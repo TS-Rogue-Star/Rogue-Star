@@ -87,7 +87,7 @@
 	timeoff_factor = 1
 	access = list(access_talon, access_talon_bridge, access_talon_medical, access_talon_engineer, access_talon_cargo, access_talon_security, access_talon_pilot) //RS Edit
 	minimal_access = list(access_talon, access_talon_bridge, access_talon_medical, access_talon_engineer, access_talon_cargo, access_talon_security, access_talon_pilot) //RS Edit
-	alt_titles = list("Talon Technician" = /datum/alt_title/talon_tech)
+	alt_titles = list("Talon Technician" = /datum/alt_title/talon_tech, "Talon Atmospheric Technician" = /datum/alt_title/talon_atmos)
 
 /datum/alt_title/talon_tech
 	title = "Talon Technician"
