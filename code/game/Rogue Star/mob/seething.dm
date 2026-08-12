@@ -235,6 +235,9 @@
 		return
 	if(ai_holder.stance == STANCE_IDLE)
 		return
+	var/turf/where = get_turf()
+	if(where.check_density(FALSE,TRUE))
+		return
 	if(prob(10))
 		spawn_seething()
 
