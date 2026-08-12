@@ -5,7 +5,7 @@ var/global/list/got_sounds = list()
 	var/oursound = got_sounds[path_string]
 	if(oursound)	//The sound is registered so we can just use it!
 		return oursound
-	if(fexists(path_string))	//The sound is registered, let's see if it exists!
+	if(fexists(path_string))	//No such sound registered, let's see if it exists!
 		got_sounds[path_string] = file(path_string)	//It does, let's record it so we can just use it next time.
 	else
 		got_sounds[path_string] = file("sound/rogue-star/placeholder_yap.mp3")	//It doesn't exist, let's register the placeholder sound so it can act as a substitute for next time!
