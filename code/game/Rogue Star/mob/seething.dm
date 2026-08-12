@@ -235,7 +235,7 @@
 		return
 	if(ai_holder.stance == STANCE_IDLE)
 		return
-	var/turf/where = get_turf()
+	var/turf/where = get_turf(src)
 	if(where.check_density(FALSE,TRUE))
 		return
 	if(prob(10))
