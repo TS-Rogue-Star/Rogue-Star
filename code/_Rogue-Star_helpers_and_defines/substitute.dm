@@ -9,7 +9,7 @@ var/global/list/got_sounds = list()
 		got_sounds[path_string] = file(path_string)
 		return got_sounds[path_string]
 	else
-		return file("sound/rogue-star/placeholder_yap.mp3")
+		return 'sound/rogue-star/placeholder_yap.mp3'
 
 /*
 /proc/get_icon(path_string)
