@@ -235,11 +235,12 @@
 		return
 	if(ai_holder.stance == STANCE_IDLE)
 		return
+	if(!prob(10))
+		return
 	var/turf/where = get_turf(src)
 	if(where.check_density(FALSE,TRUE))
 		return
-	if(prob(10))
-		spawn_seething()
+	spawn_seething()
 
 /mob/living/simple_mob/hostile/seething/spawner/try_reload()
 	warp(FALSE)
