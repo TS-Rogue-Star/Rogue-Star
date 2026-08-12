@@ -203,6 +203,7 @@
 	if(amount > 0)
 		if(prob(25))
 			warp()
+
 /mob/living/simple_mob/hostile/seething/spawner/adjustFireLoss(amount, include_robo)
 	. = ..()
 	if(amount > 0)
@@ -212,9 +213,8 @@
 /mob/living/simple_mob/hostile/seething/spawner/death()
 	. = ..()
 	lightning_strike(get_turf(src),TRUE)
-	new /obj/particle_emitter/seething/limited(get_turf(src))
-	mouse_opacity = FALSE
-	name = "dust"
+	if(particles)
+		particles.spawning = 0
 
 /mob/living/simple_mob/hostile/seething/spawner/Initialize()
 	. = ..()
@@ -231,6 +231,8 @@
 
 /mob/living/simple_mob/hostile/seething/spawner/Life()
 	. = ..()
+	if(stat == DEAD)
+		return
 	if(ai_holder.stance == STANCE_IDLE)
 		return
 	if(prob(10))
@@ -241,6 +243,8 @@
 	. = ..()
 
 /mob/living/simple_mob/hostile/seething/spawner/proc/warp(var/do_spawn = TRUE)
+	if(stat == DEAD)
+		return
 	var/turf/T = get_turf(src)
 	var/turf/destination = find_clear_turf()
 	lightning_strike(T,TRUE)
