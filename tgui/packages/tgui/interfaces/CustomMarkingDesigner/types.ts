@@ -52,7 +52,7 @@ export type DraftStrokePayload = {
 export type CustomMarkingDesignerData = {
   marking_id?: string;
   mark_name?: string;
-  initial_tab?: 'custom' | 'body' | 'basic' | 'species';
+  initial_tab?: 'custom' | 'body' | 'basic' | 'species' | 'traits';
   allow_custom_tab?: boolean;
   custom_marking_enable_disclaimer?: string;
   active_dir: string;
@@ -101,6 +101,12 @@ export type CustomMarkingDesignerData = {
   body_markings_payload?: BodyMarkingsPayload | null;
   basic_appearance_payload?: BasicAppearancePayload | null;
   species_payload?: SpeciesPayload | null;
+  traits_payload?: TraitsPayload | null;
+  traits_save_result?: TraitsSaveResult | null;
+  traits_revision?: number;
+  traits_species?: string | null;
+  trait_icon_scale_x?: number;
+  trait_icon_scale_y?: number;
   species_save_result?: SpeciesSaveResult | null;
   static_asset_manifest?: IconAssetRegistryAsset;
   static_asset_manifest_error?: string | null;
@@ -505,6 +511,116 @@ export type SpeciesPayload = {
   preview_icon_base?: string | null;
   icon_base_options?: SpeciesIconBaseOption[];
   custom_species?: string | null;
+};
+
+export type TraitCategoryId = 'positive' | 'neutral' | 'negative';
+
+export type TraitPreferenceKind =
+  | 'boolean'
+  | 'color'
+  | 'string'
+  | 'number'
+  | 'list';
+
+export type TraitPreferenceValue = string | number | BooleanLike | null;
+
+export type TraitPreferenceEntry = {
+  id: string;
+  label: string;
+  kind: TraitPreferenceKind;
+  value?: TraitPreferenceValue;
+  options?: string[];
+};
+
+export type CharacterTraitEntry = {
+  id: string;
+  name: string;
+  description: string;
+  icon_scale_x?: number;
+  icon_scale_y?: number;
+  tutorial?: string | null;
+  selected: BooleanLike;
+  disabled_reason?: string | null;
+  warning_reason?: string | null;
+  conflicts?: string[];
+  preferences?: TraitPreferenceEntry[];
+};
+
+export type CharacterTraitCategory = {
+  id: TraitCategoryId;
+  name: string;
+  summary: string;
+  selected_count: number;
+  traits: CharacterTraitEntry[];
+};
+
+export type CharacterPersistenceDetailEntry = {
+  label: string;
+  value: string;
+};
+
+export type CharacterExperienceEntry = {
+  label: string;
+  value: number;
+};
+
+export type CharacterNifPersistence = {
+  present: BooleanLike;
+  name?: string | null;
+  durability?: number | null;
+  max_durability?: number | null;
+  durability_percent?: number | null;
+  details: CharacterPersistenceDetailEntry[];
+};
+
+export type CharacterPetPersistence = {
+  present: BooleanLike;
+  name?: string | null;
+  species?: string | null;
+  details: CharacterPersistenceDetailEntry[];
+  error?: string | null;
+};
+
+export type CharacterPersistencePayload = {
+  character_name: string;
+  experience: CharacterExperienceEntry[];
+  nif: CharacterNifPersistence;
+  pet: CharacterPetPersistence;
+};
+
+export type TraitsPayload = {
+  revision: number;
+  species_id: string;
+  species_name: string;
+  anatomy: 'Organic' | 'Synthetic';
+  max_traits: number;
+  limited_traits_selected: number;
+  traits_remaining: number;
+  neutral_traits_selected: number;
+  total_selected: number;
+  persistence?: CharacterPersistencePayload;
+  categories: CharacterTraitCategory[];
+};
+
+export type TraitsSaveResult = {
+  revision: number;
+  request_id: string;
+  accepted: BooleanLike;
+  traits_revision: number;
+  error?: string | null;
+};
+
+export type TraitsDraftState = {
+  revision: number;
+  trait_order: string[];
+  selected: Record<string, boolean>;
+  preferences: Record<string, Record<string, TraitPreferenceValue>>;
+};
+
+export type TraitsSavePayload = {
+  revision: number;
+  selected_traits: string[];
+  trait_preferences: Record<string, Record<string, TraitPreferenceValue>>;
 };
 
 export type DirectionCanvasSourceOptions = {

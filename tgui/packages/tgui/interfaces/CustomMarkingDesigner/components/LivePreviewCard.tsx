@@ -19,6 +19,8 @@ type LivePreviewCardProps = Readonly<{
   canvasBackgroundScale: number;
   previewBackgroundTileWidth?: number;
   previewBackgroundTileHeight?: number;
+  iconScaleX?: number;
+  iconScaleY?: number;
   showGearControls?: boolean;
   showEquipment: boolean;
   onToggleEquipment: () => void;
@@ -42,6 +44,8 @@ export const LivePreviewCard = ({
   canvasBackgroundScale,
   previewBackgroundTileWidth,
   previewBackgroundTileHeight,
+  iconScaleX,
+  iconScaleY,
   showGearControls = true,
   showEquipment,
   onToggleEquipment,
@@ -128,6 +132,8 @@ export const LivePreviewCard = ({
             backgroundScale={canvasBackgroundScale}
             backgroundTileWidth={previewBackgroundTileWidth}
             backgroundTileHeight={previewBackgroundTileHeight}
+            iconScaleX={iconScaleX}
+            iconScaleY={iconScaleY}
           />
         </Flex.Item>
       ))}

@@ -2154,6 +2154,8 @@ type BasicAppearancePreviewColumnProps = Readonly<{
   canvasBackgroundScale: number;
   previewBackgroundTileWidth?: number;
   previewBackgroundTileHeight?: number;
+  iconScaleX?: number;
+  iconScaleY?: number;
   showEquipment: boolean;
   onToggleEquipment: () => void;
   showJobGear: boolean;
@@ -2178,6 +2180,8 @@ const BasicAppearancePreviewColumn = ({
   canvasBackgroundScale,
   previewBackgroundTileWidth,
   previewBackgroundTileHeight,
+  iconScaleX,
+  iconScaleY,
   showEquipment,
   onToggleEquipment,
   showJobGear,
@@ -2202,6 +2206,8 @@ const BasicAppearancePreviewColumn = ({
       canvasBackgroundScale={canvasBackgroundScale}
       previewBackgroundTileWidth={previewBackgroundTileWidth}
       previewBackgroundTileHeight={previewBackgroundTileHeight}
+      iconScaleX={iconScaleX}
+      iconScaleY={iconScaleY}
       showEquipment={showEquipment}
       onToggleEquipment={onToggleEquipment}
       showJobGear={showJobGear}
@@ -8196,6 +8202,8 @@ export const BasicAppearanceTab = (props: BasicAppearanceTabProps, context) => {
             canvasBackgroundScale={canvasBackgroundScale}
             previewBackgroundTileWidth={previewBackgroundTileWidth}
             previewBackgroundTileHeight={previewBackgroundTileHeight}
+            iconScaleX={data.trait_icon_scale_x}
+            iconScaleY={data.trait_icon_scale_y}
             showEquipment={showEquipment}
             onToggleEquipment={onToggleEquipment}
             showJobGear={showJobGear}

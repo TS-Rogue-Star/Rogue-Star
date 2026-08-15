@@ -18,6 +18,8 @@ type PreviewColumnProps = Readonly<{
   resolvedCanvasBackground: CanvasBackgroundOption | null;
   backgroundFallbackColor: string;
   canvasBackgroundScale: number;
+  iconScaleX?: number;
+  iconScaleY?: number;
 }>;
 
 export const PreviewColumn = ({
@@ -29,6 +31,8 @@ export const PreviewColumn = ({
   resolvedCanvasBackground,
   backgroundFallbackColor,
   canvasBackgroundScale,
+  iconScaleX,
+  iconScaleY,
 }: PreviewColumnProps) => {
   if (!renderedPreviewDirs.length) {
     return null;
@@ -74,6 +78,8 @@ export const PreviewColumn = ({
                       canvasBackgroundScale
                     : undefined
                 }
+                iconScaleX={iconScaleX}
+                iconScaleY={iconScaleY}
               />
             </Box>
           ))}
