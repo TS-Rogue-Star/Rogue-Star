@@ -7,6 +7,8 @@
 // /////////////////////////////////////////////////////////////////////////////////////////////////////
 // Updated by Lira for Rogue Star August 2026: Character Designer - Species and Prosthetics ////////////
 // /////////////////////////////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star August 2026: Character Designer - Traits Tab /////////////////////////
+// /////////////////////////////////////////////////////////////////////////////////////////////////////
 
 import { Component, createRef } from 'inferno';
 import { Box } from '../../../components';
@@ -232,10 +234,13 @@ export type DirectionPreviewCanvasProps = {
   readonly backgroundTileWidth?: number;
   readonly backgroundTileHeight?: number;
   readonly bodyAlpha?: number | null;
+  readonly iconScaleX?: number;
+  readonly iconScaleY?: number;
 };
 
 export class DirectionPreviewCanvas extends Component<DirectionPreviewCanvasProps> {
   private canvasRef = createRef<HTMLCanvasElement>();
+  private characterCompositeCanvas: HTMLCanvasElement | null = null;
   private completedRenderCache: {
     key: string;
     canvas: HTMLCanvasElement;
@@ -303,7 +308,9 @@ export class DirectionPreviewCanvas extends Component<DirectionPreviewCanvasProp
       prevProps.backgroundScale !== this.props.backgroundScale ||
       prevProps.backgroundTileWidth !== this.props.backgroundTileWidth ||
       prevProps.backgroundTileHeight !== this.props.backgroundTileHeight ||
-      prevProps.bodyAlpha !== this.props.bodyAlpha
+      prevProps.bodyAlpha !== this.props.bodyAlpha ||
+      prevProps.iconScaleX !== this.props.iconScaleX ||
+      prevProps.iconScaleY !== this.props.iconScaleY
     ) {
       this.draw();
     }
@@ -321,6 +328,7 @@ export class DirectionPreviewCanvas extends Component<DirectionPreviewCanvasProp
     }
     this.layerGroupCache.clear();
     this.colorLayerGroupCache.clear();
+    this.characterCompositeCanvas = null;
   }
 
   draw() {
@@ -335,6 +343,8 @@ export class DirectionPreviewCanvas extends Component<DirectionPreviewCanvasProp
     const pixelSize = Math.max(1, this.props.pixelSize || 1);
     const targetWidth = Math.max(1, Math.floor(canvas.width / pixelSize));
     const targetHeight = Math.max(1, Math.floor(canvas.height / pixelSize));
+    const iconScaleX = this.resolveIconScale(this.props.iconScaleX);
+    const iconScaleY = this.resolveIconScale(this.props.iconScaleY);
     this.completedRenderCache = null;
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.imageSmoothingEnabled = false;
@@ -349,6 +359,8 @@ export class DirectionPreviewCanvas extends Component<DirectionPreviewCanvasProp
           this.props.backgroundColor || '',
           this.props.backgroundScale || 1,
           this.props.bodyAlpha ?? '',
+          iconScaleX,
+          iconScaleY,
         ].join('|')
       : null;
     if (sharedRenderKey) {
@@ -381,14 +393,22 @@ export class DirectionPreviewCanvas extends Component<DirectionPreviewCanvasProp
         targetWidth,
         targetHeight,
         () => {
-          this.drawOrderedLayerGroups(
+          this.drawCharacterLayers(
             ctx,
-            layerGroups,
-            pixelSize,
             canvas,
-            targetWidth,
-            targetHeight,
-            this.props.bodyAlpha
+            iconScaleX,
+            iconScaleY,
+            (characterCtx) => {
+              this.drawOrderedLayerGroups(
+                characterCtx,
+                layerGroups,
+                pixelSize,
+                canvas,
+                targetWidth,
+                targetHeight,
+                this.props.bodyAlpha
+              );
+            }
           );
         }
       );
@@ -404,11 +424,29 @@ export class DirectionPreviewCanvas extends Component<DirectionPreviewCanvasProp
     if (!useLayerGroups) {
       const rendered = this.drawBackground(
         ctx,
-        layers,
+        [],
         pixelSize,
         canvas,
         targetWidth,
-        targetHeight
+        targetHeight,
+        () => {
+          this.drawCharacterLayers(
+            ctx,
+            canvas,
+            iconScaleX,
+            iconScaleY,
+            (characterCtx) => {
+              this.drawLayers(
+                characterCtx,
+                layers,
+                pixelSize,
+                targetWidth,
+                targetHeight,
+                this.props.bodyAlpha
+              );
+            }
+          );
+        }
       );
       if (rendered && sharedRenderKey) {
         this.completeRenderedCanvasCache(sharedRenderKey, canvas);
@@ -423,35 +461,43 @@ export class DirectionPreviewCanvas extends Component<DirectionPreviewCanvasProp
       targetWidth,
       targetHeight,
       () => {
-        if (underlayLayers.length) {
-          this.drawLayers(
-            ctx,
-            underlayLayers,
-            pixelSize,
-            targetWidth,
-            targetHeight
-          );
-        }
-        if (baseLayers && baseLayers.length) {
-          this.drawBaseLayers(
-            ctx,
-            baseLayers,
-            pixelSize,
-            canvas,
-            targetWidth,
-            targetHeight,
-            this.props.baseSignature
-          );
-        }
-        if (overlayLayers.length) {
-          this.drawLayers(
-            ctx,
-            overlayLayers,
-            pixelSize,
-            targetWidth,
-            targetHeight
-          );
-        }
+        this.drawCharacterLayers(
+          ctx,
+          canvas,
+          iconScaleX,
+          iconScaleY,
+          (characterCtx) => {
+            if (underlayLayers.length) {
+              this.drawLayers(
+                characterCtx,
+                underlayLayers,
+                pixelSize,
+                targetWidth,
+                targetHeight
+              );
+            }
+            if (baseLayers && baseLayers.length) {
+              this.drawBaseLayers(
+                characterCtx,
+                baseLayers,
+                pixelSize,
+                canvas,
+                targetWidth,
+                targetHeight,
+                this.props.baseSignature
+              );
+            }
+            if (overlayLayers.length) {
+              this.drawLayers(
+                characterCtx,
+                overlayLayers,
+                pixelSize,
+                targetWidth,
+                targetHeight
+              );
+            }
+          }
+        );
       }
     );
     if (rendered && sharedRenderKey) {
@@ -464,6 +510,72 @@ export class DirectionPreviewCanvas extends Component<DirectionPreviewCanvasProp
     if (!this.props.retainRenderedCanvasOnUnmount) {
       storeSharedRenderedCanvas(key, canvas);
     }
+  }
+
+  private resolveIconScale(value?: number) {
+    return typeof value === 'number' && Number.isFinite(value) && value > 0
+      ? value
+      : 1;
+  }
+
+  private drawCharacterLayers(
+    ctx: CanvasRenderingContext2D,
+    canvas: HTMLCanvasElement,
+    iconScaleX: number,
+    iconScaleY: number,
+    drawLayers: (ctx: CanvasRenderingContext2D) => void
+  ) {
+    if (iconScaleX === 1 && iconScaleY === 1) {
+      drawLayers(ctx);
+      return;
+    }
+
+    const compositeCanvas =
+      this.characterCompositeCanvas || document.createElement('canvas');
+    this.characterCompositeCanvas = compositeCanvas;
+    if (
+      compositeCanvas.width !== canvas.width ||
+      compositeCanvas.height !== canvas.height
+    ) {
+      compositeCanvas.width = canvas.width;
+      compositeCanvas.height = canvas.height;
+    }
+    const compositeCtx = compositeCanvas.getContext('2d');
+    if (!compositeCtx) {
+      drawLayers(ctx);
+      return;
+    }
+    compositeCtx.setTransform(1, 0, 0, 1, 0, 0);
+    compositeCtx.globalAlpha = 1;
+    compositeCtx.globalCompositeOperation = 'source-over';
+    compositeCtx.clearRect(0, 0, compositeCanvas.width, compositeCanvas.height);
+    compositeCtx.imageSmoothingEnabled = false;
+    drawLayers(compositeCtx);
+
+    const scaledWidth = Math.max(
+      1,
+      Math.round(compositeCanvas.width * iconScaleX)
+    );
+    const scaledHeight = Math.max(
+      1,
+      Math.round(compositeCanvas.height * iconScaleY)
+    );
+    const offsetX = Math.round((canvas.width - scaledWidth) / 2);
+    const offsetY = canvas.height - scaledHeight;
+    ctx.save();
+    ctx.imageSmoothingEnabled = false;
+    ctx.drawImage(
+      compositeCanvas,
+      0,
+      0,
+      compositeCanvas.width,
+      compositeCanvas.height,
+      offsetX,
+      offsetY,
+      scaledWidth,
+      scaledHeight
+    );
+    ctx.restore();
   }
 
   drawOrderedLayerGroups(

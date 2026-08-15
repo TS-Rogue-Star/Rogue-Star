@@ -28,4 +28,5 @@ export * from './basicAppearance';
 export * from './prosthetics';
 export * from './speciesPreview';
 export * from './speciesSave';
+export * from './traits';
 export * from './payloadCache';
