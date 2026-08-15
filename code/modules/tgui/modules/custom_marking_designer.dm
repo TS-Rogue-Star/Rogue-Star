@@ -11,7 +11,9 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Updated by Lira for Rogue Star December 2025: New basic appearence tab added ////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Updated by Lira for Rogue Star August 2026: Character Designer - Species and Prosthetics (Lira, August 2026) ////////////////////////////////
+// Updated by Lira for Rogue Star August 2026: Character Designer - Species and Prosthetics ////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star August 2026: Character Designer - Traits Tab /////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 #define CUSTOM_MARKING_DEFAULT_WIDTH 32
@@ -2543,7 +2545,10 @@ var/global/custom_marking_static_source_digest_complete = TRUE
 	var/list/underlays = entry:underlays
 	if(islist(underlays))
 		for(var/underlay in underlays)
-			if(!collect_static_gear_appearance_components(components, underlay, dir, effective_colors, effective_alpha, shift_x, shift_y))
+			if(!underlay)
+				continue
+			var/mutable_appearance/underlay_appearance = new /mutable_appearance(underlay)
+			if(!collect_static_gear_appearance_components(components, underlay_appearance, dir, effective_colors, effective_alpha, shift_x, shift_y))
 				return FALSE
 	var/icon_source = entry:icon
 	var/icon_state = entry:icon_state
@@ -2567,7 +2572,10 @@ var/global/custom_marking_static_source_digest_complete = TRUE
 	var/list/overlays = entry:overlays
 	if(islist(overlays))
 		for(var/overlay in overlays)
-			if(!collect_static_gear_appearance_components(components, overlay, dir, effective_colors, effective_alpha, shift_x, shift_y))
+			if(!overlay)
+				continue
+			var/mutable_appearance/overlay_appearance = new /mutable_appearance(overlay)
+			if(!collect_static_gear_appearance_components(components, overlay_appearance, dir, effective_colors, effective_alpha, shift_x, shift_y))
 				return FALSE
 	return TRUE
 
@@ -3297,6 +3305,8 @@ var/global/custom_marking_static_source_digest_complete = TRUE
 	var/preview_revision = 1 // Revisions for preview bundles
 	var/body_preview_revision = 1 // Revisions for stripped body preview bundles
 	var/species_save_result_revision = 0
+	var/traits_revision = 1 // Revisions for character trait payloads
+	var/traits_save_result_revision = 0
 	var/preview_refresh_token = 0 // Tracks external preview refresh triggers
 	var/mark_dirty = FALSE // Dirty flag for pending save
 	var/save_in_progress = FALSE // Server-side guard against duplicate save actions
@@ -3535,6 +3545,602 @@ var/global/custom_marking_static_source_digest_complete = TRUE
 			mark.body_parts += BP_TORSO
 			mark.ensure_part_frames(list(BP_TORSO))
 	return BP_TORSO
+
+/datum/tgui_module/custom_marking_designer/proc/resolve_trait_category_id(datum/trait/trait)
+	if(!istype(trait))
+		return null
+	if(trait.category > TRAIT_TYPE_NEUTRAL)
+		return "positive"
+	if(trait.category < TRAIT_TYPE_NEUTRAL)
+		return "negative"
+	return "neutral"
+
+/datum/tgui_module/custom_marking_designer/proc/resolve_trait_catalog(category_id)
+	if(!prefs || !istext(category_id))
+		return null
+	switch(category_id)
+		if("positive")
+			return positive_traits_map[prefs.species]
+		if("neutral")
+			return neutral_traits_map[prefs.species]
+		if("negative")
+			return negative_traits_map[prefs.species]
+	return null
+
+/datum/tgui_module/custom_marking_designer/proc/resolve_selected_traits(category_id)
+	if(!prefs || !istext(category_id))
+		return null
+	switch(category_id)
+		if("positive")
+			return prefs.pos_traits
+		if("neutral")
+			return prefs.neu_traits
+		if("negative")
+			return prefs.neg_traits
+	return null
+
+/datum/tgui_module/custom_marking_designer/proc/repair_character_trait_preferences()
+	if(!prefs)
+		return FALSE
+	for(var/category_id in list("positive", "neutral", "negative"))
+		var/list/selected_traits = resolve_selected_traits(category_id)
+		if(!islist(selected_traits))
+			continue
+		for(var/trait_path in selected_traits)
+			var/datum/trait/trait = all_traits[trait_path]
+			if(!istype(trait) || !LAZYLEN(trait.has_preferences))
+				continue
+			var/list/default_preferences = trait.get_default_prefs()
+			if(!islist(default_preferences))
+				continue
+			var/list/stored_preferences = selected_traits[trait_path]
+			if(!islist(stored_preferences))
+				stored_preferences = list()
+				selected_traits[trait_path] = stored_preferences
+			for(var/preference_id in trait.has_preferences)
+				if(!(preference_id in stored_preferences))
+					stored_preferences[preference_id] = default_preferences[preference_id]
+	return TRUE
+
+/datum/tgui_module/custom_marking_designer/proc/resolve_traits_preview_scale()
+	var/list/scale = list(
+		"icon_scale_x" = 1,
+		"icon_scale_y" = 1
+	)
+	if(!prefs)
+		return scale
+	var/list/selected_traits = prefs.pos_traits + prefs.neu_traits + prefs.neg_traits
+	for(var/trait_path in selected_traits)
+		var/datum/trait/trait = all_traits[trait_path]
+		if(!istype(trait) || !islist(trait.var_changes))
+			continue
+		var/scale_x = trait.var_changes["icon_scale_x"]
+		var/scale_y = trait.var_changes["icon_scale_y"]
+		if(isnum(scale_x) && scale_x > 0)
+			scale["icon_scale_x"] = scale_x
+		if(isnum(scale_y) && scale_y > 0)
+			scale["icon_scale_y"] = scale_y
+	return scale
+
+/datum/tgui_module/custom_marking_designer/proc/append_traits_preview_scale(list/payload)
+	if(!islist(payload))
+		return
+	var/list/scale = resolve_traits_preview_scale()
+	payload["trait_icon_scale_x"] = scale["icon_scale_x"]
+	payload["trait_icon_scale_y"] = scale["icon_scale_y"]
+
+/datum/tgui_module/custom_marking_designer/proc/resolve_trait_anatomy_restriction(datum/trait/trait)
+	if(!prefs || !istype(trait))
+		return "Trait data is unavailable."
+	var/is_synthetic = !!prefs.organ_data?[O_BRAIN]
+	if(is_synthetic && !(trait.can_take & SYNTHETICS))
+		return "Available to organic characters only."
+	if(!is_synthetic && !(trait.can_take & ORGANICS))
+		return "Available to synthetic characters only."
+	return null
+
+/datum/tgui_module/custom_marking_designer/proc/character_traits_conflict(trait_path, datum/trait/trait, selected_path, datum/trait/selected_trait)
+	if(!trait_path || !istype(trait) || !selected_path || !istype(selected_trait))
+		return FALSE
+	if(selected_path == trait_path)
+		return TRUE
+	if(islist(trait.excludes) && (selected_path in trait.excludes))
+		return TRUE
+	if(islist(selected_trait.excludes) && (trait_path in selected_trait.excludes))
+		return TRUE
+	if(islist(trait.var_changes) && islist(selected_trait.var_changes))
+		for(var/changed_var in trait.var_changes)
+			if(changed_var in selected_trait.var_changes)
+				return TRUE
+	if(islist(trait.var_changes_pref) && islist(selected_trait.var_changes_pref))
+		for(var/changed_pref in trait.var_changes_pref)
+			if(changed_pref in selected_trait.var_changes_pref)
+				return TRUE
+	return FALSE
+
+/datum/tgui_module/custom_marking_designer/proc/resolve_character_trait_conflict(trait_path, datum/trait/trait, list/selected_paths)
+	if(!trait_path || !istype(trait) || !islist(selected_paths))
+		return null
+	for(var/selected_path in selected_paths)
+		var/datum/trait/selected_trait = all_traits[selected_path]
+		if(!istype(selected_trait))
+			continue
+		if(character_traits_conflict(trait_path, trait, selected_path, selected_trait))
+			return selected_trait.name
+	return null
+
+/datum/tgui_module/custom_marking_designer/proc/build_character_trait_conflict_ids(trait_path, datum/trait/trait, list/trait_paths)
+	var/list/conflicts = list()
+	if(!trait_path || !istype(trait) || !islist(trait_paths))
+		return conflicts
+	for(var/selected_path in trait_paths)
+		if(selected_path == trait_path)
+			continue
+		var/datum/trait/selected_trait = all_traits[selected_path]
+		if(character_traits_conflict(trait_path, trait, selected_path, selected_trait))
+			conflicts += "[selected_path]"
+	return conflicts
+
+/datum/tgui_module/custom_marking_designer/proc/build_trait_preference_entries(trait_path, datum/trait/trait, list/selected_traits)
+	var/list/entries = list()
+	if(!istype(trait) || !LAZYLEN(trait.has_preferences))
+		return entries
+	var/list/stored_preferences = islist(selected_traits?[trait_path]) ? selected_traits[trait_path] : null
+	var/list/default_preferences = trait.get_default_prefs()
+	for(var/preference_id in trait.has_preferences)
+		var/list/preference_definition = trait.has_preferences[preference_id]
+		if(!islist(preference_definition) || preference_definition.len < 2)
+			continue
+		var/preference_value = null
+		if(islist(stored_preferences) && (preference_id in stored_preferences))
+			preference_value = stored_preferences[preference_id]
+		else if(islist(default_preferences))
+			preference_value = default_preferences[preference_id]
+		var/preference_kind
+		switch(preference_definition[1])
+			if(TRAIT_PREF_TYPE_BOOLEAN)
+				preference_kind = "boolean"
+			if(TRAIT_PREF_TYPE_COLOR)
+				preference_kind = "color"
+			if(TRAIT_PREF_TYPE_STRING)
+				preference_kind = "string"
+				if(istext(preference_value))
+					preference_value = html_decode(preference_value)
+			if(TRAIT_PREF_TYPE_INT)
+				preference_kind = "number"
+			if(TRAIT_PREF_TYPE_LIST)
+				preference_kind = "list"
+		if(!preference_kind)
+			continue
+		var/list/entry = list(
+			"id" = "[preference_id]",
+			"label" = "[preference_definition[2]]",
+			"kind" = preference_kind,
+			"value" = preference_value
+		)
+		if(preference_definition[1] == TRAIT_PREF_TYPE_LIST)
+			var/list/options = trait.vars?["inject_chems"]
+			if(islist(options))
+				entry["options"] = options.Copy()
+		entries += list(entry)
+	return entries
+
+/datum/tgui_module/custom_marking_designer/proc/build_character_trait_entry(trait_path, datum/trait/trait, list/trait_catalog, list/selected_traits, list/all_trait_paths)
+	if(!istype(trait))
+		return null
+	var/is_selected = (trait_path in selected_traits)
+	var/list/entry = list(
+		"id" = "[trait_path]",
+		"name" = "[trait.name]",
+		"description" = "[trait.desc]",
+		"selected" = is_selected,
+		"conflicts" = build_character_trait_conflict_ids(trait_path, trait, all_trait_paths)
+	)
+	if(islist(trait.var_changes))
+		var/preview_scale_x = trait.var_changes["icon_scale_x"]
+		var/preview_scale_y = trait.var_changes["icon_scale_y"]
+		if(isnum(preview_scale_x))
+			entry["icon_scale_x"] = preview_scale_x
+		if(isnum(preview_scale_y))
+			entry["icon_scale_y"] = preview_scale_y
+	var/default_tutorial = "This trait has no detailed tutorial yet. Suggest one at #Dev-Suggestions on the discord!"
+	if(istext(trait.tutorial) && length(trait.tutorial) && trait.tutorial != default_tutorial)
+		entry["tutorial"] = trait.tutorial
+	var/anatomy_restriction = resolve_trait_anatomy_restriction(trait)
+	if(is_selected)
+		if(!(trait_path in trait_catalog))
+			var/unavailable_reason = "This saved trait is not available to the current species and may be removed during character validation."
+			entry["warning_reason"] = unavailable_reason
+			entry["disabled_reason"] = unavailable_reason
+		else if(anatomy_restriction)
+			entry["warning_reason"] = anatomy_restriction
+			entry["disabled_reason"] = anatomy_restriction
+	else if(anatomy_restriction)
+		entry["disabled_reason"] = anatomy_restriction
+	var/list/preference_entries = build_trait_preference_entries(trait_path, trait, selected_traits)
+	if(preference_entries.len)
+		entry["preferences"] = preference_entries
+	return entry
+
+/datum/tgui_module/custom_marking_designer/proc/build_character_trait_category(category_id, list/all_trait_paths)
+	var/list/trait_catalog = resolve_trait_catalog(category_id)
+	if(!islist(trait_catalog))
+		trait_catalog = list()
+	var/list/selected_traits = resolve_selected_traits(category_id)
+	if(!islist(selected_traits))
+		selected_traits = list()
+	var/category_name
+	var/category_summary
+	switch(category_id)
+		if("positive")
+			category_name = "Positive Traits"
+			category_summary = "Powerful advantages that each use one limited trait slot."
+		if("neutral")
+			category_name = "Neutral Traits"
+			category_summary = "Identity and playstyle options with no limited slot cost."
+		if("negative")
+			category_name = "Negative Traits"
+			category_summary = "Meaningful tradeoffs with no selection limit."
+	if(!category_name)
+		return null
+	var/list/trait_paths = list()
+	for(var/trait_path in trait_catalog)
+		trait_paths += trait_path
+	for(var/selected_path in selected_traits)
+		if(!(selected_path in trait_paths))
+			trait_paths += selected_path
+	var/list/trait_entries = list()
+	for(var/trait_path in trait_paths)
+		var/datum/trait/trait = all_traits[trait_path]
+		var/list/entry = build_character_trait_entry(trait_path, trait, trait_catalog, selected_traits, all_trait_paths)
+		if(islist(entry))
+			trait_entries += list(entry)
+	return list(
+		"id" = category_id,
+		"name" = category_name,
+		"summary" = category_summary,
+		"selected_count" = selected_traits.len,
+		"traits" = trait_entries
+	)
+
+/datum/tgui_module/custom_marking_designer/proc/format_character_persistence_value(value)
+	if(isnull(value))
+		return "None"
+	if(istext(value) || isnum(value) || ispath(value))
+		return "[value]"
+	if(islist(value))
+		var/encoded_value
+		try
+			encoded_value = json_encode(value)
+		catch
+			encoded_value = null
+		if(istext(encoded_value) && length(encoded_value))
+			return encoded_value
+	return "[value]"
+
+/datum/tgui_module/custom_marking_designer/proc/build_character_persistence_details(list/source, list/ignored_keys)
+	var/list/details = list()
+	if(!islist(source) || !source.len)
+		return details
+	for(var/key in source)
+		if(islist(ignored_keys) && (key in ignored_keys))
+			continue
+		var/label = capitalize(replacetext("[key]", "_", " "))
+		if(findtext(label, "Ui ") == 1)
+			label = "UI [copytext(label, 4)]"
+		details += list(list(
+			"label" = label,
+			"value" = format_character_persistence_value(source[key])
+		))
+	return details
+
+/datum/tgui_module/custom_marking_designer/proc/build_character_persistence_payload()
+	var/list/payload = list(
+		"character_name" = prefs?.real_name || "Selected character",
+		"experience" = list(),
+		"nif" = list(
+			"present" = FALSE,
+			"details" = list()
+		),
+		"pet" = list(
+			"present" = FALSE,
+			"details" = list()
+		)
+	)
+	if(!prefs)
+		return payload
+
+	var/client/owner_client = prefs.client
+	var/datum/etching/etching = owner_client?.etching
+	if(etching)
+		if(islist(etching.xp))
+			var/list/experience = list()
+			for(var/kind in etching.xp)
+				var/amount = etching.xp[kind]
+				if(!isnum(amount))
+					continue
+				experience += list(list(
+					"label" = capitalize("[kind]"),
+					"value" = amount
+				))
+			payload["experience"] = experience
+
+		var/resolved_nif_type = etching.nif_type
+		if(istext(resolved_nif_type))
+			resolved_nif_type = text2path(resolved_nif_type)
+		if(ispath(resolved_nif_type, /obj/item/device/nif))
+			var/obj/item/device/nif/resolved_nif_path = resolved_nif_type
+			var/current_durability = isnum(etching.nif_durability) ? etching.nif_durability : 0
+			var/maximum_durability = initial(resolved_nif_path.durability)
+			var/durability_percent = maximum_durability > 0 ? round(clamp(current_durability / maximum_durability * 100, 0, 100), 0.1) : null
+			payload["nif"] = list(
+				"present" = TRUE,
+				"name" = initial(resolved_nif_path.name),
+				"durability" = current_durability,
+				"max_durability" = maximum_durability,
+				"durability_percent" = durability_percent,
+				"details" = build_character_persistence_details(etching.nif_savedata, null)
+			)
+
+	if(!owner_client?.ckey)
+		return payload
+	var/pet_path = "data/player_saves/[copytext(owner_client.ckey, 1, 2)]/[owner_client.ckey]/pet/slot[prefs.default_slot].json"
+	if(!fexists(pet_path))
+		return payload
+	var/pet_text
+	try
+		pet_text = file2text(pet_path)
+	catch
+		payload["pet"]["error"] = "The stored pet record could not be read."
+		return payload
+	if(!istext(pet_text) || !length(pet_text))
+		payload["pet"]["error"] = "The stored pet record is empty."
+		return payload
+	var/list/pet_data
+	try
+		pet_data = json_decode(pet_text)
+	catch
+		payload["pet"]["error"] = "The stored pet record could not be decoded."
+		return payload
+	if(!islist(pet_data))
+		payload["pet"]["error"] = "The stored pet record is invalid."
+		return payload
+
+	var/resolved_pet_type = pet_data["type"]
+	if(istext(resolved_pet_type))
+		resolved_pet_type = text2path(resolved_pet_type)
+	var/pet_species = "Unknown pet type"
+	if(ispath(resolved_pet_type, /mob/living/simple_mob))
+		var/mob/living/simple_mob/resolved_pet_path = resolved_pet_type
+		pet_species = initial(resolved_pet_path.name)
+	payload["pet"] = list(
+		"present" = TRUE,
+		"name" = istext(pet_data["name"]) && length(pet_data["name"]) ? pet_data["name"] : "Unnamed pet",
+		"species" = pet_species,
+		"details" = build_character_persistence_details(pet_data, list("ckey", "type", "name"))
+	)
+	return payload
+
+/datum/tgui_module/custom_marking_designer/proc/build_traits_payload()
+	if(!prefs)
+		return null
+	repair_character_trait_preferences()
+	var/limited_traits_selected = prefs.pos_traits.len
+	var/traits_remaining = prefs.max_traits - limited_traits_selected
+	var/list/all_trait_paths = list()
+	for(var/category_id in list("positive", "neutral", "negative"))
+		var/list/trait_catalog = resolve_trait_catalog(category_id)
+		if(islist(trait_catalog))
+			for(var/trait_path in trait_catalog)
+				if(!(trait_path in all_trait_paths))
+					all_trait_paths += trait_path
+		var/list/selected_traits = resolve_selected_traits(category_id)
+		if(islist(selected_traits))
+			for(var/selected_path in selected_traits)
+				if(!(selected_path in all_trait_paths))
+					all_trait_paths += selected_path
+	var/list/categories = list()
+	for(var/category_id in list("positive", "neutral", "negative"))
+		var/list/category = build_character_trait_category(category_id, all_trait_paths)
+		if(islist(category))
+			categories += list(category)
+	var/datum/species/selected_species = GLOB.all_species?[prefs.species]
+	var/species_name = selected_species?.name || prefs.species
+	if(prefs.species == SPECIES_CUSTOM && istext(prefs.custom_species) && length(prefs.custom_species))
+		species_name = prefs.custom_species
+	return list(
+		"revision" = traits_revision,
+		"species_id" = prefs.species,
+		"species_name" = species_name,
+		"anatomy" = prefs.organ_data?[O_BRAIN] ? "Synthetic" : "Organic",
+		"max_traits" = prefs.max_traits,
+		"limited_traits_selected" = limited_traits_selected,
+		"traits_remaining" = traits_remaining,
+		"neutral_traits_selected" = prefs.neu_traits.len,
+		"total_selected" = prefs.pos_traits.len + prefs.neu_traits.len + prefs.neg_traits.len,
+		"persistence" = build_character_persistence_payload(),
+		"categories" = categories
+	)
+
+/datum/tgui_module/custom_marking_designer/proc/send_traits_payload(mob/user, list/save_result = null)
+	if(!user || !prefs)
+		return FALSE
+	var/list/payload = build_traits_payload()
+	if(!islist(payload))
+		return FALSE
+	var/list/update = list(
+		"traits_revision" = traits_revision,
+		"traits_species" = prefs.species,
+		"traits_payload" = payload
+	)
+	if(islist(save_result))
+		update["traits_save_result"] = save_result
+	append_traits_preview_scale(update)
+	var/datum/tgui/active_ui = SStgui.get_open_ui(user, src)
+	if(active_ui)
+		active_ui.send_update(update)
+	else
+		SStgui.update_uis(src, update)
+	return TRUE
+
+/datum/tgui_module/custom_marking_designer/proc/build_traits_save_result(request_id, accepted, list/rejection_reasons = null)
+	if(!istext(request_id) || !length(request_id))
+		return null
+	traits_save_result_revision++
+	var/list/result = list(
+		"revision" = traits_save_result_revision,
+		"request_id" = request_id,
+		"accepted" = !!accepted,
+		"traits_revision" = traits_revision
+	)
+	if(LAZYLEN(rejection_reasons))
+		result["error"] = rejection_reasons[1]
+	return result
+
+/datum/tgui_module/custom_marking_designer/proc/reject_character_traits_payload(list/rejection_reasons, reason)
+	if(islist(rejection_reasons) && istext(reason) && length(reason))
+		rejection_reasons += reason
+	return FALSE
+
+/datum/tgui_module/custom_marking_designer/proc/sanitize_character_trait_preferences(datum/trait/trait, list/incoming_preferences)
+	if(!istype(trait) || !LAZYLEN(trait.has_preferences))
+		return null
+	var/list/default_preferences = trait.get_default_prefs()
+	var/list/sanitized_preferences = list()
+	for(var/preference_id in trait.has_preferences)
+		var/list/preference_definition = trait.has_preferences[preference_id]
+		if(!islist(preference_definition) || !preference_definition.len)
+			continue
+		var/default_value = islist(default_preferences) ? default_preferences[preference_id] : null
+		var/incoming_value = islist(incoming_preferences) && (preference_id in incoming_preferences) ? incoming_preferences[preference_id] : default_value
+		switch(preference_definition[1])
+			if(TRAIT_PREF_TYPE_BOOLEAN)
+				var/boolean_value = !!incoming_value
+				if(istext(incoming_value))
+					boolean_value = (lowertext(incoming_value) in list("1", "true", "yes", "on"))
+				sanitized_preferences[preference_id] = boolean_value
+			if(TRAIT_PREF_TYPE_COLOR)
+				var/default_color = istext(default_value) ? default_value : "#ffffff"
+				sanitized_preferences[preference_id] = sanitize_hexcolor(incoming_value, default_color)
+			if(TRAIT_PREF_TYPE_STRING)
+				var/text_value = istext(incoming_value) ? incoming_value : null
+				if(!istext(text_value) || length(text_value) < 3 || length(text_value) > 40)
+					text_value = istext(default_value) ? default_value : ""
+				sanitized_preferences[preference_id] = html_encode(text_value)
+			if(TRAIT_PREF_TYPE_INT)
+				var/number_value = incoming_value
+				if(!isnum(number_value) && istext(number_value))
+					number_value = text2num(number_value)
+				if(!isnum(number_value))
+					number_value = isnum(default_value) ? default_value : 0
+				sanitized_preferences[preference_id] = CLAMP(number_value, 0, 5)
+			if(TRAIT_PREF_TYPE_LIST)
+				var/list/options = trait.vars?["inject_chems"]
+				var/list_value = incoming_value
+				if(!islist(options) || !(list_value in options))
+					list_value = islist(options) && (default_value in options) ? default_value : options?[1]
+				sanitized_preferences[preference_id] = list_value
+	return sanitized_preferences
+
+/datum/tgui_module/custom_marking_designer/proc/store_character_trait_selection(trait_path, datum/trait/trait, list/incoming_preferences, list/positive_traits, list/neutral_traits, list/negative_traits)
+	if(!trait_path || !istype(trait))
+		return FALSE
+	var/list/sanitized_preferences = sanitize_character_trait_preferences(trait, incoming_preferences)
+	var/list/target_traits
+	switch(resolve_trait_category_id(trait))
+		if("positive")
+			target_traits = positive_traits
+		if("neutral")
+			target_traits = neutral_traits
+		if("negative")
+			target_traits = negative_traits
+	if(!islist(target_traits))
+		return FALSE
+	if(islist(sanitized_preferences))
+		target_traits[trait_path] = sanitized_preferences
+	else
+		target_traits += trait_path
+	return TRUE
+
+/datum/tgui_module/custom_marking_designer/proc/apply_character_traits_payload(list/params, list/rejection_reasons = null)
+	if(!prefs || !islist(params))
+		return reject_character_traits_payload(rejection_reasons, "Trait data is unavailable.")
+	var/incoming_revision = params?["revision"]
+	if(!isnum(incoming_revision) || incoming_revision != traits_revision)
+		return reject_character_traits_payload(rejection_reasons, "This Traits draft is out of date. Reload it and try again.")
+	var/list/incoming_selected = params?["selected_traits"]
+	if(!islist(incoming_selected))
+		return reject_character_traits_payload(rejection_reasons, "The Traits save did not contain a valid selection list.")
+	var/list/incoming_preferences = params?["trait_preferences"]
+	if(!islist(incoming_preferences))
+		incoming_preferences = list()
+	var/list/requested_paths = list()
+	var/list/requested_preferences = list()
+	for(var/trait_id in incoming_selected)
+		if(!istext(trait_id))
+			return reject_character_traits_payload(rejection_reasons, "The Traits save contained an invalid trait identifier.")
+		var/trait_path = text2path(trait_id)
+		var/datum/trait/trait = all_traits[trait_path]
+		if(!istype(trait))
+			return reject_character_traits_payload(rejection_reasons, "The Traits save contained an unknown trait.")
+		if(trait_path in requested_paths)
+			return reject_character_traits_payload(rejection_reasons, "The Traits save contained [trait.name] more than once.")
+		requested_paths += trait_path
+		var/list/trait_preferences = incoming_preferences[trait_id]
+		if(islist(trait_preferences))
+			requested_preferences["[trait_path]"] = trait_preferences
+
+	var/positive_trait_count = 0
+	for(var/trait_path in requested_paths)
+		var/datum/trait/trait = all_traits[trait_path]
+		var/category_id = resolve_trait_category_id(trait)
+		var/list/trait_catalog = resolve_trait_catalog(category_id)
+		if(!islist(trait_catalog) || !(trait_path in trait_catalog))
+			return reject_character_traits_payload(rejection_reasons, "[trait.name] is not available to [prefs.species]. Remove it before saving.")
+		var/anatomy_restriction = resolve_trait_anatomy_restriction(trait)
+		if(anatomy_restriction)
+			return reject_character_traits_payload(rejection_reasons, "[trait.name]: [anatomy_restriction]")
+		if(category_id == "positive")
+			positive_trait_count++
+	if(positive_trait_count > prefs.max_traits)
+		return reject_character_traits_payload(rejection_reasons, "You selected [positive_trait_count] positive traits, but the limit is [prefs.max_traits].")
+
+	for(var/trait_index = 1, trait_index <= requested_paths.len, trait_index++)
+		var/trait_path = requested_paths[trait_index]
+		var/datum/trait/trait = all_traits[trait_path]
+		for(var/selected_index = 1, selected_index < trait_index, selected_index++)
+			var/selected_path = requested_paths[selected_index]
+			var/datum/trait/selected_trait = all_traits[selected_path]
+			if(character_traits_conflict(trait_path, trait, selected_path, selected_trait))
+				return reject_character_traits_payload(rejection_reasons, "[trait.name] conflicts with [selected_trait.name]. Remove one before saving.")
+
+	var/list/new_positive_traits = list()
+	var/list/new_neutral_traits = list()
+	var/list/new_negative_traits = list()
+	for(var/trait_path in requested_paths)
+		var/datum/trait/trait = all_traits[trait_path]
+		var/list/trait_preferences = requested_preferences["[trait_path]"]
+		if(!store_character_trait_selection(trait_path, trait, trait_preferences, new_positive_traits, new_neutral_traits, new_negative_traits))
+			return reject_character_traits_payload(rejection_reasons, "[trait.name] could not be saved.")
+
+	var/list/current_paths = prefs.pos_traits + prefs.neu_traits + prefs.neg_traits
+	for(var/trait_path in current_paths)
+		if(trait_path in requested_paths)
+			continue
+		var/datum/trait/trait = all_traits[trait_path]
+		if(istype(trait))
+			trait.remove_pref(prefs)
+	for(var/trait_path in requested_paths)
+		if(trait_path in current_paths)
+			continue
+		var/datum/trait/trait = all_traits[trait_path]
+		if(istype(trait))
+			trait.apply_pref(prefs)
+
+	prefs.pos_traits = new_positive_traits
+	prefs.neu_traits = new_neutral_traits
+	prefs.neg_traits = new_negative_traits
+	return TRUE
 
 // Toggle dirty flag for pending saves
 /datum/tgui_module/custom_marking_designer/proc/set_mark_dirty(state)
@@ -4127,6 +4733,9 @@ var/global/custom_marking_static_source_digest_complete = TRUE
 	data["show_equipment"] = !!(prefs?.equip_preview_mob & EQUIP_PREVIEW_EQUIPMENT)
 	data["show_job_gear"] = !!(prefs?.equip_preview_mob & EQUIP_PREVIEW_JOB)
 	data["show_loadout_gear"] = !!(prefs?.equip_preview_mob & EQUIP_PREVIEW_LOADOUT)
+	data["traits_revision"] = traits_revision
+	data["traits_species"] = prefs?.species
+	append_traits_preview_scale(data)
 	data["reference_build_in_progress"] = reference_build_in_progress
 	return data
 
@@ -5075,6 +5684,26 @@ var/global/custom_marking_static_source_digest_complete = TRUE
 			static_manifest_client_ready = TRUE
 			prefs?.close_custom_marking_designer_loading()
 		return FALSE
+	if(action == "load_traits")
+		send_traits_payload(usr)
+		return TRUE
+	if(action == "save_traits")
+		var/close_ui = !!params?["close"]
+		var/request_id = params?["request_id"]
+		var/list/rejection_reasons = list()
+		var/traits_updated = apply_character_traits_payload(params, rejection_reasons)
+		if(traits_updated)
+			traits_revision++
+			refresh_preferences_window_if_visible(TRUE)
+			if(close_ui)
+				SStgui.close_uis(src)
+				return FALSE
+		var/list/save_result = build_traits_save_result(request_id, traits_updated, rejection_reasons)
+		send_traits_payload(usr, save_result)
+		return TRUE
+	if(action == "close_traits")
+		SStgui.close_uis(src)
+		return FALSE
 	if(action == "enable_custom_markings")
 		if(!prefs)
 			return TRUE
@@ -5296,6 +5925,7 @@ var/global/custom_marking_static_source_digest_complete = TRUE
 		var/basic_updated = apply_basic_appearance_payload(params)
 		release_preview_payload_build_lock()
 		if(basic_updated)
+			traits_revision++
 			refresh_preferences_window_if_visible(TRUE)
 			if(close_ui)
 				SStgui.close_uis(src)
@@ -5324,6 +5954,7 @@ var/global/custom_marking_static_source_digest_complete = TRUE
 		var/list/species_save_result = build_species_save_result_if_needed(species_updated, close_ui, params)
 		release_preview_payload_build_lock()
 		if(species_updated)
+			traits_revision++
 			refresh_preferences_window_if_visible(TRUE)
 			if(close_ui)
 				SStgui.close_uis(src)

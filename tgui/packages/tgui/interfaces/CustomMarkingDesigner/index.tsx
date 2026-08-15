@@ -15,6 +15,8 @@
 // /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Updated by Lira for Rogue Star August 2026: Character Designer - Species and Prosthetics ////////////////////////////
 // /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star August 2026: Character Designer - Traits Tab /////////////////////////////////////////
+// /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 import { Component } from 'inferno';
 
@@ -119,6 +121,9 @@ import {
   buildBasicAppearanceLoadParams,
   buildBodyMarkingsLoadParams,
   buildSpeciesSaveCacheParams,
+  buildTraitsDraftState,
+  buildTraitsSavePayload,
+  resolveTraitsSaveAcknowledgement,
   mergeBasicAppearancePayload,
   mergeBodyMarkingsPayload,
   shouldRetainLocalBasicPayload,
@@ -144,6 +149,9 @@ import type {
   PendingPreviewOverrides,
   SpeciesPayload,
   SpeciesSaveResult,
+  TraitsDraftState,
+  TraitsPayload,
+  TraitsSaveResult,
 } from './types';
 import { useDesignerUiState } from './state';
 import CustomEyeIconAsset from '../../../../public/Icons/Rogue Star/eye 1.png';
@@ -165,8 +173,9 @@ import {
   type MarkingLayersCacheEntry,
 } from './BasicAppearanceTab';
 import { SpeciesTab } from './SpeciesTab';
+import { TraitsTab } from './TraitsTab';
 
-type DesignerTabId = 'custom' | 'body' | 'basic' | 'species';
+type DesignerTabId = 'custom' | 'body' | 'basic' | 'species' | 'traits';
 
 type PreviewWithMarkingsCache = {
   signature: string;
@@ -1275,7 +1284,8 @@ const resolveDesignerTabState = (
     initialTab === 'body' ||
     initialTab === 'custom' ||
     initialTab === 'basic' ||
-    initialTab === 'species'
+    initialTab === 'species' ||
+    initialTab === 'traits'
   ) {
     desiredTab = initialTab;
   }
@@ -1727,6 +1737,55 @@ class SpeciesSaveResultSyncScheduler extends Component<SpeciesSaveResultSyncSche
   }
 }
 
+type TraitsSaveResultSyncSchedulerProps = Readonly<{
+  saveResult: TraitsSaveResult | null;
+  payload: TraitsPayload | null;
+  pendingRequest: PendingTraitsSaveRequest | null;
+  onAcknowledged: (
+    accepted: boolean,
+    pendingRequest: PendingTraitsSaveRequest,
+    saveResult: TraitsSaveResult
+  ) => void;
+}>;
+
+class TraitsSaveResultSyncScheduler extends Component<TraitsSaveResultSyncSchedulerProps> {
+  private lastAcknowledgedRequestId: string | null = null;
+
+  componentDidMount() {
+    this.sync();
+  }
+
+  componentDidUpdate() {
+    this.sync();
+  }
+
+  sync() {
+    const { saveResult, payload, pendingRequest, onAcknowledged } = this.props;
+    if (!pendingRequest) {
+      return;
+    }
+    const accepted = resolveTraitsSaveAcknowledgement(
+      pendingRequest.requestId,
+      saveResult,
+      payload
+    );
+    if (
+      accepted === null ||
+      pendingRequest.requestId === this.lastAcknowledgedRequestId
+    ) {
+      return;
+    }
+    this.lastAcknowledgedRequestId = pendingRequest.requestId;
+    if (saveResult) {
+      onAcknowledged(accepted, pendingRequest, saveResult);
+    }
+  }
+
+  render() {
+    return null;
+  }
+}
+
 const syncServerSpeciesPayload = (options: {
   resolvedActiveTab: DesignerTabId;
   serverSpeciesPayload: SpeciesPayload | null;
@@ -1961,6 +2020,18 @@ const DesignerTitleTabs = ({
         Body Markings
       </Tabs.Tab>
       <Tabs.Tab
+        selected={resolvedActiveTab === 'traits'}
+        icon="dna"
+        className={tabsLocked ? 'Tab--disabled' : undefined}
+        aria-disabled={tabsLocked}
+        onClick={() => {
+          if (!tabsLocked) {
+            onTabChange('traits');
+          }
+        }}>
+        Traits
+      </Tabs.Tab>
+      <Tabs.Tab
         selected={resolvedActiveTab === 'custom'}
         icon={resolveCustomDesignerTabIcon(allowCustomTab)}
         className={tabsLocked ? 'Tab--disabled' : undefined}
@@ -2032,6 +2103,12 @@ type PendingSpeciesTabSwitch = {
   iconBase: string | null;
 };
 
+type PendingTraitsSaveRequest = {
+  requestId: string;
+  wasDirty: boolean;
+  tabSwitchPrompt: TabSwitchPromptState | null;
+};
+
 type TabSwitchOverlayProps = Readonly<{
   prompt: TabSwitchPromptState | null;
   busy: boolean;
@@ -2049,6 +2126,9 @@ const resolveTabSwitchLabel = (tab: DesignerTabId) => {
   }
   if (tab === 'species') {
     return 'Species tab';
+  }
+  if (tab === 'traits') {
+    return 'Traits tab';
   }
   return 'Basic Appearance tab';
 };
@@ -2098,6 +2178,8 @@ const resolveDesignerLoadingState = (options: {
   basicPendingClose: boolean;
   speciesPendingSave: boolean;
   speciesPendingClose: boolean;
+  traitsPendingSave: boolean;
+  traitsPendingClose: boolean;
 }) => {
   const {
     resolvedActiveTab,
@@ -2114,6 +2196,8 @@ const resolveDesignerLoadingState = (options: {
     basicPendingClose,
     speciesPendingSave,
     speciesPendingClose,
+    traitsPendingSave,
+    traitsPendingClose,
   } = options;
   const shouldShowLoadingOverlay =
     loadingOverlay && !pendingSave && !pendingClose;
@@ -2132,7 +2216,9 @@ const resolveDesignerLoadingState = (options: {
     basicPendingSave ||
     basicPendingClose ||
     speciesPendingSave ||
-    speciesPendingClose;
+    speciesPendingClose ||
+    traitsPendingSave ||
+    traitsPendingClose;
   const tabsLocked =
     tabSwitchBusyState ||
     customTabLoading ||
@@ -2147,9 +2233,45 @@ const resolveDesignerLoadingState = (options: {
   };
 };
 
+const resolveTraitsDraftContext = (
+  data: CustomMarkingDesignerData,
+  stateToken: string
+) => {
+  const payload = data.traits_payload || null;
+  const revisionMatches =
+    !data.traits_revision || payload?.revision === data.traits_revision;
+  const speciesMatches =
+    !data.traits_species || payload?.species_id === data.traits_species;
+  const resolvedPayload =
+    payload && revisionMatches && speciesMatches ? payload : null;
+  const identity = resolvedPayload
+    ? `${resolvedPayload.revision}-${resolvedPayload.species_id}`
+    : `loading-${data.traits_revision || 0}-${data.traits_species || ''}`;
+  return {
+    resolvedPayload,
+    draftKey: `traitsDraft-${stateToken}-${identity}`,
+    dirtyKey: `traitsDirty-${stateToken}-${identity}`,
+  };
+};
+
+const buildInitialTraitsDraft = (payload: TraitsPayload | null) =>
+  payload ? buildTraitsDraftState(payload) : null;
+
+let traitsSaveRequestCounter = 0;
+
+const createTraitsSaveRequestId = (stateToken: string) => {
+  traitsSaveRequestCounter = (traitsSaveRequestCounter + 1) % 1000000;
+  return `${stateToken}-${Date.now()}-${traitsSaveRequestCounter}`;
+};
+
 const CustomMarkingDesignerContent = (_props, context) => {
   const { act, data } = useBackend<CustomMarkingDesignerData>(context);
   const stateToken = data.state_token || 'session';
+  const {
+    resolvedPayload: resolvedTraitsPayload,
+    draftKey: traitsDraftKey,
+    dirtyKey: traitsDirtyKey,
+  } = resolveTraitsDraftContext(data, stateToken);
   const [activeTab, setActiveTab] = useLocalState<DesignerTabId>(
     context,
     'customMarkingTab',
@@ -2509,6 +2631,38 @@ const CustomMarkingDesignerContent = (_props, context) => {
     'speciesPendingClose',
     false
   );
+  const [traitsDraftState, setTraitsDraftState] =
+    useLocalState<TraitsDraftState | null>(
+      context,
+      traitsDraftKey,
+      buildInitialTraitsDraft(resolvedTraitsPayload)
+    );
+  const [traitsDirty, setTraitsDirty] = useLocalState<boolean>(
+    context,
+    traitsDirtyKey,
+    false
+  );
+  const [traitsPendingSave, setTraitsPendingSave] = useLocalState<boolean>(
+    context,
+    'traitsPendingSave',
+    false
+  );
+  const [traitsPendingClose, setTraitsPendingClose] = useLocalState<boolean>(
+    context,
+    'traitsPendingClose',
+    false
+  );
+  const [traitsPendingSaveRequest, setTraitsPendingSaveRequest] =
+    useLocalState<PendingTraitsSaveRequest | null>(
+      context,
+      `traitsPendingSaveRequest-${stateToken}`,
+      null
+    );
+  const [traitsSaveError, setTraitsSaveError] = useLocalState<string | null>(
+    context,
+    `traitsSaveError-${stateToken}`,
+    null
+  );
   const [speciesLoadInProgress, setSpeciesLoadInProgress] =
     useLocalState<boolean>(
       context,
@@ -2695,7 +2849,8 @@ const CustomMarkingDesignerContent = (_props, context) => {
     showJobGear,
     showLoadoutGear,
   });
-  const customPreviewEnabled = resolvedActiveTab === 'custom';
+  const sharedPreviewEnabled =
+    resolvedActiveTab === 'custom' || resolvedActiveTab === 'traits';
   const {
     derivedPreviewState,
     overlayLayerParts,
@@ -2739,7 +2894,7 @@ const CustomMarkingDesignerContent = (_props, context) => {
     renderedPreviewCache,
     renderedPreviewSignature,
     draftMutationToken,
-    enabled: customPreviewEnabled,
+    enabled: sharedPreviewEnabled,
   });
   const appearanceContext = resolveAppearanceContext({
     previewDirStates: derivedPreviewState.dirs,
@@ -2791,7 +2946,7 @@ const CustomMarkingDesignerContent = (_props, context) => {
     cache: previewWithMarkingsCache,
     signature: previewMarkingsSignature,
   });
-  const tabLivePreview = customPreviewEnabled ? previewDirsWithMarkings : [];
+  const tabLivePreview = sharedPreviewEnabled ? previewDirsWithMarkings : [];
   const canvasReferenceSources = applyAppearanceToReferenceSources({
     referenceParts,
     referenceGrid,
@@ -3595,6 +3750,8 @@ const CustomMarkingDesignerContent = (_props, context) => {
       basicPendingClose,
       speciesPendingSave,
       speciesPendingClose,
+      traitsPendingSave,
+      traitsPendingClose,
     });
 
   const canvasBackgroundId = resolvedCanvasBackground?.id || 'default';
@@ -3683,6 +3840,21 @@ const CustomMarkingDesignerContent = (_props, context) => {
         ? (sharedState.speciesDirty as boolean)
         : speciesDirty;
     return !!dirtyFlag;
+  };
+
+  const detectTraitsUnsaved = () => {
+    const sharedState = selectBackend(context.store.getState()).shared || {};
+    const dirtyFlag = sharedState[traitsDirtyKey];
+    return typeof dirtyFlag === 'boolean' ? dirtyFlag : traitsDirty;
+  };
+
+  const resolveLatestTraitsDraft = () => {
+    const sharedState = selectBackend(context.store.getState()).shared || {};
+    const draft = sharedState[traitsDraftKey] as
+      | TraitsDraftState
+      | null
+      | undefined;
+    return draft !== undefined ? draft : traitsDraftState;
   };
 
   const resolveBodyReloadPending = () => {
@@ -3816,14 +3988,14 @@ const CustomMarkingDesignerContent = (_props, context) => {
     };
   };
 
-  const resolveUnsavedForTab = (tab: DesignerTabId) =>
-    tab === 'custom'
-      ? detectCustomUnsaved()
-      : tab === 'body'
-        ? detectBodyUnsaved()
-        : tab === 'basic'
-          ? detectBasicUnsaved()
-          : detectSpeciesUnsaved();
+  const unsavedDetectors: Record<DesignerTabId, () => boolean> = {
+    custom: detectCustomUnsaved,
+    body: detectBodyUnsaved,
+    basic: detectBasicUnsaved,
+    species: detectSpeciesUnsaved,
+    traits: detectTraitsUnsaved,
+  };
+  const resolveUnsavedForTab = (tab: DesignerTabId) => unsavedDetectors[tab]();
 
   const clearCustomChanges = () => {
     clearAllLocalDrafts();
@@ -4126,6 +4298,71 @@ const CustomMarkingDesignerContent = (_props, context) => {
         selected_icon_base: fallbackIconBase,
         preview_icon_base: fallbackIconBase,
       });
+    }
+  };
+
+  const saveTraitsChanges = async (
+    close = false,
+    tabSwitchPrompt: TabSwitchPromptState | null = null
+  ): Promise<boolean> => {
+    const latestDraft = resolveLatestTraitsDraft();
+    if (!latestDraft) {
+      return false;
+    }
+    const wasDirty = detectTraitsUnsaved();
+    if (!wasDirty && !close) {
+      return true;
+    }
+    setTraitsSaveError(null);
+    setPendingSave(true);
+    setPendingClose(close);
+    setTraitsPendingSave(true);
+    setTraitsPendingClose(close);
+    const requestId = createTraitsSaveRequestId(stateToken);
+    setTraitsPendingSaveRequest({
+      requestId,
+      wasDirty,
+      tabSwitchPrompt,
+    });
+    try {
+      act('save_traits', {
+        ...buildTraitsSavePayload(latestDraft),
+        request_id: requestId,
+        close,
+      });
+      return true;
+    } catch (error) {
+      setPendingSave(false);
+      setPendingClose(false);
+      setTraitsPendingSave(false);
+      setTraitsPendingClose(false);
+      setTraitsPendingSaveRequest(null);
+      setTraitsSaveError(
+        'The Traits save could not be sent. Please try again.'
+      );
+      return false;
+    }
+  };
+
+  const discardTraitsChanges = () => {
+    setTraitsDraftState(
+      resolvedTraitsPayload
+        ? buildTraitsDraftState(resolvedTraitsPayload)
+        : null
+    );
+    setTraitsDirty(false);
+    setTraitsSaveError(null);
+  };
+
+  const closeTraitsWithoutSaving = async () => {
+    setTraitsSaveError(null);
+    setPendingClose(true);
+    setTraitsPendingClose(true);
+    try {
+      await act('close_traits');
+    } finally {
+      setPendingClose(false);
+      setTraitsPendingClose(false);
     }
   };
 
@@ -4445,6 +4682,70 @@ const CustomMarkingDesignerContent = (_props, context) => {
     }
   };
 
+  const completeTraitsSave = async (
+    accepted: boolean,
+    pendingRequest: PendingTraitsSaveRequest,
+    saveResult: TraitsSaveResult
+  ) => {
+    setTraitsPendingSaveRequest(null);
+    const clearPendingState = () => {
+      setPendingSave(false);
+      setPendingClose(false);
+      setTraitsPendingSave(false);
+      setTraitsPendingClose(false);
+    };
+
+    const prompt = pendingRequest.tabSwitchPrompt;
+    if (!accepted) {
+      setTraitsSaveError(
+        saveResult.error ||
+          'The server rejected this trait set. Resolve its incompatibilities and try again.'
+      );
+      clearPendingState();
+      if (prompt) {
+        setTabSwitchPrompt(prompt);
+        setTabSwitchBusy(false);
+      }
+      return;
+    }
+
+    setTraitsSaveError(null);
+    setTraitsDirty(false);
+    if (pendingRequest.wasDirty) {
+      setBodyReloadPending(true);
+      setBasicReloadPending(true);
+      setReloadTargetRevision(0);
+      setReloadPending(true);
+    }
+    if (!prompt) {
+      clearPendingState();
+      return;
+    }
+
+    try {
+      if (prompt.targetTab === 'custom') {
+        setReloadTargetRevision(0);
+        setLoadingOverlay(true);
+        setReloadOverlayMinUntil(Date.now() + 400);
+        setReloadPending(false);
+      }
+      if (prompt.targetTab === 'body') {
+        await ensureBodyPayloadForSwitch(pendingRequest.wasDirty);
+      }
+      if (prompt.targetTab === 'basic') {
+        await ensureBasicPayloadForSwitch(pendingRequest.wasDirty);
+      }
+      if (prompt.targetTab === 'species') {
+        await ensureSpeciesPayloadForSwitch(false);
+      }
+      setActiveTab(prompt.targetTab);
+      setTabSwitchPrompt(null);
+    } finally {
+      clearPendingState();
+      setTabSwitchBusy(false);
+    }
+  };
+
   const saveTabBeforeSwitch = async (sourceTab: DesignerTabId) => {
     if (sourceTab === 'custom') {
       await handleSaveProgress();
@@ -4457,6 +4758,10 @@ const CustomMarkingDesignerContent = (_props, context) => {
     if (sourceTab === 'species') {
       const saved = await saveSpeciesChanges();
       return !!saved && !detectSpeciesUnsaved();
+    }
+    if (sourceTab === 'traits') {
+      const saved = await saveTraitsChanges();
+      return !!saved && !detectTraitsUnsaved();
     }
     const saved = await saveBasicChanges();
     return !!saved && !detectBasicUnsaved();
@@ -4473,6 +4778,8 @@ const CustomMarkingDesignerContent = (_props, context) => {
     const wasBasicDirty = prompt.sourceTab === 'basic' && detectBasicUnsaved();
     const wasSpeciesDirty =
       prompt.sourceTab === 'species' && detectSpeciesUnsaved();
+    const wasTraitsDirty =
+      prompt.sourceTab === 'traits' && detectTraitsUnsaved();
     setTabSwitchBusy(true);
     if (wasSpeciesDirty) {
       const pendingSpecies = resolveLatestSpeciesSelection();
@@ -4492,6 +4799,15 @@ const CustomMarkingDesignerContent = (_props, context) => {
       }
       return;
     }
+    if (wasTraitsDirty) {
+      setTabSwitchPrompt(null);
+      const saved = await saveTraitsChanges(false, prompt);
+      if (!saved) {
+        setTabSwitchPrompt(prompt);
+        setTabSwitchBusy(false);
+      }
+      return;
+    }
     setTabSwitchPrompt(null);
     try {
       const saved = await saveTabBeforeSwitch(prompt.sourceTab);
@@ -4501,7 +4817,11 @@ const CustomMarkingDesignerContent = (_props, context) => {
       }
       if (
         prompt.targetTab === 'custom' &&
-        (reloadPending || wasBodyDirty || wasBasicDirty || wasSpeciesDirty)
+        (reloadPending ||
+          wasBodyDirty ||
+          wasBasicDirty ||
+          wasSpeciesDirty ||
+          wasTraitsDirty)
       ) {
         if (!reloadPending) {
           setReloadTargetRevision(0);
@@ -4511,10 +4831,14 @@ const CustomMarkingDesignerContent = (_props, context) => {
         setReloadPending(false);
       }
       if (prompt.targetTab === 'body') {
-        await ensureBodyPayloadForSwitch(wasCustomDirty || wasSpeciesDirty);
+        await ensureBodyPayloadForSwitch(
+          wasCustomDirty || wasSpeciesDirty || wasTraitsDirty
+        );
       }
       if (prompt.targetTab === 'basic') {
-        await ensureBasicPayloadForSwitch(wasCustomDirty || wasSpeciesDirty);
+        await ensureBasicPayloadForSwitch(
+          wasCustomDirty || wasSpeciesDirty || wasTraitsDirty
+        );
       }
       if (prompt.targetTab === 'species') {
         await ensureSpeciesPayloadForSwitch(wasCustomDirty);
@@ -4538,6 +4862,8 @@ const CustomMarkingDesignerContent = (_props, context) => {
         discardBodyChanges();
       } else if (tabSwitchPrompt.sourceTab === 'species') {
         discardSpeciesChanges();
+      } else if (tabSwitchPrompt.sourceTab === 'traits') {
+        discardTraitsChanges();
       } else {
         discardBasicChanges();
       }
@@ -4644,6 +4970,12 @@ const CustomMarkingDesignerContent = (_props, context) => {
         writeStates={(states) =>
           context.store.dispatch(backendSetSharedStates({ states }))
         }
+      />
+      <TraitsSaveResultSyncScheduler
+        saveResult={data.traits_save_result || null}
+        payload={resolvedTraitsPayload}
+        pendingRequest={traitsPendingSaveRequest}
+        onAcknowledged={completeTraitsSave}
       />
       <PayloadPrefetchScheduler
         enabled={
@@ -4770,6 +5102,8 @@ const CustomMarkingDesignerContent = (_props, context) => {
                 resolvedCanvasBackground={resolvedCanvasBackground}
                 backgroundFallbackColor={backgroundFallbackColor}
                 canvasBackgroundScale={canvasBackgroundScale}
+                iconScaleX={data.trait_icon_scale_x}
+                iconScaleY={data.trait_icon_scale_y}
               />
             </Flex>
             {shouldShowLoadingOverlay ? <LoadingOverlay /> : null}
@@ -4812,6 +5146,36 @@ const CustomMarkingDesignerContent = (_props, context) => {
             livePreview={tabLivePreview}
             resolvedPartPriorityMap={resolvedPartPriorityMap}
             resolvedPartReplacementMap={resolvedPartReplacementMap}
+            showEquipment={showEquipment}
+            onToggleEquipment={() => setShowEquipment(!showEquipment)}
+            showJobGear={showJobGear}
+            onToggleJobGear={() => setShowJobGear(!showJobGear)}
+            showLoadoutGear={showLoadoutGear}
+            onToggleLoadout={() => setShowLoadoutGear(!showLoadoutGear)}
+          />
+        ) : resolvedActiveTab === 'traits' ? (
+          <TraitsTab
+            data={data}
+            draftState={traitsDraftState}
+            setDraftState={setTraitsDraftState}
+            dirty={traitsDirty}
+            setDirty={setTraitsDirty}
+            pendingSave={traitsPendingSave}
+            pendingClose={traitsPendingClose}
+            saveError={traitsSaveError}
+            onSave={() => saveTraitsChanges(false)}
+            onSaveAndClose={() => saveTraitsChanges(true)}
+            onDiscardAndClose={closeTraitsWithoutSaving}
+            canvasBackgroundOptions={canvasBackgroundOptions}
+            resolvedCanvasBackground={resolvedCanvasBackground}
+            backgroundFallbackColor={backgroundFallbackColor}
+            cycleCanvasBackground={cycleCanvasBackground}
+            canvasBackgroundScale={canvasBackgroundScale}
+            livePreview={tabLivePreview}
+            canvasWidth={canvasWidth}
+            canvasHeight={canvasHeight}
+            previewFitToFrame={previewFitToFrame}
+            onTogglePreviewFit={toggleCanvasFit}
             showEquipment={showEquipment}
             onToggleEquipment={() => setShowEquipment(!showEquipment)}
             showJobGear={showJobGear}

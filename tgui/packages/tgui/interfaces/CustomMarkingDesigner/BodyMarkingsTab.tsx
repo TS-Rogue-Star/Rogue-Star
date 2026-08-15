@@ -3023,6 +3023,8 @@ type BodyMarkingsPreviewColumnProps = Readonly<{
   canvasBackgroundScale: number;
   previewBackgroundTileWidth?: number;
   previewBackgroundTileHeight?: number;
+  iconScaleX?: number;
+  iconScaleY?: number;
   showEquipment: boolean;
   onToggleEquipment: () => void;
   showJobGear: boolean;
@@ -3047,6 +3049,8 @@ const BodyMarkingsPreviewColumn = ({
   canvasBackgroundScale,
   previewBackgroundTileWidth,
   previewBackgroundTileHeight,
+  iconScaleX,
+  iconScaleY,
   showEquipment,
   onToggleEquipment,
   showJobGear,
@@ -3071,6 +3075,8 @@ const BodyMarkingsPreviewColumn = ({
       canvasBackgroundScale={canvasBackgroundScale}
       previewBackgroundTileWidth={previewBackgroundTileWidth}
       previewBackgroundTileHeight={previewBackgroundTileHeight}
+      iconScaleX={iconScaleX}
+      iconScaleY={iconScaleY}
       showEquipment={showEquipment}
       onToggleEquipment={onToggleEquipment}
       showJobGear={showJobGear}
@@ -4706,6 +4712,8 @@ export const BodyMarkingsTab = (props: BodyMarkingsTabProps, context) => {
             canvasBackgroundScale={canvasBackgroundScale}
             previewBackgroundTileWidth={previewBackgroundTileWidth}
             previewBackgroundTileHeight={previewBackgroundTileHeight}
+            iconScaleX={data.trait_icon_scale_x}
+            iconScaleY={data.trait_icon_scale_y}
             showEquipment={showEquipment}
             onToggleEquipment={onToggleEquipment}
             showJobGear={showJobGear}
