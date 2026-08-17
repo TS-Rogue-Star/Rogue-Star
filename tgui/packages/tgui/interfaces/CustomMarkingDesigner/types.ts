@@ -426,6 +426,7 @@ export type SpeciesSaveResult = {
   accepted?: boolean;
   species_id: string;
   custom_base?: string | null;
+  custom_species?: string | null;
   body_definition_revision?: string | null;
   body_definition_data?: BodyMarkingDefinitionData;
   body_allowed_definition_ids?: string[];
@@ -479,7 +480,6 @@ export type SpeciesDigitigradePreviewAssets = Record<
 export type SpeciesDefinition = {
   id: string;
   name: string;
-  base_name?: string | null;
   blurb?: string | null;
   modifiers: SpeciesModifierEntry[];
   traits: SpeciesTraitEntry[];
@@ -511,6 +511,7 @@ export type SpeciesPayload = {
   preview_icon_base?: string | null;
   icon_base_options?: SpeciesIconBaseOption[];
   custom_species?: string | null;
+  custom_species_max_length?: number;
 };
 
 export type TraitCategoryId = 'positive' | 'neutral' | 'negative';

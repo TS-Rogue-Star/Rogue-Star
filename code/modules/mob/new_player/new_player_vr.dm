@@ -37,7 +37,7 @@
 		//Didn't name it
 		if(!client?.prefs?.custom_species)
 			pass = FALSE
-			to_chat(src,"<span class='warning'>You have to name your custom species. Do this on the VORE tab in character setup.</span>")
+			to_chat(src,"<span class='warning'>You have to name your custom species. Do this on the Species tab in the Character Designer.</span>") // RS Edit: Character Designer - Species Name (Lira, August 2026)
 
 		//Check traits/costs
 		var/list/megalist = client.prefs.pos_traits + client.prefs.neu_traits + client.prefs.neg_traits

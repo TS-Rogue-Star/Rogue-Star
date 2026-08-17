@@ -1423,8 +1423,9 @@ $titlebar-height: 38px;
   padding: 0.05rem;
 }
 
-.RogueStar__speciesDetailsSection {
-  min-height: 774px;
+.RogueStar__speciesDetailsSection,
+.RogueStar__speciesBlurbSection {
+  min-height: 0;
 }
 
 .RogueStar__speciesDetailNav {

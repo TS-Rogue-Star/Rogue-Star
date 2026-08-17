@@ -77,6 +77,40 @@ type SpeciesSaveStateSyncOptions = Readonly<{
   basicPayload: BasicAppearancePayload | null;
 }>;
 
+export const CUSTOM_SPECIES_ID = 'Custom Species';
+
+export const isSpeciesSaveBlocked = (
+  speciesSelection: string | null,
+  customSpeciesName: string
+) => speciesSelection === CUSTOM_SPECIES_ID && !customSpeciesName.trim().length;
+
+export const isSpeciesSaveAllowed = (
+  speciesSelection: string | null,
+  customSpeciesName: string
+): speciesSelection is string =>
+  !!speciesSelection &&
+  !isSpeciesSaveBlocked(speciesSelection, customSpeciesName);
+
+export const isSpeciesDraftDirty = (
+  speciesSelection: string | null,
+  savedSpeciesSelection: string | null,
+  iconBaseSelection: string | null,
+  savedIconBaseSelection: string | null,
+  customSpeciesName: string,
+  savedCustomSpeciesName: string
+) =>
+  speciesSelection !== savedSpeciesSelection ||
+  iconBaseSelection !== savedIconBaseSelection ||
+  customSpeciesName !== savedCustomSpeciesName;
+
+export const applyCustomSpeciesNameToPayload = (
+  payload: SpeciesPayload,
+  customSpeciesName: string | null
+): SpeciesPayload => ({
+  ...payload,
+  custom_species: customSpeciesName,
+});
+
 export const syncSpeciesSaveResultState = (
   writeStates: SpeciesSaveStateWriter,
   options: SpeciesSaveStateSyncOptions
@@ -85,6 +119,7 @@ export const syncSpeciesSaveResultState = (
     options;
   const nextSpeciesId = result.species_id || null;
   const nextIconBase = result.custom_base || null;
+  const nextCustomSpeciesName = result.custom_species || null;
   const nextMarkings = deepCopyMarkings(result.body_markings);
   const nextOrder = (result.order || []).filter(
     (markId) => !!nextMarkings?.[markId]
@@ -134,19 +169,24 @@ export const syncSpeciesSaveResultState = (
   writeStates({
     ...(speciesPayload
       ? {
-          speciesPayload: {
-            ...speciesPayload,
-            selected_species: nextSpeciesId,
-            preview_species: nextSpeciesId,
-            selected_icon_base: nextIconBase,
-            preview_icon_base: nextIconBase,
-          },
+          speciesPayload: applyCustomSpeciesNameToPayload(
+            {
+              ...speciesPayload,
+              selected_species: nextSpeciesId,
+              preview_species: nextSpeciesId,
+              selected_icon_base: nextIconBase,
+              preview_icon_base: nextIconBase,
+            },
+            nextCustomSpeciesName
+          ),
         }
       : {}),
     speciesSelection: nextSpeciesId,
     speciesSavedSelection: nextSpeciesId,
     speciesIconBaseSelection: nextIconBase,
     speciesSavedIconBaseSelection: nextIconBase,
+    speciesCustomName: nextCustomSpeciesName || '',
+    speciesSavedCustomName: nextCustomSpeciesName || '',
     speciesDirty: false,
     [`speciesLoadInProgress-${stateToken}`]: false,
     [`speciesReloadPending-${stateToken}`]: false,

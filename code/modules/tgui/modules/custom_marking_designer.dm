@@ -3206,6 +3206,7 @@ var/global/custom_marking_static_source_digest_complete = TRUE
 	var/list/definitions = list()
 	var/list/species_list = islist(GLOB.playable_species) ? GLOB.playable_species : list()
 	var/list/species_catalog = build_custom_marking_species_catalog_cache()
+	var/custom_species_name = istext(prefs.custom_species) ? html_decode(prefs.custom_species) : null
 	var/resolved_preview_species = prefs.species
 	if(istext(preview_species_id) && length(preview_species_id))
 		var/datum/species/preview_species = GLOB.all_species?[preview_species_id]
@@ -3230,9 +3231,8 @@ var/global/custom_marking_static_source_digest_complete = TRUE
 			"detail_sections" = list(),
 			"icon_base_count" = 0
 		)
-		if(species_name == SPECIES_CUSTOM && istext(prefs.custom_species) && length(prefs.custom_species))
-			def["base_name"] = def["name"]
-			def["name"] = prefs.custom_species
+		if(species_name == SPECIES_CUSTOM)
+			def["name"] = SPECIES_CUSTOM
 		var/list/detail_notes = species.get_species_detail_notes(user)
 		if(islist(detail_notes) && detail_notes.len)
 			var/list/detail_sections = custom_marking_copy_species_detail_sections(def["detail_sections"])
@@ -3276,7 +3276,8 @@ var/global/custom_marking_static_source_digest_complete = TRUE
 				continue
 			icon_base_option["body_preview_sources"] = attach_species_preview_gear_recipes(icon_base_option["body_preview_sources"], preview_gear_recipes)
 		payload["icon_base_options"] = icon_base_options
-	payload["custom_species"] = prefs.custom_species
+	payload["custom_species"] = custom_species_name
+	payload["custom_species_max_length"] = MAX_NAME_LEN
 	custom_marking_end_manual_yield(yield_context)
 	return payload
 
@@ -5950,11 +5951,14 @@ var/global/custom_marking_static_source_digest_complete = TRUE
 	else if(action == "save_species")
 		var/close_ui = params?["close"]
 		acquire_preview_payload_build_lock()
+		var/previous_species = prefs?.species
+		var/previous_icon_base = prefs?.custom_base
 		var/species_updated = apply_species_payload(params, usr)
 		var/list/species_save_result = build_species_save_result_if_needed(species_updated, close_ui, params)
 		release_preview_payload_build_lock()
 		if(species_updated)
-			traits_revision++
+			if(prefs?.species != previous_species || prefs?.custom_base != previous_icon_base)
+				traits_revision++
 			refresh_preferences_window_if_visible(TRUE)
 			if(close_ui)
 				SStgui.close_uis(src)
@@ -6464,6 +6468,7 @@ var/global/custom_marking_static_source_digest_complete = TRUE
 		"accepted" = !!accepted,
 		"species_id" = prefs.species,
 		"custom_base" = prefs.custom_base,
+		"custom_species" = istext(prefs.custom_species) ? html_decode(prefs.custom_species) : null,
 		"body_markings" = body_state["body_markings"],
 		"order" = body_state["order"],
 		"basic_appearance" = build_species_save_basic_appearance_payload(known_payload_state?["known_basic_definition_revision"])
@@ -6508,9 +6513,19 @@ var/global/custom_marking_static_source_digest_complete = TRUE
 		return FALSE
 	var/prev_species = prefs.species
 	var/prev_icon_base = prefs.custom_base
+	var/custom_species_supplied = ("custom_species" in params)
+	var/requested_custom_species = prefs.custom_species
+	if(custom_species_supplied)
+		var/raw_custom_species = params?["custom_species"]
+		if(!isnull(raw_custom_species) && !istext(raw_custom_species))
+			return FALSE
+		requested_custom_species = sanitize(raw_custom_species, MAX_NAME_LEN)
+	if(target_species == SPECIES_CUSTOM && (!istext(requested_custom_species) || !length(requested_custom_species)))
+		return FALSE
 	var/resolved_icon_base = resolve_species_icon_base(target_species, params?["icon_base"])
 	var/icon_base_changed = istext(resolved_icon_base) && length(resolved_icon_base) && resolved_icon_base != prev_icon_base
-	if(prev_species == target_species && !icon_base_changed)
+	var/custom_species_changed = custom_species_supplied && requested_custom_species != prefs.custom_species
+	if(prev_species == target_species && !icon_base_changed && !custom_species_changed)
 		return TRUE
 	prefs.species = target_species
 	if(istext(resolved_icon_base) && length(resolved_icon_base))
@@ -6557,6 +6572,8 @@ var/global/custom_marking_static_source_digest_complete = TRUE
 		prefs.sanitize_body_styles()
 		prune_body_markings_for_current_species()
 		invalidate_reference_payload_caches()
+	if(custom_species_supplied)
+		prefs.custom_species = requested_custom_species
 	return TRUE
 
 /datum/tgui_module/custom_marking_designer/proc/prune_body_markings_for_current_species()

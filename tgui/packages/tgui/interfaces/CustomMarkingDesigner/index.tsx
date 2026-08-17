@@ -123,6 +123,7 @@ import {
   buildSpeciesSaveCacheParams,
   buildTraitsDraftState,
   buildTraitsSavePayload,
+  isSpeciesSaveAllowed,
   resolveTraitsSaveAcknowledgement,
   mergeBasicAppearancePayload,
   mergeBodyMarkingsPayload,
@@ -1791,6 +1792,7 @@ const syncServerSpeciesPayload = (options: {
   serverSpeciesPayload: SpeciesPayload | null;
   speciesSavedSelection: string | null;
   speciesSavedIconBaseSelection: string | null;
+  speciesSavedCustomName: string;
   speciesDirty: boolean;
   speciesPayload: SpeciesPayload | null;
   setSpeciesPayload: (payload: SpeciesPayload | null) => void;
@@ -1798,6 +1800,8 @@ const syncServerSpeciesPayload = (options: {
   setSpeciesSavedSelection: (selection: string | null) => void;
   setSpeciesIconBaseSelection: (selection: string | null) => void;
   setSpeciesSavedIconBaseSelection: (selection: string | null) => void;
+  setSpeciesCustomName: (name: string) => void;
+  setSpeciesSavedCustomName: (name: string) => void;
   setSpeciesDirty: (dirty: boolean) => void;
   speciesLoadInProgress: boolean;
   setSpeciesLoadInProgress: (value: boolean) => void;
@@ -1809,6 +1813,7 @@ const syncServerSpeciesPayload = (options: {
     serverSpeciesPayload,
     speciesSavedSelection,
     speciesSavedIconBaseSelection,
+    speciesSavedCustomName,
     speciesDirty,
     speciesPayload,
     setSpeciesPayload,
@@ -1816,6 +1821,8 @@ const syncServerSpeciesPayload = (options: {
     setSpeciesSavedSelection,
     setSpeciesIconBaseSelection,
     setSpeciesSavedIconBaseSelection,
+    setSpeciesCustomName,
+    setSpeciesSavedCustomName,
     setSpeciesDirty,
     speciesLoadInProgress,
     setSpeciesLoadInProgress,
@@ -1841,9 +1848,11 @@ const syncServerSpeciesPayload = (options: {
     speciesSavedSelection || speciesPayload?.selected_species || null;
   const localIconBase =
     speciesSavedIconBaseSelection || speciesPayload?.selected_icon_base || null;
+  const serverCustomSpeciesName = serverSpeciesPayload.custom_species || '';
   if (
     (localSelection !== null && serverSelection !== localSelection) ||
-    (localIconBase !== null && serverIconBase !== localIconBase)
+    (localIconBase !== null && serverIconBase !== localIconBase) ||
+    serverCustomSpeciesName !== speciesSavedCustomName
   ) {
     if (speciesLoadInProgress && serverSpeciesPayload) {
       setSpeciesLoadInProgress(false);
@@ -1861,6 +1870,8 @@ const syncServerSpeciesPayload = (options: {
     setSpeciesSavedSelection(selected);
     setSpeciesIconBaseSelection(selectedIconBase);
     setSpeciesSavedIconBaseSelection(selectedIconBase);
+    setSpeciesCustomName(serverCustomSpeciesName);
+    setSpeciesSavedCustomName(serverCustomSpeciesName);
     setSpeciesDirty(false);
   }
   if (speciesLoadInProgress) {
@@ -1872,6 +1883,9 @@ const syncServerSpeciesPayload = (options: {
 };
 
 type ActFn = (action: string, params?: Record<string, unknown>) => void;
+
+const resolveSpeciesCustomName = (payload?: SpeciesPayload | null) =>
+  payload?.custom_species || '';
 
 const handlePreviewRefreshTokenUpdate = (options: {
   serverPreviewRefreshToken: number;
@@ -2112,6 +2126,7 @@ type PendingTraitsSaveRequest = {
 type TabSwitchOverlayProps = Readonly<{
   prompt: TabSwitchPromptState | null;
   busy: boolean;
+  saveDisabled: boolean;
   onSave: () => void;
   onDiscard: () => void;
   onCancel: () => void;
@@ -2133,9 +2148,18 @@ const resolveTabSwitchLabel = (tab: DesignerTabId) => {
   return 'Basic Appearance tab';
 };
 
+const isTabSwitchSaveDisabled = (
+  prompt: TabSwitchPromptState | null,
+  speciesSelection: string | null,
+  customSpeciesName: string
+) =>
+  prompt?.sourceTab === 'species' &&
+  !isSpeciesSaveAllowed(speciesSelection, customSpeciesName);
+
 const TabSwitchOverlay = ({
   prompt,
   busy,
+  saveDisabled,
   onSave,
   onDiscard,
   onCancel,
@@ -2146,12 +2170,17 @@ const TabSwitchOverlay = ({
   return (
     <UnsavedChangesOverlay
       title="Unsaved changes"
-      subtitle={`You have unsaved changes in the ${resolveTabSwitchLabel(
-        prompt.sourceTab
-      )}. Save them before switching?`}
+      subtitle={
+        saveDisabled
+          ? 'A name is required before you can save this custom species. Keep editing to add one, or discard the changes.'
+          : `You have unsaved changes in the ${resolveTabSwitchLabel(
+              prompt.sourceTab
+            )}. Save them before switching?`
+      }
       saveLabel="Save and switch"
       discardLabel="Discard and switch"
       busy={busy}
+      saveDisabled={saveDisabled}
       onSave={onSave}
       onDiscard={onDiscard}
       onCancel={() => {
@@ -2615,6 +2644,17 @@ const CustomMarkingDesignerContent = (_props, context) => {
       data.species_payload?.selected_icon_base ||
         data.species_payload?.preview_icon_base ||
         null
+    );
+  const [speciesCustomName, setSpeciesCustomName] = useLocalState<string>(
+    context,
+    'speciesCustomName',
+    resolveSpeciesCustomName(data.species_payload)
+  );
+  const [speciesSavedCustomName, setSpeciesSavedCustomName] =
+    useLocalState<string>(
+      context,
+      'speciesSavedCustomName',
+      resolveSpeciesCustomName(data.species_payload)
     );
   const [speciesDirty, setSpeciesDirty] = useLocalState<boolean>(
     context,
@@ -3701,6 +3741,7 @@ const CustomMarkingDesignerContent = (_props, context) => {
     serverSpeciesPayload,
     speciesSavedSelection,
     speciesSavedIconBaseSelection,
+    speciesSavedCustomName,
     speciesDirty,
     speciesPayload,
     setSpeciesPayload,
@@ -3708,6 +3749,8 @@ const CustomMarkingDesignerContent = (_props, context) => {
     setSpeciesSavedSelection,
     setSpeciesIconBaseSelection,
     setSpeciesSavedIconBaseSelection,
+    setSpeciesCustomName,
+    setSpeciesSavedCustomName,
     setSpeciesDirty,
     speciesLoadInProgress,
     setSpeciesLoadInProgress,
@@ -4198,6 +4241,12 @@ const CustomMarkingDesignerContent = (_props, context) => {
     return selection !== undefined ? selection : speciesIconBaseSelection;
   };
 
+  const resolveLatestSpeciesCustomName = () => {
+    const sharedState = selectBackend(context.store.getState()).shared || {};
+    const name = sharedState.speciesCustomName as string | undefined;
+    return name !== undefined ? name : speciesCustomName;
+  };
+
   const isPayloadSpeciesStale = (
     payload?: { species_id?: string | null; custom_base?: string | null } | null
   ) => {
@@ -4228,7 +4277,8 @@ const CustomMarkingDesignerContent = (_props, context) => {
       return true;
     }
     const latestSelection = resolveLatestSpeciesSelection();
-    if (!latestSelection) {
+    const latestCustomSpeciesName = resolveLatestSpeciesCustomName();
+    if (!isSpeciesSaveAllowed(latestSelection, latestCustomSpeciesName)) {
       return false;
     }
     const latestIconBase = resolveLatestSpeciesIconBaseSelection();
@@ -4240,6 +4290,7 @@ const CustomMarkingDesignerContent = (_props, context) => {
       await act('save_species', {
         species: latestSelection,
         icon_base: latestIconBase,
+        custom_species: latestCustomSpeciesName,
         close: false,
         ...buildSpeciesSaveCacheParams(
           resolveLatestBodyPayload(),
@@ -4251,12 +4302,15 @@ const CustomMarkingDesignerContent = (_props, context) => {
       setSpeciesSavedSelection(latestSelection);
       setSpeciesIconBaseSelection(latestIconBase);
       setSpeciesSavedIconBaseSelection(latestIconBase);
+      setSpeciesCustomName(latestCustomSpeciesName);
+      setSpeciesSavedCustomName(latestCustomSpeciesName);
       if (speciesPayload) {
         setSpeciesPayload({
           ...speciesPayload,
           selected_species: latestSelection,
           selected_icon_base: latestIconBase,
           preview_icon_base: latestIconBase,
+          custom_species: latestCustomSpeciesName,
         });
       }
       if (
@@ -4287,8 +4341,10 @@ const CustomMarkingDesignerContent = (_props, context) => {
       speciesPayload?.selected_icon_base ||
       speciesPayload?.preview_icon_base ||
       null;
+    const fallbackCustomSpeciesName = speciesSavedCustomName;
     setSpeciesSelection(fallbackSelection);
     setSpeciesIconBaseSelection(fallbackIconBase);
+    setSpeciesCustomName(fallbackCustomSpeciesName);
     setSpeciesDirty(false);
     if (speciesPayload && fallbackSelection) {
       setSpeciesPayload({
@@ -4297,6 +4353,7 @@ const CustomMarkingDesignerContent = (_props, context) => {
         preview_species: fallbackSelection,
         selected_icon_base: fallbackIconBase,
         preview_icon_base: fallbackIconBase,
+        custom_species: fallbackCustomSpeciesName,
       });
     }
   };
@@ -5208,6 +5265,11 @@ const CustomMarkingDesignerContent = (_props, context) => {
       <TabSwitchOverlay
         prompt={tabSwitchPrompt}
         busy={tabSwitchBusyState}
+        saveDisabled={isTabSwitchSaveDisabled(
+          tabSwitchPrompt,
+          resolveLatestSpeciesSelection(),
+          resolveLatestSpeciesCustomName()
+        )}
         onSave={handleTabSwitchSave}
         onDiscard={handleTabSwitchDiscard}
         onCancel={() => setTabSwitchPrompt(null)}
