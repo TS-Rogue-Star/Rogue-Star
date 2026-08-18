@@ -1242,6 +1242,7 @@ type SpeciesInitializerProps = Readonly<{
   requestPayload: () => void;
   syncPayload: (payload: SpeciesPayload) => void;
   loadInProgress: boolean;
+  reloadPending: boolean;
   setLoadInProgress: (value: boolean) => void;
 }>;
 
@@ -1250,6 +1251,9 @@ class SpeciesInitializer extends Component<SpeciesInitializerProps> {
   private lastDataPayload: SpeciesPayload | null = null;
 
   componentDidMount() {
+    if (this.props.reloadPending) {
+      this.lastDataPayload = this.props.dataPayload || null;
+    }
     this.requestIfNeeded();
     this.syncIfNeeded();
   }
@@ -1257,7 +1261,8 @@ class SpeciesInitializer extends Component<SpeciesInitializerProps> {
   componentDidUpdate(prevProps: SpeciesInitializerProps) {
     if (
       prevProps.speciesPayload !== this.props.speciesPayload ||
-      prevProps.dataPayload !== this.props.dataPayload
+      prevProps.dataPayload !== this.props.dataPayload ||
+      prevProps.reloadPending !== this.props.reloadPending
     ) {
       this.requestIfNeeded();
       this.syncIfNeeded();
@@ -1270,11 +1275,12 @@ class SpeciesInitializer extends Component<SpeciesInitializerProps> {
       dataPayload,
       requestPayload,
       loadInProgress,
+      reloadPending,
       setLoadInProgress,
     } = this.props;
     if (
       !speciesPayload &&
-      !dataPayload &&
+      (!dataPayload || reloadPending) &&
       !this.hasRequested &&
       !loadInProgress
     ) {
@@ -1801,7 +1807,9 @@ const resolveSpeciesPreviewDirStates = (options: {
   } = options;
   const basicPreviewSelection = resolveBasicPreviewSourceSelection(
     resolvedBasicPayload,
-    previewAppearanceState.digitigrade
+    previewAppearanceState.digitigrade,
+    undefined,
+    previewAppearanceState.biological_gender
   );
   const rawSelectedBasicSources = basicPreviewSelection.sources;
   const bodySources = Array.isArray(resolvedBodyPayload?.preview_sources)
@@ -2418,6 +2426,7 @@ export const SpeciesTab = (props: SpeciesTabProps, context) => {
           requestPayload={requestPayload}
           syncPayload={syncPayload}
           loadInProgress={loadInProgress}
+          reloadPending={speciesReloadPending}
           setLoadInProgress={setLoadInProgress}
         />
         <LoadingOverlay
@@ -2436,6 +2445,7 @@ export const SpeciesTab = (props: SpeciesTabProps, context) => {
         requestPayload={requestPayload}
         syncPayload={syncPayload}
         loadInProgress={loadInProgress}
+        reloadPending={speciesReloadPending}
         setLoadInProgress={setLoadInProgress}
       />
       <Flex direction="row" gap={1} wrap={false} align="stretch" height="100%">
