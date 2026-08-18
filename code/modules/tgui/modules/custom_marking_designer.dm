@@ -1359,6 +1359,34 @@ var/global/custom_marking_static_source_digest_complete = TRUE
 	biological_gender = resolve_species_allowed_biological_gender(preview_species, biological_gender)
 	return biological_gender == FEMALE ? "f" : "m"
 
+/datum/tgui_module/custom_marking_designer/proc/build_base_biological_gender_options()
+	var/datum/species/selected_species = GLOB.all_species?[prefs?.species]
+	var/list/possible_genders = list(MALE, FEMALE)
+	if(istype(selected_species) && islist(selected_species.genders) && selected_species.genders.len)
+		possible_genders = selected_species.genders.Copy()
+	return possible_genders
+
+/datum/tgui_module/custom_marking_designer/proc/build_basic_biological_gender_options(list/base_genders = null)
+	var/list/possible_genders = islist(base_genders) && base_genders.len ? base_genders.Copy() : build_base_biological_gender_options()
+	if(prefs?.organ_data?[BP_TORSO] == "cyborg")
+		possible_genders |= NEUTER
+	return possible_genders
+
+/datum/tgui_module/custom_marking_designer/proc/resolve_basic_biological_gender(list/possible_genders, biological_gender)
+	if(!islist(possible_genders) || !possible_genders.len)
+		return biological_gender
+	if(biological_gender in possible_genders)
+		return biological_gender
+	return possible_genders[1]
+
+/datum/tgui_module/custom_marking_designer/proc/resolve_basic_alternate_preview_gender(list/possible_genders, biological_gender)
+	var/datum/species/selected_species = GLOB.all_species?[prefs?.species]
+	var/current_suffix = resolve_species_body_preview_gender_suffix(selected_species, biological_gender)
+	for(var/possible_gender in possible_genders)
+		if(resolve_species_body_preview_gender_suffix(selected_species, possible_gender) != current_suffix)
+			return possible_gender
+	return null
+
 /datum/tgui_module/custom_marking_designer/proc/species_body_preview_cache_key(species_id, preview_icon_base = null, gender_suffix = "m", digitigrade = FALSE)
 	var/base_id = resolve_species_body_preview_base(species_id, preview_icon_base)
 	if(!base_id)
@@ -5511,8 +5539,44 @@ var/global/custom_marking_static_source_digest_complete = TRUE
 	payload["definition_data"] = context["definition_data"]
 	return TRUE
 
+/datum/tgui_module/custom_marking_designer/proc/build_basic_preview_variant_bundles(digitigrade_value, digitigrade_allowed, biological_gender, list/possible_genders)
+	if(!prefs)
+		return null
+	var/original_biological_gender = prefs.biological_gender
+	var/original_identifying_gender = prefs.identifying_gender
+	var/original_digitigrade = prefs.digitigrade
+	prefs.biological_gender = biological_gender
+	if(biological_gender != original_biological_gender)
+		prefs.identifying_gender = biological_gender
+	prefs.digitigrade = digitigrade_value
+	var/list/preview_bundle = build_stripped_preview_source_bundle(digitigrade_value)
+	var/list/preview_bundle_alt = null
+	if(digitigrade_allowed)
+		prefs.digitigrade = !digitigrade_value
+		preview_bundle_alt = build_stripped_preview_source_bundle(!digitigrade_value)
+	var/alternate_gender = resolve_basic_alternate_preview_gender(possible_genders, biological_gender)
+	var/list/preview_bundle_gender_alt = null
+	var/list/preview_bundle_gender_alt_digitigrade = null
+	if(!isnull(alternate_gender))
+		prefs.biological_gender = alternate_gender
+		prefs.identifying_gender = alternate_gender
+		prefs.digitigrade = digitigrade_value
+		preview_bundle_gender_alt = build_stripped_preview_source_bundle(digitigrade_value)
+		if(digitigrade_allowed)
+			prefs.digitigrade = !digitigrade_value
+			preview_bundle_gender_alt_digitigrade = build_stripped_preview_source_bundle(!digitigrade_value)
+	prefs.biological_gender = original_biological_gender
+	prefs.identifying_gender = original_identifying_gender
+	prefs.digitigrade = original_digitigrade
+	return list(
+		"primary" = preview_bundle,
+		"alternate" = preview_bundle_alt,
+		"gender_alternate" = preview_bundle_gender_alt,
+		"gender_alternate_digitigrade" = preview_bundle_gender_alt_digitigrade
+	)
+
 // Build payload for the basic appearance tab (Lira, December 2025)
-/datum/tgui_module/custom_marking_designer/proc/build_basic_appearance_payload(preview_digitigrade = null, preview_only = FALSE, known_definition_revision = null, known_preview_revision = null, known_preview_signature = null, known_preview_revision_alt = null, known_preview_signature_alt = null)
+/datum/tgui_module/custom_marking_designer/proc/build_basic_appearance_payload(preview_digitigrade = null, preview_only = FALSE, known_definition_revision = null, known_preview_revision = null, known_preview_signature = null, known_preview_revision_alt = null, known_preview_signature_alt = null, known_preview_revision_gender_alt = null, known_preview_signature_gender_alt = null, known_preview_revision_gender_alt_digitigrade = null, known_preview_signature_gender_alt_digitigrade = null)
 	var/list/yield_context = custom_marking_begin_manual_yield()
 	if(!prefs)
 		custom_marking_end_manual_yield(yield_context)
@@ -5520,6 +5584,14 @@ var/global/custom_marking_static_source_digest_complete = TRUE
 	var/list/payload = list()
 	payload["species_id"] = prefs.species
 	payload["custom_base"] = prefs.custom_base
+	var/list/base_genders = build_base_biological_gender_options()
+	var/list/possible_genders = build_basic_biological_gender_options(base_genders)
+	var/biological_gender = resolve_basic_biological_gender(possible_genders, prefs.biological_gender)
+	var/datum/species/selected_species = GLOB.all_species?[prefs.species]
+	payload["biological_gender"] = biological_gender
+	payload["base_biological_genders"] = base_genders
+	payload["biological_genders"] = possible_genders
+	payload["preview_gender_suffix"] = resolve_species_body_preview_gender_suffix(selected_species, biological_gender)
 	var/digitigrade_allowed = is_digitigrade_allowed()
 	var/digitigrade_value = digitigrade_allowed ? !!prefs.digitigrade : FALSE
 	if(!isnull(preview_digitigrade))
@@ -5571,8 +5643,6 @@ var/global/custom_marking_static_source_digest_complete = TRUE
 	append_basic_appearance_definitions(payload, known_definition_revision)
 	var/can_compose_prosthetics = can_compose_prosthetics_from_static_catalog()
 	payload["prosthetic_context"] = can_compose_prosthetics ? build_basic_prosthetic_context() : null
-	var/list/preview_bundle = null
-	var/list/preview_bundle_alt = null
 	var/original_digitigrade = prefs.digitigrade
 	var/original_hair = prefs.h_style
 	var/original_grad = prefs.grad_style
@@ -5590,12 +5660,12 @@ var/global/custom_marking_static_source_digest_complete = TRUE
 	prefs.ear_secondary_style = null
 	prefs.wing_style = null
 	prefs.tail_style = "hide species-sprite tail"
-	prefs.digitigrade = digitigrade_value
 	prefs.body_markings = null
-	preview_bundle = build_stripped_preview_source_bundle(digitigrade_value)
-	if(digitigrade_allowed)
-		prefs.digitigrade = !digitigrade_value
-		preview_bundle_alt = build_stripped_preview_source_bundle(!digitigrade_value)
+	var/list/preview_bundles = build_basic_preview_variant_bundles(digitigrade_value, digitigrade_allowed, biological_gender, possible_genders)
+	var/list/preview_bundle = preview_bundles?["primary"]
+	var/list/preview_bundle_alt = preview_bundles?["alternate"]
+	var/list/preview_bundle_gender_alt = preview_bundles?["gender_alternate"]
+	var/list/preview_bundle_gender_alt_digitigrade = preview_bundles?["gender_alternate_digitigrade"]
 	prefs.body_markings = original_body_markings
 	prefs.h_style = original_hair
 	prefs.grad_style = original_grad
@@ -5609,6 +5679,8 @@ var/global/custom_marking_static_source_digest_complete = TRUE
 		restore_preview_prosthetic_state(prosthetic_restore)
 	append_preview_bundle_delta(payload, preview_bundle, null, known_preview_revision, known_preview_signature)
 	append_preview_bundle_delta(payload, preview_bundle_alt, "alt", known_preview_revision_alt, known_preview_signature_alt)
+	append_preview_bundle_delta(payload, preview_bundle_gender_alt, "gender_alt", known_preview_revision_gender_alt, known_preview_signature_gender_alt)
+	append_preview_bundle_delta(payload, preview_bundle_gender_alt_digitigrade, "gender_alt_digitigrade", known_preview_revision_gender_alt_digitigrade, known_preview_signature_gender_alt_digitigrade)
 	payload["preview_width"] = get_preview_canvas_width()
 	payload["preview_height"] = get_preview_canvas_height()
 	var/list/canvas_backgrounds_live = build_canvas_background_options()
@@ -5907,7 +5979,11 @@ var/global/custom_marking_static_source_digest_complete = TRUE
 			params?["known_preview_revision"],
 			params?["known_preview_signature"],
 			params?["known_alt_preview_revision"],
-			params?["known_alt_preview_signature"]
+			params?["known_alt_preview_signature"],
+			params?["known_gender_alt_preview_revision"],
+			params?["known_gender_alt_preview_signature"],
+			params?["known_gender_alt_digitigrade_preview_revision"],
+			params?["known_gender_alt_digitigrade_preview_signature"]
 		)
 		if(islist(species_override))
 			restore_preview_species_override(species_override)
@@ -6015,6 +6091,13 @@ var/global/custom_marking_static_source_digest_complete = TRUE
 		return FALSE
 	if(!apply_basic_prosthetic_settings(params))
 		return FALSE
+	var/requested_biological_gender = params?["biological_gender"]
+	var/list/possible_genders = build_basic_biological_gender_options()
+	if(!istext(requested_biological_gender) || !(requested_biological_gender in possible_genders))
+		requested_biological_gender = prefs.biological_gender
+	var/biological_gender = resolve_basic_biological_gender(possible_genders, requested_biological_gender)
+	if(biological_gender != prefs.biological_gender)
+		prefs.set_biological_gender(biological_gender)
 	var/safe_hex
 	var/digi_raw = params?["digitigrade"]
 	var/digi_value = null
@@ -6362,6 +6445,14 @@ var/global/custom_marking_static_source_digest_complete = TRUE
 	var/list/payload = list()
 	payload["species_id"] = prefs.species
 	payload["custom_base"] = prefs.custom_base
+	var/list/base_genders = build_base_biological_gender_options()
+	var/list/possible_genders = build_basic_biological_gender_options(base_genders)
+	var/biological_gender = resolve_basic_biological_gender(possible_genders, prefs.biological_gender)
+	var/datum/species/selected_species = GLOB.all_species?[prefs.species]
+	payload["biological_gender"] = biological_gender
+	payload["base_biological_genders"] = base_genders
+	payload["biological_genders"] = possible_genders
+	payload["preview_gender_suffix"] = resolve_species_body_preview_gender_suffix(selected_species, biological_gender)
 	var/digitigrade_allowed = is_digitigrade_allowed()
 	payload["digitigrade_allowed"] = digitigrade_allowed
 	payload["digitigrade"] = digitigrade_allowed ? !!prefs.digitigrade : FALSE
@@ -6431,12 +6522,9 @@ var/global/custom_marking_static_source_digest_complete = TRUE
 	prefs.body_markings = null
 	var/digitigrade_allowed = is_digitigrade_allowed()
 	var/digitigrade_value = digitigrade_allowed ? !!original_digitigrade : FALSE
-	prefs.digitigrade = digitigrade_value
-	var/list/preview_bundle = build_stripped_preview_source_bundle(digitigrade_value)
-	var/list/preview_bundle_alt = null
-	if(digitigrade_allowed)
-		prefs.digitigrade = !digitigrade_value
-		preview_bundle_alt = build_stripped_preview_source_bundle(!digitigrade_value)
+	var/list/possible_genders = build_basic_biological_gender_options()
+	var/biological_gender = resolve_basic_biological_gender(possible_genders, prefs.biological_gender)
+	var/list/preview_bundles = build_basic_preview_variant_bundles(digitigrade_value, digitigrade_allowed, biological_gender, possible_genders)
 	prefs.digitigrade = original_digitigrade
 	prefs.h_style = original_hair
 	prefs.grad_style = original_grad
@@ -6448,10 +6536,7 @@ var/global/custom_marking_static_source_digest_complete = TRUE
 	prefs.body_markings = original_body_markings
 	if(islist(prosthetic_restore))
 		restore_preview_prosthetic_state(prosthetic_restore)
-	return list(
-		"primary" = preview_bundle,
-		"alternate" = preview_bundle_alt
-	)
+	return preview_bundles
 
 /datum/tgui_module/custom_marking_designer/proc/build_species_save_result_if_needed(species_updated, close_ui, list/known_payload_state = null)
 	if(species_updated && close_ui)
@@ -6495,6 +6580,22 @@ var/global/custom_marking_static_source_digest_complete = TRUE
 		"alt",
 		known_payload_state?["known_body_alt_preview_revision"],
 		known_payload_state?["known_body_alt_preview_signature"]
+	)
+	var/list/preview_bundle_gender_alt = preview_bundles?["gender_alternate"]
+	append_preview_bundle_delta(
+		result,
+		preview_bundle_gender_alt,
+		"gender_alt",
+		known_payload_state?["known_body_gender_alt_preview_revision"],
+		known_payload_state?["known_body_gender_alt_preview_signature"]
+	)
+	var/list/preview_bundle_gender_alt_digitigrade = preview_bundles?["gender_alternate_digitigrade"]
+	append_preview_bundle_delta(
+		result,
+		preview_bundle_gender_alt_digitigrade,
+		"gender_alt_digitigrade",
+		known_payload_state?["known_body_gender_alt_digitigrade_preview_revision"],
+		known_payload_state?["known_body_gender_alt_digitigrade_preview_signature"]
 	)
 	return result
 

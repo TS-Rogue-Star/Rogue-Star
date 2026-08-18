@@ -302,6 +302,10 @@ export type BasicProstheticContext = LimbOverrideState & {
 export type BasicAppearancePayload = {
   species_id?: string | null;
   custom_base?: string | null;
+  biological_gender?: string | null;
+  base_biological_genders?: string[];
+  biological_genders?: string[];
+  preview_gender_suffix?: 'm' | 'f';
   definition_revision?: string | null;
   definition_data?: BasicAppearanceDefinitionData;
   allowed_style_ids?: BasicAppearanceAllowedStyleIds;
@@ -341,6 +345,14 @@ export type BasicAppearancePayload = {
   preview_asset_registry_alt?: IconAssetRegistry;
   preview_signature_alt?: string | null;
   preview_revision_alt?: number;
+  preview_sources_gender_alt?: PreviewDirectionSource[];
+  preview_asset_registry_gender_alt?: IconAssetRegistry;
+  preview_signature_gender_alt?: string | null;
+  preview_revision_gender_alt?: number;
+  preview_sources_gender_alt_digitigrade?: PreviewDirectionSource[];
+  preview_asset_registry_gender_alt_digitigrade?: IconAssetRegistry;
+  preview_signature_gender_alt_digitigrade?: string | null;
+  preview_revision_gender_alt_digitigrade?: number;
   preview_sources?: PreviewDirectionSource[];
   preview_asset_registry?: IconAssetRegistry;
   preview_signature?: string | null;
@@ -352,6 +364,7 @@ export type BasicAppearancePayload = {
 };
 
 export type BasicAppearanceState = {
+  biological_gender: string;
   hair_style: string | null;
   hair_color: string | null;
   hair_gradient_style: string | null;
@@ -385,6 +398,10 @@ export type SpeciesSaveBasicAppearance = Pick<
   BasicAppearancePayload,
   | 'species_id'
   | 'custom_base'
+  | 'biological_gender'
+  | 'base_biological_genders'
+  | 'biological_genders'
+  | 'preview_gender_suffix'
   | 'definition_revision'
   | 'definition_data'
   | 'allowed_style_ids'
@@ -442,6 +459,14 @@ export type SpeciesSaveResult = {
   preview_asset_registry_alt?: IconAssetRegistry;
   preview_signature_alt?: string | null;
   preview_revision_alt?: number;
+  preview_sources_gender_alt?: PreviewDirectionSource[];
+  preview_asset_registry_gender_alt?: IconAssetRegistry;
+  preview_signature_gender_alt?: string | null;
+  preview_revision_gender_alt?: number;
+  preview_sources_gender_alt_digitigrade?: PreviewDirectionSource[];
+  preview_asset_registry_gender_alt_digitigrade?: IconAssetRegistry;
+  preview_signature_gender_alt_digitigrade?: string | null;
+  preview_revision_gender_alt_digitigrade?: number;
 };
 
 export type SpeciesModifierEntry = {

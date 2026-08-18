@@ -432,13 +432,21 @@ export const applyEyeColorToPreview = (
         return layer;
       }
       const partId = resolveEyeReferencePartId(layer);
-      if (!partId) {
+      const isEyeOverlay = layer.type === 'overlay' && layer.source === 'eyes';
+      if (!partId && !isEyeOverlay) {
         return layer;
       }
       let shifted: { grid: string[][]; signature: string };
       let dependency = layer.rasterDependency || 'stable';
-      if (partId === 'eyes') {
+      if (isEyeOverlay) {
+        if (!base || base === target) {
+          return layer;
+        }
+        shifted = resolveCachedRecolorGrid(layer, base, target, 3);
+        dependency = 'eye-direct';
+      } else if (partId === 'eyes') {
         shifted = resolveCachedTintGrid(layer, target, ICON_BLEND_MODE.ADD);
+        dependency = 'eye-direct';
       } else {
         if (
           hasDedicatedEyeReference ||

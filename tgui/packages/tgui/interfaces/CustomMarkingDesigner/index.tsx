@@ -86,6 +86,7 @@ import {
 import { createPaintHandlers } from './utils/paintHandlers';
 import {
   applyBodyColorToPreview,
+  applyCustomPreviewOverridesToBasicPayload,
   applyEyeColorToPreview,
   applyLimbHairColorToPreview,
   applyProstheticsToPreviewSources,
@@ -128,6 +129,7 @@ import {
   mergeBasicAppearancePayload,
   mergeBodyMarkingsPayload,
   shouldRetainLocalBasicPayload,
+  shouldInvalidateSpeciesPayloadForBiologicalGenderChange,
   syncSpeciesSaveResultState,
   toHex,
 } from './utils';
@@ -1806,7 +1808,6 @@ const syncServerSpeciesPayload = (options: {
   speciesLoadInProgress: boolean;
   setSpeciesLoadInProgress: (value: boolean) => void;
   speciesReloadPending: boolean;
-  setSpeciesReloadPending: (value: boolean) => void;
 }) => {
   const {
     resolvedActiveTab,
@@ -1827,8 +1828,10 @@ const syncServerSpeciesPayload = (options: {
     speciesLoadInProgress,
     setSpeciesLoadInProgress,
     speciesReloadPending,
-    setSpeciesReloadPending,
   } = options;
+  if (speciesReloadPending) {
+    return;
+  }
   if (
     resolvedActiveTab === 'species' ||
     !serverSpeciesPayload ||
@@ -1876,9 +1879,6 @@ const syncServerSpeciesPayload = (options: {
   }
   if (speciesLoadInProgress) {
     setSpeciesLoadInProgress(false);
-  }
-  if (speciesReloadPending) {
-    setSpeciesReloadPending(false);
   }
 };
 
@@ -3378,43 +3378,6 @@ const CustomMarkingDesignerContent = (_props, context) => {
       preview_revision: (payload.preview_revision || 0) + 1,
     };
   };
-  const applyPreviewOverridesToBasicPayload = (
-    payload: BasicAppearancePayload,
-    overrides: CustomPreviewOverrideMap
-  ) => {
-    let changed = false;
-    let next = payload;
-    const primary = mergePreviewSourcesWithCustomParts(
-      payload.preview_sources,
-      derivedPreviewState,
-      { previewOverrides: overrides }
-    );
-    if (primary.changed) {
-      changed = true;
-      next = {
-        ...next,
-        preview_sources: primary.sources,
-        preview_revision: (payload.preview_revision || 0) + 1,
-      };
-    }
-    const alt = mergePreviewSourcesWithCustomParts(
-      payload.preview_sources_alt,
-      derivedPreviewState,
-      { previewOverrides: overrides }
-    );
-    if (alt.changed) {
-      if (!changed) {
-        next = { ...next };
-      }
-      next = {
-        ...next,
-        preview_sources_alt: alt.sources,
-        preview_revision_alt: (payload.preview_revision_alt || 0) + 1,
-      };
-      changed = true;
-    }
-    return changed ? next : payload;
-  };
   const syncExternalPreviewSources = (
     overrides?: CustomPartsMergeOverrides
   ) => {
@@ -3438,7 +3401,7 @@ const CustomMarkingDesignerContent = (_props, context) => {
       }
     }
     if (basicPayload) {
-      const nextBasic = applyPreviewOverridesToBasicPayload(
+      const nextBasic = applyCustomPreviewOverridesToBasicPayload(
         basicPayload,
         previewOverrides
       );
@@ -3472,7 +3435,7 @@ const CustomMarkingDesignerContent = (_props, context) => {
       }
     }
     if (applyBasic && basicPayload) {
-      const nextBasic = applyPreviewOverridesToBasicPayload(
+      const nextBasic = applyCustomPreviewOverridesToBasicPayload(
         basicPayload,
         overrides
       );
@@ -3755,7 +3718,6 @@ const CustomMarkingDesignerContent = (_props, context) => {
     speciesLoadInProgress,
     setSpeciesLoadInProgress,
     speciesReloadPending,
-    setSpeciesReloadPending,
   });
   handlePreviewRefreshTokenUpdate({
     serverPreviewRefreshToken,
@@ -4158,12 +4120,18 @@ const CustomMarkingDesignerContent = (_props, context) => {
     if (!wasDirty) {
       return true;
     }
-    const { latestState } = resolveLatestBasicState();
+    const { latestState, latestSavedState } = resolveLatestBasicState();
+    const speciesPreviewStale =
+      shouldInvalidateSpeciesPayloadForBiologicalGenderChange(
+        latestSavedState.biological_gender,
+        latestState.biological_gender
+      );
     setBasicPendingSave(true);
     setBasicPendingClose(false);
     try {
       setPreviewRefreshSkips((previewRefreshSkips || 0) + 1);
       await act('save_basic_appearance', {
+        biological_gender: latestState.biological_gender,
         digitigrade: latestState.digitigrade ? 1 : 0,
         body_color: latestState.body_color,
         eye_color: latestState.eye_color,
@@ -4191,6 +4159,10 @@ const CustomMarkingDesignerContent = (_props, context) => {
         ),
         close: false,
       });
+      if (speciesPreviewStale) {
+        setSpeciesPayload(null);
+        setSpeciesReloadPending(true);
+      }
       const committedState: BasicAppearanceState = {
         ...latestState,
         limbs: cloneLimbOverrideState(latestState.limbs),
@@ -4540,9 +4512,6 @@ const CustomMarkingDesignerContent = (_props, context) => {
         }
         setSpeciesLoadInProgress(true);
         act('load_species');
-        if (latestReloadPending) {
-          setSpeciesReloadPending(false);
-        }
       }
     }
     setActiveTab(nextTab);
@@ -4692,9 +4661,6 @@ const CustomMarkingDesignerContent = (_props, context) => {
     }
     setSpeciesLoadInProgress(true);
     await act('load_species');
-    if (latestReloadPending || forceReload) {
-      setSpeciesReloadPending(false);
-    }
   };
 
   const completeSpeciesTabSwitch = async (result: SpeciesSaveResult) => {
