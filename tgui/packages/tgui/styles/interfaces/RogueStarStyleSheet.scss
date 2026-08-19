@@ -1899,6 +1899,12 @@ $titlebar-height: 38px;
   color: #ff9aac;
 }
 
+.RogueStar__traitCategoryButton--languages .RogueStar__traitCategoryIcon {
+  border-color: rgba(102, 205, 255, 0.42);
+  background: rgba(31, 91, 127, 0.22);
+  color: #9edfff;
+}
+
 .RogueStar__traitCategoryCopy {
   min-width: 0;
 }
@@ -1999,6 +2005,10 @@ $titlebar-height: 38px;
   gap: 0.3rem;
 }
 
+.RogueStar__selectedLanguageList {
+  grid-template-columns: minmax(0, 1fr);
+}
+
 .RogueStar__selectedTraitCard {
   width: 100%;
   height: 32px;
@@ -2034,6 +2044,29 @@ $titlebar-height: 38px;
 
 .RogueStar__selectedTraitCard--negative {
   border-left-color: rgba(255, 103, 127, 0.72);
+}
+
+.RogueStar__selectedLanguageCard {
+  border-left-color: rgba(102, 205, 255, 0.72);
+}
+
+.RogueStar__languagePreferredIcon {
+  color: #f5cf80;
+  font-size: 9px;
+  filter: drop-shadow(0 0 4px rgba(229, 188, 106, 0.55));
+}
+
+.RogueStar__languageCustomKey {
+  min-width: 18px;
+  padding: 0.08rem 0.26rem;
+  border: 1px solid rgba(102, 205, 255, 0.34);
+  border-radius: 5px;
+  background: rgba(13, 52, 73, 0.48);
+  color: #b9e8ff;
+  font-size: 9px;
+  font-weight: 800;
+  line-height: 1.1;
+  text-align: center;
 }
 
 .RogueStar__selectedTraitCard > .Flex {
@@ -2158,6 +2191,22 @@ $titlebar-height: 38px;
   color: #ff9aac;
 }
 
+.RogueStar__languageLockedBadge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 100%;
+  border-left: 1px solid rgba(102, 205, 255, 0.14);
+  background: rgba(7, 18, 26, 0.42);
+  color: rgba(169, 215, 238, 0.58);
+  font-size: 9px;
+}
+
+.RogueStar__selectedLanguageCard--preferred .RogueStar__languageLockedBadge {
+  color: #f5cf80;
+}
+
 .RogueStar__traitsTab--transientLocked
   .RogueStar__selectedTraitRemoveButton.Button.Button--disabled {
   background-color: rgba(7, 3, 15, 0.42) !important;
@@ -2190,6 +2239,43 @@ $titlebar-height: 38px;
   color: rgba(213, 197, 224, 0.5);
   font-size: 10px;
   line-height: 1.35;
+}
+
+.RogueStar__languageKeysSection.Section {
+  border-color: rgba(102, 205, 255, 0.22);
+  background:
+    radial-gradient(
+      circle at 96% 0,
+      rgba(102, 205, 255, 0.08),
+      transparent 44%
+    ),
+    rgba(8, 4, 18, 0.82);
+}
+
+.RogueStar__languageKeysCopy {
+  flex: 1 1 170px;
+  min-width: 0;
+  color: rgba(215, 205, 225, 0.66);
+  font-size: 10px;
+  line-height: 1.3;
+}
+
+.RogueStar__languagePrefixKey {
+  min-width: 23px;
+  padding: 0.18rem 0.35rem;
+  border: 1px solid rgba(102, 205, 255, 0.36);
+  border-radius: 6px;
+  background: rgba(17, 56, 77, 0.46);
+  color: #b9e8ff;
+  font-size: 10px;
+  font-weight: 800;
+  line-height: 1;
+  text-align: center;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+
+.RogueStar__languagePrefixKey + .RogueStar__languagePrefixKey {
+  margin-left: 0.35rem;
 }
 
 .RogueStar__traitCloseButton.Button {
@@ -2680,6 +2766,10 @@ $titlebar-height: 38px;
   padding: 0.05rem;
 }
 
+.RogueStar__languageGrid {
+  grid-template-columns: repeat(auto-fill, minmax(165px, 1fr));
+}
+
 .RogueStar__traitTile.Button {
   position: relative;
   display: flex;
@@ -2766,6 +2856,52 @@ $titlebar-height: 38px;
   box-shadow:
     0 7px 14px rgba(0, 0, 0, 0.38),
     0 0 11px rgba(255, 86, 113, 0.13);
+}
+
+.RogueStar__languageTile.Button {
+  border-left-color: rgba(102, 205, 255, 0.72);
+  background:
+    radial-gradient(
+      circle at 100% 0,
+      rgba(102, 205, 255, 0.11),
+      transparent 52%
+    ),
+    linear-gradient(140deg, rgba(13, 37, 55, 0.95), rgba(4, 13, 21, 0.98));
+}
+
+.RogueStar__languageTile.Button:hover:not(.Button--disabled) {
+  border-left-color: rgba(151, 225, 255, 0.92);
+  box-shadow:
+    0 7px 14px rgba(0, 0, 0, 0.38),
+    0 0 11px rgba(102, 205, 255, 0.15);
+}
+
+.RogueStar__languageTile--preferred.Button,
+.RogueStar__selectedLanguageCard--preferred {
+  border-color: rgba(245, 207, 128, 0.82);
+  border-left-color: #f5cf80;
+  box-shadow:
+    0 0 0 1px rgba(245, 207, 128, 0.08),
+    0 0 15px rgba(229, 188, 106, 0.26);
+}
+
+.RogueStar__languageTile--preferred.Button .Icon {
+  color: #f5cf80;
+}
+
+.RogueStar__languageAutomaticIconControl {
+  margin-left: 0.35rem;
+}
+
+.RogueStar__languageTile.Button .RogueStar__languageAutomaticIcon {
+  margin-right: 0;
+  margin-left: 0;
+  color: rgba(169, 215, 238, 0.58);
+  font-size: 8px;
+}
+
+.RogueStar__selectedLanguageSettingsControl {
+  margin-left: 0.35rem;
 }
 
 .RogueStar__traitTile--selected.Button,
@@ -2864,6 +3000,13 @@ $titlebar-height: 38px;
   letter-spacing: 0.02em;
 }
 
+.RogueStar__languageTooltipStatus {
+  margin-top: 0.45rem;
+  color: rgba(169, 215, 238, 0.76);
+  font-size: 10px;
+  font-weight: 700;
+}
+
 .RogueStar__traitDetailPopover,
 .RogueStar__traitSettingsPopover {
   width: 360px;
@@ -2926,6 +3069,78 @@ $titlebar-height: 38px;
 .RogueStar__traitSettingsPopover--locked .RogueStar__traitSettingsGrid {
   pointer-events: none;
   opacity: 0.56;
+}
+
+.RogueStar__languageSettingsPopover {
+  width: 390px;
+}
+
+.RogueStar__languageSettingsDescription {
+  margin-top: 0.45rem;
+  color: rgba(229, 215, 237, 0.72);
+  font-size: 11px;
+  line-height: 1.4;
+}
+
+.RogueStar__languageSettingsHint {
+  margin-top: 0.25rem;
+  color: rgba(190, 211, 224, 0.56);
+  font-size: 9px;
+  line-height: 1.25;
+}
+
+.RogueStar__languageCustomKeyControl {
+  box-sizing: border-box;
+  width: 100%;
+  height: 29px;
+  overflow: hidden;
+  border: 1px solid rgba(190, 144, 245, 0.2);
+  border-radius: 7px;
+  background: rgba(8, 3, 17, 0.68);
+}
+
+.RogueStar__languageCustomKeyControl > .Flex__item {
+  height: 100%;
+}
+
+.RogueStar__traitPreferenceInput.RogueStar__languageCustomKeyInput.Input {
+  height: 100%;
+  min-height: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  line-height: 27px;
+}
+
+.RogueStar__traitPreferenceInput.RogueStar__languageCustomKeyInput
+  .Input__input {
+  height: 100%;
+  line-height: 27px;
+  text-align: left;
+}
+
+.RogueStar__languageCustomKeyResetButton.Button {
+  border-left-color: rgba(190, 144, 245, 0.2);
+  background: rgba(20, 9, 34, 0.72);
+}
+
+.RogueStar__languagePreferredControl.Button {
+  box-sizing: border-box;
+  height: 29px;
+  min-height: 29px;
+  padding: 0 0.45rem;
+  text-align: left;
+}
+
+.RogueStar__languagePreferredControl.Button .Button__content {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+  height: 100%;
+  line-height: 1.2;
+  text-align: left;
 }
 
 .RogueStar__traitPreference {

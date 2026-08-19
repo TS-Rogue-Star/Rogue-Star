@@ -562,6 +562,7 @@ export type CharacterTraitEntry = {
   id: string;
   name: string;
   description: string;
+  extra_language_slots?: number;
   icon_scale_x?: number;
   icon_scale_y?: number;
   tutorial?: string | null;
@@ -614,6 +615,31 @@ export type CharacterPersistencePayload = {
   pet: CharacterPetPersistence;
 };
 
+export type CharacterLanguageEntry = {
+  id: string;
+  name: string;
+  description: string;
+  selected: BooleanLike;
+  automatic: BooleanLike;
+  selectable: BooleanLike;
+  preferred_always: BooleanLike;
+  preferred_eligible: BooleanLike;
+  preferred: BooleanLike;
+  custom_key?: string | null;
+  disabled_reason?: string | null;
+};
+
+export type CharacterLanguagesPayload = {
+  base_optional_slots: number;
+  optional_limit: number;
+  selected_optional_count: number;
+  preferred_language: string;
+  preferred_fallback: string;
+  language_prefixes: string[];
+  default_language_prefixes: string[];
+  entries: CharacterLanguageEntry[];
+};
+
 export type TraitsPayload = {
   revision: number;
   species_id: string;
@@ -625,6 +651,7 @@ export type TraitsPayload = {
   neutral_traits_selected: number;
   total_selected: number;
   persistence?: CharacterPersistencePayload;
+  languages?: CharacterLanguagesPayload;
   categories: CharacterTraitCategory[];
 };
 
@@ -641,12 +668,29 @@ export type TraitsDraftState = {
   trait_order: string[];
   selected: Record<string, boolean>;
   preferences: Record<string, Record<string, TraitPreferenceValue>>;
+  languages: LanguagesDraftState | null;
+};
+
+export type LanguagesDraftState = {
+  optional_order: string[];
+  selected_optional: Record<string, boolean>;
+  preferred_language: string;
+  custom_keys: Record<string, string>;
+  language_prefixes: string[];
+};
+
+export type LanguagesSavePayload = {
+  alternate_languages: string[];
+  preferred_language: string;
+  custom_keys: Record<string, string>;
+  language_prefixes: string[];
 };
 
 export type TraitsSavePayload = {
   revision: number;
   selected_traits: string[];
   trait_preferences: Record<string, Record<string, TraitPreferenceValue>>;
+  languages?: LanguagesSavePayload;
 };
 
 export type DirectionCanvasSourceOptions = {

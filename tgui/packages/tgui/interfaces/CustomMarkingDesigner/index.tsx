@@ -126,11 +126,13 @@ import {
   buildTraitsSavePayload,
   isSpeciesSaveAllowed,
   resolveTraitsSaveAcknowledgement,
+  resolveLanguagesDraftValidationError,
   mergeBasicAppearancePayload,
   mergeBodyMarkingsPayload,
   shouldRetainLocalBasicPayload,
   shouldInvalidateSpeciesPayloadForBiologicalGenderChange,
   syncSpeciesSaveResultState,
+  traitDraftSelectionsEqual,
   toHex,
 } from './utils';
 import {
@@ -2119,7 +2121,7 @@ type PendingSpeciesTabSwitch = {
 
 type PendingTraitsSaveRequest = {
   requestId: string;
-  wasDirty: boolean;
+  traitsChanged: boolean;
   tabSwitchPrompt: TabSwitchPromptState | null;
 };
 
@@ -2151,10 +2153,12 @@ const resolveTabSwitchLabel = (tab: DesignerTabId) => {
 const isTabSwitchSaveDisabled = (
   prompt: TabSwitchPromptState | null,
   speciesSelection: string | null,
-  customSpeciesName: string
+  customSpeciesName: string,
+  traitsValidationError: string | null
 ) =>
-  prompt?.sourceTab === 'species' &&
-  !isSpeciesSaveAllowed(speciesSelection, customSpeciesName);
+  (prompt?.sourceTab === 'species' &&
+    !isSpeciesSaveAllowed(speciesSelection, customSpeciesName)) ||
+  (prompt?.sourceTab === 'traits' && !!traitsValidationError);
 
 const TabSwitchOverlay = ({
   prompt,
@@ -2172,7 +2176,9 @@ const TabSwitchOverlay = ({
       title="Unsaved changes"
       subtitle={
         saveDisabled
-          ? 'A name is required before you can save this custom species. Keep editing to add one, or discard the changes.'
+          ? prompt.sourceTab === 'traits'
+            ? 'Resolve the language selection issue before saving, or discard the changes.'
+            : 'A name is required before you can save this custom species. Keep editing to add one, or discard the changes.'
           : `You have unsaved changes in the ${resolveTabSwitchLabel(
               prompt.sourceTab
             )}. Save them before switching?`
@@ -3862,6 +3868,13 @@ const CustomMarkingDesignerContent = (_props, context) => {
     return draft !== undefined ? draft : traitsDraftState;
   };
 
+  const resolveLatestTraitsValidationError = () => {
+    const draft = resolveLatestTraitsDraft();
+    return resolvedTraitsPayload && draft
+      ? resolveLanguagesDraftValidationError(resolvedTraitsPayload, draft)
+      : null;
+  };
+
   const resolveBodyReloadPending = () => {
     const sharedState = selectBackend(context.store.getState()).shared || {};
     const pendingValue = sharedState[`bodyMarkingsReloadPending-${stateToken}`];
@@ -4342,6 +4355,25 @@ const CustomMarkingDesignerContent = (_props, context) => {
     if (!wasDirty && !close) {
       return true;
     }
+    if (!resolvedTraitsPayload) {
+      setTraitsSaveError(
+        'The Traits draft is still loading. Please try again.'
+      );
+      return false;
+    }
+    const validationError = resolveLanguagesDraftValidationError(
+      resolvedTraitsPayload,
+      latestDraft
+    );
+    if (validationError) {
+      setTraitsSaveError(validationError);
+      return false;
+    }
+    const canonicalDraft = buildTraitsDraftState(resolvedTraitsPayload);
+    const traitsChanged = !traitDraftSelectionsEqual(
+      latestDraft,
+      canonicalDraft
+    );
     setTraitsSaveError(null);
     setPendingSave(true);
     setPendingClose(close);
@@ -4350,7 +4382,7 @@ const CustomMarkingDesignerContent = (_props, context) => {
     const requestId = createTraitsSaveRequestId(stateToken);
     setTraitsPendingSaveRequest({
       requestId,
-      wasDirty,
+      traitsChanged,
       tabSwitchPrompt,
     });
     try {
@@ -4734,7 +4766,7 @@ const CustomMarkingDesignerContent = (_props, context) => {
 
     setTraitsSaveError(null);
     setTraitsDirty(false);
-    if (pendingRequest.wasDirty) {
+    if (pendingRequest.traitsChanged) {
       setBodyReloadPending(true);
       setBasicReloadPending(true);
       setReloadTargetRevision(0);
@@ -4746,17 +4778,22 @@ const CustomMarkingDesignerContent = (_props, context) => {
     }
 
     try {
-      if (prompt.targetTab === 'custom') {
-        setReloadTargetRevision(0);
+      if (
+        prompt.targetTab === 'custom' &&
+        (pendingRequest.traitsChanged || reloadPending)
+      ) {
+        if (pendingRequest.traitsChanged) {
+          setReloadTargetRevision(0);
+        }
         setLoadingOverlay(true);
         setReloadOverlayMinUntil(Date.now() + 400);
         setReloadPending(false);
       }
       if (prompt.targetTab === 'body') {
-        await ensureBodyPayloadForSwitch(pendingRequest.wasDirty);
+        await ensureBodyPayloadForSwitch(pendingRequest.traitsChanged);
       }
       if (prompt.targetTab === 'basic') {
-        await ensureBasicPayloadForSwitch(pendingRequest.wasDirty);
+        await ensureBasicPayloadForSwitch(pendingRequest.traitsChanged);
       }
       if (prompt.targetTab === 'species') {
         await ensureSpeciesPayloadForSwitch(false);
@@ -5234,7 +5271,8 @@ const CustomMarkingDesignerContent = (_props, context) => {
         saveDisabled={isTabSwitchSaveDisabled(
           tabSwitchPrompt,
           resolveLatestSpeciesSelection(),
-          resolveLatestSpeciesCustomName()
+          resolveLatestSpeciesCustomName(),
+          resolveLatestTraitsValidationError()
         )}
         onSave={handleTabSwitchSave}
         onDiscard={handleTabSwitchDiscard}
