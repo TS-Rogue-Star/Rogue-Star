@@ -3772,6 +3772,8 @@ var/global/custom_marking_static_source_digest_complete = TRUE
 			entry["icon_scale_x"] = preview_scale_x
 		if(isnum(preview_scale_y))
 			entry["icon_scale_y"] = preview_scale_y
+	if(islist(trait.var_changes_pref) && isnum(trait.var_changes_pref["extra_languages"]))
+		entry["extra_language_slots"] = trait.var_changes_pref["extra_languages"]
 	var/default_tutorial = "This trait has no detailed tutorial yet. Suggest one at #Dev-Suggestions on the discord!"
 	if(istext(trait.tutorial) && length(trait.tutorial) && trait.tutorial != default_tutorial)
 		entry["tutorial"] = trait.tutorial
@@ -3950,7 +3952,94 @@ var/global/custom_marking_static_source_digest_complete = TRUE
 	)
 	return payload
 
-/datum/tgui_module/custom_marking_designer/proc/build_traits_payload()
+/datum/tgui_module/custom_marking_designer/proc/resolve_character_language_catalog(mob/user, datum/species/selected_species)
+	var/list/available_languages = list()
+	if(!istype(selected_species))
+		return available_languages
+	for(var/language_name in GLOB.all_languages)
+		var/datum/language/language_datum = GLOB.all_languages[language_name]
+		if(!istype(language_datum) || (language_datum.flags & RESTRICTED))
+			continue
+		if((islist(selected_species.secondary_langs) && (language_name in selected_species.secondary_langs)) || is_lang_whitelisted(user, language_datum))
+			available_languages |= language_name
+	available_languages -= selected_species.language
+	available_languages -= selected_species.default_language
+	return available_languages
+
+/datum/tgui_module/custom_marking_designer/proc/resolve_character_language_custom_key(language_name)
+	if(!prefs || !islist(prefs.language_custom_keys))
+		return null
+	for(var/custom_key in prefs.language_custom_keys)
+		if(prefs.language_custom_keys[custom_key] == language_name && character_language_custom_key_is_valid(custom_key))
+			return custom_key
+	return null
+
+/datum/tgui_module/custom_marking_designer/proc/build_character_languages_payload(mob/user)
+	if(!prefs)
+		return null
+	var/datum/species/selected_species = GLOB.all_species?[prefs.species]
+	if(!istype(selected_species))
+		return null
+	var/list/alternate_languages = islist(prefs.alternate_languages) ? prefs.alternate_languages : list()
+	var/list/available_languages = resolve_character_language_catalog(user, selected_species)
+	var/list/language_names = list()
+	for(var/language_name in GLOB.all_languages)
+		var/datum/language/language_datum = GLOB.all_languages[language_name]
+		if(istype(language_datum) && !(language_datum.flags & RESTRICTED))
+			language_names |= language_name
+	if(selected_species.language)
+		language_names |= selected_species.language
+	if(selected_species.default_language)
+		language_names |= selected_species.default_language
+	for(var/language_name in alternate_languages)
+		language_names |= language_name
+	for(var/language_name in available_languages)
+		language_names |= language_name
+	language_names |= LANGUAGE_GALCOM
+	if(prefs.preferred_language)
+		language_names |= prefs.preferred_language
+
+	var/list/entries = list()
+	for(var/language_name in language_names)
+		var/datum/language/language_datum = GLOB.all_languages?[language_name]
+		var/is_automatic = language_name == selected_species.language || language_name == selected_species.default_language
+		var/is_selectable = (language_name in available_languages)
+		var/is_selected = is_automatic || (language_name in alternate_languages)
+		var/is_preferred_always = language_name == selected_species.language || language_name == LANGUAGE_GALCOM
+		var/is_preferred_eligible = is_preferred_always || (language_name in alternate_languages)
+		var/list/entry = list(
+			"id" = language_name,
+			"name" = language_datum?.name || language_name,
+			"description" = istext(language_datum?.desc) && length(language_datum.desc) ? language_datum.desc : "No language description is available.",
+			"selected" = is_selected,
+			"automatic" = is_automatic,
+			"selectable" = is_selectable,
+			"preferred_always" = is_preferred_always,
+			"preferred_eligible" = is_preferred_eligible,
+			"preferred" = prefs.preferred_language == language_name,
+			"custom_key" = is_selected ? resolve_character_language_custom_key(language_name) : null
+		)
+		if((language_name in alternate_languages) && !is_selectable)
+			entry["disabled_reason"] = "This saved language is no longer available to the current character. Remove it before saving."
+		else if(!is_selected && !is_selectable && !is_preferred_always)
+			entry["disabled_reason"] = "This language is not available to the current character."
+		entries += list(entry)
+
+	var/base_optional_slots = isnum(selected_species.num_alternate_languages) ? max(0, selected_species.num_alternate_languages) : 0
+	var/optional_limit = max(0, base_optional_slots + (isnum(prefs.extra_languages) ? prefs.extra_languages : 0))
+	var/list/language_prefixes = islist(prefs.language_prefixes) && prefs.language_prefixes.len ? prefs.language_prefixes.Copy() : config.language_prefixes.Copy()
+	return list(
+		"base_optional_slots" = base_optional_slots,
+		"optional_limit" = optional_limit,
+		"selected_optional_count" = alternate_languages.len,
+		"preferred_language" = prefs.preferred_language || selected_species.language || LANGUAGE_GALCOM,
+		"preferred_fallback" = selected_species.language || LANGUAGE_GALCOM,
+		"language_prefixes" = language_prefixes,
+		"default_language_prefixes" = config.language_prefixes.Copy(),
+		"entries" = entries
+	)
+
+/datum/tgui_module/custom_marking_designer/proc/build_traits_payload(mob/user)
 	if(!prefs)
 		return null
 	repair_character_trait_preferences()
@@ -3988,13 +4077,14 @@ var/global/custom_marking_static_source_digest_complete = TRUE
 		"neutral_traits_selected" = prefs.neu_traits.len,
 		"total_selected" = prefs.pos_traits.len + prefs.neu_traits.len + prefs.neg_traits.len,
 		"persistence" = build_character_persistence_payload(),
+		"languages" = build_character_languages_payload(user),
 		"categories" = categories
 	)
 
 /datum/tgui_module/custom_marking_designer/proc/send_traits_payload(mob/user, list/save_result = null)
 	if(!user || !prefs)
 		return FALSE
-	var/list/payload = build_traits_payload()
+	var/list/payload = build_traits_payload(user)
 	if(!islist(payload))
 		return FALSE
 	var/list/update = list(
@@ -4091,7 +4181,101 @@ var/global/custom_marking_static_source_digest_complete = TRUE
 		target_traits += trait_path
 	return TRUE
 
-/datum/tgui_module/custom_marking_designer/proc/apply_character_traits_payload(list/params, list/rejection_reasons = null)
+/datum/tgui_module/custom_marking_designer/proc/resolve_requested_extra_languages(list/requested_paths)
+	var/projected_extra_languages = initial(prefs.extra_languages)
+	for(var/trait_path in requested_paths)
+		var/datum/trait/trait = all_traits[trait_path]
+		if(islist(trait?.var_changes_pref) && isnum(trait.var_changes_pref["extra_languages"]))
+			projected_extra_languages = trait.var_changes_pref["extra_languages"]
+	return projected_extra_languages
+
+/datum/tgui_module/custom_marking_designer/proc/stage_character_languages_payload(list/params, list/requested_paths, mob/user, list/staged_languages, list/rejection_reasons)
+	if(!prefs || !islist(params) || !islist(staged_languages))
+		return reject_character_traits_payload(rejection_reasons, "Language data is unavailable.")
+	var/datum/species/selected_species = GLOB.all_species?[prefs.species]
+	if(!istype(selected_species))
+		return reject_character_traits_payload(rejection_reasons, "The selected species has no valid language rules.")
+	var/projected_extra_languages = resolve_requested_extra_languages(requested_paths)
+	var/base_optional_slots = isnum(selected_species.num_alternate_languages) ? selected_species.num_alternate_languages : 0
+	var/optional_limit = max(0, base_optional_slots + projected_extra_languages)
+	var/languages_included = ("languages" in params)
+	if(!languages_included)
+		var/list/current_alternate_languages = islist(prefs.alternate_languages) ? prefs.alternate_languages.Copy() : list()
+		if(current_alternate_languages.len > optional_limit)
+			return reject_character_traits_payload(rejection_reasons, "Your selected traits allow [optional_limit] optional language[optional_limit == 1 ? "" : "s"], but this character currently has [current_alternate_languages.len].")
+		staged_languages["alternate_languages"] = current_alternate_languages
+		staged_languages["preferred_language"] = prefs.preferred_language
+		staged_languages["language_custom_keys"] = islist(prefs.language_custom_keys) ? prefs.language_custom_keys.Copy() : list()
+		staged_languages["language_prefixes"] = islist(prefs.language_prefixes) && prefs.language_prefixes.len ? prefs.language_prefixes.Copy() : config.language_prefixes.Copy()
+		staged_languages["extra_languages"] = projected_extra_languages
+		return TRUE
+
+	var/list/incoming_languages = params["languages"]
+	if(!islist(incoming_languages))
+		return reject_character_traits_payload(rejection_reasons, "The Traits save did not contain valid language data.")
+	var/list/incoming_alternate_languages = incoming_languages["alternate_languages"]
+	if(!islist(incoming_alternate_languages))
+		return reject_character_traits_payload(rejection_reasons, "The language draft did not contain a valid optional-language list.")
+	var/list/available_languages = resolve_character_language_catalog(user, selected_species)
+	var/list/requested_alternate_languages = list()
+	for(var/language_name in incoming_alternate_languages)
+		if(!istext(language_name) || !(language_name in GLOB.all_languages))
+			return reject_character_traits_payload(rejection_reasons, "The language draft contained an unknown language.")
+		if(language_name in requested_alternate_languages)
+			return reject_character_traits_payload(rejection_reasons, "The language draft contained [language_name] more than once.")
+		if(!(language_name in available_languages))
+			return reject_character_traits_payload(rejection_reasons, "[language_name] is not available to this character. Remove it before saving.")
+		requested_alternate_languages += language_name
+	if(requested_alternate_languages.len > optional_limit)
+		return reject_character_traits_payload(rejection_reasons, "Your selected traits allow [optional_limit] optional language[optional_limit == 1 ? "" : "s"], but [requested_alternate_languages.len] are selected.")
+
+	var/preferred_language = incoming_languages["preferred_language"]
+	if(!istext(preferred_language) || !length(preferred_language))
+		return reject_character_traits_payload(rejection_reasons, "Choose a preferred language before saving.")
+	var/list/preferred_languages = list(selected_species.language, LANGUAGE_GALCOM)
+	preferred_languages |= requested_alternate_languages
+	if(!(preferred_language in preferred_languages))
+		return reject_character_traits_payload(rejection_reasons, "[preferred_language] cannot be used as this character's preferred language.")
+
+	var/list/incoming_custom_keys = incoming_languages["custom_keys"]
+	if(!islist(incoming_custom_keys))
+		return reject_character_traits_payload(rejection_reasons, "The language draft did not contain valid custom keys.")
+	var/list/customizable_languages = list()
+	if(selected_species.language)
+		customizable_languages |= selected_species.language
+	if(selected_species.default_language)
+		customizable_languages |= selected_species.default_language
+	customizable_languages |= requested_alternate_languages
+	var/list/new_language_custom_keys = list()
+	for(var/language_name in incoming_custom_keys)
+		var/custom_key = incoming_custom_keys[language_name]
+		if(!(language_name in customizable_languages))
+			return reject_character_traits_payload(rejection_reasons, "A custom key was provided for unavailable language [language_name].")
+		if(!character_language_custom_key_is_valid(custom_key))
+			return reject_character_traits_payload(rejection_reasons, "The custom key for [language_name] must be one letter or number.")
+		if(custom_key in new_language_custom_keys)
+			return reject_character_traits_payload(rejection_reasons, "The custom language key [custom_key] is assigned more than once.")
+		new_language_custom_keys[custom_key] = language_name
+
+	var/list/incoming_prefixes = incoming_languages["language_prefixes"]
+	if(!islist(incoming_prefixes) || !incoming_prefixes.len || incoming_prefixes.len > 3)
+		return reject_character_traits_payload(rejection_reasons, "Language keys must contain one to three special characters.")
+	var/list/new_language_prefixes = list()
+	for(var/prefix in incoming_prefixes)
+		if(!character_language_prefix_is_valid(prefix))
+			return reject_character_traits_payload(rejection_reasons, "[prefix] cannot be used as a language prefix.")
+		new_language_prefixes += prefix
+
+	staged_languages["alternate_languages"] = requested_alternate_languages
+	staged_languages["preferred_language"] = preferred_language
+	staged_languages["language_custom_keys"] = new_language_custom_keys
+	staged_languages["language_prefixes"] = new_language_prefixes
+	staged_languages["extra_languages"] = projected_extra_languages
+	return TRUE
+
+/datum/tgui_module/custom_marking_designer/proc/apply_character_traits_payload(list/params, list/rejection_reasons = null, mob/user = null, list/change_result = null)
+	if(islist(change_result))
+		change_result["traits_changed"] = FALSE
 	if(!prefs || !islist(params))
 		return reject_character_traits_payload(rejection_reasons, "Trait data is unavailable.")
 	var/incoming_revision = params?["revision"]
@@ -4143,6 +4327,10 @@ var/global/custom_marking_static_source_digest_complete = TRUE
 			if(character_traits_conflict(trait_path, trait, selected_path, selected_trait))
 				return reject_character_traits_payload(rejection_reasons, "[trait.name] conflicts with [selected_trait.name]. Remove one before saving.")
 
+	var/list/staged_languages = list()
+	if(!stage_character_languages_payload(params, requested_paths, user, staged_languages, rejection_reasons))
+		return FALSE
+
 	var/list/new_positive_traits = list()
 	var/list/new_neutral_traits = list()
 	var/list/new_negative_traits = list()
@@ -4151,6 +4339,19 @@ var/global/custom_marking_static_source_digest_complete = TRUE
 		var/list/trait_preferences = requested_preferences["[trait_path]"]
 		if(!store_character_trait_selection(trait_path, trait, trait_preferences, new_positive_traits, new_neutral_traits, new_negative_traits))
 			return reject_character_traits_payload(rejection_reasons, "[trait.name] could not be saved.")
+
+	var/list/current_trait_signature = list(
+		"positive" = prefs.build_trait_signature(prefs.pos_traits),
+		"neutral" = prefs.build_trait_signature(prefs.neu_traits),
+		"negative" = prefs.build_trait_signature(prefs.neg_traits)
+	)
+	var/list/requested_trait_signature = list(
+		"positive" = prefs.build_trait_signature(new_positive_traits),
+		"neutral" = prefs.build_trait_signature(new_neutral_traits),
+		"negative" = prefs.build_trait_signature(new_negative_traits)
+	)
+	if(islist(change_result))
+		change_result["traits_changed"] = json_encode(current_trait_signature) != json_encode(requested_trait_signature)
 
 	var/list/current_paths = prefs.pos_traits + prefs.neu_traits + prefs.neg_traits
 	for(var/trait_path in current_paths)
@@ -4169,6 +4370,11 @@ var/global/custom_marking_static_source_digest_complete = TRUE
 	prefs.pos_traits = new_positive_traits
 	prefs.neu_traits = new_neutral_traits
 	prefs.neg_traits = new_negative_traits
+	prefs.extra_languages = staged_languages["extra_languages"]
+	prefs.alternate_languages = staged_languages["alternate_languages"]
+	prefs.preferred_language = staged_languages["preferred_language"]
+	prefs.language_custom_keys = staged_languages["language_custom_keys"]
+	prefs.language_prefixes = staged_languages["language_prefixes"]
 	return TRUE
 
 // Toggle dirty flag for pending saves
@@ -5764,10 +5970,11 @@ var/global/custom_marking_static_source_digest_complete = TRUE
 		var/close_ui = !!params?["close"]
 		var/request_id = params?["request_id"]
 		var/list/rejection_reasons = list()
-		var/traits_updated = apply_character_traits_payload(params, rejection_reasons)
+		var/list/change_result = list()
+		var/traits_updated = apply_character_traits_payload(params, rejection_reasons, usr, change_result)
 		if(traits_updated)
 			traits_revision++
-			refresh_preferences_window_if_visible(TRUE)
+			refresh_preferences_window_if_visible(!!change_result["traits_changed"])
 			if(close_ui)
 				SStgui.close_uis(src)
 				return FALSE

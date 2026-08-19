@@ -27,6 +27,8 @@ import { LivePreviewCard, LoadingOverlay } from './components';
 import { CHIP_BUTTON_CLASS } from './constants';
 import type {
   CanvasBackgroundOption,
+  CharacterLanguageEntry,
+  CharacterLanguagesPayload,
   CharacterPersistenceDetailEntry,
   CharacterPersistencePayload,
   CharacterTraitCategory,
@@ -41,12 +43,20 @@ import type {
 import {
   applyTraitsDraftToPayload,
   buildTraitsDraftState,
+  resolveLanguagesDraftValidationError,
   resolveTraitsPreviewScale,
+  sortLanguagesAlphabetically,
   sortTraitsByConfiguredOrder,
   traitsDraftStatesEqual,
+  updateLanguageDraftCustomKey,
+  updateLanguageDraftPrefixes,
+  updateLanguageDraftPreferred,
+  updateLanguageDraftSelection,
   updateTraitsDraftPreference,
   updateTraitsDraftSelection,
 } from './utils/traits';
+
+type TraitsCatalogCategoryId = TraitCategoryId | 'languages';
 
 type TraitsTabProps = Readonly<{
   data: CustomMarkingDesignerData;
@@ -120,13 +130,15 @@ class TraitsPayloadInitializer extends Component<TraitsPayloadInitializerProps> 
   }
 }
 
-const CATEGORY_PRESENTATION: Record<TraitCategoryId, { icon: string }> = {
-  positive: { icon: 'plus-circle' },
-  neutral: { icon: 'compass' },
-  negative: { icon: 'triangle-exclamation' },
-};
+const CATEGORY_PRESENTATION: Record<TraitsCatalogCategoryId, { icon: string }> =
+  {
+    positive: { icon: 'plus-circle' },
+    neutral: { icon: 'compass' },
+    negative: { icon: 'triangle-exclamation' },
+    languages: { icon: 'language' },
+  };
 
-const getCategoryPresentation = (category: TraitCategoryId) =>
+const getCategoryPresentation = (category: TraitsCatalogCategoryId) =>
   CATEGORY_PRESENTATION[category] || CATEGORY_PRESENTATION.neutral;
 
 type TraitGroupDefinition = Readonly<{
@@ -1244,6 +1256,554 @@ const TraitCategoryButton = ({
   );
 };
 
+const LanguageCategoryButton = ({
+  languages,
+  selected,
+  onSelect,
+}: Readonly<{
+  languages: CharacterLanguagesPayload;
+  selected: boolean;
+  onSelect: () => void;
+}>) => (
+  <Button
+    fluid
+    selected={selected}
+    className="RogueStar__traitCategoryButton RogueStar__traitCategoryButton--languages"
+    onClick={onSelect}>
+    <Box className="RogueStar__traitCategoryIcon">
+      <Icon name={getCategoryPresentation('languages').icon} />
+    </Box>
+    <Box className="RogueStar__traitCategoryCopy">
+      <Flex align="center" justify="space-between" wrap={false}>
+        <Box className="RogueStar__traitCategoryName">Languages</Box>
+        <Box className="RogueStar__traitCategoryCount">
+          {languages.selected_optional_count}/{languages.optional_limit}
+        </Box>
+      </Flex>
+    </Box>
+  </Button>
+);
+
+const LanguageDescriptionTooltip = ({
+  language,
+  selectedRow = false,
+}: Readonly<{
+  language: CharacterLanguageEntry;
+  selectedRow?: boolean;
+}>) => (
+  <Box className="RogueStar__traitDescriptionTooltip">
+    <Box>{language.description}</Box>
+    <Box className="RogueStar__languageTooltipStatus">
+      {language.automatic
+        ? 'Known automatically.'
+        : language.selected
+          ? 'Uses one optional language slot.'
+          : language.selectable
+            ? 'Available as an optional language.'
+            : language.preferred_eligible
+              ? 'Available only as a preferred-language fallback.'
+              : 'Unavailable to this character.'}
+    </Box>
+    {language.disabled_reason ? (
+      <Box className="RogueStar__traitTooltipReason">
+        <Icon name="lock" /> {language.disabled_reason}
+      </Box>
+    ) : null}
+    <Box className="RogueStar__traitTooltipHint">
+      {selectedRow ? <Box>Left-click for language settings.</Box> : null}
+      {language.preferred_eligible ? (
+        <Box>Right-click to make this the preferred language.</Box>
+      ) : null}
+    </Box>
+  </Box>
+);
+
+const LanguageCatalogTile = ({
+  language,
+  controlsLocked,
+  onToggle,
+  onSetPreferred,
+}: Readonly<{
+  language: CharacterLanguageEntry;
+  controlsLocked: boolean;
+  onToggle: (languageId: string) => void;
+  onSetPreferred: (languageId: string) => void;
+}>) => {
+  const selected = !!language.selected;
+  const canToggle = !!language.selectable || (selected && !language.automatic);
+  const optionalUnavailable =
+    !selected && !!language.selectable && !!language.disabled_reason;
+  const cannotSelect = !selected && !language.selectable;
+  const unavailable = cannotSelect && !language.preferred_eligible;
+  return (
+    <Button
+      fluid
+      selected={selected}
+      className={`RogueStar__traitTile RogueStar__languageTile${
+        selected ? ' RogueStar__traitTile--selected' : ''
+      }${language.automatic ? ' RogueStar__languageTile--automatic' : ''}${
+        language.preferred ? ' RogueStar__languageTile--preferred' : ''
+      }${
+        optionalUnavailable || cannotSelect
+          ? ' RogueStar__traitTile--disabled'
+          : ''
+      }`}
+      tooltip={<LanguageDescriptionTooltip language={language} />}
+      tooltipPosition="right"
+      aria-label={`${selected ? 'Remove' : 'Add'} ${language.name}${
+        language.preferred_eligible ? '; right-click to make preferred' : ''
+      }`}
+      aria-pressed={selected}
+      disabled={controlsLocked || optionalUnavailable || unavailable}
+      onClick={canToggle ? () => onToggle(language.id) : undefined}
+      onContextMenu={
+        language.preferred_eligible
+          ? (event) => {
+              event.preventDefault();
+              event.stopPropagation();
+              if (!controlsLocked) {
+                onSetPreferred(language.id);
+              }
+            }
+          : undefined
+      }>
+      <Flex align="center" justify="center" gap={0.35} wrap={false}>
+        {language.preferred ? <Icon name="star" /> : null}
+        <Box className="RogueStar__traitTileName">{language.name}</Box>
+        {language.automatic ? (
+          <Flex.Item
+            shrink={0}
+            className="RogueStar__languageAutomaticIconControl">
+            <Icon className="RogueStar__languageAutomaticIcon" name="lock" />
+          </Flex.Item>
+        ) : null}
+      </Flex>
+    </Button>
+  );
+};
+
+const LanguageSettingsPopover = ({
+  language,
+  controlsLocked,
+  error,
+  onChangeCustomKey,
+  onClearCustomKey,
+  onSetPreferred,
+}: Readonly<{
+  language: CharacterLanguageEntry;
+  controlsLocked: boolean;
+  error: string | null;
+  onChangeCustomKey: (value: string) => void;
+  onClearCustomKey: () => void;
+  onSetPreferred: () => void;
+}>) => {
+  const canCustomize = !!language.selected;
+  return (
+    <Box className="RogueStar__traitSettingsPopover RogueStar__languageSettingsPopover">
+      <Box className="RogueStar__traitDetailEyebrow">Language settings</Box>
+      <Box className="RogueStar__traitDetailTitle">{language.name}</Box>
+      <Box className="RogueStar__languageSettingsDescription">
+        {language.description}
+      </Box>
+      <Box className="RogueStar__traitSettingsGrid">
+        <Box className="RogueStar__traitPreference">
+          <Box className="RogueStar__traitPreferenceLabel">Custom key</Box>
+          <Flex className="RogueStar__languageCustomKeyControl" wrap={false}>
+            <Flex.Item grow minWidth={0}>
+              <Input
+                fluid
+                className="RogueStar__traitPreferenceInput RogueStar__languageCustomKeyInput"
+                value={language.custom_key || ''}
+                maxLength={1}
+                placeholder="None"
+                disabled={controlsLocked || !canCustomize}
+                onInput={(_event, value) => onChangeCustomKey(value)}
+              />
+            </Flex.Item>
+            <Flex.Item shrink={0}>
+              <Button
+                className="RogueStar__selectedTraitRemoveButton RogueStar__languageCustomKeyResetButton"
+                icon="times"
+                tooltip="Reset custom key"
+                aria-label="Reset custom key"
+                disabled={
+                  controlsLocked || !canCustomize || !language.custom_key
+                }
+                onClick={onClearCustomKey}
+              />
+            </Flex.Item>
+          </Flex>
+          <Box className="RogueStar__languageSettingsHint">
+            One case-sensitive letter or number.
+          </Box>
+          {error ? (
+            <Box className="RogueStar__traitPreferenceValidation">{error}</Box>
+          ) : null}
+        </Box>
+        <Box className="RogueStar__traitPreference">
+          <Box className="RogueStar__traitPreferenceLabel">
+            Preferred language
+          </Box>
+          <Button
+            fluid
+            selected={!!language.preferred}
+            className="RogueStar__traitPreferenceValue RogueStar__languagePreferredControl"
+            icon="star"
+            verticalAlignContent="middle"
+            disabled={controlsLocked || !language.preferred_eligible}
+            onClick={onSetPreferred}>
+            {language.preferred ? 'Currently Preferred' : 'Set Preferred'}
+          </Button>
+        </Box>
+      </Box>
+    </Box>
+  );
+};
+
+const SelectedLanguageCard = ({
+  language,
+  controlsLocked,
+  settingsOpen,
+  settingsError,
+  onToggleSettings,
+  onRemove,
+  onChangeCustomKey,
+  onClearCustomKey,
+  onSetPreferred,
+}: Readonly<{
+  language: CharacterLanguageEntry;
+  controlsLocked: boolean;
+  settingsOpen: boolean;
+  settingsError: string | null;
+  onToggleSettings: (languageId: string) => void;
+  onRemove: (languageId: string) => void;
+  onChangeCustomKey: (languageId: string, value: string) => void;
+  onClearCustomKey: (languageId: string) => void;
+  onSetPreferred: (languageId: string) => void;
+}>) => {
+  const actionButton = (
+    <Button
+      fluid
+      verticalAlignContent="middle"
+      className="RogueStar__selectedTraitButton"
+      tooltip={
+        settingsOpen ? undefined : (
+          <LanguageDescriptionTooltip language={language} selectedRow />
+        )
+      }
+      tooltipPosition="left"
+      aria-label={`${language.name}; left-click for settings${
+        language.preferred_eligible ? '; right-click to make preferred' : ''
+      }`}
+      aria-haspopup="dialog"
+      aria-expanded={settingsOpen}
+      disabled={controlsLocked}
+      onClick={() => onToggleSettings(language.id)}
+      onContextMenu={
+        language.preferred_eligible
+          ? (event) => {
+              event.preventDefault();
+              event.stopPropagation();
+              if (!controlsLocked) {
+                onSetPreferred(language.id);
+              }
+            }
+          : undefined
+      }>
+      <Flex align="center" gap={0.35} wrap={false}>
+        {language.preferred ? (
+          <Flex.Item shrink={0}>
+            <Icon className="RogueStar__languagePreferredIcon" name="star" />
+          </Flex.Item>
+        ) : null}
+        <Flex.Item grow minWidth={0}>
+          <Box className="RogueStar__selectedTraitName">{language.name}</Box>
+        </Flex.Item>
+        {language.custom_key ? (
+          <Flex.Item shrink={0}>
+            <Box className="RogueStar__languageCustomKey">
+              {language.custom_key}
+            </Box>
+          </Flex.Item>
+        ) : null}
+        <Flex.Item
+          shrink={0}
+          className="RogueStar__selectedLanguageSettingsControl">
+          <Icon className="RogueStar__selectedTraitSettings" name="sliders-h" />
+        </Flex.Item>
+      </Flex>
+    </Button>
+  );
+  const anchoredAction = settingsOpen ? (
+    <Popper
+      additionalStyles={{ 'z-index': '20' }}
+      options={{
+        placement: 'left-start',
+        modifiers: [
+          { name: 'offset', options: { offset: [0, 8] } },
+          {
+            name: 'flip',
+            options: { fallbackPlacements: ['right-start', 'bottom-start'] },
+          },
+          { name: 'preventOverflow', options: { padding: 12 } },
+        ],
+      }}
+      popperContent={
+        <LanguageSettingsPopover
+          language={language}
+          controlsLocked={controlsLocked}
+          error={settingsError}
+          onChangeCustomKey={(value) => onChangeCustomKey(language.id, value)}
+          onClearCustomKey={() => onClearCustomKey(language.id)}
+          onSetPreferred={() => onSetPreferred(language.id)}
+        />
+      }>
+      {actionButton}
+    </Popper>
+  ) : (
+    actionButton
+  );
+  const canRemove = !!language.selected && !language.automatic;
+  return (
+    <Box
+      className={`RogueStar__selectedTraitCard RogueStar__selectedLanguageCard${
+        settingsOpen ? ' RogueStar__selectedTraitCard--open' : ''
+      }${
+        language.preferred ? ' RogueStar__selectedLanguageCard--preferred' : ''
+      }`}>
+      <Flex align="center" wrap={false}>
+        <Flex.Item grow minWidth={0}>
+          {anchoredAction}
+        </Flex.Item>
+        <Flex.Item shrink={0}>
+          {canRemove ? (
+            <Button
+              className="RogueStar__selectedTraitRemoveButton"
+              icon="times"
+              verticalAlignContent="middle"
+              tooltip={`Remove ${language.name}`}
+              tooltipPosition="left"
+              aria-label={`Remove ${language.name}`}
+              disabled={controlsLocked}
+              onClick={() => onRemove(language.id)}
+            />
+          ) : (
+            <Box
+              className="RogueStar__languageLockedBadge"
+              title={language.automatic ? 'Known automatically' : 'Preferred'}>
+              <Icon name={language.automatic ? 'lock' : 'star'} />
+            </Box>
+          )}
+        </Flex.Item>
+      </Flex>
+    </Box>
+  );
+};
+
+const SelectedLanguagesSection = ({
+  languages,
+  controlsLocked,
+  openLanguageId,
+  settingsError,
+  validationError,
+  onToggleSettings,
+  onRemove,
+  onChangeCustomKey,
+  onClearCustomKey,
+  onSetPreferred,
+}: Readonly<{
+  languages: CharacterLanguagesPayload;
+  controlsLocked: boolean;
+  openLanguageId: string | null;
+  settingsError: string | null;
+  validationError: string | null;
+  onToggleSettings: (languageId: string) => void;
+  onRemove: (languageId: string) => void;
+  onChangeCustomKey: (languageId: string, value: string) => void;
+  onClearCustomKey: (languageId: string) => void;
+  onSetPreferred: (languageId: string) => void;
+}>) => {
+  const selectedLanguages = sortLanguagesAlphabetically(
+    languages.entries.filter(
+      (language) => !!language.selected || !!language.preferred
+    )
+  );
+  return (
+    <Section
+      className="RogueStar__selectedTraits RogueStar__selectedLanguages"
+      title="Selected Languages"
+      fill
+      scrollable
+      buttons={
+        <Box className="RogueStar__selectedTraitsCount">
+          {languages.selected_optional_count}/{languages.optional_limit}{' '}
+          optional
+        </Box>
+      }>
+      {validationError ? (
+        <NoticeBox danger mb={1}>
+          {validationError}
+        </NoticeBox>
+      ) : null}
+      {selectedLanguages.length ? (
+        <Box className="RogueStar__selectedTraitList RogueStar__selectedLanguageList">
+          {selectedLanguages.map((language) => (
+            <SelectedLanguageCard
+              key={language.id}
+              language={language}
+              controlsLocked={controlsLocked}
+              settingsOpen={openLanguageId === language.id}
+              settingsError={
+                openLanguageId === language.id ? settingsError : null
+              }
+              onToggleSettings={onToggleSettings}
+              onRemove={onRemove}
+              onChangeCustomKey={onChangeCustomKey}
+              onClearCustomKey={onClearCustomKey}
+              onSetPreferred={onSetPreferred}
+            />
+          ))}
+        </Box>
+      ) : (
+        <Box className="RogueStar__selectedTraitsEmpty">
+          <Icon name="language" />
+          <Box className="RogueStar__selectedTraitsEmptyTitle">
+            No languages available
+          </Box>
+          <Box className="RogueStar__selectedTraitsEmptyCopy">
+            This species has no language choices in the current catalog.
+          </Box>
+        </Box>
+      )}
+    </Section>
+  );
+};
+
+const LanguageKeysSection = ({
+  languages,
+  controlsLocked,
+  onChange,
+  onReset,
+}: Readonly<{
+  languages: CharacterLanguagesPayload;
+  controlsLocked: boolean;
+  onChange: () => void;
+  onReset: () => void;
+}>) => (
+  <Section
+    className="RogueStar__languageKeysSection"
+    title="Language Keys"
+    buttons={
+      <Flex gap={0.35}>
+        <Button
+          className={CHIP_BUTTON_CLASS}
+          icon="pen"
+          disabled={controlsLocked}
+          onClick={onChange}>
+          Change
+        </Button>
+        <Button
+          className={CHIP_BUTTON_CLASS}
+          icon="undo"
+          disabled={controlsLocked}
+          onClick={onReset}>
+          Reset
+        </Button>
+      </Flex>
+    }>
+    <Flex align="center" gap={0.35} wrap>
+      <Box className="RogueStar__languageKeysCopy">
+        Prefix spoken language with one of these keys:
+      </Box>
+      {languages.language_prefixes.map((prefix, index) => (
+        <Box
+          key={`${prefix}-${index}`}
+          className="RogueStar__languagePrefixKey">
+          {prefix === ' ' ? 'Space' : prefix}
+        </Box>
+      ))}
+    </Flex>
+  </Section>
+);
+
+const isLanguagePrefixValid = (prefix: string) =>
+  prefix.length === 1 &&
+  !/[A-Za-z0-9]/.test(prefix) &&
+  ![';', ':', '.', '!', '*', '^', '-'].includes(prefix);
+
+const LanguagePrefixEditor = ({
+  prefixes,
+  onChange,
+  onConfirm,
+  onCancel,
+}: Readonly<{
+  prefixes: string[];
+  onChange: (prefixes: string[]) => void;
+  onConfirm: () => void;
+  onCancel: () => void;
+}>) => {
+  const selectedPrefixes = prefixes.filter((prefix) => prefix.length > 0);
+  const valid =
+    selectedPrefixes.length > 0 &&
+    selectedPrefixes.length <= 3 &&
+    selectedPrefixes.every(isLanguagePrefixValid);
+  return (
+    <Modal width="480px" maxWidth="90%" maxHeight="90%" mx="auto">
+      <Section
+        title="Change Language Keys"
+        buttons={<Button icon="times" onClick={onCancel} />}>
+        <Box mb={1}>
+          Choose one to three single special characters. Letters, numbers, radio
+          prefixes (; : .), and say prefixes (! * ^ -) are unavailable. Repeated
+          characters are allowed.
+        </Box>
+        <Flex gap={0.5} justify="center" wrap={false}>
+          {prefixes.map((prefix, index) => (
+            <Flex.Item key={index} basis="92px">
+              <Box className="RogueStar__traitPreferenceLabel">
+                Key {index + 1}
+              </Box>
+              <Input
+                fluid
+                className={`RogueStar__traitPreferenceInput${
+                  !prefix || isLanguagePrefixValid(prefix)
+                    ? ''
+                    : ' RogueStar__traitPreferenceInput--invalid'
+                }`}
+                value={prefix}
+                maxLength={1}
+                aria-label={`Language key ${index + 1}`}
+                onInput={(_event, value) => {
+                  const nextPrefixes = [...prefixes];
+                  nextPrefixes[index] = value;
+                  onChange(nextPrefixes);
+                }}
+              />
+            </Flex.Item>
+          ))}
+        </Flex>
+        {!valid ? (
+          <NoticeBox danger mt={1}>
+            Enter one to three allowed special characters.
+          </NoticeBox>
+        ) : null}
+        <Flex mt={1} justify="flex-end" gap={0.5}>
+          <Button className={CHIP_BUTTON_CLASS} icon="times" onClick={onCancel}>
+            Cancel
+          </Button>
+          <Button
+            className={`${CHIP_BUTTON_CLASS} RogueStar__glowButton--positive`}
+            icon="check"
+            disabled={!valid}
+            onClick={onConfirm}>
+            Apply
+          </Button>
+        </Flex>
+      </Section>
+    </Modal>
+  );
+};
+
 const SelectedTraitCard = ({
   trait,
   category,
@@ -1501,6 +2061,7 @@ type TraitsSaveSectionProps = Readonly<{
   uiLocked: boolean;
   dirty: boolean;
   saveError: string | null;
+  validationError: string | null;
   onSave: () => void;
   onSaveAndClose: () => void;
   onDiscardAndClose: () => void;
@@ -1512,6 +2073,7 @@ const TraitsSaveSection = ({
   uiLocked,
   dirty,
   saveError,
+  validationError,
   onSave,
   onSaveAndClose,
   onDiscardAndClose,
@@ -1522,13 +2084,24 @@ const TraitsSaveSection = ({
         {saveError}
       </NoticeBox>
     ) : null}
+    {validationError ? (
+      <NoticeBox danger mb={1}>
+        {validationError}
+      </NoticeBox>
+    ) : null}
     <Flex justify="space-between" wrap className="RogueStar__sessionButtons">
       <Flex.Item>
         <Button
           className={`${CHIP_BUTTON_CLASS} RogueStar__glowButton--positive`}
           icon={pendingSave ? 'spinner-third' : 'save'}
           iconSpin={pendingSave}
-          disabled={pendingClose || pendingSave || uiLocked || !dirty}
+          disabled={
+            pendingClose ||
+            pendingSave ||
+            uiLocked ||
+            !dirty ||
+            !!validationError
+          }
           onClick={onSave}>
           Save
         </Button>
@@ -1538,7 +2111,9 @@ const TraitsSaveSection = ({
           className={`${CHIP_BUTTON_CLASS} RogueStar__glowButton--positive`}
           icon={pendingClose ? 'spinner-third' : 'floppy-disk'}
           iconSpin={pendingClose}
-          disabled={pendingClose || pendingSave || uiLocked}
+          disabled={
+            pendingClose || pendingSave || uiLocked || !!validationError
+          }
           onClick={onSaveAndClose}>
           Save &amp; Close
         </Button>
@@ -1865,6 +2440,241 @@ const TraitsPreviewColumn = ({
   </Flex>
 );
 
+const TraitsCatalogSection = ({
+  languageMode,
+  activeCategory,
+  languages,
+  visibleLanguages,
+  visibleTraits,
+  visibleTraitGroups,
+  resolvedCategoryId,
+  forceGroupsOpen,
+  controlsLocked,
+  openDetailTraitId,
+  search,
+  onSearch,
+  onToggleTrait,
+  onToggleTraitDetail,
+  onToggleLanguage,
+  onSetPreferredLanguage,
+}: Readonly<{
+  languageMode: boolean;
+  activeCategory: CharacterTraitCategory | null;
+  languages?: CharacterLanguagesPayload;
+  visibleLanguages: CharacterLanguageEntry[];
+  visibleTraits: CharacterTraitEntry[];
+  visibleTraitGroups: VisibleTraitGroup[];
+  resolvedCategoryId: TraitCategoryId;
+  forceGroupsOpen: boolean;
+  controlsLocked: boolean;
+  openDetailTraitId: string | null;
+  search: string;
+  onSearch: (value: string) => void;
+  onToggleTrait: (traitId: string) => void;
+  onToggleTraitDetail: (traitId: string) => void;
+  onToggleLanguage: (languageId: string) => void;
+  onSetPreferredLanguage: (languageId: string) => void;
+}>) => (
+  <Section
+    className="RogueStar__traitCatalog"
+    title={languageMode ? 'Languages' : activeCategory?.name || 'Traits'}
+    fill
+    scrollable
+    buttons={
+      <Box className="RogueStar__traitCatalogCount">
+        {languageMode ? (
+          <>
+            {visibleLanguages.length} languages ·{' '}
+            {languages?.selected_optional_count || 0}/
+            {languages?.optional_limit || 0} optional
+          </>
+        ) : (
+          <>
+            {visibleTraits.length} traits · {visibleTraitGroups.length} groups
+          </>
+        )}
+      </Box>
+    }>
+    <Box mb={1}>
+      <Input
+        fluid
+        value={search}
+        placeholder={languageMode ? 'Search languages…' : 'Search traits…'}
+        onInput={(_event, value) => onSearch(value)}
+      />
+    </Box>
+    {languageMode && visibleLanguages.length ? (
+      <Box className="RogueStar__traitGrid RogueStar__languageGrid">
+        {visibleLanguages.map((language) => (
+          <LanguageCatalogTile
+            key={language.id}
+            language={language}
+            controlsLocked={controlsLocked}
+            onToggle={onToggleLanguage}
+            onSetPreferred={onSetPreferredLanguage}
+          />
+        ))}
+      </Box>
+    ) : !languageMode && visibleTraits.length ? (
+      <Box className="RogueStar__traitGroups">
+        {visibleTraitGroups.map((group) => (
+          <TraitGroupSection
+            key={
+              resolvedCategoryId +
+              ':' +
+              group.id +
+              ':' +
+              (forceGroupsOpen ? 'filtered' : 'browse')
+            }
+            group={group}
+            category={resolvedCategoryId}
+            open={forceGroupsOpen}
+            controlsLocked={controlsLocked}
+            openDetailTraitId={openDetailTraitId}
+            onToggle={onToggleTrait}
+            onToggleDetail={onToggleTraitDetail}
+          />
+        ))}
+      </Box>
+    ) : (
+      <NoticeBox className="RogueStar__traitEmptyState">
+        <Icon name="search" /> No {languageMode ? 'languages' : 'traits'} match
+        this search.
+      </NoticeBox>
+    )}
+  </Section>
+);
+
+const TraitsCategoryAndSelectionSections = ({
+  draftedPayload,
+  activeCategoryId,
+  languageMode,
+  controlsLocked,
+  preferenceEditorOpen,
+  selectedTraitPopover,
+  openLanguageId,
+  languageSettingsError,
+  validationError,
+  onSelectCategory,
+  onToggleTraitPopover,
+  onToggleTrait,
+  onChangePreference,
+  onEditColorPreference,
+  onOpenPrefixEditor,
+  onResetPrefixes,
+  onToggleLanguageSettings,
+  onToggleLanguage,
+  onChangeLanguageCustomKey,
+  onSetPreferredLanguage,
+}: Readonly<{
+  draftedPayload: TraitsPayload;
+  activeCategoryId: TraitsCatalogCategoryId;
+  languageMode: boolean;
+  controlsLocked: boolean;
+  preferenceEditorOpen: boolean;
+  selectedTraitPopover: SelectedTraitPopoverState | null;
+  openLanguageId: string | null;
+  languageSettingsError: string | null;
+  validationError: string | null;
+  onSelectCategory: (categoryId: TraitsCatalogCategoryId) => void;
+  onToggleTraitPopover: (
+    traitId: string,
+    mode: SelectedTraitPopoverMode
+  ) => void;
+  onToggleTrait: (traitId: string) => void;
+  onChangePreference: (
+    traitId: string,
+    preferenceId: string,
+    value: TraitPreferenceValue
+  ) => void;
+  onEditColorPreference: (traitId: string, preferenceId: string) => void;
+  onOpenPrefixEditor: () => void;
+  onResetPrefixes: () => void;
+  onToggleLanguageSettings: (languageId: string) => void;
+  onToggleLanguage: (languageId: string) => void;
+  onChangeLanguageCustomKey: (languageId: string, value: string) => void;
+  onSetPreferredLanguage: (languageId: string) => void;
+}>) => (
+  <>
+    <Section title="Categories">
+      <Box className="RogueStar__traitCategoryList">
+        {draftedPayload.categories.map((category) => (
+          <TraitCategoryButton
+            key={category.id}
+            category={category}
+            positiveLimit={draftedPayload.max_traits}
+            selected={category.id === activeCategoryId}
+            onSelect={onSelectCategory}
+          />
+        ))}
+        {draftedPayload.languages ? (
+          <LanguageCategoryButton
+            languages={draftedPayload.languages}
+            selected={languageMode}
+            onSelect={() => onSelectCategory('languages')}
+          />
+        ) : null}
+      </Box>
+    </Section>
+    {languageMode && draftedPayload.languages ? (
+      <LanguageKeysSection
+        languages={draftedPayload.languages}
+        controlsLocked={controlsLocked}
+        onChange={onOpenPrefixEditor}
+        onReset={onResetPrefixes}
+      />
+    ) : null}
+    <Flex.Item grow minHeight={0}>
+      {languageMode && draftedPayload.languages ? (
+        <SelectedLanguagesSection
+          languages={draftedPayload.languages}
+          controlsLocked={controlsLocked}
+          openLanguageId={openLanguageId}
+          settingsError={languageSettingsError}
+          validationError={validationError}
+          onToggleSettings={onToggleLanguageSettings}
+          onRemove={onToggleLanguage}
+          onChangeCustomKey={onChangeLanguageCustomKey}
+          onClearCustomKey={(languageId) =>
+            onChangeLanguageCustomKey(languageId, '')
+          }
+          onSetPreferred={onSetPreferredLanguage}
+        />
+      ) : (
+        <SelectedTraitsSection
+          categories={draftedPayload.categories}
+          controlsLocked={controlsLocked}
+          openPopover={preferenceEditorOpen ? null : selectedTraitPopover}
+          onTogglePopover={onToggleTraitPopover}
+          onRemove={onToggleTrait}
+          onChangePreference={onChangePreference}
+          onEditColorPreference={onEditColorPreference}
+        />
+      )}
+    </Flex.Item>
+  </>
+);
+
+const LanguagePrefixEditorOverlay = ({
+  prefixes,
+  onChange,
+  onConfirm,
+  onCancel,
+}: Readonly<{
+  prefixes: string[] | null;
+  onChange: (prefixes: string[] | null) => void;
+  onConfirm: () => void;
+  onCancel: () => void;
+}>) =>
+  prefixes ? (
+    <LanguagePrefixEditor
+      prefixes={prefixes}
+      onChange={onChange}
+      onConfirm={onConfirm}
+      onCancel={onCancel}
+    />
+  ) : null;
+
 export const TraitsTab = (props: TraitsTabProps, context) => {
   const {
     data,
@@ -1898,7 +2708,7 @@ export const TraitsTab = (props: TraitsTabProps, context) => {
   const { act } = useBackend<CustomMarkingDesignerData>(context);
   const stateToken = data.state_token || 'session';
   const [activeCategoryId, setActiveCategoryId] =
-    useLocalState<TraitCategoryId>(
+    useLocalState<TraitsCatalogCategoryId>(
       context,
       `customMarkingTraitsCategory-${stateToken}`,
       'positive'
@@ -1923,6 +2733,19 @@ export const TraitsTab = (props: TraitsTabProps, context) => {
       `customMarkingTraitsColorPreferenceEditor-${stateToken}`,
       null
     );
+  const [openLanguageId, setOpenLanguageId] = useLocalState<string | null>(
+    context,
+    `customMarkingSelectedLanguage-${stateToken}`,
+    null
+  );
+  const [languageSettingsError, setLanguageSettingsError] = useLocalState<
+    string | null
+  >(context, `customMarkingLanguageSettingsError-${stateToken}`, null);
+  const [prefixEditor, setPrefixEditor] = useLocalState<string[] | null>(
+    context,
+    `customMarkingLanguagePrefixEditor-${stateToken}`,
+    null
+  );
 
   const payload = data.traits_payload || null;
   const revisionMatches =
@@ -1960,13 +2783,20 @@ export const TraitsTab = (props: TraitsTabProps, context) => {
     activeDraft
   );
   const previewScale = resolveTraitsPreviewScale(resolvedPayload, activeDraft);
+  const validationError = resolveLanguagesDraftValidationError(
+    resolvedPayload,
+    activeDraft
+  );
   const transientLock = !!data.ui_locked || pendingSave || pendingClose;
-  const controlsLocked = transientLock || !!preferenceEditor;
+  const controlsLocked = transientLock || !!preferenceEditor || !!prefixEditor;
 
-  const activeCategory =
-    draftedPayload.categories.find(
-      (category) => category.id === activeCategoryId
-    ) || draftedPayload.categories[0];
+  const languageMode =
+    activeCategoryId === 'languages' && !!draftedPayload.languages;
+  const activeCategory = languageMode
+    ? null
+    : draftedPayload.categories.find(
+        (category) => category.id === activeCategoryId
+      ) || draftedPayload.categories[0];
   const resolvedCategoryId = activeCategory?.id || 'neutral';
   const searchNeedle = search.trim().toLowerCase();
   const visibleTraits = (activeCategory?.traits || []).filter((trait) => {
@@ -1984,6 +2814,16 @@ export const TraitsTab = (props: TraitsTabProps, context) => {
   const visibleTraitGroups = buildVisibleTraitGroups(
     visibleTraits,
     resolvedCategoryId
+  );
+  const visibleLanguages = sortLanguagesAlphabetically(
+    (draftedPayload.languages?.entries || []).filter((language) => {
+      if (!searchNeedle) {
+        return true;
+      }
+      return [language.name, language.description].some((value) =>
+        value.toLowerCase().includes(searchNeedle)
+      );
+    })
   );
   const forceGroupsOpen = !!searchNeedle;
 
@@ -2012,6 +2852,8 @@ export const TraitsTab = (props: TraitsTabProps, context) => {
     }
     setOpenDetailTraitId(null);
     setSelectedTraitPopover(null);
+    setOpenLanguageId(null);
+    setLanguageSettingsError(null);
     commitDraft(
       updateTraitsDraftSelection(activeDraft, traitId, !trait.selected)
     );
@@ -2019,6 +2861,8 @@ export const TraitsTab = (props: TraitsTabProps, context) => {
 
   const handleToggleDetail = (traitId: string) => {
     setSelectedTraitPopover(null);
+    setOpenLanguageId(null);
+    setLanguageSettingsError(null);
     setOpenDetailTraitId(openDetailTraitId === traitId ? null : traitId);
   };
 
@@ -2030,6 +2874,8 @@ export const TraitsTab = (props: TraitsTabProps, context) => {
       return;
     }
     setOpenDetailTraitId(null);
+    setOpenLanguageId(null);
+    setLanguageSettingsError(null);
     setSelectedTraitPopover(
       selectedTraitPopover?.traitId === traitId &&
         selectedTraitPopover.mode === mode
@@ -2099,6 +2945,128 @@ export const TraitsTab = (props: TraitsTabProps, context) => {
     });
   };
 
+  const findDraftedLanguage = (languageId: string) =>
+    draftedPayload.languages?.entries.find(
+      (language) => language.id === languageId
+    ) || null;
+
+  const handleToggleLanguage = (languageId: string) => {
+    if (controlsLocked || !draftedPayload.languages) {
+      return;
+    }
+    const language = findDraftedLanguage(languageId);
+    if (
+      !language ||
+      (!language.selectable && !language.selected) ||
+      (!language.selected && language.disabled_reason)
+    ) {
+      return;
+    }
+    setOpenDetailTraitId(null);
+    setSelectedTraitPopover(null);
+    setOpenLanguageId(null);
+    setLanguageSettingsError(null);
+    commitDraft(
+      updateLanguageDraftSelection(
+        activeDraft,
+        languageId,
+        !language.selected,
+        draftedPayload.languages.preferred_fallback
+      )
+    );
+  };
+
+  const handleSetPreferredLanguage = (languageId: string) => {
+    if (controlsLocked) {
+      return;
+    }
+    const language = findDraftedLanguage(languageId);
+    if (!language?.preferred_eligible) {
+      return;
+    }
+    setLanguageSettingsError(null);
+    commitDraft(updateLanguageDraftPreferred(activeDraft, languageId));
+  };
+
+  const handleToggleLanguageSettings = (languageId: string) => {
+    if (controlsLocked) {
+      return;
+    }
+    setOpenDetailTraitId(null);
+    setSelectedTraitPopover(null);
+    setLanguageSettingsError(null);
+    setOpenLanguageId(openLanguageId === languageId ? null : languageId);
+  };
+
+  const handleChangeLanguageCustomKey = (languageId: string, value: string) => {
+    if (controlsLocked) {
+      return;
+    }
+    const language = findDraftedLanguage(languageId);
+    if (!language?.selected) {
+      return;
+    }
+    if (value && !/^[A-Za-z0-9]$/.test(value)) {
+      setLanguageSettingsError('Use one letter or number.');
+      return;
+    }
+    const collision = Object.entries(
+      activeDraft.languages?.custom_keys || {}
+    ).find(
+      ([otherLanguageId, customKey]) =>
+        otherLanguageId !== languageId && customKey === value
+    );
+    if (value && collision) {
+      const otherLanguage = findDraftedLanguage(collision[0]);
+      setLanguageSettingsError(
+        `“${value}” is already assigned to ${
+          otherLanguage?.name || 'another language'
+        }.`
+      );
+      return;
+    }
+    setLanguageSettingsError(null);
+    commitDraft(updateLanguageDraftCustomKey(activeDraft, languageId, value));
+  };
+
+  const handleOpenPrefixEditor = () => {
+    if (controlsLocked || !draftedPayload.languages) {
+      return;
+    }
+    const prefixes = draftedPayload.languages.language_prefixes.slice(0, 3);
+    while (prefixes.length < 3) {
+      prefixes.push('');
+    }
+    setOpenLanguageId(null);
+    setLanguageSettingsError(null);
+    setPrefixEditor(prefixes);
+  };
+
+  const handleConfirmPrefixes = () => {
+    const prefixes = prefixEditor?.filter((prefix) => prefix.length > 0) || [];
+    if (
+      !prefixes.length ||
+      prefixes.length > 3 ||
+      !prefixes.every(isLanguagePrefixValid)
+    ) {
+      return;
+    }
+    commitDraft(updateLanguageDraftPrefixes(activeDraft, prefixes));
+    setPrefixEditor(null);
+  };
+
+  const handleResetPrefixes = () => {
+    if (controlsLocked || !draftedPayload.languages) {
+      return;
+    }
+    commitDraft(
+      updateLanguageDraftPrefixes(
+        activeDraft,
+        draftedPayload.languages.default_language_prefixes
+      )
+    );
+  };
+
   const preferenceEditorTrait = preferenceEditor
     ? findDraftedTrait(preferenceEditor.traitId)
     : null;
@@ -2137,6 +3105,20 @@ export const TraitsTab = (props: TraitsTabProps, context) => {
   const previewBackgroundTileHeight = resolvedCanvasBackground?.asset?.height
     ? resolvedCanvasBackground.asset.height * canvasBackgroundScale
     : undefined;
+  const handleSearch = (value: string) => {
+    setOpenDetailTraitId(null);
+    setSelectedTraitPopover(null);
+    setOpenLanguageId(null);
+    setLanguageSettingsError(null);
+    setSearch(value);
+  };
+  const handleSelectCategory = (categoryId: TraitsCatalogCategoryId) => {
+    setOpenDetailTraitId(null);
+    setSelectedTraitPopover(null);
+    setOpenLanguageId(null);
+    setLanguageSettingsError(null);
+    setActiveCategoryId(categoryId);
+  };
 
   return (
     <Box
@@ -2146,53 +3128,24 @@ export const TraitsTab = (props: TraitsTabProps, context) => {
       minHeight="100%">
       <Flex direction="row" gap={1} wrap={false} height="100%">
         <Flex.Item basis="840px" shrink={0} minWidth={0}>
-          <Section
-            className="RogueStar__traitCatalog"
-            title={activeCategory?.name || 'Traits'}
-            fill
-            scrollable
-            buttons={
-              <Box className="RogueStar__traitCatalogCount">
-                {visibleTraits.length} traits · {visibleTraitGroups.length}{' '}
-                groups
-              </Box>
-            }>
-            <Box mb={1}>
-              <Input
-                fluid
-                value={search}
-                placeholder="Search traits…"
-                onInput={(_event, value) => {
-                  setOpenDetailTraitId(null);
-                  setSelectedTraitPopover(null);
-                  setSearch(value);
-                }}
-              />
-            </Box>
-            {visibleTraits.length ? (
-              <Box className="RogueStar__traitGroups">
-                {visibleTraitGroups.map((group) => (
-                  <TraitGroupSection
-                    key={`${resolvedCategoryId}:${group.id}:${
-                      forceGroupsOpen ? 'filtered' : 'browse'
-                    }`}
-                    group={group}
-                    category={resolvedCategoryId}
-                    open={forceGroupsOpen}
-                    controlsLocked={controlsLocked}
-                    openDetailTraitId={openDetailTraitId}
-                    onToggle={handleToggle}
-                    onToggleDetail={handleToggleDetail}
-                  />
-                ))}
-              </Box>
-            ) : (
-              <NoticeBox className="RogueStar__traitEmptyState">
-                <Icon name="search" /> No traits match this view. Try a
-                different search or show all traits.
-              </NoticeBox>
-            )}
-          </Section>
+          <TraitsCatalogSection
+            languageMode={languageMode}
+            activeCategory={activeCategory}
+            languages={draftedPayload.languages}
+            visibleLanguages={visibleLanguages}
+            visibleTraits={visibleTraits}
+            visibleTraitGroups={visibleTraitGroups}
+            resolvedCategoryId={resolvedCategoryId}
+            forceGroupsOpen={forceGroupsOpen}
+            controlsLocked={controlsLocked}
+            openDetailTraitId={openDetailTraitId}
+            search={search}
+            onSearch={handleSearch}
+            onToggleTrait={handleToggle}
+            onToggleTraitDetail={handleToggleDetail}
+            onToggleLanguage={handleToggleLanguage}
+            onSetPreferredLanguage={handleSetPreferredLanguage}
+          />
         </Flex.Item>
         <Flex.Item basis="418px" shrink={0}>
           <Flex direction="column" gap={1} height="100%">
@@ -2202,38 +3155,33 @@ export const TraitsTab = (props: TraitsTabProps, context) => {
               uiLocked={!!data.ui_locked}
               dirty={dirty}
               saveError={saveError}
+              validationError={validationError}
               onSave={onSave}
               onSaveAndClose={onSaveAndClose}
               onDiscardAndClose={onDiscardAndClose}
             />
-            <Section title="Trait Categories">
-              <Box className="RogueStar__traitCategoryList">
-                {draftedPayload.categories.map((category) => (
-                  <TraitCategoryButton
-                    key={category.id}
-                    category={category}
-                    positiveLimit={draftedPayload.max_traits}
-                    selected={category.id === activeCategory?.id}
-                    onSelect={(categoryId) => {
-                      setOpenDetailTraitId(null);
-                      setSelectedTraitPopover(null);
-                      setActiveCategoryId(categoryId);
-                    }}
-                  />
-                ))}
-              </Box>
-            </Section>
-            <Flex.Item grow minHeight={0}>
-              <SelectedTraitsSection
-                categories={draftedPayload.categories}
-                controlsLocked={controlsLocked}
-                openPopover={preferenceEditor ? null : selectedTraitPopover}
-                onTogglePopover={handleToggleSelectedTraitPopover}
-                onRemove={handleToggle}
-                onChangePreference={handleChangePreference}
-                onEditColorPreference={handleEditColorPreference}
-              />
-            </Flex.Item>
+            <TraitsCategoryAndSelectionSections
+              draftedPayload={draftedPayload}
+              activeCategoryId={activeCategoryId}
+              languageMode={languageMode}
+              controlsLocked={controlsLocked}
+              preferenceEditorOpen={!!preferenceEditor}
+              selectedTraitPopover={selectedTraitPopover}
+              openLanguageId={openLanguageId}
+              languageSettingsError={languageSettingsError}
+              validationError={validationError}
+              onSelectCategory={handleSelectCategory}
+              onToggleTraitPopover={handleToggleSelectedTraitPopover}
+              onToggleTrait={handleToggle}
+              onChangePreference={handleChangePreference}
+              onEditColorPreference={handleEditColorPreference}
+              onOpenPrefixEditor={handleOpenPrefixEditor}
+              onResetPrefixes={handleResetPrefixes}
+              onToggleLanguageSettings={handleToggleLanguageSettings}
+              onToggleLanguage={handleToggleLanguage}
+              onChangeLanguageCustomKey={handleChangeLanguageCustomKey}
+              onSetPreferredLanguage={handleSetPreferredLanguage}
+            />
           </Flex>
         </Flex.Item>
         <Flex.Item grow>
@@ -2277,6 +3225,12 @@ export const TraitsTab = (props: TraitsTabProps, context) => {
           onCancel={() => setPreferenceEditor(null)}
         />
       ) : null}
+      <LanguagePrefixEditorOverlay
+        prefixes={prefixEditor}
+        onChange={setPrefixEditor}
+        onConfirm={handleConfirmPrefixes}
+        onCancel={() => setPrefixEditor(null)}
+      />
     </Box>
   );
 };
