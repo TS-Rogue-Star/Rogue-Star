@@ -218,3 +218,33 @@
 	has_custom_open_sprites = TRUE
 	has_vore_belly_sprites = FALSE
 	rest_sprite_options = list("Default", "Bellyup")
+
+/datum/robot_sprite/dogborg/tall/dullahanjanitormodule
+	module_type = "Janitor"
+	sprite_icon = 'icons/mob/dullahanborg/dullahan_jani.dmi'
+
+/datum/robot_sprite/dogborg/tall/dullahanjanitormodule/do_equipment_glamour(var/obj/item/weapon/robot_module/module)
+	if(!has_custom_equipment_sprites)
+		return
+
+	..()
+
+	var/obj/item/device/dogborg/sleeper/compactor/DC = locate() in module.modules
+	if(DC)
+		DC.icon_state = "compactor"
+
+/datum/robot_sprite/dogborg/tall/dullahanjanitormodule/dullahan_janitor
+	name = "Dullahan"
+	sprite_icon_state = "dullahanjani"
+	has_eye_light_sprites = TRUE
+	has_custom_open_sprites = TRUE
+	has_vore_belly_sprites = TRUE
+	rest_sprite_options = list("Default", "Sit")
+
+/datum/robot_sprite/dogborg/tall/dullahanjanitormodule/dullahan_janitoralt
+	name = "Dullahan v2"
+	sprite_icon_state = "dullahanjani_alt"
+	has_eye_light_sprites = TRUE
+	has_custom_open_sprites = TRUE
+	has_vore_belly_sprites = TRUE
+	rest_sprite_options = list("Default", "Sit")
