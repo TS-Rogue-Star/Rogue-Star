@@ -87,6 +87,7 @@ export type PreviewLayerRasterDependency =
   | 'body-relative'
   | 'body-direct'
   | 'body-eye-fallback'
+  | 'eye-direct'
   | 'synth-direct';
 
 export type PreviewLayerColorTransform = {

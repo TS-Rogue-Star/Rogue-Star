@@ -209,6 +209,7 @@
 #include "code\_onclick\hud\soulcatcher_guest.dm"
 #include "code\_onclick\hud\spell_screen_objects.dm"
 #include "code\_Rogue-Star_helpers_and_defines\mobs.dm"
+#include "code\_Rogue-Star_helpers_and_defines\substitute.dm"
 #include "code\_Rogue-Star_helpers_and_defines\teleport.dm"
 #include "code\_Rogue-Star_helpers_and_defines\type_helpers.dm"
 #include "code\ATMOSPHERICS\_atmos_setup.dm"

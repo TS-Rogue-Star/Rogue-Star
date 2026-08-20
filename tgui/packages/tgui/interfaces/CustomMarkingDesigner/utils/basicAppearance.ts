@@ -13,10 +13,12 @@ import type {
   BasicAppearancePayload,
   BasicAppearanceState,
   BodyMarkingsPayload,
+  CustomPreviewOverrideMap,
 } from '../types';
 import {
   applyProstheticsToPreviewSources,
   cloneLimbOverrideState,
+  resolveBiologicalGenderSuffix,
 } from './prosthetics';
 
 export type BasicPreviewSourceSelection = Readonly<{
@@ -24,20 +26,248 @@ export type BasicPreviewSourceSelection = Readonly<{
   sources: NonNullable<BasicAppearancePayload['preview_sources']> | null;
   assetRegistry: IconAssetRegistry | null;
   revision: number;
-  sourceKey: 'basic' | 'basic-alt';
+  sourceKey:
+    | 'basic'
+    | 'basic-alt'
+    | 'basic-gender-alt'
+    | 'basic-gender-alt-digitigrade';
 }>;
+
+type BasicPreviewSourceVariant = Readonly<{
+  sources: BasicAppearancePayload['preview_sources'];
+  assetRegistry: IconAssetRegistry | undefined;
+  revision: number | undefined;
+  sourceKey: BasicPreviewSourceSelection['sourceKey'];
+}>;
+
+const resolveBasicPreviewSourceVariant = (
+  payload: BasicAppearancePayload | null | undefined,
+  usesGenderAlt: boolean,
+  usesDigitigradeAlt: boolean
+): BasicPreviewSourceVariant => {
+  if (usesGenderAlt && usesDigitigradeAlt) {
+    return {
+      sources: payload?.preview_sources_gender_alt_digitigrade,
+      assetRegistry: payload?.preview_asset_registry_gender_alt_digitigrade,
+      revision: payload?.preview_revision_gender_alt_digitigrade,
+      sourceKey: 'basic-gender-alt-digitigrade',
+    };
+  }
+  if (usesGenderAlt) {
+    return {
+      sources: payload?.preview_sources_gender_alt,
+      assetRegistry: payload?.preview_asset_registry_gender_alt,
+      revision: payload?.preview_revision_gender_alt,
+      sourceKey: 'basic-gender-alt',
+    };
+  }
+  if (usesDigitigradeAlt) {
+    return {
+      sources: payload?.preview_sources_alt,
+      assetRegistry: payload?.preview_asset_registry_alt,
+      revision: payload?.preview_revision_alt,
+      sourceKey: 'basic-alt',
+    };
+  }
+  return {
+    sources: payload?.preview_sources,
+    assetRegistry: payload?.preview_asset_registry,
+    revision: payload?.preview_revision,
+    sourceKey: 'basic',
+  };
+};
+
+const normalizeBiologicalGenderOptions = (options?: string[]) =>
+  Array.isArray(options)
+    ? options.filter(
+        (option, index): option is string =>
+          typeof option === 'string' &&
+          !!option.length &&
+          options.indexOf(option) === index
+      )
+    : [];
+
+const hasCyborgTorso = (state?: BasicAppearanceState | null) =>
+  state?.limbs.external?.torso?.status === 'cyborg';
+
+export const resolveBasicBiologicalGenderOptions = (
+  payload: BasicAppearancePayload | null | undefined,
+  state?: BasicAppearanceState | null
+): string[] => {
+  const payloadOptions = normalizeBiologicalGenderOptions(
+    payload?.biological_genders
+  );
+  if (!state) {
+    return payloadOptions;
+  }
+  const baseOptions = normalizeBiologicalGenderOptions(
+    payload?.base_biological_genders
+  );
+  const draftHasCyborgTorso = hasCyborgTorso(state);
+  let resolved = baseOptions.length ? baseOptions : payloadOptions;
+  if (
+    !baseOptions.length &&
+    !draftHasCyborgTorso &&
+    payload?.prosthetic_context?.external?.torso?.status === 'cyborg'
+  ) {
+    resolved = resolved.filter((option) => option !== 'neuter');
+  }
+  if (draftHasCyborgTorso && !resolved.includes('neuter')) {
+    return [...resolved, 'neuter'];
+  }
+  return resolved;
+};
+
+export const resolveBasicBiologicalGender = (
+  biologicalGenders: readonly string[],
+  requestedGender: string
+) =>
+  biologicalGenders.includes(requestedGender)
+    ? requestedGender
+    : biologicalGenders[0] || requestedGender;
+
+export const shouldInvalidateSpeciesPayloadForBiologicalGenderChange = (
+  previousGender: string | null | undefined,
+  nextGender: string | null | undefined
+) =>
+  resolveBiologicalGenderSuffix(previousGender) !==
+  resolveBiologicalGenderSuffix(nextGender);
+
+const mergePreviewSourcesWithCustomOverrides = (
+  sources: BasicAppearancePayload['preview_sources'],
+  overrides: CustomPreviewOverrideMap
+) => {
+  if (!Array.isArray(sources) || !sources.length) {
+    return { sources, changed: false };
+  }
+  let changed = false;
+  const nextSources = sources.map((source) => {
+    if (!source) {
+      return source;
+    }
+    const override = overrides[source.dir];
+    if (!override) {
+      return source;
+    }
+    const customParts = override.custom_parts || null;
+    const partOrder = override.part_order || null;
+    if (!customParts && !partOrder) {
+      return source;
+    }
+    changed = true;
+    return {
+      ...source,
+      ...(customParts ? { custom_parts: customParts } : {}),
+      ...(partOrder ? { part_order: partOrder } : {}),
+    };
+  });
+  return { sources: nextSources, changed };
+};
+
+export const applyCustomPreviewOverridesToBasicPayload = (
+  payload: BasicAppearancePayload,
+  overrides: CustomPreviewOverrideMap
+): BasicAppearancePayload => {
+  const primary = mergePreviewSourcesWithCustomOverrides(
+    payload.preview_sources,
+    overrides
+  );
+  const alt = mergePreviewSourcesWithCustomOverrides(
+    payload.preview_sources_alt,
+    overrides
+  );
+  const genderAlt = mergePreviewSourcesWithCustomOverrides(
+    payload.preview_sources_gender_alt,
+    overrides
+  );
+  const genderAltDigitigrade = mergePreviewSourcesWithCustomOverrides(
+    payload.preview_sources_gender_alt_digitigrade,
+    overrides
+  );
+  if (
+    !primary.changed &&
+    !alt.changed &&
+    !genderAlt.changed &&
+    !genderAltDigitigrade.changed
+  ) {
+    return payload;
+  }
+  return {
+    ...payload,
+    ...(primary.changed
+      ? {
+          preview_sources: primary.sources,
+          preview_revision: (payload.preview_revision || 0) + 1,
+        }
+      : {}),
+    ...(alt.changed
+      ? {
+          preview_sources_alt: alt.sources,
+          preview_revision_alt: (payload.preview_revision_alt || 0) + 1,
+        }
+      : {}),
+    ...(genderAlt.changed
+      ? {
+          preview_sources_gender_alt: genderAlt.sources,
+          preview_revision_gender_alt:
+            (payload.preview_revision_gender_alt || 0) + 1,
+        }
+      : {}),
+    ...(genderAltDigitigrade.changed
+      ? {
+          preview_sources_gender_alt_digitigrade: genderAltDigitigrade.sources,
+          preview_revision_gender_alt_digitigrade:
+            (payload.preview_revision_gender_alt_digitigrade || 0) + 1,
+        }
+      : {}),
+  };
+};
 
 export const resolveBasicPreviewSourceSelection = (
   payload: BasicAppearancePayload | null | undefined,
   digitigrade: boolean,
-  state?: BasicAppearanceState | null
+  state?: BasicAppearanceState | null,
+  biologicalGender?: string | null
 ): BasicPreviewSourceSelection => {
-  const usesAltSources =
-    Array.isArray(payload?.preview_sources_alt) &&
-    digitigrade !== !!payload?.digitigrade;
-  const rawSources = usesAltSources
-    ? payload?.preview_sources_alt
-    : payload?.preview_sources;
+  const requestedGender =
+    biologicalGender ?? state?.biological_gender ?? payload?.biological_gender;
+  const payloadGenderSuffix =
+    payload?.preview_gender_suffix ||
+    resolveBiologicalGenderSuffix(payload?.biological_gender);
+  const usesGenderAlt =
+    resolveBiologicalGenderSuffix(requestedGender) !== payloadGenderSuffix;
+  const usesDigitigradeAlt = digitigrade !== !!payload?.digitigrade;
+  const requestedVariant = resolveBasicPreviewSourceVariant(
+    payload,
+    usesGenderAlt,
+    usesDigitigradeAlt
+  );
+  const sameGenderFallback = resolveBasicPreviewSourceVariant(
+    payload,
+    usesGenderAlt,
+    false
+  );
+  const sameLegFallback = resolveBasicPreviewSourceVariant(
+    payload,
+    false,
+    usesDigitigradeAlt
+  );
+  const primaryVariant = resolveBasicPreviewSourceVariant(
+    payload,
+    false,
+    false
+  );
+  const selectedVariant =
+    Array.isArray(requestedVariant.sources) && requestedVariant.sources.length
+      ? requestedVariant
+      : Array.isArray(sameGenderFallback.sources) &&
+          sameGenderFallback.sources.length
+        ? sameGenderFallback
+        : Array.isArray(sameLegFallback.sources) &&
+            sameLegFallback.sources.length
+          ? sameLegFallback
+          : primaryVariant;
+  const rawSources = selectedVariant.sources;
   const sources = state
     ? applyProstheticsToPreviewSources(
         Array.isArray(rawSources) && rawSources.length ? rawSources : null,
@@ -48,15 +278,11 @@ export const resolveBasicPreviewSourceSelection = (
       ? rawSources
       : null;
   return {
-    usesAltSources,
+    usesAltSources: selectedVariant.sourceKey !== 'basic',
     sources,
-    assetRegistry: usesAltSources
-      ? payload?.preview_asset_registry_alt || null
-      : payload?.preview_asset_registry || null,
-    revision: usesAltSources
-      ? (payload?.preview_revision_alt ?? payload?.preview_revision ?? 0)
-      : (payload?.preview_revision ?? 0),
-    sourceKey: usesAltSources ? 'basic-alt' : 'basic',
+    assetRegistry: selectedVariant.assetRegistry || null,
+    revision: selectedVariant.revision ?? payload?.preview_revision ?? 0,
+    sourceKey: selectedVariant.sourceKey,
   };
 };
 
@@ -64,7 +290,13 @@ export type SharedPreviewSourceSelection = Readonly<{
   sources: NonNullable<BasicAppearancePayload['preview_sources']> | null;
   assetRegistry: IconAssetRegistry | null;
   revision: number;
-  sourceKey: 'basic' | 'basic-alt' | 'body' | 'none';
+  sourceKey:
+    | 'basic'
+    | 'basic-alt'
+    | 'basic-gender-alt'
+    | 'basic-gender-alt-digitigrade'
+    | 'body'
+    | 'none';
   payloadSpeciesId: string | null;
   payloadIconBaseId: string | null;
 }>;
@@ -155,6 +387,7 @@ export const buildBasicAppearanceGalleryContextSignature = (
     galleryType,
     galleryType === 'hair' ? activeStyle : state.hair_style || 'hair-none',
     state.hair_color || 'hair-color',
+    state.biological_gender || 'male',
     galleryType === 'gradient'
       ? activeStyle
       : state.hair_gradient_style || 'gradient-none',
@@ -260,6 +493,11 @@ export const buildBasicStateFromPayload = (
       : '';
   const digitigradeAllowed = payload?.digitigrade_allowed !== false;
   return {
+    biological_gender:
+      typeof payload?.biological_gender === 'string' &&
+      payload.biological_gender.length
+        ? payload.biological_gender
+        : 'male',
     digitigrade: digitigradeAllowed && !!payload?.digitigrade,
     blood_type:
       typeof payload?.blood_type === 'string' && payload.blood_type.length

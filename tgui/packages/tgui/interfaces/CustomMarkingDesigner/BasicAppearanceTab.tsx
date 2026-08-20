@@ -71,6 +71,7 @@ import {
   buildProstheticPreviewLayerGroups,
   buildProstheticSaveParams,
   buildProstheticShowcaseState,
+  buildProstheticShowcaseAppearanceStructureSignature,
   buildProstheticTileBaseCacheSignature,
   buildBodyMarkingsLoadParams,
   buildPartPaintPresenceMap,
@@ -89,8 +90,9 @@ import {
   PROSTHETIC_COLOR_MODE_DETAILS,
   PROSTHETIC_GALLERY_COMPOSITE_PART,
   PROSTHETIC_TARGET_LABELS,
-  recolorGrid,
   resolveBasicPreviewSourceSelection,
+  resolveBasicBiologicalGender,
+  resolveBasicBiologicalGenderOptions,
   resolveBlendMode,
   resolveEditableProstheticTargets,
   resolveGalleryTilePreviewStates,
@@ -107,9 +109,11 @@ import {
   resolveProstheticBodyColorPasses,
   resolveProstheticModelColorMode,
   resolveProstheticSynthColorPasses,
+  resolveProstheticContextForBiologicalGender,
   resolveSelectedSpeciesPreviewSources,
   resetEditableProstheticSettings,
   shouldIncludeSpeciesTailInGalleryTile,
+  shouldInvalidateSpeciesPayloadForBiologicalGenderChange,
   shouldRetainBodyMarkingBaseLayer,
   splitPreviewOverlayLayers,
   tintGrid,
@@ -697,6 +701,12 @@ export const buildBasicPayloadSignature = (
   const altRevision = `${payload.preview_signature_alt || ''}@${
     payload.preview_revision_alt || 0
   }`;
+  const genderAltRevision = `${payload.preview_signature_gender_alt || ''}@${
+    payload.preview_revision_gender_alt || 0
+  }`;
+  const genderAltDigitigradeRevision = `${
+    payload.preview_signature_gender_alt_digitigrade || ''
+  }@${payload.preview_revision_gender_alt_digitigrade || 0}`;
   const size = `${payload.preview_width || 0}x${payload.preview_height || 0}`;
   const digitigrade = payload.digitigrade ? 'd' : 'p';
   const digitigradeAllowed = payload.digitigrade_allowed === false ? '0' : '1';
@@ -714,7 +724,12 @@ export const buildBasicPayloadSignature = (
   const prostheticSignature = payload.prosthetic_context
     ? JSON.stringify(payload.prosthetic_context)
     : '';
-  return `${species}:${revision}:${altRevision}:${size}:${digitigrade}:${digitigradeAllowed}:${defsSignature}:${prostheticSignature}`;
+  const biologicalGender = `${payload.biological_gender || ''}:${
+    payload.preview_gender_suffix || ''
+  }:${(payload.base_biological_genders || []).join('|')}:${(
+    payload.biological_genders || []
+  ).join('|')}`;
+  return `${species}:${revision}:${altRevision}:${genderAltRevision}:${genderAltDigitigradeRevision}:${size}:${digitigrade}:${digitigradeAllowed}:${biologicalGender}:${defsSignature}:${prostheticSignature}`;
 };
 
 const resolveSelectedDef = <T extends { id: string }>(
@@ -1424,7 +1439,6 @@ const BasicAppearanceSettingsSection = ({
   const hairColor = normalizeHex(state.hair_color) || '#ffffff';
   const gradientColor = normalizeHex(state.hair_gradient_color) || '#ffffff';
   const facialHairColor = normalizeHex(state.facial_hair_color) || '#ffffff';
-  const eyesColor = normalizeHex(state.eye_color) || '#ffffff';
 
   const hairColorable = !!hairDef?.do_colouration;
   const facialHairColorable = !!facialHairDef?.do_colouration;
@@ -1541,17 +1555,6 @@ const BasicAppearanceSettingsSection = ({
               disabled: uiLocked,
             })}
           </LabeledList.Item>
-          <LabeledList.Item label="Eye Color">
-            <Button
-              className={CHIP_BUTTON_CLASS}
-              icon="tint"
-              disabled={uiLocked}
-              selected={activeColorTarget?.type === 'eyes'}
-              onClick={() => setColorTarget({ type: 'eyes' })}>
-              <ColorBox mr={0.5} color={eyesColor} />
-              Color
-            </Button>
-          </LabeledList.Item>
         </LabeledList>
       </Flex>
     </Section>
@@ -1561,6 +1564,7 @@ const BasicAppearanceSettingsSection = ({
 type ProstheticSettingsSectionProps = Readonly<{
   state: BasicAppearanceState;
   context: NonNullable<BasicAppearancePayload['prosthetic_context']>;
+  biologicalGenders: string[];
   bloodTypes: string[];
   bloodReagents: string[];
   activeTargets: ProstheticTarget[];
@@ -1571,6 +1575,7 @@ type ProstheticSettingsSectionProps = Readonly<{
   setActiveTargets: (targets: ProstheticTarget[]) => void;
   applyExternalSelection: (id: string) => void;
   setInternalSelection: (target: InternalOrganId, state: string) => void;
+  setBiologicalGender: (biologicalGender: string) => void;
   setBloodType: (bloodType: string) => void;
   setBloodReagent: (bloodReagent: string) => void;
   resetBloodColor: () => void;
@@ -1597,6 +1602,11 @@ const PROSTHETIC_SELECTION_SUMMARY_PARTS: Array<{
   { part: 'r_leg', label: 'Right Leg' },
   { part: 'r_foot', label: 'Right Foot' },
 ];
+
+const formatBiologicalGenderLabel = (biologicalGender: string) =>
+  biologicalGender.length
+    ? biologicalGender.charAt(0).toUpperCase() + biologicalGender.slice(1)
+    : 'Unknown';
 
 type ProstheticSelectionSummaryGroup = {
   id: string;
@@ -1682,6 +1692,7 @@ export const buildProstheticSelectionSummary = (
 const ProstheticSettingsSection = ({
   state,
   context,
+  biologicalGenders,
   bloodTypes,
   bloodReagents,
   activeTargets,
@@ -1692,6 +1703,7 @@ const ProstheticSettingsSection = ({
   setActiveTargets,
   applyExternalSelection,
   setInternalSelection,
+  setBiologicalGender,
   setBloodType,
   setBloodReagent,
   resetBloodColor,
@@ -1723,7 +1735,12 @@ const ProstheticSettingsSection = ({
   );
   const synthColor = normalizeHex(state.synth_color) || '#ffffff';
   const bodyColor = normalizeHex(state.body_color) || '#ffffff';
+  const eyesColor = normalizeHex(state.eye_color) || '#ffffff';
   const bloodColor = normalizeHex(state.blood_color) || '#a10808';
+  const biologicalGenderOptions = biologicalGenders.map((biologicalGender) => ({
+    displayText: formatBiologicalGenderLabel(biologicalGender),
+    value: biologicalGender,
+  }));
   const digitigradeEnabled = digitigradeAllowed && !!state.digitigrade;
   const digitigradeTooltip = !digitigradeAllowed
     ? 'Not available for the selected species.'
@@ -1764,6 +1781,41 @@ const ProstheticSettingsSection = ({
                 <ColorBox mr={0.5} color={bodyColor} />
                 Choose
               </Button>
+            </Box>
+            <Box className="RogueStar__physiologyControl">
+              <Box className="RogueStar__physiologyLabel">Eye Color</Box>
+              <Button
+                className={`${CHIP_BUTTON_CLASS} RogueStar__physiologyToggle`}
+                fluid
+                icon="tint"
+                disabled={uiLocked}
+                selected={activeColorTarget?.type === 'eyes'}
+                onClick={() => setColorTarget({ type: 'eyes' })}>
+                <ColorBox mr={0.5} color={eyesColor} />
+                Choose
+              </Button>
+            </Box>
+            <Box className="RogueStar__physiologyControl">
+              <Box className="RogueStar__physiologyLabel">Biological Sex</Box>
+              <Dropdown
+                key={state.biological_gender}
+                className={`${CHIP_BUTTON_CLASS} RogueStar__physiologyDropdown`}
+                color="transparent"
+                dropdownStyle="rogue-star"
+                controlContentClassName="Button__content RogueStar__physiologyDropdownContent"
+                icon="venus-mars"
+                width="100%"
+                options={biologicalGenderOptions}
+                selected={state.biological_gender}
+                displayText={formatBiologicalGenderLabel(
+                  state.biological_gender
+                )}
+                disabled={uiLocked || biologicalGenderOptions.length <= 1}
+                onSelected={(biologicalGender) =>
+                  typeof biologicalGender === 'string' &&
+                  setBiologicalGender(biologicalGender)
+                }
+              />
             </Box>
             <Box className="RogueStar__physiologyControl">
               <Box className="RogueStar__physiologyLabel">Leg Shape</Box>
@@ -2154,6 +2206,8 @@ type BasicAppearancePreviewColumnProps = Readonly<{
   canvasBackgroundScale: number;
   previewBackgroundTileWidth?: number;
   previewBackgroundTileHeight?: number;
+  iconScaleX?: number;
+  iconScaleY?: number;
   showEquipment: boolean;
   onToggleEquipment: () => void;
   showJobGear: boolean;
@@ -2178,6 +2232,8 @@ const BasicAppearancePreviewColumn = ({
   canvasBackgroundScale,
   previewBackgroundTileWidth,
   previewBackgroundTileHeight,
+  iconScaleX,
+  iconScaleY,
   showEquipment,
   onToggleEquipment,
   showJobGear,
@@ -2202,6 +2258,8 @@ const BasicAppearancePreviewColumn = ({
       canvasBackgroundScale={canvasBackgroundScale}
       previewBackgroundTileWidth={previewBackgroundTileWidth}
       previewBackgroundTileHeight={previewBackgroundTileHeight}
+      iconScaleX={iconScaleX}
+      iconScaleY={iconScaleY}
       showEquipment={showEquipment}
       onToggleEquipment={onToggleEquipment}
       showJobGear={showJobGear}
@@ -3848,6 +3906,24 @@ const applyBloodReagentChange = (options: {
   updateDraft((state) => ({ ...state, blood_reagent: bloodReagent }));
 };
 
+const applyBiologicalGenderChange = (options: {
+  biologicalGender: string;
+  allowedGenders: string[];
+  uiLocked: boolean;
+  updateDraft: (
+    updater: (state: BasicAppearanceState) => BasicAppearanceState
+  ) => void;
+}) => {
+  const { biologicalGender, allowedGenders, uiLocked, updateDraft } = options;
+  if (uiLocked || !allowedGenders.includes(biologicalGender)) {
+    return;
+  }
+  updateDraft((state) => ({
+    ...state,
+    biological_gender: biologicalGender,
+  }));
+};
+
 const resolveColorTargetHexForState = (
   appearanceState: BasicAppearanceState,
   target: BasicAppearanceColorTarget | null
@@ -5109,8 +5185,6 @@ type OverlayEntriesOptions = {
   canvasWidth: number;
   canvasHeight: number;
   appearanceState: BasicAppearanceState;
-  previewBaseEyeColor: string | null;
-  previewTargetEyeColor: string | null;
   hairDef: BasicAppearanceAccessoryDefinition | null;
   gradientDef: BasicAppearanceGradientDefinition | null;
   facialHairDef: BasicAppearanceAccessoryDefinition | null;
@@ -5462,33 +5536,17 @@ const buildOverlayEntriesFromMergedLayers = (options: {
   merged: OrderedOverlayLayer[];
   dir: number;
   hideShoes: boolean;
-  previewBaseEyeColor: string | null;
-  previewTargetEyeColor: string | null;
   referenceParts: Record<string, string[][]> | null;
   hiddenLegParts: string[];
 }): PreviewLayerEntry[] => {
-  const {
-    merged,
-    dir,
-    hideShoes,
-    previewBaseEyeColor,
-    previewTargetEyeColor,
-    referenceParts,
-    hiddenLegParts,
-  } = options;
+  const { merged, dir, hideShoes, referenceParts, hiddenLegParts } = options;
   const overlayEntries: PreviewLayerEntry[] = [];
   merged.forEach((entry, index) => {
     if (hideShoes && entry.slot === 'shoes') {
       return;
     }
-    let grid = cloneGridData(entry.grid);
+    const grid = cloneGridData(entry.grid);
     let rasterIdentity = entry.rasterIdentity;
-    if (entry.slot === 'eyes' && previewBaseEyeColor && previewTargetEyeColor) {
-      grid = recolorGrid(grid, previewBaseEyeColor, previewTargetEyeColor, 3);
-      if (rasterIdentity) {
-        rasterIdentity = `${rasterIdentity}|eye:${previewBaseEyeColor}:${previewTargetEyeColor}:3`;
-      }
-    }
     if (referenceParts && entry.slot && TAUR_CLOTHING_SLOTS.has(entry.slot)) {
       maskGridForHiddenLegParts(grid, referenceParts, hiddenLegParts);
       rasterIdentity = undefined;
@@ -5509,9 +5567,11 @@ const buildOverlayEntriesFromMergedLayers = (options: {
               : 'Overlay',
       source:
         entry.source === 'base'
-          ? entry.slot && BODY_COLOR_OVERLAY_SLOTS.has(entry.slot)
-            ? entry.slot
-            : undefined
+          ? entry.slot === 'eyes'
+            ? 'eyes'
+            : entry.slot && BODY_COLOR_OVERLAY_SLOTS.has(entry.slot)
+              ? entry.slot
+              : undefined
           : entry.source,
       grid,
       opacity: 1,
@@ -5538,8 +5598,6 @@ const buildBasicAppearanceOverlayEntries = (
     canvasWidth,
     canvasHeight,
     appearanceState,
-    previewBaseEyeColor,
-    previewTargetEyeColor,
     hairDef,
     gradientDef,
     facialHairDef,
@@ -5621,8 +5679,6 @@ const buildBasicAppearanceOverlayEntries = (
     merged,
     dir,
     hideShoes,
-    previewBaseEyeColor,
-    previewTargetEyeColor,
     referenceParts,
     hiddenLegParts,
   });
@@ -5668,7 +5724,9 @@ const resolvePreviewSourceSelection = (
   }
   const basicSelection = resolveBasicPreviewSourceSelection(
     basicPayload,
-    appearanceState.digitigrade
+    appearanceState.digitigrade,
+    undefined,
+    appearanceState.biological_gender
   );
   const transformedSources = applyProstheticsToPreviewSources(
     basicSelection.sources,
@@ -6446,6 +6504,11 @@ export const BasicAppearanceTab = (props: BasicAppearanceTabProps, context) => {
     `basicAppearanceReloadPending-${stateToken}`,
     false
   );
+  const [, setSpeciesReloadPending] = useLocalState<boolean>(
+    context,
+    `speciesReloadPending-${stateToken}`,
+    false
+  );
   const [previewRefreshSkips, setPreviewRefreshSkips] = useLocalState<number>(
     context,
     `customMarkingDesignerPreviewRefreshSkips-${stateToken}`,
@@ -6477,11 +6540,12 @@ export const BasicAppearanceTab = (props: BasicAppearanceTabProps, context) => {
     useLocalState<BasicAppearancePayload | null>(context, 'basicPayload', null);
   const [bodyPayload, setBodyPayload] =
     useLocalState<BodyMarkingsPayload | null>(context, 'bodyPayload', null);
-  const [speciesPayload] = useLocalState<SpeciesPayload | null>(
-    context,
-    'speciesPayload',
-    data.species_payload || null
-  );
+  const [speciesPayload, setSpeciesPayload] =
+    useLocalState<SpeciesPayload | null>(
+      context,
+      'speciesPayload',
+      data.species_payload || null
+    );
   const [speciesSelection] = useLocalState<string | null>(
     context,
     'speciesSelection',
@@ -6814,7 +6878,15 @@ export const BasicAppearanceTab = (props: BasicAppearanceTabProps, context) => {
     });
   };
 
-  const prostheticContext = basicPayload?.prosthetic_context || null;
+  const rawProstheticContext = basicPayload?.prosthetic_context || null;
+  const prostheticContext = resolveProstheticContextForBiologicalGender(
+    rawProstheticContext,
+    appearanceState.biological_gender
+  );
+  const biologicalGenders = resolveBasicBiologicalGenderOptions(
+    basicPayload,
+    appearanceState
+  );
   const bloodTypes = resolveStringOptions(basicPayload?.blood_types);
   const bloodReagents = resolveStringOptions(basicPayload?.blood_reagents);
   const prostheticsMode = type === 'prosthetics';
@@ -6876,11 +6948,25 @@ export const BasicAppearanceTab = (props: BasicAppearanceTabProps, context) => {
       updated.limbs,
       prostheticContext
     );
-    const nextState: BasicAppearanceState = {
+    let nextState: BasicAppearanceState = {
       ...updated,
       limbs: cloneLimbOverrideState(updated.limbs),
       ...operations,
     };
+    const nextBiologicalGenders = resolveBasicBiologicalGenderOptions(
+      basicPayload,
+      nextState
+    );
+    const nextBiologicalGender = resolveBasicBiologicalGender(
+      nextBiologicalGenders,
+      nextState.biological_gender
+    );
+    if (nextBiologicalGender !== nextState.biological_gender) {
+      nextState = {
+        ...nextState,
+        biological_gender: nextBiologicalGender,
+      };
+    }
     if (prostheticContext) {
       const nextTargets = resolveEditableProstheticTargets(
         latestTargets,
@@ -6946,6 +7032,14 @@ export const BasicAppearanceTab = (props: BasicAppearanceTabProps, context) => {
     updateBasicDraft((state) => ({ ...state, blood_type: bloodType }));
   };
 
+  const setBiologicalGender = (biologicalGender: string) =>
+    applyBiologicalGenderChange({
+      biologicalGender,
+      allowedGenders: biologicalGenders,
+      uiLocked,
+      updateDraft: updateBasicDraft,
+    });
+
   const setBloodReagent = (bloodReagent: string) =>
     applyBloodReagentChange({
       bloodReagent,
@@ -7010,8 +7104,14 @@ export const BasicAppearanceTab = (props: BasicAppearanceTabProps, context) => {
   };
 
   const handleSave = async (close = false) => {
-    const { latestState, latestDirty } = resolveLatestBasicState();
+    const { latestState, latestSavedState, latestDirty } =
+      resolveLatestBasicState();
     const wasDirty = latestDirty;
+    const speciesPreviewStale =
+      shouldInvalidateSpeciesPayloadForBiologicalGenderChange(
+        latestSavedState.biological_gender,
+        latestState.biological_gender
+      );
     const startingPreviewRevision =
       typeof data.preview_revision === 'number' ? data.preview_revision : 0;
     setPendingSave(true);
@@ -7025,6 +7125,7 @@ export const BasicAppearanceTab = (props: BasicAppearanceTabProps, context) => {
         setPreviewRefreshSkips((previewRefreshSkips || 0) + 1);
       }
       await act('save_basic_appearance', {
+        biological_gender: latestState.biological_gender,
         digitigrade: latestState.digitigrade ? 1 : 0,
         body_color: latestState.body_color,
         eye_color: latestState.eye_color,
@@ -7050,6 +7151,10 @@ export const BasicAppearanceTab = (props: BasicAppearanceTabProps, context) => {
         close,
       });
       if (!close) {
+        if (speciesPreviewStale) {
+          setSpeciesPayload(null);
+          setSpeciesReloadPending(true);
+        }
         if (wasDirty) {
           setReloadTargetRevision(startingPreviewRevision + 1);
           setReloadPending(true);
@@ -7442,15 +7547,8 @@ export const BasicAppearanceTab = (props: BasicAppearanceTabProps, context) => {
       stripReferenceMarkings ? 's1' : 's0',
       galleryComposite?.key || 'part-recipe',
     ];
-    const appearanceStructureSignature = JSON.stringify({
-      hair: candidateState.hair_style,
-      hairColor: candidateState.hair_color,
-      gradient: candidateState.hair_gradient_style,
-      gradientColor: candidateState.hair_gradient_color,
-      facialHair: candidateState.facial_hair_style,
-      facialHairColor: candidateState.facial_hair_color,
-      eye: candidateState.eye_color,
-    });
+    const appearanceStructureSignature =
+      buildProstheticShowcaseAppearanceStructureSignature(candidateState);
     const preparedStructureSignature = [
       'prosthetic-showcase-prepared-v1',
       ...preparedStructureParts,
@@ -7472,9 +7570,14 @@ export const BasicAppearanceTab = (props: BasicAppearanceTabProps, context) => {
       appearanceStructureSignature,
     ].join('::');
     const baseStructureSignature = [
-      'prosthetic-showcase-base-v5',
+      'prosthetic-showcase-base-v6',
       preparedStructureSignature,
       `body:${candidateState.body_color || ''}`,
+      `eye:${candidateState.eye_color || ''}`,
+    ].join('::');
+    const eyeColorCacheSignature = [
+      colorLayerStructureSignature,
+      `eye:${candidateState.eye_color || ''}`,
     ].join('::');
     const synthColorPasses =
       galleryComposite?.colorable && candidateState.synth_color_enabled
@@ -7537,6 +7640,7 @@ export const BasicAppearanceTab = (props: BasicAppearanceTabProps, context) => {
           bodyColor: previewTargetBodyColor,
           bodyColorMultiply: !!prostheticContext.color_multiply,
           bodyColorCacheSignature: colorLayerStructureSignature,
+          eyeColorCacheSignature,
           rasterScope: stateToken,
           direction: entry.dir,
           unsharedLayerKeys: unsharedProstheticLayerKeys,
@@ -7795,8 +7899,6 @@ export const BasicAppearanceTab = (props: BasicAppearanceTabProps, context) => {
               canvasWidth,
               canvasHeight,
               appearanceState: candidateState,
-              previewBaseEyeColor,
-              previewTargetEyeColor,
               hairDef: candidateHairDef,
               gradientDef: candidateGradientDef,
               facialHairDef: candidateFacialHairDef,
@@ -7929,8 +8031,6 @@ export const BasicAppearanceTab = (props: BasicAppearanceTabProps, context) => {
       canvasWidth,
       canvasHeight,
       appearanceState,
-      previewBaseEyeColor,
-      previewTargetEyeColor,
       hairDef,
       gradientDef,
       facialHairDef,
@@ -8144,6 +8244,7 @@ export const BasicAppearanceTab = (props: BasicAppearanceTabProps, context) => {
                 <ProstheticSettingsSection
                   state={appearanceState}
                   context={prostheticContext}
+                  biologicalGenders={biologicalGenders}
                   bloodTypes={bloodTypes}
                   bloodReagents={bloodReagents}
                   activeTargets={resolvedActiveProstheticTargets}
@@ -8154,6 +8255,7 @@ export const BasicAppearanceTab = (props: BasicAppearanceTabProps, context) => {
                   setActiveTargets={setActiveProstheticTargets}
                   applyExternalSelection={applyExternalProstheticSelection}
                   setInternalSelection={setInternalProstheticSelection}
+                  setBiologicalGender={setBiologicalGender}
                   setBloodType={setBloodType}
                   setBloodReagent={setBloodReagent}
                   resetBloodColor={resetBloodColor}
@@ -8196,6 +8298,8 @@ export const BasicAppearanceTab = (props: BasicAppearanceTabProps, context) => {
             canvasBackgroundScale={canvasBackgroundScale}
             previewBackgroundTileWidth={previewBackgroundTileWidth}
             previewBackgroundTileHeight={previewBackgroundTileHeight}
+            iconScaleX={data.trait_icon_scale_x}
+            iconScaleY={data.trait_icon_scale_y}
             showEquipment={showEquipment}
             onToggleEquipment={onToggleEquipment}
             showJobGear={showJobGear}

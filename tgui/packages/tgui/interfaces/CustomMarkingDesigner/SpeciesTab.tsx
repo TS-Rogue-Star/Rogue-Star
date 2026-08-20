@@ -42,7 +42,10 @@ import {
   buildBasicStateFromPayload,
   buildBodyPartLabelMap,
   buildSpeciesSaveCacheParams,
+  CUSTOM_SPECIES_ID,
   deepCopyMarkings,
+  isSpeciesDraftDirty,
+  isSpeciesSaveAllowed,
   mergeSpeciesBodyPreviewSource,
   resolveBasicPreviewSourceSelection,
   resolveSpeciesBodyPreviewSources,
@@ -102,6 +105,7 @@ const SPECIES_TILE_PREVIEWS: PreviewDirectionEntry[] = [
 const EMPTY_SPECIES_TILE_PREVIEWS: PreviewDirectionEntry[] = [];
 const SPECIES_NEUTRAL_BODY_COLOR = '#ffffff';
 const HUMAN_SPECIES_ID = 'Human';
+const DEFAULT_CUSTOM_SPECIES_NAME_MAX_LENGTH = 52;
 
 type SpeciesTilePreviewOptions = Readonly<{
   def: SpeciesGalleryEntry;
@@ -586,6 +590,7 @@ const SpeciesGallerySection = ({
   return (
     <Section
       title="Species Gallery"
+      fill
       buttons={
         showIconBaseTab ? (
           <Tabs>
@@ -645,6 +650,7 @@ type SpeciesSaveSectionProps = Readonly<{
   pendingClose: boolean;
   uiLocked: boolean;
   dirty: boolean;
+  saveBlocked: boolean;
   onSave: () => void;
   onSaveAndClose: () => void;
   onDiscardAndClose: () => void;
@@ -655,6 +661,7 @@ const SpeciesSaveSection = ({
   pendingClose,
   uiLocked,
   dirty,
+  saveBlocked,
   onSave,
   onSaveAndClose,
   onDiscardAndClose,
@@ -666,7 +673,9 @@ const SpeciesSaveSection = ({
           className={`${CHIP_BUTTON_CLASS} RogueStar__glowButton--positive`}
           icon={pendingSave ? 'spinner-third' : 'save'}
           iconSpin={pendingSave}
-          disabled={pendingClose || pendingSave || uiLocked || !dirty}
+          disabled={
+            pendingClose || pendingSave || uiLocked || saveBlocked || !dirty
+          }
           onClick={onSave}>
           Save
         </Button>
@@ -676,7 +685,7 @@ const SpeciesSaveSection = ({
           className={`${CHIP_BUTTON_CLASS} RogueStar__glowButton--positive`}
           icon={pendingClose ? 'spinner-third' : 'floppy-disk'}
           iconSpin={pendingClose}
-          disabled={pendingClose || pendingSave || uiLocked}
+          disabled={pendingClose || pendingSave || uiLocked || saveBlocked}
           onClick={onSaveAndClose}>
           Save &amp; Close
         </Button>
@@ -695,6 +704,48 @@ const SpeciesSaveSection = ({
         />
       </Flex.Item>
     </Flex>
+  </Section>
+);
+
+type SpeciesNameSectionProps = Readonly<{
+  value: string;
+  maxLength: number;
+  required: boolean;
+  disabled: boolean;
+  onInput: (value: string) => void;
+}>;
+
+const SpeciesNameSection = ({
+  value,
+  maxLength,
+  required,
+  disabled,
+  onInput,
+}: SpeciesNameSectionProps) => (
+  <Section
+    title={
+      <SpeciesTooltipLabel
+        label="Species Name Override"
+        description="Optional for most species, but required when Custom Species is selected."
+      />
+    }>
+    <Input
+      fluid
+      value={value}
+      maxLength={maxLength}
+      placeholder={
+        required
+          ? 'Enter a species name...'
+          : 'Optional species name override...'
+      }
+      disabled={disabled}
+      onInput={(event, nextValue) => onInput(nextValue)}
+    />
+    {required && !value.trim() && (
+      <NoticeBox danger mt={1} mb={0}>
+        A name is required before you can save this custom species.
+      </NoticeBox>
+    )}
   </Section>
 );
 
@@ -1064,6 +1115,8 @@ type SpeciesPreviewColumnProps = Readonly<{
   canvasBackgroundScale: number;
   previewBackgroundTileWidth?: number;
   previewBackgroundTileHeight?: number;
+  iconScaleX?: number;
+  iconScaleY?: number;
   showEquipment: boolean;
   onToggleEquipment: () => void;
   showJobGear: boolean;
@@ -1122,6 +1175,8 @@ const SpeciesPreviewColumn = ({
   canvasBackgroundScale,
   previewBackgroundTileWidth,
   previewBackgroundTileHeight,
+  iconScaleX,
+  iconScaleY,
   showEquipment,
   onToggleEquipment,
   showJobGear,
@@ -1134,40 +1189,50 @@ const SpeciesPreviewColumn = ({
   blurb,
   whitelistLocked,
 }: SpeciesPreviewColumnProps) => (
-  <Flex direction="column" gap={1}>
-    <LivePreviewCard
-      preview={preview}
-      canvasWidth={canvasWidth}
-      canvasHeight={canvasHeight}
-      previewFitToFrame={previewFitToFrame}
-      onTogglePreviewFit={onTogglePreviewFit}
-      previewBackgroundImage={previewBackgroundImage}
-      backgroundFallbackColor={backgroundFallbackColor}
-      canvasBackgroundScale={canvasBackgroundScale}
-      previewBackgroundTileWidth={previewBackgroundTileWidth}
-      previewBackgroundTileHeight={previewBackgroundTileHeight}
-      showEquipment={showEquipment}
-      onToggleEquipment={onToggleEquipment}
-      showJobGear={showJobGear}
-      onToggleJobGear={onToggleJobGear}
-      showLoadoutGear={showLoadoutGear}
-      onToggleLoadout={onToggleLoadout}
-      canvasBackgroundOptions={canvasBackgroundOptions}
-      resolvedCanvasBackground={resolvedCanvasBackground}
-      cycleCanvasBackground={cycleCanvasBackground}
-    />
-    <Section title="Species Blurb" scrollable>
-      {whitelistLocked && (
-        <NoticeBox danger mb={1}>
-          <Box fontWeight="bold" mb={0.5}>
-            <Icon name="lock" /> Whitelist Required
-          </Box>
-          You are not currently whitelisted to play this species. It cannot be
-          used to join the round until whitelist approval is granted.
-        </NoticeBox>
-      )}
-      <div>{renderSpeciesBlurb(blurb)}</div>
-    </Section>
+  <Flex direction="column" gap={1} height="100%" minHeight={0}>
+    <Flex.Item basis="448px" shrink={0} minHeight={0}>
+      <LivePreviewCard
+        preview={preview}
+        canvasWidth={canvasWidth}
+        canvasHeight={canvasHeight}
+        previewFitToFrame={previewFitToFrame}
+        onTogglePreviewFit={onTogglePreviewFit}
+        previewBackgroundImage={previewBackgroundImage}
+        backgroundFallbackColor={backgroundFallbackColor}
+        canvasBackgroundScale={canvasBackgroundScale}
+        previewBackgroundTileWidth={previewBackgroundTileWidth}
+        previewBackgroundTileHeight={previewBackgroundTileHeight}
+        iconScaleX={iconScaleX}
+        iconScaleY={iconScaleY}
+        showEquipment={showEquipment}
+        onToggleEquipment={onToggleEquipment}
+        showJobGear={showJobGear}
+        onToggleJobGear={onToggleJobGear}
+        showLoadoutGear={showLoadoutGear}
+        onToggleLoadout={onToggleLoadout}
+        canvasBackgroundOptions={canvasBackgroundOptions}
+        resolvedCanvasBackground={resolvedCanvasBackground}
+        cycleCanvasBackground={cycleCanvasBackground}
+      />
+    </Flex.Item>
+    <Flex.Item grow minHeight={0}>
+      <Section
+        className="RogueStar__speciesBlurbSection"
+        title="Species Blurb"
+        fill
+        scrollable>
+        {whitelistLocked && (
+          <NoticeBox danger mb={1}>
+            <Box fontWeight="bold" mb={0.5}>
+              <Icon name="lock" /> Whitelist Required
+            </Box>
+            You are not currently whitelisted to play this species. It cannot be
+            used to join the round until whitelist approval is granted.
+          </NoticeBox>
+        )}
+        <div>{renderSpeciesBlurb(blurb)}</div>
+      </Section>
+    </Flex.Item>
   </Flex>
 );
 
@@ -1177,6 +1242,7 @@ type SpeciesInitializerProps = Readonly<{
   requestPayload: () => void;
   syncPayload: (payload: SpeciesPayload) => void;
   loadInProgress: boolean;
+  reloadPending: boolean;
   setLoadInProgress: (value: boolean) => void;
 }>;
 
@@ -1185,6 +1251,9 @@ class SpeciesInitializer extends Component<SpeciesInitializerProps> {
   private lastDataPayload: SpeciesPayload | null = null;
 
   componentDidMount() {
+    if (this.props.reloadPending) {
+      this.lastDataPayload = this.props.dataPayload || null;
+    }
     this.requestIfNeeded();
     this.syncIfNeeded();
   }
@@ -1192,7 +1261,8 @@ class SpeciesInitializer extends Component<SpeciesInitializerProps> {
   componentDidUpdate(prevProps: SpeciesInitializerProps) {
     if (
       prevProps.speciesPayload !== this.props.speciesPayload ||
-      prevProps.dataPayload !== this.props.dataPayload
+      prevProps.dataPayload !== this.props.dataPayload ||
+      prevProps.reloadPending !== this.props.reloadPending
     ) {
       this.requestIfNeeded();
       this.syncIfNeeded();
@@ -1205,11 +1275,12 @@ class SpeciesInitializer extends Component<SpeciesInitializerProps> {
       dataPayload,
       requestPayload,
       loadInProgress,
+      reloadPending,
       setLoadInProgress,
     } = this.props;
     if (
       !speciesPayload &&
-      !dataPayload &&
+      (!dataPayload || reloadPending) &&
       !this.hasRequested &&
       !loadInProgress
     ) {
@@ -1267,15 +1338,6 @@ const resolvePayloadIconBase = (
   }
   return options[0]?.id || preview || null;
 };
-
-const isSpeciesStateDirty = (
-  speciesSelection: string | null,
-  speciesSavedSelection: string | null,
-  iconBaseSelection: string | null,
-  speciesSavedIconBaseSelection: string | null
-) =>
-  speciesSelection !== speciesSavedSelection ||
-  iconBaseSelection !== speciesSavedIconBaseSelection;
 
 const isPreviewPayloadForSelection = (
   payload:
@@ -1364,6 +1426,16 @@ const useSpeciesTabLocalState = (
         data.species_payload?.preview_icon_base ||
         null
     );
+  const [speciesCustomName] = useLocalState<string>(
+    context,
+    'speciesCustomName',
+    data.species_payload?.custom_species || ''
+  );
+  const [speciesSavedCustomName] = useLocalState<string>(
+    context,
+    'speciesSavedCustomName',
+    data.species_payload?.custom_species || ''
+  );
   const [speciesDirty, setSpeciesDirty] = useLocalState<boolean>(
     context,
     'speciesDirty',
@@ -1487,6 +1559,8 @@ const useSpeciesTabLocalState = (
     setSpeciesIconBaseSelection,
     speciesSavedIconBaseSelection,
     setSpeciesSavedIconBaseSelection,
+    speciesCustomName,
+    speciesSavedCustomName,
     speciesDirty,
     setSpeciesDirty,
     pendingSave,
@@ -1733,7 +1807,9 @@ const resolveSpeciesPreviewDirStates = (options: {
   } = options;
   const basicPreviewSelection = resolveBasicPreviewSourceSelection(
     resolvedBasicPayload,
-    previewAppearanceState.digitigrade
+    previewAppearanceState.digitigrade,
+    undefined,
+    previewAppearanceState.biological_gender
   );
   const rawSelectedBasicSources = basicPreviewSelection.sources;
   const bodySources = Array.isArray(resolvedBodyPayload?.preview_sources)
@@ -1886,6 +1962,8 @@ export const SpeciesTab = (props: SpeciesTabProps, context) => {
     speciesSavedSelection,
     speciesIconBaseSelection,
     speciesSavedIconBaseSelection,
+    speciesCustomName,
+    speciesSavedCustomName,
     speciesDirty,
     pendingSave,
     pendingClose,
@@ -1915,6 +1993,9 @@ export const SpeciesTab = (props: SpeciesTabProps, context) => {
     setBasicAppearanceDirty,
   } = useSpeciesTabLocalState(context, data, stateToken);
 
+  const speciesNameInputLocked =
+    uiLocked || loadInProgress || pendingSave || pendingClose;
+
   const togglePreviewFit = () => {
     const next = !previewFitToFrame;
     setPreviewFitToFrame(next);
@@ -1932,12 +2013,14 @@ export const SpeciesTab = (props: SpeciesTabProps, context) => {
       payload.preview_icon_base || payload.selected_icon_base || null;
     const selectedSpecies = payload.selected_species || null;
     const selectedIconBase = payload.selected_icon_base || previewIconBase;
+    const payloadCustomSpeciesName = payload.custom_species || '';
     if (
       !speciesDirty &&
       speciesSavedSelection !== null &&
       (selectedSpecies !== speciesSavedSelection ||
         (speciesSavedIconBaseSelection !== null &&
-          selectedIconBase !== speciesSavedIconBaseSelection))
+          selectedIconBase !== speciesSavedIconBaseSelection) ||
+        payloadCustomSpeciesName !== speciesSavedCustomName)
     ) {
       return;
     }
@@ -1965,11 +2048,13 @@ export const SpeciesTab = (props: SpeciesTabProps, context) => {
       };
       if (nextIconBase !== speciesIconBaseSelection) {
         nextStates.speciesIconBaseSelection = nextIconBase;
-        nextStates.speciesDirty = isSpeciesStateDirty(
+        nextStates.speciesDirty = isSpeciesDraftDirty(
           speciesSelection,
           speciesSavedSelection,
           nextIconBase,
-          speciesSavedIconBaseSelection
+          speciesSavedIconBaseSelection,
+          speciesCustomName,
+          speciesSavedCustomName
         );
       }
       if (loadInProgress) {
@@ -1993,6 +2078,8 @@ export const SpeciesTab = (props: SpeciesTabProps, context) => {
           speciesSavedSelection: selectedSpecies,
           speciesIconBaseSelection: selectedIconBase,
           speciesSavedIconBaseSelection: selectedIconBase,
+          speciesCustomName: payloadCustomSpeciesName,
+          speciesSavedCustomName: payloadCustomSpeciesName,
           speciesDirty: false,
           ...(loadInProgress
             ? { [`speciesLoadInProgress-${stateToken}`]: false }
@@ -2027,11 +2114,13 @@ export const SpeciesTab = (props: SpeciesTabProps, context) => {
         states: {
           speciesSelection: id,
           speciesIconBaseSelection: nextIconBase,
-          speciesDirty: isSpeciesStateDirty(
+          speciesDirty: isSpeciesDraftDirty(
             id,
             speciesSavedSelection,
             nextIconBase,
-            speciesSavedIconBaseSelection
+            speciesSavedIconBaseSelection,
+            speciesCustomName,
+            speciesSavedCustomName
           ),
           [`speciesLoadInProgress-${stateToken}`]: true,
         },
@@ -2051,11 +2140,13 @@ export const SpeciesTab = (props: SpeciesTabProps, context) => {
       backendSetSharedStates({
         states: {
           speciesIconBaseSelection: id,
-          speciesDirty: isSpeciesStateDirty(
+          speciesDirty: isSpeciesDraftDirty(
             selectedId,
             speciesSavedSelection,
             id,
-            speciesSavedIconBaseSelection
+            speciesSavedIconBaseSelection,
+            speciesCustomName,
+            speciesSavedCustomName
           ),
           [`speciesLoadInProgress-${stateToken}`]: true,
         },
@@ -2067,12 +2158,34 @@ export const SpeciesTab = (props: SpeciesTabProps, context) => {
     });
   };
 
+  const handleCustomSpeciesNameInput = (value: string) => {
+    if (speciesNameInputLocked) {
+      return;
+    }
+    context.store.dispatch(
+      backendSetSharedStates({
+        states: {
+          speciesCustomName: value,
+          speciesDirty: isSpeciesDraftDirty(
+            speciesSelection,
+            speciesSavedSelection,
+            speciesIconBaseSelection,
+            speciesSavedIconBaseSelection,
+            value,
+            speciesSavedCustomName
+          ),
+        },
+      })
+    );
+  };
+
   const handleSave = async (close = false) => {
-    if (!speciesSelection) {
+    if (!isSpeciesSaveAllowed(speciesSelection, speciesCustomName)) {
       return;
     }
     const previousSelection = speciesSavedSelection;
     const previousIconBase = speciesSavedIconBaseSelection;
+    const customSpeciesNameToSave = speciesCustomName;
     const iconBaseToSave = activeIconBaseSelection;
     context.store.dispatch(
       backendSetSharedStates({
@@ -2088,6 +2201,7 @@ export const SpeciesTab = (props: SpeciesTabProps, context) => {
       await act('save_species', {
         species: speciesSelection,
         icon_base: iconBaseToSave,
+        custom_species: customSpeciesNameToSave,
         close,
         ...buildSpeciesSaveCacheParams(bodyPayload, basicPayload),
       });
@@ -2102,6 +2216,8 @@ export const SpeciesTab = (props: SpeciesTabProps, context) => {
               speciesSavedSelection: speciesSelection,
               speciesIconBaseSelection: iconBaseToSave,
               speciesSavedIconBaseSelection: iconBaseToSave,
+              speciesCustomName: customSpeciesNameToSave,
+              speciesSavedCustomName: customSpeciesNameToSave,
               ...(speciesPayload
                 ? {
                     speciesPayload: {
@@ -2109,6 +2225,7 @@ export const SpeciesTab = (props: SpeciesTabProps, context) => {
                       selected_species: speciesSelection,
                       selected_icon_base: iconBaseToSave,
                       preview_icon_base: iconBaseToSave,
+                      custom_species: customSpeciesNameToSave || null,
                     },
                   }
                 : {}),
@@ -2309,6 +2426,7 @@ export const SpeciesTab = (props: SpeciesTabProps, context) => {
           requestPayload={requestPayload}
           syncPayload={syncPayload}
           loadInProgress={loadInProgress}
+          reloadPending={speciesReloadPending}
           setLoadInProgress={setLoadInProgress}
         />
         <LoadingOverlay
@@ -2327,11 +2445,12 @@ export const SpeciesTab = (props: SpeciesTabProps, context) => {
         requestPayload={requestPayload}
         syncPayload={syncPayload}
         loadInProgress={loadInProgress}
+        reloadPending={speciesReloadPending}
         setLoadInProgress={setLoadInProgress}
       />
-      <Flex direction="row" gap={1} wrap={false} height="100%">
+      <Flex direction="row" gap={1} wrap={false} align="stretch" height="100%">
         <Flex.Item basis="840px" shrink={0}>
-          <Flex direction="column" gap={1}>
+          <Flex direction="column" gap={1} height="100%" minHeight={0}>
             <SpeciesGallerySection
               search={search}
               setSearch={setSearch}
@@ -2354,19 +2473,34 @@ export const SpeciesTab = (props: SpeciesTabProps, context) => {
           </Flex>
         </Flex.Item>
         <Flex.Item basis="418px" shrink={0}>
-          <Flex direction="column" gap={1} height="100%">
-            <Flex.Item>
+          <Flex direction="column" gap={1} height="100%" minHeight={0}>
+            <Flex.Item shrink={0}>
               <SpeciesSaveSection
                 pendingSave={pendingSave}
                 pendingClose={pendingClose}
                 uiLocked={uiLocked || loadInProgress}
                 dirty={speciesDirty}
+                saveBlocked={
+                  !isSpeciesSaveAllowed(selectedId, speciesCustomName)
+                }
                 onSave={() => handleSave(false)}
                 onSaveAndClose={() => handleSave(true)}
                 onDiscardAndClose={handleDiscard}
               />
             </Flex.Item>
-            <Flex.Item grow>
+            <Flex.Item shrink={0}>
+              <SpeciesNameSection
+                value={speciesCustomName}
+                maxLength={
+                  speciesPayload.custom_species_max_length ||
+                  DEFAULT_CUSTOM_SPECIES_NAME_MAX_LENGTH
+                }
+                required={selectedId === CUSTOM_SPECIES_ID}
+                disabled={speciesNameInputLocked}
+                onInput={handleCustomSpeciesNameInput}
+              />
+            </Flex.Item>
+            <Flex.Item grow minHeight={0}>
               <SpeciesDetailsSection
                 modifiers={modifiers}
                 traits={traits}
@@ -2389,6 +2523,8 @@ export const SpeciesTab = (props: SpeciesTabProps, context) => {
             canvasBackgroundScale={canvasBackgroundScale}
             previewBackgroundTileWidth={previewBackgroundTileWidth}
             previewBackgroundTileHeight={previewBackgroundTileHeight}
+            iconScaleX={data.trait_icon_scale_x}
+            iconScaleY={data.trait_icon_scale_y}
             showEquipment={showEquipment}
             onToggleEquipment={onToggleEquipment}
             showJobGear={showJobGear}

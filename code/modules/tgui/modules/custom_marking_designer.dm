@@ -11,7 +11,9 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Updated by Lira for Rogue Star December 2025: New basic appearence tab added ////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Updated by Lira for Rogue Star August 2026: Character Designer - Species and Prosthetics (Lira, August 2026) ////////////////////////////////
+// Updated by Lira for Rogue Star August 2026: Character Designer - Species and Prosthetics ////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star August 2026: Character Designer - Traits Tab /////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 #define CUSTOM_MARKING_DEFAULT_WIDTH 32
@@ -1356,6 +1358,34 @@ var/global/custom_marking_static_source_digest_complete = TRUE
 		biological_gender = prefs?.biological_gender
 	biological_gender = resolve_species_allowed_biological_gender(preview_species, biological_gender)
 	return biological_gender == FEMALE ? "f" : "m"
+
+/datum/tgui_module/custom_marking_designer/proc/build_base_biological_gender_options()
+	var/datum/species/selected_species = GLOB.all_species?[prefs?.species]
+	var/list/possible_genders = list(MALE, FEMALE)
+	if(istype(selected_species) && islist(selected_species.genders) && selected_species.genders.len)
+		possible_genders = selected_species.genders.Copy()
+	return possible_genders
+
+/datum/tgui_module/custom_marking_designer/proc/build_basic_biological_gender_options(list/base_genders = null)
+	var/list/possible_genders = islist(base_genders) && base_genders.len ? base_genders.Copy() : build_base_biological_gender_options()
+	if(prefs?.organ_data?[BP_TORSO] == "cyborg")
+		possible_genders |= NEUTER
+	return possible_genders
+
+/datum/tgui_module/custom_marking_designer/proc/resolve_basic_biological_gender(list/possible_genders, biological_gender)
+	if(!islist(possible_genders) || !possible_genders.len)
+		return biological_gender
+	if(biological_gender in possible_genders)
+		return biological_gender
+	return possible_genders[1]
+
+/datum/tgui_module/custom_marking_designer/proc/resolve_basic_alternate_preview_gender(list/possible_genders, biological_gender)
+	var/datum/species/selected_species = GLOB.all_species?[prefs?.species]
+	var/current_suffix = resolve_species_body_preview_gender_suffix(selected_species, biological_gender)
+	for(var/possible_gender in possible_genders)
+		if(resolve_species_body_preview_gender_suffix(selected_species, possible_gender) != current_suffix)
+			return possible_gender
+	return null
 
 /datum/tgui_module/custom_marking_designer/proc/species_body_preview_cache_key(species_id, preview_icon_base = null, gender_suffix = "m", digitigrade = FALSE)
 	var/base_id = resolve_species_body_preview_base(species_id, preview_icon_base)
@@ -3204,6 +3234,7 @@ var/global/custom_marking_static_source_digest_complete = TRUE
 	var/list/definitions = list()
 	var/list/species_list = islist(GLOB.playable_species) ? GLOB.playable_species : list()
 	var/list/species_catalog = build_custom_marking_species_catalog_cache()
+	var/custom_species_name = istext(prefs.custom_species) ? html_decode(prefs.custom_species) : null
 	var/resolved_preview_species = prefs.species
 	if(istext(preview_species_id) && length(preview_species_id))
 		var/datum/species/preview_species = GLOB.all_species?[preview_species_id]
@@ -3228,9 +3259,8 @@ var/global/custom_marking_static_source_digest_complete = TRUE
 			"detail_sections" = list(),
 			"icon_base_count" = 0
 		)
-		if(species_name == SPECIES_CUSTOM && istext(prefs.custom_species) && length(prefs.custom_species))
-			def["base_name"] = def["name"]
-			def["name"] = prefs.custom_species
+		if(species_name == SPECIES_CUSTOM)
+			def["name"] = SPECIES_CUSTOM
 		var/list/detail_notes = species.get_species_detail_notes(user)
 		if(islist(detail_notes) && detail_notes.len)
 			var/list/detail_sections = custom_marking_copy_species_detail_sections(def["detail_sections"])
@@ -3274,7 +3304,8 @@ var/global/custom_marking_static_source_digest_complete = TRUE
 				continue
 			icon_base_option["body_preview_sources"] = attach_species_preview_gear_recipes(icon_base_option["body_preview_sources"], preview_gear_recipes)
 		payload["icon_base_options"] = icon_base_options
-	payload["custom_species"] = prefs.custom_species
+	payload["custom_species"] = custom_species_name
+	payload["custom_species_max_length"] = MAX_NAME_LEN
 	custom_marking_end_manual_yield(yield_context)
 	return payload
 
@@ -3303,6 +3334,8 @@ var/global/custom_marking_static_source_digest_complete = TRUE
 	var/preview_revision = 1 // Revisions for preview bundles
 	var/body_preview_revision = 1 // Revisions for stripped body preview bundles
 	var/species_save_result_revision = 0
+	var/traits_revision = 1 // Revisions for character trait payloads
+	var/traits_save_result_revision = 0
 	var/preview_refresh_token = 0 // Tracks external preview refresh triggers
 	var/mark_dirty = FALSE // Dirty flag for pending save
 	var/save_in_progress = FALSE // Server-side guard against duplicate save actions
@@ -3541,6 +3574,808 @@ var/global/custom_marking_static_source_digest_complete = TRUE
 			mark.body_parts += BP_TORSO
 			mark.ensure_part_frames(list(BP_TORSO))
 	return BP_TORSO
+
+/datum/tgui_module/custom_marking_designer/proc/resolve_trait_category_id(datum/trait/trait)
+	if(!istype(trait))
+		return null
+	if(trait.category > TRAIT_TYPE_NEUTRAL)
+		return "positive"
+	if(trait.category < TRAIT_TYPE_NEUTRAL)
+		return "negative"
+	return "neutral"
+
+/datum/tgui_module/custom_marking_designer/proc/resolve_trait_catalog(category_id)
+	if(!prefs || !istext(category_id))
+		return null
+	switch(category_id)
+		if("positive")
+			return positive_traits_map[prefs.species]
+		if("neutral")
+			return neutral_traits_map[prefs.species]
+		if("negative")
+			return negative_traits_map[prefs.species]
+	return null
+
+/datum/tgui_module/custom_marking_designer/proc/resolve_selected_traits(category_id)
+	if(!prefs || !istext(category_id))
+		return null
+	switch(category_id)
+		if("positive")
+			return prefs.pos_traits
+		if("neutral")
+			return prefs.neu_traits
+		if("negative")
+			return prefs.neg_traits
+	return null
+
+/datum/tgui_module/custom_marking_designer/proc/repair_character_trait_preferences()
+	if(!prefs)
+		return FALSE
+	for(var/category_id in list("positive", "neutral", "negative"))
+		var/list/selected_traits = resolve_selected_traits(category_id)
+		if(!islist(selected_traits))
+			continue
+		for(var/trait_path in selected_traits)
+			var/datum/trait/trait = all_traits[trait_path]
+			if(!istype(trait) || !LAZYLEN(trait.has_preferences))
+				continue
+			var/list/default_preferences = trait.get_default_prefs()
+			if(!islist(default_preferences))
+				continue
+			var/list/stored_preferences = selected_traits[trait_path]
+			if(!islist(stored_preferences))
+				stored_preferences = list()
+				selected_traits[trait_path] = stored_preferences
+			for(var/preference_id in trait.has_preferences)
+				if(!(preference_id in stored_preferences))
+					stored_preferences[preference_id] = default_preferences[preference_id]
+	return TRUE
+
+/datum/tgui_module/custom_marking_designer/proc/resolve_traits_preview_scale()
+	var/list/scale = list(
+		"icon_scale_x" = 1,
+		"icon_scale_y" = 1
+	)
+	if(!prefs)
+		return scale
+	var/list/selected_traits = prefs.pos_traits + prefs.neu_traits + prefs.neg_traits
+	for(var/trait_path in selected_traits)
+		var/datum/trait/trait = all_traits[trait_path]
+		if(!istype(trait) || !islist(trait.var_changes))
+			continue
+		var/scale_x = trait.var_changes["icon_scale_x"]
+		var/scale_y = trait.var_changes["icon_scale_y"]
+		if(isnum(scale_x) && scale_x > 0)
+			scale["icon_scale_x"] = scale_x
+		if(isnum(scale_y) && scale_y > 0)
+			scale["icon_scale_y"] = scale_y
+	return scale
+
+/datum/tgui_module/custom_marking_designer/proc/append_traits_preview_scale(list/payload)
+	if(!islist(payload))
+		return
+	var/list/scale = resolve_traits_preview_scale()
+	payload["trait_icon_scale_x"] = scale["icon_scale_x"]
+	payload["trait_icon_scale_y"] = scale["icon_scale_y"]
+
+/datum/tgui_module/custom_marking_designer/proc/resolve_trait_anatomy_restriction(datum/trait/trait)
+	if(!prefs || !istype(trait))
+		return "Trait data is unavailable."
+	var/is_synthetic = !!prefs.organ_data?[O_BRAIN]
+	if(is_synthetic && !(trait.can_take & SYNTHETICS))
+		return "Available to organic characters only."
+	if(!is_synthetic && !(trait.can_take & ORGANICS))
+		return "Available to synthetic characters only."
+	return null
+
+/datum/tgui_module/custom_marking_designer/proc/character_traits_conflict(trait_path, datum/trait/trait, selected_path, datum/trait/selected_trait)
+	if(!trait_path || !istype(trait) || !selected_path || !istype(selected_trait))
+		return FALSE
+	if(selected_path == trait_path)
+		return TRUE
+	if(islist(trait.excludes) && (selected_path in trait.excludes))
+		return TRUE
+	if(islist(selected_trait.excludes) && (trait_path in selected_trait.excludes))
+		return TRUE
+	if(islist(trait.var_changes) && islist(selected_trait.var_changes))
+		for(var/changed_var in trait.var_changes)
+			if(changed_var in selected_trait.var_changes)
+				return TRUE
+	if(islist(trait.var_changes_pref) && islist(selected_trait.var_changes_pref))
+		for(var/changed_pref in trait.var_changes_pref)
+			if(changed_pref in selected_trait.var_changes_pref)
+				return TRUE
+	return FALSE
+
+/datum/tgui_module/custom_marking_designer/proc/resolve_character_trait_conflict(trait_path, datum/trait/trait, list/selected_paths)
+	if(!trait_path || !istype(trait) || !islist(selected_paths))
+		return null
+	for(var/selected_path in selected_paths)
+		var/datum/trait/selected_trait = all_traits[selected_path]
+		if(!istype(selected_trait))
+			continue
+		if(character_traits_conflict(trait_path, trait, selected_path, selected_trait))
+			return selected_trait.name
+	return null
+
+/datum/tgui_module/custom_marking_designer/proc/build_character_trait_conflict_ids(trait_path, datum/trait/trait, list/trait_paths)
+	var/list/conflicts = list()
+	if(!trait_path || !istype(trait) || !islist(trait_paths))
+		return conflicts
+	for(var/selected_path in trait_paths)
+		if(selected_path == trait_path)
+			continue
+		var/datum/trait/selected_trait = all_traits[selected_path]
+		if(character_traits_conflict(trait_path, trait, selected_path, selected_trait))
+			conflicts += "[selected_path]"
+	return conflicts
+
+/datum/tgui_module/custom_marking_designer/proc/build_trait_preference_entries(trait_path, datum/trait/trait, list/selected_traits)
+	var/list/entries = list()
+	if(!istype(trait) || !LAZYLEN(trait.has_preferences))
+		return entries
+	var/list/stored_preferences = islist(selected_traits?[trait_path]) ? selected_traits[trait_path] : null
+	var/list/default_preferences = trait.get_default_prefs()
+	for(var/preference_id in trait.has_preferences)
+		var/list/preference_definition = trait.has_preferences[preference_id]
+		if(!islist(preference_definition) || preference_definition.len < 2)
+			continue
+		var/preference_value = null
+		if(islist(stored_preferences) && (preference_id in stored_preferences))
+			preference_value = stored_preferences[preference_id]
+		else if(islist(default_preferences))
+			preference_value = default_preferences[preference_id]
+		var/preference_kind
+		switch(preference_definition[1])
+			if(TRAIT_PREF_TYPE_BOOLEAN)
+				preference_kind = "boolean"
+			if(TRAIT_PREF_TYPE_COLOR)
+				preference_kind = "color"
+			if(TRAIT_PREF_TYPE_STRING)
+				preference_kind = "string"
+				if(istext(preference_value))
+					preference_value = html_decode(preference_value)
+			if(TRAIT_PREF_TYPE_INT)
+				preference_kind = "number"
+			if(TRAIT_PREF_TYPE_LIST)
+				preference_kind = "list"
+		if(!preference_kind)
+			continue
+		var/list/entry = list(
+			"id" = "[preference_id]",
+			"label" = "[preference_definition[2]]",
+			"kind" = preference_kind,
+			"value" = preference_value
+		)
+		if(preference_definition[1] == TRAIT_PREF_TYPE_LIST)
+			var/list/options = trait.vars?["inject_chems"]
+			if(islist(options))
+				entry["options"] = options.Copy()
+		entries += list(entry)
+	return entries
+
+/datum/tgui_module/custom_marking_designer/proc/build_character_trait_entry(trait_path, datum/trait/trait, list/trait_catalog, list/selected_traits, list/all_trait_paths)
+	if(!istype(trait))
+		return null
+	var/is_selected = (trait_path in selected_traits)
+	var/list/entry = list(
+		"id" = "[trait_path]",
+		"name" = "[trait.name]",
+		"description" = "[trait.desc]",
+		"selected" = is_selected,
+		"conflicts" = build_character_trait_conflict_ids(trait_path, trait, all_trait_paths)
+	)
+	if(islist(trait.var_changes))
+		var/preview_scale_x = trait.var_changes["icon_scale_x"]
+		var/preview_scale_y = trait.var_changes["icon_scale_y"]
+		if(isnum(preview_scale_x))
+			entry["icon_scale_x"] = preview_scale_x
+		if(isnum(preview_scale_y))
+			entry["icon_scale_y"] = preview_scale_y
+	if(islist(trait.var_changes_pref) && isnum(trait.var_changes_pref["extra_languages"]))
+		entry["extra_language_slots"] = trait.var_changes_pref["extra_languages"]
+	var/default_tutorial = "This trait has no detailed tutorial yet. Suggest one at #Dev-Suggestions on the discord!"
+	if(istext(trait.tutorial) && length(trait.tutorial) && trait.tutorial != default_tutorial)
+		entry["tutorial"] = trait.tutorial
+	var/anatomy_restriction = resolve_trait_anatomy_restriction(trait)
+	if(is_selected)
+		if(!(trait_path in trait_catalog))
+			var/unavailable_reason = "This saved trait is not available to the current species and may be removed during character validation."
+			entry["warning_reason"] = unavailable_reason
+			entry["disabled_reason"] = unavailable_reason
+		else if(anatomy_restriction)
+			entry["warning_reason"] = anatomy_restriction
+			entry["disabled_reason"] = anatomy_restriction
+	else if(anatomy_restriction)
+		entry["disabled_reason"] = anatomy_restriction
+	var/list/preference_entries = build_trait_preference_entries(trait_path, trait, selected_traits)
+	if(preference_entries.len)
+		entry["preferences"] = preference_entries
+	return entry
+
+/datum/tgui_module/custom_marking_designer/proc/build_character_trait_category(category_id, list/all_trait_paths)
+	var/list/trait_catalog = resolve_trait_catalog(category_id)
+	if(!islist(trait_catalog))
+		trait_catalog = list()
+	var/list/selected_traits = resolve_selected_traits(category_id)
+	if(!islist(selected_traits))
+		selected_traits = list()
+	var/category_name
+	var/category_summary
+	switch(category_id)
+		if("positive")
+			category_name = "Positive Traits"
+			category_summary = "Powerful advantages that each use one limited trait slot."
+		if("neutral")
+			category_name = "Neutral Traits"
+			category_summary = "Identity and playstyle options with no limited slot cost."
+		if("negative")
+			category_name = "Negative Traits"
+			category_summary = "Meaningful tradeoffs with no selection limit."
+	if(!category_name)
+		return null
+	var/list/trait_paths = list()
+	for(var/trait_path in trait_catalog)
+		trait_paths += trait_path
+	for(var/selected_path in selected_traits)
+		if(!(selected_path in trait_paths))
+			trait_paths += selected_path
+	var/list/trait_entries = list()
+	for(var/trait_path in trait_paths)
+		var/datum/trait/trait = all_traits[trait_path]
+		var/list/entry = build_character_trait_entry(trait_path, trait, trait_catalog, selected_traits, all_trait_paths)
+		if(islist(entry))
+			trait_entries += list(entry)
+	return list(
+		"id" = category_id,
+		"name" = category_name,
+		"summary" = category_summary,
+		"selected_count" = selected_traits.len,
+		"traits" = trait_entries
+	)
+
+/datum/tgui_module/custom_marking_designer/proc/format_character_persistence_value(value)
+	if(isnull(value))
+		return "None"
+	if(istext(value) || isnum(value) || ispath(value))
+		return "[value]"
+	if(islist(value))
+		var/encoded_value
+		try
+			encoded_value = json_encode(value)
+		catch
+			encoded_value = null
+		if(istext(encoded_value) && length(encoded_value))
+			return encoded_value
+	return "[value]"
+
+/datum/tgui_module/custom_marking_designer/proc/build_character_persistence_details(list/source, list/ignored_keys)
+	var/list/details = list()
+	if(!islist(source) || !source.len)
+		return details
+	for(var/key in source)
+		if(islist(ignored_keys) && (key in ignored_keys))
+			continue
+		var/label = capitalize(replacetext("[key]", "_", " "))
+		if(findtext(label, "Ui ") == 1)
+			label = "UI [copytext(label, 4)]"
+		details += list(list(
+			"label" = label,
+			"value" = format_character_persistence_value(source[key])
+		))
+	return details
+
+/datum/tgui_module/custom_marking_designer/proc/build_character_persistence_payload()
+	var/list/payload = list(
+		"character_name" = prefs?.real_name || "Selected character",
+		"experience" = list(),
+		"nif" = list(
+			"present" = FALSE,
+			"details" = list()
+		),
+		"pet" = list(
+			"present" = FALSE,
+			"details" = list()
+		)
+	)
+	if(!prefs)
+		return payload
+
+	var/client/owner_client = prefs.client
+	var/datum/etching/etching = owner_client?.etching
+	if(etching)
+		if(islist(etching.xp))
+			var/list/experience = list()
+			for(var/kind in etching.xp)
+				var/amount = etching.xp[kind]
+				if(!isnum(amount))
+					continue
+				experience += list(list(
+					"label" = capitalize("[kind]"),
+					"value" = amount
+				))
+			payload["experience"] = experience
+
+		var/resolved_nif_type = etching.nif_type
+		if(istext(resolved_nif_type))
+			resolved_nif_type = text2path(resolved_nif_type)
+		if(ispath(resolved_nif_type, /obj/item/device/nif))
+			var/obj/item/device/nif/resolved_nif_path = resolved_nif_type
+			var/current_durability = isnum(etching.nif_durability) ? etching.nif_durability : 0
+			var/maximum_durability = initial(resolved_nif_path.durability)
+			var/durability_percent = maximum_durability > 0 ? round(clamp(current_durability / maximum_durability * 100, 0, 100), 0.1) : null
+			payload["nif"] = list(
+				"present" = TRUE,
+				"name" = initial(resolved_nif_path.name),
+				"durability" = current_durability,
+				"max_durability" = maximum_durability,
+				"durability_percent" = durability_percent,
+				"details" = build_character_persistence_details(etching.nif_savedata, null)
+			)
+
+	if(!owner_client?.ckey)
+		return payload
+	var/pet_path = "data/player_saves/[copytext(owner_client.ckey, 1, 2)]/[owner_client.ckey]/pet/slot[prefs.default_slot].json"
+	if(!fexists(pet_path))
+		return payload
+	var/pet_text
+	try
+		pet_text = file2text(pet_path)
+	catch
+		payload["pet"]["error"] = "The stored pet record could not be read."
+		return payload
+	if(!istext(pet_text) || !length(pet_text))
+		payload["pet"]["error"] = "The stored pet record is empty."
+		return payload
+	var/list/pet_data
+	try
+		pet_data = json_decode(pet_text)
+	catch
+		payload["pet"]["error"] = "The stored pet record could not be decoded."
+		return payload
+	if(!islist(pet_data))
+		payload["pet"]["error"] = "The stored pet record is invalid."
+		return payload
+
+	var/resolved_pet_type = pet_data["type"]
+	if(istext(resolved_pet_type))
+		resolved_pet_type = text2path(resolved_pet_type)
+	var/pet_species = "Unknown pet type"
+	if(ispath(resolved_pet_type, /mob/living/simple_mob))
+		var/mob/living/simple_mob/resolved_pet_path = resolved_pet_type
+		pet_species = initial(resolved_pet_path.name)
+	payload["pet"] = list(
+		"present" = TRUE,
+		"name" = istext(pet_data["name"]) && length(pet_data["name"]) ? pet_data["name"] : "Unnamed pet",
+		"species" = pet_species,
+		"details" = build_character_persistence_details(pet_data, list("ckey", "type", "name"))
+	)
+	return payload
+
+/datum/tgui_module/custom_marking_designer/proc/resolve_character_language_catalog(mob/user, datum/species/selected_species)
+	var/list/available_languages = list()
+	if(!istype(selected_species))
+		return available_languages
+	for(var/language_name in GLOB.all_languages)
+		var/datum/language/language_datum = GLOB.all_languages[language_name]
+		if(!istype(language_datum) || (language_datum.flags & RESTRICTED))
+			continue
+		if((islist(selected_species.secondary_langs) && (language_name in selected_species.secondary_langs)) || is_lang_whitelisted(user, language_datum))
+			available_languages |= language_name
+	available_languages -= selected_species.language
+	available_languages -= selected_species.default_language
+	return available_languages
+
+/datum/tgui_module/custom_marking_designer/proc/resolve_character_language_custom_key(language_name)
+	if(!prefs || !islist(prefs.language_custom_keys))
+		return null
+	for(var/custom_key in prefs.language_custom_keys)
+		if(prefs.language_custom_keys[custom_key] == language_name && character_language_custom_key_is_valid(custom_key))
+			return custom_key
+	return null
+
+/datum/tgui_module/custom_marking_designer/proc/build_character_languages_payload(mob/user)
+	if(!prefs)
+		return null
+	var/datum/species/selected_species = GLOB.all_species?[prefs.species]
+	if(!istype(selected_species))
+		return null
+	var/list/alternate_languages = islist(prefs.alternate_languages) ? prefs.alternate_languages : list()
+	var/list/available_languages = resolve_character_language_catalog(user, selected_species)
+	var/list/language_names = list()
+	for(var/language_name in GLOB.all_languages)
+		var/datum/language/language_datum = GLOB.all_languages[language_name]
+		if(istype(language_datum) && !(language_datum.flags & RESTRICTED))
+			language_names |= language_name
+	if(selected_species.language)
+		language_names |= selected_species.language
+	if(selected_species.default_language)
+		language_names |= selected_species.default_language
+	for(var/language_name in alternate_languages)
+		language_names |= language_name
+	for(var/language_name in available_languages)
+		language_names |= language_name
+	language_names |= LANGUAGE_GALCOM
+	if(prefs.preferred_language)
+		language_names |= prefs.preferred_language
+
+	var/list/entries = list()
+	for(var/language_name in language_names)
+		var/datum/language/language_datum = GLOB.all_languages?[language_name]
+		var/is_automatic = language_name == selected_species.language || language_name == selected_species.default_language
+		var/is_selectable = (language_name in available_languages)
+		var/is_selected = is_automatic || (language_name in alternate_languages)
+		var/is_preferred_always = language_name == selected_species.language || language_name == LANGUAGE_GALCOM
+		var/is_preferred_eligible = is_preferred_always || (language_name in alternate_languages)
+		var/list/entry = list(
+			"id" = language_name,
+			"name" = language_datum?.name || language_name,
+			"description" = istext(language_datum?.desc) && length(language_datum.desc) ? language_datum.desc : "No language description is available.",
+			"selected" = is_selected,
+			"automatic" = is_automatic,
+			"selectable" = is_selectable,
+			"preferred_always" = is_preferred_always,
+			"preferred_eligible" = is_preferred_eligible,
+			"preferred" = prefs.preferred_language == language_name,
+			"custom_key" = is_selected ? resolve_character_language_custom_key(language_name) : null
+		)
+		if((language_name in alternate_languages) && !is_selectable)
+			entry["disabled_reason"] = "This saved language is no longer available to the current character. Remove it before saving."
+		else if(!is_selected && !is_selectable && !is_preferred_always)
+			entry["disabled_reason"] = "This language is not available to the current character."
+		entries += list(entry)
+
+	var/base_optional_slots = isnum(selected_species.num_alternate_languages) ? max(0, selected_species.num_alternate_languages) : 0
+	var/optional_limit = max(0, base_optional_slots + (isnum(prefs.extra_languages) ? prefs.extra_languages : 0))
+	var/list/language_prefixes = islist(prefs.language_prefixes) && prefs.language_prefixes.len ? prefs.language_prefixes.Copy() : config.language_prefixes.Copy()
+	return list(
+		"base_optional_slots" = base_optional_slots,
+		"optional_limit" = optional_limit,
+		"selected_optional_count" = alternate_languages.len,
+		"preferred_language" = prefs.preferred_language || selected_species.language || LANGUAGE_GALCOM,
+		"preferred_fallback" = selected_species.language || LANGUAGE_GALCOM,
+		"language_prefixes" = language_prefixes,
+		"default_language_prefixes" = config.language_prefixes.Copy(),
+		"entries" = entries
+	)
+
+/datum/tgui_module/custom_marking_designer/proc/build_traits_payload(mob/user)
+	if(!prefs)
+		return null
+	repair_character_trait_preferences()
+	var/limited_traits_selected = prefs.pos_traits.len
+	var/traits_remaining = prefs.max_traits - limited_traits_selected
+	var/list/all_trait_paths = list()
+	for(var/category_id in list("positive", "neutral", "negative"))
+		var/list/trait_catalog = resolve_trait_catalog(category_id)
+		if(islist(trait_catalog))
+			for(var/trait_path in trait_catalog)
+				if(!(trait_path in all_trait_paths))
+					all_trait_paths += trait_path
+		var/list/selected_traits = resolve_selected_traits(category_id)
+		if(islist(selected_traits))
+			for(var/selected_path in selected_traits)
+				if(!(selected_path in all_trait_paths))
+					all_trait_paths += selected_path
+	var/list/categories = list()
+	for(var/category_id in list("positive", "neutral", "negative"))
+		var/list/category = build_character_trait_category(category_id, all_trait_paths)
+		if(islist(category))
+			categories += list(category)
+	var/datum/species/selected_species = GLOB.all_species?[prefs.species]
+	var/species_name = selected_species?.name || prefs.species
+	if(prefs.species == SPECIES_CUSTOM && istext(prefs.custom_species) && length(prefs.custom_species))
+		species_name = prefs.custom_species
+	return list(
+		"revision" = traits_revision,
+		"species_id" = prefs.species,
+		"species_name" = species_name,
+		"anatomy" = prefs.organ_data?[O_BRAIN] ? "Synthetic" : "Organic",
+		"max_traits" = prefs.max_traits,
+		"limited_traits_selected" = limited_traits_selected,
+		"traits_remaining" = traits_remaining,
+		"neutral_traits_selected" = prefs.neu_traits.len,
+		"total_selected" = prefs.pos_traits.len + prefs.neu_traits.len + prefs.neg_traits.len,
+		"persistence" = build_character_persistence_payload(),
+		"languages" = build_character_languages_payload(user),
+		"categories" = categories
+	)
+
+/datum/tgui_module/custom_marking_designer/proc/send_traits_payload(mob/user, list/save_result = null)
+	if(!user || !prefs)
+		return FALSE
+	var/list/payload = build_traits_payload(user)
+	if(!islist(payload))
+		return FALSE
+	var/list/update = list(
+		"traits_revision" = traits_revision,
+		"traits_species" = prefs.species,
+		"traits_payload" = payload
+	)
+	if(islist(save_result))
+		update["traits_save_result"] = save_result
+	append_traits_preview_scale(update)
+	var/datum/tgui/active_ui = SStgui.get_open_ui(user, src)
+	if(active_ui)
+		active_ui.send_update(update)
+	else
+		SStgui.update_uis(src, update)
+	return TRUE
+
+/datum/tgui_module/custom_marking_designer/proc/build_traits_save_result(request_id, accepted, list/rejection_reasons = null)
+	if(!istext(request_id) || !length(request_id))
+		return null
+	traits_save_result_revision++
+	var/list/result = list(
+		"revision" = traits_save_result_revision,
+		"request_id" = request_id,
+		"accepted" = !!accepted,
+		"traits_revision" = traits_revision
+	)
+	if(LAZYLEN(rejection_reasons))
+		result["error"] = rejection_reasons[1]
+	return result
+
+/datum/tgui_module/custom_marking_designer/proc/reject_character_traits_payload(list/rejection_reasons, reason)
+	if(islist(rejection_reasons) && istext(reason) && length(reason))
+		rejection_reasons += reason
+	return FALSE
+
+/datum/tgui_module/custom_marking_designer/proc/sanitize_character_trait_preferences(datum/trait/trait, list/incoming_preferences)
+	if(!istype(trait) || !LAZYLEN(trait.has_preferences))
+		return null
+	var/list/default_preferences = trait.get_default_prefs()
+	var/list/sanitized_preferences = list()
+	for(var/preference_id in trait.has_preferences)
+		var/list/preference_definition = trait.has_preferences[preference_id]
+		if(!islist(preference_definition) || !preference_definition.len)
+			continue
+		var/default_value = islist(default_preferences) ? default_preferences[preference_id] : null
+		var/incoming_value = islist(incoming_preferences) && (preference_id in incoming_preferences) ? incoming_preferences[preference_id] : default_value
+		switch(preference_definition[1])
+			if(TRAIT_PREF_TYPE_BOOLEAN)
+				var/boolean_value = !!incoming_value
+				if(istext(incoming_value))
+					boolean_value = (lowertext(incoming_value) in list("1", "true", "yes", "on"))
+				sanitized_preferences[preference_id] = boolean_value
+			if(TRAIT_PREF_TYPE_COLOR)
+				var/default_color = istext(default_value) ? default_value : "#ffffff"
+				sanitized_preferences[preference_id] = sanitize_hexcolor(incoming_value, default_color)
+			if(TRAIT_PREF_TYPE_STRING)
+				var/text_value = istext(incoming_value) ? incoming_value : null
+				if(!istext(text_value) || length(text_value) < 3 || length(text_value) > 40)
+					text_value = istext(default_value) ? default_value : ""
+				sanitized_preferences[preference_id] = html_encode(text_value)
+			if(TRAIT_PREF_TYPE_INT)
+				var/number_value = incoming_value
+				if(!isnum(number_value) && istext(number_value))
+					number_value = text2num(number_value)
+				if(!isnum(number_value))
+					number_value = isnum(default_value) ? default_value : 0
+				sanitized_preferences[preference_id] = CLAMP(number_value, 0, 5)
+			if(TRAIT_PREF_TYPE_LIST)
+				var/list/options = trait.vars?["inject_chems"]
+				var/list_value = incoming_value
+				if(!islist(options) || !(list_value in options))
+					list_value = islist(options) && (default_value in options) ? default_value : options?[1]
+				sanitized_preferences[preference_id] = list_value
+	return sanitized_preferences
+
+/datum/tgui_module/custom_marking_designer/proc/store_character_trait_selection(trait_path, datum/trait/trait, list/incoming_preferences, list/positive_traits, list/neutral_traits, list/negative_traits)
+	if(!trait_path || !istype(trait))
+		return FALSE
+	var/list/sanitized_preferences = sanitize_character_trait_preferences(trait, incoming_preferences)
+	var/list/target_traits
+	switch(resolve_trait_category_id(trait))
+		if("positive")
+			target_traits = positive_traits
+		if("neutral")
+			target_traits = neutral_traits
+		if("negative")
+			target_traits = negative_traits
+	if(!islist(target_traits))
+		return FALSE
+	if(islist(sanitized_preferences))
+		target_traits[trait_path] = sanitized_preferences
+	else
+		target_traits += trait_path
+	return TRUE
+
+/datum/tgui_module/custom_marking_designer/proc/resolve_requested_extra_languages(list/requested_paths)
+	var/projected_extra_languages = initial(prefs.extra_languages)
+	for(var/trait_path in requested_paths)
+		var/datum/trait/trait = all_traits[trait_path]
+		if(islist(trait?.var_changes_pref) && isnum(trait.var_changes_pref["extra_languages"]))
+			projected_extra_languages = trait.var_changes_pref["extra_languages"]
+	return projected_extra_languages
+
+/datum/tgui_module/custom_marking_designer/proc/stage_character_languages_payload(list/params, list/requested_paths, mob/user, list/staged_languages, list/rejection_reasons)
+	if(!prefs || !islist(params) || !islist(staged_languages))
+		return reject_character_traits_payload(rejection_reasons, "Language data is unavailable.")
+	var/datum/species/selected_species = GLOB.all_species?[prefs.species]
+	if(!istype(selected_species))
+		return reject_character_traits_payload(rejection_reasons, "The selected species has no valid language rules.")
+	var/projected_extra_languages = resolve_requested_extra_languages(requested_paths)
+	var/base_optional_slots = isnum(selected_species.num_alternate_languages) ? selected_species.num_alternate_languages : 0
+	var/optional_limit = max(0, base_optional_slots + projected_extra_languages)
+	var/languages_included = ("languages" in params)
+	if(!languages_included)
+		var/list/current_alternate_languages = islist(prefs.alternate_languages) ? prefs.alternate_languages.Copy() : list()
+		if(current_alternate_languages.len > optional_limit)
+			return reject_character_traits_payload(rejection_reasons, "Your selected traits allow [optional_limit] optional language[optional_limit == 1 ? "" : "s"], but this character currently has [current_alternate_languages.len].")
+		staged_languages["alternate_languages"] = current_alternate_languages
+		staged_languages["preferred_language"] = prefs.preferred_language
+		staged_languages["language_custom_keys"] = islist(prefs.language_custom_keys) ? prefs.language_custom_keys.Copy() : list()
+		staged_languages["language_prefixes"] = islist(prefs.language_prefixes) && prefs.language_prefixes.len ? prefs.language_prefixes.Copy() : config.language_prefixes.Copy()
+		staged_languages["extra_languages"] = projected_extra_languages
+		return TRUE
+
+	var/list/incoming_languages = params["languages"]
+	if(!islist(incoming_languages))
+		return reject_character_traits_payload(rejection_reasons, "The Traits save did not contain valid language data.")
+	var/list/incoming_alternate_languages = incoming_languages["alternate_languages"]
+	if(!islist(incoming_alternate_languages))
+		return reject_character_traits_payload(rejection_reasons, "The language draft did not contain a valid optional-language list.")
+	var/list/available_languages = resolve_character_language_catalog(user, selected_species)
+	var/list/requested_alternate_languages = list()
+	for(var/language_name in incoming_alternate_languages)
+		if(!istext(language_name) || !(language_name in GLOB.all_languages))
+			return reject_character_traits_payload(rejection_reasons, "The language draft contained an unknown language.")
+		if(language_name in requested_alternate_languages)
+			return reject_character_traits_payload(rejection_reasons, "The language draft contained [language_name] more than once.")
+		if(!(language_name in available_languages))
+			return reject_character_traits_payload(rejection_reasons, "[language_name] is not available to this character. Remove it before saving.")
+		requested_alternate_languages += language_name
+	if(requested_alternate_languages.len > optional_limit)
+		return reject_character_traits_payload(rejection_reasons, "Your selected traits allow [optional_limit] optional language[optional_limit == 1 ? "" : "s"], but [requested_alternate_languages.len] are selected.")
+
+	var/preferred_language = incoming_languages["preferred_language"]
+	if(!istext(preferred_language) || !length(preferred_language))
+		return reject_character_traits_payload(rejection_reasons, "Choose a preferred language before saving.")
+	var/list/preferred_languages = list(selected_species.language, LANGUAGE_GALCOM)
+	preferred_languages |= requested_alternate_languages
+	if(!(preferred_language in preferred_languages))
+		return reject_character_traits_payload(rejection_reasons, "[preferred_language] cannot be used as this character's preferred language.")
+
+	var/list/incoming_custom_keys = incoming_languages["custom_keys"]
+	if(!islist(incoming_custom_keys))
+		return reject_character_traits_payload(rejection_reasons, "The language draft did not contain valid custom keys.")
+	var/list/customizable_languages = list()
+	if(selected_species.language)
+		customizable_languages |= selected_species.language
+	if(selected_species.default_language)
+		customizable_languages |= selected_species.default_language
+	customizable_languages |= requested_alternate_languages
+	var/list/new_language_custom_keys = list()
+	for(var/language_name in incoming_custom_keys)
+		var/custom_key = incoming_custom_keys[language_name]
+		if(!(language_name in customizable_languages))
+			return reject_character_traits_payload(rejection_reasons, "A custom key was provided for unavailable language [language_name].")
+		if(!character_language_custom_key_is_valid(custom_key))
+			return reject_character_traits_payload(rejection_reasons, "The custom key for [language_name] must be one letter or number.")
+		if(custom_key in new_language_custom_keys)
+			return reject_character_traits_payload(rejection_reasons, "The custom language key [custom_key] is assigned more than once.")
+		new_language_custom_keys[custom_key] = language_name
+
+	var/list/incoming_prefixes = incoming_languages["language_prefixes"]
+	if(!islist(incoming_prefixes) || !incoming_prefixes.len || incoming_prefixes.len > 3)
+		return reject_character_traits_payload(rejection_reasons, "Language keys must contain one to three special characters.")
+	var/list/new_language_prefixes = list()
+	for(var/prefix in incoming_prefixes)
+		if(!character_language_prefix_is_valid(prefix))
+			return reject_character_traits_payload(rejection_reasons, "[prefix] cannot be used as a language prefix.")
+		new_language_prefixes += prefix
+
+	staged_languages["alternate_languages"] = requested_alternate_languages
+	staged_languages["preferred_language"] = preferred_language
+	staged_languages["language_custom_keys"] = new_language_custom_keys
+	staged_languages["language_prefixes"] = new_language_prefixes
+	staged_languages["extra_languages"] = projected_extra_languages
+	return TRUE
+
+/datum/tgui_module/custom_marking_designer/proc/apply_character_traits_payload(list/params, list/rejection_reasons = null, mob/user = null, list/change_result = null)
+	if(islist(change_result))
+		change_result["traits_changed"] = FALSE
+	if(!prefs || !islist(params))
+		return reject_character_traits_payload(rejection_reasons, "Trait data is unavailable.")
+	var/incoming_revision = params?["revision"]
+	if(!isnum(incoming_revision) || incoming_revision != traits_revision)
+		return reject_character_traits_payload(rejection_reasons, "This Traits draft is out of date. Reload it and try again.")
+	var/list/incoming_selected = params?["selected_traits"]
+	if(!islist(incoming_selected))
+		return reject_character_traits_payload(rejection_reasons, "The Traits save did not contain a valid selection list.")
+	var/list/incoming_preferences = params?["trait_preferences"]
+	if(!islist(incoming_preferences))
+		incoming_preferences = list()
+	var/list/requested_paths = list()
+	var/list/requested_preferences = list()
+	for(var/trait_id in incoming_selected)
+		if(!istext(trait_id))
+			return reject_character_traits_payload(rejection_reasons, "The Traits save contained an invalid trait identifier.")
+		var/trait_path = text2path(trait_id)
+		var/datum/trait/trait = all_traits[trait_path]
+		if(!istype(trait))
+			return reject_character_traits_payload(rejection_reasons, "The Traits save contained an unknown trait.")
+		if(trait_path in requested_paths)
+			return reject_character_traits_payload(rejection_reasons, "The Traits save contained [trait.name] more than once.")
+		requested_paths += trait_path
+		var/list/trait_preferences = incoming_preferences[trait_id]
+		if(islist(trait_preferences))
+			requested_preferences["[trait_path]"] = trait_preferences
+
+	var/positive_trait_count = 0
+	for(var/trait_path in requested_paths)
+		var/datum/trait/trait = all_traits[trait_path]
+		var/category_id = resolve_trait_category_id(trait)
+		var/list/trait_catalog = resolve_trait_catalog(category_id)
+		if(!islist(trait_catalog) || !(trait_path in trait_catalog))
+			return reject_character_traits_payload(rejection_reasons, "[trait.name] is not available to [prefs.species]. Remove it before saving.")
+		var/anatomy_restriction = resolve_trait_anatomy_restriction(trait)
+		if(anatomy_restriction)
+			return reject_character_traits_payload(rejection_reasons, "[trait.name]: [anatomy_restriction]")
+		if(category_id == "positive")
+			positive_trait_count++
+	if(positive_trait_count > prefs.max_traits)
+		return reject_character_traits_payload(rejection_reasons, "You selected [positive_trait_count] positive traits, but the limit is [prefs.max_traits].")
+
+	for(var/trait_index = 1, trait_index <= requested_paths.len, trait_index++)
+		var/trait_path = requested_paths[trait_index]
+		var/datum/trait/trait = all_traits[trait_path]
+		for(var/selected_index = 1, selected_index < trait_index, selected_index++)
+			var/selected_path = requested_paths[selected_index]
+			var/datum/trait/selected_trait = all_traits[selected_path]
+			if(character_traits_conflict(trait_path, trait, selected_path, selected_trait))
+				return reject_character_traits_payload(rejection_reasons, "[trait.name] conflicts with [selected_trait.name]. Remove one before saving.")
+
+	var/list/staged_languages = list()
+	if(!stage_character_languages_payload(params, requested_paths, user, staged_languages, rejection_reasons))
+		return FALSE
+
+	var/list/new_positive_traits = list()
+	var/list/new_neutral_traits = list()
+	var/list/new_negative_traits = list()
+	for(var/trait_path in requested_paths)
+		var/datum/trait/trait = all_traits[trait_path]
+		var/list/trait_preferences = requested_preferences["[trait_path]"]
+		if(!store_character_trait_selection(trait_path, trait, trait_preferences, new_positive_traits, new_neutral_traits, new_negative_traits))
+			return reject_character_traits_payload(rejection_reasons, "[trait.name] could not be saved.")
+
+	var/list/current_trait_signature = list(
+		"positive" = prefs.build_trait_signature(prefs.pos_traits),
+		"neutral" = prefs.build_trait_signature(prefs.neu_traits),
+		"negative" = prefs.build_trait_signature(prefs.neg_traits)
+	)
+	var/list/requested_trait_signature = list(
+		"positive" = prefs.build_trait_signature(new_positive_traits),
+		"neutral" = prefs.build_trait_signature(new_neutral_traits),
+		"negative" = prefs.build_trait_signature(new_negative_traits)
+	)
+	if(islist(change_result))
+		change_result["traits_changed"] = json_encode(current_trait_signature) != json_encode(requested_trait_signature)
+
+	var/list/current_paths = prefs.pos_traits + prefs.neu_traits + prefs.neg_traits
+	for(var/trait_path in current_paths)
+		if(trait_path in requested_paths)
+			continue
+		var/datum/trait/trait = all_traits[trait_path]
+		if(istype(trait))
+			trait.remove_pref(prefs)
+	for(var/trait_path in requested_paths)
+		if(trait_path in current_paths)
+			continue
+		var/datum/trait/trait = all_traits[trait_path]
+		if(istype(trait))
+			trait.apply_pref(prefs)
+
+	prefs.pos_traits = new_positive_traits
+	prefs.neu_traits = new_neutral_traits
+	prefs.neg_traits = new_negative_traits
+	prefs.extra_languages = staged_languages["extra_languages"]
+	prefs.alternate_languages = staged_languages["alternate_languages"]
+	prefs.preferred_language = staged_languages["preferred_language"]
+	prefs.language_custom_keys = staged_languages["language_custom_keys"]
+	prefs.language_prefixes = staged_languages["language_prefixes"]
+	return TRUE
 
 // Toggle dirty flag for pending saves
 /datum/tgui_module/custom_marking_designer/proc/set_mark_dirty(state)
@@ -4133,6 +4968,9 @@ var/global/custom_marking_static_source_digest_complete = TRUE
 	data["show_equipment"] = !!(prefs?.equip_preview_mob & EQUIP_PREVIEW_EQUIPMENT)
 	data["show_job_gear"] = !!(prefs?.equip_preview_mob & EQUIP_PREVIEW_JOB)
 	data["show_loadout_gear"] = !!(prefs?.equip_preview_mob & EQUIP_PREVIEW_LOADOUT)
+	data["traits_revision"] = traits_revision
+	data["traits_species"] = prefs?.species
+	append_traits_preview_scale(data)
 	data["reference_build_in_progress"] = reference_build_in_progress
 	return data
 
@@ -4907,8 +5745,44 @@ var/global/custom_marking_static_source_digest_complete = TRUE
 	payload["definition_data"] = context["definition_data"]
 	return TRUE
 
+/datum/tgui_module/custom_marking_designer/proc/build_basic_preview_variant_bundles(digitigrade_value, digitigrade_allowed, biological_gender, list/possible_genders)
+	if(!prefs)
+		return null
+	var/original_biological_gender = prefs.biological_gender
+	var/original_identifying_gender = prefs.identifying_gender
+	var/original_digitigrade = prefs.digitigrade
+	prefs.biological_gender = biological_gender
+	if(biological_gender != original_biological_gender)
+		prefs.identifying_gender = biological_gender
+	prefs.digitigrade = digitigrade_value
+	var/list/preview_bundle = build_stripped_preview_source_bundle(digitigrade_value)
+	var/list/preview_bundle_alt = null
+	if(digitigrade_allowed)
+		prefs.digitigrade = !digitigrade_value
+		preview_bundle_alt = build_stripped_preview_source_bundle(!digitigrade_value)
+	var/alternate_gender = resolve_basic_alternate_preview_gender(possible_genders, biological_gender)
+	var/list/preview_bundle_gender_alt = null
+	var/list/preview_bundle_gender_alt_digitigrade = null
+	if(!isnull(alternate_gender))
+		prefs.biological_gender = alternate_gender
+		prefs.identifying_gender = alternate_gender
+		prefs.digitigrade = digitigrade_value
+		preview_bundle_gender_alt = build_stripped_preview_source_bundle(digitigrade_value)
+		if(digitigrade_allowed)
+			prefs.digitigrade = !digitigrade_value
+			preview_bundle_gender_alt_digitigrade = build_stripped_preview_source_bundle(!digitigrade_value)
+	prefs.biological_gender = original_biological_gender
+	prefs.identifying_gender = original_identifying_gender
+	prefs.digitigrade = original_digitigrade
+	return list(
+		"primary" = preview_bundle,
+		"alternate" = preview_bundle_alt,
+		"gender_alternate" = preview_bundle_gender_alt,
+		"gender_alternate_digitigrade" = preview_bundle_gender_alt_digitigrade
+	)
+
 // Build payload for the basic appearance tab (Lira, December 2025)
-/datum/tgui_module/custom_marking_designer/proc/build_basic_appearance_payload(preview_digitigrade = null, preview_only = FALSE, known_definition_revision = null, known_preview_revision = null, known_preview_signature = null, known_preview_revision_alt = null, known_preview_signature_alt = null)
+/datum/tgui_module/custom_marking_designer/proc/build_basic_appearance_payload(preview_digitigrade = null, preview_only = FALSE, known_definition_revision = null, known_preview_revision = null, known_preview_signature = null, known_preview_revision_alt = null, known_preview_signature_alt = null, known_preview_revision_gender_alt = null, known_preview_signature_gender_alt = null, known_preview_revision_gender_alt_digitigrade = null, known_preview_signature_gender_alt_digitigrade = null)
 	var/list/yield_context = custom_marking_begin_manual_yield()
 	if(!prefs)
 		custom_marking_end_manual_yield(yield_context)
@@ -4916,6 +5790,14 @@ var/global/custom_marking_static_source_digest_complete = TRUE
 	var/list/payload = list()
 	payload["species_id"] = prefs.species
 	payload["custom_base"] = prefs.custom_base
+	var/list/base_genders = build_base_biological_gender_options()
+	var/list/possible_genders = build_basic_biological_gender_options(base_genders)
+	var/biological_gender = resolve_basic_biological_gender(possible_genders, prefs.biological_gender)
+	var/datum/species/selected_species = GLOB.all_species?[prefs.species]
+	payload["biological_gender"] = biological_gender
+	payload["base_biological_genders"] = base_genders
+	payload["biological_genders"] = possible_genders
+	payload["preview_gender_suffix"] = resolve_species_body_preview_gender_suffix(selected_species, biological_gender)
 	var/digitigrade_allowed = is_digitigrade_allowed()
 	var/digitigrade_value = digitigrade_allowed ? !!prefs.digitigrade : FALSE
 	if(!isnull(preview_digitigrade))
@@ -4967,8 +5849,6 @@ var/global/custom_marking_static_source_digest_complete = TRUE
 	append_basic_appearance_definitions(payload, known_definition_revision)
 	var/can_compose_prosthetics = can_compose_prosthetics_from_static_catalog()
 	payload["prosthetic_context"] = can_compose_prosthetics ? build_basic_prosthetic_context() : null
-	var/list/preview_bundle = null
-	var/list/preview_bundle_alt = null
 	var/original_digitigrade = prefs.digitigrade
 	var/original_hair = prefs.h_style
 	var/original_grad = prefs.grad_style
@@ -4986,12 +5866,12 @@ var/global/custom_marking_static_source_digest_complete = TRUE
 	prefs.ear_secondary_style = null
 	prefs.wing_style = null
 	prefs.tail_style = "hide species-sprite tail"
-	prefs.digitigrade = digitigrade_value
 	prefs.body_markings = null
-	preview_bundle = build_stripped_preview_source_bundle(digitigrade_value)
-	if(digitigrade_allowed)
-		prefs.digitigrade = !digitigrade_value
-		preview_bundle_alt = build_stripped_preview_source_bundle(!digitigrade_value)
+	var/list/preview_bundles = build_basic_preview_variant_bundles(digitigrade_value, digitigrade_allowed, biological_gender, possible_genders)
+	var/list/preview_bundle = preview_bundles?["primary"]
+	var/list/preview_bundle_alt = preview_bundles?["alternate"]
+	var/list/preview_bundle_gender_alt = preview_bundles?["gender_alternate"]
+	var/list/preview_bundle_gender_alt_digitigrade = preview_bundles?["gender_alternate_digitigrade"]
 	prefs.body_markings = original_body_markings
 	prefs.h_style = original_hair
 	prefs.grad_style = original_grad
@@ -5005,6 +5885,8 @@ var/global/custom_marking_static_source_digest_complete = TRUE
 		restore_preview_prosthetic_state(prosthetic_restore)
 	append_preview_bundle_delta(payload, preview_bundle, null, known_preview_revision, known_preview_signature)
 	append_preview_bundle_delta(payload, preview_bundle_alt, "alt", known_preview_revision_alt, known_preview_signature_alt)
+	append_preview_bundle_delta(payload, preview_bundle_gender_alt, "gender_alt", known_preview_revision_gender_alt, known_preview_signature_gender_alt)
+	append_preview_bundle_delta(payload, preview_bundle_gender_alt_digitigrade, "gender_alt_digitigrade", known_preview_revision_gender_alt_digitigrade, known_preview_signature_gender_alt_digitigrade)
 	payload["preview_width"] = get_preview_canvas_width()
 	payload["preview_height"] = get_preview_canvas_height()
 	var/list/canvas_backgrounds_live = build_canvas_background_options()
@@ -5080,6 +5962,27 @@ var/global/custom_marking_static_source_digest_complete = TRUE
 		if(atlas.is_ready() && manifest_asset == atlas.get_manifest_asset_name() && manifest_revision == atlas.get_manifest_revision())
 			static_manifest_client_ready = TRUE
 			prefs?.close_custom_marking_designer_loading()
+		return FALSE
+	if(action == "load_traits")
+		send_traits_payload(usr)
+		return TRUE
+	if(action == "save_traits")
+		var/close_ui = !!params?["close"]
+		var/request_id = params?["request_id"]
+		var/list/rejection_reasons = list()
+		var/list/change_result = list()
+		var/traits_updated = apply_character_traits_payload(params, rejection_reasons, usr, change_result)
+		if(traits_updated)
+			traits_revision++
+			refresh_preferences_window_if_visible(!!change_result["traits_changed"])
+			if(close_ui)
+				SStgui.close_uis(src)
+				return FALSE
+		var/list/save_result = build_traits_save_result(request_id, traits_updated, rejection_reasons)
+		send_traits_payload(usr, save_result)
+		return TRUE
+	if(action == "close_traits")
+		SStgui.close_uis(src)
 		return FALSE
 	if(action == "enable_custom_markings")
 		if(!prefs)
@@ -5283,7 +6186,11 @@ var/global/custom_marking_static_source_digest_complete = TRUE
 			params?["known_preview_revision"],
 			params?["known_preview_signature"],
 			params?["known_alt_preview_revision"],
-			params?["known_alt_preview_signature"]
+			params?["known_alt_preview_signature"],
+			params?["known_gender_alt_preview_revision"],
+			params?["known_gender_alt_preview_signature"],
+			params?["known_gender_alt_digitigrade_preview_revision"],
+			params?["known_gender_alt_digitigrade_preview_signature"]
 		)
 		if(islist(species_override))
 			restore_preview_species_override(species_override)
@@ -5302,6 +6209,7 @@ var/global/custom_marking_static_source_digest_complete = TRUE
 		var/basic_updated = apply_basic_appearance_payload(params)
 		release_preview_payload_build_lock()
 		if(basic_updated)
+			traits_revision++
 			refresh_preferences_window_if_visible(TRUE)
 			if(close_ui)
 				SStgui.close_uis(src)
@@ -5326,10 +6234,14 @@ var/global/custom_marking_static_source_digest_complete = TRUE
 	else if(action == "save_species")
 		var/close_ui = params?["close"]
 		acquire_preview_payload_build_lock()
+		var/previous_species = prefs?.species
+		var/previous_icon_base = prefs?.custom_base
 		var/species_updated = apply_species_payload(params, usr)
 		var/list/species_save_result = build_species_save_result_if_needed(species_updated, close_ui, params)
 		release_preview_payload_build_lock()
 		if(species_updated)
+			if(prefs?.species != previous_species || prefs?.custom_base != previous_icon_base)
+				traits_revision++
 			refresh_preferences_window_if_visible(TRUE)
 			if(close_ui)
 				SStgui.close_uis(src)
@@ -5386,6 +6298,13 @@ var/global/custom_marking_static_source_digest_complete = TRUE
 		return FALSE
 	if(!apply_basic_prosthetic_settings(params))
 		return FALSE
+	var/requested_biological_gender = params?["biological_gender"]
+	var/list/possible_genders = build_basic_biological_gender_options()
+	if(!istext(requested_biological_gender) || !(requested_biological_gender in possible_genders))
+		requested_biological_gender = prefs.biological_gender
+	var/biological_gender = resolve_basic_biological_gender(possible_genders, requested_biological_gender)
+	if(biological_gender != prefs.biological_gender)
+		prefs.set_biological_gender(biological_gender)
 	var/safe_hex
 	var/digi_raw = params?["digitigrade"]
 	var/digi_value = null
@@ -5733,6 +6652,14 @@ var/global/custom_marking_static_source_digest_complete = TRUE
 	var/list/payload = list()
 	payload["species_id"] = prefs.species
 	payload["custom_base"] = prefs.custom_base
+	var/list/base_genders = build_base_biological_gender_options()
+	var/list/possible_genders = build_basic_biological_gender_options(base_genders)
+	var/biological_gender = resolve_basic_biological_gender(possible_genders, prefs.biological_gender)
+	var/datum/species/selected_species = GLOB.all_species?[prefs.species]
+	payload["biological_gender"] = biological_gender
+	payload["base_biological_genders"] = base_genders
+	payload["biological_genders"] = possible_genders
+	payload["preview_gender_suffix"] = resolve_species_body_preview_gender_suffix(selected_species, biological_gender)
 	var/digitigrade_allowed = is_digitigrade_allowed()
 	payload["digitigrade_allowed"] = digitigrade_allowed
 	payload["digitigrade"] = digitigrade_allowed ? !!prefs.digitigrade : FALSE
@@ -5802,12 +6729,9 @@ var/global/custom_marking_static_source_digest_complete = TRUE
 	prefs.body_markings = null
 	var/digitigrade_allowed = is_digitigrade_allowed()
 	var/digitigrade_value = digitigrade_allowed ? !!original_digitigrade : FALSE
-	prefs.digitigrade = digitigrade_value
-	var/list/preview_bundle = build_stripped_preview_source_bundle(digitigrade_value)
-	var/list/preview_bundle_alt = null
-	if(digitigrade_allowed)
-		prefs.digitigrade = !digitigrade_value
-		preview_bundle_alt = build_stripped_preview_source_bundle(!digitigrade_value)
+	var/list/possible_genders = build_basic_biological_gender_options()
+	var/biological_gender = resolve_basic_biological_gender(possible_genders, prefs.biological_gender)
+	var/list/preview_bundles = build_basic_preview_variant_bundles(digitigrade_value, digitigrade_allowed, biological_gender, possible_genders)
 	prefs.digitigrade = original_digitigrade
 	prefs.h_style = original_hair
 	prefs.grad_style = original_grad
@@ -5819,10 +6743,7 @@ var/global/custom_marking_static_source_digest_complete = TRUE
 	prefs.body_markings = original_body_markings
 	if(islist(prosthetic_restore))
 		restore_preview_prosthetic_state(prosthetic_restore)
-	return list(
-		"primary" = preview_bundle,
-		"alternate" = preview_bundle_alt
-	)
+	return preview_bundles
 
 /datum/tgui_module/custom_marking_designer/proc/build_species_save_result_if_needed(species_updated, close_ui, list/known_payload_state = null)
 	if(species_updated && close_ui)
@@ -5839,6 +6760,7 @@ var/global/custom_marking_static_source_digest_complete = TRUE
 		"accepted" = !!accepted,
 		"species_id" = prefs.species,
 		"custom_base" = prefs.custom_base,
+		"custom_species" = istext(prefs.custom_species) ? html_decode(prefs.custom_species) : null,
 		"body_markings" = body_state["body_markings"],
 		"order" = body_state["order"],
 		"basic_appearance" = build_species_save_basic_appearance_payload(known_payload_state?["known_basic_definition_revision"])
@@ -5866,6 +6788,22 @@ var/global/custom_marking_static_source_digest_complete = TRUE
 		known_payload_state?["known_body_alt_preview_revision"],
 		known_payload_state?["known_body_alt_preview_signature"]
 	)
+	var/list/preview_bundle_gender_alt = preview_bundles?["gender_alternate"]
+	append_preview_bundle_delta(
+		result,
+		preview_bundle_gender_alt,
+		"gender_alt",
+		known_payload_state?["known_body_gender_alt_preview_revision"],
+		known_payload_state?["known_body_gender_alt_preview_signature"]
+	)
+	var/list/preview_bundle_gender_alt_digitigrade = preview_bundles?["gender_alternate_digitigrade"]
+	append_preview_bundle_delta(
+		result,
+		preview_bundle_gender_alt_digitigrade,
+		"gender_alt_digitigrade",
+		known_payload_state?["known_body_gender_alt_digitigrade_preview_revision"],
+		known_payload_state?["known_body_gender_alt_digitigrade_preview_signature"]
+	)
 	return result
 
 /datum/tgui_module/custom_marking_designer/proc/apply_species_payload(list/params, mob/user)
@@ -5883,9 +6821,19 @@ var/global/custom_marking_static_source_digest_complete = TRUE
 		return FALSE
 	var/prev_species = prefs.species
 	var/prev_icon_base = prefs.custom_base
+	var/custom_species_supplied = ("custom_species" in params)
+	var/requested_custom_species = prefs.custom_species
+	if(custom_species_supplied)
+		var/raw_custom_species = params?["custom_species"]
+		if(!isnull(raw_custom_species) && !istext(raw_custom_species))
+			return FALSE
+		requested_custom_species = sanitize(raw_custom_species, MAX_NAME_LEN)
+	if(target_species == SPECIES_CUSTOM && (!istext(requested_custom_species) || !length(requested_custom_species)))
+		return FALSE
 	var/resolved_icon_base = resolve_species_icon_base(target_species, params?["icon_base"])
 	var/icon_base_changed = istext(resolved_icon_base) && length(resolved_icon_base) && resolved_icon_base != prev_icon_base
-	if(prev_species == target_species && !icon_base_changed)
+	var/custom_species_changed = custom_species_supplied && requested_custom_species != prefs.custom_species
+	if(prev_species == target_species && !icon_base_changed && !custom_species_changed)
 		return TRUE
 	prefs.species = target_species
 	if(istext(resolved_icon_base) && length(resolved_icon_base))
@@ -5932,6 +6880,8 @@ var/global/custom_marking_static_source_digest_complete = TRUE
 		prefs.sanitize_body_styles()
 		prune_body_markings_for_current_species()
 		invalidate_reference_payload_caches()
+	if(custom_species_supplied)
+		prefs.custom_species = requested_custom_species
 	return TRUE
 
 /datum/tgui_module/custom_marking_designer/proc/prune_body_markings_for_current_species()
