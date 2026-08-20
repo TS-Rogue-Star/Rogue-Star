@@ -648,5 +648,5 @@ sound/instruments/synthesis_samples/woodwind/fluid_tenor_sax,<br>
 **Icon-States:** talon_atmos_refreshed, talon_engineer_refreshed, talon_miner_refreshed<br>
 **Creator:** Original graphics by Youtubeboy139. Modified by Azzy.Dreemurr<br>
 **Link:** https://github.com/VOREStation/VOREStation/pull/10660<br>
-**License:** CC BY-SA 3.0<br>
+**License:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)<br>
 <br>
