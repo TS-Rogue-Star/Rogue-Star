@@ -3748,7 +3748,7 @@ var/global/custom_marking_static_source_digest_complete = TRUE
 			"value" = preference_value
 		)
 		if(preference_definition[1] == TRAIT_PREF_TYPE_LIST)
-			var/list/options = trait.vars?["inject_chems"]
+			var/list/options = trait.vars?["list_options"]
 			if(islist(options))
 				entry["options"] = options.Copy()
 		entries += list(entry)
@@ -4154,7 +4154,7 @@ var/global/custom_marking_static_source_digest_complete = TRUE
 					number_value = isnum(default_value) ? default_value : 0
 				sanitized_preferences[preference_id] = CLAMP(number_value, 0, 5)
 			if(TRAIT_PREF_TYPE_LIST)
-				var/list/options = trait.vars?["inject_chems"]
+				var/list/options = trait.vars?["list_options"]
 				var/list_value = incoming_value
 				if(!islist(options) || !(list_value in options))
 					list_value = islist(options) && (default_value in options) ? default_value : options?[1]

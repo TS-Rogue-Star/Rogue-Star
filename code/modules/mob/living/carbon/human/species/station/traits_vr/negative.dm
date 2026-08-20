@@ -180,4 +180,45 @@
 		/datum/trait/positive/soft_landing
 		)
 
+/datum/trait/negative/stim_react
+	name = "Belching Shrinks"
+	desc = "When belched upon, your body involuntarily shrinks."
+	custom_only = FALSE
+
+/datum/trait/negative/stim_react/belch_stun
+	name = "Belching Stuns"
+	desc = "When belched upon, your body involuntarily locks up."
+
+/datum/trait/negative/stim_react/belch_sleep
+	name = "Belching Sleeps"
+	desc = "When belched upon, your body involuntarily loses consciousness."
+
+/datum/trait/negative/stim_react/intent_touch
+	name = "Friendly Touch Shrinks"
+	desc = "When touched in a friendly manner in the designated location, your body involuntarily shrinks."
+	custom_only = FALSE
+	has_preferences = list(
+		"target" = list(TRAIT_PREF_TYPE_LIST, "Affected Body Part",TRAIT_NO_VAREDIT_TARGET,BP_HEAD))
+	list_options = BP_ALL
+
+/datum/trait/negative/stim_react/intent_touch/ft_stun
+	name = "Friendly Touch Stuns"
+	desc = "When touched in a friendly manner in the designated location, your body involuntarily locks up."
+
+/datum/trait/negative/stim_react/intent_touch/ft_sleep
+	name = "Friendly Touch Sleeps"
+	desc = "When touched in a friendly manner in the designated location, your body involuntarily loses consciousness."
+
+/datum/trait/negative/stim_react/intent_touch/dis_shrink
+	name = "Disarm Touch Shrinks"
+	desc = "When touched in a disarming manner in the designated location, your body involuntarily shrinks."
+
+/datum/trait/negative/stim_react/intent_touch/dis_stun
+	name = "Disarm Touch Stuns"
+	desc = "When touched in a disarming manner in the designated location, your body involuntarily locks up."
+
+/datum/trait/negative/stim_react/intent_touch/dis_sleep
+	name = "Disarm Touch Sleeps"
+	desc = "When touched in a disarming manner in the designated location, your body involuntarily loses consciousness."
+
 //RS ADD END

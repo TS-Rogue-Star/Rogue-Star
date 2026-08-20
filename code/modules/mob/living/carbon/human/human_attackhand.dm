@@ -283,6 +283,7 @@
 			add_attack_logs(H,src,"Disarmed")
 
 			M.do_attack_animation(src)
+			intent_react(M, I_DISARM)	//RS ADD
 
 			if(w_uniform)
 				w_uniform.add_fingerprint(M)
