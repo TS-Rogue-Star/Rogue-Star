@@ -641,7 +641,7 @@ sound/instruments/synthesis_samples/woodwind/fluid_tenor_sax,<br>
 <br>
 **File:** `icons/inventory/uniform/item_rs.dmi, icons/inventory/uniform/mob_rs.dmi`<br>
 **Icon-States:** talon_atmos_refreshed, talon_engineer_refreshed, talon_miner_refreshed<br>
-**Creator:** Original graphics by axietheaxolotl, Imaginos16. Modified by Azzy.Dreemurr<br>
+**Creator:** Original graphics by ChromeFoxxity. Modified by Azzy.Dreemurr<br>
 **Link:** https://github.com/TS-Rogue-Star/Rogue-Star/pull/766<br>
 <br>
 **File:** `icons/inventory/uniform/item_vr.dmi, icons/inventory/uniform/mob_vr.dmi, ‎icons/inventory/uniform/mob_vr_rolled_down.dmi‎`<br>
