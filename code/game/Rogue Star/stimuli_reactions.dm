@@ -35,7 +35,7 @@
 		Stun(30)
 		Weaken(30)
 	if(do_sleep)
-		sleeping = 30
+		Sleeping(30)
 
 /mob/living/proc/intent_react(var/mob/living/L, var/our_intent)
 	return
@@ -84,4 +84,4 @@
 		Stun(30)
 		Weaken(30)
 	if(do_sleep)
-		sleeping = 30
+		Sleeping(30)
