@@ -73,7 +73,7 @@
 				if(/datum/trait/negative/stim_react/intent_touch/dis_stun)
 					do_stun = TRUE
 					continue
-				if(/datum/trait/negative/stim_react/intent_touch/ft_sleep)
+				if(/datum/trait/negative/stim_react/intent_touch/dis_sleep)
 					do_sleep = TRUE
 					continue
 
