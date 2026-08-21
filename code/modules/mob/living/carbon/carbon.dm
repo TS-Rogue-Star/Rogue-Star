@@ -309,9 +309,11 @@
 						M.resting = 0 //Hoist yourself up up off the ground. No para/stunned/weakened removal.
 				else if(istype(hugger))
 					hugger.species.hug(hugger,src)
+					intent_react(hugger, I_HELP)	//RS ADD
 				else
 					M.visible_message("<span class='notice'>[M] hugs [src] to make [T.him] feel better!</span>", \
 								"<span class='notice'>You hug [src] to make [T.him] feel better!</span>")
+					intent_react(hugger, I_HELP)	//RS ADD
 				if(M.fire_stacks >= (src.fire_stacks + 3))
 					src.adjust_fire_stacks(1)
 					M.adjust_fire_stacks(-1)

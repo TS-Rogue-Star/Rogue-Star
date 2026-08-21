@@ -220,6 +220,18 @@
 	B.scale_to_character(src)
 	if(client?.prefs_vr.belch_color)
 		B.particles.color = client.prefs_vr.belch_color
+	var/list/our_turfs = list()
+	var/turf/current_turf = get_turf(src)
+	for(var/I = 1 to 3)
+		our_turfs += current_turf
+		current_turf = get_step(current_turf,dir)
+	for(var/turf/T in our_turfs)
+		for(var/mob/living/L in T.contents)
+			if(!isliving(L))
+				continue
+			if(L == src)
+				continue
+			L.belch_react(src)
 
 /decl/emote/audible/belch/do_extra(atom/user, atom/target)
 	if(isliving(user))
