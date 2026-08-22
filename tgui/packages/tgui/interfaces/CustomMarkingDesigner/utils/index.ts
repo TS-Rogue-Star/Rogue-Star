@@ -5,6 +5,8 @@
 // /////////////////////////////////////////////////////////////////////////////////////////////
 // Updated by Lira for Rogue Star December 2025: Updated to support new body marking selector //
 // /////////////////////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star August 2026: Character Designer - Species and Prosthetics ////
+// /////////////////////////////////////////////////////////////////////////////////////////////
 
 export * from './colorSlots';
 export * from './draftStore';
@@ -23,3 +25,8 @@ export * from './savingHandlers';
 export * from './strokeGeometry';
 export * from './bodyMarkings';
 export * from './basicAppearance';
+export * from './prosthetics';
+export * from './speciesPreview';
+export * from './speciesSave';
+export * from './traits';
+export * from './payloadCache';

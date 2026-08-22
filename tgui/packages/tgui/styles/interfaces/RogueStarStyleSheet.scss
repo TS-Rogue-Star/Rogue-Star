@@ -15,6 +15,8 @@
 // /////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Updated by Lira for Rogue Star July 2026: Add preference setting styles /////////////////////////////////
 // /////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star August 2026: Character Designer - Species and Prosthetics ////////////////
+// /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 @use '../colors.scss';
 
@@ -278,6 +280,201 @@ $titlebar-height: 38px;
     box-shadow:
       0 0 14px rgba(229, 188, 106, 0.5),
       0 0 18px rgba(129, 76, 255, 0.45);
+  }
+
+  .RogueStar__zoomControl {
+    display: inline-flex;
+    align-items: center;
+    flex: 0 0 auto;
+    height: calc($titlebar-height - 10px);
+    padding: 2px 3px 2px 4px;
+    box-sizing: border-box;
+    border: 1px solid rgba(204, 162, 255, 0.42);
+    border-radius: 999px;
+    background:
+      linear-gradient(100deg, rgba(13, 5, 28, 0.96), rgba(36, 14, 57, 0.94)),
+      radial-gradient(
+        circle at 78% 35%,
+        rgba(229, 188, 106, 0.2),
+        transparent 52%
+      );
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.08),
+      inset 0 0 12px rgba(0, 0, 0, 0.42),
+      0 0 12px rgba(129, 76, 255, 0.2);
+  }
+
+  .RogueStar__zoomControlLabel {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    height: 100%;
+    padding: 0 0.55rem;
+    border-right: 1px solid rgba(204, 162, 255, 0.2);
+    color: rgba(246, 230, 255, 0.82);
+    font-size: 0.61rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    line-height: 1;
+    text-shadow: 0 0 8px rgba(129, 76, 255, 0.42);
+
+    .Icon {
+      color: rgba(255, 222, 153, 0.9);
+      font-size: 0.62rem;
+      filter: drop-shadow(0 0 4px rgba(229, 188, 106, 0.35));
+    }
+  }
+
+  .RogueStar__zoomTrack {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 8.4rem;
+    height: 100%;
+    margin: 0 0.3rem;
+  }
+
+  .RogueStar__zoomTrack::before,
+  .RogueStar__zoomTrackFill {
+    content: '';
+    position: absolute;
+    z-index: 0;
+    top: calc(50% - 1px);
+    right: 0.7rem;
+    left: 0.7rem;
+    height: 2px;
+    border-radius: 999px;
+  }
+
+  .RogueStar__zoomTrack::before {
+    background: rgba(202, 171, 229, 0.2);
+    box-shadow: inset 0 0 3px rgba(0, 0, 0, 0.75);
+  }
+
+  .RogueStar__zoomTrackFill {
+    z-index: 1;
+    height: 3px;
+    top: calc(50% - 1.5px);
+    background: linear-gradient(
+      90deg,
+      rgba(126, 72, 219, 0.95),
+      rgba(203, 139, 255, 0.98) 55%,
+      rgba(239, 198, 111, 0.98)
+    );
+    box-shadow:
+      0 0 6px rgba(129, 76, 255, 0.55),
+      0 0 7px rgba(229, 188, 106, 0.32);
+    transform-origin: left center;
+    transition: transform 180ms ease-out;
+  }
+
+  .RogueStar__zoomStop.Button {
+    position: relative;
+    z-index: 2;
+    flex: 1 1 0;
+    min-width: 0;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+    line-height: 1;
+  }
+
+  .RogueStar__zoomStop.Button::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 6px;
+    height: 6px;
+    border: 1px solid rgba(217, 190, 241, 0.58);
+    border-radius: 50%;
+    background: #160a27;
+    box-shadow: 0 0 0 2px rgba(13, 5, 28, 0.72);
+    transform: translate(-50%, -50%);
+    transition:
+      width 120ms ease,
+      height 120ms ease,
+      border-color 120ms ease,
+      background 120ms ease,
+      box-shadow 120ms ease,
+      transform 120ms ease;
+  }
+
+  .RogueStar__zoomStop--filled.Button::before {
+    border-color: rgba(220, 179, 255, 0.9);
+    background: #9d60ec;
+    box-shadow:
+      0 0 0 2px rgba(18, 7, 36, 0.82),
+      0 0 6px rgba(157, 96, 236, 0.55);
+  }
+
+  .RogueStar__zoomStop.Button:not(.Button--selected):hover::before,
+  .RogueStar__zoomStop.Button:not(.Button--selected):focus::before {
+    border-color: rgba(255, 238, 203, 0.92);
+    background: #c68bff;
+    box-shadow:
+      0 0 0 3px rgba(145, 80, 225, 0.22),
+      0 0 9px rgba(196, 134, 255, 0.75);
+    transform: translate(-50%, -50%) scale(1.28);
+  }
+
+  .RogueStar__zoomStop.Button.Button--selected {
+    background: transparent;
+    box-shadow: none;
+  }
+
+  .RogueStar__zoomStop.Button.Button--selected::before {
+    width: 10px;
+    height: 10px;
+    border-color: rgba(255, 247, 222, 0.95);
+    background: linear-gradient(135deg, #c084ff, #f0c66f 72%);
+    box-shadow:
+      0 0 0 3px rgba(139, 78, 216, 0.24),
+      0 0 9px rgba(229, 188, 106, 0.76),
+      0 0 12px rgba(167, 101, 255, 0.68);
+  }
+
+  .RogueStar__zoomStop.Button.Button--selected::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 16px;
+    height: 16px;
+    border: 1px solid rgba(239, 198, 111, 0.22);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .RogueStar__zoomValue {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 3.25rem;
+    height: 100%;
+    padding: 0 0.45rem;
+    border: 1px solid rgba(236, 202, 135, 0.48);
+    border-radius: 999px;
+    background: linear-gradient(
+      120deg,
+      rgba(82, 40, 132, 0.86),
+      rgba(104, 67, 102, 0.82)
+    );
+    color: #fff1cf;
+    font-size: 0.67rem;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    line-height: 1;
+    text-shadow:
+      0 0 6px rgba(0, 0, 0, 0.72),
+      0 0 7px rgba(229, 188, 106, 0.38);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.12),
+      0 0 8px rgba(229, 188, 106, 0.2);
   }
 
   .TitleBar__clickable {
@@ -1105,7 +1302,9 @@ $titlebar-height: 38px;
   transition:
     border-color 120ms ease,
     box-shadow 120ms ease,
-    transform 120ms ease;
+    transform 120ms ease,
+    filter 120ms ease,
+    opacity 120ms ease;
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
@@ -1131,6 +1330,51 @@ $titlebar-height: 38px;
   border-color: rgba(229, 188, 106, 0.85);
 }
 
+.RogueStar__markingTile--color-prosthetic,
+.RogueStar__markingTile--color-prosthetic:hover,
+.RogueStar__markingTile--color-prosthetic.RogueStar__markingTile--selected,
+.RogueStar__markingTile--color-prosthetic.RogueStar__markingTile--selected:hover {
+  border-color: rgba(104, 207, 245, 0.82);
+}
+
+.RogueStar__markingTile--color-body,
+.RogueStar__markingTile--color-body:hover,
+.RogueStar__markingTile--color-body.RogueStar__markingTile--selected,
+.RogueStar__markingTile--color-body.RogueStar__markingTile--selected:hover {
+  border-color: rgba(229, 188, 106, 0.85);
+}
+
+.RogueStar__markingTile--disabled,
+.RogueStar__markingTile--disabled:hover,
+.RogueStar__markingTile--disabled.RogueStar__markingTile--selected,
+.RogueStar__markingTile--disabled.RogueStar__markingTile--selected:hover {
+  cursor: not-allowed;
+  opacity: 0.42;
+  filter: grayscale(0.92) saturate(0.25);
+  border-width: 1px;
+  border-color: rgba(174, 165, 184, 0.14);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.42);
+  transform: none;
+}
+
+.RogueStar__markingTile--whitelistLocked {
+  border-width: 2px;
+  border-color: rgba(235, 72, 92, 0.92);
+  box-shadow:
+    0 14px 28px rgba(0, 0, 0, 0.65),
+    0 0 14px rgba(235, 72, 92, 0.35);
+}
+
+.RogueStar__markingTile--whitelistLocked:hover,
+.RogueStar__markingTile--whitelistLocked.RogueStar__markingTile--selected,
+.RogueStar__markingTile--whitelistLocked.RogueStar__markingTile--selected:hover {
+  border-color: rgba(255, 88, 106, 1);
+  box-shadow:
+    0 14px 28px rgba(0, 0, 0, 0.65),
+    0 0 12px rgba(255, 72, 92, 0.48),
+    0 0 24px rgba(255, 72, 92, 0.3);
+}
+
 .RogueStar__markingTilePreviewGrid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -1153,6 +1397,1905 @@ $titlebar-height: 38px;
   overflow: hidden;
 }
 
+.RogueStar__speciesTileMultipleBases {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  color: rgba(229, 188, 106, 0.9);
+  text-align: center;
+  text-shadow: 0 0 10px rgba(229, 188, 106, 0.35);
+}
+
+.RogueStar__speciesTileMultipleBasesLabel {
+  color: rgba(244, 231, 255, 0.9);
+  font-size: 11px;
+  line-height: 1.2;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.RogueStar__speciesDetails {
+  min-width: 0;
+  padding: 0.05rem;
+}
+
+.RogueStar__speciesDetailsSection,
+.RogueStar__speciesBlurbSection {
+  min-height: 0;
+}
+
+.RogueStar__speciesDetailNav {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.4rem;
+  margin-bottom: 0.75rem;
+}
+
+.RogueStar__speciesDetailTab.Button {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-width: 0;
+  min-height: 38px;
+  margin: 0;
+  padding: 0.35rem 0.3rem;
+  border: 1px solid rgba(168, 110, 255, 0.3);
+  border-radius: 10px;
+  background: linear-gradient(
+    145deg,
+    rgba(24, 10, 43, 0.94),
+    rgba(9, 4, 20, 0.96)
+  );
+  color: rgba(235, 220, 247, 0.72);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.04),
+    0 5px 14px rgba(0, 0, 0, 0.25);
+  transition:
+    transform 120ms ease,
+    border-color 120ms ease,
+    background 120ms ease,
+    box-shadow 120ms ease,
+    color 120ms ease;
+}
+
+.RogueStar__speciesDetailTab.Button .Button__content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.32rem;
+  width: 100%;
+  min-width: 0;
+  line-height: 1;
+}
+
+.RogueStar__speciesDetailTab.Button .Icon,
+.RogueStar__speciesDetailTab.Button .fa,
+.RogueStar__speciesDetailTab.Button .fas,
+.RogueStar__speciesDetailTab.Button .far {
+  flex: 0 0 auto;
+  min-width: 0;
+  margin: 0;
+  color: rgba(202, 166, 255, 0.78);
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+.RogueStar__speciesDetailTab.Button:hover:not(.Button--selected),
+.RogueStar__speciesDetailTab.Button:focus:not(.Button--selected) {
+  transform: translateY(-1px);
+  border-color: rgba(214, 176, 255, 0.58);
+  background: linear-gradient(
+    145deg,
+    rgba(48, 19, 78, 0.96),
+    rgba(16, 7, 31, 0.98)
+  );
+  color: #fff8ff;
+  box-shadow:
+    0 0 14px rgba(129, 76, 255, 0.3),
+    0 0 10px rgba(229, 188, 106, 0.12);
+}
+
+.RogueStar__speciesDetailTab.Button.Button--selected {
+  border-color: rgba(229, 188, 106, 0.82);
+  background:
+    radial-gradient(
+      circle at 85% 10%,
+      rgba(255, 233, 178, 0.2),
+      transparent 42%
+    ),
+    linear-gradient(135deg, rgba(86, 35, 130, 0.98), rgba(38, 15, 68, 0.98));
+  color: #fff8e9;
+  box-shadow:
+    0 0 0 1px rgba(229, 188, 106, 0.12),
+    0 0 16px rgba(129, 76, 255, 0.38),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.RogueStar__speciesDetailTab.Button.Button--selected .Icon,
+.RogueStar__speciesDetailTab.Button.Button--selected .fa,
+.RogueStar__speciesDetailTab.Button.Button--selected .fas,
+.RogueStar__speciesDetailTab.Button.Button--selected .far {
+  color: #f2ce84;
+  text-shadow: 0 0 8px rgba(229, 188, 106, 0.4);
+}
+
+.RogueStar__speciesDetailTabLabel {
+  display: block;
+  min-width: 0;
+  overflow: hidden;
+  color: inherit;
+  font-size: 0.63rem;
+  font-weight: 700;
+  letter-spacing: 0.035em;
+  line-height: 1.1;
+  text-overflow: ellipsis;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.RogueStar__speciesDetailHeader {
+  position: relative;
+  display: grid;
+  grid-template-columns: 42px minmax(0, 1fr);
+  gap: 0.7rem;
+  align-items: center;
+  min-width: 0;
+  margin-bottom: 0.65rem;
+  padding: 0.7rem 0.75rem;
+  overflow: hidden;
+  border: 1px solid rgba(188, 133, 255, 0.32);
+  border-radius: 12px;
+  background:
+    radial-gradient(
+      circle at 88% 28%,
+      rgba(255, 255, 255, 0.42) 0,
+      rgba(255, 255, 255, 0.42) 1px,
+      transparent 2px
+    ),
+    radial-gradient(
+      circle at 80% 72%,
+      rgba(229, 188, 106, 0.34) 0,
+      rgba(229, 188, 106, 0.34) 1px,
+      transparent 2px
+    ),
+    linear-gradient(120deg, rgba(54, 20, 88, 0.78), rgba(18, 7, 33, 0.94));
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.07),
+    0 8px 22px rgba(0, 0, 0, 0.28),
+    0 0 18px rgba(111, 63, 211, 0.12);
+}
+
+.RogueStar__speciesDetailHeaderIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border: 1px solid rgba(229, 188, 106, 0.58);
+  border-radius: 50%;
+  background: linear-gradient(
+    145deg,
+    rgba(116, 58, 164, 0.72),
+    rgba(25, 9, 48, 0.94)
+  );
+  color: #f3d38f;
+  font-size: 1.1rem;
+  box-shadow:
+    0 0 14px rgba(129, 76, 255, 0.32),
+    inset 0 0 10px rgba(229, 188, 106, 0.08);
+}
+
+.RogueStar__speciesDetailHeaderIcon .Icon,
+.RogueStar__speciesDetailHeaderIcon .fa,
+.RogueStar__speciesDetailHeaderIcon .fas,
+.RogueStar__speciesDetailHeaderIcon .far {
+  min-width: 0;
+  margin: 0;
+}
+
+.RogueStar__speciesDetailHeaderCopy {
+  min-width: 0;
+}
+
+.RogueStar__speciesDetailHeaderTitle {
+  overflow: hidden;
+  color: #fff9ff;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.065em;
+  line-height: 1.2;
+  text-overflow: ellipsis;
+  text-transform: uppercase;
+  white-space: nowrap;
+  text-shadow: 0 0 10px rgba(142, 83, 221, 0.38);
+}
+
+.RogueStar__speciesDetailHeaderSummary {
+  margin-top: 0.22rem;
+  color: rgba(222, 203, 236, 0.64);
+  font-size: 0.66rem;
+  letter-spacing: 0.025em;
+  line-height: 1.25;
+}
+
+.RogueStar__speciesDetailList {
+  display: grid;
+  gap: 0.55rem;
+}
+
+.RogueStar__speciesDetailEmpty {
+  display: grid;
+  grid-template-columns: 38px minmax(0, 1fr);
+  gap: 0.7rem;
+  align-items: center;
+  min-width: 0;
+  padding: 0.8rem;
+  border: 1px solid rgba(104, 235, 167, 0.24);
+  border-radius: 10px;
+  background: linear-gradient(
+    125deg,
+    rgba(20, 48, 42, 0.34),
+    rgba(10, 5, 20, 0.92)
+  );
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.035),
+    0 6px 16px rgba(0, 0, 0, 0.2);
+}
+
+.RogueStar__speciesDetailEmptyIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border: 1px solid rgba(104, 235, 167, 0.48);
+  border-radius: 50%;
+  background: rgba(44, 119, 88, 0.22);
+  color: rgba(140, 255, 199, 0.9);
+  box-shadow:
+    0 0 12px rgba(104, 235, 167, 0.14),
+    inset 0 0 10px rgba(104, 235, 167, 0.06);
+}
+
+.RogueStar__speciesDetailEmptyIcon .Icon,
+.RogueStar__speciesDetailEmptyIcon .fa,
+.RogueStar__speciesDetailEmptyIcon .fas,
+.RogueStar__speciesDetailEmptyIcon .far {
+  min-width: 0;
+  margin: 0;
+}
+
+.RogueStar__speciesDetailEmptyCopy {
+  min-width: 0;
+}
+
+.RogueStar__speciesDetailEmptyTitle {
+  color: rgba(226, 255, 240, 0.9);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.055em;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.RogueStar__speciesDetailEmptyText {
+  margin-top: 0.22rem;
+  color: rgba(210, 226, 218, 0.58);
+  font-size: 0.65rem;
+  line-height: 1.3;
+}
+
+.RogueStar__speciesDetailCard {
+  min-width: 0;
+  padding: 0.68rem 0.72rem;
+  border: 1px solid rgba(168, 110, 255, 0.24);
+  border-left: 3px solid rgba(168, 110, 255, 0.58);
+  border-radius: 10px;
+  background: linear-gradient(
+    125deg,
+    rgba(22, 10, 38, 0.92),
+    rgba(10, 5, 20, 0.94)
+  );
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.035),
+    0 6px 16px rgba(0, 0, 0, 0.22);
+}
+
+.RogueStar__speciesDetailCard--critical {
+  border-left-color: rgba(255, 92, 112, 0.82);
+  box-shadow:
+    inset 2px 0 12px rgba(255, 72, 98, 0.06),
+    0 6px 16px rgba(0, 0, 0, 0.22);
+}
+
+.RogueStar__speciesDetailCard--warning {
+  border-left-color: rgba(229, 188, 106, 0.86);
+  box-shadow:
+    inset 2px 0 12px rgba(229, 188, 106, 0.06),
+    0 6px 16px rgba(0, 0, 0, 0.22);
+}
+
+.RogueStar__speciesDetailCard--positive {
+  border-left-color: rgba(104, 235, 167, 0.8);
+  box-shadow:
+    inset 2px 0 12px rgba(104, 235, 167, 0.055),
+    0 6px 16px rgba(0, 0, 0, 0.22);
+}
+
+.RogueStar__speciesDetailCard--info {
+  border-left-color: rgba(112, 184, 255, 0.78);
+  box-shadow:
+    inset 2px 0 12px rgba(112, 184, 255, 0.055),
+    0 6px 16px rgba(0, 0, 0, 0.22);
+}
+
+.RogueStar__speciesDetailCardLabel {
+  min-width: 0;
+  margin-bottom: 0.48rem;
+  color: rgba(244, 223, 255, 0.78);
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.075em;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.RogueStar__speciesDetailComparison {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(125px, 1fr));
+  gap: 0.45rem;
+  min-width: 0;
+}
+
+.RogueStar__speciesDetailValue {
+  min-width: 0;
+  padding: 0.42rem 0.5rem;
+  border: 1px solid rgba(190, 140, 255, 0.18);
+  border-radius: 8px;
+  background: rgba(36, 15, 60, 0.54);
+}
+
+.RogueStar__speciesDetailValue--baseline {
+  border-color: rgba(255, 255, 255, 0.075);
+  background: rgba(255, 255, 255, 0.025);
+}
+
+.RogueStar__speciesDetailValueLabel {
+  margin-bottom: 0.16rem;
+  color: rgba(215, 194, 230, 0.5);
+  font-size: 0.55rem;
+  font-weight: 700;
+  letter-spacing: 0.065em;
+  line-height: 1.1;
+  text-transform: uppercase;
+}
+
+.RogueStar__speciesDetailValueText {
+  min-width: 0;
+  color: rgba(250, 242, 255, 0.9);
+  font-size: 0.74rem;
+  font-weight: 600;
+  line-height: 1.25;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+.RogueStar__speciesDetailValue--baseline .RogueStar__speciesDetailValueText {
+  color: rgba(210, 194, 222, 0.66);
+  font-weight: 500;
+}
+
+.RogueStar__traitsTab {
+  overflow: hidden;
+}
+
+.RogueStar__traitCategoryList {
+  display: grid;
+  gap: 0.4rem;
+}
+
+.RogueStar__traitCategoryButton.Button {
+  width: 100%;
+  min-height: 44px;
+  margin: 0;
+  padding: 0.4rem 0.5rem;
+  border: 1px solid rgba(183, 132, 255, 0.2);
+  border-radius: 9px;
+  background: linear-gradient(
+    135deg,
+    rgba(27, 11, 45, 0.86),
+    rgba(7, 3, 16, 0.94)
+  );
+  color: rgba(242, 233, 249, 0.72);
+  text-align: left;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.035),
+    0 7px 14px rgba(0, 0, 0, 0.22);
+  transition:
+    transform 120ms ease,
+    border-color 120ms ease,
+    background 120ms ease,
+    box-shadow 120ms ease;
+}
+
+.RogueStar__traitCategoryButton.Button .Button__content {
+  display: grid;
+  grid-template-columns: 30px minmax(0, 1fr);
+  gap: 0.5rem;
+  align-items: center;
+  width: 100%;
+  min-width: 0;
+}
+
+.RogueStar__traitCategoryButton.Button:hover:not(.Button--selected),
+.RogueStar__traitCategoryButton.Button:focus:not(.Button--selected) {
+  transform: translateY(-1px);
+  border-color: rgba(213, 177, 255, 0.46);
+  background: linear-gradient(
+    135deg,
+    rgba(50, 20, 79, 0.94),
+    rgba(12, 5, 25, 0.96)
+  );
+  box-shadow:
+    0 9px 18px rgba(0, 0, 0, 0.3),
+    0 0 13px rgba(130, 78, 232, 0.2);
+}
+
+.RogueStar__traitCategoryButton.Button.Button--selected {
+  transform: translateX(3px);
+  border-color: rgba(229, 188, 106, 0.7);
+  background:
+    radial-gradient(
+      circle at 95% 8%,
+      rgba(229, 188, 106, 0.17),
+      transparent 38%
+    ),
+    linear-gradient(135deg, rgba(79, 32, 119, 0.98), rgba(20, 8, 39, 0.98));
+  color: #fffaff;
+  box-shadow:
+    -3px 0 0 rgba(229, 188, 106, 0.78),
+    0 0 15px rgba(129, 76, 255, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+.RogueStar__traitCategoryIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border: 1px solid rgba(203, 161, 255, 0.3);
+  border-radius: 50%;
+  background: rgba(97, 47, 148, 0.28);
+  color: rgba(216, 184, 255, 0.86);
+  box-shadow: inset 0 0 10px rgba(133, 75, 211, 0.12);
+}
+
+.RogueStar__traitCategoryIcon > .Icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  line-height: 1;
+}
+
+.RogueStar__traitCategoryButton--positive .RogueStar__traitCategoryIcon {
+  border-color: rgba(104, 235, 167, 0.42);
+  background: rgba(44, 119, 88, 0.2);
+  color: #8fffc6;
+}
+
+.RogueStar__traitCategoryButton--negative .RogueStar__traitCategoryIcon {
+  border-color: rgba(255, 105, 128, 0.4);
+  background: rgba(141, 39, 64, 0.18);
+  color: #ff9aac;
+}
+
+.RogueStar__traitCategoryButton--languages .RogueStar__traitCategoryIcon {
+  border-color: rgba(102, 205, 255, 0.42);
+  background: rgba(31, 91, 127, 0.22);
+  color: #9edfff;
+}
+
+.RogueStar__traitCategoryCopy {
+  min-width: 0;
+}
+
+.RogueStar__traitCategoryName {
+  color: inherit;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.065em;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.RogueStar__traitCategoryCount {
+  min-width: 28px;
+  padding: 0.12rem 0.35rem;
+  border: 1px solid rgba(229, 188, 106, 0.22);
+  border-radius: 999px;
+  background: rgba(4, 2, 11, 0.48);
+  color: #f0cf8c;
+  font-size: 10px;
+  font-weight: 800;
+  text-align: center;
+}
+
+.RogueStar__selectedTraits.Section {
+  min-height: 0;
+}
+
+.RogueStar__selectedTraitsCount {
+  padding: 0.16rem 0.48rem;
+  border: 1px solid rgba(229, 188, 106, 0.28);
+  border-radius: 999px;
+  background: rgba(70, 43, 14, 0.28);
+  color: rgba(246, 216, 154, 0.88);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.RogueStar__selectedTraitGroups {
+  display: grid;
+  gap: 0.6rem;
+}
+
+.RogueStar__selectedTraitGroup {
+  min-width: 0;
+}
+
+.RogueStar__selectedTraitGroupHeader {
+  margin-bottom: 0.3rem;
+  padding: 0 0.12rem;
+  color: rgba(213, 177, 255, 0.82);
+}
+
+.RogueStar__selectedTraitGroup--positive .RogueStar__selectedTraitGroupHeader {
+  color: #8fffc6;
+}
+
+.RogueStar__selectedTraitGroup--negative .RogueStar__selectedTraitGroupHeader {
+  color: #ff9aac;
+}
+
+.RogueStar__selectedTraitGroupHeader > .Icon {
+  margin-right: 0.35rem;
+  font-size: 10px;
+}
+
+.RogueStar__selectedTraitGroupName {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.075em;
+  line-height: 1.2;
+  text-overflow: ellipsis;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.RogueStar__selectedTraitGroupCount {
+  min-width: 18px;
+  padding: 0.1rem 0.3rem;
+  border: 1px solid currentcolor;
+  border-radius: 999px;
+  background: rgba(5, 2, 12, 0.52);
+  font-size: 9px;
+  font-weight: 800;
+  line-height: 1;
+  text-align: center;
+}
+
+.RogueStar__selectedTraitList {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.3rem;
+}
+
+.RogueStar__selectedLanguageList {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.RogueStar__selectedTraitCard {
+  width: 100%;
+  height: 32px;
+  min-width: 0;
+  margin: 0;
+  overflow: hidden;
+  border: 1px solid rgba(184, 133, 255, 0.2);
+  border-left: 3px solid rgba(177, 125, 255, 0.66);
+  border-radius: 8px;
+  background: linear-gradient(
+    135deg,
+    rgba(32, 13, 52, 0.9),
+    rgba(8, 3, 18, 0.96)
+  );
+  color: rgba(246, 236, 251, 0.86);
+  text-align: left;
+  transition:
+    border-color 120ms ease,
+    box-shadow 120ms ease;
+}
+
+.RogueStar__selectedTraitCard--open {
+  border-color: rgba(229, 188, 106, 0.58);
+  border-left-color: rgba(245, 207, 128, 0.94);
+  box-shadow:
+    0 0 0 1px rgba(229, 188, 106, 0.05),
+    0 0 12px rgba(229, 188, 106, 0.12);
+}
+
+.RogueStar__selectedTraitCard--positive {
+  border-left-color: rgba(104, 235, 167, 0.72);
+}
+
+.RogueStar__selectedTraitCard--negative {
+  border-left-color: rgba(255, 103, 127, 0.72);
+}
+
+.RogueStar__selectedLanguageCard {
+  border-left-color: rgba(102, 205, 255, 0.72);
+}
+
+.RogueStar__languagePreferredIcon {
+  color: #f5cf80;
+  font-size: 9px;
+  filter: drop-shadow(0 0 4px rgba(229, 188, 106, 0.55));
+}
+
+.RogueStar__languageCustomKey {
+  min-width: 18px;
+  padding: 0.08rem 0.26rem;
+  border: 1px solid rgba(102, 205, 255, 0.34);
+  border-radius: 5px;
+  background: rgba(13, 52, 73, 0.48);
+  color: #b9e8ff;
+  font-size: 9px;
+  font-weight: 800;
+  line-height: 1.1;
+  text-align: center;
+}
+
+.RogueStar__selectedTraitCard > .Flex {
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+}
+
+.RogueStar__selectedTraitCard > .Flex > .Flex__item {
+  height: 100%;
+}
+
+.RogueStar__selectedTraitButton.Button {
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+  min-height: 0;
+  margin: 0;
+  padding: 0 0.38rem;
+  overflow: hidden;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: inherit;
+  text-align: left;
+  transition:
+    background 120ms ease,
+    color 120ms ease;
+}
+
+.RogueStar__selectedTraitButton.Button .Button__content {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+}
+
+.RogueStar__selectedTraitButton.Button .Button__content > .Flex {
+  width: 100%;
+}
+
+.RogueStar__selectedTraitButton.Button:hover:not(.Button--disabled),
+.RogueStar__selectedTraitButton.Button:focus:not(.Button--disabled) {
+  background: linear-gradient(
+    135deg,
+    rgba(70, 42, 18, 0.78),
+    rgba(19, 8, 13, 0.48)
+  );
+  color: #ffe8b5;
+}
+
+.RogueStar__selectedTraitButton.Button.Button--disabled {
+  color: rgba(216, 202, 224, 0.56);
+  filter: saturate(0.5);
+}
+
+.RogueStar__traitsTab--transientLocked
+  .RogueStar__selectedTraitButton.Button.Button--disabled {
+  background-color: transparent !important;
+  color: inherit;
+  filter: none;
+}
+
+.RogueStar__selectedTraitName {
+  overflow: hidden;
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 1.2;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.RogueStar__selectedTraitWarning {
+  color: #efc978;
+  font-size: 9px;
+}
+
+.RogueStar__selectedTraitSettings,
+.RogueStar__selectedTraitDetails {
+  color: rgba(205, 168, 247, 0.7);
+  font-size: 9px;
+}
+
+.RogueStar__selectedTraitDetails {
+  color: rgba(239, 204, 133, 0.72);
+}
+
+.RogueStar__selectedTraitRemoveButton.Button {
+  width: 28px;
+  height: 100%;
+  min-width: 28px;
+  min-height: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-left: 1px solid rgba(213, 161, 231, 0.14);
+  border-radius: 0;
+  background: rgba(7, 3, 15, 0.42);
+  color: rgba(233, 205, 244, 0.56);
+  font-size: 10px;
+  text-align: center;
+}
+
+.RogueStar__selectedTraitRemoveButton.Button .Button__content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+.RogueStar__selectedTraitRemoveButton.Button .Icon {
+  min-width: 0;
+  margin: 0;
+}
+
+.RogueStar__selectedTraitRemoveButton.Button:hover:not(.Button--disabled),
+.RogueStar__selectedTraitRemoveButton.Button:focus:not(.Button--disabled) {
+  border-color: rgba(255, 103, 127, 0.46);
+  background: rgba(109, 25, 49, 0.38);
+  color: #ff9aac;
+}
+
+.RogueStar__languageLockedBadge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 100%;
+  border-left: 1px solid rgba(102, 205, 255, 0.14);
+  background: rgba(7, 18, 26, 0.42);
+  color: rgba(169, 215, 238, 0.58);
+  font-size: 9px;
+}
+
+.RogueStar__selectedLanguageCard--preferred .RogueStar__languageLockedBadge {
+  color: #f5cf80;
+}
+
+.RogueStar__traitsTab--transientLocked
+  .RogueStar__selectedTraitRemoveButton.Button.Button--disabled {
+  background-color: rgba(7, 3, 15, 0.42) !important;
+}
+
+.RogueStar__selectedTraitsEmpty {
+  padding: 1rem 0.7rem;
+  border: 1px dashed rgba(187, 137, 255, 0.24);
+  border-radius: 9px;
+  background: rgba(12, 5, 24, 0.46);
+  color: rgba(215, 185, 249, 0.48);
+  text-align: center;
+}
+
+.RogueStar__selectedTraitsEmpty > .Icon {
+  font-size: 16px;
+}
+
+.RogueStar__selectedTraitsEmptyTitle {
+  margin-top: 0.35rem;
+  color: rgba(244, 233, 250, 0.72);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.045em;
+  text-transform: uppercase;
+}
+
+.RogueStar__selectedTraitsEmptyCopy {
+  margin-top: 0.25rem;
+  color: rgba(213, 197, 224, 0.5);
+  font-size: 10px;
+  line-height: 1.35;
+}
+
+.RogueStar__languageKeysSection.Section {
+  border-color: rgba(102, 205, 255, 0.22);
+  background:
+    radial-gradient(
+      circle at 96% 0,
+      rgba(102, 205, 255, 0.08),
+      transparent 44%
+    ),
+    rgba(8, 4, 18, 0.82);
+}
+
+.RogueStar__languageKeysCopy {
+  flex: 1 1 170px;
+  min-width: 0;
+  color: rgba(215, 205, 225, 0.66);
+  font-size: 10px;
+  line-height: 1.3;
+}
+
+.RogueStar__languagePrefixKey {
+  min-width: 23px;
+  padding: 0.18rem 0.35rem;
+  border: 1px solid rgba(102, 205, 255, 0.36);
+  border-radius: 6px;
+  background: rgba(17, 56, 77, 0.46);
+  color: #b9e8ff;
+  font-size: 10px;
+  font-weight: 800;
+  line-height: 1;
+  text-align: center;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+
+.RogueStar__languagePrefixKey + .RogueStar__languagePrefixKey {
+  margin-left: 0.35rem;
+}
+
+.RogueStar__traitCloseButton.Button {
+  border-color: rgba(229, 188, 106, 0.42);
+  background: linear-gradient(
+    110deg,
+    rgba(78, 31, 119, 0.9),
+    rgba(35, 14, 61, 0.94)
+  );
+}
+
+.RogueStar__traitAutosaveNote {
+  margin-top: 0.45rem;
+  color: rgba(205, 225, 214, 0.58);
+  font-size: 10px;
+  line-height: 1.3;
+  text-align: center;
+}
+
+.RogueStar__traitAutosaveNote .Icon {
+  margin-right: 0.18rem;
+  color: rgba(104, 235, 167, 0.76);
+}
+
+.RogueStar__traitPreviewColumn {
+  min-height: 820px;
+}
+
+.RogueStar__traitPersistence.Section {
+  min-height: 0;
+  overflow: hidden;
+  border: 1px solid rgba(190, 140, 255, 0.3);
+  border-radius: 12px;
+  background:
+    radial-gradient(
+      circle at 95% 5%,
+      rgba(229, 188, 106, 0.1),
+      transparent 34%
+    ),
+    linear-gradient(155deg, rgba(25, 10, 42, 0.97), rgba(6, 3, 14, 0.98));
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.045),
+    0 14px 28px rgba(0, 0, 0, 0.34);
+}
+
+.RogueStar__traitPersistenceGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-rows: repeat(2, minmax(145px, 1fr));
+  gap: 0.45rem;
+  min-height: 100%;
+}
+
+.RogueStar__traitPersistenceCard {
+  min-width: 0;
+  padding: 0.52rem;
+  border: 1px solid rgba(185, 137, 255, 0.18);
+  border-radius: 10px;
+  background: linear-gradient(
+    145deg,
+    rgba(32, 13, 52, 0.86),
+    rgba(8, 3, 18, 0.94)
+  );
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.035),
+    0 7px 15px rgba(0, 0, 0, 0.22);
+}
+
+.RogueStar__traitPersistenceCard--experience {
+  grid-column: 1 / -1;
+  border-color: rgba(229, 188, 106, 0.22);
+  background:
+    radial-gradient(
+      circle at 92% 10%,
+      rgba(229, 188, 106, 0.11),
+      transparent 38%
+    ),
+    linear-gradient(145deg, rgba(40, 20, 54, 0.9), rgba(10, 5, 20, 0.95));
+}
+
+.RogueStar__traitPersistenceCard--nif {
+  border-color: rgba(104, 207, 245, 0.22);
+}
+
+.RogueStar__traitPersistenceCard--pet {
+  border-color: rgba(104, 235, 167, 0.2);
+}
+
+.RogueStar__traitPersistenceCardHeader {
+  min-width: 0;
+  margin-bottom: 0.45rem;
+}
+
+.RogueStar__traitPersistenceCardIcon {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  width: 23px;
+  height: 23px;
+  margin-right: 0.4rem;
+  border: 1px solid rgba(205, 164, 255, 0.26);
+  border-radius: 7px;
+  background: rgba(105, 54, 162, 0.22);
+  color: rgba(222, 195, 255, 0.9);
+}
+
+.RogueStar__traitPersistenceCard--experience
+  .RogueStar__traitPersistenceCardIcon {
+  border-color: rgba(229, 188, 106, 0.32);
+  background: rgba(113, 75, 22, 0.24);
+  color: #f2d391;
+}
+
+.RogueStar__traitPersistenceCard--nif .RogueStar__traitPersistenceCardIcon {
+  border-color: rgba(104, 207, 245, 0.3);
+  background: rgba(34, 101, 129, 0.2);
+  color: #a9e8ff;
+}
+
+.RogueStar__traitPersistenceCard--pet .RogueStar__traitPersistenceCardIcon {
+  border-color: rgba(104, 235, 167, 0.3);
+  background: rgba(35, 117, 81, 0.2);
+  color: #9bf6c8;
+}
+
+.RogueStar__traitPersistenceCardTitle {
+  overflow: hidden;
+  color: rgba(250, 242, 255, 0.9);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.075em;
+  text-overflow: ellipsis;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.RogueStar__traitPersistenceStatus {
+  flex: 0 0 auto;
+  padding: 0.12rem 0.34rem;
+  border: 1px solid rgba(189, 151, 225, 0.2);
+  border-radius: 999px;
+  background: rgba(6, 3, 13, 0.54);
+  color: rgba(216, 197, 228, 0.54);
+  font-size: 8px;
+  font-weight: 800;
+  letter-spacing: 0.045em;
+  text-transform: uppercase;
+}
+
+.RogueStar__traitPersistenceStatus--present {
+  border-color: rgba(104, 235, 167, 0.36);
+  background: rgba(35, 117, 81, 0.19);
+  color: rgba(157, 247, 203, 0.9);
+}
+
+.RogueStar__traitExperienceGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
+  gap: 0.35rem;
+}
+
+.RogueStar__traitExperienceEntry {
+  min-width: 0;
+  padding: 0.34rem 0.45rem;
+  border: 1px solid rgba(229, 188, 106, 0.16);
+  border-radius: 8px;
+  background: rgba(65, 38, 16, 0.2);
+}
+
+.RogueStar__traitExperienceValue {
+  color: #f2d391;
+  font-size: 15px;
+  font-weight: 800;
+  line-height: 1;
+  text-shadow: 0 0 9px rgba(229, 188, 106, 0.25);
+}
+
+.RogueStar__traitExperienceLabel {
+  margin-top: 0.2rem;
+  overflow-wrap: anywhere;
+  color: rgba(225, 209, 235, 0.56);
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.RogueStar__traitPersistencePrimary {
+  overflow-wrap: anywhere;
+  color: rgba(250, 242, 255, 0.9);
+  font-size: 11px;
+  font-weight: 800;
+  line-height: 1.25;
+}
+
+.RogueStar__traitPersistenceSecondary,
+.RogueStar__traitPersistenceMinor {
+  margin-top: 0.18rem;
+  overflow-wrap: anywhere;
+  color: rgba(215, 198, 228, 0.54);
+  font-size: 9px;
+  line-height: 1.3;
+}
+
+.RogueStar__traitPersistenceMeterLabel {
+  margin-top: 0.42rem;
+  color: rgba(195, 221, 232, 0.66);
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 0.045em;
+  text-transform: uppercase;
+}
+
+.RogueStar__traitPersistenceMeter {
+  height: 6px;
+  margin-top: 0.22rem;
+  overflow: hidden;
+  border: 1px solid rgba(158, 199, 216, 0.18);
+  border-radius: 999px;
+  background: rgba(3, 8, 12, 0.72);
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.58);
+}
+
+.RogueStar__traitPersistenceMeterFill {
+  height: 100%;
+  border-radius: inherit;
+  transition: width 140ms ease;
+}
+
+.RogueStar__traitPersistenceMeterFill--stable {
+  background: linear-gradient(90deg, #55c9ef, #8df0cf);
+  box-shadow: 0 0 8px rgba(104, 220, 230, 0.4);
+}
+
+.RogueStar__traitPersistenceMeterFill--warning {
+  background: linear-gradient(90deg, #d99145, #efc978);
+  box-shadow: 0 0 8px rgba(229, 174, 85, 0.38);
+}
+
+.RogueStar__traitPersistenceMeterFill--critical {
+  background: linear-gradient(90deg, #c94c68, #ff8395);
+  box-shadow: 0 0 8px rgba(232, 91, 115, 0.4);
+}
+
+.RogueStar__traitPersistenceDetails {
+  display: grid;
+  gap: 0.28rem;
+  margin-top: 0.45rem;
+}
+
+.RogueStar__traitPersistenceDetail {
+  min-width: 0;
+  padding-top: 0.3rem;
+  border-top: 1px solid rgba(190, 145, 227, 0.11);
+}
+
+.RogueStar__traitPersistenceDetailLabel {
+  margin-bottom: 0.12rem;
+  color: rgba(203, 175, 226, 0.5);
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 0.045em;
+  text-transform: uppercase;
+}
+
+.RogueStar__traitPersistenceDetailValue {
+  overflow-wrap: anywhere;
+  color: rgba(242, 232, 248, 0.76);
+  font-size: 9px;
+  line-height: 1.25;
+}
+
+.RogueStar__traitPersistenceSwatch {
+  flex: 0 0 auto;
+  width: 12px;
+  height: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.42);
+  border-radius: 3px;
+  box-shadow: 0 0 7px rgba(255, 255, 255, 0.12);
+}
+
+.RogueStar__traitPersistenceEmpty {
+  display: flex;
+  gap: 0.4rem;
+  align-items: center;
+  min-height: 44px;
+  padding: 0.4rem;
+  border: 1px dashed rgba(183, 137, 220, 0.17);
+  border-radius: 8px;
+  background: rgba(7, 3, 15, 0.35);
+  color: rgba(210, 192, 222, 0.46);
+  font-size: 9px;
+  line-height: 1.3;
+}
+
+.RogueStar__traitPersistenceEmpty > .Icon {
+  flex: 0 0 auto;
+  color: rgba(197, 157, 232, 0.4);
+  font-size: 13px;
+}
+
+.RogueStar__traitCatalog.Section {
+  height: 100%;
+  min-height: 820px;
+}
+
+.RogueStar__traitCatalogCount {
+  padding: 0.18rem 0.55rem;
+  border: 1px solid rgba(229, 188, 106, 0.24);
+  border-radius: 999px;
+  background: rgba(28, 11, 47, 0.72);
+  color: rgba(241, 218, 169, 0.8);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.RogueStar__traitGroups {
+  padding: 0.05rem;
+}
+
+.RogueStar__traitGroup > .Box {
+  margin-bottom: 0.55rem;
+}
+
+.RogueStar__traitGroup:last-child > .Box {
+  margin-bottom: 0;
+}
+
+.RogueStar__traitGroupToggle.Button {
+  width: 100%;
+  min-height: 48px;
+  margin: 0;
+  padding: 0.38rem 0.58rem;
+  overflow: hidden;
+  border: 1px solid rgba(181, 128, 255, 0.25);
+  border-left: 3px solid rgba(177, 125, 255, 0.68);
+  border-radius: 9px;
+  background:
+    radial-gradient(
+      circle at 96% 0,
+      rgba(174, 112, 255, 0.12),
+      transparent 35%
+    ),
+    linear-gradient(120deg, rgba(39, 15, 63, 0.92), rgba(9, 4, 20, 0.97));
+  color: rgba(242, 230, 250, 0.86);
+  text-align: left;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.045),
+    0 6px 14px rgba(0, 0, 0, 0.24);
+}
+
+.RogueStar__traitGroupToggle--positive.Button {
+  border-color: rgba(104, 235, 167, 0.24);
+  border-left-color: rgba(104, 235, 167, 0.72);
+  background:
+    radial-gradient(
+      circle at 96% 0,
+      rgba(104, 235, 167, 0.11),
+      transparent 35%
+    ),
+    linear-gradient(120deg, rgba(17, 53, 43, 0.92), rgba(5, 16, 16, 0.98));
+}
+
+.RogueStar__traitGroupToggle--negative.Button {
+  border-color: rgba(255, 103, 127, 0.24);
+  border-left-color: rgba(255, 103, 127, 0.72);
+  background:
+    radial-gradient(circle at 96% 0, rgba(255, 103, 127, 0.1), transparent 35%),
+    linear-gradient(120deg, rgba(60, 18, 35, 0.94), rgba(18, 5, 14, 0.98));
+}
+
+.RogueStar__traitGroupToggle.Button:hover,
+.RogueStar__traitGroupToggle.Button:focus {
+  border-color: rgba(220, 186, 255, 0.5);
+  color: #fffaff;
+  filter: brightness(1.1);
+}
+
+.RogueStar__traitGroupToggle--positive.Button:hover,
+.RogueStar__traitGroupToggle--positive.Button:focus {
+  border-color: rgba(127, 255, 190, 0.5);
+}
+
+.RogueStar__traitGroupToggle--negative.Button:hover,
+.RogueStar__traitGroupToggle--negative.Button:focus {
+  border-color: rgba(255, 130, 151, 0.5);
+}
+
+.RogueStar__traitGroupToggle.Button .Button__content {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  min-width: 0;
+}
+
+.RogueStar__traitGroupToggle.Button .Button__content > .Icon {
+  flex: 0 0 auto;
+  margin-right: 0.38rem;
+  color: rgba(227, 203, 244, 0.64);
+  font-size: 11px;
+}
+
+.RogueStar__traitGroupHeader {
+  flex: 1 1 auto;
+  width: auto;
+  min-width: 0;
+}
+
+.RogueStar__traitGroupIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  margin-right: 0.5rem;
+  border: 1px solid rgba(193, 147, 248, 0.25);
+  border-radius: 8px;
+  background: rgba(89, 39, 139, 0.25);
+  color: rgba(218, 184, 255, 0.88);
+  font-size: 12px;
+}
+
+.RogueStar__traitGroupIcon > .Icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  line-height: 1;
+}
+
+.RogueStar__traitGroupHeader--positive .RogueStar__traitGroupIcon {
+  border-color: rgba(104, 235, 167, 0.34);
+  background: rgba(37, 109, 78, 0.2);
+  color: #91ffca;
+}
+
+.RogueStar__traitGroupHeader--negative .RogueStar__traitGroupIcon {
+  border-color: rgba(255, 103, 127, 0.34);
+  background: rgba(132, 34, 58, 0.2);
+  color: #ff9caf;
+}
+
+.RogueStar__traitGroupName {
+  overflow: hidden;
+  color: rgba(255, 250, 255, 0.96);
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.035em;
+  line-height: 1.15;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.RogueStar__traitGroupCount,
+.RogueStar__traitGroupSelected {
+  padding: 0.2rem 0.42rem;
+  border: 1px solid rgba(206, 164, 255, 0.2);
+  border-radius: 999px;
+  background: rgba(5, 2, 12, 0.52);
+  color: rgba(228, 211, 239, 0.65);
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.RogueStar__traitGroupSelected {
+  border-color: rgba(229, 188, 106, 0.35);
+  background: rgba(94, 65, 22, 0.24);
+  color: #f2d28f;
+}
+
+.RogueStar__traitGroupSelected .Icon {
+  margin-right: 0.14rem;
+}
+
+.RogueStar__traitGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 5px;
+  align-items: stretch;
+  padding: 0.05rem;
+}
+
+.RogueStar__languageGrid {
+  grid-template-columns: repeat(auto-fill, minmax(165px, 1fr));
+}
+
+.RogueStar__traitTile.Button {
+  position: relative;
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  width: 100%;
+  min-width: 0;
+  min-height: 42px;
+  margin: 0;
+  padding: 0.34rem 0.46rem;
+  overflow: hidden;
+  border: 1px solid rgba(177, 125, 255, 0.24);
+  border-left: 3px solid rgba(177, 125, 255, 0.6);
+  border-radius: 8px;
+  background:
+    radial-gradient(
+      circle at 100% 0,
+      rgba(157, 94, 255, 0.12),
+      transparent 52%
+    ),
+    linear-gradient(140deg, rgba(24, 10, 39, 0.96), rgba(7, 3, 16, 0.98));
+  color: rgba(255, 250, 255, 0.94);
+  text-align: center;
+  text-transform: none;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.035),
+    0 4px 10px rgba(0, 0, 0, 0.28);
+  transition:
+    transform 120ms ease,
+    border-color 120ms ease,
+    box-shadow 120ms ease,
+    filter 120ms ease;
+}
+
+.RogueStar__traitTile.Button > .Button__content {
+  display: flex;
+  flex: 1 1 auto;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+  width: 100%;
+}
+
+.RogueStar__traitTile.Button:hover:not(.Button--disabled) {
+  transform: translateY(-1px);
+  border-color: rgba(206, 165, 255, 0.42);
+  border-left-color: rgba(206, 165, 255, 0.82);
+  box-shadow:
+    0 7px 14px rgba(0, 0, 0, 0.38),
+    0 0 11px rgba(129, 76, 255, 0.16);
+}
+
+.RogueStar__traitTile--positive.Button {
+  border-left-color: rgba(104, 235, 167, 0.7);
+  background:
+    radial-gradient(
+      circle at 100% 0,
+      rgba(104, 235, 167, 0.1),
+      transparent 52%
+    ),
+    linear-gradient(140deg, rgba(16, 42, 36, 0.94), rgba(5, 15, 15, 0.98));
+}
+
+.RogueStar__traitTile--positive.Button:hover:not(.Button--disabled) {
+  border-left-color: rgba(130, 255, 192, 0.9);
+  box-shadow:
+    0 7px 14px rgba(0, 0, 0, 0.38),
+    0 0 11px rgba(104, 235, 167, 0.14);
+}
+
+.RogueStar__traitTile--negative.Button {
+  border-left-color: rgba(255, 103, 127, 0.7);
+  background:
+    radial-gradient(
+      circle at 100% 0,
+      rgba(255, 103, 127, 0.1),
+      transparent 52%
+    ),
+    linear-gradient(140deg, rgba(47, 15, 29, 0.95), rgba(17, 5, 13, 0.98));
+}
+
+.RogueStar__traitTile--negative.Button:hover:not(.Button--disabled) {
+  border-left-color: rgba(255, 130, 151, 0.9);
+  box-shadow:
+    0 7px 14px rgba(0, 0, 0, 0.38),
+    0 0 11px rgba(255, 86, 113, 0.13);
+}
+
+.RogueStar__languageTile.Button {
+  border-left-color: rgba(102, 205, 255, 0.72);
+  background:
+    radial-gradient(
+      circle at 100% 0,
+      rgba(102, 205, 255, 0.11),
+      transparent 52%
+    ),
+    linear-gradient(140deg, rgba(13, 37, 55, 0.95), rgba(4, 13, 21, 0.98));
+}
+
+.RogueStar__languageTile.Button:hover:not(.Button--disabled) {
+  border-left-color: rgba(151, 225, 255, 0.92);
+  box-shadow:
+    0 7px 14px rgba(0, 0, 0, 0.38),
+    0 0 11px rgba(102, 205, 255, 0.15);
+}
+
+.RogueStar__languageTile--preferred.Button,
+.RogueStar__selectedLanguageCard--preferred {
+  border-color: rgba(245, 207, 128, 0.82);
+  border-left-color: #f5cf80;
+  box-shadow:
+    0 0 0 1px rgba(245, 207, 128, 0.08),
+    0 0 15px rgba(229, 188, 106, 0.26);
+}
+
+.RogueStar__languageTile--preferred.Button .Icon {
+  color: #f5cf80;
+}
+
+.RogueStar__languageAutomaticIconControl {
+  margin-left: 0.35rem;
+}
+
+.RogueStar__languageTile.Button .RogueStar__languageAutomaticIcon {
+  margin-right: 0;
+  margin-left: 0;
+  color: rgba(169, 215, 238, 0.58);
+  font-size: 8px;
+}
+
+.RogueStar__selectedLanguageSettingsControl {
+  margin-left: 0.35rem;
+}
+
+.RogueStar__traitTile--selected.Button,
+.RogueStar__traitTile--selected.Button.Button--selected {
+  border-color: rgba(229, 188, 106, 0.66);
+  border-left-color: rgba(245, 207, 128, 0.95);
+  background:
+    radial-gradient(
+      circle at 100% 0,
+      rgba(229, 188, 106, 0.19),
+      transparent 55%
+    ),
+    linear-gradient(140deg, rgba(70, 44, 18, 0.92), rgba(22, 10, 9, 0.98));
+  color: #ffe8b5;
+  box-shadow:
+    0 0 0 1px rgba(229, 188, 106, 0.06),
+    0 5px 13px rgba(0, 0, 0, 0.4),
+    0 0 12px rgba(229, 188, 106, 0.13);
+}
+
+.RogueStar__traitTile--warning.Button:not(.RogueStar__traitTile--selected) {
+  border-top-color: rgba(229, 188, 106, 0.42);
+  border-right-color: rgba(229, 188, 106, 0.42);
+  border-bottom-color: rgba(229, 188, 106, 0.42);
+}
+
+.RogueStar__traitTile--disabled.Button,
+.RogueStar__traitTile--disabled.Button.Button--disabled {
+  border-color: rgba(157, 143, 169, 0.14);
+  border-left-color: rgba(157, 143, 169, 0.34);
+  background: linear-gradient(
+    140deg,
+    rgba(24, 20, 29, 0.9),
+    rgba(8, 7, 11, 0.96)
+  );
+  color: rgba(213, 202, 219, 0.56);
+  filter: saturate(0.45);
+}
+
+.RogueStar__traitsTab--transientLocked
+  .RogueStar__traitTile.Button.Button--disabled:not(
+    .RogueStar__traitTile--disabled
+  ) {
+  background-color: transparent !important;
+}
+
+.RogueStar__traitTile--busy.Button {
+  filter: brightness(1.2);
+}
+
+.RogueStar__traitTileName {
+  display: -webkit-box;
+  min-width: 0;
+  overflow: hidden;
+  color: inherit;
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.015em;
+  line-height: 1.2;
+  overflow-wrap: anywhere;
+  text-overflow: ellipsis;
+  white-space: normal;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.RogueStar__traitDescriptionTooltip {
+  max-width: 240px;
+  color: rgba(247, 239, 251, 0.94);
+  font-size: 12px;
+  line-height: 1.4;
+  overflow-wrap: anywhere;
+}
+
+.RogueStar__traitTooltipReason {
+  margin-top: 0.5rem;
+  padding-top: 0.45rem;
+  border-top: 1px solid rgba(180, 158, 195, 0.2);
+  color: rgba(216, 201, 225, 0.72);
+}
+
+.RogueStar__traitTooltipReason--warning {
+  border-top-color: rgba(229, 188, 106, 0.26);
+  color: rgba(247, 219, 164, 0.9);
+}
+
+.RogueStar__traitTooltipReason .Icon {
+  margin-right: 0.2rem;
+}
+
+.RogueStar__traitTooltipHint {
+  margin-top: 0.5rem;
+  color: rgba(238, 204, 135, 0.9);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.RogueStar__languageTooltipStatus {
+  margin-top: 0.45rem;
+  color: rgba(169, 215, 238, 0.76);
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.RogueStar__traitDetailPopover,
+.RogueStar__traitSettingsPopover {
+  width: 360px;
+  max-width: calc(100vw - 24px);
+  max-height: 560px;
+  padding: 0.8rem;
+  overflow: auto;
+  border: 1px solid rgba(190, 140, 255, 0.42);
+  border-radius: 10px;
+  background:
+    radial-gradient(
+      circle at 100% 0,
+      rgba(139, 76, 230, 0.15),
+      transparent 42%
+    ),
+    rgba(9, 4, 19, 0.98);
+  color: rgba(239, 229, 246, 0.84);
+  box-shadow:
+    0 18px 38px rgba(0, 0, 0, 0.68),
+    0 0 22px rgba(129, 76, 255, 0.18);
+  @include rogue-star-scrollbar(6px);
+}
+
+.RogueStar__traitDetailEyebrow {
+  color: rgba(229, 188, 106, 0.78);
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.09em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.RogueStar__traitDetailTitle {
+  margin-top: 0.22rem;
+  color: rgba(255, 248, 255, 0.96);
+  font-size: 15px;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  line-height: 1.2;
+}
+
+.RogueStar__traitDetailGuide {
+  margin-top: 0.65rem;
+  padding-top: 0.65rem;
+  border-top: 1px solid rgba(190, 140, 255, 0.18);
+  font-size: 12px;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+
+.RogueStar__traitSettingsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 0.35rem;
+  margin-top: 0.65rem;
+  padding-top: 0.65rem;
+  border-top: 1px solid rgba(190, 140, 255, 0.18);
+}
+
+.RogueStar__traitSettingsPopover--locked .RogueStar__traitSettingsGrid {
+  pointer-events: none;
+  opacity: 0.56;
+}
+
+.RogueStar__languageSettingsPopover {
+  width: 390px;
+}
+
+.RogueStar__languageSettingsDescription {
+  margin-top: 0.45rem;
+  color: rgba(229, 215, 237, 0.72);
+  font-size: 11px;
+  line-height: 1.4;
+}
+
+.RogueStar__languageSettingsHint {
+  margin-top: 0.25rem;
+  color: rgba(190, 211, 224, 0.56);
+  font-size: 9px;
+  line-height: 1.25;
+}
+
+.RogueStar__languageCustomKeyControl {
+  box-sizing: border-box;
+  width: 100%;
+  height: 29px;
+  overflow: hidden;
+  border: 1px solid rgba(190, 144, 245, 0.2);
+  border-radius: 7px;
+  background: rgba(8, 3, 17, 0.68);
+}
+
+.RogueStar__languageCustomKeyControl > .Flex__item {
+  height: 100%;
+}
+
+.RogueStar__traitPreferenceInput.RogueStar__languageCustomKeyInput.Input {
+  height: 100%;
+  min-height: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  line-height: 27px;
+}
+
+.RogueStar__traitPreferenceInput.RogueStar__languageCustomKeyInput
+  .Input__input {
+  height: 100%;
+  line-height: 27px;
+  text-align: left;
+}
+
+.RogueStar__languageCustomKeyResetButton.Button {
+  border-left-color: rgba(190, 144, 245, 0.2);
+  background: rgba(20, 9, 34, 0.72);
+}
+
+.RogueStar__languagePreferredControl.Button {
+  box-sizing: border-box;
+  height: 29px;
+  min-height: 29px;
+  padding: 0 0.45rem;
+  text-align: left;
+}
+
+.RogueStar__languagePreferredControl.Button .Button__content {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+  height: 100%;
+  line-height: 1.2;
+  text-align: left;
+}
+
+.RogueStar__traitPreference {
+  min-width: 0;
+  padding: 0.35rem;
+  border: 1px solid rgba(189, 144, 239, 0.12);
+  border-radius: 8px;
+  background: rgba(39, 17, 61, 0.3);
+}
+
+.RogueStar__traitPreferenceLabel {
+  margin-bottom: 0.3rem;
+  overflow: hidden;
+  color: rgba(215, 195, 227, 0.58);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.045em;
+  text-overflow: ellipsis;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.RogueStar__traitPreferenceValue.Button {
+  width: 100%;
+  min-height: 29px;
+  margin: 0;
+  overflow: hidden;
+  border: 1px solid rgba(190, 144, 245, 0.2);
+  border-radius: 7px;
+  background: rgba(8, 3, 17, 0.68);
+  color: rgba(242, 232, 248, 0.8);
+  font-size: 11px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.RogueStar__traitPreferenceValue.Button.Button--selected {
+  border-color: rgba(104, 235, 167, 0.48);
+  background: rgba(35, 100, 72, 0.26);
+  color: #a7ffd2;
+}
+
+.RogueStar__traitPreferenceInput.Input {
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 29px;
+  margin: 0;
+  padding: 0 0.4rem;
+  border: 1px solid rgba(190, 144, 245, 0.2);
+  border-radius: 7px;
+  background: rgba(8, 3, 17, 0.68);
+  color: rgba(242, 232, 248, 0.9);
+  line-height: 27px;
+}
+
+.RogueStar__traitPreferenceInput .Input__input {
+  height: 27px;
+  padding: 0 0.45rem;
+  font-size: 11px;
+  line-height: 27px;
+}
+
+.RogueStar__traitPreferenceInput--invalid.Input {
+  border-color: rgba(255, 103, 127, 0.66);
+  box-shadow: 0 0 8px rgba(255, 71, 111, 0.14);
+}
+
+.RogueStar__traitPreferenceValidation {
+  margin-top: 0.25rem;
+  color: rgba(255, 142, 159, 0.88);
+  font-size: 9px;
+  line-height: 1.2;
+}
+
+.RogueStar__traitPreferenceNumber.NumberInput {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: none;
+  min-height: 29px;
+  margin: 0;
+  padding: 0.25rem 0.45rem;
+  border-radius: 7px;
+  font-size: 11px;
+}
+
+.RogueStar__traitPreferenceDropdown.Dropdown__control {
+  box-sizing: border-box;
+  width: 100%;
+  height: 29px;
+  min-height: 29px;
+  margin: 0;
+  border: 1px solid rgba(190, 144, 245, 0.2);
+  border-radius: 7px;
+  background: rgba(8, 3, 17, 0.68);
+  color: rgba(242, 232, 248, 0.9);
+  font-size: 11px;
+}
+
+.RogueStar__traitPreferenceDropdownContent {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 1.2em;
+  gap: 0.35rem;
+  align-items: center;
+  width: 100%;
+  height: 27px;
+  min-width: 0;
+}
+
+.RogueStar__traitPreferenceDropdownContent .Dropdown__selected-text {
+  width: 100%;
+  height: auto;
+  min-width: 0;
+  line-height: 1.2;
+  text-align: left;
+}
+
+.RogueStar__traitPreferenceDropdownContent .Dropdown__arrow-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  float: none;
+  width: 1.2em;
+  height: 100%;
+  min-height: 0;
+  padding-left: 0;
+  border-left: 0;
+}
+
+.RogueStar__traitPreferenceSwatch {
+  display: inline-block;
+  width: 13px;
+  height: 13px;
+  margin: 0 0.32rem 0 0.08rem;
+  vertical-align: -2px;
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  border-radius: 4px;
+  box-shadow: 0 0 7px rgba(255, 255, 255, 0.12);
+}
+
+.RogueStar__traitEmptyState {
+  min-height: 100px;
+  padding: 1.8rem 1rem;
+  border: 1px dashed rgba(187, 137, 255, 0.25);
+  border-radius: 12px;
+  background: rgba(14, 6, 27, 0.52);
+  color: rgba(224, 205, 237, 0.62);
+  font-size: 12px;
+  text-align: center;
+}
+
+.RogueStar__traitEmptyState .Icon {
+  margin-right: 0.35rem;
+  color: rgba(229, 188, 106, 0.72);
+}
+
 .RogueStar__markingTileLabel {
   font-size: 12px;
   text-align: center;
@@ -1161,6 +3304,35 @@ $titlebar-height: 38px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+.RogueStar__prostheticColorMode {
+  display: inline-flex;
+  align-self: center;
+  width: fit-content;
+  padding: 0.12rem 0.38rem;
+  border: 1px solid rgba(192, 180, 204, 0.26);
+  border-radius: 999px;
+  background: rgba(19, 11, 29, 0.72);
+  color: rgba(225, 215, 234, 0.78);
+  font-size: 0.54rem;
+  font-weight: 700;
+  letter-spacing: 0.055em;
+  line-height: 1.2;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.RogueStar__prostheticColorMode--prosthetic {
+  border-color: rgba(104, 207, 245, 0.42);
+  color: rgba(176, 232, 255, 0.92);
+  box-shadow: 0 0 8px rgba(92, 196, 240, 0.12);
+}
+
+.RogueStar__prostheticColorMode--body {
+  border-color: rgba(229, 188, 106, 0.42);
+  color: rgba(247, 217, 153, 0.92);
+  box-shadow: 0 0 8px rgba(229, 188, 106, 0.11);
 }
 
 .RogueStar__markingTile .RogueStar__previewCanvas {
@@ -1234,6 +3406,683 @@ $titlebar-height: 38px;
   box-shadow:
     0 12px 22px rgba(4, 0, 12, 0.6),
     0 0 12px rgba(229, 188, 106, 0.2);
+}
+
+.RogueStar__prostheticTargetPanel {
+  position: relative;
+  overflow: hidden;
+  padding: 0.75rem;
+  border: 1px solid rgba(184, 134, 255, 0.34);
+  border-radius: 16px;
+  background:
+    radial-gradient(
+      circle at 20% 20%,
+      rgba(124, 82, 214, 0.16),
+      transparent 48%
+    ),
+    linear-gradient(145deg, rgba(13, 7, 28, 0.96), rgba(6, 3, 15, 0.96));
+  box-shadow:
+    inset 0 0 24px rgba(128, 72, 211, 0.08),
+    0 12px 28px rgba(3, 0, 10, 0.48);
+}
+
+.RogueStar__prostheticMannequin {
+  position: relative;
+  width: 164px;
+  height: 280px;
+  overflow: hidden;
+  border: 1px solid rgba(173, 126, 239, 0.32);
+  border-radius: 18px;
+  background:
+    linear-gradient(rgba(179, 135, 255, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(179, 135, 255, 0.035) 1px, transparent 1px),
+    radial-gradient(
+      circle at 50% 42%,
+      rgba(108, 57, 183, 0.2),
+      transparent 58%
+    ),
+    rgba(5, 2, 13, 0.84);
+  background-size:
+    12px 12px,
+    12px 12px,
+    auto,
+    auto;
+  box-shadow:
+    inset 0 0 28px rgba(0, 0, 0, 0.72),
+    0 0 22px rgba(120, 72, 210, 0.12);
+}
+
+.RogueStar__prostheticMannequinGlow {
+  position: absolute;
+  top: 12px;
+  left: 31px;
+  width: 100px;
+  height: 238px;
+  border-radius: 48%;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(141, 92, 226, 0.14),
+    transparent 70%
+  );
+  filter: blur(5px);
+  pointer-events: none;
+}
+
+@keyframes rogueStarProstheticScan {
+  0% {
+    transform: translateY(-22px);
+    opacity: 0;
+  }
+  15%,
+  80% {
+    opacity: 0.65;
+  }
+  100% {
+    transform: translateY(235px);
+    opacity: 0;
+  }
+}
+
+.RogueStar__prostheticMannequinScan {
+  position: absolute;
+  z-index: 8;
+  top: 24px;
+  left: 22px;
+  width: 120px;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(132, 229, 255, 0.78),
+    transparent
+  );
+  box-shadow: 0 0 10px rgba(114, 218, 255, 0.6);
+  pointer-events: none;
+  animation: rogueStarProstheticScan 4.5s ease-in-out infinite;
+}
+
+.RogueStar__prostheticMannequinPart.Button {
+  position: absolute;
+  z-index: 3;
+  min-width: 0;
+  min-height: 0;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  border: 1px solid rgba(191, 163, 225, 0.46);
+  background: linear-gradient(
+    145deg,
+    rgba(70, 55, 91, 0.86),
+    rgba(24, 17, 36, 0.96)
+  );
+  color: rgba(240, 229, 255, 0.62);
+  box-shadow:
+    inset 0 0 8px rgba(255, 255, 255, 0.06),
+    0 3px 10px rgba(0, 0, 0, 0.48);
+  transition:
+    filter 120ms ease,
+    border-color 120ms ease,
+    background 120ms ease,
+    box-shadow 120ms ease;
+
+  > .Button__content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.RogueStar__prostheticMannequinPart.Button:not(.Button--disabled):hover,
+.RogueStar__prostheticMannequinPart.Button:not(.Button--disabled):focus {
+  z-index: 6;
+  filter: brightness(1.28);
+  border-color: rgba(225, 192, 255, 0.9);
+  box-shadow:
+    inset 0 0 10px rgba(255, 255, 255, 0.1),
+    0 0 15px rgba(173, 105, 255, 0.6);
+}
+
+.RogueStar__prostheticMannequinPart.Button.Button--selected {
+  z-index: 5;
+  border-color: rgba(154, 236, 255, 0.92);
+  background: linear-gradient(
+    145deg,
+    rgba(97, 48, 176, 0.98),
+    rgba(26, 125, 165, 0.9)
+  );
+  color: #fff;
+  box-shadow:
+    inset 0 0 12px rgba(208, 246, 255, 0.2),
+    0 0 12px rgba(103, 219, 255, 0.72),
+    0 0 22px rgba(157, 83, 246, 0.5);
+}
+
+.RogueStar__prostheticMannequinPart.Button.Button--disabled {
+  opacity: 0.28;
+  border-color: rgba(255, 255, 255, 0.1);
+  background: rgba(35, 30, 42, 0.75) !important;
+  color: rgba(255, 255, 255, 0.25);
+  box-shadow: none;
+}
+
+.RogueStar__prostheticMannequinPart.Button.Button--selected.Button--disabled {
+  opacity: 0.62;
+  border-color: rgba(126, 207, 231, 0.58);
+  background: linear-gradient(
+    145deg,
+    rgba(75, 45, 126, 0.9),
+    rgba(25, 84, 105, 0.82)
+  ) !important;
+  color: rgba(231, 249, 255, 0.72);
+  box-shadow: 0 0 9px rgba(103, 219, 255, 0.3);
+}
+
+.RogueStar__prostheticMannequinPart--head.Button {
+  top: 16px;
+  left: 64px;
+  width: 34px;
+  height: 36px;
+  border-radius: 50% 50% 44% 44%;
+}
+
+.RogueStar__prostheticMannequinPart--core.Button {
+  z-index: 4;
+  top: 59px;
+  left: 48px;
+  width: 68px;
+  height: 68px;
+  border-radius: 20px 20px 9px 9px;
+  clip-path: polygon(10% 0, 90% 0, 100% 23%, 86% 100%, 14% 100%, 0 23%);
+}
+
+.RogueStar__prostheticMannequinPart--groin.Button {
+  z-index: 4;
+  top: 129px;
+  left: 52px;
+  width: 60px;
+  height: 25px;
+  border-radius: 8px 8px 12px 12px;
+  clip-path: polygon(12% 0, 88% 0, 100% 35%, 82% 100%, 18% 100%, 0 35%);
+}
+
+.RogueStar__prostheticMannequinPart--right-arm.Button,
+.RogueStar__prostheticMannequinPart--left-arm.Button {
+  top: 65px;
+  width: 21px;
+  height: 74px;
+  border-radius: 12px;
+}
+
+.RogueStar__prostheticMannequinPart--right-arm.Button {
+  left: 25px;
+  transform: rotate(7deg);
+}
+
+.RogueStar__prostheticMannequinPart--left-arm.Button {
+  right: 25px;
+  transform: rotate(-7deg);
+}
+
+.RogueStar__prostheticMannequinPart--right-hand.Button,
+.RogueStar__prostheticMannequinPart--left-hand.Button {
+  top: 139px;
+  width: 22px;
+  height: 27px;
+  border-radius: 45% 45% 50% 50%;
+}
+
+.RogueStar__prostheticMannequinPart--right-hand.Button {
+  left: 18px;
+  transform: rotate(7deg);
+}
+
+.RogueStar__prostheticMannequinPart--left-hand.Button {
+  right: 18px;
+  transform: rotate(-7deg);
+}
+
+.RogueStar__prostheticMannequinPart--right-leg.Button,
+.RogueStar__prostheticMannequinPart--left-leg.Button {
+  top: 151px;
+  width: 27px;
+  height: 77px;
+  border-radius: 12px 12px 10px 10px;
+}
+
+.RogueStar__prostheticMannequinPart--right-leg.Button {
+  left: 50px;
+  transform: rotate(2deg);
+}
+
+.RogueStar__prostheticMannequinPart--left-leg.Button {
+  right: 50px;
+  transform: rotate(-2deg);
+}
+
+.RogueStar__prostheticMannequinPart--right-foot.Button,
+.RogueStar__prostheticMannequinPart--left-foot.Button {
+  top: 230px;
+  width: 35px;
+  height: 19px;
+  border-radius: 8px 8px 11px 11px;
+}
+
+.RogueStar__prostheticMannequinPart--right-foot.Button {
+  left: 39px;
+}
+
+.RogueStar__prostheticMannequinPart--left-foot.Button {
+  right: 39px;
+}
+
+.RogueStar__prostheticMannequinPartText {
+  font-size: 0.58rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-shadow: 0 0 5px rgba(255, 255, 255, 0.42);
+}
+
+.RogueStar__prostheticMannequinAxis {
+  position: absolute;
+  bottom: 7px;
+  left: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 120px;
+  color: rgba(205, 182, 231, 0.48);
+  font-size: 0.55rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  pointer-events: none;
+}
+
+.RogueStar__prostheticTargetReadout {
+  min-width: 0;
+  padding: 0.25rem 0;
+}
+
+.RogueStar__prostheticEyebrow {
+  color: rgba(164, 223, 255, 0.78);
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+}
+
+.RogueStar__prostheticActiveTargets {
+  min-height: 42px;
+  margin-top: 0.35rem;
+  color: #fff6ff;
+  font-size: 0.9rem;
+  font-weight: 700;
+  line-height: 1.35;
+  text-shadow: 0 0 10px rgba(160, 108, 255, 0.34);
+}
+
+.RogueStar__prostheticHint {
+  color: rgba(215, 198, 229, 0.66);
+  font-size: 0.68rem;
+  line-height: 1.4;
+}
+
+.RogueStar__prostheticSelectionList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.RogueStar__prostheticSelectionGroup {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.55rem 0.65rem;
+  border-left: 3px solid rgba(125, 216, 245, 0.8);
+  border-radius: 8px 12px 12px 8px;
+  background: linear-gradient(
+    90deg,
+    rgba(28, 82, 104, 0.32),
+    rgba(27, 13, 46, 0.58)
+  );
+}
+
+.RogueStar__prostheticSelectionGroup--amputated {
+  border-left-color: rgba(255, 132, 132, 0.82);
+  background: linear-gradient(
+    90deg,
+    rgba(104, 36, 45, 0.3),
+    rgba(27, 13, 46, 0.58)
+  );
+}
+
+.RogueStar__prostheticSelectionModel {
+  color: #fff;
+  font-size: 0.76rem;
+  font-weight: 700;
+}
+
+.RogueStar__prostheticSelectionParts {
+  margin-top: 0.18rem;
+  color: rgba(219, 205, 232, 0.68);
+  font-size: 0.65rem;
+  line-height: 1.35;
+}
+
+.RogueStar__prostheticSelectionCount {
+  flex: 0 0 auto;
+  min-width: 24px;
+  padding: 0.15rem 0.4rem;
+  border: 1px solid rgba(169, 220, 241, 0.3);
+  border-radius: 999px;
+  color: rgba(205, 240, 255, 0.8);
+  font-size: 0.62rem;
+  text-align: center;
+}
+
+.RogueStar__prostheticSelectionEmpty {
+  padding: 0.7rem;
+  border: 1px dashed rgba(178, 141, 214, 0.28);
+  border-radius: 12px;
+  color: rgba(215, 198, 229, 0.6);
+  font-size: 0.7rem;
+  text-align: center;
+}
+
+.RogueStar__internalOrganPanel {
+  padding: 0.45rem;
+  border: 1px solid rgba(173, 126, 239, 0.26);
+  border-radius: 12px;
+  background:
+    radial-gradient(
+      circle at 15% 10%,
+      rgba(101, 69, 180, 0.13),
+      transparent 48%
+    ),
+    rgba(7, 3, 17, 0.72);
+  box-shadow:
+    inset 0 0 18px rgba(117, 72, 184, 0.06),
+    0 6px 18px rgba(2, 0, 8, 0.28);
+}
+
+.RogueStar__internalOrganGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(115px, 1fr));
+  gap: 0.4rem;
+}
+
+.RogueStar__internalOrganChip.Button {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  min-width: 0;
+  min-height: 20px;
+  margin-bottom: 0;
+  padding: 0.08rem 0.42rem;
+  border-radius: 9px;
+  text-transform: none;
+  letter-spacing: normal;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.045),
+    0 4px 11px rgba(0, 0, 0, 0.24);
+
+  > .Button__content {
+    display: flex;
+    flex: 1 1 auto;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.35rem;
+    min-width: 0;
+  }
+}
+
+.RogueStar__internalOrganChipName {
+  min-width: 0;
+  overflow: hidden;
+  color: rgba(251, 244, 255, 0.92);
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.015em;
+  line-height: 1.15;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.RogueStar__internalOrganChipState {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.1rem 0.28rem;
+  border: 1px solid rgba(210, 193, 225, 0.2);
+  border-radius: 999px;
+  background: rgba(8, 4, 16, 0.56);
+  color: rgba(225, 212, 237, 0.78);
+  font-size: 0.49rem;
+  font-weight: 800;
+  letter-spacing: 0.055em;
+  line-height: 1.15;
+  text-transform: uppercase;
+  white-space: nowrap;
+
+  &::before {
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: currentColor;
+    box-shadow: 0 0 5px currentColor;
+    content: '';
+  }
+}
+
+.RogueStar__internalOrganChip--organic.Button {
+  border-color: rgba(102, 224, 169, 0.34);
+  background: linear-gradient(
+    135deg,
+    rgba(18, 58, 45, 0.72),
+    rgba(24, 12, 42, 0.88)
+  );
+
+  .RogueStar__internalOrganChipState {
+    border-color: rgba(102, 224, 169, 0.38);
+    color: rgba(148, 244, 197, 0.9);
+  }
+}
+
+.RogueStar__internalOrganChip--assisted.Button {
+  border-color: rgba(236, 191, 106, 0.38);
+  background: linear-gradient(
+    135deg,
+    rgba(68, 45, 16, 0.72),
+    rgba(29, 13, 48, 0.9)
+  );
+
+  .RogueStar__internalOrganChipState {
+    border-color: rgba(236, 191, 106, 0.42);
+    color: rgba(255, 221, 151, 0.92);
+  }
+}
+
+.RogueStar__internalOrganChip--mechanical.Button {
+  border-color: rgba(97, 205, 244, 0.4);
+  background: linear-gradient(
+    135deg,
+    rgba(12, 52, 68, 0.76),
+    rgba(25, 12, 45, 0.9)
+  );
+
+  .RogueStar__internalOrganChipState {
+    border-color: rgba(97, 205, 244, 0.42);
+    color: rgba(155, 226, 253, 0.94);
+  }
+}
+
+.RogueStar__internalOrganChip--digital.Button {
+  border-color: rgba(202, 130, 255, 0.42);
+  background: linear-gradient(
+    135deg,
+    rgba(68, 28, 92, 0.76),
+    rgba(19, 10, 42, 0.92)
+  );
+
+  .RogueStar__internalOrganChipState {
+    border-color: rgba(202, 130, 255, 0.44);
+    color: rgba(225, 178, 255, 0.94);
+  }
+}
+
+.RogueStar__internalOrganChip--unavailable.Button {
+  border-color: rgba(189, 174, 201, 0.16);
+  background: rgba(24, 17, 32, 0.68);
+}
+
+.RogueStar__internalOrganChip.Button.Button--disabled {
+  opacity: 0.68;
+  border-color: rgba(189, 174, 201, 0.16) !important;
+  background: rgba(24, 17, 32, 0.68) !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.025) !important;
+}
+
+.RogueStar__internalOrganChip--organicPassive.Button.Button--disabled {
+  opacity: 1;
+  border-color: rgba(102, 224, 169, 0.34) !important;
+  background: linear-gradient(
+    135deg,
+    rgba(18, 58, 45, 0.72),
+    rgba(24, 12, 42, 0.88)
+  ) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.045),
+    0 4px 11px rgba(0, 0, 0, 0.24) !important;
+}
+
+.RogueStar__internalOrganChip.Button.Button--disabled:hover,
+.RogueStar__internalOrganChip.Button.Button--disabled:focus {
+  transform: none;
+}
+
+.RogueStar__internalOrganChip--locked.Button.Button--disabled {
+  opacity: 0.82;
+}
+
+.RogueStar__physiologyPanel {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.45rem;
+  padding: 0.45rem;
+  border: 1px solid rgba(173, 126, 239, 0.26);
+  border-radius: 12px;
+  background:
+    radial-gradient(
+      circle at 15% 10%,
+      rgba(101, 69, 180, 0.13),
+      transparent 48%
+    ),
+    rgba(7, 3, 17, 0.72);
+  box-shadow:
+    inset 0 0 18px rgba(117, 72, 184, 0.06),
+    0 6px 18px rgba(2, 0, 8, 0.28);
+}
+
+.RogueStar__physiologyControl {
+  min-width: 0;
+  padding: 0.45rem;
+  border: 1px solid rgba(184, 151, 218, 0.18);
+  border-radius: 9px;
+  background: rgba(20, 12, 34, 0.66);
+}
+
+.RogueStar__physiologyLabel {
+  margin-bottom: 0.3rem;
+  color: rgba(226, 207, 241, 0.72);
+  font-size: 0.58rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.RogueStar__physiologyDropdown.Dropdown__control,
+.RogueStar__physiologyToggle.Button {
+  width: 100%;
+  min-height: 16px;
+  line-height: 1.25;
+  border-color: rgba(194, 139, 235, 0.3);
+  border-radius: 8px;
+  background: linear-gradient(
+    135deg,
+    rgba(48, 24, 66, 0.78),
+    rgba(24, 12, 42, 0.88)
+  );
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.045),
+    0 4px 11px rgba(0, 0, 0, 0.24);
+}
+
+.RogueStar__physiologyToggle.Button {
+  margin-bottom: 0;
+}
+
+.RogueStar__physiologyDropdown.Dropdown__control {
+  box-sizing: border-box;
+  color: rgba(255, 218, 228, 0.94);
+
+  .RogueStar__physiologyDropdownContent {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    column-gap: 0.5rem;
+    align-items: center;
+    width: 100%;
+    line-height: 1;
+  }
+
+  .RogueStar__physiologyDropdownContent > .Icon {
+    align-self: center;
+    min-width: 1.333em;
+    margin-left: -0.25em;
+    margin-right: 0.25em;
+    line-height: 1;
+    text-align: center;
+  }
+
+  .Dropdown__selected-text {
+    display: block;
+    width: auto;
+    height: auto;
+    min-width: 0;
+    line-height: 1;
+  }
+
+  .Dropdown__arrow-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    float: none;
+    width: 1.2em;
+    height: auto;
+    min-height: 0;
+    padding-left: 0;
+    border-left: 0;
+    line-height: 1;
+  }
+}
+
+.RogueStar__physiologyToggle.Button.Button--selected {
+  border-color: rgba(112, 206, 246, 0.4);
+  background: linear-gradient(
+    135deg,
+    rgba(13, 56, 75, 0.8),
+    rgba(24, 12, 42, 0.9)
+  );
+  color: rgba(166, 229, 255, 0.94);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .RogueStar__prostheticMannequinScan {
+    animation: none;
+    opacity: 0.3;
+  }
 }
 
 .RogueStar__colorModal {

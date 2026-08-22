@@ -23,6 +23,7 @@ const logger = createLogger('backend');
 
 export const backendUpdate = createAction('backend/update');
 export const backendSetSharedState = createAction('backend/setSharedState');
+export const backendSetSharedStates = createAction('backend/setSharedStates'); // RS Add: Character Designer - Species and Prosthetics (Lira, August 2026)
 export const backendSuspendStart = createAction('backend/suspendStart');
 
 export const backendSuspendSuccess = () => ({
@@ -85,6 +86,18 @@ export const backendReducer = (state = initialState, action) => {
       shared: {
         ...state.shared,
         [key]: nextState,
+      },
+    };
+  }
+
+  // RS Add: Character Designer - Species and Prosthetics (Lira, August 2026)
+  if (type === 'backend/setSharedStates') {
+    const { states } = payload;
+    return {
+      ...state,
+      shared: {
+        ...state.shared,
+        ...states,
       },
     };
   }

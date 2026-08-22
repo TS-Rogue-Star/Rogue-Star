@@ -5,9 +5,16 @@
 // //////////////////////////////////////////////////////////////////////////////////////////////
 // Updated by Lira for Rogue Star December 2025: Updated to support new body marking selector ///
 // //////////////////////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star August 2026: Character Designer - Species and Prosthetics /////
+// //////////////////////////////////////////////////////////////////////////////////////////////
 
 import { normalizeHex, TRANSPARENT_HEX } from '../color';
-import type { GearOverlayAsset, IconAssetPayload } from './assets';
+import type {
+  GearOverlayAsset,
+  GearOverlayAssetReference,
+  IconAssetPayload,
+  IconAssetReference,
+} from './assets';
 import {
   getPreviewGridFromAsset,
   getPreviewGridListFromAssets,
@@ -15,14 +22,44 @@ import {
   getPreviewPartMapFromAssets,
 } from './assets';
 
-export type { IconAssetPayload, GearOverlayAsset } from './assets';
+export type {
+  CharacterPreviewWorkHandle,
+  CharacterPreviewWorkPriority,
+  GearAppearanceAsset,
+  GearAppearanceAssetReference,
+  GearColorTransform,
+  GearOverlayAssetReference,
+  IconAssetReference,
+  IconAssetRegistry,
+  IconAssetRegistryAsset,
+  IconAssetPayload,
+  ProstheticCatalog,
+  ProstheticCatalogModel,
+  ProstheticCatalogState,
+  GearOverlayAsset,
+} from './assets';
 export {
+  areIconAssetsReady,
+  composeGearPreviewGrid,
+  getGearPreviewRasterIdentity,
+  getIconAssetRasterIdentity,
+  getIconAssetReadinessSignature,
   getPreviewGridFromAsset,
+  getPreviewGridFromGearAsset,
   getPreviewGridListFromAssets,
   getPreviewPartMapFromAssets,
   getPreviewGridMapFromGearAssets,
   getReferenceGridFromAsset,
   getReferencePartMapFromAssets,
+  getStaticProstheticCatalog,
+  isStaticIconAssetRegistryLoaded,
+  loadStaticIconAssetRegistry,
+  registerIconAssetRegistry,
+  registerStaticIconAssetRegistry,
+  resolveGearOverlayAssetReferences,
+  resolveIconAssetReference,
+  resolveIconAssetReferenceMap,
+  scheduleCharacterPreviewWork,
 } from './assets';
 
 export const GENERIC_PART_KEY = 'generic';
@@ -40,28 +77,119 @@ export type PreviewLayerEntry = {
   source?: string;
   grid?: string[][];
   opacity?: number;
+  rasterIdentity?: string;
+  rasterDependency?: PreviewLayerRasterDependency;
+  rasterShareable?: boolean;
 };
+
+export type PreviewLayerRasterDependency =
+  | 'stable'
+  | 'body-relative'
+  | 'body-direct'
+  | 'body-eye-fallback'
+  | 'eye-direct'
+  | 'synth-direct';
+
+export type PreviewLayerColorTransform = {
+  color: string;
+  multiply: boolean;
+  passes: number;
+};
+
+const parsePreviewTransformColor = (
+  color: string
+): [number, number, number, number] | null => {
+  const normalized = normalizeHex(color, {
+    preserveAlpha: true,
+    preserveTransparent: true,
+  });
+  if (!normalized) {
+    return null;
+  }
+  return [
+    parseInt(normalized.slice(1, 3), 16),
+    parseInt(normalized.slice(3, 5), 16),
+    parseInt(normalized.slice(5, 7), 16),
+    normalized.length === 9 ? parseInt(normalized.slice(7, 9), 16) : 255,
+  ];
+};
+
+export const applyPreviewLayerColorTransformToRgba = (
+  source: Uint8ClampedArray,
+  target: Uint8ClampedArray,
+  activeOffsets: readonly number[],
+  transform: PreviewLayerColorTransform
+) => {
+  const tint = parsePreviewTransformColor(transform.color);
+  const passes = Math.max(0, Math.floor(transform.passes));
+  for (let index = 0; index < activeOffsets.length; index++) {
+    const offset = activeOffsets[index];
+    let red = source[offset];
+    let green = source[offset + 1];
+    let blue = source[offset + 2];
+    let alpha = source[offset + 3];
+    if (tint) {
+      for (let pass = 0; pass < passes; pass++) {
+        if (transform.multiply) {
+          red = Math.round((red * tint[0]) / 255);
+          green = Math.round((green * tint[1]) / 255);
+          blue = Math.round((blue * tint[2]) / 255);
+          alpha = Math.round((alpha * tint[3]) / 255);
+        } else {
+          red = Math.min(255, red + tint[0]);
+          green = Math.min(255, green + tint[1]);
+          blue = Math.min(255, blue + tint[2]);
+        }
+      }
+    }
+    target[offset] = red;
+    target[offset + 1] = green;
+    target[offset + 2] = blue;
+    target[offset + 3] = alpha;
+  }
+};
+
+export type PreviewLayerGroup = {
+  key: string;
+  layers: PreviewLayerEntry[];
+  cacheSignature?: string;
+  sharedRasterSignature?: string;
+  colorTransform?: PreviewLayerColorTransform;
+};
+
+export type PreviewEyeColorMode = 'baked' | 'separate' | 'native' | 'none';
 
 export type PreviewDirectionEntry = {
   dir: number;
   label: string;
   layers: PreviewLayerEntry[];
+  bodyAlpha?: number | null;
+  eyeColorMode?: PreviewEyeColorMode;
 };
 
 export type PreviewDirectionSource = {
   dir: number;
   label: string;
-  body_asset?: IconAssetPayload;
-  composite_asset?: IconAssetPayload;
-  reference_part_assets?: Record<string, IconAssetPayload>;
-  reference_part_marking_assets?: Record<string, IconAssetPayload>;
-  overlay_assets?: GearOverlayAsset[] | IconAssetPayload[];
-  job_overlay_assets?: GearOverlayAsset[] | IconAssetPayload[];
-  loadout_overlay_assets?: GearOverlayAsset[] | IconAssetPayload[];
+  body_asset?: IconAssetReference;
+  reference_part_assets?: Record<string, IconAssetReference>;
+  reference_part_hair_assets?: Record<string, IconAssetReference>;
+  reference_part_marking_assets?: Record<string, IconAssetReference>;
+  overlay_assets?: Array<GearOverlayAssetReference | IconAssetReference>;
+  equipment_overlay_assets?: Array<
+    GearOverlayAssetReference | IconAssetReference
+  >;
+  job_overlay_assets?: Array<GearOverlayAssetReference | IconAssetReference>;
+  loadout_overlay_assets?: Array<
+    GearOverlayAssetReference | IconAssetReference
+  >;
   body_color_excluded_parts?: string[];
-  custom_parts?: Record<string, string[][]>;
+  body_color_blend_mode?: number | null;
+  body_alpha?: number | null;
+  eye_color_mode?: PreviewEyeColorMode;
+  custom_parts?: Record<string, string[][] | null>;
   part_order?: string[];
   hidden_body_parts?: string[];
+  marking_excluded_parts?: string[];
 };
 
 export type PreviewCustomPartState = {
@@ -73,15 +201,20 @@ export type PreviewDirState = {
   dir: number;
   label: string;
   bodyAsset?: IconAssetPayload;
-  compositeAsset?: IconAssetPayload;
   referencePartAssets?: Record<string, IconAssetPayload>;
+  referencePartHairAssets?: Record<string, IconAssetPayload>;
   referencePartMarkingAssets?: Record<string, IconAssetPayload>;
-  overlayAssets?: GearOverlayAsset[] | IconAssetPayload[];
-  gearJobOverlayAssets?: GearOverlayAsset[];
-  gearLoadoutOverlayAssets?: GearOverlayAsset[];
+  overlayAssets?: Array<GearOverlayAsset | IconAssetPayload>;
+  gearEquipmentOverlayAssets?: Array<GearOverlayAsset | IconAssetPayload>;
+  gearJobOverlayAssets?: Array<GearOverlayAsset | IconAssetPayload>;
+  gearLoadoutOverlayAssets?: Array<GearOverlayAsset | IconAssetPayload>;
   bodyColorExcludedParts?: string[];
+  bodyColorBlendMode?: number | null;
+  bodyAlpha?: number | null;
+  eyeColorMode?: PreviewEyeColorMode;
   partOrder?: string[];
   hiddenBodyParts?: string[];
+  markingExcludedParts?: string[];
   customParts: Record<string, PreviewCustomPartState>;
 };
 
@@ -150,8 +283,14 @@ export const buildPartPaintPresenceMap = (
     if (!dirState || !dirState.customParts) {
       return;
     }
+    const markingExcludedParts = new Set(dirState.markingExcludedParts || []);
     Object.entries(dirState.customParts).forEach(([partId, partState]) => {
-      if (!partId || partId === GENERIC_PART_KEY || presence[partId]) {
+      if (
+        !partId ||
+        partId === GENERIC_PART_KEY ||
+        presence[partId] ||
+        markingExcludedParts.has(partId)
+      ) {
         return;
       }
       if (gridHasPixels(partState?.grid)) {
@@ -190,12 +329,29 @@ export const buildRenderedPreviewDirs = (
       canvasHeight,
       signalAssetUpdate || (() => undefined)
     );
+    const previewReferencePartHair = getPreviewPartMapFromAssets(
+      dirState.referencePartHairAssets,
+      canvasWidth,
+      canvasHeight,
+      signalAssetUpdate || (() => undefined)
+    );
     let previewReferencePartMarkings = getPreviewPartMapFromAssets(
       dirState.referencePartMarkingAssets,
       canvasWidth,
       canvasHeight,
       signalAssetUpdate || (() => undefined)
     );
+    if (
+      previewReferencePartMarkings &&
+      Array.isArray(dirState.markingExcludedParts)
+    ) {
+      previewReferencePartMarkings = {
+        ...previewReferencePartMarkings,
+      };
+      for (const partId of dirState.markingExcludedParts) {
+        delete previewReferencePartMarkings[partId];
+      }
+    }
     let previewBodyGrid = getPreviewGridFromAsset(
       dirState.bodyAsset,
       canvasWidth,
@@ -240,6 +396,7 @@ export const buildRenderedPreviewDirs = (
       canvasWidth,
       canvasHeight,
       previewReferenceParts,
+      previewReferencePartHair,
       previewReferencePartMarkings,
       previewBodyGrid,
       previewOverlayLayers
@@ -251,6 +408,8 @@ export const buildRenderedPreviewDirs = (
       dir: entry.dir,
       label: dirState.label || entry.label,
       layers,
+      bodyAlpha: dirState.bodyAlpha,
+      eyeColorMode: dirState.eyeColorMode,
     });
   }
   return result;
@@ -451,6 +610,7 @@ const composePreviewLayers = (
   canvasWidth: number,
   canvasHeight: number,
   resolvedReferenceParts?: Record<string, string[][]> | null,
+  resolvedReferencePartHair?: Record<string, string[][]> | null,
   resolvedReferencePartMarkings?: Record<string, string[][]> | null,
   resolvedBodyGrid?: string[][] | null,
   resolvedOverlayLayers?: string[][][] | null
@@ -473,17 +633,23 @@ const composePreviewLayers = (
   const overlayEntries: PreviewLayerEntry[] = [];
   const referenceParts: Record<string, string[][]> =
     resolvedReferenceParts || ({} as Record<string, string[][]>);
+  const referencePartHair: Record<string, string[][]> =
+    resolvedReferencePartHair || ({} as Record<string, string[][]>);
   const referencePartMarkings: Record<string, string[][]> =
     resolvedReferencePartMarkings || ({} as Record<string, string[][]>);
   const referencePartAssets = dirState.referencePartAssets || {};
+  const referencePartHairAssets = dirState.referencePartHairAssets || {};
   const referencePartMarkingAssets = dirState.referencePartMarkingAssets || {};
   const customParts = dirState.customParts || {};
+  const markingExcludedParts = new Set(dirState.markingExcludedParts || []);
   const hasReferenceParts = Object.keys(referenceParts).length > 0;
   const hasReferenceForPart = (partId: string) =>
     partId === GENERIC_PART_KEY ||
     Object.prototype.hasOwnProperty.call(referenceParts, partId) ||
+    Object.prototype.hasOwnProperty.call(referencePartHair, partId) ||
     Object.prototype.hasOwnProperty.call(referencePartMarkings, partId) ||
     Object.prototype.hasOwnProperty.call(referencePartAssets, partId) ||
+    Object.prototype.hasOwnProperty.call(referencePartHairAssets, partId) ||
     Object.prototype.hasOwnProperty.call(referencePartMarkingAssets, partId);
   const bodyGrid = resolvedBodyGrid
     ? cloneGridData(resolvedBodyGrid)
@@ -546,6 +712,7 @@ const composePreviewLayers = (
       continue;
     }
     const isHiddenPart = !!hiddenPartsMap[partId];
+    const isMarkingExcludedPart = markingExcludedParts.has(partId);
     const normalizedPart = partId === GENERIC_PART_KEY ? null : partId;
     const baseReferenceGrid = referenceParts[partId];
     let referenceGrid = baseReferenceGrid && cloneGridData(baseReferenceGrid);
@@ -553,9 +720,14 @@ const composePreviewLayers = (
       referenceGrid = cloneGridData(bodyGrid);
     }
     const markingReferenceGrid =
-      referencePartMarkings && referencePartMarkings[partId]
+      !isMarkingExcludedPart &&
+      referencePartMarkings &&
+      referencePartMarkings[partId]
         ? cloneGridData(referencePartMarkings[partId])
         : null;
+    const hairReferenceGrid = referencePartHair[partId]
+      ? cloneGridData(referencePartHair[partId])
+      : null;
     if (isHiddenPart) {
       if (markingReferenceGrid && gridHasPixels(markingReferenceGrid)) {
         orderedPartLayers.push({
@@ -572,7 +744,25 @@ const composePreviewLayers = (
         label: `${resolveBodyPartLabel(normalizedPart, labelMap)} Base`,
         grid: referenceGrid,
       });
-    } else if (markingReferenceGrid && gridHasPixels(markingReferenceGrid)) {
+    }
+    if (
+      !isHiddenPart &&
+      hairReferenceGrid &&
+      gridHasPixels(hairReferenceGrid)
+    ) {
+      orderedPartLayers.push({
+        type: 'limb_hair',
+        key: `ref_${partId}_hair`,
+        label: `${resolveBodyPartLabel(normalizedPart, labelMap)} Hair`,
+        grid: hairReferenceGrid,
+      });
+    }
+    if (
+      !isHiddenPart &&
+      !referenceGrid &&
+      markingReferenceGrid &&
+      gridHasPixels(markingReferenceGrid)
+    ) {
       orderedPartLayers.push({
         type: 'reference_part',
         key: `ref_${partId}_markings`,
@@ -580,9 +770,10 @@ const composePreviewLayers = (
         grid: markingReferenceGrid,
       });
     }
-    let customGrid = customParts[partId]?.grid
-      ? cloneGridData(customParts[partId].grid)
-      : undefined;
+    const customGrid =
+      !isMarkingExcludedPart && customParts[partId]?.grid
+        ? cloneGridData(customParts[partId].grid)
+        : undefined;
     if (customGrid && gridHasPixels(customGrid)) {
       const customLayer: PreviewLayerEntry = {
         type: 'custom',

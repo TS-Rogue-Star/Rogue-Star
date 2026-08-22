@@ -122,6 +122,46 @@
 		var/datum/power/shadekin/SKP = new power(src)
 		shadekin_ability_datums.Add(SKP)
 
+// RS Add: Character Designer - Species and Prosthetics (Lira, August 2026)
+/datum/species/shadekin/get_species_detail_notes(var/mob/user)
+	. = ..()
+	. += list(list(
+		"section" = "abilities",
+		"title" = "Abilities & Restrictions",
+		"id" = "shadekin_phase_shift",
+		"label" = "Phase Shift",
+		"value" = "Available",
+		"description" = "Leaves realspace for fast, incorporeal travel. While shifted, the Shadekin is invisible to normal sight, non-dense, able to pass through obstacles, and unable to interact normally. Phasing back in restores normal interaction and disrupts nearby fixed and carried lights; the phase-in light settings control that flicker's duration, color, and chance to break fixed lights. Their shared dark-energy pool replenishes according to ambient light and eye color; magic-dampened areas empty it and block most powers, while phase-blocked areas prevent shifting.",
+		"severity" = "positive"
+	))
+	. += list(list(
+		"section" = "abilities",
+		"title" = "Abilities & Restrictions",
+		"id" = "shadekin_regenerate_other",
+		"label" = "Regenerate Other",
+		"value" = "Available",
+		"description" = "Applies a one-minute regeneration effect to a nearby living creature, steadily healing brute, burn, toxin, oxygen, and clone damage until the target recovers. It cannot affect corpses or be used while phase shifted, and magic dampening blocks it.",
+		"severity" = "positive"
+	))
+	. += list(list(
+		"section" = "abilities",
+		"title" = "Abilities & Restrictions",
+		"id" = "shadekin_create_shade",
+		"label" = "Create Shade",
+		"value" = "Available",
+		"description" = "Creates a field of darkness that follows the Shadekin for twenty seconds, then restores the previous lighting. The field ends early if they phase shift; it cannot be created while shifted or in a magic-dampened area.",
+		"severity" = "positive"
+	))
+	. += list(list(
+		"section" = "abilities",
+		"title" = "Abilities & Restrictions",
+		"id" = "shadekin_phase_flicker",
+		"label" = "Phase Flicker",
+		"value" = "Available",
+		"description" = "While phase shifted, can cause one randomly selected adjacent fixed light to flicker, with a short cooldown between uses.",
+		"severity" = "positive"
+	))
+
 /datum/species/shadekin/handle_death(var/mob/living/carbon/human/H)
 	spawn(1)
 		H.release_vore_contents(TRUE)	//RS ADD
@@ -190,6 +230,10 @@
 			dark_gains = energy_dark
 		else
 			dark_gains = energy_light
+
+	if(H.ether_damage > 0)	//RS ADD START
+		if(dark_gains < 0)
+			dark_gains = 0	//RS ADD END
 
 	set_energy(H, get_energy(H) + dark_gains)
 
@@ -373,3 +417,27 @@
 	new_copy.energy_dark = energy_dark
 
 	return new_copy
+
+//RS ADD
+/datum/species/shadekin/handle_ether_damage(var/mob/living/carbon/human/H)
+	if(H.ether_damage <= 0)
+		return
+	var/area/A = get_area(H)
+	if(A.magic_damp)
+		return ..()
+
+	var/current_energy = get_energy(H)
+	var/max_energy = get_max_energy(H)
+
+	if(current_energy == max_energy)
+		if(prob(10))
+			to_chat(H,span_critical("You're feeling overloaded."))
+		return ..()
+	else
+		var/howmuch = 10
+		if(howmuch > H.ether_damage)
+			howmuch = H.ether_damage
+		H.adjustEtherDamage(-H.ether_damage)
+		set_energy(H, current_energy + howmuch)
+		if(prob(10))
+			to_chat(H, SPAN_OCCULT("You feel stronger."))
