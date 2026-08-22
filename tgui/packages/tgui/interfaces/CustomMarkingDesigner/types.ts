@@ -542,11 +542,7 @@ export type SpeciesPayload = {
 export type TraitCategoryId = 'positive' | 'neutral' | 'negative';
 
 export type TraitPreferenceKind =
-  | 'boolean'
-  | 'color'
-  | 'string'
-  | 'number'
-  | 'list';
+  'boolean' | 'color' | 'string' | 'number' | 'list';
 
 export type TraitPreferenceValue = string | number | BooleanLike | null;
 

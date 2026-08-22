@@ -80,9 +80,7 @@ const mergePrimaryPreview = <T extends PreviewCacheCarrier>(
 };
 
 type BasicPreviewVariantSuffix =
-  | 'alt'
-  | 'gender_alt'
-  | 'gender_alt_digitigrade';
+  'alt' | 'gender_alt' | 'gender_alt_digitigrade';
 
 const getBasicPreviewVariant = (
   payload: BasicAppearancePayload | null | undefined,
@@ -135,8 +133,7 @@ const materializeBasicDefinitions = (
   const result: Partial<BasicAppearancePayload> = {};
   for (const key of BASIC_DEFINITION_KEYS) {
     const definitions = definitionData?.[key] as
-      | Array<{ id: string }>
-      | undefined;
+      Array<{ id: string }> | undefined;
     const filtered = filterDefinitions(definitions, allowedStyleIds?.[key]);
     if (filtered) {
       (result as Record<string, unknown>)[key] = filtered;
