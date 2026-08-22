@@ -391,8 +391,7 @@ export const buildRenderedPreviewDirs = (
     const equipmentOverlayLayersUnfiltered = allowEquipment
       ? buildOrderedOverlayLayers(
           dirState.gearEquipmentOverlayAssets as
-            | (GearOverlayAsset | IconAssetPayload)[]
-            | undefined,
+            (GearOverlayAsset | IconAssetPayload)[] | undefined,
           canvasWidth,
           canvasHeight,
           'equipment',

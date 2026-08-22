@@ -3862,9 +3862,7 @@ const CustomMarkingDesignerContent = (_props, context) => {
   const resolveLatestTraitsDraft = () => {
     const sharedState = selectBackend(context.store.getState()).shared || {};
     const draft = sharedState[traitsDraftKey] as
-      | TraitsDraftState
-      | null
-      | undefined;
+      TraitsDraftState | null | undefined;
     return draft !== undefined ? draft : traitsDraftState;
   };
 
@@ -3953,9 +3951,7 @@ const CustomMarkingDesignerContent = (_props, context) => {
   const resolveLatestSpeciesPayload = () => {
     const sharedState = selectBackend(context.store.getState()).shared || {};
     const payload = sharedState.speciesPayload as
-      | SpeciesPayload
-      | null
-      | undefined;
+      SpeciesPayload | null | undefined;
     return payload !== undefined ? payload : speciesPayload;
   };
 
@@ -4216,9 +4212,7 @@ const CustomMarkingDesignerContent = (_props, context) => {
   const resolveLatestSpeciesIconBaseSelection = () => {
     const sharedState = selectBackend(context.store.getState()).shared || {};
     const selection = sharedState.speciesIconBaseSelection as
-      | string
-      | null
-      | undefined;
+      string | null | undefined;
     return selection !== undefined ? selection : speciesIconBaseSelection;
   };
 

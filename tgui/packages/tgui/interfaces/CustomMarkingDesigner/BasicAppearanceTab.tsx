@@ -5271,8 +5271,7 @@ const buildGearOverlayLayers = (
   const equipmentLayers = showEquipment
     ? buildOrderedOverlayLayers(
         (dirState.gearEquipmentOverlayAssets as (
-          | GearOverlayAsset
-          | IconAssetPayload
+          GearOverlayAsset | IconAssetPayload
         )[]) || [],
         canvasWidth,
         canvasHeight,

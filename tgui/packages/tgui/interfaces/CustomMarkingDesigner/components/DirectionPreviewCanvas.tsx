@@ -82,8 +82,7 @@ const retainSharedRenderedCanvas = (key: string, canvas: HTMLCanvasElement) => {
   sharedRenderedCanvasCache.set(key, { canvas });
   while (sharedRenderedCanvasCache.size > MAX_SHARED_RENDERED_CANVASES) {
     const oldestKey = sharedRenderedCanvasCache.keys().next().value as
-      | string
-      | undefined;
+      string | undefined;
     if (!oldestKey) {
       break;
     }
@@ -124,8 +123,7 @@ const storeSharedBaseRenderedCanvas = (
     sharedBaseRenderedCanvasCache.size > MAX_SHARED_BASE_RENDERED_CANVASES
   ) {
     const oldestKey = sharedBaseRenderedCanvasCache.keys().next().value as
-      | string
-      | undefined;
+      string | undefined;
     if (!oldestKey) {
       break;
     }
@@ -148,8 +146,7 @@ const storeSharedLayerRaster = (key: string, canvas: HTMLCanvasElement) => {
   sharedLayerRasterCache.set(key, { canvas });
   while (sharedLayerRasterCache.size > MAX_SHARED_LAYER_RASTERS) {
     const oldestKey = sharedLayerRasterCache.keys().next().value as
-      | string
-      | undefined;
+      string | undefined;
     if (!oldestKey) {
       break;
     }
