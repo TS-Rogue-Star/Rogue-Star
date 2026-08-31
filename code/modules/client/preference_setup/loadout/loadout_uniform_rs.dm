@@ -67,15 +67,63 @@
 	display_name = "Refreshed Talon Medical Jumpsuit"
 	description = "Select from a range of outfits available to all Talon Doctors."
 	allowed_roles = list("Talon Doctor")
-	path = /obj/item/clothing/under/rank/talon/proper/refreshed
+	path = /obj/item/clothing/under/rank/talon/medical/refreshed
 	sort_category = "Uniforms"
 	cost = 1
 
 /datum/gear/uniform/refreshedtalonmedical/New()
 	..()
 	var/list/selector_uniforms = list(
-		"Refreshed Talon Doctor Uniform" = /obj/item/clothing/under/rank/talon/proper/refreshed,
-		"Old Talon Doctor Uniform"       = /obj/item/clothing/under/rank/talon/proper,
+		"Refreshed Talon Doctor Uniform" = /obj/item/clothing/under/rank/talon/medical/refreshed,
+		"Old Talon Doctor Uniform"       = /obj/item/clothing/under/rank/talon/medical,
+	)
+	gear_tweaks += new/datum/gear_tweak/path(selector_uniforms)
+
+/datum/gear/uniform/refreshedtalonengineer
+	display_name = "Refreshed Talon Engineer Jumpsuit"
+	description = "Select from a range of outfits available to all Talon Engineers."
+	allowed_roles = list("Talon Engineer")
+	path = /obj/item/clothing/under/rank/talon/engineer/refreshed
+	sort_category = "Uniforms"
+	cost = 1
+
+/datum/gear/uniform/refreshedtalonengineer/New()
+	..()
+	var/list/selector_uniforms = list(
+		"Refreshed Talon Engineer Uniform" = /obj/item/clothing/under/rank/talon/engineer/refreshed,
+		"Old Talon Engineer Uniform"       = /obj/item/clothing/under/rank/talon/engineer,
+	)
+	gear_tweaks += new/datum/gear_tweak/path(selector_uniforms)
+
+/datum/gear/uniform/refreshedtalonatmos
+	display_name = "Refreshed Talon Atmos Tech's Jumpsuit"
+	description = "Select from a range of outfits available to all Talon Engineers."
+	allowed_roles = list("Talon Engineer")
+	path = /obj/item/clothing/under/rank/talon/atmos/refreshed
+	sort_category = "Uniforms"
+	cost = 1
+
+/datum/gear/uniform/refreshedtalonatmos/New()
+	..()
+	var/list/selector_uniforms = list(
+		"Refreshed Talon Atmospheric Technician Uniform" = /obj/item/clothing/under/rank/talon/atmos/refreshed,
+		"Old Talon Talon Atmospheric Technician Uniform" = /obj/item/clothing/under/rank/talon/atmos,
+	)
+	gear_tweaks += new/datum/gear_tweak/path(selector_uniforms)
+
+/datum/gear/uniform/refreshedtalonminer
+	display_name = "Refreshed Talon Miner Jumpsuit"
+	description = "Select from a range of outfits available to all Talon Miners."
+	allowed_roles = list("Talon Miner")
+	path = /obj/item/clothing/under/rank/talon/miner/refreshed
+	sort_category = "Uniforms"
+	cost = 1
+
+/datum/gear/uniform/refreshedtalonminer/New()
+	..()
+	var/list/selector_uniforms = list(
+		"Refreshed Talon Miner Uniform" = /obj/item/clothing/under/rank/talon/miner/refreshed,
+		"Old Talon Miner Uniform"       = /obj/item/clothing/under/rank/talon/miner,
 	)
 	gear_tweaks += new/datum/gear_tweak/path(selector_uniforms)
 

@@ -79,6 +79,37 @@ const mergePrimaryPreview = <T extends PreviewCacheCarrier>(
   };
 };
 
+type BasicPreviewVariantSuffix =
+  | 'alt'
+  | 'gender_alt'
+  | 'gender_alt_digitigrade';
+
+const getBasicPreviewVariant = (
+  payload: BasicAppearancePayload | null | undefined,
+  suffix: BasicPreviewVariantSuffix
+): PreviewCacheCarrier | null =>
+  payload
+    ? {
+        preview_sources: payload[`preview_sources_${suffix}`],
+        preview_asset_registry: payload[`preview_asset_registry_${suffix}`],
+        preview_signature: payload[`preview_signature_${suffix}`],
+        preview_revision: payload[`preview_revision_${suffix}`],
+      }
+    : null;
+
+const mergeBasicPreviewVariant = (
+  previous: BasicAppearancePayload | null | undefined,
+  incoming: BasicAppearancePayload,
+  suffix: BasicPreviewVariantSuffix
+) =>
+  mergePrimaryPreview(
+    getBasicPreviewVariant(previous, suffix),
+    getBasicPreviewVariant(incoming, suffix)!,
+    null,
+    hasOwn(incoming, `preview_sources_${suffix}`) &&
+      incoming[`preview_sources_${suffix}`] !== undefined
+  );
+
 const filterDefinitions = <T extends { id: string }>(
   definitions: T[] | undefined,
   allowedIds: string[] | undefined
@@ -146,31 +177,35 @@ export const mergeBasicAppearancePayload = (
     preview_asset_registry: resolvedPrimary.preview_asset_registry,
   };
 
-  const incomingAlt: PreviewCacheCarrier = {
-    preview_sources: incoming.preview_sources_alt,
-    preview_asset_registry: incoming.preview_asset_registry_alt,
-    preview_signature: incoming.preview_signature_alt,
-    preview_revision: incoming.preview_revision_alt,
-  };
-  const previousAlt: PreviewCacheCarrier | null = previous
-    ? {
-        preview_sources: previous.preview_sources_alt,
-        preview_asset_registry: previous.preview_asset_registry_alt,
-        preview_signature: previous.preview_signature_alt,
-        preview_revision: previous.preview_revision_alt,
-      }
-    : null;
-  const resolvedAlt = mergePrimaryPreview(
-    previousAlt,
-    incomingAlt,
-    null,
-    hasOwn(incoming, 'preview_sources_alt') &&
-      incoming.preview_sources_alt !== undefined
+  const resolvedAlt = mergeBasicPreviewVariant(previous, incoming, 'alt');
+  const resolvedGenderAlt = mergeBasicPreviewVariant(
+    previous,
+    incoming,
+    'gender_alt'
+  );
+  const resolvedGenderAltDigitigrade = mergeBasicPreviewVariant(
+    previous,
+    incoming,
+    'gender_alt_digitigrade'
   );
   return {
     ...merged,
     preview_sources_alt: resolvedAlt.preview_sources,
     preview_asset_registry_alt: resolvedAlt.preview_asset_registry,
+    preview_signature_alt: resolvedAlt.preview_signature,
+    preview_revision_alt: resolvedAlt.preview_revision,
+    preview_sources_gender_alt: resolvedGenderAlt.preview_sources,
+    preview_asset_registry_gender_alt: resolvedGenderAlt.preview_asset_registry,
+    preview_signature_gender_alt: resolvedGenderAlt.preview_signature,
+    preview_revision_gender_alt: resolvedGenderAlt.preview_revision,
+    preview_sources_gender_alt_digitigrade:
+      resolvedGenderAltDigitigrade.preview_sources,
+    preview_asset_registry_gender_alt_digitigrade:
+      resolvedGenderAltDigitigrade.preview_asset_registry,
+    preview_signature_gender_alt_digitigrade:
+      resolvedGenderAltDigitigrade.preview_signature,
+    preview_revision_gender_alt_digitigrade:
+      resolvedGenderAltDigitigrade.preview_revision,
     preview_only:
       incoming.preview_only && previous && !previous.preview_only
         ? false
@@ -328,6 +363,12 @@ export const buildBasicAppearanceLoadParams = (
       'alt_'
     );
   }
+  for (const suffix of ['gender_alt', 'gender_alt_digitigrade'] as const) {
+    const variant = getBasicPreviewVariant(basicPayload, suffix);
+    if (variant?.preview_revision || variant?.preview_signature) {
+      appendKnownPreview(params, variant, `${suffix}_`);
+    }
+  }
   return params;
 };
 
@@ -364,6 +405,12 @@ export const buildSpeciesSaveCacheParams = (
       },
       'body_alt_'
     );
+  }
+  for (const suffix of ['gender_alt', 'gender_alt_digitigrade'] as const) {
+    const variant = getBasicPreviewVariant(basicPayload, suffix);
+    if (variant?.preview_revision || variant?.preview_signature) {
+      appendKnownPreview(params, variant, `body_${suffix}_`);
+    }
   }
   return params;
 };

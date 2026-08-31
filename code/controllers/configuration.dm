@@ -102,6 +102,8 @@ var/list/gamemode_cache = list()
 	var/static/disable_player_mice = 0
 	var/static/allow_ghost_mob_spawn = 1		//RS ADD - Allows players to spawn as mobs
 	var/static/ghost_mob_count = 5				//RS ADD - How many mobs are allowed to spawn from ghosts
+	// RS ADD
+	var/static/npc_chatter = "all"
 
 	var/static/uneducated_mice = 0 //Set to 1 to prevent newly-spawned mice from understanding human speech
 
@@ -781,7 +783,10 @@ var/list/gamemode_cache = list()
 					config.allow_ghost_mob_spawn = FALSE
 
 				if("ghost_mob_count")
-					config.ghost_mob_count = value //RS ADD END
+					config.ghost_mob_count = value
+
+				if("npc_chatter")
+					config.npc_chatter = lowertext(trim(value)) //RS ADD END
 
 				if("uneducated_mice")
 					config.uneducated_mice = 1

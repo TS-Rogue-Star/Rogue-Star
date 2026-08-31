@@ -238,19 +238,6 @@ var/global/list/valid_bloodreagents = list("iron","copper","phoron","silver","go
 		log_game("TRAITS [pref.client_ckey]/([character]) with: [english_traits]") //Terrible 'fake' key_name()... but they aren't in the same entity yet
 
 /datum/category_item/player_setup_item/vore/traits/content(var/mob/user)
-	. += "<b>Custom Species Name:</b> "
-	. += "<a href='?src=\ref[src];custom_species=1'>[pref.custom_species ? pref.custom_species : "-Input Name-"]</a><br>"
-
-	var/datum/species/selected_species = GLOB.all_species[pref.species]
-	if(selected_species.selects_bodytype)
-		. += "<b>Icon Base: </b> "
-		. += "<a href='?src=\ref[src];custom_base=1'>[pref.custom_base ? pref.custom_base : "Human"]</a><br>"
-
-	// RS Edit: Character Designer - Traits Tab (Lira, August 2026)
-	if(!pref.custom_species && pref.species == SPECIES_CUSTOM)
-		. += "<span style='color:red;'><b>^ Enter a custom species name. ^</b></span><br>"
-
-	. += "<br>"
 	. += "<b>Custom Say: </b>"
 	. += "<a href='?src=\ref[src];custom_say=1'>Set Say Verb</a>"
 	. += "(<a href='?src=\ref[src];reset_say=1'>Reset</A>)"
@@ -274,25 +261,10 @@ var/global/list/valid_bloodreagents = list("iron","copper","phoron","silver","go
 	. += "<b>Custom Cold Discomfort: </b>"
 	. += "<a href='?src=\ref[src];custom_cold=1'>Set Cold Messages</a>"
 	. += "(<a href='?src=\ref[src];reset_cold=1'>Reset</A>)"
-	. += "<br>"
 
 /datum/category_item/player_setup_item/vore/traits/OnTopic(var/href,var/list/href_list, var/mob/user)
 	if(!CanUseTopic(user))
 		return TOPIC_NOACTION
-
-	else if(href_list["custom_species"])
-		var/raw_choice = sanitize(tgui_input_text(user, "Input your custom species name:",
-			"Character Preference", pref.custom_species, MAX_NAME_LEN), MAX_NAME_LEN)
-		if (CanUseTopic(user))
-			pref.custom_species = raw_choice
-		return TOPIC_REFRESH
-
-	else if(href_list["custom_base"])
-		var/list/choices = pref.get_custom_bases_for_species()
-		var/text_choice = tgui_input_list(usr, "Pick an icon set for your species:","Icon Base", choices)
-		if(text_choice in choices)
-			pref.custom_base = text_choice
-		return TOPIC_REFRESH_UPDATE_PREVIEW
 
 	else if(href_list["custom_say"])
 		var/say_choice = sanitize(tgui_input_text(usr, "This word or phrase will appear instead of 'says': [pref.real_name] says, \"Hi.\"", "Custom Say", pref.custom_say, 12), 12)

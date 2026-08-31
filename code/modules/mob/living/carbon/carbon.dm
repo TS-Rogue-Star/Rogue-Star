@@ -85,6 +85,8 @@
 
 /mob/living/carbon/attack_hand(mob/M as mob)
 	SEND_SIGNAL(src, COMSIG_ATOM_ATTACK_HAND, M)	//RS ADD
+	if(ai_holder && M.a_intent != I_HELP)	// RS ADD
+		ai_holder.react_to_attack(M)	// RS ADD
 	if(!istype(M, /mob/living/carbon)) return
 	if (ishuman(M))
 		var/mob/living/carbon/human/H = M

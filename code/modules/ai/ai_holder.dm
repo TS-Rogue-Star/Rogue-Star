@@ -277,9 +277,24 @@
 	holder.apply_hud(STATUS_HUD, sleepingimage)
 
 // Now for the actual AI stuff.
+// RS ADD
+/datum/ai_holder
+	var/busy_since = 0
+
+
+// RS EDIT
 /datum/ai_holder/proc/set_busy(var/value = 0)
+	if(value && !busy)
+		busy_since = world.time
+	else if(!value)
+		busy_since = 0
 	busy = value
 	update_paused_hud()
+
+// RS ADD
+/datum/ai_holder/proc/clear_stranded_busy()
+	log_world("AI: [holder || "null"] hit the [AI_BUSY_WATCHDOG / 10]s busy watchdog after [(world.time - busy_since) / 10]s - clearing stranded busy.")
+	set_busy(FALSE)
 
 // Makes this ai holder not get processed.
 // Called automatically when the host mob is killed.

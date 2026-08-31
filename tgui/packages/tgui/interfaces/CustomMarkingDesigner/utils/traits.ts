@@ -4,6 +4,7 @@
 
 import type {
   CharacterTraitEntry,
+  LanguagesDraftState,
   TraitPreferenceValue,
   TraitsDraftState,
   TraitsPayload,
@@ -40,6 +41,17 @@ export const sortTraitsByConfiguredOrder = <T extends { id: string }>(
     .map(({ trait }) => trait);
 };
 
+export const sortLanguagesAlphabetically = <
+  T extends { id: string; name: string },
+>(
+  languages: readonly T[]
+): T[] =>
+  [...languages].sort(
+    (left, right) =>
+      left.name.localeCompare(right.name, undefined, { sensitivity: 'base' }) ||
+      left.id.localeCompare(right.id, undefined, { sensitivity: 'base' })
+  );
+
 export const buildTraitsDraftState = (
   payload: TraitsPayload
 ): TraitsDraftState => {
@@ -61,11 +73,38 @@ export const buildTraitsDraftState = (
     }
   }
 
+  const languagePayload = payload.languages;
+  const optionalLanguages =
+    languagePayload?.entries.filter(
+      (language) =>
+        !language.automatic && (language.selectable || language.selected)
+    ) || [];
+  const selectedOptional: Record<string, boolean> = {};
+  const customKeys: Record<string, string> = {};
+  for (const language of optionalLanguages) {
+    selectedOptional[language.id] = !!language.selected;
+  }
+  for (const language of languagePayload?.entries || []) {
+    if (language.custom_key) {
+      customKeys[language.id] = language.custom_key;
+    }
+  }
+  const languages: LanguagesDraftState | null = languagePayload
+    ? {
+        optional_order: optionalLanguages.map((language) => language.id),
+        selected_optional: selectedOptional,
+        preferred_language: languagePayload.preferred_language,
+        custom_keys: customKeys,
+        language_prefixes: [...languagePayload.language_prefixes],
+      }
+    : null;
+
   return {
     revision: payload.revision,
     trait_order: traitOrder,
     selected,
     preferences,
+    languages,
   };
 };
 
@@ -86,12 +125,36 @@ export const buildTraitsSavePayload = (
     };
   }
 
+  const languages = draft.languages
+    ? {
+        alternate_languages: draft.languages.optional_order.filter(
+          (languageId) => !!draft.languages?.selected_optional[languageId]
+        ),
+        preferred_language: draft.languages.preferred_language,
+        custom_keys: { ...draft.languages.custom_keys },
+        language_prefixes: [...draft.languages.language_prefixes],
+      }
+    : undefined;
+
   return {
     revision: draft.revision,
     selected_traits: selectedTraits,
     trait_preferences: traitPreferences,
+    ...(languages ? { languages } : {}),
   };
 };
+
+const buildTraitOnlySavePayload = (draft: TraitsDraftState) => {
+  const { languages: _languages, ...payload } = buildTraitsSavePayload(draft);
+  return payload;
+};
+
+export const traitDraftSelectionsEqual = (
+  left: TraitsDraftState,
+  right: TraitsDraftState
+) =>
+  JSON.stringify(buildTraitOnlySavePayload(left)) ===
+  JSON.stringify(buildTraitOnlySavePayload(right));
 
 export const traitsDraftStatesEqual = (
   left: TraitsDraftState,
@@ -103,9 +166,226 @@ export const traitsDraftStatesEqual = (
     JSON.stringify(leftPayload.selected_traits) ===
       JSON.stringify(rightPayload.selected_traits) &&
     JSON.stringify(leftPayload.trait_preferences) ===
-      JSON.stringify(rightPayload.trait_preferences)
+      JSON.stringify(rightPayload.trait_preferences) &&
+    JSON.stringify(leftPayload.languages) ===
+      JSON.stringify(rightPayload.languages)
   );
 };
+
+const findTraitById = (payload: TraitsPayload, traitId: string) => {
+  for (const category of payload.categories) {
+    const trait = category.traits.find((entry) => entry.id === traitId);
+    if (trait) {
+      return trait;
+    }
+  }
+  return null;
+};
+
+export const resolveOptionalLanguageLimit = (
+  payload: TraitsPayload,
+  draft: TraitsDraftState
+) => {
+  let extraSlots = 0;
+  for (const traitId of draft.trait_order) {
+    if (!draft.selected[traitId]) {
+      continue;
+    }
+    const modifier = findTraitById(payload, traitId)?.extra_language_slots;
+    if (typeof modifier === 'number' && Number.isFinite(modifier)) {
+      extraSlots = modifier;
+    }
+  }
+  return Math.max(
+    0,
+    (payload.languages?.base_optional_slots || 0) + extraSlots
+  );
+};
+
+export const resolveSelectedOptionalLanguageCount = (draft: TraitsDraftState) =>
+  draft.languages?.optional_order.filter(
+    (languageId) => !!draft.languages?.selected_optional[languageId]
+  ).length || 0;
+
+const applyLanguagesDraftToPayload = (
+  payload: TraitsPayload,
+  draft: TraitsDraftState
+) => {
+  if (!payload.languages || !draft.languages) {
+    return payload.languages;
+  }
+  const optionalLimit = resolveOptionalLanguageLimit(payload, draft);
+  const selectedOptionalCount = resolveSelectedOptionalLanguageCount(draft);
+  const entries = payload.languages.entries.map((language) => {
+    const selected = language.automatic
+      ? true
+      : !!draft.languages?.selected_optional[language.id];
+    const preferredEligible =
+      !!language.preferred_always || (!language.automatic && selected);
+    const disabledReason =
+      !selected && language.selectable && selectedOptionalCount >= optionalLimit
+        ? 'All optional language slots are currently in use.'
+        : language.disabled_reason;
+    return {
+      ...language,
+      selected,
+      preferred_eligible: preferredEligible,
+      preferred: draft.languages?.preferred_language === language.id,
+      custom_key: draft.languages?.custom_keys[language.id] || null,
+      disabled_reason: selected ? language.disabled_reason : disabledReason,
+    };
+  });
+  return {
+    ...payload.languages,
+    optional_limit: optionalLimit,
+    selected_optional_count: selectedOptionalCount,
+    preferred_language: draft.languages.preferred_language,
+    language_prefixes: [...draft.languages.language_prefixes],
+    entries,
+  };
+};
+
+export const resolveLanguagesDraftValidationError = (
+  payload: TraitsPayload,
+  draft: TraitsDraftState
+): string | null => {
+  if (!payload.languages || !draft.languages) {
+    return null;
+  }
+  const selectedCount = resolveSelectedOptionalLanguageCount(draft);
+  const limit = resolveOptionalLanguageLimit(payload, draft);
+  if (selectedCount > limit) {
+    return `Remove ${selectedCount - limit} optional ${
+      selectedCount - limit === 1 ? 'language' : 'languages'
+    } before saving (${selectedCount}/${limit} selected).`;
+  }
+  const draftedLanguages = applyLanguagesDraftToPayload(payload, draft);
+  const unavailableSelected = draftedLanguages?.entries.find(
+    (language) =>
+      language.selected && !language.automatic && !language.selectable
+  );
+  if (unavailableSelected) {
+    return `${unavailableSelected.name} is no longer available. Remove it before saving.`;
+  }
+  const assignedKeys = new Set<string>();
+  for (const customKey of Object.values(draft.languages.custom_keys)) {
+    if (!/^[A-Za-z0-9]$/.test(customKey)) {
+      return 'Every custom language key must be one letter or number.';
+    }
+    if (assignedKeys.has(customKey)) {
+      return `The custom language key “${customKey}” is assigned more than once.`;
+    }
+    assignedKeys.add(customKey);
+  }
+  if (
+    !draft.languages.language_prefixes.length ||
+    draft.languages.language_prefixes.length > 3 ||
+    draft.languages.language_prefixes.some(
+      (prefix) =>
+        prefix.length !== 1 ||
+        /[A-Za-z0-9]/.test(prefix) ||
+        [';', ':', '.', '!', '*', '^', '-'].includes(prefix)
+    )
+  ) {
+    return 'Language prefixes must be one to three allowed special characters.';
+  }
+  const preferredEntry = draftedLanguages?.entries.find(
+    (language) => language.id === draft.languages?.preferred_language
+  );
+  if (!preferredEntry?.preferred_eligible) {
+    return 'Choose an available preferred language before saving.';
+  }
+  return null;
+};
+
+export const updateLanguageDraftSelection = (
+  draft: TraitsDraftState,
+  languageId: string,
+  selected: boolean,
+  preferredFallback: string
+): TraitsDraftState => {
+  if (!draft.languages) {
+    return draft;
+  }
+  const optionalOrder =
+    selected && !draft.languages.selected_optional[languageId]
+      ? [
+          ...draft.languages.optional_order.filter((id) => id !== languageId),
+          languageId,
+        ]
+      : draft.languages.optional_order;
+  const customKeys = { ...draft.languages.custom_keys };
+  if (!selected) {
+    delete customKeys[languageId];
+  }
+  return {
+    ...draft,
+    languages: {
+      ...draft.languages,
+      optional_order: optionalOrder,
+      selected_optional: {
+        ...draft.languages.selected_optional,
+        [languageId]: selected,
+      },
+      preferred_language:
+        !selected && draft.languages.preferred_language === languageId
+          ? preferredFallback
+          : draft.languages.preferred_language,
+      custom_keys: customKeys,
+    },
+  };
+};
+
+export const updateLanguageDraftPreferred = (
+  draft: TraitsDraftState,
+  languageId: string
+): TraitsDraftState =>
+  draft.languages
+    ? {
+        ...draft,
+        languages: {
+          ...draft.languages,
+          preferred_language: languageId,
+        },
+      }
+    : draft;
+
+export const updateLanguageDraftCustomKey = (
+  draft: TraitsDraftState,
+  languageId: string,
+  customKey: string
+): TraitsDraftState => {
+  if (!draft.languages) {
+    return draft;
+  }
+  const customKeys = { ...draft.languages.custom_keys };
+  if (customKey) {
+    customKeys[languageId] = customKey;
+  } else {
+    delete customKeys[languageId];
+  }
+  return {
+    ...draft,
+    languages: {
+      ...draft.languages,
+      custom_keys: customKeys,
+    },
+  };
+};
+
+export const updateLanguageDraftPrefixes = (
+  draft: TraitsDraftState,
+  prefixes: string[]
+): TraitsDraftState =>
+  draft.languages
+    ? {
+        ...draft,
+        languages: {
+          ...draft.languages,
+          language_prefixes: [...prefixes],
+        },
+      }
+    : draft;
 
 export const resolveTraitsSaveAcknowledgement = (
   pendingRequestId: string | null,
@@ -245,6 +525,7 @@ export const applyTraitsDraftToPayload = (
     traits_remaining: traitsRemaining,
     neutral_traits_selected: neutralTraitsSelected,
     total_selected: selectedIds.size,
+    languages: applyLanguagesDraftToPayload(payload, draft),
     categories,
   };
 };

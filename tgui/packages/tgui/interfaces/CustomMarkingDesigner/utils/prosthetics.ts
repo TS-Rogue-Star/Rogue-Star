@@ -1292,6 +1292,34 @@ const buildColorTransform = (
   return [multiply ? color : buildAddColorMatrix(color)];
 };
 
+export const resolveBiologicalGenderSuffix = (
+  biologicalGender: string | null | undefined
+): 'm' | 'f' => (biologicalGender === 'female' ? 'f' : 'm');
+
+export const resolveProstheticContextForBiologicalGender = (
+  context: BasicProstheticContext | null | undefined,
+  biologicalGender: string | null | undefined
+): BasicProstheticContext | null => {
+  if (!context) {
+    return null;
+  }
+  const genderSuffix = resolveBiologicalGenderSuffix(biologicalGender);
+  if (context.gender_suffix === genderSuffix) {
+    return context;
+  }
+  const partStates: BasicProstheticContext['part_states'] = {};
+  for (const [part, state] of Object.entries(context.part_states || {})) {
+    partStates[part] = state.gendered_state
+      ? { ...state, gendered_state: `${state.state}_${genderSuffix}` }
+      : state;
+  }
+  return {
+    ...context,
+    gender_suffix: genderSuffix,
+    part_states: partStates,
+  };
+};
+
 const resolveModelStateName = (
   model: ProstheticCatalogModel,
   context: BasicProstheticContext,
@@ -1693,6 +1721,7 @@ export const buildLimbPreviewSignature = (
   );
   return JSON.stringify({
     external: state.limbs?.external || {},
+    biologicalGender: state.biological_gender,
     digitigrade: state.digitigrade,
     tail: state.tail_style,
     ears: state.ear_style,
@@ -1713,6 +1742,18 @@ export const buildLimbPreviewSignature = (
     synthMarkings: state.synth_markings,
   });
 };
+
+export const buildProstheticShowcaseAppearanceStructureSignature = (
+  state: BasicAppearanceState
+): string =>
+  JSON.stringify({
+    hair: state.hair_style,
+    hairColor: state.hair_color,
+    gradient: state.hair_gradient_style,
+    gradientColor: state.hair_gradient_color,
+    facialHair: state.facial_hair_style,
+    facialHairColor: state.facial_hair_color,
+  });
 
 const applyExplicitSynthColorToParts = (
   partAssets: Record<string, IconAssetReference>,
@@ -1750,14 +1791,23 @@ export const applyProstheticsToPreviewSources = (
   if (!sources?.length || !context || !catalog?.models) {
     return sources;
   }
-  const signature = buildLimbPreviewSignature(state, context, options, catalog);
+  const resolvedContext = resolveProstheticContextForBiologicalGender(
+    context,
+    state.biological_gender
+  )!;
+  const signature = buildLimbPreviewSignature(
+    state,
+    resolvedContext,
+    options,
+    catalog
+  );
   let cache = transformedSourceCache.get(sources);
   const cached = cache?.get(signature);
   if (cached) {
     return cached;
   }
-  const digitigradeParts = new Set(context.digitigrade_parts || []);
-  const lockedParts = new Set(context.locked_parts || []);
+  const digitigradeParts = new Set(resolvedContext.digitigrade_parts || []);
+  const lockedParts = new Set(resolvedContext.locked_parts || []);
   const transformed = sources.map((source) => {
     const partAssets: Record<string, IconAssetReference> = {
       ...(source.reference_part_assets || {}),
@@ -1791,13 +1841,13 @@ export const applyProstheticsToPreviewSources = (
         !!model.can_be_digitigrade &&
         digitigradeParts.has(part);
       if (!keepsDigitigradeAnatomy) {
-        const modelState = resolveModelState(model, context, part);
+        const modelState = resolveModelState(model, resolvedContext, part);
         const reference = modelState?.assets?.[source.dir];
         if (reference) {
           partAssets[part] = withProstheticColor(
             reference,
             state,
-            context,
+            resolvedContext,
             model,
             options
           );
@@ -1813,7 +1863,7 @@ export const applyProstheticsToPreviewSources = (
         partAssets[part] = withColorTransform(
           partAssets[part],
           state.synth_color,
-          !!context.color_multiply
+          !!resolvedContext.color_multiply
         );
       }
       if (keepsDigitigradeAnatomy || state.synth_markings) {
@@ -1823,7 +1873,7 @@ export const applyProstheticsToPreviewSources = (
       }
       const usesWholeBodyColorPass =
         followsBodyAppearance(model) &&
-        context.apply_skin_color &&
+        resolvedContext.apply_skin_color &&
         (keepsDigitigradeAnatomy || !options?.applyBodyColorToProsthetics);
       if (usesWholeBodyColorPass) {
         bodyColorExcluded.delete(part);
@@ -1835,7 +1885,7 @@ export const applyProstheticsToPreviewSources = (
       partAssets,
       bodyColorExcluded,
       state,
-      context,
+      resolvedContext,
       !!options?.deferSynthColor
     );
     let overlays = [...(source.overlay_assets || [])];
@@ -1859,7 +1909,7 @@ export const applyProstheticsToPreviewSources = (
         'prosthetic_tail',
         source.dir === 2 ? 7 : 16,
         resolveDeferredBodyColor(state.body_color, options),
-        !!context.color_multiply
+        !!resolvedContext.color_multiply
       );
     }
     if (fullBodyModel?.includes_ears && !state.ear_style && !state.horn_style) {
@@ -1871,7 +1921,7 @@ export const applyProstheticsToPreviewSources = (
         'prosthetic_ears',
         23,
         state.ear_colors?.[0],
-        !!context.color_multiply
+        !!resolvedContext.color_multiply
       );
     }
     if (fullBodyModel?.includes_wing && !state.wing_style) {
@@ -1883,7 +1933,7 @@ export const applyProstheticsToPreviewSources = (
         'prosthetic_wing',
         32,
         resolveDeferredBodyColor(state.body_color, options),
-        !!context.color_multiply
+        !!resolvedContext.color_multiply
       );
     }
     return {
@@ -2011,6 +2061,7 @@ export const buildProstheticPreviewLayerGroups = (options: {
   bodyColor?: string;
   bodyColorMultiply?: boolean;
   bodyColorCacheSignature?: string;
+  eyeColorCacheSignature?: string;
   rasterScope?: string;
   direction?: number;
   unsharedLayerKeys?: ReadonlySet<string>;
@@ -2028,6 +2079,7 @@ export const buildProstheticPreviewLayerGroups = (options: {
     bodyColor = '#ffffff',
     bodyColorMultiply = false,
     bodyColorCacheSignature = stableCacheSignature,
+    eyeColorCacheSignature = stableCacheSignature,
     rasterScope = 'designer-session',
     direction,
     unsharedLayerKeys,
@@ -2112,7 +2164,9 @@ export const buildProstheticPreviewLayerGroups = (options: {
         ? 'body-color'
         : dependency === 'body-relative' || dependency === 'body-eye-fallback'
           ? 'body'
-          : 'stable';
+          : dependency === 'eye-direct'
+            ? 'eye'
+            : 'stable';
     const directPasses = isSynthColorable ? passes : Math.max(1, bodyPasses);
     const directMultiply = isSynthColorable ? multiply : bodyColorMultiply;
     const transformKey =
@@ -2129,7 +2183,9 @@ export const buildProstheticPreviewLayerGroups = (options: {
         ? bodyColorCacheSignature
         : kind === 'body'
           ? cacheSignature
-          : stableCacheSignature;
+          : kind === 'eye'
+            ? eyeColorCacheSignature
+            : stableCacheSignature;
     const nextColorTransform = isSynthColorable
       ? { color, multiply, passes }
       : isBodyColorable

@@ -302,6 +302,10 @@ export type BasicProstheticContext = LimbOverrideState & {
 export type BasicAppearancePayload = {
   species_id?: string | null;
   custom_base?: string | null;
+  biological_gender?: string | null;
+  base_biological_genders?: string[];
+  biological_genders?: string[];
+  preview_gender_suffix?: 'm' | 'f';
   definition_revision?: string | null;
   definition_data?: BasicAppearanceDefinitionData;
   allowed_style_ids?: BasicAppearanceAllowedStyleIds;
@@ -341,6 +345,14 @@ export type BasicAppearancePayload = {
   preview_asset_registry_alt?: IconAssetRegistry;
   preview_signature_alt?: string | null;
   preview_revision_alt?: number;
+  preview_sources_gender_alt?: PreviewDirectionSource[];
+  preview_asset_registry_gender_alt?: IconAssetRegistry;
+  preview_signature_gender_alt?: string | null;
+  preview_revision_gender_alt?: number;
+  preview_sources_gender_alt_digitigrade?: PreviewDirectionSource[];
+  preview_asset_registry_gender_alt_digitigrade?: IconAssetRegistry;
+  preview_signature_gender_alt_digitigrade?: string | null;
+  preview_revision_gender_alt_digitigrade?: number;
   preview_sources?: PreviewDirectionSource[];
   preview_asset_registry?: IconAssetRegistry;
   preview_signature?: string | null;
@@ -352,6 +364,7 @@ export type BasicAppearancePayload = {
 };
 
 export type BasicAppearanceState = {
+  biological_gender: string;
   hair_style: string | null;
   hair_color: string | null;
   hair_gradient_style: string | null;
@@ -385,6 +398,10 @@ export type SpeciesSaveBasicAppearance = Pick<
   BasicAppearancePayload,
   | 'species_id'
   | 'custom_base'
+  | 'biological_gender'
+  | 'base_biological_genders'
+  | 'biological_genders'
+  | 'preview_gender_suffix'
   | 'definition_revision'
   | 'definition_data'
   | 'allowed_style_ids'
@@ -426,6 +443,7 @@ export type SpeciesSaveResult = {
   accepted?: boolean;
   species_id: string;
   custom_base?: string | null;
+  custom_species?: string | null;
   body_definition_revision?: string | null;
   body_definition_data?: BodyMarkingDefinitionData;
   body_allowed_definition_ids?: string[];
@@ -441,6 +459,14 @@ export type SpeciesSaveResult = {
   preview_asset_registry_alt?: IconAssetRegistry;
   preview_signature_alt?: string | null;
   preview_revision_alt?: number;
+  preview_sources_gender_alt?: PreviewDirectionSource[];
+  preview_asset_registry_gender_alt?: IconAssetRegistry;
+  preview_signature_gender_alt?: string | null;
+  preview_revision_gender_alt?: number;
+  preview_sources_gender_alt_digitigrade?: PreviewDirectionSource[];
+  preview_asset_registry_gender_alt_digitigrade?: IconAssetRegistry;
+  preview_signature_gender_alt_digitigrade?: string | null;
+  preview_revision_gender_alt_digitigrade?: number;
 };
 
 export type SpeciesModifierEntry = {
@@ -479,7 +505,6 @@ export type SpeciesDigitigradePreviewAssets = Record<
 export type SpeciesDefinition = {
   id: string;
   name: string;
-  base_name?: string | null;
   blurb?: string | null;
   modifiers: SpeciesModifierEntry[];
   traits: SpeciesTraitEntry[];
@@ -511,6 +536,7 @@ export type SpeciesPayload = {
   preview_icon_base?: string | null;
   icon_base_options?: SpeciesIconBaseOption[];
   custom_species?: string | null;
+  custom_species_max_length?: number;
 };
 
 export type TraitCategoryId = 'positive' | 'neutral' | 'negative';
@@ -536,6 +562,7 @@ export type CharacterTraitEntry = {
   id: string;
   name: string;
   description: string;
+  extra_language_slots?: number;
   icon_scale_x?: number;
   icon_scale_y?: number;
   tutorial?: string | null;
@@ -588,6 +615,31 @@ export type CharacterPersistencePayload = {
   pet: CharacterPetPersistence;
 };
 
+export type CharacterLanguageEntry = {
+  id: string;
+  name: string;
+  description: string;
+  selected: BooleanLike;
+  automatic: BooleanLike;
+  selectable: BooleanLike;
+  preferred_always: BooleanLike;
+  preferred_eligible: BooleanLike;
+  preferred: BooleanLike;
+  custom_key?: string | null;
+  disabled_reason?: string | null;
+};
+
+export type CharacterLanguagesPayload = {
+  base_optional_slots: number;
+  optional_limit: number;
+  selected_optional_count: number;
+  preferred_language: string;
+  preferred_fallback: string;
+  language_prefixes: string[];
+  default_language_prefixes: string[];
+  entries: CharacterLanguageEntry[];
+};
+
 export type TraitsPayload = {
   revision: number;
   species_id: string;
@@ -599,6 +651,7 @@ export type TraitsPayload = {
   neutral_traits_selected: number;
   total_selected: number;
   persistence?: CharacterPersistencePayload;
+  languages?: CharacterLanguagesPayload;
   categories: CharacterTraitCategory[];
 };
 
@@ -615,12 +668,29 @@ export type TraitsDraftState = {
   trait_order: string[];
   selected: Record<string, boolean>;
   preferences: Record<string, Record<string, TraitPreferenceValue>>;
+  languages: LanguagesDraftState | null;
+};
+
+export type LanguagesDraftState = {
+  optional_order: string[];
+  selected_optional: Record<string, boolean>;
+  preferred_language: string;
+  custom_keys: Record<string, string>;
+  language_prefixes: string[];
+};
+
+export type LanguagesSavePayload = {
+  alternate_languages: string[];
+  preferred_language: string;
+  custom_keys: Record<string, string>;
+  language_prefixes: string[];
 };
 
 export type TraitsSavePayload = {
   revision: number;
   selected_traits: string[];
   trait_preferences: Record<string, Record<string, TraitPreferenceValue>>;
+  languages?: LanguagesSavePayload;
 };
 
 export type DirectionCanvasSourceOptions = {
