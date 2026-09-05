@@ -1677,6 +1677,7 @@
 #include "code\game\Rogue Star\multipoint_barrier.dm"
 #include "code\game\Rogue Star\objective_objects.dm"
 #include "code\game\Rogue Star\special_persist.dm"
+#include "code\game\Rogue Star\stimuli_reactions.dm"
 #include "code\game\Rogue Star\tag.dm"
 #include "code\game\Rogue Star\tastes_and_smells.dm"
 #include "code\game\Rogue Star\waddle.dm"

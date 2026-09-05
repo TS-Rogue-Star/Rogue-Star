@@ -180,4 +180,117 @@
 		/datum/trait/positive/soft_landing
 		)
 
+//////////STIM REACTION TRAITS//////////
+//BELCHING
+/datum/trait/negative/stim_react
+	name = "Belching Shrinks"
+	desc = "When belched upon, your body involuntarily shrinks."
+	custom_only = FALSE
+
+/datum/trait/negative/stim_react/belch_stun
+	name = "Belching Stuns"
+	desc = "When belched upon, your body involuntarily locks up."
+	excludes = list(
+		/datum/trait/negative/stim_react/belch_attract
+		)
+
+/datum/trait/negative/stim_react/belch_sleep
+	name = "Belching Sleeps"
+	desc = "When belched upon, your body involuntarily loses consciousness."
+	excludes = list(
+		/datum/trait/negative/stim_react/belch_attract
+		)
+
+/datum/trait/negative/stim_react/belch_attract
+	name = "Belching Attracts"
+	desc = "When belched upon, your body involuntarily wanders closer to the source."
+	excludes = list(
+		/datum/trait/negative/stim_react/belch_stun,
+		/datum/trait/negative/stim_react/belch_sleep
+		)
+
+//HUFFING
+/datum/trait/negative/stim_react/huff_shrink
+	name = "Huffing Shrinks"
+	desc = "When huffed upon, your body involuntarily shrinks."
+
+/datum/trait/negative/stim_react/huff_stun
+	name = "Huffing Stuns"
+	desc = "When huffed upon, your body involuntarily locks up."
+	excludes = list(
+		/datum/trait/negative/stim_react/huff_attract
+		)
+
+/datum/trait/negative/stim_react/huff_sleep
+	name = "Huffing Sleeps"
+	desc = "When huffed upon, your body involuntarily loses consciousness."
+	excludes = list(
+		/datum/trait/negative/stim_react/huff_attract
+		)
+
+/datum/trait/negative/stim_react/huff_attract
+	name = "Huffing Attracts"
+	desc = "When huffed upon, your body involuntarily wanders closer to the source."
+	excludes = list(
+		/datum/trait/negative/stim_react/huff_stun,
+		/datum/trait/negative/stim_react/huff_sleep
+		)
+
+//KISSING
+/datum/trait/negative/stim_react/kiss_shrink
+	name = "Kissing Shrinks"
+	desc = "When a kiss is blown your way, your body involuntarily shrinks."
+
+/datum/trait/negative/stim_react/kiss_stun
+	name = "Kissing Stuns"
+	desc = "When a kiss is blown your way, your body involuntarily locks up."
+	excludes = list(
+		/datum/trait/negative/stim_react/kiss_attract
+		)
+
+/datum/trait/negative/stim_react/kiss_sleep
+	name = "Kissing Sleeps"
+	desc = "When a kiss is blown your way, your body involuntarily loses consciousness."
+	excludes = list(
+		/datum/trait/negative/stim_react/kiss_attract
+		)
+
+/datum/trait/negative/stim_react/kiss_attract
+	name = "Kissing Attracts"
+	desc = "When a kiss is blown your way, your body involuntarily wanders closer to the source."
+	excludes = list(
+		/datum/trait/negative/stim_react/kiss_stun,
+		/datum/trait/negative/stim_react/kiss_sleep
+		)
+
+//HELP TOUCH
+/datum/trait/negative/stim_react/intent_touch
+	name = "Friendly Touch Shrinks"
+	desc = "When touched in a friendly manner in the designated location, your body involuntarily shrinks."
+	custom_only = FALSE
+	has_preferences = list(
+		"target" = list(TRAIT_PREF_TYPE_LIST, "Affected Body Part",TRAIT_NO_VAREDIT_TARGET,BP_HEAD))
+	list_options = BP_ALL
+
+/datum/trait/negative/stim_react/intent_touch/ft_stun
+	name = "Friendly Touch Stuns"
+	desc = "When touched in a friendly manner in the designated location, your body involuntarily locks up."
+
+/datum/trait/negative/stim_react/intent_touch/ft_sleep
+	name = "Friendly Touch Sleeps"
+	desc = "When touched in a friendly manner in the designated location, your body involuntarily loses consciousness."
+
+//DISARM TOUCH
+/datum/trait/negative/stim_react/intent_touch/dis_shrink
+	name = "Disarm Touch Shrinks"
+	desc = "When touched in a disarming manner in the designated location, your body involuntarily shrinks."
+
+/datum/trait/negative/stim_react/intent_touch/dis_stun
+	name = "Disarm Touch Stuns"
+	desc = "When touched in a disarming manner in the designated location, your body involuntarily locks up."
+
+/datum/trait/negative/stim_react/intent_touch/dis_sleep
+	name = "Disarm Touch Sleeps"
+	desc = "When touched in a disarming manner in the designated location, your body involuntarily loses consciousness."
+
 //RS ADD END
