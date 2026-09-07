@@ -17,6 +17,8 @@
 // /////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Updated by Lira for Rogue Star August 2026: Character Designer - Species and Prosthetics ////////////////
 // /////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star August 2026: Character Designer - Identity ///////////////////////////////
+// /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 @use '../colors.scss';
 
@@ -4990,4 +4992,1013 @@ $titlebar-height: 38px;
   line-height: 13px;
   padding: 0 0.12rem;
   text-align: right;
+}
+
+.RogueStar__identityTab {
+  height: 100%;
+}
+
+.RogueStar__identityWorkspace.Section {
+  min-height: 100%;
+}
+
+.RogueStar__identityLocationGroupToggle--system.Button {
+  border-color: rgba(102, 205, 255, 0.28);
+  border-left-color: rgba(102, 205, 255, 0.76);
+  background:
+    radial-gradient(
+      circle at 96% 0,
+      rgba(102, 205, 255, 0.12),
+      transparent 35%
+    ),
+    linear-gradient(120deg, rgba(13, 37, 55, 0.94), rgba(4, 13, 21, 0.98));
+}
+
+.RogueStar__identityLocationGroupToggle--system.Button:hover,
+.RogueStar__identityLocationGroupToggle--system.Button:focus {
+  border-color: rgba(151, 225, 255, 0.52);
+}
+
+.RogueStar__identityLocationGroupToggle--unconfirmed.Button {
+  border-color: rgba(229, 188, 106, 0.25);
+  border-left-color: rgba(229, 188, 106, 0.7);
+  background:
+    radial-gradient(
+      circle at 96% 0,
+      rgba(229, 188, 106, 0.11),
+      transparent 35%
+    ),
+    linear-gradient(120deg, rgba(55, 37, 15, 0.94), rgba(18, 10, 5, 0.98));
+}
+
+.RogueStar__identityLocationGroupToggle--unconfirmed.Button:hover,
+.RogueStar__identityLocationGroupToggle--unconfirmed.Button:focus {
+  border-color: rgba(245, 207, 128, 0.5);
+}
+
+.RogueStar__identityLocationGroupIcon--system {
+  border-color: rgba(151, 225, 255, 0.34);
+  background: rgba(17, 54, 76, 0.72);
+  color: rgba(151, 225, 255, 0.94);
+}
+
+.RogueStar__identityLocationGroupIcon--mobile {
+  border-color: rgba(206, 165, 255, 0.34);
+  background: rgba(75, 35, 111, 0.36);
+  color: rgba(224, 195, 255, 0.94);
+}
+
+.RogueStar__identityLocationGroupIcon--unconfirmed {
+  border-color: rgba(245, 207, 128, 0.34);
+  background: rgba(75, 47, 18, 0.58);
+  color: #f5cf80;
+}
+
+.RogueStar__identityLocationGroupSelected {
+  display: flex;
+  gap: 0.45rem;
+}
+
+.RogueStar__identityLocationViewTabs.Tabs {
+  margin: 0 0 0.75rem;
+  padding: 0.28rem;
+  border: 1px solid rgba(177, 125, 255, 0.24);
+  border-radius: 8px;
+  background: linear-gradient(
+    120deg,
+    rgba(24, 12, 39, 0.92),
+    rgba(7, 5, 15, 0.96)
+  );
+}
+
+.RogueStar__identityLocationViewTabs .Tab {
+  justify-content: center;
+  border-radius: 6px;
+  color: rgba(226, 204, 245, 0.72);
+}
+
+.RogueStar__identityLocationViewTabs .Tab--selected {
+  border-bottom-color: #f5cf80;
+  background: linear-gradient(
+    120deg,
+    rgba(70, 38, 100, 0.76),
+    rgba(66, 43, 18, 0.68)
+  );
+  color: #fff0c9;
+}
+
+.RogueStar__identityStarMapLayout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0.65rem;
+  margin-bottom: 0.75rem;
+}
+
+.RogueStar__identityStarMap {
+  position: relative;
+  min-width: 0;
+  min-height: 520px;
+  overflow: hidden;
+  border: 1px solid rgba(136, 183, 215, 0.3);
+  border-radius: 10px;
+  background-color: #02040a;
+  background-image:
+    radial-gradient(
+      circle,
+      rgba(255, 255, 255, 0.8) 0 0.65px,
+      transparent 0.8px
+    ),
+    radial-gradient(
+      circle,
+      rgba(130, 207, 255, 0.55) 0 0.55px,
+      transparent 0.75px
+    ),
+    radial-gradient(
+      circle,
+      rgba(231, 194, 255, 0.48) 0 0.45px,
+      transparent 0.7px
+    ),
+    radial-gradient(
+      circle at 52% 47%,
+      rgba(62, 113, 148, 0.13),
+      transparent 34%
+    ),
+    radial-gradient(circle at 80% 24%, rgba(86, 43, 125, 0.12), transparent 28%);
+  background-position:
+    3px 5px,
+    17px 12px,
+    29px 31px,
+    0 0,
+    0 0;
+  background-size:
+    37px 43px,
+    53px 47px,
+    71px 61px,
+    100% 100%,
+    100% 100%;
+  box-shadow:
+    inset 0 0 45px rgba(0, 0, 0, 0.82),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.018),
+    0 7px 18px rgba(0, 0, 0, 0.32);
+}
+
+.RogueStar__identityStarMapCanvas {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.RogueStar__identityStarMapOverlay {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.RogueStar__identityStarMapRegion {
+  fill: rgba(87, 96, 119, 0.025);
+  stroke: none;
+}
+
+.RogueStar__identityStarMapBoundary {
+  fill: none;
+  stroke: rgba(214, 123, 54, 0.36);
+  stroke-width: 1px;
+  stroke-dasharray: 4 3;
+  stroke-linecap: butt;
+  stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
+}
+
+.RogueStar__identityStarMapRegion--human {
+  fill: rgba(52, 151, 202, 0.075);
+}
+
+.RogueStar__identityStarMapRegion--skrell {
+  fill: rgba(71, 125, 159, 0.055);
+}
+
+.RogueStar__identityStarMapRegion--unathi {
+  fill: rgba(185, 63, 55, 0.045);
+}
+
+.RogueStar__identityStarMapRegion--salthan {
+  fill: rgba(215, 112, 35, 0.055);
+}
+
+.RogueStar__identityStarMapRegion--elysian {
+  fill: rgba(170, 91, 210, 0.065);
+}
+
+.RogueStar__identityStarMapRegion--tajaran {
+  fill: rgba(75, 181, 112, 0.065);
+}
+
+.RogueStar__identityStarMapRegion--ares {
+  fill: rgba(211, 179, 52, 0.055);
+}
+
+.RogueStar__identityStarMapRegionLabel {
+  position: absolute;
+  z-index: 1;
+  max-width: 290px;
+  transform: translate(-50%, -50%);
+  color: rgba(210, 226, 237, 0.24);
+  font-size: 1.24rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  line-height: 1.05;
+  text-align: center;
+  text-shadow: 0 1px 2px #000;
+  text-transform: uppercase;
+  pointer-events: none;
+}
+
+.RogueStar__identityStarMapRegionLabel small {
+  display: block;
+  margin-top: 2px;
+  font-size: 0.94rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+}
+
+.RogueStar__identityStarMapAreaLabel {
+  white-space: nowrap;
+}
+
+.RogueStar__identityStarMapRegionLabel--human,
+.RogueStar__identityStarMapRegionLabel--skrell {
+  color: rgba(102, 205, 255, 0.27);
+}
+
+.RogueStar__identityStarMapRegionLabel--unathi {
+  color: rgba(244, 99, 112, 0.27);
+}
+
+.RogueStar__identityStarMapRegionLabel--salthan {
+  color: rgba(244, 159, 75, 0.3);
+}
+
+.RogueStar__identityStarMapRegionLabel--ares {
+  color: rgba(247, 218, 104, 0.31);
+}
+
+.RogueStar__identityStarMapRegionLabel--elysian {
+  color: rgba(221, 150, 255, 0.3);
+}
+
+.RogueStar__identityStarMapRegionLabel--tajaran {
+  color: rgba(112, 224, 141, 0.32);
+}
+
+.RogueStar__identityStarMapNode {
+  position: absolute;
+  z-index: 3;
+  box-sizing: border-box;
+  width: 13px;
+  height: 13px;
+  margin: 0;
+  padding: 0;
+  transform: translate(-50%, -50%);
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: rgba(216, 237, 249, 0.86);
+  font: inherit;
+  cursor: pointer;
+  transition:
+    opacity 90ms ease-out,
+    filter 90ms ease-out;
+}
+
+.RogueStar__identityStarMapNode:focus-visible {
+  outline: 1px solid #f5cf80;
+  outline-offset: 4px;
+}
+
+.RogueStar__identityStarMapNodeHalo,
+.RogueStar__identityStarMapNodeCore {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  display: block;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+.RogueStar__identityStarMapNodeHalo {
+  width: 14px;
+  height: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.34);
+  opacity: 0.72;
+}
+
+.RogueStar__identityStarMapNodeCore {
+  width: 5px;
+  height: 5px;
+  border: 1px solid #fff;
+  background: #fff;
+  box-shadow:
+    0 0 3px #fff,
+    0 0 7px rgba(255, 255, 255, 0.68);
+}
+
+.RogueStar__identityStarMapNode:hover,
+.RogueStar__identityStarMapNode--selected {
+  z-index: 6;
+  color: #fff0c9;
+  filter: brightness(1.25);
+}
+
+.RogueStar__identityStarMapNode--selected .RogueStar__identityStarMapNodeHalo {
+  width: 19px;
+  height: 19px;
+  border: 2px solid rgba(245, 207, 128, 0.92);
+  box-shadow: 0 0 8px rgba(229, 188, 106, 0.56);
+}
+
+.RogueStar__identityStarMapNode--selected .RogueStar__identityStarMapNodeCore {
+  border-color: #fff8dc;
+  background: #f5cf80;
+  box-shadow:
+    0 0 4px #fff0bd,
+    0 0 9px rgba(245, 207, 128, 0.8);
+}
+
+.RogueStar__identityStarMapNode--referenced:not(
+    .RogueStar__identityStarMapNode--selected
+  )
+  .RogueStar__identityStarMapNodeHalo {
+  width: 18px;
+  height: 18px;
+  border-color: rgba(206, 165, 255, 0.9);
+  box-shadow: 0 0 7px rgba(177, 105, 238, 0.48);
+}
+
+.RogueStar__identityStarMapNode--searchDimmed {
+  z-index: 2;
+  opacity: 0.19;
+  filter: saturate(0.2);
+}
+
+.RogueStar__identityStarMapNode--searchMatch {
+  z-index: 5;
+}
+
+.RogueStar__identityStarMapNode--searchMatch:not(
+    .RogueStar__identityStarMapNode--selected
+  )
+  .RogueStar__identityStarMapNodeHalo {
+  border-color: rgba(118, 239, 181, 0.9);
+  box-shadow: 0 0 7px rgba(75, 225, 154, 0.42);
+}
+
+.RogueStar__identityStarMapNodeLabel {
+  position: absolute;
+  display: block;
+  max-width: 210px;
+  overflow: hidden;
+  color: inherit;
+  font-size: 1.08rem;
+  font-weight: 700;
+  letter-spacing: 0.015em;
+  line-height: 1.05;
+  text-overflow: ellipsis;
+  text-shadow:
+    -1px -1px 1px #000,
+    1px 1px 1px #000,
+    0 0 3px #000;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+.RogueStar__identityStarMapNode--label-right
+  .RogueStar__identityStarMapNodeLabel {
+  top: 50%;
+  left: calc(100% + 4px);
+  transform: translateY(-50%);
+  text-align: left;
+}
+
+.RogueStar__identityStarMapNode--label-left
+  .RogueStar__identityStarMapNodeLabel {
+  top: 50%;
+  right: calc(100% + 4px);
+  transform: translateY(-50%);
+  text-align: right;
+}
+
+.RogueStar__identityStarMapNode--label-above
+  .RogueStar__identityStarMapNodeLabel {
+  bottom: calc(100% + 2px);
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+}
+
+.RogueStar__identityStarMapNode--label-below
+  .RogueStar__identityStarMapNodeLabel {
+  top: calc(100% + 2px);
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+}
+
+.RogueStar__identityStarMapNodeMarkers {
+  position: absolute;
+  top: -13px;
+  left: 50%;
+  display: flex;
+  gap: 2px;
+  transform: translateX(-50%);
+  padding: 1px 3px;
+  border: 1px solid rgba(206, 165, 255, 0.54);
+  border-radius: 5px;
+  background: rgba(26, 10, 43, 0.94);
+  color: #d8b8ff;
+  font-size: 7px;
+  line-height: 1;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+  pointer-events: none;
+}
+
+.RogueStar__identityStarMapNoMatch {
+  position: absolute;
+  z-index: 7;
+  top: 36px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 0.35rem 0.55rem;
+  border: 1px solid rgba(229, 188, 106, 0.34);
+  border-radius: 6px;
+  background: rgba(39, 24, 9, 0.9);
+  color: #f5cf80;
+  font-size: 1.3rem;
+  white-space: nowrap;
+}
+
+.RogueStar__identityStarMapDetails {
+  box-sizing: border-box;
+  display: grid;
+  grid-template-columns: minmax(260px, 0.9fr) minmax(320px, 1.35fr);
+  gap: 0.9rem;
+  align-items: start;
+  min-width: 0;
+  padding: 0.85rem;
+  border: 1px solid rgba(177, 125, 255, 0.28);
+  border-radius: 10px;
+  background:
+    radial-gradient(
+      circle at 100% 0,
+      rgba(105, 65, 163, 0.13),
+      transparent 38%
+    ),
+    linear-gradient(145deg, rgba(21, 11, 34, 0.97), rgba(5, 5, 13, 0.99));
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.025),
+    0 7px 18px rgba(0, 0, 0, 0.3);
+}
+
+.RogueStar__identityStarMapDetailsSummary,
+.RogueStar__identityStarMapDetailsSelection {
+  min-width: 0;
+}
+
+.RogueStar__identityStarMapDetailsSelection {
+  padding-left: 0.9rem;
+  border-left: 1px solid rgba(195, 168, 218, 0.16);
+}
+
+.RogueStar__identityStarMapDetailsHeader {
+  padding-bottom: 0.55rem;
+  border-bottom: 1px solid rgba(195, 168, 218, 0.16);
+}
+
+.RogueStar__identityStarMapDetailsEyebrow {
+  overflow: hidden;
+  color: rgba(151, 225, 255, 0.68);
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  line-height: 1.15;
+  text-overflow: ellipsis;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.RogueStar__identityStarMapDetailsTitle {
+  margin: 0.2rem 0 0.45rem;
+  color: #fff5dc;
+  font-size: 1.167rem;
+  font-weight: 800;
+  line-height: 1.08;
+  overflow-wrap: anywhere;
+}
+
+.RogueStar__identityStarMapStatus {
+  display: inline-block;
+  padding: 0.17rem 0.3rem;
+  border: 1px solid rgba(160, 187, 207, 0.2);
+  border-radius: 5px;
+  background: rgba(22, 34, 46, 0.54);
+  color: rgba(210, 229, 241, 0.72);
+  font-size: 0.75rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.RogueStar__identityStarMapDescription {
+  margin-top: 0.6rem;
+  color: rgba(238, 229, 244, 0.76);
+  font-size: 0.917rem;
+  line-height: 1.35;
+}
+
+.RogueStar__identityStarMapChoices {
+  margin-top: 0;
+}
+
+.RogueStar__identityStarMapChoicesLabel {
+  margin-bottom: 0.38rem;
+  color: rgba(245, 207, 128, 0.82);
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.RogueStar__identityStarMapChoiceGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 0.35rem;
+}
+
+.RogueStar__identityStarMapChoice.Button {
+  min-height: 38px;
+  margin: 0;
+  padding: 0.28rem 0.35rem;
+  border: 1px solid rgba(102, 205, 255, 0.18);
+  border-left: 2px solid rgba(102, 205, 255, 0.62);
+  border-radius: 6px;
+  background: linear-gradient(
+    135deg,
+    rgba(13, 37, 55, 0.86),
+    rgba(4, 13, 21, 0.94)
+  );
+  color: rgba(240, 248, 252, 0.88);
+  text-align: left;
+  white-space: normal;
+}
+
+.RogueStar__identityStarMapChoice.Button > .Button__content {
+  width: 100%;
+  min-width: 0;
+  justify-content: flex-start;
+}
+
+.RogueStar__identityStarMapChoice.Button:hover:not(.Button--disabled) {
+  border-color: rgba(151, 225, 255, 0.38);
+  border-left-color: rgba(151, 225, 255, 0.92);
+}
+
+.RogueStar__identityStarMapChoice--selected.Button,
+.RogueStar__identityStarMapChoice--selected.Button.Button--selected {
+  border-color: rgba(229, 188, 106, 0.58);
+  border-left-color: #f5cf80;
+  background: linear-gradient(
+    135deg,
+    rgba(72, 46, 18, 0.86),
+    rgba(24, 12, 8, 0.96)
+  );
+  color: #fff0c9;
+}
+
+.RogueStar__identityStarMapChoiceIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  margin-right: 0.5rem;
+  border: 1px solid rgba(151, 225, 255, 0.24);
+  border-radius: 7px;
+  background: rgba(17, 54, 76, 0.66);
+  color: rgba(151, 225, 255, 0.88);
+  font-size: 10px;
+}
+
+.RogueStar__identityStarMapChoice--selected
+  .RogueStar__identityStarMapChoiceIcon {
+  border-color: rgba(245, 207, 128, 0.38);
+  background: rgba(75, 47, 18, 0.7);
+  color: #f5cf80;
+}
+
+.RogueStar__identityStarMapChoiceName {
+  overflow: hidden;
+  font-size: 0.917rem;
+  font-weight: 700;
+  line-height: 1.18;
+  overflow-wrap: anywhere;
+}
+
+.RogueStar__identityStarMapChoiceMarkers {
+  display: flex;
+  gap: 0.2rem;
+  color: rgba(206, 165, 255, 0.9);
+  font-size: 9px;
+}
+
+.RogueStar__identityStarMapLandmarkNotice.NoticeBox {
+  margin-top: 0;
+  font-size: 0.833rem;
+}
+
+.RogueStar__identityLocationCatalog {
+  padding: 0.7rem;
+  border: 1px solid rgba(177, 125, 255, 0.24);
+  border-radius: 10px;
+  background: linear-gradient(
+    145deg,
+    rgba(21, 11, 34, 0.94),
+    rgba(5, 5, 13, 0.98)
+  );
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.025),
+    0 7px 18px rgba(0, 0, 0, 0.3);
+}
+
+.RogueStar__identityLocationCatalogHeader {
+  margin-bottom: 0.65rem;
+  padding-bottom: 0.55rem;
+  border-bottom: 1px solid rgba(195, 168, 218, 0.16);
+}
+
+.RogueStar__identityLocationCatalogTitle {
+  color: #fff5dc;
+  font-size: 0.82rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.RogueStar__identityLocationCatalogCount {
+  color: rgba(151, 225, 255, 0.7);
+  font-size: 0.62rem;
+  font-weight: 700;
+}
+
+.RogueStar__identityLocationRegions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+}
+
+.RogueStar__identityLocationRegionHeader {
+  margin: 0 0.1rem 0.45rem;
+  padding: 0.2rem 0.15rem 0.4rem;
+  border-bottom: 1px solid rgba(151, 225, 255, 0.16);
+}
+
+.RogueStar__identityLocationRegionTitle {
+  color: rgba(151, 225, 255, 0.85);
+  font-size: 0.9rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.RogueStar__identityLocationRegionCount {
+  color: rgba(151, 225, 255, 0.7);
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.RogueStar__identityLocationGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 5px;
+  align-items: stretch;
+  padding: 0.05rem;
+}
+
+.RogueStar__identityLocationTile.Button {
+  min-height: 54px;
+  padding: 0.38rem 0.48rem;
+  border-left-color: rgba(102, 205, 255, 0.72);
+  background:
+    radial-gradient(
+      circle at 100% 0,
+      rgba(102, 205, 255, 0.11),
+      transparent 52%
+    ),
+    linear-gradient(140deg, rgba(13, 37, 55, 0.95), rgba(4, 13, 21, 0.98));
+  text-align: left;
+}
+
+.RogueStar__identityLocationTile.Button > .Button__content {
+  justify-content: flex-start;
+}
+
+.RogueStar__identityLocationTile.Button:hover:not(.Button--disabled) {
+  border-left-color: rgba(151, 225, 255, 0.92);
+  box-shadow:
+    0 7px 14px rgba(0, 0, 0, 0.38),
+    0 0 11px rgba(102, 205, 255, 0.15);
+}
+
+.RogueStar__identityLocationTileIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  margin-right: 0.5rem;
+  border: 1px solid rgba(151, 225, 255, 0.3);
+  border-radius: 9px;
+  background: rgba(17, 54, 76, 0.72);
+  color: rgba(151, 225, 255, 0.92);
+  font-size: 13px;
+}
+
+.RogueStar__identityStarMapChoiceIcon > .Icon,
+.RogueStar__identityLocationTileIcon > .Icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  line-height: 1;
+}
+
+.RogueStar__identityLocationTile.RogueStar__traitTile--selected
+  .RogueStar__identityLocationTileIcon {
+  border-color: rgba(245, 207, 128, 0.42);
+  background: rgba(75, 47, 18, 0.72);
+  color: #f5cf80;
+}
+
+.RogueStar__identityLocationTileName {
+  text-align: left;
+}
+
+.RogueStar__identityLocationTileMarkers {
+  display: flex;
+  gap: 0.22rem;
+  color: rgba(206, 165, 255, 0.9);
+  font-size: 10px;
+}
+
+.RogueStar__identityLocationTile.RogueStar__traitTile--selected
+  .RogueStar__identityLocationTileMarkers {
+  color: #f5cf80;
+}
+
+.RogueStar__identityLocationTooltip {
+  max-width: 300px;
+}
+
+.RogueStar__identityLocationGroupTooltip {
+  max-width: 330px;
+}
+
+.RogueStar__identityLocationTooltipTitle {
+  margin-bottom: 0.35rem;
+  color: #f5cf80;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.RogueStar__identityLocationTooltipStatus > .Box + .Box {
+  margin-top: 0.2rem;
+}
+
+.RogueStar__identityOrganizationTooltipDescription {
+  white-space: pre-line;
+}
+
+.RogueStar__identityCustomLocation {
+  margin-top: 1rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid rgba(180, 158, 195, 0.2);
+}
+
+.RogueStar__identityLocationEditor > .RogueStar__identityCustomLocation {
+  margin-top: 0.5rem;
+  padding-top: 0.25rem;
+}
+
+.RogueStar__identityCustomLocationGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.65rem;
+}
+
+.RogueStar__identityCustomLocationField {
+  min-width: 0;
+}
+
+.RogueStar__identityField {
+  display: grid;
+  grid-template-columns: 112px minmax(0, 1fr);
+  gap: 0.55rem;
+  align-items: center;
+  margin-bottom: 0.55rem;
+}
+
+.RogueStar__identityField:last-child {
+  margin-bottom: 0;
+}
+
+.RogueStar__identityFieldLabel {
+  color: rgba(235, 217, 255, 0.72);
+  font-weight: 700;
+  line-height: 1.15;
+}
+
+.RogueStar__identityFieldControl {
+  min-width: 0;
+}
+
+.RogueStar__identityNameColorButton.RogueStar__chip {
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 24px;
+  min-height: 24px;
+  min-width: 34px;
+  padding: 0 0.6rem;
+}
+
+.RogueStar__identityNameColorButton > .Button__content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.RogueStar__identityNameColorSwatch.ColorBox {
+  box-sizing: border-box;
+  width: 14px;
+  height: 14px;
+  border: 2px solid rgba(255, 245, 255, 0.82);
+  border-radius: 50%;
+  box-shadow:
+    0 0 0 1px rgba(37, 17, 55, 0.9),
+    0 0 8px rgba(229, 188, 255, 0.34);
+}
+
+.RogueStar__identitySelectionReadout {
+  min-width: 0;
+  overflow: hidden;
+  color: #fdf3ff;
+  line-height: 24px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.RogueStar__identityDropdown.Button {
+  box-sizing: border-box;
+  height: 24px;
+  min-height: 24px;
+  padding: 0 0.5rem;
+  line-height: 1;
+}
+
+.RogueStar__identityDropdownContent {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  column-gap: 0.4rem;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+  overflow: hidden;
+  text-align: left;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  line-height: 1;
+}
+
+.RogueStar__identityDropdownContent > .Icon {
+  align-self: center;
+  min-width: 1.333em;
+  margin: 0;
+  line-height: 1;
+  text-align: center;
+}
+
+.RogueStar__identityDropdownContent .Dropdown__selected-text {
+  display: block;
+  width: auto;
+  height: auto;
+  min-width: 0;
+  line-height: 1;
+}
+
+.RogueStar__identityDropdownContent .Dropdown__arrow-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  float: none;
+  width: 1.2em;
+  height: auto;
+  min-height: 0;
+  padding-left: 0;
+  border-left: 0;
+  line-height: 1;
+}
+
+.RogueStar__identityNumber.NumberInput {
+  min-height: 24px;
+}
+
+.RogueStar__identityLongTextGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.65rem;
+  height: 100%;
+  min-height: 0;
+}
+
+.RogueStar__identityFlavorTextWorkspace {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 31rem;
+}
+
+.RogueStar__identityCustomLinkEditor {
+  flex: 0 0 auto;
+  margin-bottom: 0.75rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid rgba(180, 158, 195, 0.2);
+}
+
+.RogueStar__identityFlavorTextGrid {
+  display: grid;
+  flex: 1 1 auto;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-rows: repeat(3, minmax(8rem, 1fr));
+  gap: 0.65rem;
+  min-height: 26rem;
+}
+
+.RogueStar__identityFlavorTextGrid .RogueStar__identityTextArea.TextArea {
+  min-height: 7rem;
+}
+
+.RogueStar__identityRobotFlavorTextWorkspace {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 36rem;
+}
+
+.RogueStar__identityRobotFlavorTextGrid {
+  display: grid;
+  flex: 1 1 auto;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-auto-rows: minmax(8rem, 1fr);
+  gap: 0.65rem;
+  min-height: 0;
+}
+
+.RogueStar__identityRobotFlavorTextGrid .RogueStar__identityTextArea.TextArea {
+  min-height: 7rem;
+}
+
+.RogueStar__identityLongTextEditor {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 0;
+}
+
+.RogueStar__identityTextArea.TextArea {
+  box-sizing: border-box;
+  flex: 1 1 auto;
+  width: 100%;
+  min-height: 9rem;
+  resize: vertical;
+}
+
+.RogueStar__identityTab--transientLocked .Button:not(.Button--disabled),
+.RogueStar__identityTab--transientLocked .Input:not(.Input--disabled),
+.RogueStar__identityTab--transientLocked .TextArea:not(.TextArea--disabled),
+.RogueStar__identityTab--transientLocked
+  .NumberInput:not(.NumberInput--disabled) {
+  opacity: 1;
+}
+
+.RogueStar__identityTab--transientLocked
+  .RogueStar__identityLocationTile.Button.Button--disabled {
+  background-color: transparent !important;
 }
