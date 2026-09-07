@@ -159,11 +159,16 @@
 	for(var/datum/category_item/player_setup_item/PI in items)
 		PI.copy_to_mob(C)
 
+// RS Edit: Character Designer - Identity Tab (Lira, September 2026)
 /datum/category_group/player_setup_category/proc/content(var/mob/user)
 	. = "<table style='width:100%'><tr style='vertical-align:top'><td style='width:50%'>"
-	var/current = 0
-	var/halfway = items.len / 2
+	var/list/visible_items = list()
 	for(var/datum/category_item/player_setup_item/PI in items)
+		if(PI.show_in_character_setup)
+			visible_items += PI
+	var/current = 0
+	var/halfway = visible_items.len / 2
+	for(var/datum/category_item/player_setup_item/PI in visible_items)
 		if(halfway && current++ >= halfway)
 			halfway = 0
 			. += "</td><td></td><td style='width:50%'>"
@@ -180,6 +185,7 @@
 /datum/category_item/player_setup_item
 	var/sort_order = 0
 	var/datum/preferences/pref
+	var/show_in_character_setup = TRUE // RS Add: Character Designer - Identity Tab (Lira, September 2026)
 
 /datum/category_item/player_setup_item/New()
 	..()

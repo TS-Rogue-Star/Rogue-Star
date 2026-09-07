@@ -17,6 +17,8 @@
 // /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Updated by Lira for Rogue Star August 2026: Character Designer - Traits Tab /////////////////////////////////////////
 // /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star September 2026: Character Designer - Identity Tab ////////////////////////////////////
+// /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 import { Component } from 'inferno';
 
@@ -124,6 +126,14 @@ import {
   buildSpeciesSaveCacheParams,
   buildTraitsDraftState,
   buildTraitsSavePayload,
+  buildIdentityDraftState,
+  buildIdentitySavePayload,
+  cloneIdentityDraftState,
+  identityDraftStatesEqual,
+  isIdentityRandomNameRequestCurrent,
+  resolveIdentityDraftValidationError,
+  resolveIdentitySaveAcknowledgement,
+  runIdentityPayloadSync,
   isSpeciesSaveAllowed,
   resolveTraitsSaveAcknowledgement,
   resolveLanguagesDraftValidationError,
@@ -157,6 +167,10 @@ import type {
   TraitsDraftState,
   TraitsPayload,
   TraitsSaveResult,
+  IdentityDraftState,
+  IdentityPayload,
+  IdentityRandomNameResult,
+  IdentitySaveResult,
 } from './types';
 import { useDesignerUiState } from './state';
 import CustomEyeIconAsset from '../../../../public/Icons/Rogue Star/eye 1.png';
@@ -179,8 +193,15 @@ import {
 } from './BasicAppearanceTab';
 import { SpeciesTab } from './SpeciesTab';
 import { TraitsTab } from './TraitsTab';
+import { IdentityTab } from './IdentityTab';
 
-type DesignerTabId = 'custom' | 'body' | 'basic' | 'species' | 'traits';
+type DesignerTabId =
+  | 'identity'
+  | 'custom'
+  | 'body'
+  | 'basic'
+  | 'species'
+  | 'traits';
 
 type PreviewWithMarkingsCache = {
   signature: string;
@@ -1287,6 +1308,7 @@ const resolveDesignerTabState = (
   let desiredTab: DesignerTabId | null = null;
   if (
     initialTab === 'body' ||
+    initialTab === 'identity' ||
     initialTab === 'custom' ||
     initialTab === 'basic' ||
     initialTab === 'species' ||
@@ -1791,6 +1813,210 @@ class TraitsSaveResultSyncScheduler extends Component<TraitsSaveResultSyncSchedu
   }
 }
 
+type IdentityPayloadSyncSchedulerProps = Readonly<{
+  payload: IdentityPayload | null;
+  onPayload: (payload: IdentityPayload) => boolean;
+}>;
+
+type IdentityPayloadRequestSchedulerProps = Readonly<{
+  active: boolean;
+  payload: IdentityPayload | null;
+  loadInProgress: boolean;
+  onRequest: () => void;
+}>;
+
+class IdentityPayloadRequestScheduler extends Component<IdentityPayloadRequestSchedulerProps> {
+  private requested = false;
+
+  componentDidMount() {
+    this.sync();
+  }
+
+  componentDidUpdate() {
+    this.sync();
+  }
+
+  sync() {
+    const { active, payload, loadInProgress, onRequest } = this.props;
+    if (!active || payload) {
+      this.requested = false;
+      return;
+    }
+    if (loadInProgress || this.requested) {
+      return;
+    }
+    this.requested = true;
+    onRequest();
+  }
+
+  render() {
+    return null;
+  }
+}
+
+class IdentityPayloadSyncScheduler extends Component<IdentityPayloadSyncSchedulerProps> {
+  private syncState = { lastRevision: 0 };
+
+  componentDidMount() {
+    this.sync();
+  }
+
+  componentDidUpdate() {
+    this.sync();
+  }
+
+  sync() {
+    const { payload, onPayload } = this.props;
+    runIdentityPayloadSync(this.syncState, payload, onPayload);
+  }
+
+  render() {
+    return null;
+  }
+}
+
+type IdentitySaveResultSyncSchedulerProps = Readonly<{
+  saveResult: IdentitySaveResult | null;
+  payload: IdentityPayload | null;
+  pendingRequest: PendingIdentitySaveRequest | null;
+  onAcknowledged: (
+    accepted: boolean,
+    pendingRequest: PendingIdentitySaveRequest,
+    saveResult: IdentitySaveResult,
+    payload: IdentityPayload | null
+  ) => void;
+}>;
+
+class IdentitySaveResultSyncScheduler extends Component<IdentitySaveResultSyncSchedulerProps> {
+  private lastAcknowledgedRequestId: string | null = null;
+
+  componentDidMount() {
+    this.sync();
+  }
+
+  componentDidUpdate() {
+    this.sync();
+  }
+
+  sync() {
+    const { saveResult, payload, pendingRequest, onAcknowledged } = this.props;
+    if (!pendingRequest) {
+      return;
+    }
+    const accepted = resolveIdentitySaveAcknowledgement(
+      pendingRequest.requestId,
+      saveResult,
+      payload
+    );
+    if (
+      accepted === null ||
+      pendingRequest.requestId === this.lastAcknowledgedRequestId
+    ) {
+      return;
+    }
+    this.lastAcknowledgedRequestId = pendingRequest.requestId;
+    if (saveResult) {
+      onAcknowledged(accepted, pendingRequest, saveResult, payload);
+    }
+  }
+
+  render() {
+    return null;
+  }
+}
+
+const IDENTITY_SAVE_ACK_TIMEOUT_MS = 15_000;
+
+type IdentitySaveTimeoutSchedulerProps = Readonly<{
+  pendingRequest: PendingIdentitySaveRequest | null;
+  onTimeout: (pendingRequest: PendingIdentitySaveRequest) => void;
+}>;
+
+class IdentitySaveTimeoutScheduler extends Component<IdentitySaveTimeoutSchedulerProps> {
+  private timeoutHandle: ReturnType<typeof setTimeout> | null = null;
+
+  componentDidMount() {
+    this.sync();
+  }
+
+  componentDidUpdate(prevProps: IdentitySaveTimeoutSchedulerProps) {
+    if (
+      prevProps.pendingRequest?.requestId !==
+      this.props.pendingRequest?.requestId
+    ) {
+      this.sync();
+    }
+  }
+
+  componentWillUnmount() {
+    this.clear();
+  }
+
+  clear() {
+    if (this.timeoutHandle) {
+      clearTimeout(this.timeoutHandle);
+      this.timeoutHandle = null;
+    }
+  }
+
+  sync() {
+    this.clear();
+    const pendingRequest = this.props.pendingRequest;
+    if (!pendingRequest) {
+      return;
+    }
+    this.timeoutHandle = setTimeout(() => {
+      this.timeoutHandle = null;
+      if (this.props.pendingRequest?.requestId === pendingRequest.requestId) {
+        this.props.onTimeout(pendingRequest);
+      }
+    }, IDENTITY_SAVE_ACK_TIMEOUT_MS);
+  }
+
+  render() {
+    return null;
+  }
+}
+
+type IdentityRandomNameResultSyncSchedulerProps = Readonly<{
+  result: IdentityRandomNameResult | null;
+  pendingRequest: PendingIdentityRandomNameRequest | null;
+  onAcknowledged: (
+    result: IdentityRandomNameResult,
+    pendingRequest: PendingIdentityRandomNameRequest
+  ) => void;
+}>;
+
+class IdentityRandomNameResultSyncScheduler extends Component<IdentityRandomNameResultSyncSchedulerProps> {
+  private lastAcknowledgedRequestId: string | null = null;
+
+  componentDidMount() {
+    this.sync();
+  }
+
+  componentDidUpdate() {
+    this.sync();
+  }
+
+  sync() {
+    const { result, pendingRequest, onAcknowledged } = this.props;
+    if (
+      !result ||
+      !pendingRequest ||
+      result.request_id !== pendingRequest.requestId ||
+      result.request_id === this.lastAcknowledgedRequestId
+    ) {
+      return;
+    }
+    this.lastAcknowledgedRequestId = result.request_id;
+    onAcknowledged(result, pendingRequest);
+  }
+
+  render() {
+    return null;
+  }
+}
+
 const syncServerSpeciesPayload = (options: {
   resolvedActiveTab: DesignerTabId;
   serverSpeciesPayload: SpeciesPayload | null;
@@ -2012,6 +2238,18 @@ const DesignerTitleTabs = ({
         Species
       </Tabs.Tab>
       <Tabs.Tab
+        selected={resolvedActiveTab === 'identity'}
+        icon="id-card"
+        className={tabsLocked ? 'Tab--disabled' : undefined}
+        aria-disabled={tabsLocked}
+        onClick={() => {
+          if (!tabsLocked) {
+            onTabChange('identity');
+          }
+        }}>
+        Identity
+      </Tabs.Tab>
+      <Tabs.Tab
         selected={resolvedActiveTab === 'basic'}
         icon="user"
         className={tabsLocked ? 'Tab--disabled' : undefined}
@@ -2125,6 +2363,16 @@ type PendingTraitsSaveRequest = {
   tabSwitchPrompt: TabSwitchPromptState | null;
 };
 
+type PendingIdentitySaveRequest = {
+  requestId: string;
+  tabSwitchPrompt: TabSwitchPromptState | null;
+};
+
+type PendingIdentityRandomNameRequest = {
+  requestId: string;
+  requestedName: string;
+};
+
 type TabSwitchOverlayProps = Readonly<{
   prompt: TabSwitchPromptState | null;
   busy: boolean;
@@ -2147,6 +2395,9 @@ const resolveTabSwitchLabel = (tab: DesignerTabId) => {
   if (tab === 'traits') {
     return 'Traits tab';
   }
+  if (tab === 'identity') {
+    return 'Identity tab';
+  }
   return 'Basic Appearance tab';
 };
 
@@ -2154,11 +2405,13 @@ const isTabSwitchSaveDisabled = (
   prompt: TabSwitchPromptState | null,
   speciesSelection: string | null,
   customSpeciesName: string,
-  traitsValidationError: string | null
+  traitsValidationError: string | null,
+  identityValidationError: string | null
 ) =>
   (prompt?.sourceTab === 'species' &&
     !isSpeciesSaveAllowed(speciesSelection, customSpeciesName)) ||
-  (prompt?.sourceTab === 'traits' && !!traitsValidationError);
+  (prompt?.sourceTab === 'traits' && !!traitsValidationError) ||
+  (prompt?.sourceTab === 'identity' && !!identityValidationError);
 
 const TabSwitchOverlay = ({
   prompt,
@@ -2178,7 +2431,9 @@ const TabSwitchOverlay = ({
         saveDisabled
           ? prompt.sourceTab === 'traits'
             ? 'Resolve the language selection issue before saving, or discard the changes.'
-            : 'A name is required before you can save this custom species. Keep editing to add one, or discard the changes.'
+            : prompt.sourceTab === 'identity'
+              ? 'Resolve the Identity validation issue before saving, or discard the changes.'
+              : 'A name is required before you can save this custom species. Keep editing to add one, or discard the changes.'
           : `You have unsaved changes in the ${resolveTabSwitchLabel(
               prompt.sourceTab
             )}. Save them before switching?`
@@ -2206,6 +2461,8 @@ const resolveDesignerLoadingState = (options: {
   bodyPayloadSnapshot: BodyMarkingsPayload | null;
   basicPayloadSnapshot: BasicAppearancePayload | null;
   speciesPayload: SpeciesPayload | null;
+  identityPayload: IdentityPayload | null;
+  identityLoadInProgress: boolean;
   tabSwitchBusy: boolean;
   bodyPendingSave: boolean;
   bodyPendingClose: boolean;
@@ -2215,6 +2472,8 @@ const resolveDesignerLoadingState = (options: {
   speciesPendingClose: boolean;
   traitsPendingSave: boolean;
   traitsPendingClose: boolean;
+  identityPendingSave: boolean;
+  identityPendingClose: boolean;
 }) => {
   const {
     resolvedActiveTab,
@@ -2224,6 +2483,8 @@ const resolveDesignerLoadingState = (options: {
     bodyPayloadSnapshot,
     basicPayloadSnapshot,
     speciesPayload,
+    identityPayload,
+    identityLoadInProgress,
     tabSwitchBusy,
     bodyPendingSave,
     bodyPendingClose,
@@ -2233,6 +2494,8 @@ const resolveDesignerLoadingState = (options: {
     speciesPendingClose,
     traitsPendingSave,
     traitsPendingClose,
+    identityPendingSave,
+    identityPendingClose,
   } = options;
   const shouldShowLoadingOverlay =
     loadingOverlay && !pendingSave && !pendingClose;
@@ -2242,6 +2505,9 @@ const resolveDesignerLoadingState = (options: {
     !!basicPayloadSnapshot && !basicPayloadSnapshot.preview_only;
   const basicTabLoading = resolvedActiveTab === 'basic' && !basicPayloadReady;
   const speciesTabLoading = resolvedActiveTab === 'species' && !speciesPayload;
+  const identityTabLoading =
+    resolvedActiveTab === 'identity' &&
+    (!identityPayload || identityLoadInProgress);
   const tabSwitchBusyState =
     tabSwitchBusy ||
     pendingSave ||
@@ -2253,13 +2519,16 @@ const resolveDesignerLoadingState = (options: {
     speciesPendingSave ||
     speciesPendingClose ||
     traitsPendingSave ||
-    traitsPendingClose;
+    traitsPendingClose ||
+    identityPendingSave ||
+    identityPendingClose;
   const tabsLocked =
     tabSwitchBusyState ||
     customTabLoading ||
     bodyTabLoading ||
     basicTabLoading ||
-    speciesTabLoading;
+    speciesTabLoading ||
+    identityTabLoading;
 
   return {
     shouldShowLoadingOverlay,
@@ -2292,16 +2561,47 @@ const resolveTraitsDraftContext = (
 const buildInitialTraitsDraft = (payload: TraitsPayload | null) =>
   payload ? buildTraitsDraftState(payload) : null;
 
+const resolveIdentityPayload = (
+  data: CustomMarkingDesignerData
+): IdentityPayload | null => {
+  const payload = data.identity_payload || null;
+  if (
+    !payload ||
+    (data.identity_revision && payload.revision !== data.identity_revision)
+  ) {
+    return null;
+  }
+  return payload;
+};
+
 let traitsSaveRequestCounter = 0;
+let identitySaveRequestCounter = 0;
+let identityRandomNameRequestCounter = 0;
 
 const createTraitsSaveRequestId = (stateToken: string) => {
   traitsSaveRequestCounter = (traitsSaveRequestCounter + 1) % 1000000;
   return `${stateToken}-${Date.now()}-${traitsSaveRequestCounter}`;
 };
 
+const createIdentitySaveRequestId = (stateToken: string) => {
+  identitySaveRequestCounter = (identitySaveRequestCounter + 1) % 1000000;
+  return `${stateToken}-identity-${Date.now()}-${identitySaveRequestCounter}`;
+};
+
+const createIdentityRandomNameRequestId = (stateToken: string) => {
+  identityRandomNameRequestCounter =
+    (identityRandomNameRequestCounter + 1) % 1000000;
+  return `${stateToken}-identity-name-${Date.now()}-${identityRandomNameRequestCounter}`;
+};
+
+// eslint-disable-next-line complexity
 const CustomMarkingDesignerContent = (_props, context) => {
   const { act, data } = useBackend<CustomMarkingDesignerData>(context);
   const stateToken = data.state_token || 'session';
+  const identityDraftKey = `identityDraft-${stateToken}`;
+  const identitySavedDraftKey = `identitySavedDraft-${stateToken}`;
+  const identityDirtyKey = `identityDirty-${stateToken}`;
+  const resolvedIdentityPayload = resolveIdentityPayload(data);
   const {
     resolvedPayload: resolvedTraitsPayload,
     draftKey: traitsDraftKey,
@@ -2709,6 +3009,60 @@ const CustomMarkingDesignerContent = (_props, context) => {
     `traitsSaveError-${stateToken}`,
     null
   );
+  const initialIdentityDraft = resolvedIdentityPayload
+    ? buildIdentityDraftState(resolvedIdentityPayload)
+    : null;
+  const [identityDraft, setIdentityDraft] =
+    useLocalState<IdentityDraftState | null>(
+      context,
+      identityDraftKey,
+      initialIdentityDraft
+    );
+  const [identitySavedDraft, setIdentitySavedDraft] =
+    useLocalState<IdentityDraftState | null>(
+      context,
+      identitySavedDraftKey,
+      initialIdentityDraft
+    );
+  const [identityDirty, setIdentityDirty] = useLocalState<boolean>(
+    context,
+    identityDirtyKey,
+    false
+  );
+  const [identityLoadInProgress, setIdentityLoadInProgress] =
+    useLocalState<boolean>(
+      context,
+      `identityLoadInProgress-${stateToken}`,
+      false
+    );
+  const [identityPendingSave, setIdentityPendingSave] = useLocalState<boolean>(
+    context,
+    `identityPendingSave-${stateToken}`,
+    false
+  );
+  const [identityPendingClose, setIdentityPendingClose] =
+    useLocalState<boolean>(
+      context,
+      `identityPendingClose-${stateToken}`,
+      false
+    );
+  const [identityPendingSaveRequest, setIdentityPendingSaveRequest] =
+    useLocalState<PendingIdentitySaveRequest | null>(
+      context,
+      `identityPendingSaveRequest-${stateToken}`,
+      null
+    );
+  const [
+    identityPendingRandomNameRequest,
+    setIdentityPendingRandomNameRequest,
+  ] = useLocalState<PendingIdentityRandomNameRequest | null>(
+    context,
+    `identityPendingRandomNameRequest-${stateToken}`,
+    null
+  );
+  const [identitySaveError, setIdentitySaveError] = useLocalState<
+    string | null
+  >(context, `identitySaveError-${stateToken}`, null);
   const [speciesLoadInProgress, setSpeciesLoadInProgress] =
     useLocalState<boolean>(
       context,
@@ -2896,7 +3250,9 @@ const CustomMarkingDesignerContent = (_props, context) => {
     showLoadoutGear,
   });
   const sharedPreviewEnabled =
-    resolvedActiveTab === 'custom' || resolvedActiveTab === 'traits';
+    resolvedActiveTab === 'custom' ||
+    resolvedActiveTab === 'traits' ||
+    resolvedActiveTab === 'identity';
   const {
     derivedPreviewState,
     overlayLayerParts,
@@ -3754,6 +4110,8 @@ const CustomMarkingDesignerContent = (_props, context) => {
       bodyPayloadSnapshot,
       basicPayloadSnapshot,
       speciesPayload,
+      identityPayload: resolvedIdentityPayload,
+      identityLoadInProgress,
       tabSwitchBusy,
       bodyPendingSave,
       bodyPendingClose,
@@ -3763,6 +4121,8 @@ const CustomMarkingDesignerContent = (_props, context) => {
       speciesPendingClose,
       traitsPendingSave,
       traitsPendingClose,
+      identityPendingSave,
+      identityPendingClose,
     });
 
   const canvasBackgroundId = resolvedCanvasBackground?.id || 'default';
@@ -3873,6 +4233,50 @@ const CustomMarkingDesignerContent = (_props, context) => {
     return resolvedTraitsPayload && draft
       ? resolveLanguagesDraftValidationError(resolvedTraitsPayload, draft)
       : null;
+  };
+
+  const detectIdentityUnsaved = () => {
+    const sharedState = selectBackend(context.store.getState()).shared || {};
+    const dirtyFlag = sharedState[identityDirtyKey];
+    return typeof dirtyFlag === 'boolean' ? dirtyFlag : identityDirty;
+  };
+
+  const resolveLatestIdentityDraft = () => {
+    const sharedState = selectBackend(context.store.getState()).shared || {};
+    const draft = sharedState[identityDraftKey] as
+      | IdentityDraftState
+      | null
+      | undefined;
+    return draft !== undefined ? draft : identityDraft;
+  };
+
+  const resolveLatestIdentitySavedDraft = () => {
+    const sharedState = selectBackend(context.store.getState()).shared || {};
+    const draft = sharedState[identitySavedDraftKey] as
+      | IdentityDraftState
+      | null
+      | undefined;
+    return draft !== undefined ? draft : identitySavedDraft;
+  };
+
+  const resolveLatestIdentityValidationError = () =>
+    resolvedIdentityPayload
+      ? resolveIdentityDraftValidationError(
+          resolvedIdentityPayload,
+          resolveLatestIdentityDraft()
+        )
+      : 'Identity data is still loading.';
+
+  const requestIdentityPayload = () => {
+    setIdentityLoadInProgress(true);
+    try {
+      act('load_identity');
+    } catch (error) {
+      setIdentityLoadInProgress(false);
+      setIdentitySaveError(
+        'Identity data could not be requested. Please try again.'
+      );
+    }
   };
 
   const resolveBodyReloadPending = () => {
@@ -4007,6 +4411,7 @@ const CustomMarkingDesignerContent = (_props, context) => {
   };
 
   const unsavedDetectors: Record<DesignerTabId, () => boolean> = {
+    identity: detectIdentityUnsaved,
     custom: detectCustomUnsaved,
     body: detectBodyUnsaved,
     basic: detectBasicUnsaved,
@@ -4427,6 +4832,125 @@ const CustomMarkingDesignerContent = (_props, context) => {
     }
   };
 
+  const syncIdentityPayload = (payload: IdentityPayload) => {
+    setIdentityLoadInProgress(false);
+    if (identityPendingSave) {
+      return false;
+    }
+    if (detectIdentityUnsaved()) {
+      return true;
+    }
+    const canonicalDraft = buildIdentityDraftState(payload);
+    setIdentityDraft(cloneIdentityDraftState(canonicalDraft));
+    setIdentitySavedDraft(cloneIdentityDraftState(canonicalDraft));
+    setIdentityDirty(false);
+    setIdentitySaveError(null);
+    return true;
+  };
+
+  const saveIdentityChanges = (
+    close = false,
+    switchPrompt: TabSwitchPromptState | null = null
+  ): boolean => {
+    const latestDraft = resolveLatestIdentityDraft();
+    if (!resolvedIdentityPayload || !latestDraft) {
+      setIdentitySaveError('Identity data is still loading. Please try again.');
+      return false;
+    }
+    const validationError = resolveIdentityDraftValidationError(
+      resolvedIdentityPayload,
+      latestDraft
+    );
+    if (validationError) {
+      setIdentitySaveError(validationError);
+      return false;
+    }
+    if (!detectIdentityUnsaved() && !close && !switchPrompt) {
+      return true;
+    }
+    const requestId = createIdentitySaveRequestId(stateToken);
+    setIdentitySaveError(null);
+    setPendingSave(true);
+    setPendingClose(close);
+    setIdentityPendingSave(true);
+    setIdentityPendingClose(close);
+    setIdentityPendingSaveRequest({
+      requestId,
+      tabSwitchPrompt: switchPrompt,
+    });
+    try {
+      act('save_identity', {
+        ...buildIdentitySavePayload(latestDraft, resolvedIdentityPayload),
+        request_id: requestId,
+        close,
+      });
+      return true;
+    } catch (error) {
+      setPendingSave(false);
+      setPendingClose(false);
+      setIdentityPendingSave(false);
+      setIdentityPendingClose(false);
+      setIdentityPendingSaveRequest(null);
+      setIdentitySaveError(
+        'The Identity save could not be sent. Please try again.'
+      );
+      return false;
+    }
+  };
+
+  const discardIdentityChanges = () => {
+    const savedDraft = resolveLatestIdentitySavedDraft();
+    setIdentityDraft(savedDraft ? cloneIdentityDraftState(savedDraft) : null);
+    setIdentityDirty(false);
+    setIdentitySaveError(null);
+  };
+
+  const closeIdentityWithoutSaving = async () => {
+    discardIdentityChanges();
+    setPendingClose(true);
+    setIdentityPendingClose(true);
+    try {
+      await act('close_identity');
+    } finally {
+      setPendingClose(false);
+      setIdentityPendingClose(false);
+    }
+  };
+
+  const randomizeIdentityName = (identifyingGender: string) => {
+    if (identityPendingRandomNameRequest) {
+      return;
+    }
+    const latestDraft = resolveLatestIdentityDraft();
+    if (!latestDraft) {
+      setIdentitySaveError('Identity data is still loading. Please try again.');
+      return;
+    }
+    const requestId = createIdentityRandomNameRequestId(stateToken);
+    setIdentitySaveError(null);
+    setIdentityPendingRandomNameRequest({
+      requestId,
+      requestedName: latestDraft.real_name,
+    });
+    try {
+      act('randomize_identity_name', {
+        identifying_gender: identifyingGender,
+        request_id: requestId,
+      });
+    } catch (error) {
+      setIdentityPendingRandomNameRequest(null);
+      setIdentitySaveError(
+        'A random name could not be requested. Please try again.'
+      );
+    }
+  };
+
+  const prepareIdentityTab = () => {
+    if (!resolvedIdentityPayload) {
+      requestIdentityPayload();
+    }
+  };
+
   const handleTabChange = (nextTab: DesignerTabId) => {
     if (tabsLocked) {
       return;
@@ -4545,6 +5069,9 @@ const CustomMarkingDesignerContent = (_props, context) => {
         setSpeciesLoadInProgress(true);
         act('load_species');
       }
+    }
+    if (nextTab === 'identity') {
+      prepareIdentityTab();
     }
     setActiveTab(nextTab);
   };
@@ -4695,6 +5222,25 @@ const CustomMarkingDesignerContent = (_props, context) => {
     await act('load_species');
   };
 
+  const ensureIdentityPayloadForSwitch = async (forceReload: boolean) => {
+    if (!forceReload && resolvedIdentityPayload) {
+      setIdentityLoadInProgress(false);
+      return;
+    }
+    setIdentityDraft(null);
+    setIdentitySavedDraft(null);
+    setIdentityDirty(false);
+    setIdentityLoadInProgress(true);
+    try {
+      await act('load_identity');
+    } catch (error) {
+      setIdentityLoadInProgress(false);
+      setIdentitySaveError(
+        'Identity data could not be requested. Please try again.'
+      );
+    }
+  };
+
   const completeSpeciesTabSwitch = async (result: SpeciesSaveResult) => {
     if (!pendingSpeciesTabSwitch) {
       return;
@@ -4729,6 +5275,9 @@ const CustomMarkingDesignerContent = (_props, context) => {
       }
       if (prompt.targetTab === 'species') {
         await ensureSpeciesPayloadForSwitch(false);
+      }
+      if (prompt.targetTab === 'identity') {
+        await ensureIdentityPayloadForSwitch(true);
       }
       setActiveTab(prompt.targetTab);
       setTabSwitchPrompt(null);
@@ -4798,12 +5347,132 @@ const CustomMarkingDesignerContent = (_props, context) => {
       if (prompt.targetTab === 'species') {
         await ensureSpeciesPayloadForSwitch(false);
       }
+      if (prompt.targetTab === 'identity') {
+        await ensureIdentityPayloadForSwitch(false);
+      }
       setActiveTab(prompt.targetTab);
       setTabSwitchPrompt(null);
     } finally {
       clearPendingState();
       setTabSwitchBusy(false);
     }
+  };
+
+  const completeIdentitySave = async (
+    accepted: boolean,
+    pendingRequest: PendingIdentitySaveRequest,
+    saveResult: IdentitySaveResult,
+    payload: IdentityPayload | null
+  ) => {
+    setIdentityPendingSaveRequest(null);
+    const clearPendingState = () => {
+      setPendingSave(false);
+      setPendingClose(false);
+      setIdentityPendingSave(false);
+      setIdentityPendingClose(false);
+    };
+    const prompt = pendingRequest.tabSwitchPrompt;
+    if (!accepted || !payload) {
+      if (payload) {
+        const canonicalDraft = buildIdentityDraftState(payload);
+        const latestDraft = resolveLatestIdentityDraft();
+        setIdentitySavedDraft(cloneIdentityDraftState(canonicalDraft));
+        if (latestDraft) {
+          setIdentityDraft({
+            ...latestDraft,
+            revision: payload.revision,
+          });
+        }
+      }
+      setIdentitySaveError(
+        saveResult.error ||
+          'The server rejected these Identity changes. Review the fields and try again.'
+      );
+      clearPendingState();
+      if (prompt) {
+        setTabSwitchPrompt(prompt);
+        setTabSwitchBusy(false);
+      }
+      return;
+    }
+
+    const canonicalDraft = buildIdentityDraftState(payload);
+    setIdentityDraft(cloneIdentityDraftState(canonicalDraft));
+    setIdentitySavedDraft(cloneIdentityDraftState(canonicalDraft));
+    setIdentityDirty(false);
+    setIdentityLoadInProgress(false);
+    setIdentitySaveError(null);
+    if (!prompt) {
+      clearPendingState();
+      return;
+    }
+
+    try {
+      if (prompt.targetTab === 'body') {
+        await ensureBodyPayloadForSwitch(false);
+      }
+      if (prompt.targetTab === 'basic') {
+        await ensureBasicPayloadForSwitch(false);
+      }
+      if (prompt.targetTab === 'species') {
+        await ensureSpeciesPayloadForSwitch(false);
+      }
+      setActiveTab(prompt.targetTab);
+      setTabSwitchPrompt(null);
+    } finally {
+      clearPendingState();
+      setTabSwitchBusy(false);
+    }
+  };
+
+  const timeoutIdentitySave = (pendingRequest: PendingIdentitySaveRequest) => {
+    setIdentityPendingSaveRequest(null);
+    setPendingSave(false);
+    setPendingClose(false);
+    setIdentityPendingSave(false);
+    setIdentityPendingClose(false);
+    setIdentitySaveError(
+      'The server did not acknowledge the Identity save. Please try again.'
+    );
+    if (pendingRequest.tabSwitchPrompt) {
+      setTabSwitchPrompt(pendingRequest.tabSwitchPrompt);
+      setTabSwitchBusy(false);
+    }
+  };
+
+  const completeIdentityRandomName = (
+    result: IdentityRandomNameResult,
+    pendingRequest: PendingIdentityRandomNameRequest
+  ) => {
+    setIdentityPendingRandomNameRequest(null);
+    const latestDraft = resolveLatestIdentityDraft();
+    const savedDraft = resolveLatestIdentitySavedDraft();
+    if (!latestDraft || !savedDraft) {
+      setIdentitySaveError('Identity data changed while generating the name.');
+      requestIdentityPayload();
+      return;
+    }
+    if (
+      !isIdentityRandomNameRequestCurrent(
+        latestDraft,
+        pendingRequest.requestedName
+      )
+    ) {
+      return;
+    }
+    if (!result.name) {
+      setIdentitySaveError(
+        result.error || 'The server could not generate a random name.'
+      );
+      return;
+    }
+    const nextDraft = {
+      ...latestDraft,
+      real_name: result.name,
+    };
+    setIdentityDraft(nextDraft);
+    setIdentityDirty(!identityDraftStatesEqual(nextDraft, savedDraft));
+    setIdentitySaveError(null);
   };
 
   const saveTabBeforeSwitch = async (sourceTab: DesignerTabId) => {
@@ -4823,6 +5492,10 @@ const CustomMarkingDesignerContent = (_props, context) => {
       const saved = await saveTraitsChanges();
       return !!saved && !detectTraitsUnsaved();
     }
+    if (sourceTab === 'identity') {
+      const saved = saveIdentityChanges();
+      return !!saved && !detectIdentityUnsaved();
+    }
     const saved = await saveBasicChanges();
     return !!saved && !detectBasicUnsaved();
   };
@@ -4840,6 +5513,8 @@ const CustomMarkingDesignerContent = (_props, context) => {
       prompt.sourceTab === 'species' && detectSpeciesUnsaved();
     const wasTraitsDirty =
       prompt.sourceTab === 'traits' && detectTraitsUnsaved();
+    const wasIdentityDirty =
+      prompt.sourceTab === 'identity' && detectIdentityUnsaved();
     setTabSwitchBusy(true);
     if (wasSpeciesDirty) {
       const pendingSpecies = resolveLatestSpeciesSelection();
@@ -4862,6 +5537,15 @@ const CustomMarkingDesignerContent = (_props, context) => {
     if (wasTraitsDirty) {
       setTabSwitchPrompt(null);
       const saved = await saveTraitsChanges(false, prompt);
+      if (!saved) {
+        setTabSwitchPrompt(prompt);
+        setTabSwitchBusy(false);
+      }
+      return;
+    }
+    if (wasIdentityDirty) {
+      setTabSwitchPrompt(null);
+      const saved = saveIdentityChanges(false, prompt);
       if (!saved) {
         setTabSwitchPrompt(prompt);
         setTabSwitchBusy(false);
@@ -4903,6 +5587,9 @@ const CustomMarkingDesignerContent = (_props, context) => {
       if (prompt.targetTab === 'species') {
         await ensureSpeciesPayloadForSwitch(wasCustomDirty);
       }
+      if (prompt.targetTab === 'identity') {
+        await ensureIdentityPayloadForSwitch(wasBasicDirty || wasSpeciesDirty);
+      }
       setActiveTab(prompt.targetTab);
     } finally {
       setTabSwitchBusy(false);
@@ -4924,6 +5611,8 @@ const CustomMarkingDesignerContent = (_props, context) => {
         discardSpeciesChanges();
       } else if (tabSwitchPrompt.sourceTab === 'traits') {
         discardTraitsChanges();
+      } else if (tabSwitchPrompt.sourceTab === 'identity') {
+        discardIdentityChanges();
       } else {
         discardBasicChanges();
       }
@@ -4944,6 +5633,9 @@ const CustomMarkingDesignerContent = (_props, context) => {
       }
       if (tabSwitchPrompt.targetTab === 'species') {
         await ensureSpeciesPayloadForSwitch(false);
+      }
+      if (tabSwitchPrompt.targetTab === 'identity') {
+        await ensureIdentityPayloadForSwitch(false);
       }
       setActiveTab(tabSwitchPrompt.targetTab);
     } finally {
@@ -5037,6 +5729,33 @@ const CustomMarkingDesignerContent = (_props, context) => {
         pendingRequest={traitsPendingSaveRequest}
         onAcknowledged={completeTraitsSave}
       />
+      <IdentityPayloadRequestScheduler
+        key={`identity-request-${stateToken}`}
+        active={resolvedActiveTab === 'identity'}
+        payload={resolvedIdentityPayload}
+        loadInProgress={identityLoadInProgress}
+        onRequest={requestIdentityPayload}
+      />
+      <IdentityPayloadSyncScheduler
+        key={`identity-sync-${stateToken}`}
+        payload={resolvedIdentityPayload}
+        onPayload={syncIdentityPayload}
+      />
+      <IdentitySaveResultSyncScheduler
+        saveResult={data.identity_save_result || null}
+        payload={resolvedIdentityPayload}
+        pendingRequest={identityPendingSaveRequest}
+        onAcknowledged={completeIdentitySave}
+      />
+      <IdentitySaveTimeoutScheduler
+        pendingRequest={identityPendingSaveRequest}
+        onTimeout={timeoutIdentitySave}
+      />
+      <IdentityRandomNameResultSyncScheduler
+        result={data.identity_random_name_result || null}
+        pendingRequest={identityPendingRandomNameRequest}
+        onAcknowledged={completeIdentityRandomName}
+      />
       <PayloadPrefetchScheduler
         enabled={
           resolvedActiveTab !== 'species' ||
@@ -5067,7 +5786,45 @@ const CustomMarkingDesignerContent = (_props, context) => {
       />
       <DesignerUndoHotkeyListener canUndo={canUndoDrafts} onUndo={handleUndo} />
       <Window.Content scrollable overflowX="auto">
-        {resolvedActiveTab === 'custom' ? (
+        {resolvedActiveTab === 'identity' ? (
+          <IdentityTab
+            context={context}
+            stateToken={stateToken}
+            payload={resolvedIdentityPayload}
+            draft={identityDraft}
+            savedDraft={identitySavedDraft}
+            setDraft={setIdentityDraft}
+            setDirty={setIdentityDirty}
+            dirty={identityDirty}
+            pendingSave={identityPendingSave}
+            pendingClose={identityPendingClose}
+            randomNamePending={!!identityPendingRandomNameRequest}
+            saveError={identitySaveError}
+            uiLocked={uiLocked}
+            onRandomizeName={randomizeIdentityName}
+            onSave={() => saveIdentityChanges(false)}
+            onSaveAndClose={() => saveIdentityChanges(true)}
+            onDiscardAndClose={closeIdentityWithoutSaving}
+            canvasBackgroundOptions={canvasBackgroundOptions}
+            resolvedCanvasBackground={resolvedCanvasBackground}
+            backgroundFallbackColor={backgroundFallbackColor}
+            cycleCanvasBackground={cycleCanvasBackground}
+            canvasBackgroundScale={canvasBackgroundScale}
+            livePreview={tabLivePreview}
+            canvasWidth={canvasWidth}
+            canvasHeight={canvasHeight}
+            iconScaleX={data.trait_icon_scale_x}
+            iconScaleY={data.trait_icon_scale_y}
+            previewFitToFrame={previewFitToFrame}
+            onTogglePreviewFit={toggleCanvasFit}
+            showEquipment={showEquipment}
+            onToggleEquipment={() => setShowEquipment(!showEquipment)}
+            showJobGear={showJobGear}
+            onToggleJobGear={() => setShowJobGear(!showJobGear)}
+            showLoadoutGear={showLoadoutGear}
+            onToggleLoadout={() => setShowLoadoutGear(!showLoadoutGear)}
+          />
+        ) : resolvedActiveTab === 'custom' ? (
           <Box className="RogueStar" position="relative" minHeight="100%">
             <Flex direction="row" fill gap={2} wrap={false} align="stretch">
               <DesignerLeftColumn
@@ -5272,7 +6029,8 @@ const CustomMarkingDesignerContent = (_props, context) => {
           tabSwitchPrompt,
           resolveLatestSpeciesSelection(),
           resolveLatestSpeciesCustomName(),
-          resolveLatestTraitsValidationError()
+          resolveLatestTraitsValidationError(),
+          resolveLatestIdentityValidationError()
         )}
         onSave={handleTabSwitchSave}
         onDiscard={handleTabSwitchDiscard}
