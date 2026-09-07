@@ -9,6 +9,8 @@
 // ////////////////////////////////////////////////////////////////////////////////////////////////////
 // Updated by Lira for Rogue Star August 2026: Character Designer - Species and Prosthetics ///////////
 // ////////////////////////////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star September 2026: Character Designer - Identity Tab ///////////////////
+// ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 import type { BooleanLike } from '../../../common/react';
 import type {
@@ -52,7 +54,7 @@ export type DraftStrokePayload = {
 export type CustomMarkingDesignerData = {
   marking_id?: string;
   mark_name?: string;
-  initial_tab?: 'custom' | 'body' | 'basic' | 'species' | 'traits';
+  initial_tab?: 'identity' | 'custom' | 'body' | 'basic' | 'species' | 'traits';
   allow_custom_tab?: boolean;
   custom_marking_enable_disclaimer?: string;
   active_dir: string;
@@ -105,6 +107,10 @@ export type CustomMarkingDesignerData = {
   traits_save_result?: TraitsSaveResult | null;
   traits_revision?: number;
   traits_species?: string | null;
+  identity_payload?: IdentityPayload | null;
+  identity_save_result?: IdentitySaveResult | null;
+  identity_random_name_result?: IdentityRandomNameResult | null;
+  identity_revision?: number;
   trait_icon_scale_x?: number;
   trait_icon_scale_y?: number;
   species_save_result?: SpeciesSaveResult | null;
@@ -660,6 +666,142 @@ export type TraitsSaveResult = {
   request_id: string;
   accepted: BooleanLike;
   traits_revision: number;
+  error?: string | null;
+};
+
+export type IdentityValues = {
+  real_name: string;
+  nickname: string;
+  name_color: string | null;
+  be_random_name: boolean;
+  identifying_gender: string;
+  age: number;
+  bday_month: number;
+  bday_day: number;
+  bday_announce: boolean;
+  metadata: string;
+  metadata_likes: string;
+  metadata_dislikes: string;
+  custom_link: string;
+  flavor_text_general: string;
+  flavor_text_head: string;
+  flavor_text_face: string;
+  flavor_text_eyes: string;
+  flavor_text_torso: string;
+  flavor_text_arms: string;
+  flavor_text_hands: string;
+  flavor_text_legs: string;
+  flavor_text_feet: string;
+  robot_flavor_texts: Record<string, string>;
+  economic_status: string;
+  home_system: string;
+  birthplace: string;
+  citizenship: string;
+  faction: string;
+  religion: string;
+  med_record: string;
+  gen_record: string;
+  sec_record: string;
+};
+
+export type IdentityLocationKind =
+  | 'system'
+  | 'planet'
+  | 'moon'
+  | 'settlement'
+  | 'compact'
+  | 'habitat'
+  | 'flotilla'
+  | 'unknown';
+
+export type IdentityLocationOption = {
+  name: string;
+  display_name?: string | null;
+  kind: IdentityLocationKind;
+  system?: string | null;
+  system_description?: string | null;
+  description?: string | null;
+};
+
+export type IdentityOrganizationOption = {
+  name: string;
+  display_name?: string | null;
+  description: string;
+};
+
+export type IdentityLocationGroupKind = 'system' | 'mobile' | 'unconfirmed';
+
+export type IdentityLocationGroup = {
+  id: string;
+  name: string;
+  kind: IdentityLocationGroupKind;
+  description?: string | null;
+  locations: IdentityLocationOption[];
+};
+
+export type IdentityPayload = Omit<
+  IdentityValues,
+  'be_random_name' | 'bday_announce'
+> & {
+  be_random_name: BooleanLike;
+  bday_announce: BooleanLike;
+  revision: number;
+  pronoun_options: string[];
+  economic_status_options: string[];
+  home_system_options: string[];
+  location_options: IdentityLocationOption[];
+  citizenship_options: string[];
+  citizenship_catalog_options: IdentityOrganizationOption[];
+  faction_options: string[];
+  faction_catalog_options: IdentityOrganizationOption[];
+  religion_options: string[];
+  religion_catalog_options: IdentityOrganizationOption[];
+  robot_flavor_text_modules: string[];
+  min_age: number;
+  max_age: number;
+  max_name_length: number;
+  max_ooc_notes_length: number;
+  max_custom_link_length: number;
+  max_flavor_text_length: number;
+  max_record_length: number;
+  allow_ooc_notes: boolean;
+  records_banned: boolean;
+};
+
+export type IdentityDraftState = IdentityValues & {
+  revision: number;
+};
+
+export type IdentitySavePayload = Omit<
+  IdentityValues,
+  | 'metadata'
+  | 'metadata_likes'
+  | 'metadata_dislikes'
+  | 'med_record'
+  | 'gen_record'
+  | 'sec_record'
+> & {
+  revision: number;
+  metadata?: string;
+  metadata_likes?: string;
+  metadata_dislikes?: string;
+  med_record?: string;
+  gen_record?: string;
+  sec_record?: string;
+};
+
+export type IdentitySaveResult = {
+  revision: number;
+  request_id: string;
+  accepted: BooleanLike;
+  identity_revision: number;
+  error?: string | null;
+};
+
+export type IdentityRandomNameResult = {
+  revision: number;
+  request_id: string;
+  name?: string | null;
   error?: string | null;
 };
 
