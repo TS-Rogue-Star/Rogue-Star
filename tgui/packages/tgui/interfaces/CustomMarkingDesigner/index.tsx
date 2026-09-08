@@ -196,12 +196,7 @@ import { TraitsTab } from './TraitsTab';
 import { IdentityTab } from './IdentityTab';
 
 type DesignerTabId =
-  | 'identity'
-  | 'custom'
-  | 'body'
-  | 'basic'
-  | 'species'
-  | 'traits';
+  'identity' | 'custom' | 'body' | 'basic' | 'species' | 'traits';
 
 type PreviewWithMarkingsCache = {
   signature: string;
@@ -4242,18 +4237,14 @@ const CustomMarkingDesignerContent = (_props, context) => {
   const resolveLatestIdentityDraft = () => {
     const sharedState = selectBackend(context.store.getState()).shared || {};
     const draft = sharedState[identityDraftKey] as
-      | IdentityDraftState
-      | null
-      | undefined;
+      IdentityDraftState | null | undefined;
     return draft !== undefined ? draft : identityDraft;
   };
 
   const resolveLatestIdentitySavedDraft = () => {
     const sharedState = selectBackend(context.store.getState()).shared || {};
     const draft = sharedState[identitySavedDraftKey] as
-      | IdentityDraftState
-      | null
-      | undefined;
+      IdentityDraftState | null | undefined;
     return draft !== undefined ? draft : identitySavedDraft;
   };
 

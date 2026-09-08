@@ -60,15 +60,13 @@ export const buildIdentityLocationRegions = (
     groups: buildIdentityLocationGroups(locations)
       .flatMap((group) =>
         group.kind === 'mobile'
-          ? group.locations.map(
-              (option): IdentityLocationGroup => ({
-                id: `flotilla:${option.name}`,
-                name: getIdentityLocationDisplayName(option),
-                kind: 'mobile',
-                description: option.description || null,
-                locations: [option],
-              })
-            )
+          ? group.locations.map((option): IdentityLocationGroup => ({
+              id: `flotilla:${option.name}`,
+              name: getIdentityLocationDisplayName(option),
+              kind: 'mobile',
+              description: option.description || null,
+              locations: [option],
+            }))
           : [group]
       )
       .sort((left, right) => left.name.localeCompare(right.name)),
