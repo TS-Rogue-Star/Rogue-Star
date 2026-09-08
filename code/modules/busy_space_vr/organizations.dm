@@ -1,11 +1,6 @@
-//////////////////////////////////////////////////////////////////////////////
-// Updated by Lira for Rogue Star September 2026: Hub for organization lore //
-//////////////////////////////////////////////////////////////////////////////
-
 //Datums for different factions that can be used by busy_space
 /datum/lore/organization
 	var/name = ""				// Organization's name
-	var/identity_display_name 	// RS Add: Optional Character Designer label; saved choices remain separate.
 	var/short_name = ""			// Organization's shortname (NanoTrasen for "NanoTrasen Incorporated")
 	var/acronym = ""			// Organization's acronym, e.g. 'NT' for NanoTrasen'.
 	var/desc = ""				// One or two paragraph description of the organization, but only current stuff.  Currently unused.
@@ -306,13 +301,12 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 // TSCs
-// RS Edit: Character Designer - Identity Tab (Lira, September 2026) || Sources: https://wiki.vore-station.net/index.php?title=NanoTrasen&oldid=8993
 /datum/lore/organization/tsc/nanotrasen
 	name = "NanoTrasen Incorporated"
 	short_name = "NanoTrasen "
 	acronym = "NT"
 	desc = "NanoTrasen is one of the foremost research and development companies in Commonwealth space. \
-	Originally a gene-therapy business on Mars, its medical acquisitions and expansion into Phoron led to \
+	Originally focused on consumer products, their swift move into the field of Phoron has lead to \
 	them being the foremost experts on the substance and its uses. In the modern day, NanoTrasen prides \
 	itself on being an early adopter to as many new technologies as possible, often offering the newest \
 	products to their employees. In an effort to combat complaints about being 'guinea pigs', Nanotrasen \
@@ -657,10 +651,8 @@
 			"our headquarters on Earth"
 			)
 
-// RS Edit: Character Designer - Identity Tab (Lira, September 2026) || Sources: https://wiki.vore-station.net/index.php?title=Ward-Takahashi_GMB&oldid=8340
 /datum/lore/organization/tsc/ward_takahashi
-	name = "Ward-Takahashi GMB"
-	identity_display_name = "Ward-Takahashi GMB"
+	name = "Ward-Takahashi General Manufacturing Conglomerate"
 	short_name = "Ward-Takahashi "
 	acronym = "WT"
 	desc = "Ward-Takahashi focuses on the sale of small consumer electronics, with its computers, communicators, \
@@ -967,12 +959,11 @@
 			)
 	destination_names = list()
 
-// RS Edit: Character Designer - Identity Tab (Lira, September 2026) || Sources: https://wiki.vore-station.net/index.php?title=Free_Trade_Union&oldid=8995
 /datum/lore/organization/tsc/ftu
 	name = "Free Trade Union"
 	short_name = "Trade Union "
 	acronym = "FTU"
-	desc = "The Free Trade Union is different from other transtellar companies in that they are not just a company; rather, they are a big conglomerate of various traders and merchants from all over the galaxy. The FTU is also partially responsible for many of the large scale 'freeport' trade stations across the known galaxy, even in non-human space. Generally, they are multi-purpose stations but they always keep areas filled with duty-free shops, where almost anything you can imagine can be found - so long as it's not outrageously illegal or hideously expensive.<br><br>The FTU helped popularize Tradeband as a common language for merchants from different species and nations.<br><br>The Union controls a sizable merchant fleet whose captains have autonomy to trade, alongside combat vessels that answer directly to central command and defend its traders."
+	desc = "The Free Trade Union is different from other transtellar companies in that they are not just a company; rather, they are a big conglomerate of various traders and merchants from all over the galaxy. The FTU is also partially responsible for many of the large scale 'freeport' trade stations across the known galaxy, even in non-human space. Generally, they are multi-purpose stations but they always keep areas filled with duty-free shops, where almost anything you can imagine can be found - so long as it's not outrageously illegal or hideously expensive.<br><br>They are the creators of the Tradeband language, created specially for being a lingua franca where every merchant can understand each other independent of language or nationality.<br><br>The Union doesn't maintain a particularly large fleet of its own; most members are card-carrying independents who fly under their own flags. When you do see a Union ship (they usually operate under the names of historic merchants) you can be assured that it's tending to something that the Union sees as being of the utmost importance to its interests."
 	history = ""
 	work = ""
 	headquarters = ""
@@ -1659,91 +1650,6 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 // Other
-// RS Add: Character Designer - Identity Tab (Lira, September 2026) || Sources: /datum/lore/codex/page/human/add_content()
-/datum/lore/organization/other/greater_human_diaspora
-	name = "Greater Human Diaspora"
-	short_name = "Greater Human Diaspora "
-	acronym = ""
-	desc = "The Greater Human Diaspora is a collective identity for humanity's many interstellar societies, rather than a single government. \
-	Humans have spread widely from Earth through exploration, trade, corporate expansion, settlement, and repeated political divisions; the Commonwealth of Sol-Procyon is the largest human polity, but represents only one portion of humanity. \
-	The label is most often used by people who identify with the wider diaspora or an independent or minor human community rather than one of the major states."
-	history = ""
-	work = "a collective identity for humanity's interstellar societies"
-	headquarters = ""
-	motto = ""
-	org_type = "neutral"
-	autogenerate_destination_names = FALSE
-
-// RS Add: Character Designer - Identity Tab (Lira, September 2026) || Sources: /datum/lore/codex/page/akula/add_content(), https://wiki.vore-station.net/index.php?title=Vital_Lore&oldid=10665, https://wiki.vore-station.net/index.php?title=Backstory&oldid=10631, /datum/lore/organization/other/kosaky_fleets
-/datum/lore/organization/other/kosaky_fleets
-	name = "Kosaky Fleets"
-	short_name = "Kosaky Fleets "
-	acronym = ""
-	desc = "The Kosaky Fleets are loose, independent nomadic communities that travel between systems to trade, salvage, mine, build, and hire out their services. \
-	They maintain small waystations and seasonal asteroid-hab wintering camps across Commonwealth space, where they replenish supplies, divide earnings, trade with nearby settlements, and settle policy and leadership through traditions and competitions. \
-	Their culture is steeped in stories of the Void and reciprocal hospitality, and Akula live among the fleets after their incidental uplift by free Kosaky."
-	history = ""
-	work = "nomadic trade, salvage, construction, and frontier services"
-	headquarters = ""
-	motto = ""
-	org_type = "spacer"
-	autogenerate_destination_names = FALSE
-
-// RS Add: Character Designer - Identity Tab (Lira, September 2026) || Sources: /datum/lore/codex/page/tajaran/add_content(), https://wiki.vore-station.net/index.php?title=Backstory&oldid=10631, https://wiki.vore-station.net/index.php?title=Tajaran&oldid=9624
-/datum/lore/organization/other/tajaran_diaspora
-	name = "Tajaran Diaspora"
-	short_name = "Tajaran Diaspora "
-	acronym = ""
-	desc = "The Tajaran Diaspora is a broad name for the many Tajaran peoples, states, fleets, and colonies originating from Meralar in the Rarkajar system. \
-	It is not a single government: Tajaran society encompasses city-states, kingdoms, federations, noble houses, nomadic groups, and other cultures with distinct interests and traditions. \
-	Tajaran are relatively new to interstellar politics but are proud explorers and colonists, active traders, and renowned terraformers who have spread along and beyond the Commonwealth's rimward frontier."
-	history = ""
-	work = "a collective identity for Tajaran cultures and polities"
-	headquarters = ""
-	motto = ""
-	org_type = "neutral"
-	autogenerate_destination_names = FALSE
-
-// RS Add: Character Designer - Identity Tab (Lira, September 2026) || Sources: https://wiki.vore-station.net/index.php?title=ITG&oldid=8262
-/datum/lore/organization/other/ironcrest
-	name = "Ironcrest Transport Group"
-	short_name = "ITG "
-	acronym = "ITG"
-	desc = "Commonly known as ITG, Ironcrest Transport Group is a rapidly expanding freight carrier operating across the Coreward Periphery. \
-	It favors fast, lightly armed cargo and passenger vessels, maintains defensive security, and trains workers for contract placement with other companies. \
-	ITG is particularly known for helping Black Eyed Shadekin enter spacefaring life; employees praise its pay and provided necessities, though some express concern about clauses governing departure from the company."
-	history = ""
-	work = "interstellar freight, passenger transport, and contract staffing"
-	headquarters = ""
-	motto = ""
-	autogenerate_destination_names = FALSE
-
-// RS Add: Character Designer - Identity Tab (Lira, September 2026) || Sources: https://wiki.vore-station.net/index.php?title=Periphery_Post&oldid=10026
-/datum/lore/organization/other/periphery_post
-	name = "Periphery Post"
-	short_name = "Periphery Post "
-	acronym = "PP"
-	desc = "The Periphery Post is a fast-moving news outlet covering stories, interviews, rumors, scandals, and opinion across the Coreward Periphery and beyond. \
-	Its reporting ranges from regional politics and breaking events to human-interest pieces and comedy, giving local workers a lively view of the wider galaxy."
-	history = ""
-	work = "news media"
-	headquarters = ""
-	motto = "Lightning fast news here now. Take the PP!"
-	autogenerate_destination_names = FALSE
-
-// RS Add: Character Designer - Identity Tab (Lira, September 2026) || Sources: https://wiki.vore-station.net/index.php?title=Free_Anur_Tribune&oldid=9350, https://wiki.vore-station.net/index.php?title=Vital_Lore&oldid=10665
-/datum/lore/organization/other/free_anur_tribune
-	name = "Free Anur Tribune"
-	short_name = "Free Anur Tribune "
-	acronym = "FAT"
-	desc = "The Free Anur Tribune is a local news outlet devoted exclusively to Virgo-Erigone. \
-	Through news reports, interviews, and video coverage, it chronicles current affairs and preserves the system's modern public history."
-	history = ""
-	work = "local news media"
-	headquarters = ""
-	motto = "Get the real news. Get FAT."
-	autogenerate_destination_names = FALSE
-
 /datum/lore/organization/other/kitsuhana	//sorry KHI, but you're not a coherent stellar government, and you're definitely not a TSC. you get to go in the Others pool. //makes sense to me!
 	name = "Kitsuhana Heavy Industries"
 	short_name = ""	//whitespace haaaack
@@ -2744,13 +2650,13 @@
 		destination_names.Add("[pick(location)] [pick(greek)]-[pick(greek)]","[pick(location)] [pick(phoenician)]-[pick(phoenician)]","[pick(location)] [pick(russian)]-[pick(russian)]","[pick(location)] [pick(american)]-[pick(american)]")
 		fyrdsgen--
 
-// RS Edit: Character Designer - Identity Tab (Lira, September 2026) || Sources: https://wiki.vore-station.net/index.php?title=Teshari&oldid=9625
 /datum/lore/organization/gov/teshari
 	name = "Teshari Expeditionary Fleet"
-	identity_display_name = "Teshari Auxiliary Spacefleet"
 	short_name = "Teshari Expeditionary "
 	acronym = "TEF"
-	desc = "The Teshari are a Skrell protectorate governed by a grand parliament representing major Teshari populations. The Skrell representative's role has become largely honorary. They rely on Skrell protection, maintaining a small Teshari Auxiliary Spacefleet devoted chiefly to logistics: supply ships, tenders, hospital ships, and survey vessels. Most are donated Skrell ships adapted for Teshari crews, with more locally built vessels joining the fleet. Its two warships are the destroyer TAS Raptora Victore and the experimental corvette TAS Curiosity's Endeavor."
+	desc = "Though nominally a client state of the skrell, the teshari nevertheless maintain their own navy in the form of the Teshari Expeditionary Fleet. The TEF are as much civil and combat engineers as a competent space force, as they are the tip of the spear when it comes to locating and surveying new worlds suitable for teshari habitation, and in the establishment of full colonies. That isn't to say there aren't independent teshari colonies out there, but those that are founded under the wings of the TEF tend to be the largest and most prosperous. They're also responsible for maintaining the security of these colonies and protecting trade ships. Like the USDF (and unlike most other governmental fleets), TEF vessels almost universally sport the 'TEF' designator rather than specific terms.\
+	<br><br>\
+	The TEF's ships are named after famous teshari pioneers and explorers and the events surrounding those individuals."
 	history = ""
 	work = "teshari colonization and infrastructure maintenance"
 	headquarters = "Qerr'balak, Qerr'valis"
@@ -2873,43 +2779,14 @@
 			"one of our production fleets"
 			)
 
-// RS Add: Character Designer - Identity Tab (Lira, September 2026) || Sources: https://wiki.vore-station.net/index.php?title=Backstory&oldid=10631
-/datum/lore/organization/gov/moghes_hegemony
-	name = "Moghes Hegemony"
-	short_name = "Moghes Hegemony "
-	acronym = ""
-	desc = "The Moghes Hegemony is an ancient, decentralized Unathi empire. The priesthood on Moghes arbitrates between competing Allegiances, which combine noble houses, extended families, and political factions. Allegiances administer their own systems, raise armies and navies, and receive the loyalty of their client species. Duty, honor, hierarchy, and skilled craftsmanship are central to Unathi culture. The Hegemony remains at an uneasy peace with humanity after the Hegemony War."
-	history = ""
-	work = "an Unathi-led interstellar empire"
-	headquarters = "Moghes, Uuoea-Esa"
-	motto = ""
-	org_type = "government"
-	autogenerate_destination_names = FALSE
-
-// RS Add: Character Designer - Identity Tab (Lira, September 2026) || Sources: /datum/lore/codex/page/skrell/add_content(), https://wiki.vore-station.net/index.php?title=Backstory&oldid=10631
-/datum/lore/organization/gov/skrell_consensus
-	name = "Skrell Consensus"
-	short_name = "Skrell Consensus "
-	acronym = ""
-	desc = "The Skrell Consensus is an ancient and technologically advanced Skrell civilization whose interstellar society is decentralized among interrelated city-states and constitutional monarchies. \
-	Local Qerr-Katish monarchs govern alongside caste councils and academy legislatures. \
-	Despite this decentralized structure, the Consensus is an immense industrial and scientific power that prizes order, learning, achievement, and harmony, and it maintains generally cordial relations with humanity despite its guarded politics and closely held technology."
-	history = ""
-	work = "an ancient Skrellian interstellar polity"
-	headquarters = ""
-	motto = ""
-	org_type = "government"
-	autogenerate_destination_names = FALSE
-
 //////////////////////////////////////////////////////////////////////////////////
 
 // Military
-// RS Edit: Character Designer - Identity Tab (Lira, September 2026) || Sources: https://wiki.vore-station.net/index.php?title=United_Solar_Defense_Force&oldid=10527
 /datum/lore/organization/mil/usdf
 	name = "United Solar Defense Force"
 	short_name = "" //Doesn't cause whitespace any more, with a little sneaky low-effort workaround
 	acronym = "USDF"
-	desc = "The United Solar Defense Force is the federal military of the Commonwealth of Sol-Procyon. It arose from the Commonwealth's reform of the colonial militia system through the Act of Colonial Security. The Rapid Deployment Guard patrols shipping lanes and borders, the Solar Defense Navy provides the main naval force, and the Colonial Army defends and fights on planetary surfaces. Its forces are funded by Commonwealth member colonies and protect the Commonwealth's people, territory, and interests."
+	desc = "The USDF is the dedicated military force of the Commonwealth, originally formed by the United Nations. USDF ships are responsible for securing the major traffic lanes between Commonwealth member systems, as well as protecting them from threats that are too great for local SDF units to handle. Despite nominally being a 'Defense Force', a lot of dubious incidents and several notable firebrands within the USDF mean that the Fleet is considered by some to be the galaxy\'s eight-hundred-pound gorilla; it does whatever it wants whenever it wants, and there really isn\'t anything you (or anyone else, even the Commonwealth itself) can do about it. Thankfully a coalition of moderates and Commonwealth loyalists have so far managed to keep the hardliners from getting away with too much, at least for the time being."
 	history = ""
 	work = "peacekeeping and piracy suppression"
 	headquarters = "Paris, Earth"
@@ -3150,7 +3027,6 @@
 			)
 			//some basics, padded with autogen
 
-// RS Edit: Character Designer - Identity Tab (Lira, September 2026) || Sources: https://ss13polaris.com/wiki/index.php?title=Trans-Stellar_Corporations&oldid=3961
 //replaced the edgy blackstar group with polaris-canon SAARE
 /datum/lore/organization/mil/saare
 	name = "Stealth Assault Enterprises"

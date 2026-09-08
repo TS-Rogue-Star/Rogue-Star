@@ -181,7 +181,6 @@ export class TextArea extends Component {
       value,
       maxLength,
       placeholder,
-      disabled, // RS Add: Character Designer - Identity Tab (Lira, September 2026)
       scrollbar,
       noborder,
       displayedValue,
@@ -222,7 +221,6 @@ export class TextArea extends Component {
             nowrap && 'TextArea__nowrap',
           ])}
           placeholder={placeholder}
-          disabled={disabled} // RS Add: Character Designer - Identity Tab (Lira, September 2026)
           onChange={this.handleOnChange}
           onKeyDown={this.handleKeyDown}
           onKeyPress={this.handleKeyPress}

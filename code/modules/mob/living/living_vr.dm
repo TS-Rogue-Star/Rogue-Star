@@ -93,7 +93,6 @@
 		msg += "<br><br><b>DISLIKES</b><br><br>[ooc_notes_to_html(ooc_notes_dislikes)]" // RS Edit: Allow special characters (Lira, May 2026)
 	to_chat(usr, "<span class='filter_notice'>[src]'s Metainfo:<br>[msg]</span>")
 
-// RS Edit: Character Designer - Identity Tab (Lira, September 2026)
 /mob/living/verb/set_custom_link()
 	set name = "Set Custom Link"
 	set desc = "Set a custom link to show up with your examine text."
@@ -101,10 +100,10 @@
 
 	if(usr != src)
 		return
-	var/new_link = strip_html_simple(tgui_input_text(usr, "Enter a link to add on to your examine text! This should be a related image link/gallery, or things like your F-list. This is not the place for memes.", "Custom Link" , html_decode(custom_link), max_length = MAX_CUSTOM_LINK_LENGTH, encode = TRUE,  prevent_enter = TRUE))
+	var/new_link = strip_html_simple(tgui_input_text(usr, "Enter a link to add on to your examine text! This should be a related image link/gallery, or things like your F-list. This is not the place for memes.", "Custom Link" , html_decode(custom_link), max_length = 100, encode = TRUE,  prevent_enter = TRUE))
 	if(new_link && CanUseTopic(usr))
-		if(length(new_link) > MAX_CUSTOM_LINK_LENGTH)
-			to_chat(usr, "<span class = 'warning'>Your entry is too long, it must be [MAX_CUSTOM_LINK_LENGTH] characters or less.</span>")
+		if(length(new_link) > 100)
+			to_chat(usr, "<span class = 'warning'>Your entry is too long, it must be 100 characters or less.</span>")
 			return
 
 		custom_link = new_link

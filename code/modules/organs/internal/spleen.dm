@@ -2,7 +2,6 @@
 	name = "spleen"
 	icon_state = "spleen"
 	organ_tag = O_SPLEEN
-	chargen_prosthetic_flags = ORGAN_CHARGEN_STANDARD // RS Add: Character Designer - Species and Prosthetics (Lira, August 2026)
 	parent_organ = BP_TORSO
 	w_class = ITEMSIZE_TINY
 

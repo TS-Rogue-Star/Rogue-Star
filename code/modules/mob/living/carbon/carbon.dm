@@ -85,8 +85,6 @@
 
 /mob/living/carbon/attack_hand(mob/M as mob)
 	SEND_SIGNAL(src, COMSIG_ATOM_ATTACK_HAND, M)	//RS ADD
-	if(ai_holder && M.a_intent != I_HELP)	// RS ADD
-		ai_holder.react_to_attack(M)	// RS ADD
 	if(!istype(M, /mob/living/carbon)) return
 	if (ishuman(M))
 		var/mob/living/carbon/human/H = M
@@ -311,11 +309,9 @@
 						M.resting = 0 //Hoist yourself up up off the ground. No para/stunned/weakened removal.
 				else if(istype(hugger))
 					hugger.species.hug(hugger,src)
-					resolve_stimuli(hugger, STIM_HELP)	//RS ADD
 				else
 					M.visible_message("<span class='notice'>[M] hugs [src] to make [T.him] feel better!</span>", \
 								"<span class='notice'>You hug [src] to make [T.him] feel better!</span>")
-					resolve_stimuli(hugger, STIM_HELP)	//RS ADD
 				if(M.fire_stacks >= (src.fire_stacks + 3))
 					src.adjust_fire_stacks(1)
 					M.adjust_fire_stacks(-1)

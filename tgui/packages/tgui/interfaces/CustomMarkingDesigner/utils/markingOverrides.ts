@@ -1,8 +1,6 @@
 // /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Created by Lira for Rogue Star December 2025: Helpers for merging client-side body marking layers into preview/reference grids //
 // /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Updated by Lira for Rogue Star August 2026: Character Designer - Species and Prosthetics ////////////////////////////////////////
-// /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 import { TRANSPARENT_HEX } from '../../../utils/color';
 import {
@@ -122,26 +120,23 @@ export const buildReferencePartMarkingGridsByDir = (
   return result;
 };
 
-export const buildSuppressedMarkingPartsByDir = (
+export const buildHiddenBodyPartsByDir = (
   previewDirStates: Record<number, PreviewDirState>
 ): Record<number, Record<string, boolean>> => {
   const result: Record<number, Record<string, boolean>> = {};
   Object.values(previewDirStates || {}).forEach((dirState) => {
-    if (!dirState) {
+    const hiddenParts = dirState?.hiddenBodyParts;
+    if (!dirState || !Array.isArray(hiddenParts) || !hiddenParts.length) {
       return;
     }
-    const suppressedMap: Record<string, boolean> = {};
-    const suppressedParts = [
-      ...(dirState.hiddenBodyParts || []),
-      ...(dirState.markingExcludedParts || []),
-    ];
-    suppressedParts.forEach((partId) => {
+    const hiddenMap: Record<string, boolean> = {};
+    hiddenParts.forEach((partId) => {
       if (typeof partId === 'string' && partId.length) {
-        suppressedMap[partId] = true;
+        hiddenMap[partId] = true;
       }
     });
-    if (Object.keys(suppressedMap).length) {
-      result[dirState.dir] = suppressedMap;
+    if (Object.keys(hiddenMap).length) {
+      result[dirState.dir] = hiddenMap;
     }
   });
   return result;

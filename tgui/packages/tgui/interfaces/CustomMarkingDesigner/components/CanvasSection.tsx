@@ -1,8 +1,6 @@
 // /////////////////////////////////////////////////////////////////////////////////////////////////////
 // Created by Lira for Rogue Star December 2025: Canvas section component for custom marking designer //
 // /////////////////////////////////////////////////////////////////////////////////////////////////////
-// Updated by Lira for Rogue Star August 2026: Character Designer - Species and Prosthetics ////////////
-// /////////////////////////////////////////////////////////////////////////////////////////////////////
 
 import { Box, Flex, Section } from '../../../components';
 import { PaintCanvas } from '../../Canvas';
@@ -24,10 +22,7 @@ export type CanvasSectionProps = Readonly<{
   title: string;
   canvasFrameStyle: Record<string, any>;
   canvasBackgroundStyle?: Record<string, any> | null;
-  canvasRenderWidthPx: number;
-  canvasRenderHeightPx: number;
-  canvasOffsetX: number;
-  canvasOffsetY: number;
+  canvasTransform: string;
   canvasKey: string;
   backgroundImage: string | null;
   backgroundFallbackColor: string;
@@ -64,10 +59,7 @@ export const CanvasSection = ({
   title,
   canvasFrameStyle,
   canvasBackgroundStyle,
-  canvasRenderWidthPx,
-  canvasRenderHeightPx,
-  canvasOffsetX,
-  canvasOffsetY,
+  canvasTransform,
   canvasKey,
   backgroundImage,
   backgroundFallbackColor,
@@ -215,9 +207,7 @@ export const CanvasSection = ({
               activeLayerKey={activePartKey}
               otherLayerOpacity={genericReferenceOpacity}
               dotsize={canvasPixelSize}
-              legacyGridGuideSize={
-                canvasToolbarProps.canvasFitToFrame ? CANVAS_FIT_TARGET : 0
-              }
+              legacyGridGuideSize={CANVAS_FIT_TARGET}
               tool={activePrimaryTool ? activePrimaryTool : PLACEHOLDER_TOOL}
               secondaryTool={activeSecondaryTool || undefined}
               resolveToolForButton={(button) => resolveToolForButton(button)}
@@ -226,13 +216,12 @@ export const CanvasSection = ({
               finalized={false}
               allowUndoShortcut
               style={{
-                position: 'absolute',
+                position: 'relative',
                 zIndex: 1,
-                left: `${canvasOffsetX}px`,
-                top: `${canvasOffsetY}px`,
-                width: `${canvasRenderWidthPx}px`,
-                height: `${canvasRenderHeightPx}px`,
-                'image-rendering': 'pixelated',
+                width: `${canvasDisplayWidthPx}px`,
+                height: `${canvasDisplayHeightPx}px`,
+                transform: canvasTransform,
+                transformOrigin: 'top left',
                 backgroundColor: 'transparent',
               }}
               onUndo={() => handleUndo()}

@@ -5,18 +5,13 @@
 // //////////////////////////////////////////////////////////////////////////////////////////////////
 // Updated by Lira for Rogue Star December 2025: Updated to support new body marking selector ///////
 // //////////////////////////////////////////////////////////////////////////////////////////////////
-// Updated by Lira for Rogue Star August 2026: Character Designer - Species and Prosthetics /////////
-// //////////////////////////////////////////////////////////////////////////////////////////////////
 
 import {
   GENERIC_PART_KEY,
   applyDiffToGrid,
-  areIconAssetsReady,
   cloneGridData,
   createBlankGrid,
-  getIconAssetRasterIdentity,
   getPreviewGridFromAsset,
-  getPreviewGridFromGearAsset,
   getPreviewPartMapFromAssets,
   gridHasPixels,
   resolveBodyPartLabel,
@@ -31,12 +26,10 @@ import type {
   PreviewDirectionEntry,
   PreviewDirState,
   PreviewLayerEntry,
-  PreviewLayerRasterDependency,
 } from '../../../utils/character-preview';
 import { TRANSPARENT_HEX } from '../../../utils/color';
 
 const OVERLAY_SLOT_PRIORITY_MAP: Record<string, number> = {
-  underwear: 6,
   tail_lower: 7,
   wing_lower: 8,
   shoes: 9,
@@ -63,71 +56,8 @@ const OVERLAY_SLOT_PRIORITY_MAP: Record<string, number> = {
   custom_marking: 40,
 };
 const HIDDEN_LEG_PARTS = new Set(['l_leg', 'r_leg', 'l_foot', 'r_foot']);
-const TAUR_CLOTHING_SLOTS = new Set([
-  'underwear',
-  'uniform',
-  'belt',
-  'suit',
-  'back',
-]);
+const TAUR_CLOTHING_SLOTS = new Set(['uniform', 'belt', 'suit', 'back']);
 const MARKING_MASK_ALPHA_THRESHOLD = 250;
-const RENDER_PRIORITY_SOURCE = 'render_priority';
-
-export const splitPreviewOverlayLayers = <
-  T extends { type?: string; source?: string },
->(
-  layers: T[]
-): { before: T[]; overlay: T[]; after: T[] } => {
-  const baseLayers: T[] = [];
-  const priorityLayers: T[] = [];
-  layers.forEach((layer) => {
-    if (layer?.type === 'custom' && layer.source === RENDER_PRIORITY_SOURCE) {
-      priorityLayers.push(layer);
-    } else {
-      baseLayers.push(layer);
-    }
-  });
-  const firstOverlayIndex = baseLayers.findIndex(
-    (layer) => layer?.type === 'overlay'
-  );
-  if (firstOverlayIndex === -1) {
-    return { before: baseLayers, overlay: [], after: priorityLayers };
-  }
-  let lastOverlayIndex = firstOverlayIndex;
-  for (let idx = baseLayers.length - 1; idx >= 0; idx -= 1) {
-    if (baseLayers[idx]?.type === 'overlay') {
-      lastOverlayIndex = idx;
-      break;
-    }
-  }
-  return {
-    before: baseLayers.slice(0, firstOverlayIndex),
-    overlay: baseLayers.slice(firstOverlayIndex, lastOverlayIndex + 1),
-    after: [...baseLayers.slice(lastOverlayIndex + 1), ...priorityLayers],
-  };
-};
-
-export const isReferenceMarkingLayer = (layer: PreviewLayerEntry) => {
-  if (!layer || layer.type !== 'reference_part') {
-    return false;
-  }
-  if (typeof layer.key !== 'string' || !layer.key.startsWith('ref_')) {
-    return false;
-  }
-  return layer.key.endsWith('_markings');
-};
-
-export const shouldRetainBodyMarkingBaseLayer = (
-  layer: PreviewLayerEntry,
-  isHiddenPart: boolean,
-  isMarkingSuppressedPart: boolean
-) => {
-  const suppressReferenceMarking =
-    isMarkingSuppressedPart && isReferenceMarkingLayer(layer);
-  return (
-    !suppressReferenceMarking && (!isHiddenPart || layer?.type === 'custom')
-  );
-};
 
 type PartPaintPresenceOptions = {
   dirStates: Record<number, PreviewDirState>;
@@ -144,7 +74,7 @@ type OrderedOverlayLayer = {
   grid: string[][];
   layer: number | null;
   slot?: string | null;
-  source: 'base' | 'equipment' | 'job' | 'loadout';
+  source: 'base' | 'job' | 'loadout';
   order: number;
 };
 
@@ -180,7 +110,6 @@ export const buildPartPaintPresenceMap = (
     }
     processedDirs.add(dirKey);
     const dirDrafts = draftDiffIndex?.[dirKey] || null;
-    const markingExcludedParts = new Set(dirState?.markingExcludedParts || []);
     const partIds = new Set<string>();
     if (dirState?.customParts) {
       Object.keys(dirState.customParts).forEach((partId) =>
@@ -194,12 +123,7 @@ export const buildPartPaintPresenceMap = (
       partIds.add(activePartKey);
     }
     partIds.forEach((partId) => {
-      if (
-        !partId ||
-        partId === GENERIC_PART_KEY ||
-        presence[partId] ||
-        markingExcludedParts.has(partId)
-      ) {
+      if (!partId || partId === GENERIC_PART_KEY || presence[partId]) {
         return;
       }
       let workingGrid = dirState?.customParts?.[partId]?.grid;
@@ -270,7 +194,6 @@ export const buildRenderedPreviewDirs = (
   partPaintPresenceMap?: Record<string, boolean>,
   showJobGear?: boolean,
   showLoadoutGear?: boolean,
-  showEquipment?: boolean,
   signalAssetUpdate?: () => void,
   stripReferenceMarkings?: boolean
 ): PreviewDirectionEntry[] => {
@@ -293,29 +216,12 @@ export const buildRenderedPreviewDirs = (
       canvasHeight,
       signalAssetUpdate || (() => undefined)
     );
-    const previewReferencePartHair = getPreviewPartMapFromAssets(
-      dirState.referencePartHairAssets,
-      canvasWidth,
-      canvasHeight,
-      signalAssetUpdate || (() => undefined)
-    );
     let previewReferencePartMarkings = getPreviewPartMapFromAssets(
       dirState.referencePartMarkingAssets,
       canvasWidth,
       canvasHeight,
       signalAssetUpdate || (() => undefined)
     );
-    if (
-      previewReferencePartMarkings &&
-      Array.isArray(dirState.markingExcludedParts)
-    ) {
-      previewReferencePartMarkings = {
-        ...previewReferencePartMarkings,
-      };
-      for (const partId of dirState.markingExcludedParts) {
-        delete previewReferencePartMarkings[partId];
-      }
-    }
     let previewBodyGrid = getPreviewGridFromAsset(
       dirState.bodyAsset,
       canvasWidth,
@@ -348,7 +254,6 @@ export const buildRenderedPreviewDirs = (
     );
     const allowLoadout = showLoadoutGear !== false;
     const allowJob = showJobGear !== false;
-    const allowEquipment = showEquipment !== false;
     const loadoutOverlayLayers = allowLoadout
       ? buildOrderedOverlayLayers(
           dirState.gearLoadoutOverlayAssets as
@@ -386,32 +291,8 @@ export const buildRenderedPreviewDirs = (
             (entry) => !entry.slot || !loadoutSlots.has(entry.slot)
           )
         : jobOverlayLayersUnfiltered;
-    const higherPrioritySlots = new Set(
-      [...jobOverlayLayers, ...loadoutOverlayLayers]
-        .map((layer) => layer.slot)
-        .filter((slot): slot is string => !!slot)
-    );
-    const equipmentOverlayLayersUnfiltered = allowEquipment
-      ? buildOrderedOverlayLayers(
-          dirState.gearEquipmentOverlayAssets as
-            | (GearOverlayAsset | IconAssetPayload)[]
-            | undefined,
-          canvasWidth,
-          canvasHeight,
-          'equipment',
-          signalAssetUpdate || (() => undefined),
-          overlaySlotFilter,
-          overlayLayers.length +
-            loadoutOverlayLayers.length +
-            jobOverlayLayers.length
-        )
-      : [];
-    const equipmentOverlayLayers = equipmentOverlayLayersUnfiltered.filter(
-      (layer) => !layer.slot || !higherPrioritySlots.has(layer.slot)
-    );
     const orderedOverlayLayers = mergeOverlayLayerLists(
       overlayLayers,
-      equipmentOverlayLayers,
       jobOverlayLayers,
       loadoutOverlayLayers
     );
@@ -428,14 +309,11 @@ export const buildRenderedPreviewDirs = (
       partReplacementMap,
       partPaintPresenceMap,
       previewReferenceParts,
-      previewReferencePartHair,
       previewReferencePartMarkings,
       previewBodyGrid,
       orderedOverlayLayers,
-      showEquipment,
       showJobGear,
-      showLoadoutGear,
-      !!stripReferenceMarkings
+      showLoadoutGear
     );
     if (!layers.length) {
       continue;
@@ -444,8 +322,6 @@ export const buildRenderedPreviewDirs = (
       dir: entry.dir,
       label: dirState.label || entry.label,
       layers,
-      bodyAlpha: dirState.bodyAlpha,
-      eyeColorMode: dirState.eyeColorMode,
     });
   }
   return result;
@@ -496,210 +372,15 @@ const maskGridForHiddenParts = (
   }
 };
 
-const cloneMarkingGridForPart = (
-  grid: string[][] | undefined,
-  partId: string,
-  markingExcludedParts: Set<string>
-): string[][] | undefined => {
-  if (!grid || markingExcludedParts.has(partId)) {
-    return undefined;
-  }
-  return cloneGridData(grid);
-};
-
 type ReferenceLayerAppendOptions = {
   orderedPartLayers: PreviewLayerEntry[];
   partId: string;
   normalizedPart: string | null;
   labelMap: Record<string, string>;
   referenceGrid?: string[][] | null;
-  hairReferenceGrid?: string[][] | null;
   markingReferenceGrid?: string[][] | null;
-  referenceRasterIdentity?: string | null;
-  hairReferenceRasterIdentity?: string | null;
-  markingReferenceRasterIdentity?: string | null;
-  referenceRasterDependency: PreviewLayerRasterDependency;
   isReplacedPart: boolean;
   isHiddenPart: boolean;
-};
-
-const buildShareableRasterMetadata = (
-  rasterIdentity: string | null | undefined,
-  rasterDependency: PreviewLayerRasterDependency
-): Pick<
-  PreviewLayerEntry,
-  'rasterIdentity' | 'rasterDependency' | 'rasterShareable'
-> =>
-  rasterIdentity
-    ? {
-        rasterIdentity,
-        rasterDependency,
-        rasterShareable: true,
-      }
-    : {};
-
-const getPreviewAssetRasterIdentity = (
-  asset: IconAssetPayload | undefined,
-  canvasWidth: number,
-  canvasHeight: number
-) => {
-  const identity = getIconAssetRasterIdentity(asset);
-  return identity ? `${identity}|preview:${canvasWidth}x${canvasHeight}` : null;
-};
-
-const buildStrippedPreviewRasterIdentity = (options: {
-  asset?: IconAssetPayload;
-  markingAssets: IconAssetPayload[];
-  stripReferenceMarkings: boolean;
-  strippedAssetsReady: boolean;
-  canvasWidth: number;
-  canvasHeight: number;
-}) => {
-  const {
-    asset,
-    markingAssets,
-    stripReferenceMarkings,
-    strippedAssetsReady,
-    canvasWidth,
-    canvasHeight,
-  } = options;
-  const baseIdentity = getPreviewAssetRasterIdentity(
-    asset,
-    canvasWidth,
-    canvasHeight
-  );
-  if (stripReferenceMarkings && !strippedAssetsReady) {
-    return null;
-  }
-  if (!baseIdentity || !stripReferenceMarkings || !markingAssets.length) {
-    return baseIdentity;
-  }
-  const markingIdentities = markingAssets
-    .map((markingAsset) =>
-      getPreviewAssetRasterIdentity(markingAsset, canvasWidth, canvasHeight)
-    )
-    .filter((identity): identity is string => !!identity)
-    .sort();
-  return markingIdentities.length
-    ? `${baseIdentity}|strip-markings:${markingIdentities.join(',')}`
-    : baseIdentity;
-};
-
-const collectVisibleMarkingAssets = (
-  assets: Record<string, IconAssetPayload>,
-  excludedParts: ReadonlySet<string>
-) =>
-  Object.entries(assets)
-    .filter(([partId]) => !excludedParts.has(partId))
-    .map(([, asset]) => asset);
-
-const areStrippedRasterAssetsReady = (
-  stripReferenceMarkings: boolean,
-  markingAssets: IconAssetPayload[]
-) => !stripReferenceMarkings || areIconAssetsReady(markingAssets);
-
-const hasBodyRasterPreprocessing = (
-  hiddenParts: Record<string, boolean>,
-  replacements?: Record<string, boolean>
-) =>
-  Object.keys(hiddenParts).length > 0 ||
-  Object.values(replacements || {}).some(Boolean);
-
-const resolveBodyPreviewRasterIdentity = (options: {
-  bodyWasPreprocessed: boolean;
-  bodyAsset?: IconAssetPayload;
-  bodyMarkingAssets: IconAssetPayload[];
-  stripReferenceMarkings: boolean;
-  strippedAssetsReady: boolean;
-  canvasWidth: number;
-  canvasHeight: number;
-}) =>
-  options.bodyWasPreprocessed
-    ? null
-    : buildStrippedPreviewRasterIdentity({
-        asset: options.bodyAsset,
-        markingAssets: options.bodyMarkingAssets,
-        stripReferenceMarkings: options.stripReferenceMarkings,
-        strippedAssetsReady: options.strippedAssetsReady,
-        canvasWidth: options.canvasWidth,
-        canvasHeight: options.canvasHeight,
-      });
-
-const buildBodyColorExcludedParts = (parts?: string[]) => new Set(parts || []);
-
-const resolveReferenceRasterDependency = (
-  excludedParts: ReadonlySet<string>,
-  partId: string
-): PreviewLayerRasterDependency =>
-  excludedParts.has(partId) ? 'stable' : 'body-relative';
-
-const resolveReferenceRasterIdentities = (options: {
-  partId: string;
-  bodyWasPreprocessed: boolean;
-  bodyAsset?: IconAssetPayload;
-  bodyMarkingAssets: IconAssetPayload[];
-  referencePartAssets: Record<string, IconAssetPayload>;
-  referencePartHairAssets: Record<string, IconAssetPayload>;
-  referencePartMarkingAssets: Record<string, IconAssetPayload>;
-  markingExcludedParts: ReadonlySet<string>;
-  stripReferenceMarkings: boolean;
-  strippedAssetsReady: boolean;
-  canvasWidth: number;
-  canvasHeight: number;
-}) => {
-  const {
-    partId,
-    bodyWasPreprocessed,
-    bodyAsset,
-    bodyMarkingAssets,
-    referencePartAssets,
-    referencePartHairAssets,
-    referencePartMarkingAssets,
-    markingExcludedParts,
-    stripReferenceMarkings,
-    strippedAssetsReady,
-    canvasWidth,
-    canvasHeight,
-  } = options;
-  const partMarkingAsset = referencePartMarkingAssets[partId];
-  const referenceRasterIdentity =
-    partId === GENERIC_PART_KEY
-      ? bodyWasPreprocessed
-        ? null
-        : buildStrippedPreviewRasterIdentity({
-            asset: bodyAsset,
-            markingAssets: bodyMarkingAssets,
-            stripReferenceMarkings,
-            strippedAssetsReady,
-            canvasWidth,
-            canvasHeight,
-          })
-      : buildStrippedPreviewRasterIdentity({
-          asset: referencePartAssets[partId],
-          markingAssets:
-            !markingExcludedParts.has(partId) && partMarkingAsset
-              ? [partMarkingAsset]
-              : [],
-          stripReferenceMarkings,
-          strippedAssetsReady,
-          canvasWidth,
-          canvasHeight,
-        });
-  return {
-    referenceRasterIdentity,
-    hairReferenceRasterIdentity: getPreviewAssetRasterIdentity(
-      referencePartHairAssets[partId],
-      canvasWidth,
-      canvasHeight
-    ),
-    markingReferenceRasterIdentity: stripReferenceMarkings
-      ? null
-      : getPreviewAssetRasterIdentity(
-          partMarkingAsset,
-          canvasWidth,
-          canvasHeight
-        ),
-  };
 };
 
 const appendReferenceLayersForPart = ({
@@ -708,12 +389,7 @@ const appendReferenceLayersForPart = ({
   normalizedPart,
   labelMap,
   referenceGrid,
-  hairReferenceGrid,
   markingReferenceGrid,
-  referenceRasterIdentity,
-  hairReferenceRasterIdentity,
-  markingReferenceRasterIdentity,
-  referenceRasterDependency,
   isReplacedPart,
   isHiddenPart,
 }: ReferenceLayerAppendOptions) => {
@@ -725,10 +401,6 @@ const appendReferenceLayersForPart = ({
         key: `ref_${partId}_markings`,
         label: `${resolvedLabel} Markings`,
         grid: markingReferenceGrid,
-        ...buildShareableRasterMetadata(
-          markingReferenceRasterIdentity,
-          'stable'
-        ),
       });
     }
     return;
@@ -739,20 +411,8 @@ const appendReferenceLayersForPart = ({
       key: `ref_${partId}`,
       label: `${resolvedLabel} Base`,
       grid: referenceGrid,
-      ...buildShareableRasterMetadata(
-        referenceRasterIdentity,
-        referenceRasterDependency
-      ),
     });
-  }
-  if (hairReferenceGrid && gridHasPixels(hairReferenceGrid)) {
-    orderedPartLayers.push({
-      type: 'limb_hair',
-      key: `ref_${partId}_hair`,
-      label: `${resolvedLabel} Hair`,
-      grid: hairReferenceGrid,
-      ...buildShareableRasterMetadata(hairReferenceRasterIdentity, 'stable'),
-    });
+    return;
   }
   if (
     isReplacedPart &&
@@ -764,7 +424,6 @@ const appendReferenceLayersForPart = ({
       key: `ref_${partId}_markings`,
       label: `${resolvedLabel} Markings`,
       grid: markingReferenceGrid,
-      ...buildShareableRasterMetadata(markingReferenceRasterIdentity, 'stable'),
     });
   }
 };
@@ -772,7 +431,6 @@ const appendReferenceLayersForPart = ({
 const appendOverlayEntries = ({
   overlayEntries,
   orderedOverlayLayers,
-  showEquipment,
   showJobGear,
   showLoadoutGear,
   hiddenLegParts,
@@ -781,7 +439,6 @@ const appendOverlayEntries = ({
 }: {
   overlayEntries: PreviewLayerEntry[];
   orderedOverlayLayers?: OrderedOverlayLayer[] | null;
-  showEquipment?: boolean;
   showJobGear?: boolean;
   showLoadoutGear?: boolean;
   hiddenLegParts?: string[];
@@ -811,30 +468,20 @@ const appendOverlayEntries = ({
       return;
     }
     const opacity =
-      entry.source === 'equipment' && showEquipment === false
+      entry.source === 'job' && showJobGear === false
         ? 0
-        : entry.source === 'job' && showJobGear === false
+        : entry.source === 'loadout' && showLoadoutGear === false
           ? 0
-          : entry.source === 'loadout' && showLoadoutGear === false
-            ? 0
-            : 1;
+          : 1;
     overlayEntries.push({
       type: 'overlay',
       key: `overlay_${entry.source}_${index}`,
       label:
-        entry.source === 'equipment'
-          ? 'Equipment'
-          : entry.source === 'job'
-            ? 'Job Gear'
-            : entry.source === 'loadout'
-              ? 'Loadout Gear'
-              : 'Overlay',
-      source:
-        entry.source === 'base'
-          ? entry.slot === 'species_tail'
-            ? 'species_tail'
-            : undefined
-          : entry.source,
+        entry.source === 'job'
+          ? 'Job Gear'
+          : entry.source === 'loadout'
+            ? 'Loadout Gear'
+            : 'Overlay',
       grid: cloned,
       opacity,
     });
@@ -854,48 +501,28 @@ const composePreviewLayers = (
   partReplacementMap?: Record<string, boolean>,
   partPaintPresenceMap?: Record<string, boolean>,
   resolvedReferenceParts?: Record<string, string[][]> | null,
-  resolvedReferencePartHair?: Record<string, string[][]> | null,
   resolvedReferencePartMarkings?: Record<string, string[][]> | null,
   resolvedBodyGrid?: string[][] | null,
   orderedOverlayLayers?: OrderedOverlayLayer[] | null,
-  showEquipment?: boolean,
   showJobGear?: boolean,
-  showLoadoutGear?: boolean,
-  stripReferenceMarkings = false
+  showLoadoutGear?: boolean
 ): PreviewLayerEntry[] => {
   const orderedPartLayers: PreviewLayerEntry[] = [];
   const floatingCustomLayers: PreviewLayerEntry[] = [];
   const overlayEntries: PreviewLayerEntry[] = [];
   const referenceParts: Record<string, string[][]> =
     resolvedReferenceParts || ({} as Record<string, string[][]>);
-  const referencePartHair: Record<string, string[][]> =
-    resolvedReferencePartHair || ({} as Record<string, string[][]>);
   const referencePartMarkings: Record<string, string[][]> =
     resolvedReferencePartMarkings || ({} as Record<string, string[][]>);
   const referencePartAssets = dirState.referencePartAssets || {};
-  const referencePartHairAssets = dirState.referencePartHairAssets || {};
   const referencePartMarkingAssets = dirState.referencePartMarkingAssets || {};
   const customParts = dirState.customParts || {};
-  const markingExcludedParts = new Set(dirState.markingExcludedParts || []);
-  const bodyColorExcludedParts = buildBodyColorExcludedParts(
-    dirState.bodyColorExcludedParts
-  );
-  const bodyMarkingAssets = collectVisibleMarkingAssets(
-    referencePartMarkingAssets,
-    markingExcludedParts
-  );
-  const strippedAssetsReady = areStrippedRasterAssetsReady(
-    stripReferenceMarkings,
-    bodyMarkingAssets
-  );
   const hasReferenceParts = Object.keys(referenceParts).length > 0;
   const hasReferenceForPart = (partId: string) =>
     partId === GENERIC_PART_KEY ||
     Object.prototype.hasOwnProperty.call(referenceParts, partId) ||
-    Object.prototype.hasOwnProperty.call(referencePartHair, partId) ||
     Object.prototype.hasOwnProperty.call(referencePartMarkings, partId) ||
     Object.prototype.hasOwnProperty.call(referencePartAssets, partId) ||
-    Object.prototype.hasOwnProperty.call(referencePartHairAssets, partId) ||
     Object.prototype.hasOwnProperty.call(referencePartMarkingAssets, partId);
   const clonedBodyGrid = resolvedBodyGrid
     ? cloneGridData(resolvedBodyGrid)
@@ -910,26 +537,12 @@ const composePreviewLayers = (
     partPaintPresenceMap,
     hiddenPartsMap
   );
-  const bodyWasPreprocessed = hasBodyRasterPreprocessing(
-    hiddenPartsMap,
-    partReplacementMap
-  );
   if (!hasReferenceParts && bodyGrid) {
-    const bodyRasterIdentity = resolveBodyPreviewRasterIdentity({
-      bodyWasPreprocessed,
-      bodyAsset: dirState.bodyAsset,
-      bodyMarkingAssets,
-      stripReferenceMarkings,
-      strippedAssetsReady,
-      canvasWidth,
-      canvasHeight,
-    });
     orderedPartLayers.push({
       type: 'body',
       key: 'body',
       label: 'Body',
       grid: bodyGrid,
-      ...buildShareableRasterMetadata(bodyRasterIdentity, 'body-relative'),
     });
   }
   const partOrder = buildPreviewPartOrderForState(
@@ -939,14 +552,8 @@ const composePreviewLayers = (
   );
   for (const partId of partOrder) {
     const isHiddenPart = !!hiddenPartsMap[partId];
-    const isMarkingExcludedPart = markingExcludedParts.has(partId);
     const hasReference = hasReferenceForPart(partId);
-    const baseCustomGrid = cloneMarkingGridForPart(
-      customParts[partId]?.grid,
-      partId,
-      markingExcludedParts
-    );
-    const hasCustom = !!baseCustomGrid;
+    const hasCustom = !!customParts[partId]?.grid;
     if (!hasReference && !hasCustom) {
       continue;
     }
@@ -957,50 +564,27 @@ const composePreviewLayers = (
       referenceGrid = cloneGridData(bodyGrid);
     }
     const markingReferenceGrid =
-      cloneMarkingGridForPart(
-        referencePartMarkings[partId],
-        partId,
-        markingExcludedParts
-      ) || null;
-    const hairReferenceGrid = referencePartHair[partId]
-      ? cloneGridData(referencePartHair[partId])
-      : null;
+      referencePartMarkings && referencePartMarkings[partId]
+        ? cloneGridData(referencePartMarkings[partId])
+        : null;
     const isReplacedPart = shouldApplyReplacement(
       partId,
       partReplacementMap,
       partPaintPresenceMap
     );
-    const rasterIdentities = resolveReferenceRasterIdentities({
-      partId,
-      bodyWasPreprocessed,
-      bodyAsset: dirState.bodyAsset,
-      bodyMarkingAssets,
-      referencePartAssets,
-      referencePartHairAssets,
-      referencePartMarkingAssets,
-      markingExcludedParts,
-      stripReferenceMarkings,
-      strippedAssetsReady,
-      canvasWidth,
-      canvasHeight,
-    });
     appendReferenceLayersForPart({
       orderedPartLayers,
       partId,
       normalizedPart,
       labelMap,
       referenceGrid,
-      hairReferenceGrid,
       markingReferenceGrid,
-      ...rasterIdentities,
-      referenceRasterDependency: resolveReferenceRasterDependency(
-        bodyColorExcludedParts,
-        partId
-      ),
       isReplacedPart: !!isReplacedPart,
       isHiddenPart,
     });
-    let customGrid = baseCustomGrid;
+    let customGrid = customParts[partId]?.grid
+      ? cloneGridData(customParts[partId].grid)
+      : undefined;
     const dirDraftMap = draftDiffIndex?.[dirState.dir] || null;
     const pendingDraftDiff = dirDraftMap?.[partId] || null;
     const shouldApplyDraft =
@@ -1014,7 +598,7 @@ const composePreviewLayers = (
       : dirState.dir === activeDirKey && partId === activePartKey
         ? activeDraftDiff
         : null;
-    if (!isMarkingExcludedPart && shouldApplyDraft && diffToApply?.length) {
+    if (shouldApplyDraft && diffToApply?.length) {
       customGrid = applyDiffToGrid(
         customGrid || createBlankGrid(canvasWidth, canvasHeight),
         diffToApply,
@@ -1035,7 +619,6 @@ const composePreviewLayers = (
         key: `custom_${partId}`,
         label: `${resolveBodyPartLabel(normalizedPart, labelMap)} Custom`,
         grid: customGrid,
-        source: shouldFloat ? RENDER_PRIORITY_SOURCE : undefined,
       };
       if (shouldFloat) {
         floatingCustomLayers.push(customLayer);
@@ -1047,7 +630,6 @@ const composePreviewLayers = (
   appendOverlayEntries({
     overlayEntries,
     orderedOverlayLayers,
-    showEquipment,
     showJobGear,
     showLoadoutGear,
     hiddenLegParts,
@@ -1078,6 +660,12 @@ const buildOrderedOverlayLayers = (
   const updateSignal = signalAssetUpdate || (() => undefined);
   for (let i = 0; i < assets.length; i += 1) {
     const entry = assets[i] as GearOverlayAsset | IconAssetPayload;
+    const payload =
+      (entry as GearOverlayAsset)?.asset ||
+      ((entry as IconAssetPayload)?.token ? (entry as IconAssetPayload) : null);
+    if (!payload) {
+      continue;
+    }
     const slot =
       (entry as GearOverlayAsset)?.slot !== undefined
         ? (entry as GearOverlayAsset).slot
@@ -1085,8 +673,8 @@ const buildOrderedOverlayLayers = (
     if (slotFilter && !slotFilter(slot || null)) {
       continue;
     }
-    const grid = getPreviewGridFromGearAsset(
-      entry,
+    const grid = getPreviewGridFromAsset(
+      payload,
       canvasWidth,
       canvasHeight,
       updateSignal
@@ -1122,24 +710,21 @@ const buildOrderedOverlayLayers = (
 
 const mergeOverlayLayerLists = (
   baseLayers: OrderedOverlayLayer[],
-  equipmentLayers: OrderedOverlayLayer[],
   jobLayers: OrderedOverlayLayer[],
   loadoutLayers: OrderedOverlayLayer[]
 ): OrderedOverlayLayer[] =>
-  [...baseLayers, ...equipmentLayers, ...jobLayers, ...loadoutLayers].sort(
-    (a, b) => {
-      const layerA = Number.isFinite(a.layer)
-        ? (a.layer as number)
-        : Number.MAX_SAFE_INTEGER;
-      const layerB = Number.isFinite(b.layer)
-        ? (b.layer as number)
-        : Number.MAX_SAFE_INTEGER;
-      if (layerA !== layerB) {
-        return layerA - layerB;
-      }
-      return a.order - b.order;
+  [...baseLayers, ...jobLayers, ...loadoutLayers].sort((a, b) => {
+    const layerA = Number.isFinite(a.layer)
+      ? (a.layer as number)
+      : Number.MAX_SAFE_INTEGER;
+    const layerB = Number.isFinite(b.layer)
+      ? (b.layer as number)
+      : Number.MAX_SAFE_INTEGER;
+    if (layerA !== layerB) {
+      return layerA - layerB;
     }
-  );
+    return a.order - b.order;
+  });
 
 const buildPreviewPartOrderForState = (
   preferredOrder: string[] | undefined,

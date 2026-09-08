@@ -125,7 +125,6 @@ export class Input extends Component {
       value,
       maxLength,
       placeholder,
-      disabled, // RS Add: Character Designer - Species Name (Lira, August 2026)
       ...boxProps
     } = props;
     // Box props
@@ -149,7 +148,6 @@ export class Input extends Component {
           onBlur={this.handleBlur}
           onKeyDown={this.handleKeyDown}
           maxLength={maxLength}
-          disabled={disabled} // RS Add: Character Designer - Species Name (Lira, August 2026)
         />
       </Box>
     );

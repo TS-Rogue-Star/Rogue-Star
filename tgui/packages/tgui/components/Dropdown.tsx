@@ -21,7 +21,6 @@ type DropdownUniqueProps = {
   readonly controlContentClassName?: string; // RS Add: Preference settings panel (Lira, July 2026)
   readonly width?: string;
   readonly menuWidth?: string;
-  readonly menuZIndex?: string | number; // RS Add: Character Designer - Traits Tab (Lira, August 2026)
   readonly over?: boolean;
   readonly color?: string;
   readonly nochevron?: boolean;
@@ -118,11 +117,6 @@ export class Dropdown extends Component<DropdownProps, DropdownState> {
       // Hack, but domNode should *always* be the parent control meaning it will have width
       // @ts-ignore
       `${domNode.offsetWidth}px`;
-
-    // RS Add: Character Designer - Traits Tab (Lira, August 2026)
-    renderedMenu.style.zIndex =
-      this.props.menuZIndex === undefined ? '' : String(this.props.menuZIndex);
-
     // RS Add Start: Improvements for emote interface (Lira, February 2026)
     const isRogueStarDropdown =
       this.props.dropdownStyle?.trim() === 'rogue-star';
@@ -357,7 +351,6 @@ export class Dropdown extends Component<DropdownProps, DropdownState> {
       over,
       nochevron,
       width,
-      menuZIndex, // RS Add: Character Designer - Traits Tab (Lira, August 2026)
       onClick,
       onSelected,
       selected,

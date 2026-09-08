@@ -223,55 +223,6 @@
     }
     return urlLength;
   };
-
-  var splitTguiPayload = function (payload, chunkId, chunkType) {
-    var chunks = [];
-    var chunk = '';
-    var chunkUrlLength = 0;
-    var maxIndex = Math.max(1, payload.length);
-    var chunkOverhead = estimateUrlLength('', {
-      tgui: 1,
-      window_id: Byond.windowId,
-      type: 'chunk',
-      chunk_id: chunkId,
-      chunk_index: maxIndex,
-      chunk_total: maxIndex,
-      chunk_type: chunkType,
-      payload: '',
-    });
-    var maxChunkUrlLength = Math.max(
-      1,
-      TGUI_MAX_URL_LENGTH - chunkOverhead
-    );
-
-    for (var i = 0; i < payload.length;) {
-      var characterLength = 1;
-      var firstCodeUnit = payload.charCodeAt(i);
-      if (firstCodeUnit >= 0xD800 && firstCodeUnit <= 0xDBFF
-        && i + 1 < payload.length) {
-        var secondCodeUnit = payload.charCodeAt(i + 1);
-        if (secondCodeUnit >= 0xDC00 && secondCodeUnit <= 0xDFFF) {
-          characterLength = 2;
-        }
-      }
-      var character = payload.substring(i, i + characterLength);
-      var characterUrlLength = encodeURIComponent(character).length;
-      if (chunk.length && (chunk.length + characterLength > TGUI_CHUNK_SIZE
-        || chunkUrlLength + characterUrlLength > maxChunkUrlLength)) {
-        chunks.push(chunk);
-        chunk = '';
-        chunkUrlLength = 0;
-        continue;
-      }
-      chunk += character;
-      chunkUrlLength += characterUrlLength;
-      i += characterLength;
-    }
-    if (chunk.length || !payload.length) {
-      chunks.push(chunk);
-    }
-    return chunks;
-  };
   // RS Add End
 
   Byond.sendMessage = function (type, payload) {
@@ -293,9 +244,12 @@
       && typeof message.type === 'string') {
       var payloadStr = message.payload || '';
       var chunkId = (++tguiChunkCounter).toString();
-      var chunks = splitTguiPayload(payloadStr, chunkId, message.type);
-      var total = chunks.length;
+      var total = Math.ceil(payloadStr.length / TGUI_CHUNK_SIZE) || 1;
       for (var i = 0; i < total; i++) {
+        var chunk = payloadStr.substring(
+          i * TGUI_CHUNK_SIZE,
+          (i + 1) * TGUI_CHUNK_SIZE
+        );
         Byond.topic({
           tgui: 1,
           window_id: Byond.windowId,
@@ -304,7 +258,7 @@
           chunk_index: i + 1,
           chunk_total: total,
           chunk_type: message.type,
-          payload: chunks[i],
+          payload: chunk,
         });
       }
       return;

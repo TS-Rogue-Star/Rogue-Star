@@ -3048,14 +3048,6 @@ const VoreUserPreferences = (props, context) => {
               onClick={() => act('set_belch_color')}
             />
           </Flex.Item>
-          {/* RS Add: Huff color pref (Lira, September 2026)*/}
-          <Flex.Item basis="50%" grow={1}>
-            <Button
-              fluid
-              content="Set Huff Color"
-              onClick={() => act('set_huff_color')}
-            />
-          </Flex.Item>
         </Flex>
       </Section>
       <Divider />

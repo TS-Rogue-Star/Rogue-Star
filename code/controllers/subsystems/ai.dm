@@ -11,11 +11,9 @@ SUBSYSTEM_DEF(ai)
 
 	var/slept_mobs = 0
 	var/list/process_z = list()
-	// RS ADD
-	var/deferred_fires = 0
 
 /datum/controller/subsystem/ai/stat_entry(msg_prefix)
-	..("P: [processing.len] | S: [slept_mobs] | D: [deferred_fires]") // RS EDIT
+	..("P: [processing.len] | S: [slept_mobs]")
 
 /datum/controller/subsystem/ai/fire(resumed = 0)
 	if (!resumed)
@@ -34,14 +32,8 @@ SUBSYSTEM_DEF(ai)
 	while(currentrun.len)
 		var/datum/ai_holder/A = currentrun[currentrun.len]
 		--currentrun.len
-		if(!A || QDELETED(A))
+		if(!A || QDELETED(A) || A.busy) // Doesn't exist or won't exist soon or not doing it this tick
 			continue
-		if(A.busy)
-			// RS ADD
-			if(A.busy_since && (world.time - A.busy_since) > AI_BUSY_WATCHDOG)
-				A.clear_stranded_busy()
-			else
-				continue
 
 		var/mob/living/L = A.holder	//VOREStation Edit Start
 		if(!L?.loc)
@@ -54,6 +46,4 @@ SUBSYSTEM_DEF(ai)
 			A.set_stance(STANCE_IDLE)
 
 		if(MC_TICK_CHECK)
-			if(currentrun.len)	// RS ADD
-				deferred_fires++
 			return

@@ -1,8 +1,6 @@
 // //////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Created by Lira for Rogue Star December 2025: Canvas display sizing helpers for custom marking designer //
 // //////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Updated by Lira for Rogue Star August 2026: Character Designer - Species and Prosthetics /////////////////
-// //////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 import { useLocalState } from '../../../backend';
 import { CANVAS_FIT_TARGET, DOT_SIZE } from '../constants';
@@ -14,10 +12,7 @@ export type CanvasDisplayState = Readonly<{
   canvasPixelSize: number;
   canvasDisplayWidthPx: number;
   canvasDisplayHeightPx: number;
-  canvasRenderWidthPx: number;
-  canvasRenderHeightPx: number;
-  canvasOffsetX: number;
-  canvasOffsetY: number;
+  canvasTransform: string;
   canvasFitToFrame: boolean;
   previewFitToFrame: boolean;
   toggleCanvasFit: () => void;
@@ -74,20 +69,24 @@ export const useCanvasDisplayState = (
     1,
     Math.round(canvasPixelSize * canvasHeight)
   );
-  const canvasScale =
+  const canvasZoomScale =
     canvasFitToFrame || canvasWidth <= baseDisplayUnits
       ? 1
       : Math.max(
           canvasWidth / baseDisplayUnits,
           canvasHeight / baseDisplayUnits
         );
-  const canvasRenderWidthPx = canvasDisplayWidthPx * canvasScale;
-  const canvasRenderHeightPx = canvasDisplayHeightPx * canvasScale;
-  const croppedCanvasEdgeNudge = canvasScale > 1 ? 0.5 : 0;
-  const canvasOffsetX =
-    (canvasDisplayWidthPx - canvasRenderWidthPx) / 2 + croppedCanvasEdgeNudge;
   const canvasOffsetY =
-    canvasDisplayHeightPx - canvasRenderHeightPx + croppedCanvasEdgeNudge;
+    canvasFitToFrame || canvasZoomScale === 1
+      ? 0
+      : -1 * ((canvasZoomScale - 1) / canvasZoomScale) * canvasDisplayHeightPx +
+        1;
+  const canvasOffsetX =
+    canvasFitToFrame || canvasZoomScale === 1
+      ? 0
+      : ((1 - canvasZoomScale) * canvasDisplayWidthPx) / (2 * canvasZoomScale) +
+        191;
+  const canvasTransform = `translate(${canvasOffsetX}px, ${canvasOffsetY}px) scale(${canvasZoomScale})`;
   const toggleCanvasFit = () => {
     const next = !canvasFitToFrame;
     setCanvasFitToFrame(next);
@@ -99,10 +98,7 @@ export const useCanvasDisplayState = (
     canvasPixelSize,
     canvasDisplayWidthPx,
     canvasDisplayHeightPx,
-    canvasRenderWidthPx,
-    canvasRenderHeightPx,
-    canvasOffsetX,
-    canvasOffsetY,
+    canvasTransform,
     canvasFitToFrame,
     previewFitToFrame,
     toggleCanvasFit,

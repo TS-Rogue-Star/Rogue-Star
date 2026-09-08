@@ -2,7 +2,6 @@
 	name = "liver"
 	icon_state = "liver"
 	organ_tag = "liver"
-	chargen_prosthetic_flags = ORGAN_CHARGEN_STANDARD // RS Add: Character Designer - Species and Prosthetics (Lira, August 2026)
 	parent_organ = BP_GROIN
 
 /obj/item/organ/internal/liver/process()
