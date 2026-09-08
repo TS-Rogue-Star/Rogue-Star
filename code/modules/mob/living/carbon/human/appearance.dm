@@ -53,7 +53,7 @@
 
 	update_hair()
 	return 1
-	
+
 /mob/living/carbon/human/proc/change_hair_gradient(var/hair_gradient)
 	if(!hair_gradient)
 		return
@@ -124,7 +124,7 @@
 
 	update_hair()
 	return 1
-	
+
 /mob/living/carbon/human/proc/change_grad_color(var/red, var/green, var/blue)
 	if(red == r_grad && green == g_grad && blue == b_grad)
 		return
@@ -246,7 +246,10 @@
 
 	return valid_facial_hairstyles
 
-/mob/living/carbon/human/proc/force_update_limbs()
+// RS Edit: Character Designer - Species and Prosthetics (Lira, August 2026)
+/mob/living/carbon/human/proc/force_update_limbs(rebuild_body_icon = TRUE)
 	for(var/obj/item/organ/external/O in organs)
 		O.sync_colour_to_human(src)
+	if(!rebuild_body_icon)
+		return
 	update_icons_body(FALSE)

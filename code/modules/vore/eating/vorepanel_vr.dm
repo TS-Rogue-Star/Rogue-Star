@@ -890,6 +890,16 @@ var/global/list/rsui_healthbar_preview_cache = list()
 				host.client.prefs_vr.belch_color = sanitize_hexcolor(color_choice)
 				unsaved_changes = TRUE
 			return TRUE
+		//RS ADD START
+		if("set_huff_color")
+			if(!host.client || !host.client.prefs_vr)
+				return TRUE
+			var/color_choice = input(usr, "Choose your huff color", "Huff Color", host.client.prefs_vr.huff_color) as color|null
+			if(color_choice)
+				host.client.prefs_vr.huff_color = sanitize_hexcolor(color_choice)
+				unsaved_changes = TRUE
+			return TRUE
+		//RS ADD END
 		if("toggle_dropnom_pred")
 			set_trustlist_preference_state("dropnom_pred") // RS Add: Trustlist integration (Lira, September 2025)
 			return TRUE

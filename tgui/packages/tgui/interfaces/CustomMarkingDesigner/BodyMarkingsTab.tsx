@@ -1,6 +1,8 @@
-// /////////////////////////////////////////////////////////////////////////////////////
-// Created by Lira for Rogue Star December 2025: New body marking selection tab added //
-// /////////////////////////////////////////////////////////////////////////////////////
+// ///////////////////////////////////////////////////////////////////////////////////////////
+// Created by Lira for Rogue Star December 2025: New body marking selection tab added ////////
+// ///////////////////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star August 2026: Character Designer - Species and Prosthetics //
+// ///////////////////////////////////////////////////////////////////////////////////////////
 
 import { Component } from 'inferno';
 import {
@@ -24,33 +26,54 @@ import {
 import { normalizeHex, TRANSPARENT_HEX } from '../../utils/color';
 import {
   applyBodyColorToPreview,
+  applyEyeColorToPreview,
+  applyLimbHairColorToPreview,
+  applyProstheticsToPreviewSources,
+  buildBodyMarkingsLoadParams,
   buildPartPaintPresenceMap,
   buildRenderedPreviewDirs as buildDesignerPreviewDirs,
   buildBasicStateFromPayload,
   clampChannel,
   ICON_BLEND_MODE,
+  mergeBodyMarkingsPayload,
   parseHex,
   recolorGrid,
+  resolveSelectedSpeciesPreviewSources,
+  resolveSharedPreviewSourceSelection,
   resolveBlendMode,
+  shouldRetainBodyMarkingBaseLayer,
+  splitPreviewOverlayLayers,
   tintGrid,
   toHex,
   updatePreviewStateFromPayload,
 } from './utils';
 import {
   buildRenderedPreviewDirs as buildBasePreviewDirs,
+  areIconAssetsReady,
   cloneGridData,
   createBlankGrid,
+  getIconAssetReadinessSignature,
   getPreviewGridFromAsset,
+  getPreviewGridFromGearAsset,
   getPreviewPartMapFromAssets,
   gridHasPixels,
+  resolveIconAssetReference,
+  scheduleCharacterPreviewWork,
+  type CharacterPreviewWorkHandle,
+  type CharacterPreviewWorkPriority,
   type GearOverlayAsset,
+  type IconAssetReference,
   type IconAssetPayload,
   PreviewDirectionEntry,
   type PreviewLayerEntry,
   type PreviewDirState,
 } from '../../utils/character-preview';
-import { DirectionPreviewCanvas, LoadingOverlay } from './components';
-import { CHIP_BUTTON_CLASS, PREVIEW_PIXEL_SIZE } from './constants';
+import {
+  DirectionPreviewCanvas,
+  LivePreviewCard,
+  LoadingOverlay,
+} from './components';
+import { CHIP_BUTTON_CLASS } from './constants';
 import type {
   BasicAppearanceAccessoryDefinition,
   BasicAppearanceGradientDefinition,
@@ -64,6 +87,7 @@ import type {
   BodyMarkingsSavedState,
   CanvasBackgroundOption,
   CustomMarkingDesignerData,
+  SpeciesPayload,
 } from './types';
 import {
   buildBodyMarkingDefinitions,
@@ -86,8 +110,11 @@ type BodyMarkingsTabProps = Readonly<{
   backgroundFallbackColor: string;
   cycleCanvasBackground: () => void;
   canvasBackgroundScale: number;
+  livePreview?: PreviewDirectionEntry[];
   resolvedPartPriorityMap: Record<string, boolean>;
   resolvedPartReplacementMap: Record<string, boolean>;
+  showEquipment: boolean;
+  onToggleEquipment: () => void;
   showJobGear: boolean;
   onToggleJobGear: () => void;
   showLoadoutGear: boolean;
@@ -108,7 +135,7 @@ type OrderedOverlayLayer = {
   grid: string[][];
   layer: number | null;
   slot?: string | null;
-  source: 'base' | 'job' | 'loadout';
+  source: 'base' | 'equipment' | 'job' | 'loadout';
   order: number;
 };
 
@@ -127,12 +154,40 @@ type MarkingLayersCacheEntry = {
   built: Record<string, PartMarkingLayers>;
 };
 
+type MarkingTilePreviewResult = Readonly<{
+  signature: string;
+  previews: PreviewDirectionEntry[];
+  complete: boolean;
+}>;
+
+type MarkingTilePreviewCacheEntry = MarkingTilePreviewResult & {
+  lastUsed: number;
+};
+
 type SelectMarkingOptions = Readonly<{
   setColorTarget?: boolean;
 }>;
 
 const MARKING_TILE_PIXEL_SIZE = 2;
 const BODY_MARKING_SELECTION_LIMIT = 40;
+const BODY_MARKING_TILE_PAGE_SIZE = 20;
+const MAX_CACHED_MARKING_TILE_PREVIEWS = 100;
+let markingTilePreviewCacheSequence = 0;
+const ignoreMarkingTileAssetUpdate = () => undefined;
+
+const compactMarkingTileSignature = (signature: string) => {
+  let primary = 2166136261;
+  let secondary = 5381;
+  for (let index = 0; index < signature.length; index += 1) {
+    const code = signature.charCodeAt(index);
+    primary ^= code;
+    primary = Math.imul(primary, 16777619);
+    secondary = Math.imul(secondary, 33) ^ code;
+  }
+  return `${signature.length}:${(primary >>> 0).toString(36)}:${(
+    secondary >>> 0
+  ).toString(36)}`;
+};
 
 const CATEGORY_LABELS: Record<string, string> = {
   all: 'All',
@@ -147,6 +202,7 @@ const CATEGORY_LABELS: Record<string, string> = {
 };
 
 const OVERLAY_SLOT_PRIORITY_MAP: Record<string, number> = {
+  underwear: 6,
   tail_lower: 7,
   wing_lower: 8,
   shoes: 9,
@@ -174,7 +230,13 @@ const OVERLAY_SLOT_PRIORITY_MAP: Record<string, number> = {
 };
 
 const HIDDEN_LEG_PARTS = new Set(['l_leg', 'r_leg', 'l_foot', 'r_foot']);
-const TAUR_CLOTHING_SLOTS = new Set(['uniform', 'belt', 'suit', 'back']);
+const TAUR_CLOTHING_SLOTS = new Set([
+  'underwear',
+  'uniform',
+  'belt',
+  'suit',
+  'back',
+]);
 const APPEARANCE_OVERLAY_SLOTS = new Set([
   'hair',
   'hair_accessory',
@@ -211,121 +273,18 @@ const collectBodyColorExcludedParts = (
   return excluded.size ? excluded : null;
 };
 
-const colorDistance = (
-  r: number,
-  g: number,
-  b: number,
-  target: [number, number, number]
-) =>
-  Math.abs(r - target[0]) + Math.abs(g - target[1]) + Math.abs(b - target[2]);
-
-const EYE_COLOR_MATCH_THRESHOLD = 90;
-const EYE_COLOR_BODY_MARGIN = 12;
-
-const shiftEyeColorGrid = (
-  grid: string[][],
-  baseHex: string,
-  targetHex: string,
-  bodyHex?: string | null
-): string[][] => {
-  const [br, bg, bb] = parseHex(baseHex);
-  const [tr, tg, tb] = parseHex(targetHex);
-  if (br === tr && bg === tg && bb === tb) {
-    return grid;
+const collectBodyColorBlendMode = (
+  dirStates: Record<number, PreviewDirState> | null | undefined
+): number | null => {
+  if (!dirStates) {
+    return null;
   }
-  const hasBody = typeof bodyHex === 'string' && normalizeHex(bodyHex) !== null;
-  const [bodyR, bodyG, bodyB] = hasBody
-    ? parseHex(bodyHex as string)
-    : ([0, 0, 0] as [number, number, number]);
-  const deltaR = tr - br;
-  const deltaG = tg - bg;
-  const deltaB = tb - bb;
-  const recolored: string[][] = [];
-  for (let x = 0; x < grid.length; x += 1) {
-    const column = grid[x];
-    if (!Array.isArray(column)) {
-      recolored[x] = [];
-      continue;
-    }
-    recolored[x] = [];
-    for (let y = 0; y < column.length; y += 1) {
-      const px = column[y];
-      if (typeof px !== 'string' || px === TRANSPARENT_HEX) {
-        recolored[x][y] = TRANSPARENT_HEX;
-        continue;
-      }
-      const [r, g, b, a] = parseHex(px);
-      const eyeDist = colorDistance(r, g, b, [br, bg, bb]);
-      const bodyDist = hasBody
-        ? colorDistance(r, g, b, [bodyR, bodyG, bodyB])
-        : Number.POSITIVE_INFINITY;
-      const matchesEye =
-        eyeDist <= EYE_COLOR_MATCH_THRESHOLD ||
-        eyeDist + EYE_COLOR_BODY_MARGIN <= bodyDist;
-      if (!matchesEye) {
-        recolored[x][y] = px;
-        continue;
-      }
-      recolored[x][y] = toHex(
-        clampChannel(r + deltaR),
-        clampChannel(g + deltaG),
-        clampChannel(b + deltaB),
-        a
-      );
+  for (const dirState of Object.values(dirStates)) {
+    if (typeof dirState?.bodyColorBlendMode === 'number') {
+      return dirState.bodyColorBlendMode;
     }
   }
-  return recolored;
-};
-
-export const applyEyeColorToPreview = (
-  preview: PreviewDirectionEntry[],
-  baseHex: string | null,
-  targetHex: string | null,
-  bodyHex?: string | null
-): PreviewDirectionEntry[] => {
-  const base = normalizeHex(baseHex);
-  const target = normalizeHex(targetHex);
-  if (!base || !target || base === target) {
-    return preview;
-  }
-  let changed = false;
-  const next = preview.map((entry) => {
-    let layersChanged = false;
-    const layers = (entry.layers || []).map((layer) => {
-      if (!layer?.grid || layer.type !== 'reference_part') {
-        return layer;
-      }
-      if (
-        typeof layer.key !== 'string' ||
-        !layer.key.startsWith('ref_') ||
-        layer.key.endsWith('_markings')
-      ) {
-        return layer;
-      }
-      const partId = layer.key.slice(4).toLowerCase();
-      if (partId !== 'head' && partId !== 'face' && partId !== 'eyes') {
-        return layer;
-      }
-      const shifted = shiftEyeColorGrid(layer.grid, base, target, bodyHex);
-      if (shifted === layer.grid) {
-        return layer;
-      }
-      layersChanged = true;
-      return {
-        ...layer,
-        grid: shifted,
-      };
-    });
-    if (!layersChanged) {
-      return entry;
-    }
-    changed = true;
-    return {
-      ...entry,
-      layers,
-    };
-  });
-  return changed ? next : preview;
+  return null;
 };
 
 const pixelHasColor = (value?: string): boolean =>
@@ -483,23 +442,26 @@ const collectHiddenLegParts = (hiddenBodyParts?: string[] | null): string[] => {
   return parts;
 };
 
-const buildHiddenBodyPartsByDir = (
+const buildSuppressedMarkingPartsByDir = (
   previewDirStates: Record<number, PreviewDirState>
 ): Record<number, Record<string, boolean>> => {
   const result: Record<number, Record<string, boolean>> = {};
   for (const dirState of Object.values(previewDirStates)) {
-    const hiddenParts = dirState?.hiddenBodyParts;
-    if (!dirState || !Array.isArray(hiddenParts) || !hiddenParts.length) {
+    if (!dirState) {
       continue;
     }
-    const hiddenMap: Record<string, boolean> = {};
-    for (const partId of hiddenParts) {
+    const suppressedMap: Record<string, boolean> = {};
+    const suppressedParts = [
+      ...(dirState.hiddenBodyParts || []),
+      ...(dirState.markingExcludedParts || []),
+    ];
+    for (const partId of suppressedParts) {
       if (typeof partId === 'string' && partId.length) {
-        hiddenMap[partId] = true;
+        suppressedMap[partId] = true;
       }
     }
-    if (Object.keys(hiddenMap).length) {
-      result[dirState.dir] = hiddenMap;
+    if (Object.keys(suppressedMap).length) {
+      result[dirState.dir] = suppressedMap;
     }
   }
   return result;
@@ -782,14 +744,8 @@ const buildOrderedOverlayLayers = (
   const updateSignal = signalAssetUpdate || (() => undefined);
   for (let i = 0; i < assets.length; i += 1) {
     const entry = assets[i] as GearOverlayAsset | IconAssetPayload;
-    const payload =
-      (entry as GearOverlayAsset)?.asset ||
-      ((entry as IconAssetPayload)?.token ? (entry as IconAssetPayload) : null);
-    if (!payload) {
-      continue;
-    }
-    const grid = getPreviewGridFromAsset(
-      payload,
+    const grid = getPreviewGridFromGearAsset(
+      entry,
       canvasWidth,
       canvasHeight,
       updateSignal
@@ -829,21 +785,24 @@ const buildOrderedOverlayLayers = (
 
 const mergeOverlayLayerLists = (
   baseLayers: OrderedOverlayLayer[],
+  equipmentLayers: OrderedOverlayLayer[],
   jobLayers: OrderedOverlayLayer[],
   loadoutLayers: OrderedOverlayLayer[]
 ): OrderedOverlayLayer[] =>
-  [...baseLayers, ...jobLayers, ...loadoutLayers].sort((a, b) => {
-    const layerA = Number.isFinite(a.layer)
-      ? (a.layer as number)
-      : Number.MAX_SAFE_INTEGER;
-    const layerB = Number.isFinite(b.layer)
-      ? (b.layer as number)
-      : Number.MAX_SAFE_INTEGER;
-    if (layerA !== layerB) {
-      return layerA - layerB;
+  [...baseLayers, ...equipmentLayers, ...jobLayers, ...loadoutLayers].sort(
+    (a, b) => {
+      const layerA = Number.isFinite(a.layer)
+        ? (a.layer as number)
+        : Number.MAX_SAFE_INTEGER;
+      const layerB = Number.isFinite(b.layer)
+        ? (b.layer as number)
+        : Number.MAX_SAFE_INTEGER;
+      if (layerA !== layerB) {
+        return layerA - layerB;
+      }
+      return a.order - b.order;
     }
-    return a.order - b.order;
-  });
+  );
 
 const resolveSelectedDef = <T extends { id: string }>(
   defs: T[] | undefined,
@@ -1005,7 +964,8 @@ const buildMarkingLayersForDir = (
   canvasWidth: number,
   canvasHeight: number,
   offsetX = 0,
-  signalAssetUpdate?: () => void
+  signalAssetUpdate?: () => void,
+  assetPriority: CharacterPreviewWorkPriority = 'visible'
 ): Record<string, PartMarkingLayers> => {
   const assetsByDir =
     (digitigrade && def.digitigrade_assets?.[dir]) || def.assets?.[dir];
@@ -1025,7 +985,8 @@ const buildMarkingLayersForDir = (
       asset,
       canvasWidth,
       canvasHeight,
-      signalAssetUpdate || (() => undefined)
+      signalAssetUpdate || (() => undefined),
+      assetPriority
     );
     if (!baseGrid || !gridHasPixels(baseGrid)) {
       continue;
@@ -1054,6 +1015,31 @@ const buildMarkingLayersForDir = (
   return result;
 };
 
+const collectMarkingTileAssetPayloads = (
+  def: BodyMarkingDefinition,
+  digitigrade: boolean,
+  directions: Array<{ dir: number }>
+) => {
+  const payloads: IconAssetReference[] = [];
+  const defaultEntry = def.default_entry || ({} as BodyMarkingEntry);
+  for (const direction of directions) {
+    const assetsByDir =
+      (digitigrade && def.digitigrade_assets?.[direction.dir]) ||
+      def.assets?.[direction.dir];
+    if (!assetsByDir) {
+      continue;
+    }
+    for (const [partId, payload] of Object.entries(assetsByDir)) {
+      const partState = defaultEntry[partId] as BodyMarkingPartState;
+      if (!isBodyMarkingPartEnabled(partState?.on) || !payload) {
+        continue;
+      }
+      payloads.push(payload);
+    }
+  }
+  return payloads;
+};
+
 const resolveLayerPartId = (layer: { key?: string; type?: string }) => {
   if (typeof layer?.key === 'string' && layer.key.startsWith('ref_')) {
     const raw = layer.key.slice('ref_'.length);
@@ -1080,27 +1066,6 @@ const resolveLayerPartId = (layer: { key?: string; type?: string }) => {
   return null;
 };
 
-const splitOverlayLayers = <T extends { type?: string }>(layers: T[]) => {
-  const firstOverlayIndex = layers.findIndex(
-    (layer) => layer?.type === 'overlay'
-  );
-  if (firstOverlayIndex === -1) {
-    return { before: layers, overlay: [], after: [] };
-  }
-  let lastOverlayIndex = firstOverlayIndex;
-  for (let idx = layers.length - 1; idx >= 0; idx -= 1) {
-    if (layers[idx]?.type === 'overlay') {
-      lastOverlayIndex = idx;
-      break;
-    }
-  }
-  return {
-    before: layers.slice(0, firstOverlayIndex),
-    overlay: layers.slice(firstOverlayIndex, lastOverlayIndex + 1),
-    after: layers.slice(lastOverlayIndex + 1),
-  };
-};
-
 export type AppearancePreviewContext = Readonly<{
   canApplyAppearance: boolean;
   appearanceState: BasicAppearanceState;
@@ -1119,7 +1084,136 @@ export type AppearancePreviewContext = Readonly<{
   digitigrade: boolean;
   previewDirStatesForLive: Record<number, PreviewDirState>;
   bodyColorExcludedParts: Set<string> | null;
+  bodyColorBlendMode: number | null;
 }>;
+
+const collectGearAssetPayloads = (
+  target: IconAssetReference[],
+  assets?: Array<GearOverlayAsset | IconAssetPayload>
+) => {
+  if (!Array.isArray(assets)) {
+    return;
+  }
+  for (const entry of assets) {
+    if ('asset' in entry) {
+      target.push(entry.asset);
+      if (entry.mask_asset) {
+        target.push(entry.mask_asset);
+      }
+      for (const overlay of entry.overlays || []) {
+        target.push(overlay.asset);
+      }
+    } else if (entry.token) {
+      target.push(entry);
+    }
+  }
+};
+
+const collectAccessoryAssetPayloads = (
+  target: IconAssetReference[],
+  def: BasicAppearanceAccessoryDefinition | null,
+  directions: Array<{ dir: number }>,
+  includeBack = false
+) => {
+  if (!def) {
+    return;
+  }
+  for (const direction of directions) {
+    const assets = def.assets?.[direction.dir] || [];
+    for (const payload of assets) {
+      if (payload) {
+        target.push(payload);
+      }
+    }
+    if (!includeBack || !def.multi_dir) {
+      continue;
+    }
+    const backAssets = def.back_assets?.[direction.dir] || [];
+    for (const payload of backAssets) {
+      if (payload) {
+        target.push(payload);
+      }
+    }
+  }
+};
+
+const collectTileBaseAssetPayloads = (options: {
+  previewDirStates: Record<number, PreviewDirState>;
+  appearanceContext: AppearancePreviewContext;
+  directions: Array<{ dir: number }>;
+}) => {
+  const { previewDirStates, appearanceContext, directions } = options;
+  const payloads: IconAssetReference[] = [];
+  for (const direction of directions) {
+    const dirState = previewDirStates[direction.dir];
+    if (!dirState) {
+      continue;
+    }
+    if (dirState.bodyAsset) {
+      payloads.push(dirState.bodyAsset);
+    }
+    Object.values(dirState.referencePartAssets || {}).forEach((payload) =>
+      payloads.push(payload)
+    );
+    Object.values(dirState.referencePartHairAssets || {}).forEach((payload) =>
+      payloads.push(payload)
+    );
+    Object.values(dirState.referencePartMarkingAssets || {}).forEach(
+      (payload) => payloads.push(payload)
+    );
+    collectGearAssetPayloads(
+      payloads,
+      dirState.overlayAssets as Array<GearOverlayAsset | IconAssetPayload>
+    );
+  }
+  if (!appearanceContext.canApplyAppearance) {
+    return payloads;
+  }
+  collectAccessoryAssetPayloads(
+    payloads,
+    appearanceContext.facialHairDef,
+    directions
+  );
+  const hairDef = appearanceContext.hairDef;
+  if (hairDef) {
+    for (const direction of directions) {
+      const hairAssets = hairDef.assets?.[direction.dir] || [];
+      const basePayload = hairAssets[0];
+      if (!basePayload) {
+        continue;
+      }
+      payloads.push(basePayload);
+      if (hairDef.do_colouration && hairAssets[1]) {
+        payloads.push(hairAssets[1]);
+      }
+      if (hairDef.do_colouration && appearanceContext.gradientDef) {
+        const gradientPayload =
+          appearanceContext.gradientDef.assets?.[direction.dir];
+        if (gradientPayload) {
+          payloads.push(gradientPayload);
+        }
+      }
+    }
+  }
+  collectAccessoryAssetPayloads(payloads, appearanceContext.earDef, directions);
+  collectAccessoryAssetPayloads(
+    payloads,
+    appearanceContext.hornDef,
+    directions
+  );
+  collectAccessoryAssetPayloads(
+    payloads,
+    appearanceContext.tailDef,
+    directions
+  );
+  collectAccessoryAssetPayloads(
+    payloads,
+    appearanceContext.wingDef,
+    directions,
+    true
+  );
+  return payloads;
+};
 
 type BodyMarkingsPreviewBaseResult = Readonly<{
   basePreview: PreviewDirectionEntry[];
@@ -1233,6 +1327,7 @@ export const resolveAppearanceContext = (options: {
   const bodyColorExcludedParts = collectBodyColorExcludedParts(
     previewDirStatesForLive
   );
+  const bodyColorBlendMode = collectBodyColorBlendMode(previewDirStatesForLive);
   return {
     canApplyAppearance,
     appearanceState,
@@ -1251,6 +1346,7 @@ export const resolveAppearanceContext = (options: {
     digitigrade,
     previewDirStatesForLive,
     bodyColorExcludedParts,
+    bodyColorBlendMode,
   };
 };
 
@@ -1265,10 +1361,14 @@ const buildAppearanceOverlayEntriesForDir = (options: {
   hornDef: BasicAppearanceAccessoryDefinition | null;
   tailDef: BasicAppearanceAccessoryDefinition | null;
   wingDef: BasicAppearanceAccessoryDefinition | null;
+  previewBaseBodyColor: string | null;
+  previewTargetBodyColor: string | null;
+  bodyColorBlendMode: number | null;
   previewBaseEyeColor: string | null;
   previewTargetEyeColor: string | null;
   canvasWidth: number;
   canvasHeight: number;
+  showEquipment: boolean;
   showJobGear: boolean;
   showLoadoutGear: boolean;
   signalAssetUpdate: () => void;
@@ -1284,10 +1384,14 @@ const buildAppearanceOverlayEntriesForDir = (options: {
     hornDef,
     tailDef,
     wingDef,
+    previewBaseBodyColor,
+    previewTargetBodyColor,
+    bodyColorBlendMode,
     previewBaseEyeColor,
     previewTargetEyeColor,
     canvasWidth,
     canvasHeight,
+    showEquipment,
     showJobGear,
     showLoadoutGear,
     signalAssetUpdate,
@@ -1312,6 +1416,9 @@ const buildAppearanceOverlayEntriesForDir = (options: {
     : [];
   const overlayAssets = overlayAssetsRaw.filter((entry) => {
     const slot = (entry as GearOverlayAsset)?.slot;
+    if (slot === 'species_tail' && tailDef && tailDef.id !== 'Normal') {
+      return false;
+    }
     return !slot || !APPEARANCE_OVERLAY_SLOTS.has(String(slot));
   });
   const baseOverlayLayers = buildOrderedOverlayLayers(
@@ -1358,6 +1465,24 @@ const buildAppearanceOverlayEntriesForDir = (options: {
           (entry) => !entry.slot || !loadoutSlots.has(entry.slot)
         )
       : jobLayersUnfiltered;
+  const higherPrioritySlots = new Set(
+    [...jobLayers, ...loadoutLayers]
+      .map((entry) => entry.slot)
+      .filter((slot): slot is string => !!slot)
+  );
+  const equipmentLayers = showEquipment
+    ? buildOrderedOverlayLayers(
+        (dirState.gearEquipmentOverlayAssets as (
+          | GearOverlayAsset
+          | IconAssetPayload
+        )[]) || [],
+        canvasWidth,
+        canvasHeight,
+        'equipment',
+        signalAssetUpdate,
+        baseOverlayLayers.length + jobLayers.length + loadoutLayers.length
+      ).filter((entry) => !entry.slot || !higherPrioritySlots.has(entry.slot))
+    : [];
 
   const appearanceLayers: OrderedOverlayLayer[] = [];
 
@@ -1508,6 +1633,7 @@ const buildAppearanceOverlayEntriesForDir = (options: {
 
   const merged = mergeOverlayLayerLists(
     [...baseOverlayLayers, ...appearanceLayers],
+    equipmentLayers,
     jobLayers,
     loadoutLayers
   );
@@ -1517,8 +1643,16 @@ const buildAppearanceOverlayEntriesForDir = (options: {
       return;
     }
     let grid = cloneGridData(entry.grid);
+    if (entry.slot === 'species_tail' && previewTargetBodyColor) {
+      grid =
+        typeof bodyColorBlendMode === 'number'
+          ? tintGrid(grid, previewTargetBodyColor, bodyColorBlendMode)
+          : previewBaseBodyColor
+            ? recolorGrid(grid, previewBaseBodyColor, previewTargetBodyColor, 1)
+            : grid;
+    }
     if (entry.slot === 'eyes' && previewBaseEyeColor && previewTargetEyeColor) {
-      grid = recolorGrid(grid, previewBaseEyeColor, previewTargetEyeColor);
+      grid = recolorGrid(grid, previewBaseEyeColor, previewTargetEyeColor, 3);
     }
     if (referenceParts && entry.slot && TAUR_CLOTHING_SLOTS.has(entry.slot)) {
       maskGridForHiddenLegParts(grid, referenceParts, hiddenLegParts);
@@ -1530,11 +1664,13 @@ const buildAppearanceOverlayEntriesForDir = (options: {
       type: 'overlay',
       key: `overlay_body_${dir}_${entry.source}_${entry.slot || index}_${index}`,
       label:
-        entry.source === 'job'
-          ? 'Job Gear'
-          : entry.source === 'loadout'
-            ? 'Loadout Gear'
-            : 'Overlay',
+        entry.source === 'equipment'
+          ? 'Equipment'
+          : entry.source === 'job'
+            ? 'Job Gear'
+            : entry.source === 'loadout'
+              ? 'Loadout Gear'
+              : 'Overlay',
       source: entry.source,
       grid,
       opacity: 1,
@@ -1549,6 +1685,7 @@ export const applyAppearanceOverlaysToPreview = (options: {
   appearanceContext: AppearancePreviewContext;
   canvasWidth: number;
   canvasHeight: number;
+  showEquipment: boolean;
   showJobGear: boolean;
   showLoadoutGear: boolean;
   signalAssetUpdate: () => void;
@@ -1559,6 +1696,7 @@ export const applyAppearanceOverlaysToPreview = (options: {
     appearanceContext,
     canvasWidth,
     canvasHeight,
+    showEquipment,
     showJobGear,
     showLoadoutGear,
     signalAssetUpdate,
@@ -1568,7 +1706,7 @@ export const applyAppearanceOverlaysToPreview = (options: {
   }
   return preview.map((dirEntry) => {
     const layers = dirEntry.layers || [];
-    const { before, after } = splitOverlayLayers(layers);
+    const { before, after } = splitPreviewOverlayLayers(layers);
     const overlayEntries = buildAppearanceOverlayEntriesForDir({
       dir: dirEntry.dir,
       dirState: previewDirStatesForLive[dirEntry.dir],
@@ -1580,10 +1718,14 @@ export const applyAppearanceOverlaysToPreview = (options: {
       hornDef: appearanceContext.hornDef,
       tailDef: appearanceContext.tailDef,
       wingDef: appearanceContext.wingDef,
+      previewBaseBodyColor: appearanceContext.previewBaseBodyColor,
+      previewTargetBodyColor: appearanceContext.previewTargetBodyColor,
+      bodyColorBlendMode: appearanceContext.bodyColorBlendMode,
       previewBaseEyeColor: appearanceContext.previewBaseEyeColor,
       previewTargetEyeColor: appearanceContext.previewTargetEyeColor,
       canvasWidth,
       canvasHeight,
+      showEquipment,
       showJobGear,
       showLoadoutGear,
       signalAssetUpdate,
@@ -1595,7 +1737,7 @@ export const applyAppearanceOverlaysToPreview = (options: {
   });
 };
 
-const buildBodyMarkingsPreviewBases = (options: {
+export const buildBodyMarkingsPreviewBases = (options: {
   previewDirStates: Record<number, PreviewDirState>;
   bodyPayload: BodyMarkingsPayload | null;
   basicPayload: BasicAppearancePayload | null;
@@ -1606,9 +1748,11 @@ const buildBodyMarkingsPreviewBases = (options: {
   canvasHeight: number;
   resolvedPartPriorityMap: Record<string, boolean>;
   resolvedPartReplacementMap: Record<string, boolean>;
+  showEquipment: boolean;
   showJobGear: boolean;
   showLoadoutGear: boolean;
   signalAssetUpdate: () => void;
+  bodyColorMaxFactor?: number;
 }): BodyMarkingsPreviewBaseResult => {
   const {
     previewDirStates,
@@ -1621,21 +1765,25 @@ const buildBodyMarkingsPreviewBases = (options: {
     canvasHeight,
     resolvedPartPriorityMap,
     resolvedPartReplacementMap,
+    showEquipment,
     showJobGear,
     showLoadoutGear,
     signalAssetUpdate,
+    bodyColorMaxFactor,
   } = options;
+  const resolvedBodyColorMaxFactor = bodyColorMaxFactor ?? 1;
   const appearanceContext = resolveAppearanceContext({
     previewDirStates,
     basicPayload,
     basicAppearanceState,
     fallbackDigitigrade: !!bodyPayload?.digitigrade,
   });
+  const hasPreviewSources = Object.keys(previewDirStates || {}).length > 0;
   const hasReplacementFlags = Object.values(
     resolvedPartReplacementMap || {}
   ).some(Boolean);
   const partPaintPresenceMap =
-    bodyPayload?.preview_sources && hasReplacementFlags
+    hasPreviewSources && hasReplacementFlags
       ? buildPartPaintPresenceMap({
           dirStates: appearanceContext.previewDirStatesForLive,
           activeDirKey: data.active_dir_key,
@@ -1645,7 +1793,7 @@ const buildBodyMarkingsPreviewBases = (options: {
           replacementDependents: data.replacement_dependents,
         })
       : undefined;
-  const basePreviewRaw = bodyPayload?.preview_sources
+  const basePreviewRaw = hasPreviewSources
     ? buildBasePreviewDirs(
         appearanceContext.previewDirStatesForLive,
         data.directions,
@@ -1655,7 +1803,7 @@ const buildBodyMarkingsPreviewBases = (options: {
         signalAssetUpdate
       )
     : [];
-  const liveBasePreviewRaw = bodyPayload?.preview_sources
+  const liveBasePreviewRaw = hasPreviewSources
     ? buildDesignerPreviewDirs(
         appearanceContext.previewDirStatesForLive,
         data.directions,
@@ -1671,26 +1819,37 @@ const buildBodyMarkingsPreviewBases = (options: {
         partPaintPresenceMap,
         showJobGear,
         showLoadoutGear,
+        showEquipment,
         signalAssetUpdate
       )
     : [];
   const basePreviewColored = applyEyeColorToPreview(
-    applyBodyColorToPreview(
-      basePreviewRaw,
-      appearanceContext.previewBaseBodyColor,
-      appearanceContext.previewTargetBodyColor,
-      appearanceContext.bodyColorExcludedParts
+    applyLimbHairColorToPreview(
+      applyBodyColorToPreview(
+        basePreviewRaw,
+        appearanceContext.previewBaseBodyColor,
+        appearanceContext.previewTargetBodyColor,
+        appearanceContext.bodyColorExcludedParts,
+        resolvedBodyColorMaxFactor,
+        appearanceContext.bodyColorBlendMode
+      ),
+      appearanceContext.appearanceState.hair_color
     ),
     appearanceContext.previewBaseEyeColor,
     appearanceContext.previewTargetEyeColor,
     appearanceContext.previewTargetBodyColor
   );
   const liveBasePreviewColored = applyEyeColorToPreview(
-    applyBodyColorToPreview(
-      liveBasePreviewRaw,
-      appearanceContext.previewBaseBodyColor,
-      appearanceContext.previewTargetBodyColor,
-      appearanceContext.bodyColorExcludedParts
+    applyLimbHairColorToPreview(
+      applyBodyColorToPreview(
+        liveBasePreviewRaw,
+        appearanceContext.previewBaseBodyColor,
+        appearanceContext.previewTargetBodyColor,
+        appearanceContext.bodyColorExcludedParts,
+        resolvedBodyColorMaxFactor,
+        appearanceContext.bodyColorBlendMode
+      ),
+      appearanceContext.appearanceState.hair_color
     ),
     appearanceContext.previewBaseEyeColor,
     appearanceContext.previewTargetEyeColor,
@@ -1702,6 +1861,7 @@ const buildBodyMarkingsPreviewBases = (options: {
     appearanceContext,
     canvasWidth,
     canvasHeight,
+    showEquipment,
     showJobGear,
     showLoadoutGear,
     signalAssetUpdate,
@@ -1712,6 +1872,7 @@ const buildBodyMarkingsPreviewBases = (options: {
     appearanceContext,
     canvasWidth,
     canvasHeight,
+    showEquipment,
     showJobGear,
     showLoadoutGear,
     signalAssetUpdate,
@@ -1801,15 +1962,12 @@ class BodyMarkingsInitializer extends Component<BodyMarkingsInitializerProps> {
       return;
     }
     const nextSignature = buildBodyPayloadSignature(dataPayload);
-    if (isPreviewOnly && bodyPayload) {
+    if (isPreviewOnly && bodyPayload && !loadInProgress) {
       const localRevision = bodyPayload.preview_revision || 0;
       const incomingRevision = dataPayload.preview_revision || 0;
       if (localRevision > incomingRevision) {
         this.lastDataPayload = dataPayload;
         this.lastPayloadSignature = nextSignature;
-        if (loadInProgress) {
-          setLoadInProgress(false);
-        }
         return;
       }
     }
@@ -1819,6 +1977,7 @@ class BodyMarkingsInitializer extends Component<BodyMarkingsInitializerProps> {
     if (!dataRefChanged && !signatureChanged) {
       return;
     }
+    const waitingForReload = loadInProgress && !bodyPayload;
     if (dataPayload.preview_only) {
       this.lastDataPayload = dataPayload;
       this.lastPayloadSignature = nextSignature;
@@ -1833,7 +1992,6 @@ class BodyMarkingsInitializer extends Component<BodyMarkingsInitializerProps> {
     this.lastPayloadSignature = nextSignature;
 
     const signatureMatches = nextSignature === payloadSignature;
-    const waitingForReload = loadInProgress && !bodyPayload;
     if (signatureMatches) {
       if (waitingForReload) {
         if (!hadLastDataPayload) {
@@ -1972,10 +2130,19 @@ class BodyMarkingsPreviewLoadCoordinator extends Component<BodyMarkingsPreviewLo
 type MarkingTileProps = Readonly<{
   def: BodyMarkingDefinition;
   selected: boolean;
-  previews: PreviewDirectionEntry[];
-  onToggle: () => void;
+  canToggle: boolean;
+  applyAdd: (id: string) => void;
+  applyRemove: (id: string) => void;
   canvasWidth: number;
   canvasHeight: number;
+  previewContextSignature: string;
+  previewResult: MarkingTilePreviewResult | null;
+  getPreviewSignature: (def: BodyMarkingDefinition) => string;
+  buildPreview: (
+    def: BodyMarkingDefinition,
+    onUpdated: () => void,
+    priority: CharacterPreviewWorkPriority
+  ) => MarkingTilePreviewResult;
   backgroundImage: string | null;
   backgroundColor: string;
   backgroundScale: number;
@@ -1983,13 +2150,122 @@ type MarkingTileProps = Readonly<{
   backgroundTileHeight?: number;
 }>;
 
-class MarkingTile extends Component<MarkingTileProps> {
-  shouldComponentUpdate(next: MarkingTileProps) {
+type MarkingTileState = {
+  result: MarkingTilePreviewResult | null;
+};
+
+class MarkingTile extends Component<MarkingTileProps, MarkingTileState> {
+  state: MarkingTileState = {
+    result: null,
+  };
+  private mounted = false;
+  private scheduledWork: CharacterPreviewWorkHandle | null = null;
+
+  private getCurrentPreviewResult(completeOnly = false) {
+    const currentSignature = this.props.getPreviewSignature(this.props.def);
+    const candidates = [this.props.previewResult, this.state.result];
+    const completeResult = candidates.find(
+      (result) => result?.complete && result.signature === currentSignature
+    );
+    if (completeResult || completeOnly) {
+      return completeResult || null;
+    }
+    return (
+      candidates.find((result) => result?.signature === currentSignature) ||
+      null
+    );
+  }
+
+  private persistIncomingPreviewResult() {
+    const { previewResult } = this.props;
+    if (
+      !previewResult ||
+      previewResult === this.state.result ||
+      previewResult.signature !== this.props.getPreviewSignature(this.props.def)
+    ) {
+      return;
+    }
+    this.setState({ result: previewResult });
+  }
+
+  componentDidMount() {
+    this.mounted = true;
+    this.persistIncomingPreviewResult();
+    if (!this.getCurrentPreviewResult(true)) {
+      this.schedulePreviewBuild();
+    }
+  }
+
+  componentDidUpdate(prevProps: MarkingTileProps) {
+    this.persistIncomingPreviewResult();
+    if (
+      prevProps.def !== this.props.def ||
+      prevProps.previewContextSignature !== this.props.previewContextSignature
+    ) {
+      this.scheduledWork?.cancel();
+      this.scheduledWork = null;
+      if (!this.getCurrentPreviewResult(true)) {
+        this.schedulePreviewBuild();
+      }
+    }
+  }
+
+  componentWillUnmount() {
+    this.mounted = false;
+    this.scheduledWork?.cancel();
+    this.scheduledWork = null;
+  }
+
+  private handleAssetsUpdated = () => {
+    this.schedulePreviewBuild();
+  };
+
+  private handleToggle = () => {
+    const { canToggle, selected, def, applyAdd, applyRemove } = this.props;
+    if (!canToggle) {
+      return;
+    }
+    return selected ? applyRemove(def.id) : applyAdd(def.id);
+  };
+
+  private schedulePreviewBuild() {
+    if (this.scheduledWork) {
+      return;
+    }
+    const requestContext = this.props.previewContextSignature;
+    const def = this.props.def;
+    let workHandle: CharacterPreviewWorkHandle | null = null;
+    workHandle = scheduleCharacterPreviewWork(() => {
+      if (this.scheduledWork === workHandle) {
+        this.scheduledWork = null;
+      }
+      if (
+        !this.mounted ||
+        this.props.def !== def ||
+        this.props.previewContextSignature !== requestContext
+      ) {
+        return;
+      }
+      const result = this.props.buildPreview(
+        def,
+        this.handleAssetsUpdated,
+        'visible'
+      );
+      if (!this.mounted) {
+        return;
+      }
+      this.setState({ result });
+    }, 'visible');
+    this.scheduledWork = workHandle;
+  }
+
+  shouldComponentUpdate(next: MarkingTileProps, nextState: MarkingTileState) {
     return (
       next.selected !== this.props.selected ||
-      next.previews !== this.props.previews ||
-      next.def.id !== this.props.def.id ||
-      next.def.name !== this.props.def.name ||
+      next.def !== this.props.def ||
+      next.previewContextSignature !== this.props.previewContextSignature ||
+      next.previewResult !== this.props.previewResult ||
+      nextState.result !== this.state.result ||
       next.backgroundImage !== this.props.backgroundImage ||
       next.backgroundColor !== this.props.backgroundColor ||
       next.backgroundScale !== this.props.backgroundScale ||
@@ -2002,8 +2278,6 @@ class MarkingTile extends Component<MarkingTileProps> {
     const {
       def,
       selected,
-      previews,
-      onToggle,
       canvasWidth,
       canvasHeight,
       backgroundImage,
@@ -2012,12 +2286,14 @@ class MarkingTile extends Component<MarkingTileProps> {
       backgroundTileWidth,
       backgroundTileHeight,
     } = this.props;
+    const result = this.getCurrentPreviewResult();
+    const previews = result?.previews || [];
     return (
       <Box
         className={`RogueStar__markingTile${
           selected ? ' RogueStar__markingTile--selected' : ''
         }`}
-        onClick={onToggle}>
+        onClick={this.handleToggle}>
         <Box className="RogueStar__markingTilePreviewGrid">
           {previews.map((preview) => (
             <Box
@@ -2025,9 +2301,15 @@ class MarkingTile extends Component<MarkingTileProps> {
               className="RogueStar__markingTilePreview">
               <DirectionPreviewCanvas
                 layers={preview.layers}
+                bodyAlpha={preview.bodyAlpha}
                 pixelSize={MARKING_TILE_PIXEL_SIZE}
                 width={canvasWidth}
                 height={canvasHeight}
+                renderSignature={
+                  result?.complete
+                    ? `${result.signature}|${preview.dir}`
+                    : undefined
+                }
                 backgroundImage={backgroundImage}
                 backgroundColor={backgroundColor}
                 backgroundScale={backgroundScale}
@@ -2055,7 +2337,8 @@ type MarkingTileSectionProps = Readonly<{
   onPageChange: (page: number) => void;
   tileDirectionsSignature: string;
   previewColorSignature: string;
-  assetRevision: number;
+  previewContextSignature: string;
+  previewStructureSignature: string;
   backgroundImage: string | null;
   backgroundColor: string;
   backgroundScale: number;
@@ -2063,9 +2346,15 @@ type MarkingTileSectionProps = Readonly<{
   backgroundTileHeight?: number;
   markings: Record<string, BodyMarkingEntry>;
   markingKeysSignature: string;
-  getTilePreviewEntries: (
+  getTilePreviewSignature: (def: BodyMarkingDefinition) => string;
+  getCachedTilePreviewEntries: (
     def: BodyMarkingDefinition
-  ) => PreviewDirectionEntry[];
+  ) => MarkingTilePreviewResult | null;
+  buildTilePreviewEntries: (
+    def: BodyMarkingDefinition,
+    onUpdated: () => void,
+    priority: CharacterPreviewWorkPriority
+  ) => MarkingTilePreviewResult;
   applyAdd: (id: string) => void;
   applyRemove: (id: string) => void;
 }>;
@@ -2078,53 +2367,38 @@ const compareDefinitionsByName = (
   a.id.localeCompare(b.id, undefined, { sensitivity: 'base' });
 
 class MarkingTileSection extends Component<MarkingTileSectionProps> {
-  shouldComponentUpdate(next: MarkingTileSectionProps) {
-    return (
-      next.category !== this.props.category ||
-      next.search !== this.props.search ||
-      next.page !== this.props.page ||
-      next.canvasWidth !== this.props.canvasWidth ||
-      next.canvasHeight !== this.props.canvasHeight ||
-      next.markingKeysSignature !== this.props.markingKeysSignature ||
-      next.tileDirectionsSignature !== this.props.tileDirectionsSignature ||
-      next.previewColorSignature !== this.props.previewColorSignature ||
-      next.assetRevision !== this.props.assetRevision ||
-      next.definitions !== this.props.definitions ||
-      next.backgroundImage !== this.props.backgroundImage ||
-      next.backgroundColor !== this.props.backgroundColor ||
-      next.backgroundScale !== this.props.backgroundScale ||
-      next.backgroundTileWidth !== this.props.backgroundTileWidth ||
-      next.backgroundTileHeight !== this.props.backgroundTileHeight
-    );
+  private prewarmGeneration = 0;
+  private prewarmHandles = new Set<CharacterPreviewWorkHandle>();
+  private prewarmScheduledDefinitions = new Set<string>();
+  private previousPreviewColorSignature: string | undefined;
+  private previousPreviewStructureSignature: string | undefined;
+
+  componentDidMount() {
+    this.restartAdjacentPagePrewarm();
   }
 
-  render() {
-    const {
-      definitions,
-      canvasWidth,
-      canvasHeight,
-      category,
-      search,
-      page,
-      onPageChange,
-      tileDirectionsSignature: _,
-      previewColorSignature: __,
-      markings,
-      backgroundImage,
-      backgroundColor,
-      backgroundScale,
-      backgroundTileWidth,
-      backgroundTileHeight,
-      getTilePreviewEntries,
-      applyAdd,
-      applyRemove,
-    } = this.props;
-    const searchNeedle = search.trim().toLowerCase();
-    const filteredDefinitions = definitions.filter((def) => {
-      if (def.hide_from_gallery && !markings[def.id]) {
+  componentDidUpdate() {
+    this.restartAdjacentPagePrewarm();
+  }
+
+  componentWillUnmount() {
+    this.cancelAdjacentPagePrewarm();
+  }
+
+  private cancelAdjacentPagePrewarm() {
+    this.prewarmGeneration += 1;
+    this.prewarmHandles.forEach((handle) => handle.cancel());
+    this.prewarmHandles.clear();
+    this.prewarmScheduledDefinitions.clear();
+  }
+
+  private getFilteredDefinitions(props = this.props) {
+    const searchNeedle = props.search.trim().toLowerCase();
+    const filteredDefinitions = props.definitions.filter((def) => {
+      if (def.hide_from_gallery && !props.markings[def.id]) {
         return false;
       }
-      if (category !== 'all' && def.category !== category) {
+      if (props.category !== 'all' && def.category !== props.category) {
         return false;
       }
       if (!searchNeedle) {
@@ -2136,48 +2410,166 @@ class MarkingTileSection extends Component<MarkingTileSectionProps> {
       );
     });
     filteredDefinitions.sort(compareDefinitionsByName);
+    return filteredDefinitions;
+  }
 
-    const PAGE_SIZE = 20;
+  private scheduleDefinitionPrewarm(
+    def: BodyMarkingDefinition,
+    generation: number
+  ) {
+    if (
+      generation !== this.prewarmGeneration ||
+      this.prewarmScheduledDefinitions.has(def.id)
+    ) {
+      return;
+    }
+    this.prewarmScheduledDefinitions.add(def.id);
+    let handle: CharacterPreviewWorkHandle | null = null;
+    handle = scheduleCharacterPreviewWork(() => {
+      if (handle) {
+        this.prewarmHandles.delete(handle);
+      }
+      this.prewarmScheduledDefinitions.delete(def.id);
+      if (generation !== this.prewarmGeneration) {
+        return;
+      }
+      if (this.props.getCachedTilePreviewEntries(def)?.complete) {
+        return;
+      }
+      const result = this.props.buildTilePreviewEntries(
+        def,
+        () => this.scheduleDefinitionPrewarm(def, generation),
+        'background'
+      );
+      if (!result.complete) {
+        return;
+      }
+    }, 'background');
+    this.prewarmHandles.add(handle);
+  }
+
+  private restartAdjacentPagePrewarm() {
+    this.cancelAdjacentPagePrewarm();
+    const generation = this.prewarmGeneration;
+    const filteredDefinitions = this.getFilteredDefinitions();
     const totalPages = Math.max(
       1,
-      Math.ceil(filteredDefinitions.length / PAGE_SIZE)
+      Math.ceil(filteredDefinitions.length / BODY_MARKING_TILE_PAGE_SIZE)
+    );
+    const currentPage = Math.min(
+      Math.max(0, this.props.page),
+      Math.max(0, totalPages - 1)
+    );
+    const adjacentPages = [currentPage + 1, currentPage - 1].filter(
+      (page) => page >= 0 && page < totalPages
+    );
+    for (const page of adjacentPages) {
+      const start = page * BODY_MARKING_TILE_PAGE_SIZE;
+      const definitions = filteredDefinitions.slice(
+        start,
+        start + BODY_MARKING_TILE_PAGE_SIZE
+      );
+      for (const def of definitions) {
+        this.scheduleDefinitionPrewarm(def, generation);
+      }
+    }
+  }
+
+  shouldComponentUpdate(next: MarkingTileSectionProps) {
+    return (
+      next.category !== this.props.category ||
+      next.search !== this.props.search ||
+      next.page !== this.props.page ||
+      next.canvasWidth !== this.props.canvasWidth ||
+      next.canvasHeight !== this.props.canvasHeight ||
+      next.markingKeysSignature !== this.props.markingKeysSignature ||
+      next.tileDirectionsSignature !== this.props.tileDirectionsSignature ||
+      next.previewColorSignature !== this.props.previewColorSignature ||
+      next.previewContextSignature !== this.props.previewContextSignature ||
+      next.definitions !== this.props.definitions ||
+      next.backgroundImage !== this.props.backgroundImage ||
+      next.backgroundColor !== this.props.backgroundColor ||
+      next.backgroundScale !== this.props.backgroundScale ||
+      next.backgroundTileWidth !== this.props.backgroundTileWidth ||
+      next.backgroundTileHeight !== this.props.backgroundTileHeight
+    );
+  }
+
+  render() {
+    const {
+      canvasWidth,
+      canvasHeight,
+      page,
+      onPageChange,
+      markings,
+      backgroundImage,
+      backgroundColor,
+      backgroundScale,
+      backgroundTileWidth,
+      backgroundTileHeight,
+      previewColorSignature,
+      previewContextSignature,
+      previewStructureSignature,
+      getTilePreviewSignature,
+      getCachedTilePreviewEntries,
+      buildTilePreviewEntries,
+      applyAdd,
+      applyRemove,
+    } = this.props;
+    const filteredDefinitions = this.getFilteredDefinitions();
+    const totalPages = Math.max(
+      1,
+      Math.ceil(filteredDefinitions.length / BODY_MARKING_TILE_PAGE_SIZE)
     );
     const currentPage = Math.min(
       Math.max(0, page),
       Math.max(0, totalPages - 1)
     );
-    const startIdx = currentPage * PAGE_SIZE;
-    const endIdx = startIdx + PAGE_SIZE;
+    const startIdx = currentPage * BODY_MARKING_TILE_PAGE_SIZE;
+    const endIdx = startIdx + BODY_MARKING_TILE_PAGE_SIZE;
     const pagedDefinitions = filteredDefinitions.slice(startIdx, endIdx);
     const showStart = filteredDefinitions.length ? startIdx + 1 : 0;
     const showEnd = Math.min(endIdx, filteredDefinitions.length);
+    const synchronouslyRecolorVisibleTiles =
+      this.previousPreviewColorSignature !== undefined &&
+      this.previousPreviewColorSignature !== previewColorSignature &&
+      this.previousPreviewStructureSignature === previewStructureSignature;
+    this.previousPreviewColorSignature = previewColorSignature;
+    this.previousPreviewStructureSignature = previewStructureSignature;
 
     return (
       <>
         <Box className="RogueStar__markingGrid">
           {pagedDefinitions.map((def) => {
             const selected = !!markings[def.id];
-            const tilePreviews = getTilePreviewEntries(def);
             const canToggle = !(selected && def.hide_from_gallery);
+            const previewResult =
+              synchronouslyRecolorVisibleTiles && def.do_colouration
+                ? buildTilePreviewEntries(
+                    def,
+                    ignoreMarkingTileAssetUpdate,
+                    'visible'
+                  )
+                : getCachedTilePreviewEntries(def);
             return (
               <MarkingTile
                 key={def.id}
                 def={def}
                 selected={selected}
-                previews={tilePreviews}
+                canToggle={canToggle}
+                applyAdd={applyAdd}
+                applyRemove={applyRemove}
                 canvasWidth={canvasWidth}
                 canvasHeight={canvasHeight}
+                previewContextSignature={previewContextSignature}
+                previewResult={previewResult}
+                getPreviewSignature={getTilePreviewSignature}
+                buildPreview={buildTilePreviewEntries}
                 backgroundImage={backgroundImage}
                 backgroundColor={backgroundColor}
                 backgroundScale={backgroundScale}
                 backgroundTileWidth={backgroundTileWidth}
                 backgroundTileHeight={backgroundTileHeight}
-                onToggle={() => {
-                  if (!canToggle) {
-                    return;
-                  }
-                  return selected ? applyRemove(def.id) : applyAdd(def.id);
-                }}
               />
             );
           })}
@@ -2185,7 +2577,7 @@ class MarkingTileSection extends Component<MarkingTileSectionProps> {
             <NoticeBox>No markings found for this filter.</NoticeBox>
           )}
         </Box>
-        {filteredDefinitions.length > PAGE_SIZE && (
+        {filteredDefinitions.length > BODY_MARKING_TILE_PAGE_SIZE && (
           <Flex
             mt={1}
             align="center"
@@ -2240,12 +2632,19 @@ type BodyMarkingsGallerySectionProps = Readonly<{
   canvasWidth: number;
   canvasHeight: number;
   tileDirectionsSignature: string;
-  assetRevision: number;
+  previewContextSignature: string;
+  previewStructureSignature: string;
   markings: Record<string, BodyMarkingEntry>;
   markingKeysSignature: string;
-  getTilePreviewEntries: (
+  getTilePreviewSignature: (def: BodyMarkingDefinition) => string;
+  getCachedTilePreviewEntries: (
     def: BodyMarkingDefinition
-  ) => PreviewDirectionEntry[];
+  ) => MarkingTilePreviewResult | null;
+  buildTilePreviewEntries: (
+    def: BodyMarkingDefinition,
+    onUpdated: () => void,
+    priority: CharacterPreviewWorkPriority
+  ) => MarkingTilePreviewResult;
   backgroundImage: string | null;
   backgroundColor: string;
   backgroundScale: number;
@@ -2270,10 +2669,13 @@ const BodyMarkingsGallerySection = ({
   canvasWidth,
   canvasHeight,
   tileDirectionsSignature,
-  assetRevision,
+  previewContextSignature,
+  previewStructureSignature,
   markings,
   markingKeysSignature,
-  getTilePreviewEntries,
+  getTilePreviewSignature,
+  getCachedTilePreviewEntries,
+  buildTilePreviewEntries,
   backgroundImage,
   backgroundColor,
   backgroundScale,
@@ -2333,7 +2735,8 @@ const BodyMarkingsGallerySection = ({
     <MarkingTileSection
       definitions={bodyPayload.body_marking_definitions || []}
       tileDirectionsSignature={tileDirectionsSignature}
-      assetRevision={assetRevision}
+      previewContextSignature={previewContextSignature}
+      previewStructureSignature={previewStructureSignature}
       canvasWidth={canvasWidth}
       canvasHeight={canvasHeight}
       category={category}
@@ -2343,7 +2746,9 @@ const BodyMarkingsGallerySection = ({
       markings={markings}
       markingKeysSignature={markingKeysSignature}
       previewColorSignature={previewTint || 'default'}
-      getTilePreviewEntries={getTilePreviewEntries}
+      getTilePreviewSignature={getTilePreviewSignature}
+      getCachedTilePreviewEntries={getCachedTilePreviewEntries}
+      buildTilePreviewEntries={buildTilePreviewEntries}
       backgroundImage={backgroundImage}
       backgroundColor={backgroundColor}
       backgroundScale={backgroundScale}
@@ -2618,6 +3023,10 @@ type BodyMarkingsPreviewColumnProps = Readonly<{
   canvasBackgroundScale: number;
   previewBackgroundTileWidth?: number;
   previewBackgroundTileHeight?: number;
+  iconScaleX?: number;
+  iconScaleY?: number;
+  showEquipment: boolean;
+  onToggleEquipment: () => void;
   showJobGear: boolean;
   onToggleJobGear: () => void;
   showLoadoutGear: boolean;
@@ -2640,6 +3049,10 @@ const BodyMarkingsPreviewColumn = ({
   canvasBackgroundScale,
   previewBackgroundTileWidth,
   previewBackgroundTileHeight,
+  iconScaleX,
+  iconScaleY,
+  showEquipment,
+  onToggleEquipment,
   showJobGear,
   onToggleJobGear,
   showLoadoutGear,
@@ -2651,73 +3064,29 @@ const BodyMarkingsPreviewColumn = ({
   applyColorTarget,
 }: BodyMarkingsPreviewColumnProps) => (
   <Flex direction="column" gap={1}>
-    <Section
-      fill
-      noTopPadding
-      className="RogueStar__previewCard RogueStar__previewCard--flush">
-      <Flex align="center" wrap gap={0.5} mb={1} ml={0.5}>
-        <Box
-          color="label"
-          fontWeight="bold"
-          className="RogueStar__previewTitle"
-          mr={0.5}>
-          Live Preview
-        </Box>
-        <Button
-          className={CHIP_BUTTON_CLASS}
-          icon={previewFitToFrame ? 'compress-arrows-alt' : 'expand-arrows-alt'}
-          selected={previewFitToFrame}
-          tooltip="Shrink to show the full 64x64 grid"
-          onClick={onTogglePreviewFit}
-        />
-        <Button
-          className={CHIP_BUTTON_CLASS}
-          icon="id-card"
-          selected={showJobGear}
-          tooltip="Show or hide job gear overlays."
-          onClick={onToggleJobGear}>
-          Job gear
-        </Button>
-        <Button
-          className={CHIP_BUTTON_CLASS}
-          icon="toolbox"
-          selected={showLoadoutGear}
-          tooltip="Show or hide loadout overlays."
-          onClick={onToggleLoadout}>
-          Loadout
-        </Button>
-        {canvasBackgroundOptions.length ? (
-          <Button
-            className={CHIP_BUTTON_CLASS}
-            icon="image"
-            tooltip={`Change preview background (current: ${resolvedCanvasBackground?.label || 'Default'})`}
-            onClick={cycleCanvasBackground}>
-            {resolvedCanvasBackground?.label || 'Background'}
-          </Button>
-        ) : null}
-      </Flex>
-      <Flex wrap gap={1}>
-        {markedPreview.map((entry) => (
-          <Flex.Item
-            key={entry.dir}
-            basis="45%"
-            className="RogueStar__previewItem">
-            <DirectionPreviewCanvas
-              layers={entry.layers}
-              pixelSize={Math.max(1, PREVIEW_PIXEL_SIZE)}
-              width={canvasWidth}
-              height={canvasHeight}
-              fitToFrame={previewFitToFrame}
-              backgroundImage={previewBackgroundImage}
-              backgroundColor={backgroundFallbackColor}
-              backgroundScale={canvasBackgroundScale}
-              backgroundTileWidth={previewBackgroundTileWidth}
-              backgroundTileHeight={previewBackgroundTileHeight}
-            />
-          </Flex.Item>
-        ))}
-      </Flex>
-    </Section>
+    <LivePreviewCard
+      preview={markedPreview}
+      canvasWidth={canvasWidth}
+      canvasHeight={canvasHeight}
+      previewFitToFrame={previewFitToFrame}
+      onTogglePreviewFit={onTogglePreviewFit}
+      previewBackgroundImage={previewBackgroundImage}
+      backgroundFallbackColor={backgroundFallbackColor}
+      canvasBackgroundScale={canvasBackgroundScale}
+      previewBackgroundTileWidth={previewBackgroundTileWidth}
+      previewBackgroundTileHeight={previewBackgroundTileHeight}
+      iconScaleX={iconScaleX}
+      iconScaleY={iconScaleY}
+      showEquipment={showEquipment}
+      onToggleEquipment={onToggleEquipment}
+      showJobGear={showJobGear}
+      onToggleJobGear={onToggleJobGear}
+      showLoadoutGear={showLoadoutGear}
+      onToggleLoadout={onToggleLoadout}
+      canvasBackgroundOptions={canvasBackgroundOptions}
+      resolvedCanvasBackground={resolvedCanvasBackground}
+      cycleCanvasBackground={cycleCanvasBackground}
+    />
     <Section title="Color Picker">
       <Box className="RogueStar__inlineColorPicker">
         <RogueStarColorPicker
@@ -2733,6 +3102,11 @@ const BodyMarkingsPreviewColumn = ({
   </Flex>
 );
 
+const resolveInitialSpeciesIconBase = (
+  payload?: SpeciesPayload | null
+): string | null =>
+  payload?.preview_icon_base || payload?.selected_icon_base || null;
+
 export const BodyMarkingsTab = (props: BodyMarkingsTabProps, context) => {
   const {
     data,
@@ -2743,8 +3117,11 @@ export const BodyMarkingsTab = (props: BodyMarkingsTabProps, context) => {
     backgroundFallbackColor,
     cycleCanvasBackground,
     canvasBackgroundScale,
+    livePreview,
     resolvedPartPriorityMap,
     resolvedPartReplacementMap,
+    showEquipment,
+    onToggleEquipment,
     showJobGear,
     onToggleJobGear,
     showLoadoutGear,
@@ -2784,15 +3161,26 @@ export const BodyMarkingsTab = (props: BodyMarkingsTabProps, context) => {
     false
   );
   const [bodyPayload, setBodyPayload] =
-    useLocalState<BodyMarkingsPayload | null>(
-      context,
-      'bodyPayload',
-      data.body_markings_payload || null
-    );
+    useLocalState<BodyMarkingsPayload | null>(context, 'bodyPayload', null);
+  const [speciesPayload] = useLocalState<SpeciesPayload | null>(
+    context,
+    'speciesPayload',
+    data.species_payload || null
+  );
+  const [speciesSelection] = useLocalState<string | null>(
+    context,
+    'speciesSelection',
+    data.species_payload?.selected_species || null
+  );
+  const [speciesIconBaseSelection] = useLocalState<string | null>(
+    context,
+    'speciesIconBaseSelection',
+    resolveInitialSpeciesIconBase(data.species_payload)
+  );
   const [basicPayload] = useLocalState<BasicAppearancePayload | null>(
     context,
     'basicPayload',
-    data.basic_appearance_payload || null
+    null
   );
   const [basicAppearanceState] = useLocalState<BasicAppearanceState>(
     context,
@@ -2864,7 +3252,7 @@ export const BodyMarkingsTab = (props: BodyMarkingsTabProps, context) => {
     false
   );
   const [tilePreviewCache] = useLocalState<
-    Record<string, { sig: string; previews: PreviewDirectionEntry[] }>
+    Record<string, MarkingTilePreviewCacheEntry>
   >(context, 'bodyMarkingsTilePreviewCache', {});
   const [markingLayersCache] = useLocalState<
     Record<string, MarkingLayersCacheEntry>
@@ -2979,17 +3367,24 @@ export const BodyMarkingsTab = (props: BodyMarkingsTabProps, context) => {
       maxH = Math.max(maxH, asset.height || 0);
     };
     const considerMap = (
-      assets?: Record<string, { width?: number; height?: number }> | null
+      assets?: Record<string, IconAssetReference> | null
     ) => {
       if (!assets) return;
       for (const asset of Object.values(assets)) {
-        consider(asset);
+        consider(
+          resolveIconAssetReference(asset, bodyPayload?.preview_asset_registry)
+        );
       }
     };
     for (const entry of bodyPayload?.preview_sources || []) {
-      consider(entry?.body_asset);
-      consider(entry?.composite_asset);
+      consider(
+        resolveIconAssetReference(
+          entry?.body_asset,
+          bodyPayload?.preview_asset_registry
+        )
+      );
       considerMap(entry?.reference_part_assets);
+      considerMap(entry?.reference_part_hair_assets);
       considerMap(entry?.reference_part_marking_assets);
     }
     return { maxW, maxH };
@@ -3091,22 +3486,34 @@ export const BodyMarkingsTab = (props: BodyMarkingsTabProps, context) => {
     : '#ffffff';
 
   const requestPayload = () => {
-    act('load_body_markings');
+    act(
+      'load_body_markings',
+      buildBodyMarkingsLoadParams(bodyPayload, basicPayload)
+    );
   };
 
   const syncPayload = (payload: BodyMarkingsPayload) => {
-    setBodyPayload(payload);
-    const nextMarkings = deepCopyMarkings(payload.body_markings);
+    const mergedPayload = mergeBodyMarkingsPayload(
+      bodyPayload,
+      payload,
+      basicPayload
+    );
+    setBodyPayload(mergedPayload);
+    const nextMarkings = deepCopyMarkings(mergedPayload.body_markings);
     const nextOrder =
-      (payload.order as string[]) || Object.keys(payload.body_markings || {});
+      (mergedPayload.order as string[]) ||
+      Object.keys(mergedPayload.body_markings || {});
     setMarkings(nextMarkings);
     setOrder(nextOrder);
     const nextSelectedId =
       typeof nextOrder[0] === 'string' ? nextOrder[0] : null;
-    const nextDefinitions = buildBodyMarkingDefinitions(payload);
-    selectMarking(nextSelectedId, nextDefinitions, payload.body_markings, {
-      setColorTarget: false,
-    });
+    const nextDefinitions = buildBodyMarkingDefinitions(mergedPayload);
+    selectMarking(
+      nextSelectedId,
+      nextDefinitions,
+      mergedPayload.body_markings,
+      { setColorTarget: false }
+    );
     setSavedState({
       order: [...nextOrder],
       markings: deepCopyMarkings(nextMarkings),
@@ -3117,7 +3524,9 @@ export const BodyMarkingsTab = (props: BodyMarkingsTabProps, context) => {
   };
 
   const syncPreviewPayload = (payload: BodyMarkingsPayload) => {
-    setBodyPayload(payload);
+    setBodyPayload(
+      mergeBodyMarkingsPayload(bodyPayload, payload, basicPayload)
+    );
   };
 
   const applyAdd = (id: string) => {
@@ -3486,16 +3895,59 @@ export const BodyMarkingsTab = (props: BodyMarkingsTabProps, context) => {
   const {
     basePreviewReady,
     tileDirectionsSignature,
-    getTilePreviewEntries,
+    tilePreviewContextSignature,
+    tilePreviewStructureSignature,
+    getTilePreviewSignature,
+    getCachedTilePreviewEntries,
+    buildTilePreviewEntries,
     markedPreview,
   } = (() => {
-    const previewDirStates = bodyPayload?.preview_sources
+    const {
+      sources: basePreviewSources,
+      assetRegistry: basePreviewAssetRegistry,
+      revision: basePreviewRevision,
+      sourceKey: basePreviewSourceKey,
+      payloadSpeciesId,
+      payloadIconBaseId,
+    } = resolveSharedPreviewSourceSelection({
+      basicPayload,
+      bodyPayload,
+      digitigrade: basicAppearanceState.digitigrade,
+      basicAppearanceState,
+    });
+    const { speciesPreviewSources, speciesPreviewSignature } =
+      resolveSelectedSpeciesPreviewSources({
+        speciesPayload,
+        speciesSelection,
+        speciesIconBaseSelection,
+        payloadSpeciesId,
+        payloadIconBaseId,
+        digitigrade: basicAppearanceState.digitigrade,
+      });
+    const transformedSpeciesPreviewSources = applyProstheticsToPreviewSources(
+      speciesPreviewSources,
+      basicAppearanceState,
+      basicPayload?.prosthetic_context
+    );
+    const activePreviewSources =
+      transformedSpeciesPreviewSources || basePreviewSources;
+    const activePreviewAssetRegistry = transformedSpeciesPreviewSources
+      ? null
+      : basePreviewAssetRegistry;
+    const activePreviewRevision = transformedSpeciesPreviewSources
+      ? basePreviewRevision || 1
+      : basePreviewRevision;
+    const activePreviewSourceSignature = transformedSpeciesPreviewSources
+      ? speciesPreviewSignature || 'species'
+      : basePreviewSourceKey;
+    const previewDirStates = activePreviewSources
       ? updatePreviewStateFromPayload(
           { revision: 0, lastDiffSeq: 0, dirs: {} },
           {
             data: {
-              preview_sources: bodyPayload.preview_sources,
-              preview_revision: bodyPayload.preview_revision || 0,
+              preview_sources: activePreviewSources,
+              preview_asset_registry: activePreviewAssetRegistry || undefined,
+              preview_revision: activePreviewRevision,
               active_dir_key: data.active_dir_key,
               active_dir: data.active_dir,
               grid: [],
@@ -3520,11 +3972,12 @@ export const BodyMarkingsTab = (props: BodyMarkingsTabProps, context) => {
         canvasHeight,
         resolvedPartPriorityMap,
         resolvedPartReplacementMap,
+        showEquipment,
         showJobGear,
         showLoadoutGear,
         signalAssetUpdate,
       });
-    const hiddenPartsByDir = buildHiddenBodyPartsByDir(
+    const hiddenPartsByDir = buildSuppressedMarkingPartsByDir(
       appearanceContext.previewDirStatesForLive
     );
     const { appearanceSignature, digitigrade } = appearanceContext;
@@ -3543,11 +3996,13 @@ export const BodyMarkingsTab = (props: BodyMarkingsTabProps, context) => {
     const tileDirectionsSignature = tileDirections
       .map((entry) => entry.dir)
       .join('|');
+    const previewableTileDirections = tileDirections.filter(
+      (entry) => !!basePreviewByDir[entry.dir]
+    );
 
     const expectedPreviewDirs = (() => {
-      const previewSources = bodyPayload?.preview_sources;
-      const payloadDirs = Array.isArray(previewSources)
-        ? previewSources
+      const payloadDirs = Array.isArray(activePreviewSources)
+        ? activePreviewSources
             .map((entry) => entry?.dir)
             .filter((dir): dir is number => typeof dir === 'number')
         : [];
@@ -3566,8 +4021,10 @@ export const BodyMarkingsTab = (props: BodyMarkingsTabProps, context) => {
         ? expectedPreviewDirs.every((dir) => !!basePreviewByDir[dir])
         : basePreview.length > 0);
 
-    const buildTilePreviewEntries = (
-      def: BodyMarkingDefinition
+    const buildTilePreviewEntriesInternal = (
+      def: BodyMarkingDefinition,
+      onUpdated: () => void,
+      priority: CharacterPreviewWorkPriority
     ): PreviewDirectionEntry[] => {
       if (!tileDirections.length || !Object.keys(basePreviewByDir).length) {
         return [];
@@ -3611,12 +4068,14 @@ export const BodyMarkingsTab = (props: BodyMarkingsTabProps, context) => {
             canvasWidth,
             canvasHeight,
             markingOffsetX,
-            signalAssetUpdate
+            onUpdated,
+            priority
           );
           const baseLayers = baseDir.layers || [];
           const overlayLayers = baseLayers.filter(
             (layer) =>
               layer.type === 'overlay' &&
+              layer.source !== 'equipment' &&
               layer.source !== 'job' &&
               layer.source !== 'loadout'
           );
@@ -3706,8 +4165,11 @@ export const BodyMarkingsTab = (props: BodyMarkingsTabProps, context) => {
               };
             }
             if (
-              !isSuppressedPart &&
-              (!isHiddenPart || layer?.type === 'custom')
+              shouldRetainBodyMarkingBaseLayer(
+                layer,
+                isHiddenPart,
+                isSuppressedPart
+              )
             ) {
               normalStack.push(resolvedLayer);
             }
@@ -3730,39 +4192,118 @@ export const BodyMarkingsTab = (props: BodyMarkingsTabProps, context) => {
           return {
             dir: dir.dir,
             label: baseDir.label || dir.label,
-            layers: [...normalStack, ...priorityStack, ...overlayLayers],
+            layers: [...normalStack, ...overlayLayers, ...priorityStack],
           };
         })
         .filter(Boolean) as PreviewDirectionEntry[];
     };
 
-    const resolveTilePreviewSignature = (def: BodyMarkingDefinition) =>
+    const tileBaseAssetPayloads = collectTileBaseAssetPayloads({
+      previewDirStates: appearanceContext.previewDirStatesForLive,
+      appearanceContext,
+      directions: tileDirections,
+    });
+    const tileBaseAssetReadinessSignature = getIconAssetReadinessSignature(
+      tileBaseAssetPayloads
+    );
+    const tilePreviewStructureSignature = compactMarkingTileSignature(
       [
-        def.id,
-        def.default_color || '',
-        def.do_colouration ? 'c' : 'n',
-        def.render_above_body ? 'p' : 'n',
-        def.color_blend_mode,
         digitigrade ? 'd' : 'p',
         canvasWidth,
         canvasHeight,
         markingOffsetX,
-        bodyPayload?.preview_revision || 0,
+        activePreviewRevision,
+        activePreviewSourceSignature,
         appearanceSignature,
-        assetRevision,
         tileDirections.map((entry) => entry.dir).join(','),
-        previewTint || 'default',
-      ].join('|');
+        tileBaseAssetReadinessSignature,
+      ].join('|')
+    );
+    const tilePreviewContextSignature = compactMarkingTileSignature(
+      [tilePreviewStructureSignature, previewTint || 'default'].join('|')
+    );
 
-    const getTilePreviewEntries = (def: BodyMarkingDefinition) => {
-      const sig = resolveTilePreviewSignature(def);
+    const resolveTilePreviewSignature = (def: BodyMarkingDefinition) => {
+      const payloads = collectMarkingTileAssetPayloads(
+        def,
+        digitigrade,
+        previewableTileDirections
+      );
+      return `${def.id}|${compactMarkingTileSignature(
+        [
+          def.do_colouration
+            ? tilePreviewContextSignature
+            : tilePreviewStructureSignature,
+          def.default_color || '',
+          def.do_colouration ? 'c' : 'n',
+          def.render_above_body ? 'p' : 'n',
+          def.color_blend_mode,
+          (def.body_parts || []).join(','),
+          (def.hide_body_parts || []).join(','),
+          Object.entries(def.render_above_body_parts || {})
+            .sort(([a], [b]) => a.localeCompare(b))
+            .map(([partId, enabled]) => `${partId}:${enabled ? '1' : '0'}`)
+            .join(','),
+          JSON.stringify(def.default_entry || {}),
+          getIconAssetReadinessSignature(payloads),
+        ].join('|')
+      )}`;
+    };
+
+    const getCachedTilePreviewEntries = (def: BodyMarkingDefinition) => {
+      const signature = resolveTilePreviewSignature(def);
       const cached = tilePreviewCache[def.id];
-      if (cached && cached.sig === sig) {
-        return cached.previews;
+      if (!cached || cached.signature !== signature) {
+        return null;
       }
-      const previews = buildTilePreviewEntries(def);
-      tilePreviewCache[def.id] = { sig, previews };
-      return previews;
+      cached.lastUsed = ++markingTilePreviewCacheSequence;
+      return cached as MarkingTilePreviewResult;
+    };
+
+    const pruneTilePreviewCache = () => {
+      const entries = Object.entries(tilePreviewCache);
+      if (entries.length <= MAX_CACHED_MARKING_TILE_PREVIEWS) {
+        return;
+      }
+      entries.sort(([, a], [, b]) => (a.lastUsed || 0) - (b.lastUsed || 0));
+      const removeCount = entries.length - MAX_CACHED_MARKING_TILE_PREVIEWS;
+      for (let index = 0; index < removeCount; index += 1) {
+        delete tilePreviewCache[entries[index][0]];
+      }
+    };
+
+    const buildTilePreviewEntries = (
+      def: BodyMarkingDefinition,
+      onUpdated: () => void,
+      priority: CharacterPreviewWorkPriority
+    ): MarkingTilePreviewResult => {
+      const initialSignature = resolveTilePreviewSignature(def);
+      const cached = tilePreviewCache[def.id];
+      if (cached?.complete && cached.signature === initialSignature) {
+        cached.lastUsed = ++markingTilePreviewCacheSequence;
+        return cached;
+      }
+      const previews = buildTilePreviewEntriesInternal(
+        def,
+        onUpdated,
+        priority
+      );
+      const payloads = collectMarkingTileAssetPayloads(
+        def,
+        digitigrade,
+        previewableTileDirections
+      );
+      const result: MarkingTilePreviewCacheEntry = {
+        signature: resolveTilePreviewSignature(def),
+        previews,
+        complete:
+          areIconAssetsReady(tileBaseAssetPayloads) &&
+          areIconAssetsReady(payloads),
+        lastUsed: ++markingTilePreviewCacheSequence,
+      };
+      tilePreviewCache[def.id] = result;
+      pruneTilePreviewCache();
+      return result;
     };
 
     const layersByDir: Record<number, Record<string, PartMarkingLayers>> = {};
@@ -3843,7 +4384,7 @@ export const BodyMarkingsTab = (props: BodyMarkingsTabProps, context) => {
         before: nonOverlayLayers,
         overlay: overlayLayers,
         after,
-      } = splitOverlayLayers(baseLayers);
+      } = splitPreviewOverlayLayers(baseLayers);
       const suppressedPartsMap = hiddenPartsByDir[dirEntry.dir];
       const hasSuppressedParts =
         !!suppressedPartsMap && Object.keys(suppressedPartsMap).length > 0;
@@ -3926,7 +4467,13 @@ export const BodyMarkingsTab = (props: BodyMarkingsTabProps, context) => {
             ),
           };
         }
-        if (!isSuppressedPart && (!isHiddenPart || layer?.type === 'custom')) {
+        if (
+          shouldRetainBodyMarkingBaseLayer(
+            layer,
+            isHiddenPart,
+            isSuppressedPart
+          )
+        ) {
           normalLayers.push(resolvedLayer);
         }
         if (!partId || !layerGroup[partId] || handledParts.has(partId)) {
@@ -3949,9 +4496,9 @@ export const BodyMarkingsTab = (props: BodyMarkingsTabProps, context) => {
         ...dirEntry,
         layers: [
           ...normalLayers,
-          ...priorityLayers,
           ...overlayLayers,
           ...after,
+          ...priorityLayers,
         ],
       };
     });
@@ -3959,7 +4506,11 @@ export const BodyMarkingsTab = (props: BodyMarkingsTabProps, context) => {
     return {
       basePreviewReady,
       tileDirectionsSignature,
-      getTilePreviewEntries,
+      tilePreviewContextSignature,
+      tilePreviewStructureSignature,
+      getTilePreviewSignature: resolveTilePreviewSignature,
+      getCachedTilePreviewEntries,
+      buildTilePreviewEntries,
       markedPreview,
     };
   })();
@@ -3975,6 +4526,8 @@ export const BodyMarkingsTab = (props: BodyMarkingsTabProps, context) => {
   const previewBackgroundTileHeight = resolvedCanvasBackground?.asset?.height
     ? resolvedCanvasBackground.asset.height * canvasBackgroundScale
     : undefined;
+  const previewForLive =
+    livePreview && livePreview.length ? livePreview : markedPreview;
   const atSelectionLimit = totalSelected >= BODY_MARKING_SELECTION_LIMIT;
   const effectiveSelectedId =
     selectedId && !isHiddenMarking(selectedId)
@@ -4008,12 +4561,22 @@ export const BodyMarkingsTab = (props: BodyMarkingsTabProps, context) => {
           setLoadInProgress={setLoadInProgress}
           requestPayload={requestPayload}
           syncPayload={(payload) => {
-            setPayloadSignature(buildBodyPayloadSignature(payload));
-            syncPayload(payload);
+            const mergedPayload = mergeBodyMarkingsPayload(
+              bodyPayload,
+              payload,
+              basicPayload
+            );
+            setPayloadSignature(buildBodyPayloadSignature(mergedPayload));
+            syncPayload(mergedPayload);
           }}
           syncPreviewPayload={(payload) => {
-            setPayloadSignature(buildBodyPayloadSignature(payload));
-            syncPreviewPayload(payload);
+            const mergedPayload = mergeBodyMarkingsPayload(
+              bodyPayload,
+              payload,
+              basicPayload
+            );
+            setPayloadSignature(buildBodyPayloadSignature(mergedPayload));
+            syncPreviewPayload(mergedPayload);
           }}
         />
         <BodyMarkingsPreviewLoadCoordinator
@@ -4044,12 +4607,22 @@ export const BodyMarkingsTab = (props: BodyMarkingsTabProps, context) => {
         setLoadInProgress={setLoadInProgress}
         requestPayload={requestPayload}
         syncPayload={(payload) => {
-          setPayloadSignature(buildBodyPayloadSignature(payload));
-          syncPayload(payload);
+          const mergedPayload = mergeBodyMarkingsPayload(
+            bodyPayload,
+            payload,
+            basicPayload
+          );
+          setPayloadSignature(buildBodyPayloadSignature(mergedPayload));
+          syncPayload(mergedPayload);
         }}
         syncPreviewPayload={(payload) => {
-          setPayloadSignature(buildBodyPayloadSignature(payload));
-          syncPreviewPayload(payload);
+          const mergedPayload = mergeBodyMarkingsPayload(
+            bodyPayload,
+            payload,
+            basicPayload
+          );
+          setPayloadSignature(buildBodyPayloadSignature(mergedPayload));
+          syncPreviewPayload(mergedPayload);
         }}
       />
       <BodyMarkingsPreviewLoadCoordinator
@@ -4079,10 +4652,13 @@ export const BodyMarkingsTab = (props: BodyMarkingsTabProps, context) => {
               canvasWidth={canvasWidth}
               canvasHeight={canvasHeight}
               tileDirectionsSignature={tileDirectionsSignature}
-              assetRevision={assetRevision}
+              previewContextSignature={tilePreviewContextSignature}
+              previewStructureSignature={tilePreviewStructureSignature}
               markings={markings}
               markingKeysSignature={markingKeysSignature}
-              getTilePreviewEntries={getTilePreviewEntries}
+              getTilePreviewSignature={getTilePreviewSignature}
+              getCachedTilePreviewEntries={getCachedTilePreviewEntries}
+              buildTilePreviewEntries={buildTilePreviewEntries}
               applyAdd={applyAdd}
               applyRemove={applyRemove}
               backgroundImage={previewBackgroundImage}
@@ -4126,7 +4702,7 @@ export const BodyMarkingsTab = (props: BodyMarkingsTabProps, context) => {
         </Flex.Item>
         <Flex.Item grow>
           <BodyMarkingsPreviewColumn
-            markedPreview={markedPreview}
+            markedPreview={previewForLive}
             canvasWidth={canvasWidth}
             canvasHeight={canvasHeight}
             previewFitToFrame={previewFitToFrame}
@@ -4136,6 +4712,10 @@ export const BodyMarkingsTab = (props: BodyMarkingsTabProps, context) => {
             canvasBackgroundScale={canvasBackgroundScale}
             previewBackgroundTileWidth={previewBackgroundTileWidth}
             previewBackgroundTileHeight={previewBackgroundTileHeight}
+            iconScaleX={data.trait_icon_scale_x}
+            iconScaleY={data.trait_icon_scale_y}
+            showEquipment={showEquipment}
+            onToggleEquipment={onToggleEquipment}
             showJobGear={showJobGear}
             onToggleJobGear={onToggleJobGear}
             showLoadoutGear={showLoadoutGear}

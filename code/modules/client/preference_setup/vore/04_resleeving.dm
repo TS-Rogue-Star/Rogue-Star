@@ -38,7 +38,6 @@
 			character.original_player = character.ckey
 
 /datum/category_item/player_setup_item/vore/resleeve/content(var/mob/user)
-	. += "<br>"
 	. += "<b>Start With Body Scan:</b> <a [pref.resleeve_scan ? "class='linkOn'" : ""] href='?src=\ref[src];toggle_resleeve_scan=1'><b>[pref.resleeve_scan ? "Yes" : "No"]</b></a><br>"
 	. += "<b>Prevent Body Impersonation:</b> <a [pref.resleeve_lock ? "class='linkOn'" : ""] href='?src=\ref[src];toggle_resleeve_lock=1'><b>[pref.resleeve_lock ? "Yes" : "No"]</b></a><br>"
 	. += "<b>Allow Cookie Replicas:</b> <a [pref.synth_cookie ? "class='linkOn'" : ""] href='?src=\ref[src];toggle_synth_cookie=1'><b>[pref.synth_cookie ? "Yes" : "No"]</b></a><br>"

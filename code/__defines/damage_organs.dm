@@ -55,6 +55,14 @@
 #define ORGAN_LIFELIKE 3 // Robotic, made to appear organic
 #define ORGAN_NANOFORM 4 // VOREStation Add - Fully nanoswarm organ
 
+// RS Add: Character Designer - Species and Prosthetics (Lira, August 2026)
+#define ORGAN_CHARGEN_NORMAL     (1<<0)
+#define ORGAN_CHARGEN_ASSISTED   (1<<1)
+#define ORGAN_CHARGEN_MECHANICAL (1<<2)
+#define ORGAN_CHARGEN_DIGITAL    (1<<3)
+#define ORGAN_CHARGEN_STANDARD   (ORGAN_CHARGEN_NORMAL | ORGAN_CHARGEN_ASSISTED | ORGAN_CHARGEN_MECHANICAL)
+#define ORGAN_CHARGEN_BRAIN      (ORGAN_CHARGEN_STANDARD | ORGAN_CHARGEN_DIGITAL)
+
 //Germs and infections.
 #define GERM_LEVEL_AMBIENT  110 // Maximum germ level you can reach by standing still.
 #define GERM_LEVEL_MOVE_CAP 200 // Maximum germ level you can reach by running around.

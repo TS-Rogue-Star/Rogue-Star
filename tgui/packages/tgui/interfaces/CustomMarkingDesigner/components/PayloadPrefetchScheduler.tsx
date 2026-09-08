@@ -1,12 +1,15 @@
 // /////////////////////////////////////////////////////////////////////////////////////////////////////
 // Created by Lira for Rogue Star December 2025: Prefetch helper for shared payloads on designer open //
 // /////////////////////////////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star August 2026: Character Designer - Species and Prosthetics ////////////
+// /////////////////////////////////////////////////////////////////////////////////////////////////////
 
 import { Component } from 'inferno';
 
 import type { BasicAppearancePayload, BodyMarkingsPayload } from '../types';
 
 type PayloadPrefetchSchedulerProps = {
+  readonly enabled: boolean;
   readonly bodyPayload: BodyMarkingsPayload | null;
   readonly basicPayload: BasicAppearancePayload | null;
   readonly bodyLoadInProgress: boolean;
@@ -32,6 +35,7 @@ export class PayloadPrefetchScheduler extends Component<PayloadPrefetchScheduler
 
   componentDidUpdate(prevProps: PayloadPrefetchSchedulerProps) {
     if (
+      prevProps.enabled !== this.props.enabled ||
       prevProps.bodyPayload !== this.props.bodyPayload ||
       prevProps.basicPayload !== this.props.basicPayload ||
       prevProps.bodyLoadInProgress !== this.props.bodyLoadInProgress ||
@@ -43,6 +47,7 @@ export class PayloadPrefetchScheduler extends Component<PayloadPrefetchScheduler
 
   private sync() {
     const {
+      enabled,
       bodyPayload,
       basicPayload,
       bodyLoadInProgress,
@@ -57,8 +62,14 @@ export class PayloadPrefetchScheduler extends Component<PayloadPrefetchScheduler
       requestBasic,
     } = this.props;
 
-    const bodyReady = !!bodyPayload && !bodyPayload.preview_only;
-    const basicReady = !!basicPayload && !basicPayload.preview_only;
+    if (!enabled) {
+      return;
+    }
+
+    const bodyReady =
+      !!bodyPayload && !bodyPayload.preview_only && !bodyReloadPending;
+    const basicReady =
+      !!basicPayload && !basicPayload.preview_only && !basicReloadPending;
     const needsBody = !bodyReady;
     const needsBasic = !basicReady;
 

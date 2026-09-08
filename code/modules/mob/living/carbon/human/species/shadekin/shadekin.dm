@@ -122,6 +122,46 @@
 		var/datum/power/shadekin/SKP = new power(src)
 		shadekin_ability_datums.Add(SKP)
 
+// RS Add: Character Designer - Species and Prosthetics (Lira, August 2026)
+/datum/species/shadekin/get_species_detail_notes(var/mob/user)
+	. = ..()
+	. += list(list(
+		"section" = "abilities",
+		"title" = "Abilities & Restrictions",
+		"id" = "shadekin_phase_shift",
+		"label" = "Phase Shift",
+		"value" = "Available",
+		"description" = "Leaves realspace for fast, incorporeal travel. While shifted, the Shadekin is invisible to normal sight, non-dense, able to pass through obstacles, and unable to interact normally. Phasing back in restores normal interaction and disrupts nearby fixed and carried lights; the phase-in light settings control that flicker's duration, color, and chance to break fixed lights. Their shared dark-energy pool replenishes according to ambient light and eye color; magic-dampened areas empty it and block most powers, while phase-blocked areas prevent shifting.",
+		"severity" = "positive"
+	))
+	. += list(list(
+		"section" = "abilities",
+		"title" = "Abilities & Restrictions",
+		"id" = "shadekin_regenerate_other",
+		"label" = "Regenerate Other",
+		"value" = "Available",
+		"description" = "Applies a one-minute regeneration effect to a nearby living creature, steadily healing brute, burn, toxin, oxygen, and clone damage until the target recovers. It cannot affect corpses or be used while phase shifted, and magic dampening blocks it.",
+		"severity" = "positive"
+	))
+	. += list(list(
+		"section" = "abilities",
+		"title" = "Abilities & Restrictions",
+		"id" = "shadekin_create_shade",
+		"label" = "Create Shade",
+		"value" = "Available",
+		"description" = "Creates a field of darkness that follows the Shadekin for twenty seconds, then restores the previous lighting. The field ends early if they phase shift; it cannot be created while shifted or in a magic-dampened area.",
+		"severity" = "positive"
+	))
+	. += list(list(
+		"section" = "abilities",
+		"title" = "Abilities & Restrictions",
+		"id" = "shadekin_phase_flicker",
+		"label" = "Phase Flicker",
+		"value" = "Available",
+		"description" = "While phase shifted, can cause one randomly selected adjacent fixed light to flicker, with a short cooldown between uses.",
+		"severity" = "positive"
+	))
+
 /datum/species/shadekin/handle_death(var/mob/living/carbon/human/H)
 	spawn(1)
 		H.release_vore_contents(TRUE)	//RS ADD

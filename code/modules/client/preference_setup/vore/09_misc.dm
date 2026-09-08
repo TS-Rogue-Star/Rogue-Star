@@ -35,7 +35,6 @@
 	pref.auto_backup_implant		= sanitize_integer(pref.auto_backup_implant, 0, 1, initial(pref.auto_backup_implant))
 
 /datum/category_item/player_setup_item/vore/misc/content(var/mob/user)
-	. += "<br>"
 	. += "<b>Appear in Character Directory:</b> <a [pref.show_in_directory ? "class='linkOn'" : ""] href='?src=\ref[src];toggle_show_in_directory=1'><b>[pref.show_in_directory ? "Yes" : "No"]</b></a><br>"
 	. += "<b>Character Directory Vore Tag:</b> <a href='?src=\ref[src];directory_tag=1'><b>[pref.directory_tag]</b></a><br>"
 	. += "<b>Character Directory ERP Tag:</b> <a href='?src=\ref[src];directory_erptag=1'><b>[pref.directory_erptag]</b></a><br>"

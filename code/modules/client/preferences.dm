@@ -396,6 +396,7 @@ var/list/preferences_datums = list()
 		return
 	del_mannequin(cache_ckey)
 	del_mannequin("[cache_ckey]-markref")
+	del_mannequin("[cache_ckey]-markref-species-preview")
 
 // Remove body marking assignments the current player shouldn't be able to use
 /datum/preferences/proc/prune_disallowed_body_markings()
@@ -485,12 +486,14 @@ var/list/preferences_datums = list()
 	if(!module)
 		module = new(src, mark)
 		custom_marking_designer_ui = module
+	open_custom_marking_designer_loading(user)
 	module.tgui_interact(user)
 
 // RS Add: Open the body markings gallery tab (Lira, December 2025)
 /datum/preferences/proc/open_body_markings_designer(mob/user)
 	if(!user)
 		return
+	open_custom_marking_designer_loading(user)
 	var/datum/custom_marking/mark = get_primary_custom_marking()
 	var/datum/tgui_module/custom_marking_designer/module = custom_marking_designer_ui
 	if(module)
@@ -502,13 +505,13 @@ var/list/preferences_datums = list()
 			custom_marking_designer_ui = null
 			module = null
 	if(!module)
-		module = new(src, mark, "basic", TRUE)
+		module = new(src, mark, "species", TRUE)
 		custom_marking_designer_ui = module
 	else
-		module.initial_tab = "basic"
-		module.active_tab = "basic"
+		module.initial_tab = "species"
 		module.allow_custom_tab = !!mark
 		SStgui.update_uis(module)
+	open_custom_marking_designer_loading(user)
 	module.tgui_interact(user)
 
 // Provide a user-friendly label for a stored body marking key
@@ -1026,7 +1029,7 @@ var/list/preferences_datums = list()
 			character.species.create_organs(character)
 	if(needs_species_update)
 	// RS Add End
-		character.set_species(species, null, TRUE, null, fast_preview) // RS Edit: Custom markings support (Lira, September 2025)
+		character.set_species(species, null, icon_updates, null, fast_preview) // RS Edit: Custom markings support (Lira, September 2025)
 	// Special Case: This references variables owned by two different datums, so do it here.
 	if(be_random_name)
 		real_name = random_name(identifying_gender,species)

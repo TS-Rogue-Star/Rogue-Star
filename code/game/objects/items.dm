@@ -838,6 +838,23 @@ modules/mob/living/carbon/human/life.dm if you die, you will be zoomed out.
 			if(slot_l_hand_str)
 				state2use += "_l"
 
+	// RS Add: Character Designer - Species and Prosthetics (Lira, August 2026)
+	if(istype(loc, /mob/living/carbon/human/dummy/mannequin/custom_marking_gear))
+		var/image/recipe_standing = image(icon = icon2use, icon_state = state2use)
+		recipe_standing.alpha = alpha
+		recipe_standing.color = color
+		recipe_standing.layer = layer2use
+		if(istype(clip_mask))
+			recipe_standing.filters += filter(type = "alpha", icon = clip_mask)
+		if(!inhands)
+			if(addblends)
+				var/image/addblend_overlay = image(icon = icon2use, icon_state = addblends)
+				addblend_overlay.blend_mode = BLEND_ADD
+				recipe_standing.add_overlay(addblend_overlay)
+			apply_blood(recipe_standing)
+			apply_accessories(recipe_standing)
+		return recipe_standing
+
 	// testing("[src] (\ref[src]) - Slot: [slot_name], Inhands: [inhands], Worn Icon:[icon2use], Worn State:[state2use], Worn Layer:[layer2use]")
 
 	//Generate the base onmob icon

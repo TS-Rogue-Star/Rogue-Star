@@ -1,3 +1,4 @@
+//RS FILE
 /decl/emote/audible/multisound
 	key = "0000000000000"
 
@@ -117,3 +118,53 @@
 		'sound/rogue-star/wawa/wawa9.ogg', 'sound/rogue-star/wawa/wawa10.ogg', 'sound/rogue-star/wawa/wawa11.ogg', 'sound/rogue-star/wawa/wawa12.ogg',
 		'sound/rogue-star/wawa/wawa13.ogg', 'sound/rogue-star/wawa/wawa14.ogg', 'sound/rogue-star/wawa/wawa15.ogg','sound/rogue-star/wawa/wawa16.ogg')
 	sound_vary = TRUE
+
+/decl/emote/audible/multisound/huff
+
+	key = "huff"
+	emote_message_1p = "You huff!"
+	emote_message_3p = "huffs!"
+	emote_message_1p_target = "You huff at TARGET!!!"
+	emote_message_3p_target = "huffs at TARGET!"
+
+	emote_sound = null
+	soundlist = list("sound/rogue-star/huff/huff1.ogg","sound/rogue-star/huff/huff2.ogg","sound/rogue-star/huff/huff3.ogg","sound/rogue-star/huff/huff4.ogg")
+	sound_vary = TRUE
+
+/decl/emote/audible/multisound/huff/do_extra(atom/user, atom/target)
+	if(ismob(user))
+		var/mob/M = user
+		huff_particles(M)
+
+/proc/huff_particles(var/mob/M)
+	if(!M || !ismob(M))
+		return
+
+	var/turf/current_turf = get_turf(M)
+
+	var/obj/particle_emitter/belch/B
+	switch(M.dir)
+		if(NORTH)
+			B = new /obj/particle_emitter/steam/huff/n(current_turf)
+		if(SOUTH)
+			B = new /obj/particle_emitter/steam/huff/s(current_turf)
+		if(EAST)
+			B = new /obj/particle_emitter/steam/huff/e(current_turf)
+		if(WEST)
+			B = new /obj/particle_emitter/steam/huff/w(current_turf)
+	if(!B)
+		return
+	B.scale_to_character(M)
+	if(M.client?.prefs_vr.huff_color)
+		B.particles.color = M.client.prefs_vr.huff_color
+	var/list/our_turfs = list()
+	for(var/I = 1 to 3)
+		our_turfs += current_turf
+		current_turf = get_step(current_turf, M.dir)
+	for(var/turf/T in our_turfs)
+		for(var/mob/living/L in T.contents)
+			if(!isliving(L))
+				continue
+			if(L == M)
+				continue
+			L.resolve_stimuli(M, STIM_HUFF)

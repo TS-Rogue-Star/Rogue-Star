@@ -109,6 +109,7 @@
 
 /obj/item/organ/internal/brain/xenochimera
 	var/laststress = 0
+	chargen_prosthetic_flags = 0 // RS Add: Character Designer - Species and Prosthetics (Lira, August 2026)
 
 /datum/species/xenochimera/proc/handle_feralness(var/mob/living/carbon/human/H)
 	//first, calculate how stressed the chimera is
@@ -353,11 +354,12 @@
 	min_age = 18
 	max_age = 80
 
+	// RS Edit: Character Designer - Species and Prosthetics (Lira, August 2026)
 	blurb = "Vasilissans are a tall, lanky, spider like people. \
 	Each having four eyes, an extra four, large legs sprouting from their back, and a chitinous plating on their body, and the ability to spit webs \
 	from their mandible lined mouths.  They are a recent discovery by Nanotrasen, only being discovered roughly seven years ago.  \
-	Before they were found they built great cities out of their silk, being united and subjugated in warring factions under great Star Queens  \
-	Who forced the working class to build huge, towering cities to attempt to reach the stars, which they worship as gems of great spiritual and magical significance."
+	Before they were found they built great cities out of their silk, being united and subjugated in warring factions under great 'Star Queens' \
+	who forced the working class to build huge, towering cities to attempt to reach the stars, which they worship as gems of great spiritual and magical significance."
 
 	wikilink = "https://wiki.vore-station.net/Vasilissans"
 

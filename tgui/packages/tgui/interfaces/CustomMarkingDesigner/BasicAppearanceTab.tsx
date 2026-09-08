@@ -1,6 +1,8 @@
-// /////////////////////////////////////////////////////////////////////////////////////
-// Created by Lira for Rogue Star December 2025: Basic appearance selection tab added //
-// /////////////////////////////////////////////////////////////////////////////////////
+// ///////////////////////////////////////////////////////////////////////////////////////////
+// Created by Lira for Rogue Star December 2025: Basic appearance selection tab added ////////
+// ///////////////////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star August 2026: Character Designer - Species and Prosthetics //
+// ///////////////////////////////////////////////////////////////////////////////////////////
 
 import { Component } from 'inferno';
 import {
@@ -13,6 +15,7 @@ import {
   Box,
   Button,
   ColorBox,
+  Dropdown,
   Flex,
   Input,
   LabeledList,
@@ -23,32 +26,104 @@ import {
 } from '../../components';
 import { normalizeHex, TRANSPARENT_HEX } from '../../utils/color';
 import {
+  areIconAssetsReady,
   buildRenderedPreviewDirs as buildBasePreviewDirs,
   cloneGridData,
   createBlankGrid,
+  getGearPreviewRasterIdentity,
+  getIconAssetReadinessSignature,
   getPreviewGridFromAsset,
+  getPreviewGridFromGearAsset,
   getPreviewPartMapFromAssets,
   gridHasPixels,
+  resolveIconAssetReference,
   type GearOverlayAsset,
+  type IconAssetRegistry,
+  type IconAssetReference,
   type IconAssetPayload,
   type PreviewDirState,
   type PreviewDirectionEntry,
   type PreviewLayerEntry,
+  type PreviewLayerGroup,
 } from '../../utils/character-preview';
-import { DirectionPreviewCanvas, LoadingOverlay } from './components';
-import { CHIP_BUTTON_CLASS, PREVIEW_PIXEL_SIZE } from './constants';
+import {
+  DirectionPreviewCanvas,
+  LivePreviewCard,
+  LoadingOverlay,
+  ProstheticMannequin,
+} from './components';
+import { CHIP_BUTTON_CLASS } from './constants';
 import {
   applyBodyColorToPreview,
+  applyEyeColorToPreview,
+  applyInternalOrganOperation,
+  applyLimbHairColorToPreview,
+  applyProstheticGalleryCompositeToPreviewSources,
+  applyProstheticSelectionToTargets,
+  applyProstheticsToPreviewSources,
+  attachProstheticColorModes,
+  basicAppearanceStatesEqual,
+  buildBasicAppearanceGalleryContextSignature,
+  buildBasicAppearanceLoadParams,
   buildBasicStateFromPayload,
+  buildCanonicalProstheticOperations,
+  buildLimbPreviewSignature,
+  buildProstheticPreviewLayerGroups,
+  buildProstheticSaveParams,
+  buildProstheticShowcaseState,
+  buildProstheticShowcaseAppearanceStructureSignature,
+  buildProstheticTileBaseCacheSignature,
+  buildBodyMarkingsLoadParams,
   buildPartPaintPresenceMap,
   buildRenderedPreviewDirs as buildDesignerPreviewDirs,
+  canApplyProstheticGalleryCompositeToPreviewSources,
   clampChannel,
+  cloneLimbOverrideState,
   ICON_BLEND_MODE,
+  isReferenceMarkingLayer,
+  isProstheticTargetEditable,
+  mergeBasicAppearancePayload,
+  mergeBodyMarkingsPayload,
+  normalizeProstheticTargets,
+  normalizeBasicAppearanceGalleryStyleId,
   parseHex,
-  recolorGrid,
+  PROSTHETIC_COLOR_MODE_DETAILS,
+  PROSTHETIC_GALLERY_COMPOSITE_PART,
+  PROSTHETIC_TARGET_LABELS,
+  resolveBasicPreviewSourceSelection,
+  resolveBasicBiologicalGender,
+  resolveBasicBiologicalGenderOptions,
   resolveBlendMode,
+  resolveEditableProstheticTargets,
+  resolveGalleryTilePreviewStates,
+  resolveInternalOrganDefinitions,
+  resolveInternalOrganOptions,
+  resolveInternalOrganStateDescription,
+  resolveLockedInternalOrganLabel,
+  resolveNextInternalOrganChoice,
+  resolveApplicableProstheticTargets,
+  isProstheticSelectionCompatibleWithTargets,
+  resolveProstheticGalleryDefinitions,
+  resolveProstheticGalleryDefinitionsForTargets,
+  resolveProstheticGalleryComposite,
+  resolveProstheticBodyColorPasses,
+  resolveProstheticModelColorMode,
+  resolveProstheticSynthColorPasses,
+  resolveProstheticContextForBiologicalGender,
+  resolveSelectedSpeciesPreviewSources,
+  resetEditableProstheticSettings,
+  shouldIncludeSpeciesTailInGalleryTile,
+  shouldInvalidateSpeciesPayloadForBiologicalGenderChange,
+  shouldRetainBodyMarkingBaseLayer,
+  splitPreviewOverlayLayers,
   tintGrid,
+  toggleProstheticTargetSelection,
   toHex,
+  type BasicAppearanceGalleryType,
+  type InternalOrganId,
+  type ProstheticColorMode,
+  type ProstheticPreviewTransformOptions,
+  type ProstheticTarget,
   updatePreviewStateFromPayload,
 } from './utils';
 import {
@@ -71,6 +146,7 @@ import type {
   CanvasBackgroundOption,
   CustomMarkingDesignerData,
   DirectionEntry,
+  SpeciesPayload,
 } from './types';
 
 type BasicAppearanceTabProps = Readonly<{
@@ -82,8 +158,11 @@ type BasicAppearanceTabProps = Readonly<{
   backgroundFallbackColor: string;
   cycleCanvasBackground: () => void;
   canvasBackgroundScale: number;
+  livePreview?: PreviewDirectionEntry[];
   resolvedPartPriorityMap: Record<string, boolean>;
   resolvedPartReplacementMap: Record<string, boolean>;
+  showEquipment: boolean;
+  onToggleEquipment: () => void;
   showJobGear: boolean;
   onToggleJobGear: () => void;
   showLoadoutGear: boolean;
@@ -99,7 +178,8 @@ type BasicAppearanceType =
   | 'tail'
   | 'wings'
   | 'eyes'
-  | 'body';
+  | 'body'
+  | 'prosthetics';
 
 type BasicAppearanceColorTarget =
   | { type: 'hair' }
@@ -107,6 +187,8 @@ type BasicAppearanceColorTarget =
   | { type: 'facial_hair' }
   | { type: 'eyes' }
   | { type: 'body' }
+  | { type: 'blood' }
+  | { type: 'synth' }
   | { type: 'ears'; channel: number }
   | { type: 'horns'; channel: number }
   | { type: 'tail'; channel: number }
@@ -121,9 +203,10 @@ type BasicAppearanceAccessoryChannelCaps = Readonly<{
 
 type OrderedOverlayLayer = {
   grid: string[][];
+  rasterIdentity?: string;
   layer: number | null;
   slot?: string | null;
-  source: 'base' | 'job' | 'loadout';
+  source: 'base' | 'equipment' | 'job' | 'loadout';
   order: number;
 };
 
@@ -139,9 +222,13 @@ const TYPE_LABELS: Record<BasicAppearanceType, string> = {
   wings: 'Wings',
   eyes: 'Eyes',
   body: 'Body',
+  prosthetics: 'Body',
 };
 
+const DEFAULT_BASIC_APPEARANCE_TYPE: BasicAppearanceType = 'prosthetics';
+
 const GALLERY_TYPES: BasicAppearanceType[] = [
+  DEFAULT_BASIC_APPEARANCE_TYPE,
   'hair',
   'gradient',
   'facial_hair',
@@ -152,6 +239,7 @@ const GALLERY_TYPES: BasicAppearanceType[] = [
 ];
 
 const OVERLAY_SLOT_PRIORITY_MAP: Record<string, number> = {
+  underwear: 6,
   tail_lower: 7,
   wing_lower: 8,
   shoes: 9,
@@ -178,7 +266,18 @@ const OVERLAY_SLOT_PRIORITY_MAP: Record<string, number> = {
   custom_marking: 40,
 };
 const HIDDEN_LEG_PARTS = new Set(['l_leg', 'r_leg', 'l_foot', 'r_foot']);
-const TAUR_CLOTHING_SLOTS = new Set(['uniform', 'belt', 'suit', 'back']);
+const TAUR_CLOTHING_SLOTS = new Set([
+  'underwear',
+  'uniform',
+  'belt',
+  'suit',
+  'back',
+]);
+const BODY_COLOR_OVERLAY_SLOTS = new Set([
+  'species_tail',
+  'prosthetic_tail',
+  'prosthetic_wing',
+]);
 
 let assetUpdateScheduled = false;
 
@@ -222,121 +321,18 @@ const collectBodyColorExcludedParts = (
   return excluded.size ? excluded : null;
 };
 
-const colorDistance = (
-  r: number,
-  g: number,
-  b: number,
-  target: [number, number, number]
-) =>
-  Math.abs(r - target[0]) + Math.abs(g - target[1]) + Math.abs(b - target[2]);
-
-const EYE_COLOR_MATCH_THRESHOLD = 90;
-const EYE_COLOR_BODY_MARGIN = 12;
-
-const shiftEyeColorGrid = (
-  grid: string[][],
-  baseHex: string,
-  targetHex: string,
-  bodyHex?: string | null
-): string[][] => {
-  const [br, bg, bb] = parseHex(baseHex);
-  const [tr, tg, tb] = parseHex(targetHex);
-  if (br === tr && bg === tg && bb === tb) {
-    return grid;
+const collectBodyColorBlendMode = (
+  dirStates: Record<number, PreviewDirState> | null | undefined
+): number | null => {
+  if (!dirStates) {
+    return null;
   }
-  const hasBody = typeof bodyHex === 'string' && normalizeHex(bodyHex) !== null;
-  const [bodyR, bodyG, bodyB] = hasBody
-    ? parseHex(bodyHex as string)
-    : ([0, 0, 0] as [number, number, number]);
-  const deltaR = tr - br;
-  const deltaG = tg - bg;
-  const deltaB = tb - bb;
-  const recolored: string[][] = [];
-  for (let x = 0; x < grid.length; x += 1) {
-    const column = grid[x];
-    if (!Array.isArray(column)) {
-      recolored[x] = [];
-      continue;
-    }
-    recolored[x] = [];
-    for (let y = 0; y < column.length; y += 1) {
-      const px = column[y];
-      if (typeof px !== 'string' || px === TRANSPARENT_HEX) {
-        recolored[x][y] = TRANSPARENT_HEX;
-        continue;
-      }
-      const [r, g, b, a] = parseHex(px);
-      const eyeDist = colorDistance(r, g, b, [br, bg, bb]);
-      const bodyDist = hasBody
-        ? colorDistance(r, g, b, [bodyR, bodyG, bodyB])
-        : Number.POSITIVE_INFINITY;
-      const matchesEye =
-        eyeDist <= EYE_COLOR_MATCH_THRESHOLD ||
-        eyeDist + EYE_COLOR_BODY_MARGIN <= bodyDist;
-      if (!matchesEye) {
-        recolored[x][y] = px;
-        continue;
-      }
-      recolored[x][y] = toHex(
-        clampChannel(r + deltaR),
-        clampChannel(g + deltaG),
-        clampChannel(b + deltaB),
-        a
-      );
+  for (const dirState of Object.values(dirStates)) {
+    if (typeof dirState?.bodyColorBlendMode === 'number') {
+      return dirState.bodyColorBlendMode;
     }
   }
-  return recolored;
-};
-
-const applyEyeColorToPreview = (
-  preview: PreviewDirectionEntry[],
-  baseHex: string | null,
-  targetHex: string | null,
-  bodyHex?: string | null
-): PreviewDirectionEntry[] => {
-  const base = normalizeHex(baseHex);
-  const target = normalizeHex(targetHex);
-  if (!base || !target || base === target) {
-    return preview;
-  }
-  let changed = false;
-  const next = preview.map((entry) => {
-    let layersChanged = false;
-    const layers = (entry.layers || []).map((layer) => {
-      if (!layer?.grid || layer.type !== 'reference_part') {
-        return layer;
-      }
-      if (
-        typeof layer.key !== 'string' ||
-        !layer.key.startsWith('ref_') ||
-        layer.key.endsWith('_markings')
-      ) {
-        return layer;
-      }
-      const partId = layer.key.slice(4).toLowerCase();
-      if (partId !== 'head' && partId !== 'face' && partId !== 'eyes') {
-        return layer;
-      }
-      const shifted = shiftEyeColorGrid(layer.grid, base, target, bodyHex);
-      if (shifted === layer.grid) {
-        return layer;
-      }
-      layersChanged = true;
-      return {
-        ...layer,
-        grid: shifted,
-      };
-    });
-    if (!layersChanged) {
-      return entry;
-    }
-    changed = true;
-    return {
-      ...entry,
-      layers,
-    };
-  });
-  return changed ? next : preview;
+  return null;
 };
 
 const applyBodyAndEyeColorToPreview = (
@@ -344,17 +340,23 @@ const applyBodyAndEyeColorToPreview = (
   bodyBaseHex: string | null,
   bodyTargetHex: string | null,
   bodyExcludedParts: Set<string> | null,
+  bodyBlendMode: number | null,
   eyeBaseHex: string | null,
   eyeTargetHex: string | null,
-  bodyHex?: string | null
+  bodyHex?: string | null,
+  hairHex?: string | null
 ): PreviewDirectionEntry[] =>
   applyEyeColorToPreview(
-    applyBodyColorToPreview(
-      preview,
-      bodyBaseHex,
-      bodyTargetHex,
-      bodyExcludedParts,
-      3
+    applyLimbHairColorToPreview(
+      applyBodyColorToPreview(
+        preview,
+        bodyBaseHex,
+        bodyTargetHex,
+        bodyExcludedParts,
+        3,
+        bodyBlendMode
+      ),
+      hairHex || null
     ),
     eyeBaseHex,
     eyeTargetHex,
@@ -550,23 +552,26 @@ const mergeHiddenBodyPartsInPreviewStates = (
   );
 };
 
-const buildHiddenBodyPartsByDir = (
+const buildSuppressedMarkingPartsByDir = (
   previewDirStates: Record<number, PreviewDirState>
 ): Record<number, Record<string, boolean>> => {
   const result: Record<number, Record<string, boolean>> = {};
   for (const dirState of Object.values(previewDirStates)) {
-    const hiddenParts = dirState?.hiddenBodyParts;
-    if (!dirState || !Array.isArray(hiddenParts) || !hiddenParts.length) {
+    if (!dirState) {
       continue;
     }
-    const hiddenMap: Record<string, boolean> = {};
-    for (const partId of hiddenParts) {
+    const suppressedMap: Record<string, boolean> = {};
+    const suppressedParts = [
+      ...(dirState.hiddenBodyParts || []),
+      ...(dirState.markingExcludedParts || []),
+    ];
+    for (const partId of suppressedParts) {
       if (typeof partId === 'string' && partId.length) {
-        hiddenMap[partId] = true;
+        suppressedMap[partId] = true;
       }
     }
-    if (Object.keys(hiddenMap).length) {
-      result[dirState.dir] = hiddenMap;
+    if (Object.keys(suppressedMap).length) {
+      result[dirState.dir] = suppressedMap;
     }
   }
   return result;
@@ -684,26 +689,47 @@ const shiftGrid = (
   return target;
 };
 
-const buildBasicPayloadSignature = (
+export const buildBasicPayloadSignature = (
   payload?: BasicAppearancePayload | null
 ) => {
   if (!payload) {
     return null;
   }
-  const revision = payload.preview_revision || 0;
-  const altRevision = payload.preview_revision_alt || 0;
+  const revision = `${payload.preview_signature || ''}@${
+    payload.preview_revision || 0
+  }`;
+  const altRevision = `${payload.preview_signature_alt || ''}@${
+    payload.preview_revision_alt || 0
+  }`;
+  const genderAltRevision = `${payload.preview_signature_gender_alt || ''}@${
+    payload.preview_revision_gender_alt || 0
+  }`;
+  const genderAltDigitigradeRevision = `${
+    payload.preview_signature_gender_alt_digitigrade || ''
+  }@${payload.preview_revision_gender_alt_digitigrade || 0}`;
   const size = `${payload.preview_width || 0}x${payload.preview_height || 0}`;
   const digitigrade = payload.digitigrade ? 'd' : 'p';
   const digitigradeAllowed = payload.digitigrade_allowed === false ? '0' : '1';
-  const defsSignature = [
-    (payload.hair_styles || []).map((def) => def.id).join('|'),
-    (payload.gradient_styles || []).map((def) => def.id).join('|'),
-    (payload.facial_hair_styles || []).map((def) => def.id).join('|'),
-    (payload.ear_styles || []).map((def) => def.id).join('|'),
-    (payload.tail_styles || []).map((def) => def.id).join('|'),
-    (payload.wing_styles || []).map((def) => def.id).join('|'),
-  ].join('::');
-  return `${revision}:${altRevision}:${size}:${digitigrade}:${digitigradeAllowed}:${defsSignature}`;
+  const species = `${payload.species_id || ''}:${payload.custom_base || ''}`;
+  const defsSignature =
+    payload.definition_revision ||
+    [
+      (payload.hair_styles || []).map((def) => def.id).join('|'),
+      (payload.gradient_styles || []).map((def) => def.id).join('|'),
+      (payload.facial_hair_styles || []).map((def) => def.id).join('|'),
+      (payload.ear_styles || []).map((def) => def.id).join('|'),
+      (payload.tail_styles || []).map((def) => def.id).join('|'),
+      (payload.wing_styles || []).map((def) => def.id).join('|'),
+    ].join('::');
+  const prostheticSignature = payload.prosthetic_context
+    ? JSON.stringify(payload.prosthetic_context)
+    : '';
+  const biologicalGender = `${payload.biological_gender || ''}:${
+    payload.preview_gender_suffix || ''
+  }:${(payload.base_biological_genders || []).join('|')}:${(
+    payload.biological_genders || []
+  ).join('|')}`;
+  return `${species}:${revision}:${altRevision}:${genderAltRevision}:${genderAltDigitigradeRevision}:${size}:${digitigrade}:${digitigradeAllowed}:${biologicalGender}:${defsSignature}:${prostheticSignature}`;
 };
 
 const resolveSelectedDef = <T extends { id: string }>(
@@ -753,6 +779,8 @@ const resolveDefaultColorTarget = (
       return { type: 'eyes' };
     case 'body':
       return { type: 'body' };
+    case 'prosthetics':
+      return { type: 'synth' };
     default:
       return { type: 'hair' };
   }
@@ -760,6 +788,14 @@ const resolveDefaultColorTarget = (
 
 const clampChannelIndex = (value: number, maxChannels: number) =>
   Math.max(0, Math.min(maxChannels - 1, Math.floor(value)));
+
+const resolveStringOptions = (options?: string[]) =>
+  Array.isArray(options)
+    ? options.filter(
+        (option): option is string =>
+          typeof option === 'string' && !!option.length
+      )
+    : [];
 
 const resolveBasicColorTarget = (options: {
   target: BasicAppearanceColorTarget | null;
@@ -782,6 +818,10 @@ const resolveBasicColorTarget = (options: {
       return { type: 'eyes' };
     case 'body':
       return { type: 'body' };
+    case 'blood':
+      return { type: 'blood' };
+    case 'synth':
+      return { type: 'synth' };
     case 'ears': {
       const maxChannels = Math.max(0, maxAccessoryChannels.ears);
       if (maxChannels <= 0) {
@@ -828,14 +868,41 @@ const resolveBasicColorTarget = (options: {
 };
 
 type BasicTilePreviewEntry = PreviewDirectionEntry & {
+  layerGroups?: PreviewLayerGroup[];
   baseLayers?: PreviewLayerEntry[];
   underlayLayers?: PreviewLayerEntry[];
   overlayLayers?: PreviewLayerEntry[];
   baseSignature?: string;
+  renderSignature?: string;
+  retainRenderedCanvasOnUnmount?: boolean;
+};
+
+type BasicTileDefinition = Readonly<{
+  id: string;
+  name: string;
+  description?: string | null;
+  disabled?: boolean;
+  disabledReason?: string | null;
+  tooltip?: string | null;
+  colorMode?: ProstheticColorMode;
+}>;
+
+const ProstheticColorModeBadge = ({
+  mode,
+}: Readonly<{ mode: ProstheticColorMode }>) => {
+  const details = PROSTHETIC_COLOR_MODE_DETAILS[mode];
+  return (
+    <Box
+      as="span"
+      className={`RogueStar__prostheticColorMode RogueStar__prostheticColorMode--${mode}`}
+      title={details.description}>
+      {details.label}
+    </Box>
+  );
 };
 
 type BasicTileProps = Readonly<{
-  def: { id: string; name: string };
+  def: BasicTileDefinition;
   selected: boolean;
   previews: BasicTilePreviewEntry[];
   onToggle: () => void;
@@ -855,6 +922,10 @@ class BasicTile extends Component<BasicTileProps> {
       next.previews !== this.props.previews ||
       next.def.id !== this.props.def.id ||
       next.def.name !== this.props.def.name ||
+      next.def.disabled !== this.props.def.disabled ||
+      next.def.disabledReason !== this.props.def.disabledReason ||
+      next.def.tooltip !== this.props.def.tooltip ||
+      next.def.colorMode !== this.props.def.colorMode ||
       next.backgroundImage !== this.props.backgroundImage ||
       next.backgroundColor !== this.props.backgroundColor ||
       next.backgroundScale !== this.props.backgroundScale ||
@@ -877,12 +948,19 @@ class BasicTile extends Component<BasicTileProps> {
       backgroundTileWidth,
       backgroundTileHeight,
     } = this.props;
+    const disabled = !!def.disabled;
     return (
       <Box
         className={`RogueStar__markingTile${
           selected ? ' RogueStar__markingTile--selected' : ''
+        }${disabled ? ' RogueStar__markingTile--disabled' : ''}${
+          def.colorMode === 'prosthetic' || def.colorMode === 'body'
+            ? ` RogueStar__markingTile--color-${def.colorMode}`
+            : ''
         }`}
-        onClick={onToggle}>
+        aria-disabled={disabled}
+        title={def.tooltip || def.disabledReason || def.description || def.name}
+        onClick={disabled ? undefined : onToggle}>
         <Box className="RogueStar__markingTilePreviewGrid">
           {previews.map((preview) => (
             <Box
@@ -890,16 +968,23 @@ class BasicTile extends Component<BasicTileProps> {
               className="RogueStar__markingTilePreview">
               <DirectionPreviewCanvas
                 layers={
+                  preview.layerGroups ||
                   preview.baseLayers ||
                   preview.underlayLayers ||
                   preview.overlayLayers
                     ? undefined
                     : preview.layers
                 }
+                layerGroups={preview.layerGroups}
                 baseLayers={preview.baseLayers}
                 underlayLayers={preview.underlayLayers}
                 overlayLayers={preview.overlayLayers}
+                bodyAlpha={preview.bodyAlpha}
                 baseSignature={preview.baseSignature}
+                renderSignature={preview.renderSignature}
+                retainRenderedCanvasOnUnmount={
+                  preview.retainRenderedCanvasOnUnmount
+                }
                 pixelSize={MARKING_TILE_PIXEL_SIZE}
                 width={canvasWidth}
                 height={canvasHeight}
@@ -912,7 +997,11 @@ class BasicTile extends Component<BasicTileProps> {
             </Box>
           ))}
         </Box>
-        <Box className="RogueStar__markingTileLabel" title={def.name}>
+        <Box
+          className="RogueStar__markingTileLabel"
+          title={
+            def.tooltip || def.disabledReason || def.description || def.name
+          }>
           {def.name}
         </Box>
       </Box>
@@ -921,7 +1010,7 @@ class BasicTile extends Component<BasicTileProps> {
 }
 
 type BasicTileSectionProps = Readonly<{
-  definitions: Array<{ id: string; name: string }>;
+  definitions: BasicTileDefinition[];
   canvasWidth: number;
   canvasHeight: number;
   search: string;
@@ -935,12 +1024,10 @@ type BasicTileSectionProps = Readonly<{
   backgroundScale: number;
   backgroundTileWidth?: number;
   backgroundTileHeight?: number;
-  getTilePreviewEntries: (def: {
-    id: string;
-    name: string;
-  }) => BasicTilePreviewEntry[];
+  getTilePreviewEntries: (def: BasicTileDefinition) => BasicTilePreviewEntry[];
   onSelect: (id: string | null) => void;
   emptyMessage?: string;
+  allowDeselect?: boolean;
 }>;
 
 class BasicTileSection extends Component<BasicTileSectionProps> {
@@ -981,6 +1068,7 @@ class BasicTileSection extends Component<BasicTileSectionProps> {
       getTilePreviewEntries,
       onSelect,
       emptyMessage,
+      allowDeselect = true,
     } = this.props;
     const searchNeedle = search.trim().toLowerCase();
     const filtered = definitions.filter((def) => {
@@ -989,7 +1077,8 @@ class BasicTileSection extends Component<BasicTileSectionProps> {
       }
       return (
         def.id.toLowerCase().includes(searchNeedle) ||
-        def.name.toLowerCase().includes(searchNeedle)
+        def.name.toLowerCase().includes(searchNeedle) ||
+        (def.description || '').toLowerCase().includes(searchNeedle)
       );
     });
     filtered.sort(compareByName);
@@ -1025,7 +1114,10 @@ class BasicTileSection extends Component<BasicTileSectionProps> {
                 backgroundScale={backgroundScale}
                 backgroundTileWidth={backgroundTileWidth}
                 backgroundTileHeight={backgroundTileHeight}
-                onToggle={() => onSelect(selected ? null : def.id)}
+                onToggle={() =>
+                  !def.disabled &&
+                  onSelect(selected && allowDeselect ? null : def.id)
+                }
               />
             );
           })}
@@ -1082,22 +1174,20 @@ type BasicAppearanceGallerySectionProps = Readonly<{
   setSearch: (search: string) => void;
   tilePage: number;
   setTilePage: (page: number) => void;
-  definitions: Array<{ id: string; name: string }>;
+  definitions: BasicTileDefinition[];
   selectedId: string | null;
   canvasWidth: number;
   canvasHeight: number;
   tileDirectionsSignature: string;
   assetRevision: number;
-  getTilePreviewEntries: (def: {
-    id: string;
-    name: string;
-  }) => BasicTilePreviewEntry[];
+  getTilePreviewEntries: (def: BasicTileDefinition) => BasicTilePreviewEntry[];
   backgroundImage: string | null;
   backgroundColor: string;
   backgroundScale: number;
   backgroundTileWidth?: number;
   backgroundTileHeight?: number;
   onSelect: (id: string | null) => void;
+  emptyMessage?: string;
 }>;
 
 const BasicAppearanceGallerySection = ({
@@ -1120,9 +1210,12 @@ const BasicAppearanceGallerySection = ({
   backgroundTileWidth,
   backgroundTileHeight,
   onSelect,
+  emptyMessage,
 }: BasicAppearanceGallerySectionProps) => (
   <Section
-    title="Basic Appearance Gallery"
+    title={
+      type === 'prosthetics' ? 'Prosthetic Gallery' : 'Basic Appearance Gallery'
+    }
     buttons={
       <Flex align="center" gap={0.5} wrap="wrap">
         <Flex.Item grow>
@@ -1170,6 +1263,8 @@ const BasicAppearanceGallerySection = ({
       backgroundTileHeight={backgroundTileHeight}
       getTilePreviewEntries={getTilePreviewEntries}
       onSelect={onSelect}
+      emptyMessage={emptyMessage}
+      allowDeselect={type !== 'prosthetics'}
     />
   </Section>
 );
@@ -1235,14 +1330,12 @@ const BasicAppearanceSaveSection = ({
 type BasicAppearanceSettingsSectionProps = Readonly<{
   state: BasicAppearanceState;
   uiLocked: boolean;
-  digitigradeAllowed: boolean;
   hairDef: BasicAppearanceAccessoryDefinition | null;
   facialHairDef: BasicAppearanceAccessoryDefinition | null;
   maxAccessoryChannels: BasicAppearanceAccessoryChannelCaps;
   activeColorTarget: BasicAppearanceColorTarget | null;
   setColorTarget: (target: BasicAppearanceColorTarget | null) => void;
   setStyle: (type: BasicAppearanceType, styleId: string | null) => void;
-  setDigitigrade: (value: boolean) => void;
 }>;
 
 const buildChannelButtons = (options: {
@@ -1297,14 +1390,12 @@ const buildChannelButtons = (options: {
 const BasicAppearanceSettingsSection = ({
   state,
   uiLocked,
-  digitigradeAllowed,
   hairDef,
   facialHairDef,
   maxAccessoryChannels,
   activeColorTarget,
   setColorTarget,
   setStyle,
-  setDigitigrade,
 }: BasicAppearanceSettingsSectionProps) => {
   type BasicAppearanceStyleType =
     | 'hair'
@@ -1314,10 +1405,6 @@ const BasicAppearanceSettingsSection = ({
     | 'horns'
     | 'tail'
     | 'wings';
-
-  const digitigradeTooltip = !digitigradeAllowed
-    ? 'Not available for the selected species.'
-    : undefined;
 
   const StyleRow = (
     props: Readonly<{
@@ -1352,8 +1439,6 @@ const BasicAppearanceSettingsSection = ({
   const hairColor = normalizeHex(state.hair_color) || '#ffffff';
   const gradientColor = normalizeHex(state.hair_gradient_color) || '#ffffff';
   const facialHairColor = normalizeHex(state.facial_hair_color) || '#ffffff';
-  const eyesColor = normalizeHex(state.eye_color) || '#ffffff';
-  const bodyColor = normalizeHex(state.body_color) || '#ffffff';
 
   const hairColorable = !!hairDef?.do_colouration;
   const facialHairColorable = !!facialHairDef?.do_colouration;
@@ -1470,39 +1555,641 @@ const BasicAppearanceSettingsSection = ({
               disabled: uiLocked,
             })}
           </LabeledList.Item>
-          <LabeledList.Item label="Eye Color">
-            <Button
-              className={CHIP_BUTTON_CLASS}
-              icon="tint"
-              disabled={uiLocked}
-              selected={activeColorTarget?.type === 'eyes'}
-              onClick={() => setColorTarget({ type: 'eyes' })}>
-              <ColorBox mr={0.5} color={eyesColor} />
-              Color
-            </Button>
-          </LabeledList.Item>
-          <LabeledList.Item label="Body Color">
-            <Button
-              className={CHIP_BUTTON_CLASS}
-              icon="tint"
-              disabled={uiLocked}
-              selected={activeColorTarget?.type === 'body'}
-              onClick={() => setColorTarget({ type: 'body' })}>
-              <ColorBox mr={0.5} color={bodyColor} />
-              Color
-            </Button>
-          </LabeledList.Item>
-          <LabeledList.Item label="Digitigrade">
-            <Button.Checkbox
-              className={CHIP_BUTTON_CLASS}
-              checked={digitigradeAllowed && !!state.digitigrade}
-              disabled={uiLocked || !digitigradeAllowed}
-              tooltip={digitigradeTooltip}
-              onClick={() => setDigitigrade(!state.digitigrade)}>
-              Enabled
-            </Button.Checkbox>
-          </LabeledList.Item>
         </LabeledList>
+      </Flex>
+    </Section>
+  );
+};
+
+type ProstheticSettingsSectionProps = Readonly<{
+  state: BasicAppearanceState;
+  context: NonNullable<BasicAppearancePayload['prosthetic_context']>;
+  biologicalGenders: string[];
+  bloodTypes: string[];
+  bloodReagents: string[];
+  activeTargets: ProstheticTarget[];
+  uiLocked: boolean;
+  digitigradeAllowed: boolean;
+  activeColorTarget: BasicAppearanceColorTarget | null;
+  setColorTarget: (target: BasicAppearanceColorTarget | null) => void;
+  setActiveTargets: (targets: ProstheticTarget[]) => void;
+  applyExternalSelection: (id: string) => void;
+  setInternalSelection: (target: InternalOrganId, state: string) => void;
+  setBiologicalGender: (biologicalGender: string) => void;
+  setBloodType: (bloodType: string) => void;
+  setBloodReagent: (bloodReagent: string) => void;
+  resetBloodColor: () => void;
+  setNeedsGlasses: (needsGlasses: boolean) => void;
+  setDigitigrade: (value: boolean) => void;
+  setSynthColorEnabled: (enabled: boolean) => void;
+  setSynthMarkings: (enabled: boolean) => void;
+  resetSettings: () => void;
+}>;
+
+const PROSTHETIC_SELECTION_SUMMARY_PARTS: Array<{
+  part: string;
+  label: string;
+}> = [
+  { part: 'torso', label: 'Torso' },
+  { part: 'groin', label: 'Groin' },
+  { part: 'head', label: 'Head' },
+  { part: 'l_arm', label: 'Left Arm' },
+  { part: 'l_hand', label: 'Left Hand' },
+  { part: 'r_arm', label: 'Right Arm' },
+  { part: 'r_hand', label: 'Right Hand' },
+  { part: 'l_leg', label: 'Left Leg' },
+  { part: 'l_foot', label: 'Left Foot' },
+  { part: 'r_leg', label: 'Right Leg' },
+  { part: 'r_foot', label: 'Right Foot' },
+];
+
+const formatBiologicalGenderLabel = (biologicalGender: string) =>
+  biologicalGender.length
+    ? biologicalGender.charAt(0).toUpperCase() + biologicalGender.slice(1)
+    : 'Unknown';
+
+type ProstheticSelectionSummaryGroup = {
+  id: string;
+  status: 'cyborg' | 'amputated';
+  name: string;
+  parts: string[];
+  fullBody: boolean;
+  description?: string | null;
+  colorMode?: ProstheticColorMode;
+};
+
+const resolveInternalOrganChipTone = (state: string) => {
+  switch (state) {
+    case 'normal':
+    case 'native':
+      return 'organic';
+    case 'assisted':
+      return 'assisted';
+    case 'mechanical':
+      return 'mechanical';
+    case 'digital':
+      return 'digital';
+    default:
+      return 'unavailable';
+  }
+};
+
+export const buildProstheticSelectionSummary = (
+  state: Pick<BasicAppearanceState, 'limbs'>,
+  definitions: ReturnType<typeof resolveProstheticGalleryDefinitions>
+): ProstheticSelectionSummaryGroup[] => {
+  const modelDetails = definitions.reduce(
+    (details, definition) => {
+      details[definition.id] = {
+        name: definition.name,
+        description: definition.description,
+      };
+      return details;
+    },
+    {} as Record<string, { name: string; description?: string | null }>
+  );
+  const groups: Record<string, ProstheticSelectionSummaryGroup> = {};
+  for (const summaryPart of PROSTHETIC_SELECTION_SUMMARY_PARTS) {
+    const entry = state.limbs.external[summaryPart.part];
+    if (!entry || entry.status === 'normal') {
+      continue;
+    }
+    const status = entry.status === 'amputated' ? 'amputated' : 'cyborg';
+    const modelId = status === 'cyborg' ? entry.model || 'prosthetic' : '';
+    const id = status === 'cyborg' ? `cyborg:${modelId}` : 'amputated';
+    if (!groups[id]) {
+      groups[id] = {
+        id,
+        status,
+        name:
+          status === 'amputated'
+            ? 'Amputated'
+            : modelDetails[modelId]?.name || modelId || 'Prosthetic',
+        parts: [],
+        fullBody: false,
+        description:
+          status === 'cyborg' ? modelDetails[modelId]?.description : undefined,
+        colorMode:
+          status === 'cyborg'
+            ? resolveProstheticModelColorMode(modelId)
+            : undefined,
+      };
+    }
+    groups[id].parts.push(summaryPart.label);
+  }
+  const resolvedGroups = Object.values(groups);
+  if (
+    resolvedGroups.length === 1 &&
+    resolvedGroups[0].status === 'cyborg' &&
+    resolvedGroups[0].parts.length === PROSTHETIC_SELECTION_SUMMARY_PARTS.length
+  ) {
+    resolvedGroups[0].parts = ['Full Body'];
+    resolvedGroups[0].fullBody = true;
+  }
+  return resolvedGroups;
+};
+
+const ProstheticSettingsSection = ({
+  state,
+  context,
+  biologicalGenders,
+  bloodTypes,
+  bloodReagents,
+  activeTargets,
+  uiLocked,
+  digitigradeAllowed,
+  activeColorTarget,
+  setColorTarget,
+  setActiveTargets,
+  applyExternalSelection,
+  setInternalSelection,
+  setBiologicalGender,
+  setBloodType,
+  setBloodReagent,
+  resetBloodColor,
+  setNeedsGlasses,
+  setDigitigrade,
+  setSynthColorEnabled,
+  setSynthMarkings,
+  resetSettings,
+}: ProstheticSettingsSectionProps) => {
+  const normalizedActiveTargets = normalizeProstheticTargets(activeTargets);
+  const activeTargetLabels = normalizedActiveTargets.map(
+    (target) => PROSTHETIC_TARGET_LABELS[target]
+  );
+  const organicTargets = resolveApplicableProstheticTargets(
+    normalizedActiveTargets,
+    '__normal__',
+    state.limbs,
+    context
+  );
+  const amputatedTargets = resolveApplicableProstheticTargets(
+    normalizedActiveTargets,
+    '__amputated__',
+    state.limbs,
+    context
+  );
+  const selectionSummary = buildProstheticSelectionSummary(
+    state,
+    resolveProstheticGalleryDefinitions(context)
+  );
+  const synthColor = normalizeHex(state.synth_color) || '#ffffff';
+  const bodyColor = normalizeHex(state.body_color) || '#ffffff';
+  const eyesColor = normalizeHex(state.eye_color) || '#ffffff';
+  const bloodColor = normalizeHex(state.blood_color) || '#a10808';
+  const biologicalGenderOptions = biologicalGenders.map((biologicalGender) => ({
+    displayText: formatBiologicalGenderLabel(biologicalGender),
+    value: biologicalGender,
+  }));
+  const digitigradeEnabled = digitigradeAllowed && !!state.digitigrade;
+  const digitigradeTooltip = !digitigradeAllowed
+    ? 'Not available for the selected species.'
+    : undefined;
+  const fullBodyEditable = isProstheticTargetEditable(
+    'full_body',
+    state.limbs,
+    context
+  );
+
+  const toggleActiveTarget = (target: ProstheticTarget) => {
+    setActiveTargets(
+      toggleProstheticTargetSelection(
+        normalizedActiveTargets,
+        target,
+        state.limbs
+      )
+    );
+  };
+
+  return (
+    <Section title="Body Settings" fill>
+      <Flex direction="column" gap={1}>
+        <Box>
+          <Box bold mb={0.5}>
+            Body & Physiology
+          </Box>
+          <Box className="RogueStar__physiologyPanel">
+            <Box className="RogueStar__physiologyControl">
+              <Box className="RogueStar__physiologyLabel">Body Color</Box>
+              <Button
+                className={`${CHIP_BUTTON_CLASS} RogueStar__physiologyToggle`}
+                fluid
+                icon="tint"
+                disabled={uiLocked}
+                selected={activeColorTarget?.type === 'body'}
+                onClick={() => setColorTarget({ type: 'body' })}>
+                <ColorBox mr={0.5} color={bodyColor} />
+                Choose
+              </Button>
+            </Box>
+            <Box className="RogueStar__physiologyControl">
+              <Box className="RogueStar__physiologyLabel">Eye Color</Box>
+              <Button
+                className={`${CHIP_BUTTON_CLASS} RogueStar__physiologyToggle`}
+                fluid
+                icon="tint"
+                disabled={uiLocked}
+                selected={activeColorTarget?.type === 'eyes'}
+                onClick={() => setColorTarget({ type: 'eyes' })}>
+                <ColorBox mr={0.5} color={eyesColor} />
+                Choose
+              </Button>
+            </Box>
+            <Box className="RogueStar__physiologyControl">
+              <Box className="RogueStar__physiologyLabel">Biological Sex</Box>
+              <Dropdown
+                key={state.biological_gender}
+                className={`${CHIP_BUTTON_CLASS} RogueStar__physiologyDropdown`}
+                color="transparent"
+                dropdownStyle="rogue-star"
+                controlContentClassName="Button__content RogueStar__physiologyDropdownContent"
+                icon="venus-mars"
+                width="100%"
+                options={biologicalGenderOptions}
+                selected={state.biological_gender}
+                displayText={formatBiologicalGenderLabel(
+                  state.biological_gender
+                )}
+                disabled={uiLocked || biologicalGenderOptions.length <= 1}
+                onSelected={(biologicalGender) =>
+                  typeof biologicalGender === 'string' &&
+                  setBiologicalGender(biologicalGender)
+                }
+              />
+            </Box>
+            <Box className="RogueStar__physiologyControl">
+              <Box className="RogueStar__physiologyLabel">Leg Shape</Box>
+              <Button.Checkbox
+                className={`${CHIP_BUTTON_CLASS} RogueStar__physiologyToggle`}
+                fluid
+                checked={digitigradeEnabled}
+                disabled={uiLocked || !digitigradeAllowed}
+                tooltip={digitigradeTooltip}
+                onClick={() => setDigitigrade(!state.digitigrade)}>
+                {digitigradeEnabled ? 'Digitigrade Legs' : 'Plantigrade Legs'}
+              </Button.Checkbox>
+            </Box>
+            <Box className="RogueStar__physiologyControl">
+              <Box className="RogueStar__physiologyLabel">Blood Type</Box>
+              <Dropdown
+                key={state.blood_type}
+                className={`${CHIP_BUTTON_CLASS} RogueStar__physiologyDropdown`}
+                color="transparent"
+                dropdownStyle="rogue-star"
+                controlContentClassName="Button__content RogueStar__physiologyDropdownContent"
+                icon="tint"
+                width="100%"
+                options={bloodTypes}
+                selected={state.blood_type}
+                displayText={state.blood_type}
+                disabled={uiLocked || !bloodTypes.length}
+                onSelected={(bloodType) =>
+                  typeof bloodType === 'string' && setBloodType(bloodType)
+                }
+              />
+            </Box>
+            <Box className="RogueStar__physiologyControl">
+              <Box className="RogueStar__physiologyLabel">Blood Color</Box>
+              <Flex gap={0.5}>
+                <Flex.Item grow>
+                  <Button
+                    className={`${CHIP_BUTTON_CLASS} RogueStar__physiologyToggle`}
+                    fluid
+                    icon="tint"
+                    disabled={uiLocked}
+                    selected={activeColorTarget?.type === 'blood'}
+                    tooltip="Blood color does not apply to synthetic characters."
+                    onClick={() => setColorTarget({ type: 'blood' })}>
+                    <ColorBox mr={0.5} color={bloodColor} />
+                    Choose
+                  </Button>
+                </Flex.Item>
+                <Flex.Item shrink={0}>
+                  <Button
+                    className={`${CHIP_BUTTON_CLASS} RogueStar__physiologyToggle`}
+                    icon="rotate-left"
+                    disabled={uiLocked}
+                    tooltip="Reset to the human default (#A10808)."
+                    onClick={resetBloodColor}
+                  />
+                </Flex.Item>
+              </Flex>
+            </Box>
+            <Box className="RogueStar__physiologyControl">
+              <Box className="RogueStar__physiologyLabel">Blood Reagent</Box>
+              <Dropdown
+                key={state.blood_reagent}
+                className={`${CHIP_BUTTON_CLASS} RogueStar__physiologyDropdown`}
+                color="transparent"
+                dropdownStyle="rogue-star"
+                controlContentClassName="Button__content RogueStar__physiologyDropdownContent"
+                icon="flask"
+                width="100%"
+                options={bloodReagents}
+                selected={state.blood_reagent}
+                displayText={state.blood_reagent}
+                disabled={uiLocked || !bloodReagents.length}
+                onSelected={(bloodReagent) =>
+                  typeof bloodReagent === 'string' &&
+                  setBloodReagent(bloodReagent)
+                }
+              />
+            </Box>
+            <Box className="RogueStar__physiologyControl">
+              <Box className="RogueStar__physiologyLabel">Vision</Box>
+              <Button.Checkbox
+                className={`${CHIP_BUTTON_CLASS} RogueStar__physiologyToggle`}
+                fluid
+                checked={state.needs_glasses}
+                disabled={uiLocked}
+                tooltip="Start nearsighted. Prescription glasses correct the resulting blurred vision."
+                onClick={() => setNeedsGlasses(!state.needs_glasses)}>
+                {state.needs_glasses ? 'Needs Glasses' : 'Normal Vision'}
+              </Button.Checkbox>
+            </Box>
+          </Box>
+        </Box>
+
+        <Box>
+          <Flex align="center" justify="space-between" mb={0.5}>
+            <Flex.Item>
+              <Box bold>Internal Organs</Box>
+            </Flex.Item>
+            <Flex.Item shrink={0}>
+              <Box className="RogueStar__prostheticEyebrow">Click to cycle</Box>
+            </Flex.Item>
+          </Flex>
+          <Box className="RogueStar__internalOrganPanel">
+            <Box className="RogueStar__internalOrganGrid">
+              {resolveInternalOrganDefinitions(context).map((definition) => {
+                const target = definition.id as InternalOrganId;
+                const options = resolveInternalOrganOptions(
+                  target,
+                  state.limbs,
+                  context
+                );
+                const locked = !definition.allowed_states.length;
+                const selected = locked
+                  ? definition.locked_state || 'native'
+                  : state.limbs.internal[target]?.status || 'normal';
+                const selectedDefinition = options.find(
+                  (entry) => entry.id === selected
+                );
+                const nextChoice = resolveNextInternalOrganChoice(
+                  options,
+                  selected
+                );
+                const organicBrain =
+                  target === 'brain' &&
+                  selected === 'normal' &&
+                  !options.length &&
+                  !locked;
+                const lockedLabel = resolveLockedInternalOrganLabel(definition);
+                const displayText = locked
+                  ? lockedLabel
+                  : options.length
+                    ? selectedDefinition?.label || selected
+                    : organicBrain
+                      ? 'Organic'
+                      : target === 'brain'
+                        ? 'Needs synth head'
+                        : 'Unavailable';
+                const stateDescription = resolveInternalOrganStateDescription(
+                  target,
+                  selected
+                );
+                const tooltip = locked
+                  ? `${definition.label}: ${displayText}. ${stateDescription}. This choice is fixed for this species.`
+                  : nextChoice
+                    ? `${definition.label}: ${displayText}. ${stateDescription}. Click to switch to ${nextChoice.label}.`
+                    : organicBrain
+                      ? `Brain: Organic. ${stateDescription}. Install a prosthetic head to choose a cybernetic brain type.`
+                      : target === 'brain'
+                        ? 'Install a prosthetic head to choose a cybernetic brain type.'
+                        : `${definition.label} has no states available with the current anatomy.`;
+                const tone = organicBrain
+                  ? 'organic'
+                  : options.length
+                    ? resolveInternalOrganChipTone(selected)
+                    : locked
+                      ? resolveInternalOrganChipTone(selected)
+                      : 'unavailable';
+                return (
+                  <Button
+                    key={target}
+                    className={`${CHIP_BUTTON_CLASS} RogueStar__internalOrganChip RogueStar__internalOrganChip--${tone}${
+                      locked ? ' RogueStar__internalOrganChip--locked' : ''
+                    }${
+                      organicBrain
+                        ? ' RogueStar__internalOrganChip--organicPassive'
+                        : ''
+                    }`}
+                    fluid
+                    disabled={uiLocked || locked || !nextChoice}
+                    tooltip={tooltip}
+                    onClick={() =>
+                      nextChoice && setInternalSelection(target, nextChoice.id)
+                    }>
+                    <Box as="span" className="RogueStar__internalOrganChipName">
+                      {definition.label}
+                    </Box>
+                    <Box
+                      as="span"
+                      className="RogueStar__internalOrganChipState">
+                      {displayText}
+                    </Box>
+                  </Button>
+                );
+              })}
+            </Box>
+          </Box>
+        </Box>
+
+        <Box>
+          <Box bold mb={0.5}>
+            Prosthetics and Amputations
+          </Box>
+          <Box className="RogueStar__prostheticTargetPanel">
+            <Flex gap={1} wrap={false} align="stretch">
+              <Flex.Item basis="164px" shrink={0}>
+                <ProstheticMannequin
+                  activeTargets={normalizedActiveTargets}
+                  uiLocked={uiLocked}
+                  isTargetEditable={(target) =>
+                    isProstheticTargetEditable(
+                      target,
+                      state.limbs,
+                      context,
+                      normalizedActiveTargets
+                    )
+                  }
+                  onToggleTarget={toggleActiveTarget}
+                />
+              </Flex.Item>
+              <Flex.Item grow className="RogueStar__prostheticTargetReadout">
+                <Box className="RogueStar__prostheticEyebrow">
+                  Active Targets
+                </Box>
+                <Box className="RogueStar__prostheticActiveTargets">
+                  {activeTargetLabels.length
+                    ? activeTargetLabels.join(' · ')
+                    : 'No body areas selected'}
+                </Box>
+                <Flex mt={0.5} gap={0.5} wrap>
+                  <Flex.Item>
+                    <Button
+                      className={CHIP_BUTTON_CLASS}
+                      icon="person"
+                      selected={normalizedActiveTargets.includes('full_body')}
+                      disabled={uiLocked || !fullBodyEditable}
+                      onClick={() => setActiveTargets(['full_body'])}>
+                      Full Body
+                    </Button>
+                  </Flex.Item>
+                  <Flex.Item>
+                    <Button
+                      className={CHIP_BUTTON_CLASS}
+                      icon="times"
+                      disabled={uiLocked || !normalizedActiveTargets.length}
+                      onClick={() => setActiveTargets([])}>
+                      Clear
+                    </Button>
+                  </Flex.Item>
+                </Flex>
+                <Box className="RogueStar__prostheticEyebrow" mt={1}>
+                  Quick Set
+                </Box>
+                <Flex mt={0.5} gap={0.5} wrap>
+                  <Flex.Item>
+                    <Button
+                      className={CHIP_BUTTON_CLASS}
+                      icon="user"
+                      disabled={uiLocked || !organicTargets.length}
+                      tooltip="Restore every compatible active target to organic anatomy."
+                      onClick={() => applyExternalSelection('__normal__')}>
+                      Organic
+                    </Button>
+                  </Flex.Item>
+                  <Flex.Item>
+                    <Button
+                      className={CHIP_BUTTON_CLASS}
+                      icon="cut"
+                      disabled={uiLocked || !amputatedTargets.length}
+                      tooltip="Mark every compatible active limb as amputated."
+                      onClick={() => applyExternalSelection('__amputated__')}>
+                      Amputate
+                    </Button>
+                  </Flex.Item>
+                </Flex>
+                <Box className="RogueStar__prostheticEyebrow" mt={1}>
+                  Appearance
+                </Box>
+                <Flex mt={0.5}>
+                  <Flex.Item>
+                    <Button.Checkbox
+                      className={CHIP_BUTTON_CLASS}
+                      checked={state.synth_markings}
+                      disabled={uiLocked}
+                      tooltip="Allow body markings to appear on prosthetic parts."
+                      onClick={() => setSynthMarkings(!state.synth_markings)}>
+                      Markings
+                    </Button.Checkbox>
+                  </Flex.Item>
+                </Flex>
+                <Flex mt={0.5} gap={0.5} wrap={false}>
+                  <Flex.Item>
+                    <Button.Checkbox
+                      className={CHIP_BUTTON_CLASS}
+                      checked={state.synth_color_enabled}
+                      disabled={uiLocked}
+                      tooltip="Enable recoloring for chassis labeled Prosthetic Color. Body Color and No Recoloring chassis are unaffected."
+                      onClick={() =>
+                        setSynthColorEnabled(!state.synth_color_enabled)
+                      }>
+                      Recolor
+                    </Button.Checkbox>
+                  </Flex.Item>
+                  <Flex.Item>
+                    <Button
+                      className={CHIP_BUTTON_CLASS}
+                      icon="tint"
+                      disabled={uiLocked || !state.synth_color_enabled}
+                      tooltip="Choose the color used by chassis labeled Prosthetic Color."
+                      selected={activeColorTarget?.type === 'synth'}
+                      onClick={() => setColorTarget({ type: 'synth' })}>
+                      <ColorBox mr={0.5} color={synthColor} />
+                      Choose
+                    </Button>
+                  </Flex.Item>
+                </Flex>
+              </Flex.Item>
+            </Flex>
+          </Box>
+        </Box>
+
+        <Box>
+          <Flex align="center" justify="space-between" mb={0.5}>
+            <Flex.Item>
+              <Box bold>Current External Selections</Box>
+            </Flex.Item>
+            <Flex.Item shrink={0}>
+              <Button.Confirm
+                className={`${CHIP_BUTTON_CLASS} RogueStar__glowButton--negative`}
+                icon="rotate-left"
+                confirmIcon="triangle-exclamation"
+                color="transparent"
+                confirmColor="bad"
+                confirmContent="Confirm Reset"
+                disabled={uiLocked}
+                tooltip="Reset all editable limbs and internal organs."
+                onClick={resetSettings}
+              />
+            </Flex.Item>
+          </Flex>
+          <Box className="RogueStar__prostheticSelectionList">
+            {selectionSummary.map((group) => (
+              <Box
+                key={group.id}
+                className={`RogueStar__prostheticSelectionGroup${
+                  group.status === 'amputated'
+                    ? ' RogueStar__prostheticSelectionGroup--amputated'
+                    : ''
+                }`}>
+                <Box>
+                  <Box className="RogueStar__prostheticSelectionModel">
+                    {group.name}
+                  </Box>
+                  {!!group.description && (
+                    <Box className="RogueStar__prostheticHint" mt={0.25}>
+                      {group.description}
+                    </Box>
+                  )}
+                  <Box className="RogueStar__prostheticSelectionParts">
+                    {group.parts.join(' · ')}
+                  </Box>
+                  {!!group.colorMode && (
+                    <Box mt={0.3}>
+                      <ProstheticColorModeBadge mode={group.colorMode} />
+                    </Box>
+                  )}
+                </Box>
+                <Box className="RogueStar__prostheticSelectionCount">
+                  {group.fullBody ? 'ALL' : group.parts.length}
+                </Box>
+              </Box>
+            ))}
+            {!selectionSummary.length && (
+              <Box className="RogueStar__prostheticSelectionEmpty">
+                All external body parts are currently organic.
+              </Box>
+            )}
+          </Box>
+          {!!selectionSummary.length && (
+            <Box className="RogueStar__prostheticHint" mt={0.5}>
+              Unlisted body regions remain organic.
+            </Box>
+          )}
+        </Box>
       </Flex>
     </Section>
   );
@@ -1519,6 +2206,10 @@ type BasicAppearancePreviewColumnProps = Readonly<{
   canvasBackgroundScale: number;
   previewBackgroundTileWidth?: number;
   previewBackgroundTileHeight?: number;
+  iconScaleX?: number;
+  iconScaleY?: number;
+  showEquipment: boolean;
+  onToggleEquipment: () => void;
   showJobGear: boolean;
   onToggleJobGear: () => void;
   showLoadoutGear: boolean;
@@ -1541,6 +2232,10 @@ const BasicAppearancePreviewColumn = ({
   canvasBackgroundScale,
   previewBackgroundTileWidth,
   previewBackgroundTileHeight,
+  iconScaleX,
+  iconScaleY,
+  showEquipment,
+  onToggleEquipment,
   showJobGear,
   onToggleJobGear,
   showLoadoutGear,
@@ -1552,73 +2247,29 @@ const BasicAppearancePreviewColumn = ({
   applyColorTarget,
 }: BasicAppearancePreviewColumnProps) => (
   <Flex direction="column" gap={1}>
-    <Section
-      fill
-      noTopPadding
-      className="RogueStar__previewCard RogueStar__previewCard--flush">
-      <Flex align="center" wrap gap={0.5} mb={1} ml={0.5}>
-        <Box
-          color="label"
-          fontWeight="bold"
-          className="RogueStar__previewTitle"
-          mr={0.5}>
-          Live Preview
-        </Box>
-        <Button
-          className={CHIP_BUTTON_CLASS}
-          icon={previewFitToFrame ? 'compress-arrows-alt' : 'expand-arrows-alt'}
-          selected={previewFitToFrame}
-          tooltip="Shrink to show the full 64x64 grid"
-          onClick={onTogglePreviewFit}
-        />
-        <Button
-          className={CHIP_BUTTON_CLASS}
-          icon="id-card"
-          selected={showJobGear}
-          tooltip="Show or hide job gear overlays."
-          onClick={onToggleJobGear}>
-          Job gear
-        </Button>
-        <Button
-          className={CHIP_BUTTON_CLASS}
-          icon="toolbox"
-          selected={showLoadoutGear}
-          tooltip="Show or hide loadout overlays."
-          onClick={onToggleLoadout}>
-          Loadout
-        </Button>
-        {canvasBackgroundOptions.length ? (
-          <Button
-            className={CHIP_BUTTON_CLASS}
-            icon="image"
-            tooltip={`Change preview background (current: ${resolvedCanvasBackground?.label || 'Default'})`}
-            onClick={cycleCanvasBackground}>
-            {resolvedCanvasBackground?.label || 'Background'}
-          </Button>
-        ) : null}
-      </Flex>
-      <Flex wrap gap={1}>
-        {preview.map((entry) => (
-          <Flex.Item
-            key={entry.dir}
-            basis="45%"
-            className="RogueStar__previewItem">
-            <DirectionPreviewCanvas
-              layers={entry.layers}
-              pixelSize={Math.max(1, PREVIEW_PIXEL_SIZE)}
-              width={canvasWidth}
-              height={canvasHeight}
-              fitToFrame={previewFitToFrame}
-              backgroundImage={previewBackgroundImage}
-              backgroundColor={backgroundFallbackColor}
-              backgroundScale={canvasBackgroundScale}
-              backgroundTileWidth={previewBackgroundTileWidth}
-              backgroundTileHeight={previewBackgroundTileHeight}
-            />
-          </Flex.Item>
-        ))}
-      </Flex>
-    </Section>
+    <LivePreviewCard
+      preview={preview}
+      canvasWidth={canvasWidth}
+      canvasHeight={canvasHeight}
+      previewFitToFrame={previewFitToFrame}
+      onTogglePreviewFit={onTogglePreviewFit}
+      previewBackgroundImage={previewBackgroundImage}
+      backgroundFallbackColor={backgroundFallbackColor}
+      canvasBackgroundScale={canvasBackgroundScale}
+      previewBackgroundTileWidth={previewBackgroundTileWidth}
+      previewBackgroundTileHeight={previewBackgroundTileHeight}
+      iconScaleX={iconScaleX}
+      iconScaleY={iconScaleY}
+      showEquipment={showEquipment}
+      onToggleEquipment={onToggleEquipment}
+      showJobGear={showJobGear}
+      onToggleJobGear={onToggleJobGear}
+      showLoadoutGear={showLoadoutGear}
+      onToggleLoadout={onToggleLoadout}
+      canvasBackgroundOptions={canvasBackgroundOptions}
+      resolvedCanvasBackground={resolvedCanvasBackground}
+      cycleCanvasBackground={cycleCanvasBackground}
+    />
     <Section title="Color Picker">
       <Box className="RogueStar__inlineColorPicker">
         <RogueStarColorPicker
@@ -1708,6 +2359,13 @@ class BasicAppearanceInitializer extends Component<BasicAppearanceInitializerPro
       this.lastDataPayload = null;
       return;
     }
+    if (basicPayload && !loadInProgress && !dataPayload.preview_only) {
+      const basicSignature = buildBasicPayloadSignature(basicPayload);
+      if (basicSignature !== payloadSignature) {
+        setPayloadSignature(basicSignature);
+      }
+      return;
+    }
     const nextSignature = buildBasicPayloadSignature(dataPayload);
     if (!dataPayload.preview_only && basicPayload) {
       const localRevision = Math.max(
@@ -1733,6 +2391,7 @@ class BasicAppearanceInitializer extends Component<BasicAppearanceInitializerPro
     }
     const dataRefChanged = dataPayload !== this.lastDataPayload;
     const signatureChanged = nextSignature !== this.lastPayloadSignature;
+    const waitingForReload = loadInProgress && !basicPayload;
     if (dataPayload.preview_only) {
       if (!dataRefChanged && !signatureChanged) {
         return;
@@ -1746,7 +2405,6 @@ class BasicAppearanceInitializer extends Component<BasicAppearanceInitializerPro
       }
       return;
     }
-    const hadLastDataPayload = this.lastDataPayload !== null;
     if (!dataRefChanged && !signatureChanged) {
       return;
     }
@@ -1754,17 +2412,11 @@ class BasicAppearanceInitializer extends Component<BasicAppearanceInitializerPro
     this.lastPayloadSignature = nextSignature;
 
     const signatureMatches = nextSignature === payloadSignature;
-    const waitingForReload = loadInProgress && !basicPayload;
     if (signatureMatches) {
       if (waitingForReload) {
-        if (!hadLastDataPayload) {
-          return;
-        }
-        if (dataRefChanged) {
-          setPayloadSignature(nextSignature);
-          syncPayload(dataPayload);
-          setLoadInProgress(false);
-        }
+        setPayloadSignature(nextSignature);
+        syncPayload(dataPayload);
+        setLoadInProgress(false);
         return;
       }
 
@@ -1881,7 +2533,13 @@ class BodyMarkingsPreviewInitializer extends Component<BodyMarkingsPreviewInitia
     }
     const dataRefChanged = dataPayload !== this.lastDataPayload;
     const signatureChanged = nextSignature !== this.lastPayloadSignature;
+    const hadLastDataPayload = this.lastDataPayload !== null;
     if (!dataRefChanged && !signatureChanged) {
+      return;
+    }
+    if (loadInProgress && !bodyPayload && !hadLastDataPayload) {
+      this.lastDataPayload = dataPayload;
+      this.lastPayloadSignature = nextSignature;
       return;
     }
     this.lastDataPayload = dataPayload;
@@ -1912,14 +2570,8 @@ const buildOrderedOverlayLayers = (
   const updateSignal = signalAssetUpdate || (() => undefined);
   for (let i = 0; i < assets.length; i += 1) {
     const entry = assets[i] as GearOverlayAsset | IconAssetPayload;
-    const payload =
-      (entry as GearOverlayAsset)?.asset ||
-      ((entry as IconAssetPayload)?.token ? (entry as IconAssetPayload) : null);
-    if (!payload) {
-      continue;
-    }
-    const grid = getPreviewGridFromAsset(
-      payload,
+    const grid = getPreviewGridFromGearAsset(
+      entry,
       canvasWidth,
       canvasHeight,
       updateSignal
@@ -1946,8 +2598,12 @@ const buildOrderedOverlayLayers = (
     } else {
       layerValue = orderOffset + i;
     }
+    const gearRasterIdentity = getGearPreviewRasterIdentity(entry);
     layers.push({
       grid: grid as string[][],
+      rasterIdentity: gearRasterIdentity
+        ? `${gearRasterIdentity}|preview:${canvasWidth}x${canvasHeight}`
+        : undefined,
       layer: layerValue,
       slot,
       source,
@@ -1959,21 +2615,24 @@ const buildOrderedOverlayLayers = (
 
 const mergeOverlayLayerLists = (
   baseLayers: OrderedOverlayLayer[],
+  equipmentLayers: OrderedOverlayLayer[],
   jobLayers: OrderedOverlayLayer[],
   loadoutLayers: OrderedOverlayLayer[]
 ): OrderedOverlayLayer[] =>
-  [...baseLayers, ...jobLayers, ...loadoutLayers].sort((a, b) => {
-    const layerA = Number.isFinite(a.layer)
-      ? (a.layer as number)
-      : Number.MAX_SAFE_INTEGER;
-    const layerB = Number.isFinite(b.layer)
-      ? (b.layer as number)
-      : Number.MAX_SAFE_INTEGER;
-    if (layerA !== layerB) {
-      return layerA - layerB;
+  [...baseLayers, ...equipmentLayers, ...jobLayers, ...loadoutLayers].sort(
+    (a, b) => {
+      const layerA = Number.isFinite(a.layer)
+        ? (a.layer as number)
+        : Number.MAX_SAFE_INTEGER;
+      const layerB = Number.isFinite(b.layer)
+        ? (b.layer as number)
+        : Number.MAX_SAFE_INTEGER;
+      if (layerA !== layerB) {
+        return layerA - layerB;
+      }
+      return a.order - b.order;
     }
-    return a.order - b.order;
-  });
+  );
 
 const splitOverlayGroup = (
   layers: PreviewLayerEntry[]
@@ -1981,23 +2640,26 @@ const splitOverlayGroup = (
   before: PreviewLayerEntry[];
   after: PreviewLayerEntry[];
 } => {
-  const firstOverlayIndex = layers.findIndex(
-    (layer) => layer?.type === 'overlay'
-  );
-  if (firstOverlayIndex === -1) {
-    return { before: layers, after: [] };
-  }
-  let lastOverlayIndex = firstOverlayIndex;
-  for (let idx = layers.length - 1; idx >= 0; idx -= 1) {
-    if (layers[idx]?.type === 'overlay') {
-      lastOverlayIndex = idx;
-      break;
-    }
-  }
-  return {
-    before: layers.slice(0, firstOverlayIndex),
-    after: layers.slice(lastOverlayIndex + 1),
-  };
+  const { before, after } = splitPreviewOverlayLayers(layers);
+  return { before, after };
+};
+
+const splitPriorityBodyMarkingLayers = (
+  layers: PreviewLayerEntry[]
+): {
+  base: PreviewLayerEntry[];
+  priority: PreviewLayerEntry[];
+} => {
+  const base: PreviewLayerEntry[] = [];
+  const priority: PreviewLayerEntry[] = [];
+  layers.forEach((layer) => {
+    const isPriorityMarking =
+      layer?.type === 'overlay' &&
+      typeof layer.key === 'string' &&
+      layer.key.startsWith('mark-priority-');
+    (isPriorityMarking ? priority : base).push(layer);
+  });
+  return { base, priority };
 };
 
 export type MarkingLayerEntry = {
@@ -2055,19 +2717,376 @@ type MarkedBasePreviewCache = {
   afterByDir: Record<number, PreviewLayerEntry[]>;
 };
 
+type PreviewDirStatesCache = {
+  sources: BasicAppearancePayload['preview_sources'] | null | undefined;
+  assetRegistry: IconAssetRegistry | null | undefined;
+  revision: number | null | undefined;
+  activeDirKey: number;
+  activeDir: string;
+  canvasWidth: number;
+  canvasHeight: number;
+  dirs: Record<number, PreviewDirState>;
+};
+
+type BasePreviewRawCache = {
+  signature: string;
+  preview: PreviewDirectionEntry[];
+};
+
 type GalleryBasePreviewCache = {
   signature: string;
   preview: PreviewDirectionEntry[];
   previewByDir: Record<number, PreviewDirectionEntry>;
 };
 
+type GalleryAppearanceGridEntry = {
+  hairGrid: string[][] | null;
+  facialHairGrid: string[][] | null;
+  earGrid: string[][] | null;
+  hornGrid: string[][] | null;
+  tailGrid: string[][] | null;
+  wingGrid: string[][] | null;
+  wingBackGrid: string[][] | null;
+};
+
+type GalleryAppearanceGridContextCache = {
+  signature: string;
+  byDir: Record<number, GalleryAppearanceGridEntry>;
+};
+
 type TileBasePreviewCacheEntry = {
   sig: string;
+  structureSig?: string;
+  preparedSig?: string;
+  complete?: boolean;
+  prostheticPrepared?: ProstheticTilePreparedBase;
   preview: PreviewDirectionEntry[];
   previewByDir: Record<number, PreviewDirectionEntry>;
 };
 
 type TileBasePreviewCache = Record<string, TileBasePreviewCacheEntry>;
+
+type TilePreviewCache = Record<
+  string,
+  { sig: string; previews: BasicTilePreviewEntry[] }
+>;
+
+type BasicAppearanceRenderCache = {
+  markingLayersCache: Record<string, MarkingLayersCacheEntry>;
+  bodyMarkingsPreviewCache: BodyMarkingsPreviewCache;
+  bodyMarkingDefinitionCache: BodyMarkingDefinitionCache;
+  bodyMarkingsSignatureCache: BodyMarkingsSignatureCache;
+  previewDirStatesCache: PreviewDirStatesCache;
+  basePreviewRawCache: BasePreviewRawCache;
+  markedBasePreviewCache: MarkedBasePreviewCache;
+  galleryBasePreviewCache: GalleryBasePreviewCache;
+  galleryAppearanceGridContextCache: GalleryAppearanceGridContextCache;
+  tilePreviewCache: TilePreviewCache;
+  tileBasePreviewCache: TileBasePreviewCache;
+};
+
+const createBasicAppearanceRenderCache = (): BasicAppearanceRenderCache => ({
+  markingLayersCache: {},
+  bodyMarkingsPreviewCache: { signature: '', context: null },
+  bodyMarkingDefinitionCache: {
+    payloadRef: null,
+    definitions: {},
+    offsetX: 0,
+  },
+  bodyMarkingsSignatureCache: {
+    markingsRef: null,
+    orderRef: null,
+    definitionsRef: null,
+    signature: 'none',
+  },
+  previewDirStatesCache: {
+    sources: null,
+    assetRegistry: null,
+    revision: null,
+    activeDirKey: 0,
+    activeDir: '',
+    canvasWidth: 0,
+    canvasHeight: 0,
+    dirs: {},
+  },
+  basePreviewRawCache: { signature: '', preview: [] },
+  markedBasePreviewCache: {
+    signature: '',
+    previewByDir: {},
+    afterByDir: {},
+  },
+  galleryBasePreviewCache: { signature: '', preview: [], previewByDir: {} },
+  galleryAppearanceGridContextCache: { signature: '', byDir: {} },
+  tilePreviewCache: {},
+  tileBasePreviewCache: {},
+});
+
+const basicAppearanceRenderCacheByStore = new WeakMap<
+  object,
+  { stateToken: string; cache: BasicAppearanceRenderCache }
+>();
+
+export const resolveBasicAppearanceRenderCache = (
+  store: object,
+  stateToken: string
+): BasicAppearanceRenderCache => {
+  const cached = basicAppearanceRenderCacheByStore.get(store);
+  if (cached?.stateToken === stateToken) {
+    return cached.cache;
+  }
+  const cache = createBasicAppearanceRenderCache();
+  basicAppearanceRenderCacheByStore.set(store, { stateToken, cache });
+  return cache;
+};
+
+type ProstheticTilePreparedBase = {
+  hairDef: BasicAppearanceAccessoryDefinition | null;
+  gradientDef: BasicAppearanceGradientDefinition | null;
+  facialHairDef: BasicAppearanceAccessoryDefinition | null;
+  earDef: BasicAppearanceAccessoryDefinition | null;
+  hornDef: BasicAppearanceAccessoryDefinition | null;
+  tailDef: BasicAppearanceAccessoryDefinition | null;
+  wingDef: BasicAppearanceAccessoryDefinition | null;
+  selection: PreviewSourceSelection;
+  dirStates: Record<number, PreviewDirState>;
+  suppressedPartsByDir: Record<number, Record<string, boolean>>;
+  assembledPreviewCache: ProstheticAssembledPreviewCache;
+  assetReferences: IconAssetReference[];
+};
+
+export type ProstheticAssembledPreviewCache = {
+  preview: PreviewDirectionEntry[] | null;
+};
+
+export const resolveProstheticAssembledPreview = (
+  cache: ProstheticAssembledPreviewCache,
+  resolver: () => PreviewDirectionEntry[]
+): PreviewDirectionEntry[] => {
+  if (cache.preview !== null) {
+    return cache.preview;
+  }
+  cache.preview = resolver();
+  return cache.preview;
+};
+
+const appendPreviewGearAssetReferences = (
+  target: IconAssetReference[],
+  assets?: Array<GearOverlayAsset | IconAssetPayload>
+) => {
+  if (!Array.isArray(assets)) {
+    return;
+  }
+  for (const entry of assets) {
+    if ('asset' in entry) {
+      target.push(entry.asset);
+      if (entry.mask_asset) {
+        target.push(entry.mask_asset);
+      }
+      for (const overlay of entry.overlays || []) {
+        target.push(overlay.asset);
+      }
+      continue;
+    }
+    target.push(entry);
+  }
+};
+
+const collectPreviewDirStateAssetReferences = (options: {
+  previewDirStates: Record<number, PreviewDirState>;
+  directions: Array<{ dir: number }>;
+  stripReferenceMarkings?: boolean;
+}) => {
+  const { previewDirStates, directions, stripReferenceMarkings } = options;
+  const references: IconAssetReference[] = [];
+  for (const direction of directions) {
+    const dirState = previewDirStates[direction.dir];
+    if (!dirState) {
+      continue;
+    }
+    if (dirState.bodyAsset) {
+      references.push(dirState.bodyAsset);
+    }
+    Object.values(dirState.referencePartAssets || {}).forEach((asset) =>
+      references.push(asset)
+    );
+    Object.values(dirState.referencePartHairAssets || {}).forEach((asset) =>
+      references.push(asset)
+    );
+    if (!stripReferenceMarkings) {
+      Object.values(dirState.referencePartMarkingAssets || {}).forEach(
+        (asset) => references.push(asset)
+      );
+    }
+    appendPreviewGearAssetReferences(
+      references,
+      dirState.overlayAssets as Array<GearOverlayAsset | IconAssetPayload>
+    );
+  }
+  return references;
+};
+
+const appendAccessoryAssetReferences = (
+  target: IconAssetReference[],
+  def: BasicAppearanceAccessoryDefinition | null,
+  directions: Array<{ dir: number }>,
+  includeBack = false
+) => {
+  if (!def) {
+    return;
+  }
+  for (const direction of directions) {
+    for (const asset of def.assets?.[direction.dir] || []) {
+      if (asset) {
+        target.push(asset);
+      }
+    }
+    if (!includeBack || !def.multi_dir) {
+      continue;
+    }
+    for (const asset of def.back_assets?.[direction.dir] || []) {
+      if (asset) {
+        target.push(asset);
+      }
+    }
+  }
+};
+
+const collectAppearanceOverlayAssetReferences = (options: {
+  directions: Array<{ dir: number }>;
+  hairDef: BasicAppearanceAccessoryDefinition | null;
+  gradientDef: BasicAppearanceGradientDefinition | null;
+  facialHairDef: BasicAppearanceAccessoryDefinition | null;
+  earDef: BasicAppearanceAccessoryDefinition | null;
+  hornDef: BasicAppearanceAccessoryDefinition | null;
+  tailDef: BasicAppearanceAccessoryDefinition | null;
+  wingDef: BasicAppearanceAccessoryDefinition | null;
+}) => {
+  const {
+    directions,
+    hairDef,
+    gradientDef,
+    facialHairDef,
+    earDef,
+    hornDef,
+    tailDef,
+    wingDef,
+  } = options;
+  const references: IconAssetReference[] = [];
+  appendAccessoryAssetReferences(references, facialHairDef, directions);
+  appendAccessoryAssetReferences(references, earDef, directions);
+  appendAccessoryAssetReferences(references, hornDef, directions);
+  appendAccessoryAssetReferences(references, tailDef, directions);
+  appendAccessoryAssetReferences(references, wingDef, directions, true);
+  if (hairDef) {
+    for (const direction of directions) {
+      const hairAssets = hairDef.assets?.[direction.dir] || [];
+      if (hairAssets[0]) {
+        references.push(hairAssets[0]);
+      }
+      if (hairDef.do_colouration && hairAssets[1]) {
+        references.push(hairAssets[1]);
+      }
+      const gradientAsset = gradientDef?.assets?.[direction.dir];
+      if (hairDef.do_colouration && gradientAsset) {
+        references.push(gradientAsset);
+      }
+    }
+  }
+  return references;
+};
+
+const collectActiveBodyMarkingAssetReferences = (options: {
+  definitions: Record<string, BodyMarkingDefinition>;
+  markings: Record<string, BodyMarkingEntry>;
+  order: string[];
+  directions: Array<{ dir: number }>;
+  digitigrade: boolean;
+  suppressedPartsByDir?: Record<number, Record<string, boolean>>;
+}) => {
+  const {
+    definitions,
+    markings,
+    order,
+    directions,
+    digitigrade,
+    suppressedPartsByDir,
+  } = options;
+  const references: IconAssetReference[] = [];
+  for (const markId of order) {
+    const def = definitions[markId];
+    const entry = markings[markId];
+    if (!def || !entry) {
+      continue;
+    }
+    for (const direction of directions) {
+      const assetsByPart =
+        (digitigrade && def.digitigrade_assets?.[direction.dir]) ||
+        def.assets?.[direction.dir];
+      for (const [partId, asset] of Object.entries(assetsByPart || {})) {
+        const partState = entry[partId] as BodyMarkingPartState;
+        if (
+          asset &&
+          !suppressedPartsByDir?.[direction.dir]?.[partId] &&
+          isBodyMarkingPartEnabled(partState?.on)
+        ) {
+          references.push(asset);
+        }
+      }
+    }
+  }
+  return references;
+};
+
+const hasActiveBodyMarkingParts = (options: {
+  definitions: Record<string, BodyMarkingDefinition>;
+  markings: Record<string, BodyMarkingEntry>;
+  order: string[];
+}): boolean => {
+  const { definitions, markings, order } = options;
+  return order.some((markId) => {
+    const def = definitions[markId];
+    const entry = markings[markId];
+    if (!def || !entry) {
+      return false;
+    }
+    const partIds =
+      def.body_parts && def.body_parts.length
+        ? def.body_parts
+        : Object.keys(entry).filter((partId) => partId !== 'color');
+    return partIds.some((partId) =>
+      isBodyMarkingPartEnabled(
+        (entry[partId] as BodyMarkingPartState | undefined)?.on
+      )
+    );
+  });
+};
+
+const primePreviewAssetReferences = (options: {
+  references: IconAssetReference[];
+  canvasWidth: number;
+  canvasHeight: number;
+  signalAssetUpdate: () => void;
+}) => {
+  const { references, canvasWidth, canvasHeight, signalAssetUpdate } = options;
+  for (const reference of references) {
+    getPreviewGridFromAsset(
+      reference,
+      canvasWidth,
+      canvasHeight,
+      signalAssetUpdate,
+      'visible'
+    );
+  }
+};
+
+const buildPendingTilePreview = (
+  directions: Array<{ dir: number; label: string }>
+): PreviewDirectionEntry[] =>
+  directions.map((direction) => ({
+    dir: direction.dir,
+    label: direction.label,
+    layers: [],
+  }));
 
 const resolveBodyMarkingOffsetX = (
   payload?: BodyMarkingsPayload | null
@@ -2079,18 +3098,23 @@ const resolveBodyMarkingOffsetX = (
     maxW = Math.max(maxW, asset.width || 0);
     maxH = Math.max(maxH, asset.height || 0);
   };
-  const considerMap = (
-    assets?: Record<string, { width?: number; height?: number }> | null
-  ) => {
+  const considerMap = (assets?: Record<string, IconAssetReference> | null) => {
     if (!assets) return;
     for (const asset of Object.values(assets)) {
-      consider(asset);
+      consider(
+        resolveIconAssetReference(asset, payload?.preview_asset_registry)
+      );
     }
   };
   for (const entry of payload?.preview_sources || []) {
-    consider(entry?.body_asset);
-    consider(entry?.composite_asset);
+    consider(
+      resolveIconAssetReference(
+        entry?.body_asset,
+        payload?.preview_asset_registry
+      )
+    );
     considerMap(entry?.reference_part_assets);
+    considerMap(entry?.reference_part_hair_assets);
     considerMap(entry?.reference_part_marking_assets);
   }
   const usesLargeSprites = maxW > 32 || maxH > 32;
@@ -2300,16 +3324,6 @@ const resolveLayerPartId = (layer: { key?: string; type?: string }) => {
   return null;
 };
 
-const isReferenceMarkingLayer = (layer: PreviewLayerEntry) => {
-  if (!layer || layer.type !== 'reference_part') {
-    return false;
-  }
-  if (typeof layer.key !== 'string' || !layer.key.startsWith('ref_')) {
-    return false;
-  }
-  return layer.key.endsWith('_markings');
-};
-
 const stripReferenceMarkingsFromPreview = (
   preview: PreviewDirectionEntry[]
 ): PreviewDirectionEntry[] => {
@@ -2327,27 +3341,6 @@ const stripReferenceMarkingsFromPreview = (
     };
   });
   return changed ? next : preview;
-};
-
-const splitOverlayLayers = <T extends { type?: string }>(layers: T[]) => {
-  const firstOverlayIndex = layers.findIndex(
-    (layer) => layer?.type === 'overlay'
-  );
-  if (firstOverlayIndex === -1) {
-    return { before: layers, overlay: [], after: [] };
-  }
-  let lastOverlayIndex = firstOverlayIndex;
-  for (let idx = layers.length - 1; idx >= 0; idx -= 1) {
-    if (layers[idx]?.type === 'overlay') {
-      lastOverlayIndex = idx;
-      break;
-    }
-  }
-  return {
-    before: layers.slice(0, firstOverlayIndex),
-    overlay: layers.slice(firstOverlayIndex, lastOverlayIndex + 1),
-    after: layers.slice(lastOverlayIndex + 1),
-  };
 };
 
 const buildBodyMarkingLayersByDir = (options: {
@@ -2530,13 +3523,10 @@ export const applyBodyMarkingsToPreview = (options: {
       before: nonOverlayLayers,
       overlay: overlayLayers,
       after,
-    } = splitOverlayLayers(baseLayers);
+    } = splitPreviewOverlayLayers(baseLayers);
     const suppressedPartsMap = suppressedPartsByDir?.[dirEntry.dir];
     const hasSuppressedParts =
       !!suppressedPartsMap && Object.keys(suppressedPartsMap).length > 0;
-    const combinedHiddenPartsMap = hasSuppressedParts
-      ? { ...hiddenPartsMap, ...suppressedPartsMap }
-      : hiddenPartsMap;
     const referenceMasks =
       hasHiddenParts || hasSuppressedParts
         ? buildReferencePartMaskMap(
@@ -2599,21 +3589,19 @@ export const applyBodyMarkingsToPreview = (options: {
       const isHiddenPart = !!(partId && hiddenPartsMap[partId]);
       const isSuppressedPart = !!(partId && suppressedPartsMap?.[partId]);
       let resolvedLayer = layer;
-      if (
-        partId === 'generic' &&
-        (hasHiddenParts || hasSuppressedParts) &&
-        Array.isArray(layer.grid)
-      ) {
+      if (partId === 'generic' && hasHiddenParts && Array.isArray(layer.grid)) {
         resolvedLayer = {
           ...layer,
           grid: buildMaskedGenericGrid(
             layer.grid as string[][],
             referenceMasks,
-            combinedHiddenPartsMap
+            hiddenPartsMap
           ),
         };
       }
-      if (!isSuppressedPart && (!isHiddenPart || layer?.type === 'custom')) {
+      if (
+        shouldRetainBodyMarkingBaseLayer(layer, isHiddenPart, isSuppressedPart)
+      ) {
         normalLayers.push(resolvedLayer);
       }
       if (!partId || !layerGroup[partId] || handledParts.has(partId)) {
@@ -2634,7 +3622,7 @@ export const applyBodyMarkingsToPreview = (options: {
     });
     return {
       ...dirEntry,
-      layers: [...normalLayers, ...priorityLayers, ...overlayLayers, ...after],
+      layers: [...normalLayers, ...overlayLayers, ...after, ...priorityLayers],
     };
   });
 };
@@ -2903,6 +3891,39 @@ const applyDigitigradeChange = (options: {
   }
 };
 
+const applyBloodReagentChange = (options: {
+  bloodReagent: string;
+  allowedReagents: string[];
+  uiLocked: boolean;
+  updateDraft: (
+    updater: (state: BasicAppearanceState) => BasicAppearanceState
+  ) => void;
+}) => {
+  const { bloodReagent, allowedReagents, uiLocked, updateDraft } = options;
+  if (uiLocked || !allowedReagents.includes(bloodReagent)) {
+    return;
+  }
+  updateDraft((state) => ({ ...state, blood_reagent: bloodReagent }));
+};
+
+const applyBiologicalGenderChange = (options: {
+  biologicalGender: string;
+  allowedGenders: string[];
+  uiLocked: boolean;
+  updateDraft: (
+    updater: (state: BasicAppearanceState) => BasicAppearanceState
+  ) => void;
+}) => {
+  const { biologicalGender, allowedGenders, uiLocked, updateDraft } = options;
+  if (uiLocked || !allowedGenders.includes(biologicalGender)) {
+    return;
+  }
+  updateDraft((state) => ({
+    ...state,
+    biological_gender: biologicalGender,
+  }));
+};
+
 const resolveColorTargetHexForState = (
   appearanceState: BasicAppearanceState,
   target: BasicAppearanceColorTarget | null
@@ -2921,6 +3942,10 @@ const resolveColorTargetHexForState = (
       return normalizeHex(appearanceState.eye_color) || '#ffffff';
     case 'body':
       return normalizeHex(appearanceState.body_color) || '#ffffff';
+    case 'blood':
+      return normalizeHex(appearanceState.blood_color) || '#a10808';
+    case 'synth':
+      return normalizeHex(appearanceState.synth_color) || '#ffffff';
     case 'ears':
       return (
         normalizeHex(appearanceState.ear_colors?.[target.channel]) || '#ffffff'
@@ -2991,6 +4016,10 @@ const applyBasicColorTarget = (options: {
         return { ...prev, eye_color: normalized };
       case 'body':
         return { ...prev, body_color: normalized };
+      case 'blood':
+        return { ...prev, blood_color: normalized };
+      case 'synth':
+        return { ...prev, synth_color: normalized };
       case 'ears': {
         const next = [...(prev.ear_colors || [])];
         next[resolved.channel] = normalized;
@@ -3021,7 +4050,7 @@ const applyBasicColorTarget = (options: {
 };
 
 const resolveGalleryDefinitionsForType = (
-  galleryType: BasicAppearanceType,
+  galleryType: BasicAppearanceGalleryType,
   hairStyles?: BasicAppearanceAccessoryDefinition[],
   gradientStyles?: BasicAppearanceGradientDefinition[],
   facialHairStyles?: BasicAppearanceAccessoryDefinition[],
@@ -3055,7 +4084,7 @@ const resolveGalleryDefinitionsForType = (
 };
 
 const resolveSelectedIdForGalleryType = (
-  galleryType: BasicAppearanceType,
+  galleryType: BasicAppearanceGalleryType,
   appearanceState: BasicAppearanceState
 ): string | null => {
   switch (galleryType) {
@@ -3079,14 +4108,13 @@ const resolveSelectedIdForGalleryType = (
 };
 
 const applyGallerySelection = (options: {
-  galleryType: BasicAppearanceType;
+  galleryType: BasicAppearanceGalleryType;
   id: string | null;
   setStyle: (targetType: BasicAppearanceType, styleId: string | null) => void;
   setColorTarget: (target: BasicAppearanceColorTarget | null) => void;
 }) => {
   const { galleryType, id, setStyle, setColorTarget } = options;
-  const normalized =
-    id && (id === 'Normal' || id.toLowerCase() === 'none') ? null : id;
+  const normalized = normalizeBasicAppearanceGalleryStyleId(id);
   switch (galleryType) {
     case 'hair':
       setStyle('hair', normalized);
@@ -3123,12 +4151,14 @@ const applyGallerySelection = (options: {
 
 type TilePreviewOptions = {
   def: { id: string; name: string };
-  galleryType: BasicAppearanceType;
+  galleryType: BasicAppearanceGalleryType;
+  payloadSignature: string | null;
   tileDirections: DirectionEntry[];
   tileDirectionsSignature: string;
   canvasWidth: number;
   canvasHeight: number;
   activePreviewRevision?: number | null;
+  previewSourceSignature: string;
   appearanceState: BasicAppearanceState;
   assetRevision: number;
   bodyMarkingsSignature: string;
@@ -3143,6 +4173,11 @@ type TilePreviewOptions = {
   wingStyles?: BasicAppearanceAccessoryDefinition[];
   hairDef: BasicAppearanceAccessoryDefinition | null;
   gradientDef: BasicAppearanceGradientDefinition | null;
+  facialHairDef: BasicAppearanceAccessoryDefinition | null;
+  earDef: BasicAppearanceAccessoryDefinition | null;
+  hornDef: BasicAppearanceAccessoryDefinition | null;
+  tailDef: BasicAppearanceAccessoryDefinition | null;
+  wingDef: BasicAppearanceAccessoryDefinition | null;
   previewDirStates: Record<number, PreviewDirState>;
   tilePreviewCache: Record<
     string,
@@ -3150,9 +4185,14 @@ type TilePreviewOptions = {
   >;
   tileBasePreviewCache: TileBasePreviewCache;
   galleryMannequinPreviewByDir: Record<number, PreviewDirectionEntry>;
+  galleryBaseIncludesSpeciesTail: boolean;
+  galleryBaseHiddenPartsSignature: string;
+  galleryAppearanceGridContextByDir: Record<number, GalleryAppearanceGridEntry>;
+  galleryAppearanceContextSignature: string;
   previewBaseBodyColor: string | null;
   previewBaseEyeColor: string | null;
   bodyColorExcludedParts: Set<string> | null;
+  bodyColorBlendMode: number | null;
   applyBodyMarkings: (
     preview: PreviewDirectionEntry[],
     suppressedPartsByDir?: Record<number, Record<string, boolean>>
@@ -3167,14 +4207,18 @@ type TailTileInfo = {
 };
 
 const resolveTailTileInfo = (
-  galleryType: BasicAppearanceType,
+  galleryType: BasicAppearanceGalleryType,
   tailStyles: BasicAppearanceAccessoryDefinition[] | undefined,
-  defId: string
+  defId: string,
+  selectedTailDef: BasicAppearanceAccessoryDefinition | null
 ): TailTileInfo => {
-  if (galleryType !== 'tail') {
-    return { tailDef: null, hiddenParts: [] };
-  }
-  const tailDef = resolveSelectedDef(tailStyles, defId);
+  const tailDef =
+    galleryType === 'tail'
+      ? resolveSelectedDef(
+          tailStyles,
+          normalizeBasicAppearanceGalleryStyleId(defId)
+        )
+      : selectedTailDef;
   const hiddenParts =
     tailDef && Array.isArray(tailDef.hide_body_parts)
       ? tailDef.hide_body_parts.filter(
@@ -3192,7 +4236,9 @@ type TilePreviewSignatureOptions = {
   canvasWidth: number;
   canvasHeight: number;
   activePreviewRevision?: number | null;
+  previewSourceSignature: string;
   appearanceState: BasicAppearanceState;
+  galleryContextSignature: string;
   assetRevision: number;
   bodyMarkingsSignature: string;
   previewTargetBodyColor: string | null;
@@ -3209,7 +4255,9 @@ const buildTilePreviewSignature = (
     canvasWidth,
     canvasHeight,
     activePreviewRevision,
+    previewSourceSignature,
     appearanceState,
+    galleryContextSignature,
     assetRevision,
     bodyMarkingsSignature,
     previewTargetBodyColor,
@@ -3221,21 +4269,13 @@ const buildTilePreviewSignature = (
     tileDirectionsSignature,
     `${canvasWidth}x${canvasHeight}`,
     `${activePreviewRevision || 0}`,
+    previewSourceSignature,
     appearanceState.digitigrade ? 'd' : 'p',
+    galleryContextSignature,
     `${assetRevision}`,
     bodyMarkingsSignature,
-    appearanceState.hair_style || 'none',
     previewTargetBodyColor || 'bc',
     previewTargetEyeColor || 'ec',
-    appearanceState.hair_color || 'hc',
-    appearanceState.hair_gradient_style || 'gs',
-    appearanceState.hair_gradient_color || 'gc',
-    appearanceState.facial_hair_style || 'fs',
-    appearanceState.facial_hair_color || 'fc',
-    (appearanceState.ear_colors || []).join('|'),
-    (appearanceState.horn_colors || []).join('|'),
-    (appearanceState.tail_colors || []).join('|'),
-    (appearanceState.wing_colors || []).join('|'),
     tailHiddenParts.length ? tailHiddenParts.join('|') : 'no-hide',
     stripReferenceMarkings ? 's1' : 's0',
   ];
@@ -3247,10 +4287,12 @@ type TileBasePreviewSignatureOptions = {
   canvasWidth: number;
   canvasHeight: number;
   activePreviewRevision?: number | null;
+  previewSourceSignature: string;
   appearanceState: BasicAppearanceState;
   assetRevision: number;
   bodyMarkingsContextSignature: string;
   tailHiddenParts: string[];
+  includeSpeciesTail: boolean;
   stripReferenceMarkings?: boolean;
 };
 
@@ -3262,27 +4304,63 @@ const buildTileBasePreviewSignature = (
     canvasWidth,
     canvasHeight,
     activePreviewRevision,
+    previewSourceSignature,
     appearanceState,
     assetRevision,
     bodyMarkingsContextSignature,
     tailHiddenParts,
+    includeSpeciesTail,
     stripReferenceMarkings,
   } = options;
   return [
     tileDirectionsSignature,
     `${canvasWidth}x${canvasHeight}`,
     `${activePreviewRevision || 0}`,
+    previewSourceSignature,
     appearanceState.digitigrade ? 'd' : 'p',
     `${assetRevision}`,
     bodyMarkingsContextSignature,
     tailHiddenParts.length ? tailHiddenParts.join('|') : 'no-hide',
+    includeSpeciesTail ? 'species-tail' : 'no-species-tail',
     stripReferenceMarkings ? 's1' : 's0',
+  ].join('::');
+};
+
+export const buildBasicTileBaseRenderSignature = (options: {
+  payloadSignature: string | null;
+  baseColorSignature: string;
+  dir: number;
+  hairColor: string | null;
+  bodyColorBlendMode: number | null;
+  bodyColorExcludedParts: Set<string> | null;
+}): string => {
+  const {
+    payloadSignature,
+    baseColorSignature,
+    dir,
+    hairColor,
+    bodyColorBlendMode,
+    bodyColorExcludedParts,
+  } = options;
+  const excludedPartsSignature = bodyColorExcludedParts?.size
+    ? Array.from(bodyColorExcludedParts).sort().join('|')
+    : 'none';
+  return [
+    'basic-tile-base-v1',
+    payloadSignature || 'payload',
+    baseColorSignature,
+    `dir:${dir}`,
+    `hair:${normalizeHex(hairColor) || ''}`,
+    `blend:${bodyColorBlendMode ?? 'relative'}`,
+    `excluded:${excludedPartsSignature}`,
   ].join('::');
 };
 
 type TileBasePreviewOptions = {
   cacheKey: string;
-  galleryType: BasicAppearanceType;
+  galleryType: BasicAppearanceGalleryType;
+  definitionId: string;
+  selectedTailStyle: string | null;
   tailHiddenParts: string[];
   previewDirStates: Record<number, PreviewDirState>;
   tileDirections: DirectionEntry[];
@@ -3290,6 +4368,7 @@ type TileBasePreviewOptions = {
   canvasWidth: number;
   canvasHeight: number;
   activePreviewRevision?: number | null;
+  previewSourceSignature: string;
   appearanceState: BasicAppearanceState;
   assetRevision: number;
   bodyMarkingsContextSignature: string;
@@ -3298,12 +4377,15 @@ type TileBasePreviewOptions = {
   previewBaseEyeColor: string | null;
   previewTargetEyeColor: string | null;
   bodyColorExcludedParts: Set<string> | null;
+  bodyColorBlendMode: number | null;
   applyBodyMarkings: (
     preview: PreviewDirectionEntry[],
     suppressedPartsByDir?: Record<number, Record<string, boolean>>
   ) => PreviewDirectionEntry[];
   signalAssetUpdate: () => void;
   galleryMannequinPreviewByDir: Record<number, PreviewDirectionEntry>;
+  galleryBaseIncludesSpeciesTail: boolean;
+  galleryBaseHiddenPartsSignature: string;
   tileBasePreviewCache: TileBasePreviewCache;
   stripReferenceMarkings?: boolean;
 };
@@ -3314,6 +4396,8 @@ const buildTileBasePreviewByDir = (
   const {
     cacheKey,
     galleryType,
+    definitionId,
+    selectedTailStyle,
     tailHiddenParts,
     previewDirStates,
     tileDirections,
@@ -3321,6 +4405,7 @@ const buildTileBasePreviewByDir = (
     canvasWidth,
     canvasHeight,
     activePreviewRevision,
+    previewSourceSignature,
     appearanceState,
     assetRevision,
     bodyMarkingsContextSignature,
@@ -3329,13 +4414,27 @@ const buildTileBasePreviewByDir = (
     previewBaseEyeColor,
     previewTargetEyeColor,
     bodyColorExcludedParts,
+    bodyColorBlendMode,
     applyBodyMarkings,
     signalAssetUpdate,
     galleryMannequinPreviewByDir,
+    galleryBaseIncludesSpeciesTail,
+    galleryBaseHiddenPartsSignature,
     tileBasePreviewCache,
     stripReferenceMarkings,
   } = options;
-  if (galleryType !== 'tail' || !tailHiddenParts.length) {
+  const includeSpeciesTail = shouldIncludeSpeciesTailInGalleryTile(
+    galleryType,
+    definitionId,
+    selectedTailStyle
+  );
+  const hiddenPartsSignature = tailHiddenParts.length
+    ? tailHiddenParts.join('|')
+    : 'no-hide';
+  if (
+    includeSpeciesTail === galleryBaseIncludesSpeciesTail &&
+    hiddenPartsSignature === galleryBaseHiddenPartsSignature
+  ) {
     return galleryMannequinPreviewByDir;
   }
   const baseSignature = buildTileBasePreviewSignature({
@@ -3343,35 +4442,57 @@ const buildTileBasePreviewByDir = (
     canvasWidth,
     canvasHeight,
     activePreviewRevision,
+    previewSourceSignature,
     appearanceState,
     assetRevision,
     bodyMarkingsContextSignature,
     tailHiddenParts,
+    includeSpeciesTail,
     stripReferenceMarkings,
   });
   const cachedBase = tileBasePreviewCache[cacheKey];
   let basePreview =
     cachedBase?.sig === baseSignature ? cachedBase.preview : null;
   if (!basePreview) {
-    const previewDirStatesForTile = mergeHiddenBodyPartsInPreviewStates(
-      previewDirStates,
-      tailHiddenParts
+    const previewDirStatesForTile = resolveGalleryTilePreviewStates(
+      mergeHiddenBodyPartsInPreviewStates(previewDirStates, tailHiddenParts),
+      galleryType,
+      definitionId,
+      selectedTailStyle
     );
-    const suppressedPartsByDir = buildHiddenBodyPartsByDir(
+    const suppressedPartsByDir = buildSuppressedMarkingPartsByDir(
       previewDirStatesForTile
     );
-    basePreview = applyBodyMarkings(
-      buildBasePreviewDirs(
-        previewDirStatesForTile,
-        tileDirections,
-        {},
-        canvasWidth,
-        canvasHeight,
-        signalAssetUpdate,
-        stripReferenceMarkings
-      ),
-      suppressedPartsByDir
-    );
+    const rawBasePreview = includeSpeciesTail
+      ? buildDesignerPreviewDirs(
+          previewDirStatesForTile,
+          tileDirections,
+          {},
+          canvasWidth,
+          canvasHeight,
+          tileDirections[0]?.dir || 0,
+          'generic',
+          null,
+          null,
+          undefined,
+          undefined,
+          undefined,
+          false,
+          false,
+          false,
+          signalAssetUpdate,
+          stripReferenceMarkings
+        )
+      : buildBasePreviewDirs(
+          previewDirStatesForTile,
+          tileDirections,
+          {},
+          canvasWidth,
+          canvasHeight,
+          signalAssetUpdate,
+          stripReferenceMarkings
+        );
+    basePreview = applyBodyMarkings(rawBasePreview, suppressedPartsByDir);
     tileBasePreviewCache[cacheKey] = {
       sig: baseSignature,
       preview: basePreview,
@@ -3389,9 +4510,11 @@ const buildTileBasePreviewByDir = (
     previewBaseBodyColor,
     previewTargetBodyColor,
     bodyColorExcludedParts,
+    bodyColorBlendMode,
     previewBaseEyeColor,
     previewTargetEyeColor,
-    previewTargetBodyColor
+    previewTargetBodyColor,
+    appearanceState.hair_color
   );
   return coloredPreview.reduce(
     (acc, entry) => {
@@ -3400,29 +4523,6 @@ const buildTileBasePreviewByDir = (
     },
     {} as Record<number, PreviewDirectionEntry>
   );
-};
-
-type TileGridResult = {
-  grid: string[][] | null;
-  backGrid: string[][] | null;
-};
-
-type TileGridBuilderOptions = {
-  defId: string;
-  galleryType: BasicAppearanceType;
-  dir: number;
-  canvasWidth: number;
-  canvasHeight: number;
-  appearanceState: BasicAppearanceState;
-  hairStyles?: BasicAppearanceAccessoryDefinition[];
-  gradientStyles?: BasicAppearanceGradientDefinition[];
-  facialHairStyles?: BasicAppearanceAccessoryDefinition[];
-  earStyles?: BasicAppearanceAccessoryDefinition[];
-  wingStyles?: BasicAppearanceAccessoryDefinition[];
-  hairDef: BasicAppearanceAccessoryDefinition | null;
-  gradientDef: BasicAppearanceGradientDefinition | null;
-  tailDef: BasicAppearanceAccessoryDefinition | null;
-  signalAssetUpdate: () => void;
 };
 
 const buildAccessoryTileGrid = (options: {
@@ -3448,79 +4548,28 @@ const buildAccessoryTileGrid = (options: {
   });
 };
 
-const buildHairTileGrid = (
-  options: TileGridBuilderOptions
-): string[][] | null => {
+const buildGradientTileGrid = (options: {
+  gradientDef: BasicAppearanceGradientDefinition | null;
+  hairDef: BasicAppearanceAccessoryDefinition | null;
+  dir: number;
+  canvasWidth: number;
+  canvasHeight: number;
+  appearanceState: BasicAppearanceState;
+  signalAssetUpdate: () => void;
+}): string[][] | null => {
   const {
-    defId,
-    dir,
-    canvasWidth,
-    canvasHeight,
-    appearanceState,
-    hairStyles,
     gradientDef,
-    signalAssetUpdate,
-  } = options;
-  const resolved = resolveSelectedDef(hairStyles, defId);
-  if (!resolved) {
-    return null;
-  }
-  return buildHairGridWithGradient({
-    hairDef: resolved,
-    gradientDef,
-    dir,
-    canvasWidth,
-    canvasHeight,
-    hairColor: appearanceState.hair_color,
-    gradientColor: appearanceState.hair_gradient_color,
-    signalAssetUpdate,
-  });
-};
-
-const buildFacialHairTileGrid = (
-  options: TileGridBuilderOptions
-): string[][] | null => {
-  const {
-    defId,
-    dir,
-    canvasWidth,
-    canvasHeight,
-    appearanceState,
-    facialHairStyles,
-    signalAssetUpdate,
-  } = options;
-  const resolved = resolveSelectedDef(facialHairStyles, defId);
-  return buildAccessoryTileGrid({
-    def: resolved,
-    dir,
-    canvasWidth,
-    canvasHeight,
-    colors: [appearanceState.facial_hair_color],
-    signalAssetUpdate,
-  });
-};
-
-const buildGradientTileGrid = (
-  options: TileGridBuilderOptions
-): string[][] | null => {
-  const {
-    defId,
-    dir,
-    canvasWidth,
-    canvasHeight,
-    appearanceState,
-    gradientStyles,
     hairDef,
+    dir,
+    canvasWidth,
+    canvasHeight,
+    appearanceState,
     signalAssetUpdate,
   } = options;
-  const resolved = resolveSelectedDef(gradientStyles, defId);
-  if (!resolved) {
-    return null;
-  }
   if (hairDef) {
     return buildHairGridWithGradient({
       hairDef,
-      gradientDef: resolved,
+      gradientDef,
       dir,
       canvasWidth,
       canvasHeight,
@@ -3529,7 +4578,10 @@ const buildGradientTileGrid = (
       signalAssetUpdate,
     });
   }
-  const gradPayload = resolved.assets?.[dir];
+  if (!gradientDef) {
+    return null;
+  }
+  const gradPayload = gradientDef.assets?.[dir];
   const rawGrad = gradPayload
     ? getPreviewGridFromAsset(
         gradPayload,
@@ -3550,106 +4602,42 @@ const buildGradientTileGrid = (
     : (rawGrad as string[][]);
 };
 
-const buildEarTileGrid = (
-  options: TileGridBuilderOptions
-): string[][] | null => {
+const buildWingTileGrids = (options: {
+  wingDef: BasicAppearanceAccessoryDefinition | null;
+  dir: number;
+  canvasWidth: number;
+  canvasHeight: number;
+  appearanceState: BasicAppearanceState;
+  signalAssetUpdate: () => void;
+}): Pick<GalleryAppearanceGridEntry, 'wingGrid' | 'wingBackGrid'> => {
   const {
-    defId,
+    wingDef,
     dir,
     canvasWidth,
     canvasHeight,
     appearanceState,
-    earStyles,
     signalAssetUpdate,
   } = options;
-  const resolved = resolveSelectedDef(earStyles, defId);
-  return buildAccessoryTileGrid({
-    def: resolved,
-    dir,
-    canvasWidth,
-    canvasHeight,
-    colors: appearanceState.ear_colors,
-    signalAssetUpdate,
-  });
-};
-
-const buildHornTileGrid = (
-  options: TileGridBuilderOptions
-): string[][] | null => {
-  const {
-    defId,
-    dir,
-    canvasWidth,
-    canvasHeight,
-    appearanceState,
-    earStyles,
-    signalAssetUpdate,
-  } = options;
-  const resolved = resolveSelectedDef(earStyles, defId);
-  return buildAccessoryTileGrid({
-    def: resolved,
-    dir,
-    canvasWidth,
-    canvasHeight,
-    colors: appearanceState.horn_colors,
-    signalAssetUpdate,
-  });
-};
-
-const buildTailTileGrid = (
-  options: TileGridBuilderOptions
-): string[][] | null => {
-  const {
-    dir,
-    canvasWidth,
-    canvasHeight,
-    appearanceState,
-    tailDef,
-    signalAssetUpdate,
-  } = options;
-  return buildAccessoryTileGrid({
-    def: tailDef,
-    dir,
-    canvasWidth,
-    canvasHeight,
-    colors: appearanceState.tail_colors,
-    signalAssetUpdate,
-  });
-};
-
-const buildWingTileGrids = (
-  options: TileGridBuilderOptions
-): TileGridResult => {
-  const {
-    defId,
-    dir,
-    canvasWidth,
-    canvasHeight,
-    appearanceState,
-    wingStyles,
-    signalAssetUpdate,
-  } = options;
-  const resolved = resolveSelectedDef(wingStyles, defId);
-  if (!resolved) {
-    return { grid: null, backGrid: null };
+  if (!wingDef) {
+    return { wingGrid: null, wingBackGrid: null };
   }
-  const grid = buildAccessoryTileGrid({
-    def: resolved,
+  const wingGrid = buildAccessoryTileGrid({
+    def: wingDef,
     dir,
     canvasWidth,
     canvasHeight,
     colors: appearanceState.wing_colors,
     signalAssetUpdate,
   });
-  let backGrid: string[][] | null = null;
-  if (resolved.multi_dir && resolved.back_assets) {
-    const backAssets = resolved.back_assets?.[dir];
+  let wingBackGrid: string[][] | null = null;
+  if (wingDef.multi_dir && wingDef.back_assets) {
+    const backAssets = wingDef.back_assets?.[dir];
     if (backAssets && backAssets.length) {
       const backDef: BasicAppearanceAccessoryDefinition = {
-        ...resolved,
+        ...wingDef,
         assets: { [dir]: backAssets } as any,
       };
-      backGrid = buildAccessoryTileGrid({
+      wingBackGrid = buildAccessoryTileGrid({
         def: backDef,
         dir,
         canvasWidth,
@@ -3659,30 +4647,319 @@ const buildWingTileGrids = (
       });
     }
   }
-  return { grid, backGrid };
+  return { wingGrid, wingBackGrid };
 };
 
-const buildTileGridForGallery = (
-  options: TileGridBuilderOptions
-): TileGridResult => {
-  switch (options.galleryType) {
-    case 'hair':
-      return { grid: buildHairTileGrid(options), backGrid: null };
-    case 'facial_hair':
-      return { grid: buildFacialHairTileGrid(options), backGrid: null };
-    case 'gradient':
-      return { grid: buildGradientTileGrid(options), backGrid: null };
-    case 'ears':
-      return { grid: buildEarTileGrid(options), backGrid: null };
-    case 'horns':
-      return { grid: buildHornTileGrid(options), backGrid: null };
-    case 'tail':
-      return { grid: buildTailTileGrid(options), backGrid: null };
-    case 'wings':
-      return buildWingTileGrids(options);
-    default:
-      return { grid: null, backGrid: null };
+const buildGalleryAppearanceGridEntry = (options: {
+  galleryType: BasicAppearanceGalleryType;
+  dir: number;
+  canvasWidth: number;
+  canvasHeight: number;
+  appearanceState: BasicAppearanceState;
+  hairDef: BasicAppearanceAccessoryDefinition | null;
+  gradientDef: BasicAppearanceGradientDefinition | null;
+  facialHairDef: BasicAppearanceAccessoryDefinition | null;
+  earDef: BasicAppearanceAccessoryDefinition | null;
+  hornDef: BasicAppearanceAccessoryDefinition | null;
+  tailDef: BasicAppearanceAccessoryDefinition | null;
+  wingDef: BasicAppearanceAccessoryDefinition | null;
+  signalAssetUpdate: () => void;
+}): GalleryAppearanceGridEntry => {
+  const {
+    galleryType,
+    dir,
+    canvasWidth,
+    canvasHeight,
+    appearanceState,
+    hairDef,
+    gradientDef,
+    facialHairDef,
+    earDef,
+    hornDef,
+    tailDef,
+    wingDef,
+    signalAssetUpdate,
+  } = options;
+  const retainHair = galleryType !== 'hair' && galleryType !== 'gradient';
+  const hairGrid =
+    retainHair && hairDef
+      ? buildHairGridWithGradient({
+          hairDef,
+          gradientDef,
+          dir,
+          canvasWidth,
+          canvasHeight,
+          hairColor: appearanceState.hair_color,
+          gradientColor: appearanceState.hair_gradient_color,
+          signalAssetUpdate,
+        })
+      : null;
+  const facialHairGrid =
+    galleryType === 'facial_hair'
+      ? null
+      : buildAccessoryTileGrid({
+          def: facialHairDef,
+          dir,
+          canvasWidth,
+          canvasHeight,
+          colors: [appearanceState.facial_hair_color],
+          signalAssetUpdate,
+        });
+  const earGrid =
+    galleryType === 'ears'
+      ? null
+      : buildAccessoryTileGrid({
+          def: earDef,
+          dir,
+          canvasWidth,
+          canvasHeight,
+          colors: appearanceState.ear_colors,
+          signalAssetUpdate,
+        });
+  const hornGrid =
+    galleryType === 'horns'
+      ? null
+      : buildAccessoryTileGrid({
+          def: hornDef,
+          dir,
+          canvasWidth,
+          canvasHeight,
+          colors: appearanceState.horn_colors,
+          signalAssetUpdate,
+        });
+  const tailGrid =
+    galleryType === 'tail'
+      ? null
+      : buildAccessoryTileGrid({
+          def: tailDef,
+          dir,
+          canvasWidth,
+          canvasHeight,
+          colors: appearanceState.tail_colors,
+          signalAssetUpdate,
+        });
+  const { wingGrid, wingBackGrid } =
+    galleryType === 'wings'
+      ? { wingGrid: null, wingBackGrid: null }
+      : buildWingTileGrids({
+          wingDef,
+          dir,
+          canvasWidth,
+          canvasHeight,
+          appearanceState,
+          signalAssetUpdate,
+        });
+  return {
+    hairGrid,
+    facialHairGrid,
+    earGrid,
+    hornGrid,
+    tailGrid,
+    wingGrid,
+    wingBackGrid,
+  };
+};
+
+const resolveGalleryAppearanceGridContext = (options: {
+  cache: GalleryAppearanceGridContextCache;
+  signature: string;
+  galleryType: BasicAppearanceGalleryType;
+  tileDirections: DirectionEntry[];
+  canvasWidth: number;
+  canvasHeight: number;
+  appearanceState: BasicAppearanceState;
+  hairDef: BasicAppearanceAccessoryDefinition | null;
+  gradientDef: BasicAppearanceGradientDefinition | null;
+  facialHairDef: BasicAppearanceAccessoryDefinition | null;
+  earDef: BasicAppearanceAccessoryDefinition | null;
+  hornDef: BasicAppearanceAccessoryDefinition | null;
+  tailDef: BasicAppearanceAccessoryDefinition | null;
+  wingDef: BasicAppearanceAccessoryDefinition | null;
+  signalAssetUpdate: () => void;
+}): Record<number, GalleryAppearanceGridEntry> => {
+  const {
+    cache,
+    signature,
+    galleryType,
+    tileDirections,
+    canvasWidth,
+    canvasHeight,
+    appearanceState,
+    hairDef,
+    gradientDef,
+    facialHairDef,
+    earDef,
+    hornDef,
+    tailDef,
+    wingDef,
+    signalAssetUpdate,
+  } = options;
+  if (cache.signature === signature) {
+    return cache.byDir;
   }
+  const byDir: Record<number, GalleryAppearanceGridEntry> = {};
+  for (const direction of tileDirections) {
+    byDir[direction.dir] = buildGalleryAppearanceGridEntry({
+      galleryType,
+      dir: direction.dir,
+      canvasWidth,
+      canvasHeight,
+      appearanceState,
+      hairDef,
+      gradientDef,
+      facialHairDef,
+      earDef,
+      hornDef,
+      tailDef,
+      wingDef,
+      signalAssetUpdate,
+    });
+  }
+  cache.signature = signature;
+  cache.byDir = byDir;
+  return byDir;
+};
+
+type TileAppearanceGrids = {
+  headGrid: string[][] | null;
+  tailGrid: string[][] | null;
+  wingGrid: string[][] | null;
+  wingBackGrid: string[][] | null;
+};
+
+const buildTileAppearanceGrids = (options: {
+  defId: string;
+  galleryType: BasicAppearanceGalleryType;
+  dir: number;
+  canvasWidth: number;
+  canvasHeight: number;
+  appearanceState: BasicAppearanceState;
+  context: GalleryAppearanceGridEntry;
+  hairStyles?: BasicAppearanceAccessoryDefinition[];
+  gradientStyles?: BasicAppearanceGradientDefinition[];
+  facialHairStyles?: BasicAppearanceAccessoryDefinition[];
+  earStyles?: BasicAppearanceAccessoryDefinition[];
+  wingStyles?: BasicAppearanceAccessoryDefinition[];
+  hairDef: BasicAppearanceAccessoryDefinition | null;
+  gradientDef: BasicAppearanceGradientDefinition | null;
+  tailDef: BasicAppearanceAccessoryDefinition | null;
+  signalAssetUpdate: () => void;
+}): TileAppearanceGrids => {
+  const {
+    defId,
+    galleryType,
+    dir,
+    canvasWidth,
+    canvasHeight,
+    appearanceState,
+    context,
+    hairStyles,
+    gradientStyles,
+    facialHairStyles,
+    earStyles,
+    wingStyles,
+    hairDef,
+    gradientDef,
+    tailDef,
+    signalAssetUpdate,
+  } = options;
+  const candidateId = normalizeBasicAppearanceGalleryStyleId(defId);
+  let hairGrid = context.hairGrid;
+  let facialHairGrid = context.facialHairGrid;
+  let earGrid = context.earGrid;
+  let hornGrid = context.hornGrid;
+  let tailGrid = context.tailGrid;
+  let wingGrid = context.wingGrid;
+  let wingBackGrid = context.wingBackGrid;
+  switch (galleryType) {
+    case 'hair': {
+      const candidate = resolveSelectedDef(hairStyles, candidateId);
+      hairGrid = candidate
+        ? buildHairGridWithGradient({
+            hairDef: candidate,
+            gradientDef,
+            dir,
+            canvasWidth,
+            canvasHeight,
+            hairColor: appearanceState.hair_color,
+            gradientColor: appearanceState.hair_gradient_color,
+            signalAssetUpdate,
+          })
+        : null;
+      break;
+    }
+    case 'gradient': {
+      hairGrid = buildGradientTileGrid({
+        gradientDef: resolveSelectedDef(gradientStyles, candidateId),
+        hairDef,
+        dir,
+        canvasWidth,
+        canvasHeight,
+        appearanceState,
+        signalAssetUpdate,
+      });
+      break;
+    }
+    case 'facial_hair':
+      facialHairGrid = buildAccessoryTileGrid({
+        def: resolveSelectedDef(facialHairStyles, candidateId),
+        dir,
+        canvasWidth,
+        canvasHeight,
+        colors: [appearanceState.facial_hair_color],
+        signalAssetUpdate,
+      });
+      break;
+    case 'ears':
+      earGrid = buildAccessoryTileGrid({
+        def: resolveSelectedDef(earStyles, candidateId),
+        dir,
+        canvasWidth,
+        canvasHeight,
+        colors: appearanceState.ear_colors,
+        signalAssetUpdate,
+      });
+      break;
+    case 'horns':
+      hornGrid = buildAccessoryTileGrid({
+        def: resolveSelectedDef(earStyles, candidateId),
+        dir,
+        canvasWidth,
+        canvasHeight,
+        colors: appearanceState.horn_colors,
+        signalAssetUpdate,
+      });
+      break;
+    case 'tail':
+      tailGrid = buildAccessoryTileGrid({
+        def: tailDef,
+        dir,
+        canvasWidth,
+        canvasHeight,
+        colors: appearanceState.tail_colors,
+        signalAssetUpdate,
+      });
+      break;
+    case 'wings': {
+      const wingGrids = buildWingTileGrids({
+        wingDef: resolveSelectedDef(wingStyles, candidateId),
+        dir,
+        canvasWidth,
+        canvasHeight,
+        appearanceState,
+        signalAssetUpdate,
+      });
+      wingGrid = wingGrids.wingGrid;
+      wingBackGrid = wingGrids.wingBackGrid;
+      break;
+    }
+  }
+  let headGrid: string[][] | null = null;
+  headGrid = mergeAccessoryGrid(headGrid, facialHairGrid);
+  headGrid = mergeAccessoryGrid(headGrid, hairGrid);
+  headGrid = mergeAccessoryGrid(headGrid, earGrid);
+  headGrid = mergeAccessoryGrid(headGrid, hornGrid);
+  return { headGrid, tailGrid, wingGrid, wingBackGrid };
 };
 
 const buildTilePreviewEntries = (
@@ -3691,11 +4968,13 @@ const buildTilePreviewEntries = (
   const {
     def,
     galleryType,
+    payloadSignature,
     tileDirections,
     tileDirectionsSignature,
     canvasWidth,
     canvasHeight,
     activePreviewRevision,
+    previewSourceSignature,
     appearanceState,
     assetRevision,
     bodyMarkingsSignature,
@@ -3710,25 +4989,47 @@ const buildTilePreviewEntries = (
     wingStyles,
     hairDef,
     gradientDef,
+    facialHairDef,
+    earDef,
+    hornDef,
+    tailDef,
+    wingDef,
     previewDirStates,
     tilePreviewCache,
     tileBasePreviewCache,
     galleryMannequinPreviewByDir,
+    galleryBaseIncludesSpeciesTail,
+    galleryBaseHiddenPartsSignature,
+    galleryAppearanceGridContextByDir,
+    galleryAppearanceContextSignature,
     previewBaseBodyColor,
     previewBaseEyeColor,
     bodyColorExcludedParts,
+    bodyColorBlendMode,
     applyBodyMarkings,
     signalAssetUpdate,
     stripReferenceMarkings,
   } = options;
-  const tailInfo = resolveTailTileInfo(galleryType, tailStyles, def.id);
+  const tailInfo = resolveTailTileInfo(
+    galleryType,
+    tailStyles,
+    def.id,
+    tailDef
+  );
+  const includeSpeciesTail = shouldIncludeSpeciesTailInGalleryTile(
+    galleryType,
+    def.id,
+    appearanceState.tail_style
+  );
   const defKey = `${galleryType}:${def.id}`;
   const sig = buildTilePreviewSignature({
     tileDirectionsSignature,
     canvasWidth,
     canvasHeight,
     activePreviewRevision,
+    previewSourceSignature,
     appearanceState,
+    galleryContextSignature: galleryAppearanceContextSignature,
     assetRevision,
     bodyMarkingsSignature,
     previewTargetBodyColor,
@@ -3741,10 +5042,12 @@ const buildTilePreviewEntries = (
     canvasWidth,
     canvasHeight,
     activePreviewRevision,
+    previewSourceSignature,
     appearanceState,
     assetRevision,
     bodyMarkingsContextSignature,
     tailHiddenParts: tailInfo.hiddenParts,
+    includeSpeciesTail,
     stripReferenceMarkings,
   });
   const baseColorSignature = [
@@ -3762,6 +5065,8 @@ const buildTilePreviewEntries = (
   const tileBasePreviewByDir = buildTileBasePreviewByDir({
     cacheKey: defKey,
     galleryType,
+    definitionId: def.id,
+    selectedTailStyle: appearanceState.tail_style,
     tailHiddenParts: tailInfo.hiddenParts,
     previewDirStates,
     tileDirections,
@@ -3769,6 +5074,7 @@ const buildTilePreviewEntries = (
     canvasWidth,
     canvasHeight,
     activePreviewRevision,
+    previewSourceSignature,
     appearanceState,
     assetRevision,
     bodyMarkingsContextSignature,
@@ -3777,21 +5083,34 @@ const buildTilePreviewEntries = (
     previewBaseEyeColor,
     previewTargetEyeColor,
     bodyColorExcludedParts,
+    bodyColorBlendMode,
     applyBodyMarkings,
     signalAssetUpdate,
     galleryMannequinPreviewByDir,
+    galleryBaseIncludesSpeciesTail,
+    galleryBaseHiddenPartsSignature,
     tileBasePreviewCache,
     stripReferenceMarkings,
   });
 
   const previews = tileDirections.map((entry) => {
-    const tileGrids = buildTileGridForGallery({
+    const context = galleryAppearanceGridContextByDir[entry.dir] || {
+      hairGrid: null,
+      facialHairGrid: null,
+      earGrid: null,
+      hornGrid: null,
+      tailGrid: null,
+      wingGrid: null,
+      wingBackGrid: null,
+    };
+    const tileGrids = buildTileAppearanceGrids({
       defId: def.id,
       galleryType,
       dir: entry.dir,
       canvasWidth,
       canvasHeight,
       appearanceState,
+      context,
       hairStyles,
       gradientStyles,
       facialHairStyles,
@@ -3802,25 +5121,42 @@ const buildTilePreviewEntries = (
       tailDef: tailInfo.tailDef,
       signalAssetUpdate,
     });
-    const baseLayers = tileBasePreviewByDir[entry.dir]?.layers || [];
-    const underlayLayers = tileGrids.backGrid
+    const { base: baseLayers, priority: priorityLayers } =
+      splitPriorityBodyMarkingLayers(
+        tileBasePreviewByDir[entry.dir]?.layers || []
+      );
+    const underlayLayers = tileGrids.wingBackGrid
       ? [
           {
             type: 'overlay',
             key: `tile-${galleryType}-${def.id}-${entry.dir}-back`,
-            grid: tileGrids.backGrid,
+            grid: tileGrids.wingBackGrid,
           },
         ]
       : [];
-    const overlayLayers = tileGrids.grid
-      ? [
-          {
-            type: 'overlay',
-            key: `tile-${galleryType}-${def.id}-${entry.dir}`,
-            grid: tileGrids.grid,
-          },
-        ]
-      : [];
+    const overlayLayers: PreviewLayerEntry[] = [];
+    if (tileGrids.tailGrid) {
+      overlayLayers.push({
+        type: 'overlay',
+        key: `tile-${galleryType}-${def.id}-${entry.dir}-tail`,
+        grid: tileGrids.tailGrid,
+      });
+    }
+    if (tileGrids.headGrid) {
+      overlayLayers.push({
+        type: 'overlay',
+        key: `tile-${galleryType}-${def.id}-${entry.dir}-head`,
+        grid: tileGrids.headGrid,
+      });
+    }
+    if (tileGrids.wingGrid) {
+      overlayLayers.push({
+        type: 'overlay',
+        key: `tile-${galleryType}-${def.id}-${entry.dir}-wing`,
+        grid: tileGrids.wingGrid,
+      });
+    }
+    overlayLayers.push(...priorityLayers);
     return {
       dir: entry.dir,
       label: entry.label,
@@ -3828,7 +5164,14 @@ const buildTilePreviewEntries = (
       baseLayers,
       underlayLayers,
       overlayLayers,
-      baseSignature: baseColorSignature,
+      baseSignature: buildBasicTileBaseRenderSignature({
+        payloadSignature,
+        baseColorSignature,
+        dir: entry.dir,
+        hairColor: appearanceState.hair_color,
+        bodyColorBlendMode,
+        bodyColorExcludedParts,
+      }),
     };
   });
 
@@ -3842,8 +5185,6 @@ type OverlayEntriesOptions = {
   canvasWidth: number;
   canvasHeight: number;
   appearanceState: BasicAppearanceState;
-  previewBaseEyeColor: string | null;
-  previewTargetEyeColor: string | null;
   hairDef: BasicAppearanceAccessoryDefinition | null;
   gradientDef: BasicAppearanceGradientDefinition | null;
   facialHairDef: BasicAppearanceAccessoryDefinition | null;
@@ -3851,6 +5192,7 @@ type OverlayEntriesOptions = {
   hornDef: BasicAppearanceAccessoryDefinition | null;
   tailDef: BasicAppearanceAccessoryDefinition | null;
   wingDef: BasicAppearanceAccessoryDefinition | null;
+  showEquipment: boolean;
   showJobGear: boolean;
   showLoadoutGear: boolean;
   signalAssetUpdate: () => void;
@@ -3860,6 +5202,7 @@ type GearOverlayLayerOptions = {
   dirState: PreviewDirState;
   canvasWidth: number;
   canvasHeight: number;
+  showEquipment: boolean;
   showJobGear: boolean;
   showLoadoutGear: boolean;
   signalAssetUpdate: () => void;
@@ -3867,6 +5210,7 @@ type GearOverlayLayerOptions = {
 
 type GearOverlayLayerGroups = {
   baseOverlayLayers: OrderedOverlayLayer[];
+  equipmentLayers: OrderedOverlayLayer[];
   loadoutLayers: OrderedOverlayLayer[];
   jobLayers: OrderedOverlayLayer[];
 };
@@ -3878,6 +5222,7 @@ const buildGearOverlayLayers = (
     dirState,
     canvasWidth,
     canvasHeight,
+    showEquipment,
     showJobGear,
     showLoadoutGear,
     signalAssetUpdate,
@@ -3926,8 +5271,27 @@ const buildGearOverlayLayers = (
           (entry) => !entry.slot || !loadoutSlots.has(entry.slot)
         )
       : jobLayersUnfiltered;
+  const higherPrioritySlots = new Set(
+    [...jobLayers, ...loadoutLayers]
+      .map((entry) => entry.slot)
+      .filter((slot): slot is string => !!slot)
+  );
+  const equipmentLayers = showEquipment
+    ? buildOrderedOverlayLayers(
+        (dirState.gearEquipmentOverlayAssets as (
+          | GearOverlayAsset
+          | IconAssetPayload
+        )[]) || [],
+        canvasWidth,
+        canvasHeight,
+        'equipment',
+        signalAssetUpdate,
+        baseOverlayLayers.length + jobLayers.length + loadoutLayers.length
+      ).filter((entry) => !entry.slot || !higherPrioritySlots.has(entry.slot))
+    : [];
   return {
     baseOverlayLayers,
+    equipmentLayers,
     loadoutLayers,
     jobLayers,
   };
@@ -4172,31 +5536,20 @@ const buildOverlayEntriesFromMergedLayers = (options: {
   merged: OrderedOverlayLayer[];
   dir: number;
   hideShoes: boolean;
-  previewBaseEyeColor: string | null;
-  previewTargetEyeColor: string | null;
   referenceParts: Record<string, string[][]> | null;
   hiddenLegParts: string[];
 }): PreviewLayerEntry[] => {
-  const {
-    merged,
-    dir,
-    hideShoes,
-    previewBaseEyeColor,
-    previewTargetEyeColor,
-    referenceParts,
-    hiddenLegParts,
-  } = options;
+  const { merged, dir, hideShoes, referenceParts, hiddenLegParts } = options;
   const overlayEntries: PreviewLayerEntry[] = [];
   merged.forEach((entry, index) => {
     if (hideShoes && entry.slot === 'shoes') {
       return;
     }
-    let grid = cloneGridData(entry.grid);
-    if (entry.slot === 'eyes' && previewBaseEyeColor && previewTargetEyeColor) {
-      grid = recolorGrid(grid, previewBaseEyeColor, previewTargetEyeColor, 3);
-    }
+    const grid = cloneGridData(entry.grid);
+    let rasterIdentity = entry.rasterIdentity;
     if (referenceParts && entry.slot && TAUR_CLOTHING_SLOTS.has(entry.slot)) {
       maskGridForHiddenLegParts(grid, referenceParts, hiddenLegParts);
+      rasterIdentity = undefined;
     }
     if (!gridHasPixels(grid)) {
       return;
@@ -4205,13 +5558,32 @@ const buildOverlayEntriesFromMergedLayers = (options: {
       type: 'overlay',
       key: `overlay_basic_${dir}_${entry.source}_${entry.slot || index}_${index}`,
       label:
-        entry.source === 'job'
-          ? 'Job Gear'
-          : entry.source === 'loadout'
-            ? 'Loadout Gear'
-            : 'Overlay',
+        entry.source === 'equipment'
+          ? 'Equipment'
+          : entry.source === 'job'
+            ? 'Job Gear'
+            : entry.source === 'loadout'
+              ? 'Loadout Gear'
+              : 'Overlay',
+      source:
+        entry.source === 'base'
+          ? entry.slot === 'eyes'
+            ? 'eyes'
+            : entry.slot && BODY_COLOR_OVERLAY_SLOTS.has(entry.slot)
+              ? entry.slot
+              : undefined
+          : entry.source,
       grid,
       opacity: 1,
+      rasterIdentity,
+      rasterDependency:
+        entry.slot === 'species_tail'
+          ? 'body-relative'
+          : entry.slot === 'prosthetic_tail' || entry.slot === 'prosthetic_wing'
+            ? 'body-direct'
+            : 'stable',
+      rasterShareable:
+        !!rasterIdentity && !entry.slot?.startsWith('prosthetic_'),
     });
   });
   return overlayEntries;
@@ -4226,8 +5598,6 @@ const buildBasicAppearanceOverlayEntries = (
     canvasWidth,
     canvasHeight,
     appearanceState,
-    previewBaseEyeColor,
-    previewTargetEyeColor,
     hairDef,
     gradientDef,
     facialHairDef,
@@ -4235,6 +5605,7 @@ const buildBasicAppearanceOverlayEntries = (
     hornDef,
     tailDef,
     wingDef,
+    showEquipment,
     showJobGear,
     showLoadoutGear,
     signalAssetUpdate,
@@ -4254,15 +5625,20 @@ const buildBasicAppearanceOverlayEntries = (
           signalAssetUpdate
         )
       : null;
-  const { baseOverlayLayers, loadoutLayers, jobLayers } =
+  const { baseOverlayLayers, equipmentLayers, loadoutLayers, jobLayers } =
     buildGearOverlayLayers({
       dirState,
       canvasWidth,
       canvasHeight,
+      showEquipment,
       showJobGear,
       showLoadoutGear,
       signalAssetUpdate,
     });
+  const resolvedBaseOverlayLayers =
+    tailDef && tailDef.id !== 'Normal'
+      ? baseOverlayLayers.filter((entry) => entry.slot !== 'species_tail')
+      : baseOverlayLayers;
   const appearanceLayers: OrderedOverlayLayer[] = [
     ...buildHairAppearanceLayers({
       dir,
@@ -4294,7 +5670,8 @@ const buildBasicAppearanceOverlayEntries = (
     }),
   ];
   const merged = mergeOverlayLayerLists(
-    [...baseOverlayLayers, ...appearanceLayers],
+    [...resolvedBaseOverlayLayers, ...appearanceLayers],
+    equipmentLayers,
     jobLayers,
     loadoutLayers
   );
@@ -4302,37 +5679,69 @@ const buildBasicAppearanceOverlayEntries = (
     merged,
     dir,
     hideShoes,
-    previewBaseEyeColor,
-    previewTargetEyeColor,
     referenceParts,
     hiddenLegParts,
   });
 };
 
-const resolveGalleryType = (type: BasicAppearanceType): BasicAppearanceType =>
-  type === 'eyes' || type === 'body' ? 'hair' : type;
+const resolveGalleryType = (
+  type: BasicAppearanceType
+): BasicAppearanceGalleryType =>
+  type === 'eyes' || type === 'body' || type === 'prosthetics' ? 'hair' : type;
 
 type PreviewSourceSelection = {
   previewUsesAltSources: boolean;
+  rawPreviewSources?: BasicAppearancePayload['preview_sources'];
   activePreviewSources?: BasicAppearancePayload['preview_sources'];
+  activePreviewAssetRegistry?: IconAssetRegistry | null;
   activePreviewRevision?: number | null;
+  previewSourceSignature: string;
 };
 
 const resolvePreviewSourceSelection = (
   basicPayload: BasicAppearancePayload | null | undefined,
-  appearanceState: BasicAppearanceState
+  appearanceState: BasicAppearanceState,
+  speciesPreviewSources?: BasicAppearancePayload['preview_sources'] | null,
+  speciesPreviewSignature = '',
+  options?: ProstheticPreviewTransformOptions
 ): PreviewSourceSelection => {
-  const previewUsesAltSources =
-    !!basicPayload?.preview_sources_alt &&
-    appearanceState.digitigrade !== !!basicPayload?.digitigrade;
+  if (speciesPreviewSources?.length) {
+    const transformedSources = applyProstheticsToPreviewSources(
+      speciesPreviewSources,
+      appearanceState,
+      basicPayload?.prosthetic_context,
+      undefined,
+      options
+    );
+    return {
+      previewUsesAltSources: false,
+      rawPreviewSources: speciesPreviewSources,
+      activePreviewSources: transformedSources || undefined,
+      activePreviewAssetRegistry: null,
+      activePreviewRevision: basicPayload?.preview_revision || 1,
+      previewSourceSignature: speciesPreviewSignature || 'species',
+    };
+  }
+  const basicSelection = resolveBasicPreviewSourceSelection(
+    basicPayload,
+    appearanceState.digitigrade,
+    undefined,
+    appearanceState.biological_gender
+  );
+  const transformedSources = applyProstheticsToPreviewSources(
+    basicSelection.sources,
+    appearanceState,
+    basicPayload?.prosthetic_context,
+    undefined,
+    options
+  );
   return {
-    previewUsesAltSources,
-    activePreviewSources: previewUsesAltSources
-      ? basicPayload?.preview_sources_alt
-      : basicPayload?.preview_sources,
-    activePreviewRevision: previewUsesAltSources
-      ? (basicPayload?.preview_revision_alt ?? basicPayload?.preview_revision)
-      : basicPayload?.preview_revision,
+    previewUsesAltSources: basicSelection.usesAltSources,
+    rawPreviewSources: basicSelection.sources || undefined,
+    activePreviewSources: transformedSources || undefined,
+    activePreviewAssetRegistry: basicSelection.assetRegistry,
+    activePreviewRevision: basicSelection.revision,
+    previewSourceSignature: basicSelection.sourceKey,
   };
 };
 
@@ -4371,31 +5780,50 @@ const resolveDirectionData = (
   };
 };
 
-const resolvePreviewDirStates = (options: {
+export const resolvePreviewDirStates = (options: {
+  cache?: PreviewDirStatesCache;
   activePreviewSources?: BasicAppearancePayload['preview_sources'];
+  activePreviewAssetRegistry?: IconAssetRegistry | null;
   activePreviewRevision?: number | null;
-  data: CustomMarkingDesignerData;
+  activeDirKey: number;
+  activeDir: string;
   canvasWidth: number;
   canvasHeight: number;
 }): Record<number, PreviewDirState> => {
   const {
+    cache,
     activePreviewSources,
+    activePreviewAssetRegistry,
     activePreviewRevision,
-    data,
+    activeDirKey,
+    activeDir,
     canvasWidth,
     canvasHeight,
   } = options;
   if (!activePreviewSources) {
     return {} as Record<number, PreviewDirState>;
   }
-  return updatePreviewStateFromPayload(
+  if (
+    cache &&
+    cache.sources === activePreviewSources &&
+    cache.assetRegistry === activePreviewAssetRegistry &&
+    cache.revision === activePreviewRevision &&
+    cache.activeDirKey === activeDirKey &&
+    cache.activeDir === activeDir &&
+    cache.canvasWidth === canvasWidth &&
+    cache.canvasHeight === canvasHeight
+  ) {
+    return cache.dirs;
+  }
+  const dirs = updatePreviewStateFromPayload(
     { revision: 0, lastDiffSeq: 0, dirs: {} },
     {
       data: {
         preview_sources: activePreviewSources,
+        preview_asset_registry: activePreviewAssetRegistry || undefined,
         preview_revision: activePreviewRevision || 0,
-        active_dir_key: data.active_dir_key,
-        active_dir: data.active_dir,
+        active_dir_key: activeDirKey,
+        active_dir: activeDir,
         grid: [],
       } as any,
       sessionKey: 'basic-appearance',
@@ -4405,6 +5833,17 @@ const resolvePreviewDirStates = (options: {
       canvasGrid: null,
     }
   ).dirs;
+  if (cache) {
+    cache.sources = activePreviewSources;
+    cache.assetRegistry = activePreviewAssetRegistry;
+    cache.revision = activePreviewRevision;
+    cache.activeDirKey = activeDirKey;
+    cache.activeDir = activeDir;
+    cache.canvasWidth = canvasWidth;
+    cache.canvasHeight = canvasHeight;
+    cache.dirs = dirs;
+  }
+  return dirs;
 };
 
 const resolveHiddenBodyParts = (parts?: unknown): string[] => {
@@ -4558,12 +5997,14 @@ const buildTailHiddenSignature = (tailHiddenBodyParts: string[]): string =>
 type GalleryBasePreviewSignatureOptions = {
   payloadSignature: string | null;
   activePreviewRevision?: number | null;
+  previewSourceSignature: string;
   previewUsesAltSources: boolean;
   canvasWidth: number;
   canvasHeight: number;
   tileDirectionsSignature: string;
   directionSignature: string;
   bodyMarkingsContextSignature: string;
+  galleryTailContextSignature: string;
   stripReferenceMarkings?: boolean;
 };
 
@@ -4573,22 +6014,26 @@ const buildGalleryBasePreviewSignature = (
   const {
     payloadSignature,
     activePreviewRevision,
+    previewSourceSignature,
     previewUsesAltSources,
     canvasWidth,
     canvasHeight,
     tileDirectionsSignature,
     directionSignature,
     bodyMarkingsContextSignature,
+    galleryTailContextSignature,
     stripReferenceMarkings,
   } = options;
   return [
     payloadSignature || 'base',
     activePreviewRevision || 0,
+    previewSourceSignature,
     previewUsesAltSources ? 'alt' : 'base',
     `${canvasWidth}x${canvasHeight}`,
     tileDirectionsSignature,
     directionSignature,
     bodyMarkingsContextSignature,
+    galleryTailContextSignature,
     stripReferenceMarkings ? 's1' : 's0',
   ].join('::');
 };
@@ -4606,6 +6051,7 @@ const resolveGalleryBasePreview = (options: {
   tileDirections: DirectionEntry[];
   canvasWidth: number;
   canvasHeight: number;
+  includeSpeciesTail: boolean;
   applyBodyMarkings: (
     preview: PreviewDirectionEntry[],
     suppressedPartsByDir?: Record<number, Record<string, boolean>>
@@ -4622,6 +6068,7 @@ const resolveGalleryBasePreview = (options: {
     tileDirections,
     canvasWidth,
     canvasHeight,
+    includeSpeciesTail,
     applyBodyMarkings,
     suppressedPartsByDir,
     signalAssetUpdate,
@@ -4631,15 +6078,35 @@ const resolveGalleryBasePreview = (options: {
   let previewByDir = cache.previewByDir;
   if (cache.signature !== signature) {
     const galleryMannequinPreviewRaw = activePreviewSources
-      ? buildBasePreviewDirs(
-          previewDirStates,
-          tileDirections,
-          {},
-          canvasWidth,
-          canvasHeight,
-          signalAssetUpdate,
-          stripReferenceMarkings
-        )
+      ? includeSpeciesTail
+        ? buildDesignerPreviewDirs(
+            previewDirStates,
+            tileDirections,
+            {},
+            canvasWidth,
+            canvasHeight,
+            tileDirections[0]?.dir || 0,
+            'generic',
+            null,
+            null,
+            undefined,
+            undefined,
+            undefined,
+            false,
+            false,
+            false,
+            signalAssetUpdate,
+            stripReferenceMarkings
+          )
+        : buildBasePreviewDirs(
+            previewDirStates,
+            tileDirections,
+            {},
+            canvasWidth,
+            canvasHeight,
+            signalAssetUpdate,
+            stripReferenceMarkings
+          )
       : [];
     preview = applyBodyMarkings(
       galleryMannequinPreviewRaw,
@@ -4669,6 +6136,7 @@ const buildBasePreviewRaw = (options: {
   resolvedPartPriorityMap: Record<string, boolean>;
   resolvedPartReplacementMap: Record<string, boolean>;
   partPaintPresenceMap?: Record<string, boolean>;
+  showEquipment: boolean;
   showJobGear: boolean;
   showLoadoutGear: boolean;
   signalAssetUpdate: () => void;
@@ -4684,6 +6152,7 @@ const buildBasePreviewRaw = (options: {
     resolvedPartPriorityMap,
     resolvedPartReplacementMap,
     partPaintPresenceMap,
+    showEquipment,
     showJobGear,
     showLoadoutGear,
     signalAssetUpdate,
@@ -4707,16 +6176,33 @@ const buildBasePreviewRaw = (options: {
     partPaintPresenceMap,
     showJobGear,
     showLoadoutGear,
+    showEquipment,
     signalAssetUpdate,
     stripReferenceMarkings
   );
 };
 
+export const resolveCachedBasePreviewRaw = (
+  cache: BasePreviewRawCache,
+  signature: string,
+  resolver: () => PreviewDirectionEntry[]
+): PreviewDirectionEntry[] => {
+  if (cache.signature === signature) {
+    return cache.preview;
+  }
+  const preview = resolver();
+  cache.signature = signature;
+  cache.preview = preview;
+  return preview;
+};
+
 type BasePreviewSignatureOptions = {
   payloadSignature: string | null;
   activePreviewRevision?: number | null;
+  previewSourceSignature: string;
   previewUsesAltSources: boolean;
-  appearanceState: BasicAppearanceState;
+  digitigrade: boolean;
+  previewTransformSignature: string;
   canvasWidth: number;
   canvasHeight: number;
   tailHiddenSignature: string;
@@ -4726,18 +6212,21 @@ type BasePreviewSignatureOptions = {
   partPrioritySignature: string;
   partReplacementSignature: string;
   partPaintSignature: string;
+  showEquipment: boolean;
   showJobGear: boolean;
   showLoadoutGear: boolean;
 };
 
-const buildBasePreviewSignature = (
+export const buildBasePreviewSignature = (
   options: BasePreviewSignatureOptions
 ): string => {
   const {
     payloadSignature,
     activePreviewRevision,
+    previewSourceSignature,
     previewUsesAltSources,
-    appearanceState,
+    digitigrade,
+    previewTransformSignature,
     canvasWidth,
     canvasHeight,
     tailHiddenSignature,
@@ -4747,14 +6236,17 @@ const buildBasePreviewSignature = (
     partPrioritySignature,
     partReplacementSignature,
     partPaintSignature,
+    showEquipment,
     showJobGear,
     showLoadoutGear,
   } = options;
   return [
     payloadSignature || 'base',
     activePreviewRevision || 0,
+    previewSourceSignature,
     previewUsesAltSources ? 'alt' : 'base',
-    appearanceState.digitigrade ? 'd' : 'p',
+    digitigrade ? 'd' : 'p',
+    previewTransformSignature || 'untransformed',
     `${canvasWidth}x${canvasHeight}`,
     tailHiddenSignature,
     directionSignature,
@@ -4763,6 +6255,7 @@ const buildBasePreviewSignature = (
     partPrioritySignature,
     partReplacementSignature,
     partPaintSignature,
+    showEquipment ? 'e1' : 'e0',
     showJobGear ? 'j1' : 'j0',
     showLoadoutGear ? 'l1' : 'l0',
   ].join('::');
@@ -4858,6 +6351,109 @@ const resolvePreviewBackgroundData = (
   };
 };
 
+const resolveSelectedProstheticGalleryId = (
+  definitions: ReturnType<typeof resolveProstheticGalleryDefinitions>,
+  selectedId: string | null
+) => {
+  const selectedDefinition = definitions.find(
+    (definition) => definition.id === selectedId && !definition.disabled
+  );
+  const resolvedDefinition =
+    selectedDefinition ||
+    definitions.find((definition) => !definition.disabled) ||
+    null;
+  return resolvedDefinition?.id || null;
+};
+
+export const resolveVisibleProstheticDefinitions = (
+  visible: boolean,
+  resolver: () => ReturnType<typeof resolveProstheticGalleryDefinitions>
+): ReturnType<typeof resolveProstheticGalleryDefinitions> =>
+  visible ? resolver() : [];
+
+const applyInternalProstheticSelectionToDraft = (options: {
+  target: InternalOrganId;
+  status: string;
+  context: BasicAppearancePayload['prosthetic_context'];
+  currentState: BasicAppearanceState;
+  updateDraft: (
+    updater: (state: BasicAppearanceState) => BasicAppearanceState
+  ) => void;
+}) => {
+  const { target, status, context, currentState, updateDraft } = options;
+  if (
+    !context ||
+    !resolveInternalOrganOptions(target, currentState.limbs, context).some(
+      (entry) => entry.id === status
+    )
+  ) {
+    return;
+  }
+  updateDraft((state) => ({
+    ...state,
+    limbs: applyInternalOrganOperation(state.limbs, {
+      target,
+      state: status,
+    }),
+  }));
+};
+
+const resolveBasicAppearanceGalleryPresentation = (options: {
+  type: BasicAppearanceType;
+  galleryType: BasicAppearanceGalleryType;
+  payload: BasicAppearancePayload;
+  appearanceState: BasicAppearanceState;
+  prostheticDefinitions: ReturnType<typeof resolveProstheticGalleryDefinitions>;
+  prostheticContext: BasicAppearancePayload['prosthetic_context'];
+  selectedProstheticModelId: string | null;
+}) => {
+  const {
+    type,
+    galleryType,
+    payload,
+    appearanceState,
+    prostheticDefinitions,
+    prostheticContext,
+    selectedProstheticModelId,
+  } = options;
+  if (type === 'prosthetics') {
+    return {
+      definitions: prostheticDefinitions,
+      selectedId: selectedProstheticModelId,
+      emptyMessage: !prostheticContext
+        ? 'Prosthetic data is unavailable for this character.'
+        : !prostheticDefinitions.length
+          ? 'No prosthetic manufacturers are available for this species.'
+          : undefined,
+    };
+  }
+  return {
+    definitions: resolveGalleryDefinitionsForType(
+      galleryType,
+      payload.hair_styles,
+      payload.gradient_styles,
+      payload.facial_hair_styles,
+      payload.ear_styles,
+      payload.tail_styles,
+      payload.wing_styles
+    ),
+    selectedId: resolveSelectedIdForGalleryType(galleryType, appearanceState),
+    emptyMessage: undefined,
+  };
+};
+
+export const resolveActiveProstheticTargetsFromSharedState = (
+  shared: Record<string, unknown> | null | undefined,
+  fallback: readonly ProstheticTarget[]
+): ProstheticTarget[] => {
+  const storedTargets = shared?.basicAppearanceProstheticTargets;
+  return normalizeProstheticTargets(
+    Array.isArray(storedTargets)
+      ? (storedTargets as ProstheticTarget[])
+      : fallback
+  );
+};
+
 export const BasicAppearanceTab = (props: BasicAppearanceTabProps, context) => {
   const {
     data,
@@ -4868,8 +6464,11 @@ export const BasicAppearanceTab = (props: BasicAppearanceTabProps, context) => {
     backgroundFallbackColor,
     cycleCanvasBackground,
     canvasBackgroundScale,
+    livePreview,
     resolvedPartPriorityMap,
     resolvedPartReplacementMap,
+    showEquipment,
+    onToggleEquipment,
     showJobGear,
     onToggleJobGear,
     showLoadoutGear,
@@ -4905,6 +6504,11 @@ export const BasicAppearanceTab = (props: BasicAppearanceTabProps, context) => {
     `basicAppearanceReloadPending-${stateToken}`,
     false
   );
+  const [, setSpeciesReloadPending] = useLocalState<boolean>(
+    context,
+    `speciesReloadPending-${stateToken}`,
+    false
+  );
   const [previewRefreshSkips, setPreviewRefreshSkips] = useLocalState<number>(
     context,
     `customMarkingDesignerPreviewRefreshSkips-${stateToken}`,
@@ -4933,17 +6537,27 @@ export const BasicAppearanceTab = (props: BasicAppearanceTabProps, context) => {
     false
   );
   const [basicPayload, setBasicPayload] =
-    useLocalState<BasicAppearancePayload | null>(
-      context,
-      'basicPayload',
-      data.basic_appearance_payload || null
-    );
+    useLocalState<BasicAppearancePayload | null>(context, 'basicPayload', null);
   const [bodyPayload, setBodyPayload] =
-    useLocalState<BodyMarkingsPayload | null>(
+    useLocalState<BodyMarkingsPayload | null>(context, 'bodyPayload', null);
+  const [speciesPayload, setSpeciesPayload] =
+    useLocalState<SpeciesPayload | null>(
       context,
-      'bodyPayload',
-      data.body_markings_payload || null
+      'speciesPayload',
+      data.species_payload || null
     );
+  const [speciesSelection] = useLocalState<string | null>(
+    context,
+    'speciesSelection',
+    data.species_payload?.selected_species || null
+  );
+  const [speciesIconBaseSelection] = useLocalState<string | null>(
+    context,
+    'speciesIconBaseSelection',
+    data.species_payload?.preview_icon_base ||
+      data.species_payload?.selected_icon_base ||
+      null
+  );
   const [bodyMarkingsState, setBodyMarkingsState] = useLocalState<
     Record<string, BodyMarkingEntry>
   >(
@@ -4973,41 +6587,19 @@ export const BasicAppearanceTab = (props: BasicAppearanceTabProps, context) => {
     'bodyMarkingsDirty',
     false
   );
-  const [markingLayersCache] = useLocalState<
-    Record<string, MarkingLayersCacheEntry>
-  >(context, 'basicAppearanceBodyMarkingLayersCache', {});
-  const [bodyMarkingsPreviewCache] = useLocalState<BodyMarkingsPreviewCache>(
-    context,
-    'basicAppearanceBodyMarkingPreviewCache',
-    { signature: '', context: null }
-  );
-  const [bodyMarkingDefinitionCache] =
-    useLocalState<BodyMarkingDefinitionCache>(
-      context,
-      'basicAppearanceBodyMarkingDefinitionCache',
-      { payloadRef: null, definitions: {}, offsetX: 0 }
-    );
-  const [bodyMarkingsSignatureCache] =
-    useLocalState<BodyMarkingsSignatureCache>(
-      context,
-      'basicAppearanceBodyMarkingsSignatureCache',
-      {
-        markingsRef: null,
-        orderRef: null,
-        definitionsRef: null,
-        signature: 'none',
-      }
-    );
-  const [markedBasePreviewCache] = useLocalState<MarkedBasePreviewCache>(
-    context,
-    'basicAppearanceMarkedBasePreviewCache',
-    { signature: '', previewByDir: {}, afterByDir: {} }
-  );
-  const [galleryBasePreviewCache] = useLocalState<GalleryBasePreviewCache>(
-    context,
-    'basicAppearanceGalleryPreviewCache',
-    { signature: '', preview: [], previewByDir: {} }
-  );
+  const {
+    markingLayersCache,
+    bodyMarkingsPreviewCache,
+    bodyMarkingDefinitionCache,
+    bodyMarkingsSignatureCache,
+    previewDirStatesCache,
+    basePreviewRawCache,
+    markedBasePreviewCache,
+    galleryBasePreviewCache,
+    galleryAppearanceGridContextCache,
+    tilePreviewCache,
+    tileBasePreviewCache,
+  } = resolveBasicAppearanceRenderCache(context.store, stateToken);
   const digitigradeAllowed = basicPayload?.digitigrade_allowed ?? true;
   const [appearanceState, setAppearanceState] =
     useLocalState<BasicAppearanceState>(
@@ -5023,8 +6615,19 @@ export const BasicAppearanceTab = (props: BasicAppearanceTabProps, context) => {
   const [type, setType] = useLocalState<BasicAppearanceType>(
     context,
     'basicAppearanceType',
-    'hair'
+    DEFAULT_BASIC_APPEARANCE_TYPE
   );
+  const [selectedProstheticModelId, setSelectedProstheticModelId] =
+    useLocalState<string | null>(
+      context,
+      'basicAppearanceProstheticModel',
+      Object.values(appearanceState.limbs.external || {}).find(
+        (entry) => entry.status === 'cyborg' && !!entry.model
+      )?.model || null
+    );
+  const [activeProstheticTargets, setActiveProstheticTargets] = useLocalState<
+    ProstheticTarget[]
+  >(context, 'basicAppearanceProstheticTargets', ['full_body']);
   const [search, setSearch] = useLocalState<string>(
     context,
     'basicAppearanceSearch',
@@ -5050,7 +6653,7 @@ export const BasicAppearanceTab = (props: BasicAppearanceTabProps, context) => {
     useLocalState<BasicAppearanceColorTarget | null>(
       context,
       'basicAppearanceColorTarget',
-      { type: 'hair' }
+      resolveDefaultColorTarget(DEFAULT_BASIC_APPEARANCE_TYPE)
     );
   const [pendingSave, setPendingSaveLocal] = useLocalState<boolean>(
     context,
@@ -5061,14 +6664,6 @@ export const BasicAppearanceTab = (props: BasicAppearanceTabProps, context) => {
     context,
     'basicAppearancePendingClose',
     false
-  );
-  const [tilePreviewCache] = useLocalState<
-    Record<string, { sig: string; previews: BasicTilePreviewEntry[] }>
-  >(context, 'basicAppearanceTilePreviewCache', {});
-  const [tileBasePreviewCache] = useLocalState<TileBasePreviewCache>(
-    context,
-    'basicAppearanceTileBasePreviewCache',
-    {}
   );
   const [assetRevision] = useLocalState<number>(
     context,
@@ -5129,14 +6724,20 @@ export const BasicAppearanceTab = (props: BasicAppearanceTabProps, context) => {
   const canvasHeight = basicPayload?.preview_height || 64;
 
   const requestPayload = () => {
-    act('load_basic_appearance');
+    act(
+      'load_basic_appearance',
+      buildBasicAppearanceLoadParams(basicPayload, bodyPayload)
+    );
   };
 
   const requestBodyPayload = () => {
     if (!bodyPayloadRequestPending) {
       setBodyPayloadRequestPending(true);
     }
-    act('load_body_markings');
+    act(
+      'load_body_markings',
+      buildBodyMarkingsLoadParams(bodyPayload, basicPayload)
+    );
   };
 
   const syncBodyPayload = (payload: BodyMarkingsPayload) => {
@@ -5154,10 +6755,16 @@ export const BasicAppearanceTab = (props: BasicAppearanceTabProps, context) => {
       }
       return;
     }
-    setBodyPayload(payload);
-    const nextMarkings = deepCopyMarkings(payload.body_markings);
+    const mergedPayload = mergeBodyMarkingsPayload(
+      bodyPayload,
+      payload,
+      basicPayload
+    );
+    setBodyPayload(mergedPayload);
+    const nextMarkings = deepCopyMarkings(mergedPayload.body_markings);
     const nextOrder =
-      (payload.order as string[]) || Object.keys(payload.body_markings || {});
+      (mergedPayload.order as string[]) ||
+      Object.keys(mergedPayload.body_markings || {});
     const nextSelectedId =
       bodyMarkingsSelected && nextOrder.includes(bodyMarkingsSelected)
         ? bodyMarkingsSelected
@@ -5182,8 +6789,31 @@ export const BasicAppearanceTab = (props: BasicAppearanceTabProps, context) => {
   };
 
   const syncPayload = (payload: BasicAppearancePayload) => {
-    setBasicPayload(payload);
-    const nextState = buildBasicStateFromPayload(payload);
+    const mergedPayload = mergeBasicAppearancePayload(
+      basicPayload,
+      payload,
+      bodyPayload
+    );
+    setBasicPayload(mergedPayload);
+    const nextState = buildBasicStateFromPayload(mergedPayload);
+    const nextProstheticContext = mergedPayload.prosthetic_context;
+    if (nextProstheticContext) {
+      const backendState = selectBackend(context.store.getState()) as {
+        shared?: Record<string, unknown>;
+      };
+      const latestTargets = resolveActiveProstheticTargetsFromSharedState(
+        backendState?.shared,
+        activeProstheticTargets
+      );
+      const nextTargets = resolveEditableProstheticTargets(
+        latestTargets,
+        nextState.limbs,
+        nextProstheticContext
+      );
+      if (nextTargets.length !== latestTargets.length) {
+        setActiveProstheticTargets(nextTargets);
+      }
+    }
     setAppearanceState(nextState);
     setSavedState(nextState);
     setTilePage(0);
@@ -5198,11 +6828,9 @@ export const BasicAppearanceTab = (props: BasicAppearanceTabProps, context) => {
     const shared = backendState?.shared || {};
     const resolvedPayload =
       (shared.basicPayload as BasicAppearancePayload | null) || basicPayload;
-    setBasicPayload({
-      ...(resolvedPayload || ({} as BasicAppearancePayload)),
-      ...payload,
-      preview_only: false,
-    });
+    setBasicPayload(
+      mergeBasicAppearancePayload(resolvedPayload, payload, bodyPayload)
+    );
     setBasicReloadPending(false);
   };
 
@@ -5215,6 +6843,9 @@ export const BasicAppearanceTab = (props: BasicAppearanceTabProps, context) => {
       latestState:
         (shared.basicAppearanceState as BasicAppearanceState) ||
         appearanceState,
+      latestSavedState:
+        (shared.basicAppearanceSavedState as BasicAppearanceState) ||
+        savedState,
       latestPayload:
         (shared.basicPayload as BasicAppearancePayload | null) || basicPayload,
       latestDirty:
@@ -5247,7 +6878,220 @@ export const BasicAppearanceTab = (props: BasicAppearanceTabProps, context) => {
     });
   };
 
+  const rawProstheticContext = basicPayload?.prosthetic_context || null;
+  const prostheticContext = resolveProstheticContextForBiologicalGender(
+    rawProstheticContext,
+    appearanceState.biological_gender
+  );
+  const biologicalGenders = resolveBasicBiologicalGenderOptions(
+    basicPayload,
+    appearanceState
+  );
+  const bloodTypes = resolveStringOptions(basicPayload?.blood_types);
+  const bloodReagents = resolveStringOptions(basicPayload?.blood_reagents);
+  const prostheticsMode = type === 'prosthetics';
+  const normalizedActiveProstheticTargets = normalizeProstheticTargets(
+    activeProstheticTargets
+  );
+  const resolvedActiveProstheticTargets = prostheticContext
+    ? resolveEditableProstheticTargets(
+        normalizedActiveProstheticTargets,
+        appearanceState.limbs,
+        prostheticContext
+      )
+    : normalizedActiveProstheticTargets;
+  const resolveLatestActiveProstheticTargets = () => {
+    const backendState = selectBackend(context.store.getState()) as {
+      shared?: Record<string, unknown>;
+    };
+    const shared = backendState?.shared;
+    const latestTargets = resolveActiveProstheticTargetsFromSharedState(
+      shared,
+      activeProstheticTargets
+    );
+    const latestState =
+      (shared?.basicAppearanceState as BasicAppearanceState) || appearanceState;
+    return prostheticContext
+      ? resolveEditableProstheticTargets(
+          latestTargets,
+          latestState.limbs,
+          prostheticContext
+        )
+      : latestTargets;
+  };
+  const prostheticDefinitions = resolveVisibleProstheticDefinitions(
+    prostheticsMode,
+    () =>
+      attachProstheticColorModes(
+        resolveProstheticGalleryDefinitionsForTargets(
+          resolvedActiveProstheticTargets,
+          appearanceState.limbs,
+          prostheticContext
+        )
+      )
+  );
+  const resolvedSelectedProstheticModelId = prostheticsMode
+    ? resolveSelectedProstheticGalleryId(
+        prostheticDefinitions,
+        selectedProstheticModelId
+      )
+    : selectedProstheticModelId;
+
+  const updateBasicDraft = (
+    updater: (state: BasicAppearanceState) => BasicAppearanceState
+  ) => {
+    const { latestState, latestSavedState } = resolveLatestBasicState();
+    const latestTargets = resolveLatestActiveProstheticTargets();
+    const updated = updater(latestState);
+    const operations = buildCanonicalProstheticOperations(
+      latestSavedState.limbs,
+      updated.limbs,
+      prostheticContext
+    );
+    let nextState: BasicAppearanceState = {
+      ...updated,
+      limbs: cloneLimbOverrideState(updated.limbs),
+      ...operations,
+    };
+    const nextBiologicalGenders = resolveBasicBiologicalGenderOptions(
+      basicPayload,
+      nextState
+    );
+    const nextBiologicalGender = resolveBasicBiologicalGender(
+      nextBiologicalGenders,
+      nextState.biological_gender
+    );
+    if (nextBiologicalGender !== nextState.biological_gender) {
+      nextState = {
+        ...nextState,
+        biological_gender: nextBiologicalGender,
+      };
+    }
+    if (prostheticContext) {
+      const nextTargets = resolveEditableProstheticTargets(
+        latestTargets,
+        nextState.limbs,
+        prostheticContext
+      );
+      if (nextTargets.length !== latestTargets.length) {
+        setActiveProstheticTargets(nextTargets);
+      }
+    }
+    updateAppearanceState(() => nextState);
+    setDirty(!basicAppearanceStatesEqual(nextState, latestSavedState));
+  };
+
+  const applyExternalProstheticSelection = (id: string) => {
+    if (!prostheticContext || !id || uiLocked) {
+      return;
+    }
+    const latestTargets = resolveLatestActiveProstheticTargets();
+    updateBasicDraft((state) => {
+      const quickSet = id === '__normal__' || id === '__amputated__';
+      if (
+        !quickSet &&
+        !isProstheticSelectionCompatibleWithTargets(
+          latestTargets,
+          id,
+          state.limbs,
+          prostheticContext
+        )
+      ) {
+        return state;
+      }
+      return {
+        ...state,
+        limbs: applyProstheticSelectionToTargets(
+          state.limbs,
+          latestTargets,
+          id,
+          prostheticContext
+        ),
+      };
+    });
+  };
+
+  const setInternalProstheticSelection = (
+    target: InternalOrganId,
+    status: string
+  ) => {
+    const { latestState } = resolveLatestBasicState();
+    applyInternalProstheticSelectionToDraft({
+      target,
+      status,
+      context: prostheticContext,
+      currentState: latestState,
+      updateDraft: updateBasicDraft,
+    });
+  };
+
+  const setBloodType = (bloodType: string) => {
+    if (uiLocked || !bloodTypes.includes(bloodType)) {
+      return;
+    }
+    updateBasicDraft((state) => ({ ...state, blood_type: bloodType }));
+  };
+
+  const setBiologicalGender = (biologicalGender: string) =>
+    applyBiologicalGenderChange({
+      biologicalGender,
+      allowedGenders: biologicalGenders,
+      uiLocked,
+      updateDraft: updateBasicDraft,
+    });
+
+  const setBloodReagent = (bloodReagent: string) =>
+    applyBloodReagentChange({
+      bloodReagent,
+      allowedReagents: bloodReagents,
+      uiLocked,
+      updateDraft: updateBasicDraft,
+    });
+
+  const resetBloodColor = () => {
+    setColorTarget({ type: 'blood' });
+    updateBasicDraft((state) => ({ ...state, blood_color: '#a10808' }));
+  };
+
+  const setNeedsGlasses = (needsGlasses: boolean) =>
+    updateBasicDraft((state) => ({
+      ...state,
+      needs_glasses: !!needsGlasses,
+    }));
+
+  const setSynthColorEnabled = (enabled: boolean) =>
+    updateBasicDraft((state) => ({
+      ...state,
+      synth_color_enabled: !!enabled,
+    }));
+
+  const setSynthMarkings = (enabled: boolean) =>
+    updateBasicDraft((state) => ({
+      ...state,
+      synth_markings: !!enabled,
+    }));
+
+  const resetProstheticSettings = () =>
+    updateBasicDraft((state) =>
+      resetEditableProstheticSettings(state, prostheticContext)
+    );
+
   const applyColorTarget = (hex: string) => {
+    if (colorTarget?.type === 'synth') {
+      const { latestState } = resolveLatestBasicState();
+      if (!latestState.synth_color_enabled) {
+        return;
+      }
+      const normalized = normalizeHex(hex) || '#ffffff';
+      if ((normalizeHex(latestState.synth_color) || '#ffffff') === normalized) {
+        return;
+      }
+      updateBasicDraft((state) => ({
+        ...state,
+        synth_color: normalized,
+      }));
+      return;
+    }
     applyBasicColorTarget({
       hex,
       colorTarget,
@@ -5260,8 +7104,14 @@ export const BasicAppearanceTab = (props: BasicAppearanceTabProps, context) => {
   };
 
   const handleSave = async (close = false) => {
-    const { latestState, latestDirty } = resolveLatestBasicState();
+    const { latestState, latestSavedState, latestDirty } =
+      resolveLatestBasicState();
     const wasDirty = latestDirty;
+    const speciesPreviewStale =
+      shouldInvalidateSpeciesPayloadForBiologicalGenderChange(
+        latestSavedState.biological_gender,
+        latestState.biological_gender
+      );
     const startingPreviewRevision =
       typeof data.preview_revision === 'number' ? data.preview_revision : 0;
     setPendingSave(true);
@@ -5275,9 +7125,14 @@ export const BasicAppearanceTab = (props: BasicAppearanceTabProps, context) => {
         setPreviewRefreshSkips((previewRefreshSkips || 0) + 1);
       }
       await act('save_basic_appearance', {
+        biological_gender: latestState.biological_gender,
         digitigrade: latestState.digitigrade ? 1 : 0,
         body_color: latestState.body_color,
         eye_color: latestState.eye_color,
+        blood_type: latestState.blood_type,
+        blood_reagent: latestState.blood_reagent,
+        blood_color: latestState.blood_color,
+        needs_glasses: latestState.needs_glasses ? 1 : 0,
         hair_style: latestState.hair_style,
         hair_color: latestState.hair_color,
         hair_gradient_style: latestState.hair_gradient_style,
@@ -5292,16 +7147,27 @@ export const BasicAppearanceTab = (props: BasicAppearanceTabProps, context) => {
         tail_colors: latestState.tail_colors,
         wing_style: latestState.wing_style,
         wing_colors: latestState.wing_colors,
+        ...buildProstheticSaveParams(latestState, prostheticContext),
         close,
       });
       if (!close) {
+        if (speciesPreviewStale) {
+          setSpeciesPayload(null);
+          setSpeciesReloadPending(true);
+        }
         if (wasDirty) {
           setReloadTargetRevision(startingPreviewRevision + 1);
           setReloadPending(true);
         }
+        const committedState: BasicAppearanceState = {
+          ...latestState,
+          limbs: cloneLimbOverrideState(latestState.limbs),
+          limb_operations: [],
+          organ_operations: [],
+        };
         setDirty(false);
-        setSavedState(latestState);
-        setAppearanceState(latestState);
+        setSavedState(committedState);
+        setAppearanceState(committedState);
       }
     } finally {
       setPendingSave(false);
@@ -5359,7 +7225,7 @@ export const BasicAppearanceTab = (props: BasicAppearanceTabProps, context) => {
 
   const activeColorTarget = resolveBasicColorTarget({
     target: colorTarget,
-    activeType: galleryType,
+    activeType: type,
     maxAccessoryChannels,
   });
 
@@ -5368,8 +7234,28 @@ export const BasicAppearanceTab = (props: BasicAppearanceTabProps, context) => {
     activeColorTarget
   );
 
-  const { previewUsesAltSources, activePreviewSources, activePreviewRevision } =
-    resolvePreviewSourceSelection(basicPayload, appearanceState);
+  const { speciesPreviewSources, speciesPreviewSignature } =
+    resolveSelectedSpeciesPreviewSources({
+      speciesPayload,
+      speciesSelection,
+      speciesIconBaseSelection,
+      payloadSpeciesId: basicPayload?.species_id,
+      payloadIconBaseId: basicPayload?.custom_base,
+      digitigrade: appearanceState.digitigrade,
+    });
+  const {
+    previewUsesAltSources,
+    rawPreviewSources,
+    activePreviewSources,
+    activePreviewAssetRegistry,
+    activePreviewRevision,
+    previewSourceSignature,
+  } = resolvePreviewSourceSelection(
+    basicPayload,
+    appearanceState,
+    speciesPreviewSources,
+    speciesPreviewSignature
+  );
   const {
     previewBaseBodyColor,
     previewTargetBodyColor,
@@ -5379,24 +7265,51 @@ export const BasicAppearanceTab = (props: BasicAppearanceTabProps, context) => {
   const { tileDirections, tileDirectionsSignature, directionSignature } =
     resolveDirectionData(data.directions);
   const previewDirStates = resolvePreviewDirStates({
+    cache: previewDirStatesCache,
     activePreviewSources,
+    activePreviewAssetRegistry,
     activePreviewRevision,
-    data,
+    activeDirKey: data.active_dir_key,
+    activeDir: data.active_dir,
     canvasWidth,
     canvasHeight,
   });
   const tailHiddenBodyParts = resolveHiddenBodyParts(tailDef?.hide_body_parts);
+  const galleryBaseDefinitionId =
+    galleryType === 'tail' ? '__replacement__' : '';
+  const galleryBaseIncludesSpeciesTail = shouldIncludeSpeciesTailInGalleryTile(
+    galleryType,
+    galleryBaseDefinitionId,
+    appearanceState.tail_style
+  );
+  const galleryBaseTailHiddenBodyParts =
+    galleryType === 'tail' ? [] : tailHiddenBodyParts;
+  const galleryBaseHiddenPartsSignature = galleryBaseTailHiddenBodyParts.length
+    ? galleryBaseTailHiddenBodyParts.join('|')
+    : 'no-hide';
+  const galleryPreviewDirStates = mergeHiddenBodyPartsInPreviewStates(
+    resolveGalleryTilePreviewStates(
+      previewDirStates,
+      galleryType,
+      galleryBaseDefinitionId,
+      appearanceState.tail_style
+    ),
+    galleryBaseTailHiddenBodyParts
+  );
   const previewDirStatesForLive = mergeHiddenBodyPartsInPreviewStates(
     previewDirStates,
     tailHiddenBodyParts
   );
-  const previewHiddenPartsByDir = buildHiddenBodyPartsByDir(previewDirStates);
-  const liveHiddenPartsByDir = buildHiddenBodyPartsByDir(
+  const galleryHiddenPartsByDir = buildSuppressedMarkingPartsByDir(
+    galleryPreviewDirStates
+  );
+  const liveHiddenPartsByDir = buildSuppressedMarkingPartsByDir(
     previewDirStatesForLive
   );
   const bodyColorExcludedParts = collectBodyColorExcludedParts(
     previewDirStatesForLive
   );
+  const bodyColorBlendMode = collectBodyColorBlendMode(previewDirStatesForLive);
   const {
     definitions: bodyMarkingsDefinitions,
     signature: bodyMarkingsSignature,
@@ -5420,6 +7333,11 @@ export const BasicAppearanceTab = (props: BasicAppearanceTabProps, context) => {
   });
   const stripReferenceMarkings =
     Object.keys(bodyMarkingsDefinitions || {}).length > 0;
+  const hasActiveBodyMarkings = hasActiveBodyMarkingParts({
+    definitions: bodyMarkingsDefinitions,
+    markings: bodyMarkingsState,
+    order: bodyMarkingsOrder,
+  });
   const applyBodyMarkings = (
     preview: PreviewDirectionEntry[],
     suppressedPartsByDir?: Record<number, Record<string, boolean>>
@@ -5448,27 +7366,34 @@ export const BasicAppearanceTab = (props: BasicAppearanceTabProps, context) => {
   );
   const partPaintSignature = buildBooleanMapSignature(partPaintPresenceMap);
   const tailHiddenSignature = buildTailHiddenSignature(tailHiddenBodyParts);
+  const galleryTailContextSignature = [
+    galleryBaseIncludesSpeciesTail ? 'species-tail' : 'no-species-tail',
+    galleryBaseHiddenPartsSignature,
+  ].join('::');
   const galleryBaseSignature = buildGalleryBasePreviewSignature({
     payloadSignature,
     activePreviewRevision,
+    previewSourceSignature,
     previewUsesAltSources,
     canvasWidth,
     canvasHeight,
     tileDirectionsSignature,
     directionSignature,
     bodyMarkingsContextSignature,
+    galleryTailContextSignature,
     stripReferenceMarkings,
   });
   const { preview: galleryBasePreview } = resolveGalleryBasePreview({
     cache: galleryBasePreviewCache,
     signature: galleryBaseSignature,
     activePreviewSources,
-    previewDirStates,
+    previewDirStates: galleryPreviewDirStates,
     tileDirections,
     canvasWidth,
     canvasHeight,
+    includeSpeciesTail: galleryBaseIncludesSpeciesTail,
     applyBodyMarkings,
-    suppressedPartsByDir: previewHiddenPartsByDir,
+    suppressedPartsByDir: galleryHiddenPartsByDir,
     signalAssetUpdate,
     stripReferenceMarkings,
   });
@@ -5477,9 +7402,11 @@ export const BasicAppearanceTab = (props: BasicAppearanceTabProps, context) => {
     previewBaseBodyColor,
     previewTargetBodyColor,
     bodyColorExcludedParts,
+    bodyColorBlendMode,
     previewBaseEyeColor,
     previewTargetEyeColor,
-    previewTargetBodyColor
+    previewTargetBodyColor,
+    appearanceState.hair_color
   );
   const galleryMannequinPreviewByDir = galleryMannequinPreview.reduce(
     (acc, entry) => {
@@ -5487,6 +7414,32 @@ export const BasicAppearanceTab = (props: BasicAppearanceTabProps, context) => {
       return acc;
     },
     {} as Record<number, PreviewDirectionEntry>
+  );
+  const galleryAppearanceContextSignature = [
+    buildBasicAppearanceGalleryContextSignature(appearanceState, galleryType),
+    basicPayload?.definition_revision || 'definitions',
+    tileDirectionsSignature,
+    `${canvasWidth}x${canvasHeight}`,
+    `${assetRevision}`,
+  ].join('::');
+  const galleryAppearanceGridContextByDir = resolveGalleryAppearanceGridContext(
+    {
+      cache: galleryAppearanceGridContextCache,
+      signature: galleryAppearanceContextSignature,
+      galleryType,
+      tileDirections,
+      canvasWidth,
+      canvasHeight,
+      appearanceState,
+      hairDef,
+      gradientDef,
+      facialHairDef,
+      earDef,
+      hornDef,
+      tailDef,
+      wingDef,
+      signalAssetUpdate,
+    }
   );
 
   const setGallerySelection = (id: string | null) =>
@@ -5501,11 +7454,13 @@ export const BasicAppearanceTab = (props: BasicAppearanceTabProps, context) => {
     buildTilePreviewEntries({
       def,
       galleryType,
+      payloadSignature,
       tileDirections,
       tileDirectionsSignature,
       canvasWidth,
       canvasHeight,
       activePreviewRevision,
+      previewSourceSignature,
       appearanceState,
       assetRevision,
       bodyMarkingsSignature,
@@ -5520,38 +7475,505 @@ export const BasicAppearanceTab = (props: BasicAppearanceTabProps, context) => {
       wingStyles: wing_styles,
       hairDef,
       gradientDef,
+      facialHairDef,
+      earDef,
+      hornDef,
+      tailDef,
+      wingDef,
       previewDirStates,
       tilePreviewCache,
       tileBasePreviewCache,
       galleryMannequinPreviewByDir,
+      galleryBaseIncludesSpeciesTail,
+      galleryBaseHiddenPartsSignature,
+      galleryAppearanceGridContextByDir,
+      galleryAppearanceContextSignature,
       previewBaseBodyColor,
       previewBaseEyeColor,
       bodyColorExcludedParts,
+      bodyColorBlendMode,
       applyBodyMarkings,
       signalAssetUpdate,
       stripReferenceMarkings,
     });
 
-  const basePreviewRaw = buildBasePreviewRaw({
-    activePreviewSources,
-    previewDirStates: previewDirStatesForLive,
-    directions: data.directions,
-    canvasWidth,
-    canvasHeight,
-    activeDirKey: data.active_dir_key,
-    resolvedPartPriorityMap,
-    resolvedPartReplacementMap,
-    partPaintPresenceMap,
-    showJobGear,
-    showLoadoutGear,
-    signalAssetUpdate,
-    stripReferenceMarkings,
-  });
+  const getProstheticTilePreviewEntries = (def: {
+    id: string;
+    name: string;
+    description?: string | null;
+  }): BasicTilePreviewEntry[] => {
+    if (!prostheticsMode || !prostheticContext) {
+      return [];
+    }
+    const candidateState = buildProstheticShowcaseState(
+      appearanceState,
+      def.id,
+      prostheticContext
+    );
+    const galleryPreviewTransformOptions = {
+      deferSynthColor: true,
+      deferBodyColor: true,
+      applyBodyColorToProsthetics: true,
+    } as const;
+    const galleryCompositeSelection = resolveProstheticGalleryComposite(
+      def.id,
+      candidateState,
+      prostheticContext
+    );
+    const galleryCompositeOptions = {
+      requiresPartLevelMarkingComposition:
+        candidateState.synth_markings && hasActiveBodyMarkings,
+      preservesSourcePartMarkings: candidateState.synth_markings,
+      deferBodyColor: true,
+    };
+    const galleryComposite = canApplyProstheticGalleryCompositeToPreviewSources(
+      rawPreviewSources,
+      galleryCompositeSelection,
+      prostheticContext,
+      galleryCompositeOptions
+    )
+      ? galleryCompositeSelection
+      : null;
+    const cacheKey = `prosthetics:${def.id}`;
+    const preparedStructureParts = [
+      payloadSignature || 'payload',
+      speciesPreviewSignature || 'species',
+      previewSourceSignature,
+      tileDirectionsSignature,
+      directionSignature,
+      `${canvasWidth}x${canvasHeight}`,
+      `${activePreviewRevision || 0}`,
+      bodyMarkingsSignature,
+      stripReferenceMarkings ? 's1' : 's0',
+      galleryComposite?.key || 'part-recipe',
+    ];
+    const appearanceStructureSignature =
+      buildProstheticShowcaseAppearanceStructureSignature(candidateState);
+    const preparedStructureSignature = [
+      'prosthetic-showcase-prepared-v1',
+      ...preparedStructureParts,
+      buildLimbPreviewSignature(
+        candidateState,
+        prostheticContext,
+        galleryPreviewTransformOptions
+      ),
+      appearanceStructureSignature,
+    ].join('::');
+    const colorLayerStructureSignature = [
+      'prosthetic-showcase-color-layer-v1',
+      ...preparedStructureParts,
+      buildLimbPreviewSignature(
+        { ...candidateState, body_color: null },
+        prostheticContext,
+        galleryPreviewTransformOptions
+      ),
+      appearanceStructureSignature,
+    ].join('::');
+    const baseStructureSignature = [
+      'prosthetic-showcase-base-v6',
+      preparedStructureSignature,
+      `body:${candidateState.body_color || ''}`,
+      `eye:${candidateState.eye_color || ''}`,
+    ].join('::');
+    const eyeColorCacheSignature = [
+      colorLayerStructureSignature,
+      `eye:${candidateState.eye_color || ''}`,
+    ].join('::');
+    const synthColorPasses =
+      galleryComposite?.colorable && candidateState.synth_color_enabled
+        ? { [PROSTHETIC_GALLERY_COMPOSITE_PART]: 1 }
+        : resolveProstheticSynthColorPasses(candidateState, prostheticContext);
+    const hasSynthColorPasses = Object.values(synthColorPasses).some(
+      (passes) => passes > 0
+    );
+    const synthColor = normalizeHex(candidateState.synth_color) || '#ffffff';
+    const synthSignature = hasSynthColorPasses
+      ? `synth:${synthColor}`
+      : 'synth:authored';
+    const bodyColorPasses =
+      galleryComposite &&
+      !galleryComposite.colorable &&
+      prostheticContext.apply_skin_color
+        ? { [PROSTHETIC_GALLERY_COMPOSITE_PART]: 1 }
+        : resolveProstheticBodyColorPasses(candidateState, prostheticContext);
+    const unsharedProstheticLayerKeys = new Set<string>();
+    const addUnsharedProstheticPart = (part: string) => {
+      unsharedProstheticLayerKeys.add(`ref_${part}`);
+      unsharedProstheticLayerKeys.add(`ref_${part}_hair`);
+      unsharedProstheticLayerKeys.add(`ref_${part}_markings`);
+    };
+    if (galleryComposite) {
+      addUnsharedProstheticPart(PROSTHETIC_GALLERY_COMPOSITE_PART);
+    } else {
+      const lockedParts = new Set(prostheticContext.locked_parts || []);
+      Object.entries(candidateState.limbs.external || {}).forEach(
+        ([part, entry]) => {
+          if (entry.status === 'cyborg' && !lockedParts.has(part)) {
+            addUnsharedProstheticPart(part);
+          }
+        }
+      );
+    }
+    const buildColoredPreviews = (
+      basePreview: PreviewDirectionEntry[],
+      cacheSignature: string,
+      colorCacheSignature: string,
+      renderSignature?: string
+    ): BasicTilePreviewEntry[] =>
+      basePreview.map((entry) => ({
+        ...entry,
+        layers: [],
+        renderSignature: renderSignature
+          ? `${renderSignature}::dir:${entry.dir}`
+          : undefined,
+        retainRenderedCanvasOnUnmount: !!renderSignature,
+        layerGroups: buildProstheticPreviewLayerGroups({
+          layers: entry.layers,
+          colorPasses: synthColorPasses,
+          color: synthColor,
+          multiply: !!prostheticContext.color_multiply,
+          cacheKey: `${cacheKey}:${entry.dir}`,
+          cacheSignature,
+          colorCacheSignature,
+          stableCacheSignature: colorLayerStructureSignature,
+          bodyColorPasses,
+          bodyColor: previewTargetBodyColor,
+          bodyColorMultiply: !!prostheticContext.color_multiply,
+          bodyColorCacheSignature: colorLayerStructureSignature,
+          eyeColorCacheSignature,
+          rasterScope: stateToken,
+          direction: entry.dir,
+          unsharedLayerKeys: unsharedProstheticLayerKeys,
+        }),
+      }));
+
+    let cachedBase = tileBasePreviewCache[cacheKey];
+    if (
+      cachedBase?.complete &&
+      cachedBase.structureSig === baseStructureSignature
+    ) {
+      const signature = [baseStructureSignature, synthSignature].join('::');
+      const cached = tilePreviewCache[cacheKey];
+      if (cached?.sig === signature) {
+        return cached.previews;
+      }
+      const previews = buildColoredPreviews(
+        cachedBase.preview,
+        baseStructureSignature,
+        colorLayerStructureSignature,
+        signature
+      );
+      tilePreviewCache[cacheKey] = { sig: signature, previews };
+      return previews;
+    }
+
+    let prepared =
+      cachedBase?.preparedSig === preparedStructureSignature
+        ? cachedBase.prostheticPrepared
+        : undefined;
+    if (!prepared) {
+      const candidateHairDef = resolveSelectedDef(
+        hair_styles,
+        candidateState.hair_style
+      );
+      const candidateGradientDef = resolveSelectedDef(
+        gradient_styles,
+        candidateState.hair_gradient_style
+      );
+      const candidateFacialHairDef = resolveSelectedDef(
+        facial_hair_styles,
+        candidateState.facial_hair_style
+      );
+      const candidateEarDef = resolveSelectedDef(
+        ear_styles,
+        candidateState.ear_style
+      );
+      const candidateHornDef = resolveSelectedDef(
+        ear_styles,
+        candidateState.horn_style
+      );
+      const candidateTailDef = resolveSelectedDef(
+        tail_styles,
+        candidateState.tail_style
+      );
+      const candidateWingDef = resolveSelectedDef(
+        wing_styles,
+        candidateState.wing_style
+      );
+      const rawCandidateSelection = resolvePreviewSourceSelection(
+        basicPayload,
+        candidateState,
+        speciesPreviewSources,
+        speciesPreviewSignature,
+        galleryPreviewTransformOptions
+      );
+      const compositePreviewSources =
+        applyProstheticGalleryCompositeToPreviewSources(
+          rawCandidateSelection.activePreviewSources || null,
+          galleryComposite,
+          prostheticContext,
+          galleryCompositeOptions
+        );
+      const candidateSelection =
+        compositePreviewSources &&
+        compositePreviewSources !== rawCandidateSelection.activePreviewSources
+          ? {
+              ...rawCandidateSelection,
+              activePreviewSources: compositePreviewSources,
+            }
+          : rawCandidateSelection;
+      const candidateDirStates = resolvePreviewDirStates({
+        activePreviewSources: candidateSelection.activePreviewSources,
+        activePreviewAssetRegistry:
+          candidateSelection.activePreviewAssetRegistry,
+        activePreviewRevision: candidateSelection.activePreviewRevision,
+        activeDirKey: data.active_dir_key,
+        activeDir: data.active_dir,
+        canvasWidth,
+        canvasHeight,
+      });
+      const candidateSuppressedParts =
+        buildSuppressedMarkingPartsByDir(candidateDirStates);
+      prepared = {
+        hairDef: candidateHairDef,
+        gradientDef: candidateGradientDef,
+        facialHairDef: candidateFacialHairDef,
+        earDef: candidateEarDef,
+        hornDef: candidateHornDef,
+        tailDef: candidateTailDef,
+        wingDef: candidateWingDef,
+        selection: candidateSelection,
+        dirStates: candidateDirStates,
+        suppressedPartsByDir: candidateSuppressedParts,
+        assembledPreviewCache: { preview: null },
+        assetReferences: [
+          ...collectPreviewDirStateAssetReferences({
+            previewDirStates: candidateDirStates,
+            directions: tileDirections,
+            stripReferenceMarkings,
+          }),
+          ...collectAppearanceOverlayAssetReferences({
+            directions: tileDirections,
+            hairDef: candidateHairDef,
+            gradientDef: candidateGradientDef,
+            facialHairDef: candidateFacialHairDef,
+            earDef: candidateEarDef,
+            hornDef: candidateHornDef,
+            tailDef: candidateTailDef,
+            wingDef: candidateWingDef,
+          }),
+          ...collectActiveBodyMarkingAssetReferences({
+            definitions: bodyMarkingsDefinitions,
+            markings: bodyMarkingsState,
+            order: bodyMarkingsOrder,
+            directions: tileDirections,
+            digitigrade: candidateState.digitigrade,
+            suppressedPartsByDir: candidateSuppressedParts,
+          }),
+        ],
+      };
+    }
+    const {
+      hairDef: candidateHairDef,
+      gradientDef: candidateGradientDef,
+      facialHairDef: candidateFacialHairDef,
+      earDef: candidateEarDef,
+      hornDef: candidateHornDef,
+      tailDef: candidateTailDef,
+      wingDef: candidateWingDef,
+      selection: candidateSelection,
+      dirStates: candidateDirStates,
+      suppressedPartsByDir: candidateSuppressedParts,
+      assetReferences: candidateAssetReferences,
+    } = prepared;
+    let assetsReady = areIconAssetsReady(candidateAssetReferences);
+    let assetReadinessSignature = getIconAssetReadinessSignature(
+      candidateAssetReferences
+    );
+    if (!assetsReady && assetReadinessSignature.includes(':idle')) {
+      primePreviewAssetReferences({
+        references: candidateAssetReferences,
+        canvasWidth,
+        canvasHeight,
+        signalAssetUpdate,
+      });
+      assetsReady = areIconAssetsReady(candidateAssetReferences);
+      assetReadinessSignature = getIconAssetReadinessSignature(
+        candidateAssetReferences
+      );
+    }
+    const loadingBaseSignature = buildProstheticTileBaseCacheSignature({
+      structureSignature: baseStructureSignature,
+      assetReadinessSignature,
+      complete: assetsReady,
+    });
+
+    if (!assetsReady) {
+      if (cachedBase?.structureSig !== baseStructureSignature) {
+        const pendingPreview = buildPendingTilePreview(tileDirections);
+        cachedBase = {
+          sig: loadingBaseSignature,
+          structureSig: baseStructureSignature,
+          preparedSig: preparedStructureSignature,
+          complete: false,
+          prostheticPrepared: prepared,
+          preview: pendingPreview,
+          previewByDir: pendingPreview.reduce(
+            (result, entry) => {
+              result[entry.dir] = entry;
+              return result;
+            },
+            {} as Record<number, PreviewDirectionEntry>
+          ),
+        };
+        tileBasePreviewCache[cacheKey] = cachedBase;
+      } else {
+        cachedBase.sig = loadingBaseSignature;
+        cachedBase.preparedSig = preparedStructureSignature;
+        cachedBase.prostheticPrepared = prepared;
+      }
+      const signature = [loadingBaseSignature, synthSignature].join('::');
+      const cached = tilePreviewCache[cacheKey];
+      if (cached?.sig === signature) {
+        return cached.previews;
+      }
+      const previews = buildColoredPreviews(
+        cachedBase.preview,
+        loadingBaseSignature,
+        colorLayerStructureSignature
+      );
+      tilePreviewCache[cacheKey] = { sig: signature, previews };
+      return previews;
+    }
+
+    let basePreview = cachedBase?.preview;
+    if (
+      !cachedBase?.complete ||
+      cachedBase.structureSig !== baseStructureSignature
+    ) {
+      const assembledPreview = resolveProstheticAssembledPreview(
+        prepared.assembledPreviewCache,
+        () => {
+          const rawPreview = buildBasePreviewRaw({
+            activePreviewSources: candidateSelection.activePreviewSources,
+            previewDirStates: candidateDirStates,
+            directions: tileDirections,
+            canvasWidth,
+            canvasHeight,
+            activeDirKey: tileDirections[0]?.dir || data.active_dir_key,
+            resolvedPartPriorityMap: {},
+            resolvedPartReplacementMap: {},
+            partPaintPresenceMap: undefined,
+            showEquipment: false,
+            showJobGear: false,
+            showLoadoutGear: false,
+            signalAssetUpdate,
+            stripReferenceMarkings,
+          });
+          const baseSegments = rawPreview.map((entry) => {
+            const { before, after } = splitOverlayGroup(entry.layers || []);
+            return { entry, before, after };
+          });
+          const markedPreview = applyBodyMarkings(
+            baseSegments.map(({ entry, before }) => ({
+              ...entry,
+              layers: before,
+            })),
+            candidateSuppressedParts
+          );
+          const markedByDir = markedPreview.reduce(
+            (result, entry) => {
+              result[entry.dir] = entry;
+              return result;
+            },
+            {} as Record<number, PreviewDirectionEntry>
+          );
+          return baseSegments.map(({ entry, before, after }) => {
+            const markedEntry = markedByDir[entry.dir];
+            const fallbackLayers = markedEntry?.layers || before;
+            const { base: baseLayers, priority: priorityLayers } =
+              splitPriorityBodyMarkingLayers(fallbackLayers);
+            const overlayEntries = buildBasicAppearanceOverlayEntries({
+              dir: entry.dir,
+              dirState: candidateDirStates[entry.dir],
+              canvasWidth,
+              canvasHeight,
+              appearanceState: candidateState,
+              hairDef: candidateHairDef,
+              gradientDef: candidateGradientDef,
+              facialHairDef: candidateFacialHairDef,
+              earDef: candidateEarDef,
+              hornDef: candidateHornDef,
+              tailDef: candidateTailDef,
+              wingDef: candidateWingDef,
+              showEquipment: false,
+              showJobGear: false,
+              showLoadoutGear: false,
+              signalAssetUpdate,
+            });
+            return {
+              ...entry,
+              layers: [
+                ...baseLayers,
+                ...overlayEntries,
+                ...after,
+                ...priorityLayers,
+              ],
+            };
+          });
+        }
+      );
+      const candidateExcludedParts =
+        collectBodyColorExcludedParts(candidateDirStates);
+      const candidateBlendMode = collectBodyColorBlendMode(candidateDirStates);
+      basePreview = applyBodyAndEyeColorToPreview(
+        assembledPreview,
+        previewBaseBodyColor,
+        previewTargetBodyColor,
+        candidateExcludedParts,
+        candidateBlendMode,
+        previewBaseEyeColor,
+        previewTargetEyeColor,
+        previewTargetBodyColor,
+        candidateState.hair_color
+      );
+      tileBasePreviewCache[cacheKey] = {
+        sig: baseStructureSignature,
+        structureSig: baseStructureSignature,
+        preparedSig: preparedStructureSignature,
+        complete: true,
+        prostheticPrepared: prepared,
+        preview: basePreview,
+        previewByDir: basePreview.reduce(
+          (result, entry) => {
+            result[entry.dir] = entry;
+            return result;
+          },
+          {} as Record<number, PreviewDirectionEntry>
+        ),
+      };
+    }
+    const signature = [baseStructureSignature, synthSignature].join('::');
+    const previews = buildColoredPreviews(
+      basePreview || [],
+      baseStructureSignature,
+      colorLayerStructureSignature,
+      signature
+    );
+    tilePreviewCache[cacheKey] = { sig: signature, previews };
+    return previews;
+  };
+
   const basePreviewSignature = buildBasePreviewSignature({
     payloadSignature,
     activePreviewRevision,
+    previewSourceSignature,
     previewUsesAltSources,
-    appearanceState,
+    digitigrade: appearanceState.digitigrade,
+    previewTransformSignature: buildLimbPreviewSignature(
+      appearanceState,
+      prostheticContext
+    ),
     canvasWidth,
     canvasHeight,
     tailHiddenSignature,
@@ -5561,10 +7983,37 @@ export const BasicAppearanceTab = (props: BasicAppearanceTabProps, context) => {
     partPrioritySignature,
     partReplacementSignature,
     partPaintSignature,
+    showEquipment,
     showJobGear,
     showLoadoutGear,
   });
-  const markedBaseSignature = `${basePreviewSignature}::${bodyMarkingsContextSignature}::${stripReferenceMarkings ? 's1' : 's0'}`;
+  const rawBasePreviewSignature = [
+    basePreviewSignature,
+    `assets:${assetRevision}`,
+    stripReferenceMarkings ? 's1' : 's0',
+  ].join('::');
+  const basePreviewRaw = resolveCachedBasePreviewRaw(
+    basePreviewRawCache,
+    rawBasePreviewSignature,
+    () =>
+      buildBasePreviewRaw({
+        activePreviewSources,
+        previewDirStates: previewDirStatesForLive,
+        directions: data.directions,
+        canvasWidth,
+        canvasHeight,
+        activeDirKey: data.active_dir_key,
+        resolvedPartPriorityMap,
+        resolvedPartReplacementMap,
+        partPaintPresenceMap,
+        showEquipment,
+        showJobGear,
+        showLoadoutGear,
+        signalAssetUpdate,
+        stripReferenceMarkings,
+      })
+  );
+  const markedBaseSignature = `${rawBasePreviewSignature}::${bodyMarkingsContextSignature}`;
   const { markedBasePreviewByDir, basePreviewAfterByDir } =
     resolveMarkedBasePreview({
       cache: markedBasePreviewCache,
@@ -5582,8 +8031,6 @@ export const BasicAppearanceTab = (props: BasicAppearanceTabProps, context) => {
       canvasWidth,
       canvasHeight,
       appearanceState,
-      previewBaseEyeColor,
-      previewTargetEyeColor,
       hairDef,
       gradientDef,
       facialHairDef,
@@ -5591,17 +8038,26 @@ export const BasicAppearanceTab = (props: BasicAppearanceTabProps, context) => {
       hornDef,
       tailDef,
       wingDef,
+      showEquipment,
       showJobGear,
       showLoadoutGear,
       signalAssetUpdate,
     });
     const fallbackSplit = splitOverlayGroup(dirEntry.layers || []);
-    const baseLayers = markedEntry?.layers || fallbackSplit.before;
+    const { base: baseLayers, priority: priorityLayers } =
+      splitPriorityBodyMarkingLayers(
+        markedEntry?.layers || fallbackSplit.before
+      );
     const afterLayers =
       basePreviewAfterByDir[dirEntry.dir] || fallbackSplit.after;
     return {
       ...dirEntry,
-      layers: [...baseLayers, ...overlayEntries, ...afterLayers],
+      layers: [
+        ...baseLayers,
+        ...overlayEntries,
+        ...afterLayers,
+        ...priorityLayers,
+      ],
     };
   });
   const livePreviewWithMarkings = applyBodyAndEyeColorToPreview(
@@ -5609,10 +8065,14 @@ export const BasicAppearanceTab = (props: BasicAppearanceTabProps, context) => {
     previewBaseBodyColor,
     previewTargetBodyColor,
     bodyColorExcludedParts,
+    bodyColorBlendMode,
     previewBaseEyeColor,
     previewTargetEyeColor,
-    previewTargetBodyColor
+    previewTargetBodyColor,
+    appearanceState.hair_color
   );
+  const previewForLive =
+    livePreview && livePreview.length ? livePreview : livePreviewWithMarkings;
   const {
     previewBackgroundImage,
     previewBackgroundTileWidth,
@@ -5645,12 +8105,22 @@ export const BasicAppearanceTab = (props: BasicAppearanceTabProps, context) => {
           setLoadInProgress={setLoadInProgress}
           requestPayload={requestPayload}
           syncPayload={(payload) => {
-            setPayloadSignature(buildBasicPayloadSignature(payload));
-            syncPayload(payload);
+            const mergedPayload = mergeBasicAppearancePayload(
+              basicPayload,
+              payload,
+              bodyPayload
+            );
+            setPayloadSignature(buildBasicPayloadSignature(mergedPayload));
+            syncPayload(mergedPayload);
           }}
           syncPreviewPayload={(payload) => {
-            setPayloadSignature(buildBasicPayloadSignature(payload));
-            syncPreviewPayload(payload);
+            const mergedPayload = mergeBasicAppearancePayload(
+              basicPayload,
+              payload,
+              bodyPayload
+            );
+            setPayloadSignature(buildBasicPayloadSignature(mergedPayload));
+            syncPreviewPayload(mergedPayload);
           }}
         />
         <LoadingOverlay
@@ -5661,19 +8131,19 @@ export const BasicAppearanceTab = (props: BasicAppearanceTabProps, context) => {
     );
   }
 
-  const galleryDefinitions = resolveGalleryDefinitionsForType(
+  const {
+    definitions: galleryDefinitions,
+    selectedId: selectedGalleryId,
+    emptyMessage: galleryEmptyMessage,
+  } = resolveBasicAppearanceGalleryPresentation({
+    type,
     galleryType,
-    hair_styles,
-    gradient_styles,
-    facial_hair_styles,
-    ear_styles,
-    tail_styles,
-    wing_styles
-  );
-  const selectedGalleryId = resolveSelectedIdForGalleryType(
-    galleryType,
-    appearanceState
-  );
+    payload: basicPayload,
+    appearanceState,
+    prostheticDefinitions,
+    prostheticContext,
+    selectedProstheticModelId: resolvedSelectedProstheticModelId,
+  });
 
   return (
     <Box className="RogueStar" position="relative" minHeight="100%">
@@ -5697,19 +8167,29 @@ export const BasicAppearanceTab = (props: BasicAppearanceTabProps, context) => {
         setLoadInProgress={setLoadInProgress}
         requestPayload={requestPayload}
         syncPayload={(payload) => {
-          setPayloadSignature(buildBasicPayloadSignature(payload));
-          syncPayload(payload);
+          const mergedPayload = mergeBasicAppearancePayload(
+            basicPayload,
+            payload,
+            bodyPayload
+          );
+          setPayloadSignature(buildBasicPayloadSignature(mergedPayload));
+          syncPayload(mergedPayload);
         }}
         syncPreviewPayload={(payload) => {
-          setPayloadSignature(buildBasicPayloadSignature(payload));
-          syncPreviewPayload(payload);
+          const mergedPayload = mergeBasicAppearancePayload(
+            basicPayload,
+            payload,
+            bodyPayload
+          );
+          setPayloadSignature(buildBasicPayloadSignature(mergedPayload));
+          syncPreviewPayload(mergedPayload);
         }}
       />
       <Flex direction="row" gap={1} wrap={false} height="100%">
         <Flex.Item basis="840px" shrink={0}>
           <Flex direction="column" gap={1}>
             <BasicAppearanceGallerySection
-              type={galleryType}
+              type={type}
               setType={(nextType) => {
                 setType(nextType);
                 setColorTarget(resolveDefaultColorTarget(nextType));
@@ -5724,8 +8204,22 @@ export const BasicAppearanceTab = (props: BasicAppearanceTabProps, context) => {
               canvasHeight={canvasHeight}
               tileDirectionsSignature={tileDirectionsSignature}
               assetRevision={assetRevision}
-              getTilePreviewEntries={getTilePreviewEntries}
-              onSelect={setGallerySelection}
+              getTilePreviewEntries={
+                prostheticsMode
+                  ? getProstheticTilePreviewEntries
+                  : getTilePreviewEntries
+              }
+              onSelect={(id) => {
+                if (prostheticsMode) {
+                  if (id) {
+                    setSelectedProstheticModelId(id);
+                    applyExternalProstheticSelection(id);
+                  }
+                  return;
+                }
+                setGallerySelection(id);
+              }}
+              emptyMessage={galleryEmptyMessage}
               backgroundImage={previewBackgroundImage}
               backgroundColor={backgroundFallbackColor}
               backgroundScale={canvasBackgroundScale}
@@ -5745,23 +8239,56 @@ export const BasicAppearanceTab = (props: BasicAppearanceTabProps, context) => {
               onSaveAndClose={() => handleSave(true)}
               onDiscardAndClose={handleDiscard}
             />
-            <BasicAppearanceSettingsSection
-              state={appearanceState}
-              uiLocked={uiLocked}
-              digitigradeAllowed={digitigradeAllowed}
-              hairDef={hairDef}
-              facialHairDef={facialHairDef}
-              maxAccessoryChannels={maxAccessoryChannels}
-              activeColorTarget={activeColorTarget}
-              setColorTarget={setColorTarget}
-              setStyle={setStyle}
-              setDigitigrade={setDigitigrade}
-            />
+            {prostheticsMode ? (
+              prostheticContext ? (
+                <ProstheticSettingsSection
+                  state={appearanceState}
+                  context={prostheticContext}
+                  biologicalGenders={biologicalGenders}
+                  bloodTypes={bloodTypes}
+                  bloodReagents={bloodReagents}
+                  activeTargets={resolvedActiveProstheticTargets}
+                  uiLocked={uiLocked}
+                  digitigradeAllowed={digitigradeAllowed}
+                  activeColorTarget={activeColorTarget}
+                  setColorTarget={setColorTarget}
+                  setActiveTargets={setActiveProstheticTargets}
+                  applyExternalSelection={applyExternalProstheticSelection}
+                  setInternalSelection={setInternalProstheticSelection}
+                  setBiologicalGender={setBiologicalGender}
+                  setBloodType={setBloodType}
+                  setBloodReagent={setBloodReagent}
+                  resetBloodColor={resetBloodColor}
+                  setNeedsGlasses={setNeedsGlasses}
+                  setDigitigrade={setDigitigrade}
+                  setSynthColorEnabled={setSynthColorEnabled}
+                  setSynthMarkings={setSynthMarkings}
+                  resetSettings={resetProstheticSettings}
+                />
+              ) : (
+                <Section title="Body Settings" fill>
+                  <NoticeBox warning>
+                    Prosthetic settings could not be loaded for this character.
+                  </NoticeBox>
+                </Section>
+              )
+            ) : (
+              <BasicAppearanceSettingsSection
+                state={appearanceState}
+                uiLocked={uiLocked}
+                hairDef={hairDef}
+                facialHairDef={facialHairDef}
+                maxAccessoryChannels={maxAccessoryChannels}
+                activeColorTarget={activeColorTarget}
+                setColorTarget={setColorTarget}
+                setStyle={setStyle}
+              />
+            )}
           </Flex>
         </Flex.Item>
         <Flex.Item grow>
           <BasicAppearancePreviewColumn
-            preview={livePreviewWithMarkings}
+            preview={previewForLive}
             canvasWidth={canvasWidth}
             canvasHeight={canvasHeight}
             previewFitToFrame={previewFitToFrame}
@@ -5771,6 +8298,10 @@ export const BasicAppearanceTab = (props: BasicAppearanceTabProps, context) => {
             canvasBackgroundScale={canvasBackgroundScale}
             previewBackgroundTileWidth={previewBackgroundTileWidth}
             previewBackgroundTileHeight={previewBackgroundTileHeight}
+            iconScaleX={data.trait_icon_scale_x}
+            iconScaleY={data.trait_icon_scale_y}
+            showEquipment={showEquipment}
+            onToggleEquipment={onToggleEquipment}
             showJobGear={showJobGear}
             onToggleJobGear={onToggleJobGear}
             showLoadoutGear={showLoadoutGear}

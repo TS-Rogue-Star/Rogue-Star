@@ -21,6 +21,7 @@
 			if(!vore_smooch)
 				visible_message("[src] leaves a smooch mark on [target]'s cheek!")
 				target.adjustBruteLoss(-0.25)
+				target.resolve_stimuli(user, "kiss")
 				qdel(src)
 			else //vorny version
 				visible_message("[src] suddenly opens its lips wide, engulfing [target]")

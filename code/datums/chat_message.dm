@@ -175,6 +175,10 @@ var/list/runechat_image_cache = list()
 
 	// Approximate text height
 	var/complete_text = "<span class='center maptext [extra_classes != null ? extra_classes.Join(" ") : ""]' style='color: [tgt_color];'>[text]</span>"
+	// RS ADD
+	if(!owned_by)
+		qdel(src)
+		return
 	var/mheight = WXH_TO_HEIGHT(owned_by.MeasureText(complete_text, null, msgwidth))
 	approx_lines = max(1, mheight / CHAT_MESSAGE_APPROX_LHEIGHT)
 

@@ -448,10 +448,10 @@
 /area/security/moonbase/legal)
 "bs" = (
 /obj/structure/table/glass,
-/obj/item/device/healthanalyzer,
-/obj/item/clothing/accessory/stethoscope,
-/turf/simulated/floor/tiled/white,
-/area/medical/exam_room)
+/obj/item/weapon/folder/white,
+/obj/item/weapon/clipboard,
+/turf/simulated/floor/carpet/blue,
+/area/medical/psych)
 "bt" = (
 /obj/structure/table/steel_reinforced,
 /obj/machinery/atmospherics/unary/vent_pump/on{
@@ -910,14 +910,11 @@
 /turf/simulated/floor/tiled/eris/steel/brown_platform,
 /area/crew_quarters/bar)
 "cz" = (
-/obj/effect/floor_decal/corner/paleblue{
-	dir = 10
-	},
 /obj/machinery/camera/network/medbay{
 	dir = 1
 	},
-/turf/simulated/floor/tiled/white,
-/area/medical/exam_room)
+/turf/simulated/floor/carpet/blue,
+/area/medical/psych)
 "cA" = (
 /obj/structure/disposalpipe/segment{
 	dir = 8;
@@ -1303,12 +1300,13 @@
 /turf/simulated/floor/tiled/steel_ridged,
 /area/security/briefing_room)
 "dC" = (
-/obj/structure/closet/secure_closet/personal/patient,
-/obj/effect/floor_decal/corner/paleblue/full{
-	dir = 8
+/obj/machinery/door/firedoor/glass,
+/obj/structure/grille,
+/obj/structure/window/reinforced/polarized/full{
+	id = "medpsych"
 	},
-/turf/simulated/floor/tiled/white,
-/area/medical/exam_room)
+/turf/simulated/floor/plating,
+/area/medical/psych)
 "dD" = (
 /obj/machinery/door/firedoor/glass,
 /obj/structure/grille,
@@ -1657,14 +1655,6 @@
 /obj/effect/map_effect/perma_light/brighter,
 /turf/simulated/open,
 /area/crew_quarters/bar)
-"et" = (
-/obj/machinery/door/firedoor/glass,
-/obj/structure/grille,
-/obj/structure/window/reinforced/polarized/full{
-	id = "medexam"
-	},
-/turf/simulated/floor/plating,
-/area/medical/exam_room)
 "eu" = (
 /obj/structure/cable/green{
 	icon_state = "4-8"
@@ -2171,18 +2161,6 @@
 "fM" = (
 /turf/simulated/wall/r_wall,
 /area/rnd/research_foyer)
-"fN" = (
-/obj/machinery/bodyscanner{
-	dir = 4
-	},
-/obj/effect/floor_decal/corner_steel_grid{
-	dir = 10
-	},
-/obj/effect/floor_decal/corner/paleblue/full{
-	dir = 1
-	},
-/turf/simulated/floor/tiled/white,
-/area/medical/exam_room)
 "fP" = (
 /obj/effect/floor_decal/milspec/color/emerald/half{
 	dir = 8
@@ -2304,7 +2282,6 @@
 	},
 /area/security/main)
 "ge" = (
-/obj/structure/bed/chair/bay,
 /obj/structure/cable/cyan{
 	icon_state = "4-8"
 	},
@@ -2314,8 +2291,8 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
-/turf/simulated/floor/tiled/white,
-/area/medical/exam_room)
+/turf/simulated/floor/carpet/blue,
+/area/medical/psych)
 "gg" = (
 /obj/structure/dogbed,
 /mob/living/simple_mob/animal/passive/dog/void_puppy/nulle,
@@ -3022,14 +2999,14 @@
 /obj/structure/bed/chair/sofa/teal{
 	dir = 4
 	},
-/obj/effect/floor_decal/corner/paleblue{
-	dir = 9
+/obj/machinery/power/apc{
+	dir = 8
 	},
-/obj/machinery/alarm{
-	dir = 4
+/obj/structure/cable/cyan{
+	icon_state = "0-4"
 	},
-/turf/simulated/floor/tiled/white,
-/area/medical/exam_room)
+/turf/simulated/floor/carpet/blue,
+/area/medical/psych)
 "hR" = (
 /obj/random/maintenance/clean,
 /obj/random/maintenance/clean,
@@ -3223,11 +3200,8 @@
 "im" = (
 /obj/structure/table/glass,
 /obj/machinery/computer/med_data/laptop,
-/obj/effect/floor_decal/corner/paleblue{
-	dir = 6
-	},
-/turf/simulated/floor/tiled/white,
-/area/medical/exam_room)
+/turf/simulated/floor/carpet/blue,
+/area/medical/psych)
 "in" = (
 /obj/effect/floor_decal/milspec/color/blue/half,
 /obj/machinery/status_display{
@@ -3683,12 +3657,12 @@
 "jk" = (
 /obj/structure/flora/ausbushes/ppflowers,
 /obj/structure/window/reinforced/polarized/full{
-	id = "medexam"
+	id = "medpsych"
 	},
 /turf/simulated/floor/outdoors/grass/forest{
 	outdoors = 0
 	},
-/area/medical/exam_room)
+/area/medical/psych)
 "jl" = (
 /turf/simulated/wall/fancy_shuttle/window{
 	fancy_shuttle_tag = "explo"
@@ -4070,13 +4044,11 @@
 /obj/structure/bed/chair/sofa/right/teal{
 	dir = 4
 	},
-/obj/effect/floor_decal/corner/paleblue/full,
-/obj/item/weapon/cane,
 /obj/machinery/atmospherics/unary/vent_pump/on{
 	dir = 4
 	},
-/turf/simulated/floor/tiled/white,
-/area/medical/exam_room)
+/turf/simulated/floor/carpet/blue,
+/area/medical/psych)
 "kl" = (
 /obj/machinery/vending/boozeomat,
 /turf/simulated/floor/tiled/eris/steel/bar_flat,
@@ -4701,18 +4673,15 @@
 /obj/structure/bed/chair/office/light{
 	dir = 1
 	},
-/obj/effect/floor_decal/corner/paleblue{
-	dir = 10
-	},
 /obj/machinery/button/windowtint/multitint{
 	pixel_y = 33;
 	pixel_x = 19;
-	id = "medexam"
+	id = "medpsych"
 	},
 /obj/machinery/light,
 /obj/effect/landmark/start/psych,
-/turf/simulated/floor/tiled/white,
-/area/medical/exam_room)
+/turf/simulated/floor/carpet/blue,
+/area/medical/psych)
 "lQ" = (
 /obj/structure/table/woodentable,
 /turf/simulated/floor/carpet/blue2,
@@ -5695,11 +5664,14 @@
 /turf/simulated/floor/tiled/steel_ridged,
 /area/crew_quarters/heads/cmo)
 "ob" = (
-/obj/effect/floor_decal/corner/paleblue/full{
-	dir = 4
+/obj/structure/table/glass,
+/obj/item/weapon/paper_bin{
+	pixel_x = 3;
+	pixel_y = 7
 	},
-/turf/simulated/floor/tiled/white,
-/area/medical/exam_room)
+/obj/item/weapon/pen/multi,
+/turf/simulated/floor/carpet/blue,
+/area/medical/psych)
 "oc" = (
 /obj/effect/floor_decal/milspec/color/emerald/half{
 	dir = 4
@@ -6054,8 +6026,9 @@
 "oU" = (
 /obj/machinery/door/firedoor/glass,
 /obj/machinery/door/airlock/glass_medical/polarized{
-	id_tint = "medexam";
-	name = "Exam Room"
+	id_tint = "medpsych";
+	name = "Mental Health";
+	req_one_access = list(64)
 	},
 /obj/structure/cable/cyan{
 	icon_state = "4-8"
@@ -6070,7 +6043,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/tiled/steel_ridged,
-/area/medical/exam_room)
+/area/medical/psych)
 "oW" = (
 /obj/structure/cable/cyan{
 	icon_state = "2-8"
@@ -6864,17 +6837,15 @@
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/rnd/moonbase/serverroom)
 "qI" = (
-/obj/effect/floor_decal/corner/paleblue{
-	dir = 6
-	},
 /obj/machinery/disposal/wall{
 	dir = 8
 	},
 /obj/structure/disposalpipe/trunk{
 	dir = 2
 	},
-/turf/simulated/floor/tiled/white,
-/area/medical/exam_room)
+/obj/structure/flora/pottedplant/orientaltree,
+/turf/simulated/floor/carpet/blue,
+/area/medical/psych)
 "qJ" = (
 /obj/effect/floor_decal/milspec/color/emerald/half{
 	dir = 10
@@ -7555,20 +7526,6 @@
 	},
 /turf/simulated/floor/tiled/monotile,
 /area/quartermaster/storage)
-"sn" = (
-/obj/structure/bed/padded,
-/obj/item/weapon/bedsheet/medical,
-/obj/effect/floor_decal/corner/paleblue{
-	dir = 5
-	},
-/obj/structure/cable/cyan{
-	icon_state = "0-2"
-	},
-/obj/machinery/power/apc{
-	dir = 1
-	},
-/turf/simulated/floor/tiled/white,
-/area/medical/exam_room)
 "so" = (
 /obj/effect/floor_decal/steeldecal/steel_decals5{
 	dir = 8
@@ -9339,12 +9296,12 @@
 "wN" = (
 /obj/structure/flora/ausbushes/ywflowers,
 /obj/structure/window/reinforced/polarized/full{
-	id = "medexam"
+	id = "medpsych"
 	},
 /turf/simulated/floor/outdoors/grass/forest{
 	outdoors = 0
 	},
-/area/medical/exam_room)
+/area/medical/psych)
 "wO" = (
 /obj/structure/cable/cyan{
 	icon_state = "1-2"
@@ -9642,7 +9599,7 @@
 /area/security/moonbase/legal)
 "xy" = (
 /turf/simulated/wall/r_wall,
-/area/medical/exam_room)
+/area/medical/psych)
 "xz" = (
 /obj/structure/railing/grey{
 	dir = 1
@@ -9768,8 +9725,9 @@
 /turf/simulated/floor/tiled,
 /area/engineering/engine_room)
 "xR" = (
-/turf/simulated/floor/tiled/white,
-/area/medical/exam_room)
+/obj/structure/bed/padded,
+/turf/simulated/floor/carpet/blue,
+/area/medical/psych)
 "xS" = (
 /obj/machinery/portable_atmospherics/hydroponics,
 /obj/machinery/camera/network/civilian{
@@ -10193,8 +10151,11 @@
 /area/bridge/meeting_room)
 "yU" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/turf/simulated/floor/tiled/white,
-/area/medical/exam_room)
+/obj/structure/cable/cyan{
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/carpet/blue,
+/area/medical/psych)
 "yV" = (
 /obj/structure/cable{
 	icon_state = "4-8"
@@ -11355,17 +11316,17 @@
 /turf/simulated/floor/tiled,
 /area/security/moonbase/legal)
 "BX" = (
-/obj/structure/cable/cyan{
-	icon_state = "1-4"
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 6
 	},
-/turf/simulated/floor/tiled/white,
-/area/medical/exam_room)
+/obj/structure/cable/cyan{
+	icon_state = "2-4"
+	},
+/turf/simulated/floor/carpet/blue,
+/area/medical/psych)
 "BY" = (
 /obj/structure/cable{
 	icon_state = "2-8"
@@ -12881,8 +12842,8 @@
 	})
 "FZ" = (
 /obj/structure/table/glass,
-/turf/simulated/floor/tiled/white,
-/area/medical/exam_room)
+/turf/simulated/floor/carpet/blue,
+/area/medical/psych)
 "Ga" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
@@ -13025,19 +12986,6 @@
 "Gy" = (
 /turf/simulated/floor/carpet/blue2,
 /area/lawoffice/moonbase/iaatwo)
-"Gz" = (
-/obj/machinery/body_scanconsole{
-	dir = 4
-	},
-/obj/effect/floor_decal/corner_steel_grid{
-	dir = 10
-	},
-/obj/effect/floor_decal/corner/paleblue{
-	dir = 5
-	},
-/obj/machinery/firealarm,
-/turf/simulated/floor/tiled/white,
-/area/medical/exam_room)
 "GA" = (
 /obj/structure/table/woodentable,
 /obj/machinery/computer/med_data/laptop{
@@ -13695,12 +13643,12 @@
 "HZ" = (
 /obj/structure/flora/ausbushes/leafybush,
 /obj/structure/window/reinforced/polarized/full{
-	id = "medexam"
+	id = "medpsych"
 	},
 /turf/simulated/floor/outdoors/grass/forest{
 	outdoors = 0
 	},
-/area/medical/exam_room)
+/area/medical/psych)
 "Ib" = (
 /obj/structure/window/reinforced,
 /obj/structure/lattice,
@@ -13933,10 +13881,10 @@
 /obj/machinery/light_switch{
 	dir = 8;
 	pixel_x = 24;
-	pixel_y = 23
+	pixel_y = -23
 	},
-/turf/simulated/floor/tiled/white,
-/area/medical/exam_room)
+/turf/simulated/floor/carpet/blue,
+/area/medical/psych)
 "IN" = (
 /obj/structure/bed/chair/bay/comfy/blue{
 	dir = 1
@@ -14311,14 +14259,11 @@
 	},
 /area/medical/medbay_primary_storage)
 "JK" = (
-/obj/effect/floor_decal/corner/paleblue{
-	dir = 10
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 9
 	},
-/turf/simulated/floor/tiled/white,
-/area/medical/exam_room)
+/turf/simulated/floor/carpet/blue,
+/area/medical/psych)
 "JL" = (
 /obj/structure/cable/white{
 	icon_state = "1-2"
@@ -15403,18 +15348,6 @@
 	},
 /turf/simulated/floor/tiled/white,
 /area/medical/medbay_primary_storage)
-"Me" = (
-/obj/structure/cable/cyan{
-	icon_state = "4-8"
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
-/turf/simulated/floor/tiled/white,
-/area/medical/exam_room)
 "Mf" = (
 /obj/effect/floor_decal/steeldecal/steel_decals5{
 	dir = 1
@@ -15610,15 +15543,6 @@
 	},
 /turf/simulated/floor/tiled,
 /area/ai_monitored/storage/emergency/eva)
-"MB" = (
-/obj/structure/flora/ausbushes/pointybush,
-/obj/structure/window/reinforced/polarized/full{
-	id = "medexam"
-	},
-/turf/simulated/floor/outdoors/grass/forest{
-	outdoors = 0
-	},
-/area/medical/exam_room)
 "MC" = (
 /obj/effect/floor_decal/milspec/color/red,
 /obj/structure/closet/bombcloset/double,
@@ -16681,14 +16605,12 @@
 /turf/simulated/floor/tiled/monotile,
 /area/hallway/arrival/moonbase/main)
 "Pn" = (
-/obj/machinery/vending/wallmed1/public{
-	pixel_y = 29
+/obj/machinery/light{
+	dir = 8
 	},
-/obj/effect/floor_decal/corner/paleblue{
-	dir = 5
-	},
+/obj/structure/flora/pottedplant/minitree,
 /turf/simulated/floor/tiled/white,
-/area/medical/exam_room)
+/area/medical/ward)
 "Po" = (
 /obj/structure/panic_button{
 	pixel_x = 32;
@@ -17072,14 +16994,14 @@
 /obj/structure/bed/chair/sofa/left/teal{
 	dir = 4
 	},
-/obj/effect/floor_decal/corner/paleblue{
-	dir = 9
-	},
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
 	dir = 4
 	},
-/turf/simulated/floor/tiled/white,
-/area/medical/exam_room)
+/obj/machinery/alarm{
+	dir = 4
+	},
+/turf/simulated/floor/carpet/blue,
+/area/medical/psych)
 "Qe" = (
 /obj/structure/cable/cyan{
 	icon_state = "1-8"
@@ -18503,6 +18425,10 @@
 "TI" = (
 /turf/simulated/floor/plating,
 /area/hallway/moonbase/central)
+"TL" = (
+/obj/structure/bed/chair/comfy,
+/turf/simulated/floor/carpet/blue,
+/area/medical/psych)
 "TN" = (
 /obj/machinery/alarm{
 	dir = 8
@@ -18852,11 +18778,8 @@
 /turf/simulated/floor/tiled/eris/cafe,
 /area/security/main)
 "UL" = (
-/obj/structure/cable/cyan{
-	icon_state = "1-2"
-	},
-/turf/simulated/floor/tiled/white,
-/area/medical/exam_room)
+/turf/simulated/floor/carpet/blue,
+/area/medical/psych)
 "UM" = (
 /obj/effect/map_helper/airlock/atmos/pump_out_external,
 /obj/machinery/atmospherics/unary/vent_pump/high_volume{
@@ -20548,14 +20471,12 @@
 /turf/simulated/floor/carpet/tealcarpet,
 /area/crew_quarters/heads/cmo)
 "Zc" = (
-/obj/effect/floor_decal/corner/paleblue{
-	dir = 9
-	},
 /obj/machinery/light{
 	dir = 8
 	},
-/turf/simulated/floor/tiled/white,
-/area/medical/exam_room)
+/obj/structure/flora/pottedplant/orientaltree,
+/turf/simulated/floor/carpet/blue,
+/area/medical/psych)
 "Zd" = (
 /obj/effect/floor_decal/steeldecal/steel_decals5{
 	dir = 1
@@ -31217,12 +31138,12 @@ KF
 KF
 KF
 KF
+KF
 xy
-et
-et
-et
-et
-et
+dC
+dC
+dC
+dC
 xy
 mM
 vt
@@ -31357,22 +31278,22 @@ Rz
 Yx
 ji
 ji
+Pn
 Yr
 ji
-et
 dC
 Zc
 Qd
 hQ
 kj
-et
+dC
 eR
 vv
 zD
 GJ
-Bd
-sT
 rT
+sT
+Bd
 yD
 sQ
 sQ
@@ -31501,13 +31422,13 @@ Cx
 rY
 rY
 rY
-et
-sn
+rY
+dC
 UL
 BX
 yU
 JK
-et
+dC
 eR
 ho
 zD
@@ -31642,14 +31563,14 @@ nr
 rY
 HD
 ke
+rY
 zO
-et
-Pn
+dC
 xR
-Me
+ge
 bs
 cz
-et
+dC
 eR
 fw
 zD
@@ -31785,13 +31706,13 @@ hJ
 yc
 WY
 rY
-et
-Gz
-xR
+rY
+dC
+TL
 ge
 FZ
 lP
-et
+dC
 eR
 vv
 zD
@@ -31926,14 +31847,14 @@ Yx
 yX
 DD
 pR
+rY
 wU
-et
-fN
+dC
 qI
 IM
 im
 ob
-et
+dC
 GR
 fz
 oy
@@ -32069,8 +31990,8 @@ Yc
 Yc
 xr
 Yc
+Yc
 xy
-MB
 jk
 oU
 wN
@@ -33055,9 +32976,9 @@ bm
 bm
 JM
 Zf
-ac
-ac
-ac
+wj
+wj
+wj
 ac
 ac
 ac

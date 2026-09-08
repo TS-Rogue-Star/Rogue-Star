@@ -210,6 +210,7 @@
 	name = "cephalon mass"
 	parent_organ = BP_TORSO
 	vital = TRUE
+	chargen_prosthetic_flags = 0 // RS Add: Character Designer - Species and Prosthetics (Lira, August 2026)
 
 /obj/item/organ/internal/brain/cephalon/Initialize()
 	. = ..()

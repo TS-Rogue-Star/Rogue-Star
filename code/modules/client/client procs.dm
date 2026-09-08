@@ -237,6 +237,10 @@
 	prefs.last_id = computer_id			//these are gonna be used for banning
 	prefs.client = src // Only relevant if we reloaded it from the global list, otherwise prefs/New sets it
 
+	// RS Add: Character Designer - Traits Tab (Lira, August 2026)
+	if(!etching && !IsGuestKey(key))
+		load_etching(prefs)
+
 	hook_vr("client_new",list(src)) //VOREStation Code. For now this only loads vore prefs, so better put before mob.Login() call but after normal prefs are loaded.
 
 	. = ..()	//calls mob.Login()

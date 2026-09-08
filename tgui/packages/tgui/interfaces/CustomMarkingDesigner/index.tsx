@@ -13,17 +13,32 @@
 // /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Updated by Lira for Rogue Star February 2026: West - east mirror tool added /////////////////////////////////////////
 // /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star August 2026: Character Designer - Species and Prosthetics ////////////////////////////
+// /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star August 2026: Character Designer - Traits Tab /////////////////////////////////////////
+// /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star September 2026: Character Designer - Identity Tab ////////////////////////////////////
+// /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-import { selectBackend, useBackend, useLocalState } from '../../backend';
-import { Box, Button, Flex, Tabs } from '../../components';
+import { Component } from 'inferno';
+
+import {
+  backendSetSharedStates,
+  selectBackend,
+  useBackend,
+  useLocalState,
+} from '../../backend';
+import { Box, Button, Flex, Icon, Tabs } from '../../components';
 import { Window } from '../../layouts';
 import { normalizeHex, TRANSPARENT_HEX } from '../../utils/color';
 import {
   GENERIC_PART_KEY,
   cloneGridData,
+  isStaticIconAssetRegistryLoaded,
   resolveBodyPartLabel,
   type DiffEntry,
   type PreviewDirectionEntry,
+  type PreviewDirectionSource,
   type PreviewLayerEntry,
   type PreviewState,
 } from '../../utils/character-preview';
@@ -46,7 +61,6 @@ import {
   UnsavedChangesOverlay,
 } from './components';
 import {
-  CHIP_BUTTON_CLASS,
   COLOR_PICKER_CUSTOM_SLOTS,
   EAST,
   ERASER_PREVIEW_COLOR,
@@ -74,15 +88,23 @@ import {
 import { createPaintHandlers } from './utils/paintHandlers';
 import {
   applyBodyColorToPreview,
+  applyCustomPreviewOverridesToBasicPayload,
+  applyEyeColorToPreview,
+  applyLimbHairColorToPreview,
+  applyProstheticsToPreviewSources,
+  applyHeadAppearanceToCanvasReferences,
   applyPreviewInitialization,
   areAllPreviewLayersLoaded,
   buildCanvasKey,
+  buildGenericCanvasReference,
   buildBodyPartLabelMap,
   buildBodyMarkingDefinitions,
   buildBodyMarkingSavePayload,
   buildBodyMarkingChunkPlan,
   buildBodyPayloadSignature,
   buildBasicStateFromPayload,
+  buildProstheticSaveParams,
+  cloneLimbOverrideState,
   buildBodySavedStateFromPayload,
   createReferenceOpacityControls,
   getCanvasFrameStyle,
@@ -91,15 +113,41 @@ import {
   createSavingHandlers,
   deepCopyMarkings,
   initializeColorPickerSlotsIfNeeded,
+  mergeSpeciesBodyPreviewSource,
   parseHex,
   resolveExportGridForDirPart,
   resolveReferencePartId,
+  resolveSharedPreviewSourceSelection,
+  resolveSpeciesBodyPreviewSources,
+  resolveSpeciesIconBaseOptions,
   sampleGridColorAt,
+  buildBasicAppearanceLoadParams,
+  buildBodyMarkingsLoadParams,
+  buildSpeciesSaveCacheParams,
+  buildTraitsDraftState,
+  buildTraitsSavePayload,
+  buildIdentityDraftState,
+  buildIdentitySavePayload,
+  cloneIdentityDraftState,
+  identityDraftStatesEqual,
+  isIdentityRandomNameRequestCurrent,
+  resolveIdentityDraftValidationError,
+  resolveIdentitySaveAcknowledgement,
+  runIdentityPayloadSync,
+  isSpeciesSaveAllowed,
+  resolveTraitsSaveAcknowledgement,
+  resolveLanguagesDraftValidationError,
+  mergeBasicAppearancePayload,
+  mergeBodyMarkingsPayload,
+  shouldRetainLocalBasicPayload,
+  shouldInvalidateSpeciesPayloadForBiologicalGenderChange,
+  syncSpeciesSaveResultState,
+  traitDraftSelectionsEqual,
   toHex,
 } from './utils';
 import {
-  buildHiddenBodyPartsByDir,
   buildReferencePartMarkingGridsByDir,
+  buildSuppressedMarkingPartsByDir,
 } from './utils/markingOverrides';
 import type {
   CustomMarkingDesignerData,
@@ -114,19 +162,28 @@ import type {
   BooleanMapState,
   CustomPreviewOverrideMap,
   PendingPreviewOverrides,
+  SpeciesPayload,
+  SpeciesSaveResult,
+  TraitsDraftState,
+  TraitsPayload,
+  TraitsSaveResult,
+  IdentityDraftState,
+  IdentityPayload,
+  IdentityRandomNameResult,
+  IdentitySaveResult,
 } from './types';
 import { useDesignerUiState } from './state';
 import CustomEyeIconAsset from '../../../../public/Icons/Rogue Star/eye 1.png';
 import {
   BodyMarkingsTab,
   applyAppearanceOverlaysToPreview,
-  applyEyeColorToPreview,
   resolveAppearanceContext,
   type AppearancePreviewContext,
 } from './BodyMarkingsTab';
 import {
   BasicAppearanceTab,
   applyBodyMarkingsToPreview,
+  buildBasicPayloadSignature,
   resolveBodyMarkingsContext,
   type BodyMarkingDefinitionCache,
   type BodyMarkingsPreviewContext,
@@ -134,8 +191,17 @@ import {
   type BodyMarkingsSignatureCache,
   type MarkingLayersCacheEntry,
 } from './BasicAppearanceTab';
+import { SpeciesTab } from './SpeciesTab';
+import { TraitsTab } from './TraitsTab';
+import { IdentityTab } from './IdentityTab';
 
-type DesignerTabId = 'custom' | 'body' | 'basic';
+type DesignerTabId =
+  | 'identity'
+  | 'custom'
+  | 'body'
+  | 'basic'
+  | 'species'
+  | 'traits';
 
 type PreviewWithMarkingsCache = {
   signature: string;
@@ -155,6 +221,7 @@ type CustomLayerMap = {
 const REFERENCE_PASSTHROUGH_KEYS = new Set([
   'markings',
   'overlay',
+  'gear_equipment',
   'gear_job',
   'gear_loadout',
 ]);
@@ -167,6 +234,11 @@ const APPEARANCE_OVERLAY_MASK_SLOTS = new Set([
   'tail_upper_alt',
   'wing_lower',
   'wing_upper',
+]);
+const HEAD_APPEARANCE_OVERLAY_SLOTS = new Set([
+  'hair',
+  'hair_accessory',
+  'ears',
 ]);
 
 const resolveOverlaySlotFromKey = (
@@ -243,15 +315,20 @@ const mergeGrid = (target: string[][], source?: string[][] | null) => {
   }
 };
 
-const buildAppearanceOverlayGrid = (
+const buildAppearanceOverlayGrids = (
   preview: PreviewDirectionEntry[],
   dirKey: number
-): string[][] | null => {
+): {
+  head: string[][] | null;
+  other: string[][] | null;
+} => {
   const entry = preview.find((dirEntry) => dirEntry.dir === dirKey);
   if (!entry?.layers) {
-    return null;
+    return { head: null, other: null };
   }
-  const overlayLayers = entry.layers.filter((layer) => {
+  const headLayers: PreviewLayerEntry[] = [];
+  const otherLayers: PreviewLayerEntry[] = [];
+  entry.layers.forEach((layer) => {
     if (
       layer?.type !== 'overlay' ||
       layer?.source !== 'base' ||
@@ -259,26 +336,35 @@ const buildAppearanceOverlayGrid = (
       !layer.key.startsWith('overlay_body_') ||
       !Array.isArray(layer.grid)
     ) {
-      return false;
+      return;
     }
     const slot = resolveOverlaySlotFromKey(
       layer.key,
       dirKey,
       layer.source || 'base'
     );
-    return !!slot && APPEARANCE_OVERLAY_MASK_SLOTS.has(slot);
-  });
-  if (!overlayLayers.length) {
-    return null;
-  }
-  const merged: string[][] = [];
-  overlayLayers.forEach((layer) => {
-    if (!layer.grid || !layer.grid.length) {
+    if (!slot || !APPEARANCE_OVERLAY_MASK_SLOTS.has(slot)) {
       return;
     }
-    mergeGrid(merged, layer.grid);
+    if (HEAD_APPEARANCE_OVERLAY_SLOTS.has(slot)) {
+      headLayers.push(layer);
+    } else {
+      otherLayers.push(layer);
+    }
   });
-  return merged.length ? merged : null;
+  const mergeLayers = (layers: PreviewLayerEntry[]): string[][] | null => {
+    const merged: string[][] = [];
+    layers.forEach((layer) => {
+      if (layer.grid?.length) {
+        mergeGrid(merged, layer.grid);
+      }
+    });
+    return merged.length ? merged : null;
+  };
+  return {
+    head: mergeLayers(headLayers),
+    other: mergeLayers(otherLayers),
+  };
 };
 
 const applyAppearanceToReferenceSources = (options: {
@@ -325,17 +411,22 @@ const applyAppearanceToReferenceSources = (options: {
   const recolored =
     layers.length > 0
       ? applyEyeColorToPreview(
-          applyBodyColorToPreview(
-            [
-              {
-                dir: dirKey,
-                label: '',
-                layers,
-              },
-            ],
-            appearanceContext.previewBaseBodyColor,
-            appearanceContext.previewTargetBodyColor,
-            appearanceContext.bodyColorExcludedParts
+          applyLimbHairColorToPreview(
+            applyBodyColorToPreview(
+              [
+                {
+                  dir: dirKey,
+                  label: '',
+                  layers,
+                },
+              ],
+              appearanceContext.previewBaseBodyColor,
+              appearanceContext.previewTargetBodyColor,
+              appearanceContext.bodyColorExcludedParts,
+              1,
+              appearanceContext.bodyColorBlendMode
+            ),
+            appearanceContext.appearanceState.hair_color
           ),
           appearanceContext.previewBaseEyeColor,
           appearanceContext.previewTargetEyeColor,
@@ -343,7 +434,7 @@ const applyAppearanceToReferenceSources = (options: {
         )
       : null;
   let nextReferenceGrid = referenceGrid;
-  const nextReferenceParts: Record<string, string[][]> = {
+  let nextReferenceParts: Record<string, string[][]> = {
     ...preservedParts,
   };
   if (recolored?.[0]?.layers) {
@@ -365,16 +456,32 @@ const applyAppearanceToReferenceSources = (options: {
       nextReferenceParts[partId] = layer.grid;
     });
   }
-  const appearanceOverlayGrid = buildAppearanceOverlayGrid(preview, dirKey);
-  if (appearanceOverlayGrid) {
+  const mergeIntoCanvasOverlay = (overlayGrid: string[][]) => {
     const existingOverlay = nextReferenceParts.overlay;
     const merged = existingOverlay
       ? cloneGridData(existingOverlay)
-      : cloneGridData(appearanceOverlayGrid);
+      : cloneGridData(overlayGrid);
     if (existingOverlay) {
-      mergeGrid(merged, appearanceOverlayGrid);
+      mergeGrid(merged, overlayGrid);
     }
     nextReferenceParts.overlay = merged;
+  };
+  const appearanceOverlayGrids = buildAppearanceOverlayGrids(preview, dirKey);
+  if (appearanceOverlayGrids.head) {
+    const mergedHeadReferences = applyHeadAppearanceToCanvasReferences({
+      referenceParts: nextReferenceParts,
+      referenceGrid: nextReferenceGrid,
+      overlayGrid: appearanceOverlayGrids.head,
+      mergeGrid,
+    });
+    nextReferenceParts = mergedHeadReferences.referenceParts;
+    nextReferenceGrid = mergedHeadReferences.referenceGrid;
+    if (!mergedHeadReferences.applied) {
+      mergeIntoCanvasOverlay(appearanceOverlayGrids.head);
+    }
+  }
+  if (appearanceOverlayGrids.other) {
+    mergeIntoCanvasOverlay(appearanceOverlayGrids.other);
   }
   const nextSignature =
     appearanceContext.appearanceSignature.length > 0
@@ -398,6 +505,9 @@ const resolveCustomDesignerTabTooltip = (allowCustomTab: boolean) =>
   allowCustomTab ? undefined : 'Enable Custom Markings to use the designer.';
 
 const CLIENT_PREVIEW_EPOCH_STRIDE = 1000000;
+const DESIGNER_ZOOM_LEVELS = [50, 60, 70, 80, 90, 100] as const;
+const DESIGNER_ZOOM_MIN_PERCENT = 50;
+const DESIGNER_ZOOM_MAX_PERCENT = 100;
 
 const buildBooleanMapSignature = (
   map?: Record<string, boolean> | null
@@ -580,32 +690,59 @@ const resolvePayloadSnapshots = (options: {
   context: any;
   bodyPayload: BodyMarkingsPayload | null;
   basicPayload: BasicAppearancePayload | null;
-  dataBodyPayload?: BodyMarkingsPayload | null;
-  dataBasicPayload?: BasicAppearancePayload | null;
 }): {
   bodyPayloadSnapshot: BodyMarkingsPayload | null;
   basicPayloadSnapshot: BasicAppearancePayload | null;
 } => {
   const sharedStateSnapshot =
     selectBackend(options.context.store.getState()).shared || {};
-  const bodyPayloadSnapshot =
-    (sharedStateSnapshot.bodyPayload as
-      | BodyMarkingsPayload
-      | null
-      | undefined) ??
-    options.bodyPayload ??
-    options.dataBodyPayload ??
-    null;
-  const basicPayloadSnapshot =
-    (sharedStateSnapshot.basicPayload as
-      | BasicAppearancePayload
-      | null
-      | undefined) ??
-    options.basicPayload ??
-    options.dataBasicPayload ??
-    null;
+  const hasSharedBodyPayload = Object.prototype.hasOwnProperty.call(
+    sharedStateSnapshot,
+    'bodyPayload'
+  );
+  const hasSharedBasicPayload = Object.prototype.hasOwnProperty.call(
+    sharedStateSnapshot,
+    'basicPayload'
+  );
+  const bodyPayloadSnapshot = hasSharedBodyPayload
+    ? (sharedStateSnapshot.bodyPayload as BodyMarkingsPayload | null)
+    : options.bodyPayload;
+  const basicPayloadSnapshot = hasSharedBasicPayload
+    ? (sharedStateSnapshot.basicPayload as BasicAppearancePayload | null)
+    : options.basicPayload;
   return { bodyPayloadSnapshot, basicPayloadSnapshot };
 };
+
+const isPayloadStaleForSelection = (
+  payload:
+    | Pick<BodyMarkingsPayload, 'species_id' | 'custom_base'>
+    | Pick<BasicAppearancePayload, 'species_id' | 'custom_base'>
+    | null
+    | undefined,
+  speciesId: string | null,
+  iconBase: string | null
+): boolean =>
+  !!payload &&
+  ((!!speciesId && payload.species_id !== speciesId) ||
+    (!!iconBase && payload.custom_base !== iconBase));
+
+const resolveEnableCustomDisclaimer = (
+  data: CustomMarkingDesignerData
+): string =>
+  data.custom_marking_enable_disclaimer ||
+  "This is an advanced character editing tool that allows you to edit individual pixels on your character to adjust or create new markings.  Custom markings have the same standards as markings added to the RogueStar codebase.  They should make realistic sense and must be SFW.  If it wouldn't get approved to add to the code, it should not be done here.  If you are uncertain about something, please let us know and we're happy to chatter about it.";
+
+const resolveCanvasBackgroundDefaults = (
+  data: CustomMarkingDesignerData
+): {
+  canvasBackgroundOptions: CanvasBackgroundOption[];
+  defaultCanvasBackgroundKey: string;
+} => ({
+  canvasBackgroundOptions: Array.isArray(data.canvas_backgrounds)
+    ? data.canvas_backgrounds
+    : [],
+  defaultCanvasBackgroundKey: data.default_canvas_background || 'default',
+});
 
 const resolveDigitigradeAppearanceState = (options: {
   bodyPayloadSnapshot: BodyMarkingsPayload | null;
@@ -632,6 +769,56 @@ const resolveDigitigradeAppearanceState = (options: {
       ? basicAppearanceState
       : { ...basicAppearanceState, digitigrade: resolvedDigitigrade };
   return { resolvedDigitigrade, markingsAppearanceState };
+};
+
+const resolveSpeciesPreviewSelection = (options: {
+  speciesPayload: SpeciesPayload | null;
+  speciesSelection: string | null;
+  speciesIconBaseSelection: string | null;
+  digitigrade: boolean;
+}): {
+  selectedSpeciesId: string | null;
+  selectedIconBase: string | null;
+  selectedSpecies: SpeciesPayload['species'][number] | null;
+  speciesPreviewSources: PreviewDirectionSource[] | null;
+  speciesPreviewSignature: string;
+} => {
+  const {
+    speciesPayload,
+    speciesSelection,
+    speciesIconBaseSelection,
+    digitigrade,
+  } = options;
+  const selectedSpeciesId =
+    speciesSelection || speciesPayload?.selected_species || null;
+  const selectedIconBase =
+    speciesIconBaseSelection ||
+    speciesPayload?.preview_icon_base ||
+    speciesPayload?.selected_icon_base ||
+    null;
+  const selectedSpecies =
+    selectedSpeciesId && speciesPayload?.species
+      ? speciesPayload.species.find(
+          (entry) => entry.id === selectedSpeciesId
+        ) || null
+      : null;
+  return {
+    selectedSpeciesId,
+    selectedIconBase,
+    selectedSpecies,
+    speciesPreviewSources: resolveSpeciesBodyPreviewSources({
+      selectedSpecies,
+      iconBaseOptions: resolveSpeciesIconBaseOptions(
+        speciesPayload,
+        selectedSpeciesId
+      ),
+      iconBaseSelection: selectedIconBase,
+      digitigrade,
+    }),
+    speciesPreviewSignature: `${selectedSpeciesId || ''}:${
+      selectedIconBase || ''
+    }:${digitigrade ? 'digi' : 'normal'}`,
+  };
 };
 
 const resolveMarkingsPreviewState = (options: {
@@ -723,6 +910,7 @@ const buildRenderedPreviewSignature = (options: {
   diffSeq?: number | null;
   assetRevision: number;
   directionSignature: string;
+  showEquipment: boolean;
   showJobGear: boolean;
   showLoadoutGear: boolean;
   partReplacementSignature: string;
@@ -736,6 +924,7 @@ const buildRenderedPreviewSignature = (options: {
     diffSeq,
     assetRevision,
     directionSignature,
+    showEquipment,
     showJobGear,
     showLoadoutGear,
     partReplacementSignature,
@@ -749,6 +938,7 @@ const buildRenderedPreviewSignature = (options: {
     `diff:${diffSeq ?? 0}`,
     `asset:${assetRevision}`,
     directionSignature,
+    showEquipment ? 'equipment1' : 'equipment0',
     showJobGear ? 'job1' : 'job0',
     showLoadoutGear ? 'load1' : 'load0',
     partReplacementSignature,
@@ -759,20 +949,135 @@ const buildRenderedPreviewSignature = (options: {
     .join('|');
 };
 
+const buildSpeciesPreviewSourceMap = (
+  sources?: PreviewDirectionSource[] | null
+): Record<number, PreviewDirectionSource> | null => {
+  if (!Array.isArray(sources) || !sources.length) {
+    return null;
+  }
+  const byDir: Record<number, PreviewDirectionSource> = {};
+  sources.forEach((entry) => {
+    if (entry && typeof entry.dir === 'number') {
+      byDir[entry.dir] = entry;
+    }
+  });
+  return Object.keys(byDir).length ? byDir : null;
+};
+
+const resolveSpeciesPreviewSources = (options: {
+  baseSources: PreviewDirectionSource[] | null;
+  speciesSources: PreviewDirectionSource[] | null;
+}): {
+  sources: PreviewDirectionSource[] | null;
+  hasSpeciesSources: boolean;
+  usingSpeciesOnly: boolean;
+} => {
+  const { baseSources, speciesSources } = options;
+  const hasSpeciesSources =
+    Array.isArray(speciesSources) && speciesSources.length > 0;
+  if (!hasSpeciesSources) {
+    return {
+      sources: baseSources,
+      hasSpeciesSources: false,
+      usingSpeciesOnly: false,
+    };
+  }
+  if (!Array.isArray(baseSources) || !baseSources.length) {
+    return {
+      sources: speciesSources,
+      hasSpeciesSources: true,
+      usingSpeciesOnly: true,
+    };
+  }
+  const speciesByDir = buildSpeciesPreviewSourceMap(speciesSources);
+  if (!speciesByDir) {
+    return {
+      sources: baseSources,
+      hasSpeciesSources: true,
+      usingSpeciesOnly: false,
+    };
+  }
+  const merged = baseSources.map((entry) => {
+    const override = speciesByDir[entry.dir];
+    return override ? mergeSpeciesBodyPreviewSource(entry, override) : entry;
+  });
+  return {
+    sources: merged,
+    hasSpeciesSources: true,
+    usingSpeciesOnly: false,
+  };
+};
+
+const shouldUseSpeciesPreviewOverride = (options: {
+  speciesPreviewSources: PreviewDirectionSource[] | null;
+  selectedSpeciesId: string | null;
+  selectedIconBase: string | null;
+  payloadSpeciesId: string | null;
+  payloadIconBase: string | null;
+}) => {
+  const {
+    speciesPreviewSources,
+    selectedSpeciesId,
+    selectedIconBase,
+    payloadSpeciesId,
+    payloadIconBase,
+  } = options;
+  if (!speciesPreviewSources) {
+    return false;
+  }
+  if (!payloadSpeciesId || selectedSpeciesId !== payloadSpeciesId) {
+    return true;
+  }
+  return !!selectedIconBase && selectedIconBase !== payloadIconBase;
+};
+
+const resolvePreviewSourceKey = (options: {
+  basePreviewSourceKey: string;
+  usingSpeciesOnly: boolean;
+  hasSpeciesSources: boolean;
+  useSpeciesPreviewOverride: boolean;
+  speciesPreviewSignature: string;
+}) => {
+  const {
+    basePreviewSourceKey,
+    usingSpeciesOnly,
+    hasSpeciesSources,
+    useSpeciesPreviewOverride,
+    speciesPreviewSignature,
+  } = options;
+  const resolvedBasePreviewSourceKey = usingSpeciesOnly
+    ? 'species'
+    : basePreviewSourceKey;
+  const speciesKey =
+    hasSpeciesSources && useSpeciesPreviewOverride && speciesPreviewSignature
+      ? `species:${speciesPreviewSignature}`
+      : '';
+  return [resolvedBasePreviewSourceKey, speciesKey]
+    .filter((entry) => entry.length > 0)
+    .join('|');
+};
+
 const resolvePreviewSourceState = (options: {
   data: CustomMarkingDesignerData;
   bodyPayloadSnapshot: BodyMarkingsPayload | null;
   basicPayloadSnapshot: BasicAppearancePayload | null;
   markingsAppearanceState: BasicAppearanceState;
+  selectedSpeciesId: string | null;
+  selectedIconBase: string | null;
+  speciesPreviewSources: PreviewDirectionSource[] | null;
+  speciesPreviewSignature: string;
   previewStateRevision: number;
   clientPreviewEpoch: number;
   setClientPreviewEpoch: (value: number) => void;
+  previewSourceSignature: string;
+  setPreviewSourceSignature: (value: string) => void;
   resolvedPartReplacementMap: Record<string, boolean>;
   resolvedPartPriorityMap: Record<string, boolean>;
   assetRevision: number;
   directionSignature: string;
   canvasWidth: number;
   canvasHeight: number;
+  showEquipment: boolean;
   showJobGear: boolean;
   showLoadoutGear: boolean;
 }): {
@@ -786,58 +1091,100 @@ const resolvePreviewSourceState = (options: {
     bodyPayloadSnapshot,
     basicPayloadSnapshot,
     markingsAppearanceState,
+    selectedSpeciesId,
+    selectedIconBase,
+    speciesPreviewSources,
+    speciesPreviewSignature,
     previewStateRevision,
     clientPreviewEpoch,
     setClientPreviewEpoch,
+    previewSourceSignature,
+    setPreviewSourceSignature,
     resolvedPartReplacementMap,
     resolvedPartPriorityMap,
     assetRevision,
     directionSignature,
     canvasWidth,
     canvasHeight,
+    showEquipment,
     showJobGear,
     showLoadoutGear,
   } = options;
-  const bodyPreviewSourceList = bodyPayloadSnapshot?.preview_sources;
-  const bodyPreviewSources =
-    Array.isArray(bodyPreviewSourceList) && bodyPreviewSourceList.length
-      ? bodyPreviewSourceList
-      : null;
-  const basicPreviewUsesAltSources =
-    !!basicPayloadSnapshot?.preview_sources_alt &&
-    markingsAppearanceState.digitigrade !== !!basicPayloadSnapshot?.digitigrade;
-  const basicPreviewSources = basicPreviewUsesAltSources
-    ? basicPayloadSnapshot?.preview_sources_alt
-    : basicPayloadSnapshot?.preview_sources;
-  const resolvedBasicPreviewSources =
-    Array.isArray(basicPreviewSources) && basicPreviewSources.length
-      ? basicPreviewSources
-      : null;
-  const basicPreviewRevision = basicPreviewUsesAltSources
-    ? (basicPayloadSnapshot?.preview_revision_alt ??
-      basicPayloadSnapshot?.preview_revision ??
-      0)
-    : (basicPayloadSnapshot?.preview_revision ?? 0);
-  const clientPreviewSources =
-    resolvedBasicPreviewSources || bodyPreviewSources || null;
-  const clientPreviewRevisionBase = resolvedBasicPreviewSources
-    ? basicPreviewRevision
-    : bodyPreviewSources
-      ? (bodyPayloadSnapshot?.preview_revision ?? 0)
-      : basicPreviewRevision;
-  const usingClientPreview = !!clientPreviewSources;
-  const clientPreviewRevision = resolveClientPreviewRevision({
-    usingClientPreview,
-    clientPreviewRevisionBase,
-    clientPreviewEpoch,
-    previewStateRevision,
-    setClientPreviewEpoch,
+  const {
+    sources: basePreviewSources,
+    assetRegistry: basePreviewAssetRegistry,
+    revision: basePreviewRevision,
+    sourceKey: basePreviewSourceKey,
+    payloadSpeciesId,
+    payloadIconBaseId: payloadIconBase,
+  } = resolveSharedPreviewSourceSelection({
+    basicPayload: basicPayloadSnapshot,
+    bodyPayload: bodyPayloadSnapshot,
+    digitigrade: markingsAppearanceState.digitigrade,
+    basicAppearanceState: markingsAppearanceState,
   });
+  const useSpeciesPreviewOverride =
+    !basePreviewSources ||
+    shouldUseSpeciesPreviewOverride({
+      speciesPreviewSources,
+      selectedSpeciesId,
+      selectedIconBase,
+      payloadSpeciesId,
+      payloadIconBase,
+    });
+  const activeSpeciesPreviewSources = useSpeciesPreviewOverride
+    ? speciesPreviewSources
+    : null;
+  const transformedSpeciesPreviewSources = applyProstheticsToPreviewSources(
+    activeSpeciesPreviewSources,
+    markingsAppearanceState,
+    basicPayloadSnapshot?.prosthetic_context
+  );
+  const {
+    sources: clientPreviewSources,
+    hasSpeciesSources,
+    usingSpeciesOnly,
+  } = resolveSpeciesPreviewSources({
+    baseSources: basePreviewSources,
+    speciesSources: transformedSpeciesPreviewSources,
+  });
+  const clientPreviewRevisionBase = basePreviewRevision;
+  const usingClientPreview = !!clientPreviewSources;
+  const previewSourceKey = resolvePreviewSourceKey({
+    basePreviewSourceKey,
+    usingSpeciesOnly,
+    hasSpeciesSources,
+    useSpeciesPreviewOverride,
+    speciesPreviewSignature,
+  });
+  const signatureChanged = previewSourceKey !== previewSourceSignature;
+  const signatureInitialized = previewSourceSignature.length > 0;
+  const initialEpoch = clientPreviewEpoch || 1;
+  const requestedEpoch =
+    signatureChanged && signatureInitialized && usingClientPreview
+      ? (initialEpoch % 1000000) + 1
+      : initialEpoch;
+  const { revision: clientPreviewRevision, epoch: resolvedEpoch } =
+    resolveClientPreviewRevision({
+      usingClientPreview,
+      clientPreviewRevisionBase,
+      clientPreviewEpoch: requestedEpoch,
+      previewStateRevision,
+    });
+  if (signatureChanged) {
+    setPreviewSourceSignature(previewSourceKey);
+  }
+  if (usingClientPreview && resolvedEpoch !== clientPreviewEpoch) {
+    setClientPreviewEpoch(resolvedEpoch);
+  }
   const previewData =
     usingClientPreview && clientPreviewSources
       ? {
           ...data,
           preview_sources: clientPreviewSources,
+          preview_asset_registry: usingSpeciesOnly
+            ? undefined
+            : basePreviewAssetRegistry || undefined,
           preview_revision: clientPreviewRevision,
         }
       : data;
@@ -847,13 +1194,6 @@ const resolvePreviewSourceState = (options: {
   const partPrioritySignature = buildBooleanMapSignature(
     resolvedPartPriorityMap
   );
-  const previewSourceKey = resolvedBasicPreviewSources
-    ? basicPreviewUsesAltSources
-      ? 'basic-alt'
-      : 'basic'
-    : bodyPreviewSources
-      ? 'body'
-      : 'none';
   const previewRevisionKey = usingClientPreview
     ? `client:${clientPreviewRevisionBase}`
     : `server:${data.preview_revision ?? 0}`;
@@ -863,6 +1203,7 @@ const resolvePreviewSourceState = (options: {
     diffSeq: data.diff_seq,
     assetRevision,
     directionSignature,
+    showEquipment,
     showJobGear,
     showLoadoutGear,
     partReplacementSignature,
@@ -895,7 +1236,7 @@ const resolvePreviewMarkingSignatures = (options: {
     stripReferenceMarkings,
     resolvedBodyMarkingsSignature,
   } = options;
-  const previewHiddenPartsByDir = buildHiddenBodyPartsByDir(
+  const previewHiddenPartsByDir = buildSuppressedMarkingPartsByDir(
     appearanceContext.previewDirStatesForLive
   );
   const previewHiddenPartsSignature = buildBooleanDirMapSignature(
@@ -967,8 +1308,11 @@ const resolveDesignerTabState = (
   let desiredTab: DesignerTabId | null = null;
   if (
     initialTab === 'body' ||
+    initialTab === 'identity' ||
     initialTab === 'custom' ||
-    initialTab === 'basic'
+    initialTab === 'basic' ||
+    initialTab === 'species' ||
+    initialTab === 'traits'
   ) {
     desiredTab = initialTab;
   }
@@ -1009,17 +1353,15 @@ const resolveClientPreviewRevision = (options: {
   clientPreviewRevisionBase: number;
   clientPreviewEpoch: number;
   previewStateRevision: number;
-  setClientPreviewEpoch: (value: number) => void;
-}): number => {
+}): { revision: number; epoch: number } => {
   const {
     usingClientPreview,
     clientPreviewRevisionBase,
     clientPreviewEpoch,
     previewStateRevision,
-    setClientPreviewEpoch,
   } = options;
   if (!usingClientPreview) {
-    return clientPreviewRevisionBase;
+    return { revision: clientPreviewRevisionBase, epoch: clientPreviewEpoch };
   }
   const initialEpoch = clientPreviewEpoch || 1;
   let resolvedEpoch = initialEpoch;
@@ -1032,12 +1374,11 @@ const resolveClientPreviewRevision = (options: {
           CLIENT_PREVIEW_EPOCH_STRIDE
       ) + 1;
   }
-  if (resolvedEpoch !== clientPreviewEpoch) {
-    setClientPreviewEpoch(resolvedEpoch);
-  }
-  return (
-    clientPreviewRevisionBase + resolvedEpoch * CLIENT_PREVIEW_EPOCH_STRIDE
-  );
+  return {
+    revision:
+      clientPreviewRevisionBase + resolvedEpoch * CLIENT_PREVIEW_EPOCH_STRIDE,
+    epoch: resolvedEpoch,
+  };
 };
 
 const syncCustomPreviewInitialization = (options: {
@@ -1131,56 +1472,648 @@ const syncCustomPreviewInitialization = (options: {
   });
 };
 
-const syncServerBodyPayload = (options: {
+type ServerPayloadSyncSchedulerProps = Readonly<{
   resolvedActiveTab: DesignerTabId;
   serverBodyPayload: BodyMarkingsPayload | null;
-  bodyMarkingsDirty: boolean;
+  serverBasicPayload: BasicAppearancePayload | null;
+  targetSpeciesId: string | null;
+  targetIconBase: string | null;
   bodyPayload: BodyMarkingsPayload | null;
-  bodyPayloadSignature: string | null;
-  setBodyPayloadSignature: (signature: string | null) => void;
+  basicPayload: BasicAppearancePayload | null;
+  bodyMarkingsDirty: boolean;
+  basicAppearanceDirty: boolean;
+  bodyReloadPending: boolean;
+  basicReloadPending: boolean;
+  bodyLoadInProgress: boolean;
+  basicLoadInProgress: boolean;
   setBodyPayload: (payload: BodyMarkingsPayload | null) => void;
+  setBasicPayload: (payload: BasicAppearancePayload | null) => void;
   setBodySavedState: (state: BodyMarkingsSavedState) => void;
   setBodyMarkingsState: (state: Record<string, BodyMarkingEntry>) => void;
   setBodyMarkingsOrder: (order: string[]) => void;
   setBodyMarkingsSelected: (id: string | null) => void;
   setBodyMarkingsDirty: (dirty: boolean) => void;
-}) => {
-  const {
-    resolvedActiveTab,
-    serverBodyPayload,
-    bodyMarkingsDirty,
-    bodyPayload,
-    bodyPayloadSignature,
-    setBodyPayloadSignature,
-    setBodyPayload,
-    setBodySavedState,
-    setBodyMarkingsState,
-    setBodyMarkingsOrder,
-    setBodyMarkingsSelected,
-    setBodyMarkingsDirty,
-  } = options;
-  if (resolvedActiveTab === 'body' || !serverBodyPayload || bodyMarkingsDirty) {
-    return;
+  setBasicAppearanceState: (state: BasicAppearanceState) => void;
+  setBasicSavedState: (state: BasicAppearanceState) => void;
+  setBasicAppearanceDirty: (dirty: boolean) => void;
+  setBodyLoadInProgress: (value: boolean) => void;
+  setBasicLoadInProgress: (value: boolean) => void;
+  clearBodyReloadPending: () => void;
+  clearBasicReloadPending: () => void;
+}>;
+
+class ServerPayloadSyncScheduler extends Component<ServerPayloadSyncSchedulerProps> {
+  private staleBodyPayload: BodyMarkingsPayload | null = null;
+  private staleBasicPayload: BasicAppearancePayload | null = null;
+
+  componentDidMount() {
+    this.sync();
   }
-  const isPreviewOnly = !!serverBodyPayload.preview_only;
-  const localRevision = bodyPayload?.preview_revision || 0;
-  const incomingRevision = serverBodyPayload.preview_revision || 0;
-  const shouldApplyPreview = !bodyPayload || incomingRevision >= localRevision;
-  const nextSignature = buildBodyPayloadSignature(serverBodyPayload);
-  const signatureChanged = nextSignature !== bodyPayloadSignature;
-  if ((!isPreviewOnly || shouldApplyPreview) && signatureChanged) {
-    setBodyPayloadSignature(nextSignature);
-    setBodyPayload(serverBodyPayload);
-    const savedState = buildBodySavedStateFromPayload(serverBodyPayload);
+
+  componentDidUpdate(prevProps: ServerPayloadSyncSchedulerProps) {
+    const bodyWasWaiting =
+      !prevProps.bodyPayload &&
+      (prevProps.bodyReloadPending || prevProps.bodyLoadInProgress);
+    const bodyIsWaiting =
+      !this.props.bodyPayload &&
+      (this.props.bodyReloadPending || this.props.bodyLoadInProgress);
+    if (!bodyWasWaiting && bodyIsWaiting) {
+      this.staleBodyPayload = this.props.serverBodyPayload;
+    }
+    const basicWasWaiting =
+      !prevProps.basicPayload &&
+      (prevProps.basicReloadPending || prevProps.basicLoadInProgress);
+    const basicIsWaiting =
+      !this.props.basicPayload &&
+      (this.props.basicReloadPending || this.props.basicLoadInProgress);
+    if (!basicWasWaiting && basicIsWaiting) {
+      this.staleBasicPayload = this.props.serverBasicPayload;
+    }
+    this.sync();
+  }
+
+  syncBodyPayload() {
+    const {
+      resolvedActiveTab,
+      serverBodyPayload,
+      targetSpeciesId,
+      targetIconBase,
+      bodyPayload,
+      bodyMarkingsDirty,
+      bodyReloadPending,
+      bodyLoadInProgress,
+      setBodyPayload,
+      setBodySavedState,
+      setBodyMarkingsState,
+      setBodyMarkingsOrder,
+      setBodyMarkingsSelected,
+      setBodyMarkingsDirty,
+      setBodyLoadInProgress,
+      clearBodyReloadPending,
+    } = this.props;
+    if (
+      resolvedActiveTab === 'body' ||
+      !serverBodyPayload ||
+      serverBodyPayload.preview_only ||
+      bodyMarkingsDirty
+    ) {
+      return;
+    }
+    const mergedServerBodyPayload = mergeBodyMarkingsPayload(
+      bodyPayload,
+      serverBodyPayload,
+      this.props.basicPayload
+    );
+    if (
+      isPayloadStaleForSelection(
+        mergedServerBodyPayload,
+        targetSpeciesId,
+        targetIconBase
+      )
+    ) {
+      return;
+    }
+    const waitingForReload =
+      !bodyPayload && (bodyReloadPending || bodyLoadInProgress);
+    if (
+      waitingForReload &&
+      this.staleBodyPayload &&
+      serverBodyPayload === this.staleBodyPayload
+    ) {
+      return;
+    }
+    if (bodyPayload && !bodyReloadPending && !bodyLoadInProgress) {
+      this.staleBodyPayload = null;
+      return;
+    }
+    const nextSignature = buildBodyPayloadSignature(mergedServerBodyPayload);
+    const currentSignature = buildBodyPayloadSignature(bodyPayload);
+    if (nextSignature === currentSignature) {
+      if (bodyLoadInProgress) {
+        setBodyLoadInProgress(false);
+      }
+      if (bodyReloadPending) {
+        clearBodyReloadPending();
+      }
+      this.staleBodyPayload = null;
+      return;
+    }
+    const savedState = buildBodySavedStateFromPayload(mergedServerBodyPayload);
+    setBodyPayload(mergedServerBodyPayload);
     setBodySavedState(savedState);
     setBodyMarkingsState(deepCopyMarkings(savedState.markings));
     setBodyMarkingsOrder([...savedState.order]);
     setBodyMarkingsSelected(savedState.selectedId);
     setBodyMarkingsDirty(false);
+    if (bodyLoadInProgress) {
+      setBodyLoadInProgress(false);
+    }
+    if (bodyReloadPending) {
+      clearBodyReloadPending();
+    }
+    this.staleBodyPayload = null;
+  }
+
+  syncBasicPayload() {
+    const {
+      resolvedActiveTab,
+      serverBasicPayload,
+      targetSpeciesId,
+      targetIconBase,
+      basicPayload,
+      basicAppearanceDirty,
+      basicReloadPending,
+      basicLoadInProgress,
+      setBasicPayload,
+      setBasicAppearanceState,
+      setBasicSavedState,
+      setBasicAppearanceDirty,
+      setBasicLoadInProgress,
+      clearBasicReloadPending,
+    } = this.props;
+    if (
+      resolvedActiveTab === 'basic' ||
+      !serverBasicPayload ||
+      serverBasicPayload.preview_only ||
+      basicAppearanceDirty
+    ) {
+      return;
+    }
+    const mergedServerBasicPayload = mergeBasicAppearancePayload(
+      basicPayload,
+      serverBasicPayload,
+      this.props.bodyPayload
+    );
+    if (
+      isPayloadStaleForSelection(
+        mergedServerBasicPayload,
+        targetSpeciesId,
+        targetIconBase
+      )
+    ) {
+      return;
+    }
+    const waitingForReload =
+      !basicPayload && (basicReloadPending || basicLoadInProgress);
+    if (
+      waitingForReload &&
+      this.staleBasicPayload &&
+      serverBasicPayload === this.staleBasicPayload
+    ) {
+      return;
+    }
+    if (
+      shouldRetainLocalBasicPayload({
+        basicPayload,
+        reloadPending: basicReloadPending,
+        loadInProgress: basicLoadInProgress,
+      })
+    ) {
+      this.staleBasicPayload = null;
+      return;
+    }
+    const nextSignature = buildBasicPayloadSignature(mergedServerBasicPayload);
+    const currentSignature = buildBasicPayloadSignature(basicPayload);
+    if (nextSignature === currentSignature) {
+      if (basicLoadInProgress) {
+        setBasicLoadInProgress(false);
+      }
+      if (basicReloadPending) {
+        clearBasicReloadPending();
+      }
+      this.staleBasicPayload = null;
+      return;
+    }
+    const nextState = buildBasicStateFromPayload(mergedServerBasicPayload);
+    setBasicPayload(mergedServerBasicPayload);
+    setBasicAppearanceState(nextState);
+    setBasicSavedState(nextState);
+    setBasicAppearanceDirty(false);
+    if (basicLoadInProgress) {
+      setBasicLoadInProgress(false);
+    }
+    if (basicReloadPending) {
+      clearBasicReloadPending();
+    }
+    this.staleBasicPayload = null;
+  }
+
+  sync() {
+    this.syncBasicPayload();
+    this.syncBodyPayload();
+  }
+
+  render() {
+    return null;
+  }
+}
+
+type SpeciesSaveResultSyncSchedulerProps = Readonly<{
+  speciesSaveResult?: SpeciesSaveResult | null;
+  onSaveResult?: (result: SpeciesSaveResult) => void;
+  speciesPayload: SpeciesPayload | null;
+  bodyPayload: BodyMarkingsPayload | null;
+  basicPayload: BasicAppearancePayload | null;
+  stateToken: string;
+  writeStates: (states: Record<string, unknown>) => void;
+}>;
+
+class SpeciesSaveResultSyncScheduler extends Component<SpeciesSaveResultSyncSchedulerProps> {
+  private lastRevision = 0;
+
+  componentDidMount() {
+    this.sync();
+  }
+
+  componentDidUpdate(prevProps: SpeciesSaveResultSyncSchedulerProps) {
+    if (prevProps.speciesSaveResult !== this.props.speciesSaveResult) {
+      this.sync();
+    }
+  }
+
+  sync() {
+    const {
+      speciesSaveResult,
+      onSaveResult,
+      speciesPayload,
+      bodyPayload,
+      basicPayload,
+      stateToken,
+      writeStates,
+    } = this.props;
+    if (
+      !speciesSaveResult ||
+      !speciesSaveResult.revision ||
+      speciesSaveResult.revision === this.lastRevision
+    ) {
+      return;
+    }
+    this.lastRevision = speciesSaveResult.revision;
+    syncSpeciesSaveResultState(writeStates, {
+      result: speciesSaveResult,
+      stateToken,
+      speciesPayload,
+      bodyPayload,
+      basicPayload,
+    });
+    onSaveResult?.(speciesSaveResult);
+  }
+
+  render() {
+    return null;
+  }
+}
+
+type TraitsSaveResultSyncSchedulerProps = Readonly<{
+  saveResult: TraitsSaveResult | null;
+  payload: TraitsPayload | null;
+  pendingRequest: PendingTraitsSaveRequest | null;
+  onAcknowledged: (
+    accepted: boolean,
+    pendingRequest: PendingTraitsSaveRequest,
+    saveResult: TraitsSaveResult
+  ) => void;
+}>;
+
+class TraitsSaveResultSyncScheduler extends Component<TraitsSaveResultSyncSchedulerProps> {
+  private lastAcknowledgedRequestId: string | null = null;
+
+  componentDidMount() {
+    this.sync();
+  }
+
+  componentDidUpdate() {
+    this.sync();
+  }
+
+  sync() {
+    const { saveResult, payload, pendingRequest, onAcknowledged } = this.props;
+    if (!pendingRequest) {
+      return;
+    }
+    const accepted = resolveTraitsSaveAcknowledgement(
+      pendingRequest.requestId,
+      saveResult,
+      payload
+    );
+    if (
+      accepted === null ||
+      pendingRequest.requestId === this.lastAcknowledgedRequestId
+    ) {
+      return;
+    }
+    this.lastAcknowledgedRequestId = pendingRequest.requestId;
+    if (saveResult) {
+      onAcknowledged(accepted, pendingRequest, saveResult);
+    }
+  }
+
+  render() {
+    return null;
+  }
+}
+
+type IdentityPayloadSyncSchedulerProps = Readonly<{
+  payload: IdentityPayload | null;
+  onPayload: (payload: IdentityPayload) => boolean;
+}>;
+
+type IdentityPayloadRequestSchedulerProps = Readonly<{
+  active: boolean;
+  payload: IdentityPayload | null;
+  loadInProgress: boolean;
+  onRequest: () => void;
+}>;
+
+class IdentityPayloadRequestScheduler extends Component<IdentityPayloadRequestSchedulerProps> {
+  private requested = false;
+
+  componentDidMount() {
+    this.sync();
+  }
+
+  componentDidUpdate() {
+    this.sync();
+  }
+
+  sync() {
+    const { active, payload, loadInProgress, onRequest } = this.props;
+    if (!active || payload) {
+      this.requested = false;
+      return;
+    }
+    if (loadInProgress || this.requested) {
+      return;
+    }
+    this.requested = true;
+    onRequest();
+  }
+
+  render() {
+    return null;
+  }
+}
+
+class IdentityPayloadSyncScheduler extends Component<IdentityPayloadSyncSchedulerProps> {
+  private syncState = { lastRevision: 0 };
+
+  componentDidMount() {
+    this.sync();
+  }
+
+  componentDidUpdate() {
+    this.sync();
+  }
+
+  sync() {
+    const { payload, onPayload } = this.props;
+    runIdentityPayloadSync(this.syncState, payload, onPayload);
+  }
+
+  render() {
+    return null;
+  }
+}
+
+type IdentitySaveResultSyncSchedulerProps = Readonly<{
+  saveResult: IdentitySaveResult | null;
+  payload: IdentityPayload | null;
+  pendingRequest: PendingIdentitySaveRequest | null;
+  onAcknowledged: (
+    accepted: boolean,
+    pendingRequest: PendingIdentitySaveRequest,
+    saveResult: IdentitySaveResult,
+    payload: IdentityPayload | null
+  ) => void;
+}>;
+
+class IdentitySaveResultSyncScheduler extends Component<IdentitySaveResultSyncSchedulerProps> {
+  private lastAcknowledgedRequestId: string | null = null;
+
+  componentDidMount() {
+    this.sync();
+  }
+
+  componentDidUpdate() {
+    this.sync();
+  }
+
+  sync() {
+    const { saveResult, payload, pendingRequest, onAcknowledged } = this.props;
+    if (!pendingRequest) {
+      return;
+    }
+    const accepted = resolveIdentitySaveAcknowledgement(
+      pendingRequest.requestId,
+      saveResult,
+      payload
+    );
+    if (
+      accepted === null ||
+      pendingRequest.requestId === this.lastAcknowledgedRequestId
+    ) {
+      return;
+    }
+    this.lastAcknowledgedRequestId = pendingRequest.requestId;
+    if (saveResult) {
+      onAcknowledged(accepted, pendingRequest, saveResult, payload);
+    }
+  }
+
+  render() {
+    return null;
+  }
+}
+
+const IDENTITY_SAVE_ACK_TIMEOUT_MS = 15_000;
+
+type IdentitySaveTimeoutSchedulerProps = Readonly<{
+  pendingRequest: PendingIdentitySaveRequest | null;
+  onTimeout: (pendingRequest: PendingIdentitySaveRequest) => void;
+}>;
+
+class IdentitySaveTimeoutScheduler extends Component<IdentitySaveTimeoutSchedulerProps> {
+  private timeoutHandle: ReturnType<typeof setTimeout> | null = null;
+
+  componentDidMount() {
+    this.sync();
+  }
+
+  componentDidUpdate(prevProps: IdentitySaveTimeoutSchedulerProps) {
+    if (
+      prevProps.pendingRequest?.requestId !==
+      this.props.pendingRequest?.requestId
+    ) {
+      this.sync();
+    }
+  }
+
+  componentWillUnmount() {
+    this.clear();
+  }
+
+  clear() {
+    if (this.timeoutHandle) {
+      clearTimeout(this.timeoutHandle);
+      this.timeoutHandle = null;
+    }
+  }
+
+  sync() {
+    this.clear();
+    const pendingRequest = this.props.pendingRequest;
+    if (!pendingRequest) {
+      return;
+    }
+    this.timeoutHandle = setTimeout(() => {
+      this.timeoutHandle = null;
+      if (this.props.pendingRequest?.requestId === pendingRequest.requestId) {
+        this.props.onTimeout(pendingRequest);
+      }
+    }, IDENTITY_SAVE_ACK_TIMEOUT_MS);
+  }
+
+  render() {
+    return null;
+  }
+}
+
+type IdentityRandomNameResultSyncSchedulerProps = Readonly<{
+  result: IdentityRandomNameResult | null;
+  pendingRequest: PendingIdentityRandomNameRequest | null;
+  onAcknowledged: (
+    result: IdentityRandomNameResult,
+    pendingRequest: PendingIdentityRandomNameRequest
+  ) => void;
+}>;
+
+class IdentityRandomNameResultSyncScheduler extends Component<IdentityRandomNameResultSyncSchedulerProps> {
+  private lastAcknowledgedRequestId: string | null = null;
+
+  componentDidMount() {
+    this.sync();
+  }
+
+  componentDidUpdate() {
+    this.sync();
+  }
+
+  sync() {
+    const { result, pendingRequest, onAcknowledged } = this.props;
+    if (
+      !result ||
+      !pendingRequest ||
+      result.request_id !== pendingRequest.requestId ||
+      result.request_id === this.lastAcknowledgedRequestId
+    ) {
+      return;
+    }
+    this.lastAcknowledgedRequestId = result.request_id;
+    onAcknowledged(result, pendingRequest);
+  }
+
+  render() {
+    return null;
+  }
+}
+
+const syncServerSpeciesPayload = (options: {
+  resolvedActiveTab: DesignerTabId;
+  serverSpeciesPayload: SpeciesPayload | null;
+  speciesSavedSelection: string | null;
+  speciesSavedIconBaseSelection: string | null;
+  speciesSavedCustomName: string;
+  speciesDirty: boolean;
+  speciesPayload: SpeciesPayload | null;
+  setSpeciesPayload: (payload: SpeciesPayload | null) => void;
+  setSpeciesSelection: (selection: string | null) => void;
+  setSpeciesSavedSelection: (selection: string | null) => void;
+  setSpeciesIconBaseSelection: (selection: string | null) => void;
+  setSpeciesSavedIconBaseSelection: (selection: string | null) => void;
+  setSpeciesCustomName: (name: string) => void;
+  setSpeciesSavedCustomName: (name: string) => void;
+  setSpeciesDirty: (dirty: boolean) => void;
+  speciesLoadInProgress: boolean;
+  setSpeciesLoadInProgress: (value: boolean) => void;
+  speciesReloadPending: boolean;
+}) => {
+  const {
+    resolvedActiveTab,
+    serverSpeciesPayload,
+    speciesSavedSelection,
+    speciesSavedIconBaseSelection,
+    speciesSavedCustomName,
+    speciesDirty,
+    speciesPayload,
+    setSpeciesPayload,
+    setSpeciesSelection,
+    setSpeciesSavedSelection,
+    setSpeciesIconBaseSelection,
+    setSpeciesSavedIconBaseSelection,
+    setSpeciesCustomName,
+    setSpeciesSavedCustomName,
+    setSpeciesDirty,
+    speciesLoadInProgress,
+    setSpeciesLoadInProgress,
+    speciesReloadPending,
+  } = options;
+  if (speciesReloadPending) {
+    return;
+  }
+  if (
+    resolvedActiveTab === 'species' ||
+    !serverSpeciesPayload ||
+    speciesDirty
+  ) {
+    if (speciesLoadInProgress && serverSpeciesPayload) {
+      setSpeciesLoadInProgress(false);
+    }
+    return;
+  }
+  const serverSelection = serverSpeciesPayload.selected_species || null;
+  const serverIconBase =
+    serverSpeciesPayload.selected_icon_base ||
+    serverSpeciesPayload.preview_icon_base ||
+    null;
+  const localSelection =
+    speciesSavedSelection || speciesPayload?.selected_species || null;
+  const localIconBase =
+    speciesSavedIconBaseSelection || speciesPayload?.selected_icon_base || null;
+  const serverCustomSpeciesName = serverSpeciesPayload.custom_species || '';
+  if (
+    (localSelection !== null && serverSelection !== localSelection) ||
+    (localIconBase !== null && serverIconBase !== localIconBase) ||
+    serverCustomSpeciesName !== speciesSavedCustomName
+  ) {
+    if (speciesLoadInProgress && serverSpeciesPayload) {
+      setSpeciesLoadInProgress(false);
+    }
+    return;
+  }
+  if (serverSpeciesPayload !== speciesPayload) {
+    setSpeciesPayload(serverSpeciesPayload);
+    const selected = serverSpeciesPayload.selected_species || null;
+    const selectedIconBase =
+      serverSpeciesPayload.selected_icon_base ||
+      serverSpeciesPayload.preview_icon_base ||
+      null;
+    setSpeciesSelection(selected);
+    setSpeciesSavedSelection(selected);
+    setSpeciesIconBaseSelection(selectedIconBase);
+    setSpeciesSavedIconBaseSelection(selectedIconBase);
+    setSpeciesCustomName(serverCustomSpeciesName);
+    setSpeciesSavedCustomName(serverCustomSpeciesName);
+    setSpeciesDirty(false);
+  }
+  if (speciesLoadInProgress) {
+    setSpeciesLoadInProgress(false);
   }
 };
 
 type ActFn = (action: string, params?: Record<string, unknown>) => void;
+
+const resolveSpeciesCustomName = (payload?: SpeciesPayload | null) =>
+  payload?.custom_species || '';
 
 const handlePreviewRefreshTokenUpdate = (options: {
   serverPreviewRefreshToken: number;
@@ -1243,7 +2176,12 @@ const handlePreviewRefreshTokenUpdate = (options: {
   if (bodyPayloadSnapshot) {
     if (resolvedActiveTab === 'body') {
       setBodyMarkingsLoadInProgress(true);
-      act('load_body_markings', { preview_only: 1 });
+      act(
+        'load_body_markings',
+        buildBodyMarkingsLoadParams(bodyPayloadSnapshot, basicPayloadSnapshot, {
+          preview_only: 1,
+        })
+      );
     } else {
       setBodyReloadPending(true);
     }
@@ -1251,7 +2189,14 @@ const handlePreviewRefreshTokenUpdate = (options: {
   if (basicPayloadSnapshot) {
     if (resolvedActiveTab === 'basic') {
       setBasicAppearanceLoadInProgress(true);
-      act('load_basic_appearance', { preview_only: 1 });
+      act(
+        'load_basic_appearance',
+        buildBasicAppearanceLoadParams(
+          basicPayloadSnapshot,
+          bodyPayloadSnapshot,
+          { preview_only: 1 }
+        )
+      );
     } else {
       setBasicReloadPending(true);
     }
@@ -1259,9 +2204,409 @@ const handlePreviewRefreshTokenUpdate = (options: {
 };
 
 // eslint-disable-next-line complexity
-export const CustomMarkingDesigner = (_props, context) => {
+type DesignerTitleTabsProps = Readonly<{
+  resolvedActiveTab: DesignerTabId;
+  tabsLocked: boolean;
+  allowCustomTab: boolean;
+  zoomPercent: number;
+  setZoomPercent: (value: number) => void;
+  setEnableCustomPromptOpen: (value: boolean) => void;
+  onTabChange: (tab: DesignerTabId) => void;
+}>;
+
+const DesignerTitleTabs = ({
+  resolvedActiveTab,
+  tabsLocked,
+  allowCustomTab,
+  zoomPercent,
+  setZoomPercent,
+  setEnableCustomPromptOpen,
+  onTabChange,
+}: DesignerTitleTabsProps) => (
+  <>
+    <Tabs className="RogueStar__titleTabs">
+      <Tabs.Tab
+        selected={resolvedActiveTab === 'species'}
+        icon="paw"
+        className={tabsLocked ? 'Tab--disabled' : undefined}
+        aria-disabled={tabsLocked}
+        onClick={() => {
+          if (!tabsLocked) {
+            onTabChange('species');
+          }
+        }}>
+        Species
+      </Tabs.Tab>
+      <Tabs.Tab
+        selected={resolvedActiveTab === 'identity'}
+        icon="id-card"
+        className={tabsLocked ? 'Tab--disabled' : undefined}
+        aria-disabled={tabsLocked}
+        onClick={() => {
+          if (!tabsLocked) {
+            onTabChange('identity');
+          }
+        }}>
+        Identity
+      </Tabs.Tab>
+      <Tabs.Tab
+        selected={resolvedActiveTab === 'basic'}
+        icon="user"
+        className={tabsLocked ? 'Tab--disabled' : undefined}
+        aria-disabled={tabsLocked}
+        onClick={() => {
+          if (!tabsLocked) {
+            onTabChange('basic');
+          }
+        }}>
+        Basic Appearance
+      </Tabs.Tab>
+      <Tabs.Tab
+        selected={resolvedActiveTab === 'body'}
+        icon="list"
+        className={tabsLocked ? 'Tab--disabled' : undefined}
+        aria-disabled={tabsLocked}
+        onClick={() => {
+          if (!tabsLocked) {
+            onTabChange('body');
+          }
+        }}>
+        Body Markings
+      </Tabs.Tab>
+      <Tabs.Tab
+        selected={resolvedActiveTab === 'traits'}
+        icon="dna"
+        className={tabsLocked ? 'Tab--disabled' : undefined}
+        aria-disabled={tabsLocked}
+        onClick={() => {
+          if (!tabsLocked) {
+            onTabChange('traits');
+          }
+        }}>
+        Traits
+      </Tabs.Tab>
+      <Tabs.Tab
+        selected={resolvedActiveTab === 'custom'}
+        icon={resolveCustomDesignerTabIcon(allowCustomTab)}
+        className={tabsLocked ? 'Tab--disabled' : undefined}
+        aria-disabled={tabsLocked}
+        tooltip={resolveCustomDesignerTabTooltip(allowCustomTab)}
+        onClick={() => {
+          if (tabsLocked) {
+            return;
+          }
+          if (!allowCustomTab) {
+            setEnableCustomPromptOpen(true);
+            return;
+          }
+          onTabChange('custom');
+        }}>
+        Custom Marking Designer
+      </Tabs.Tab>
+    </Tabs>
+    <Box
+      className="RogueStar__zoomControl"
+      role="group"
+      aria-label={`Designer zoom, currently ${zoomPercent}%`}
+      ml="auto">
+      <Box className="RogueStar__zoomControlLabel">
+        <Icon name="search" />
+        Zoom
+      </Box>
+      <Box className="RogueStar__zoomTrack">
+        <Box
+          className="RogueStar__zoomTrackFill"
+          style={{
+            transform: `scaleX(${
+              (zoomPercent - DESIGNER_ZOOM_MIN_PERCENT) /
+              (DESIGNER_ZOOM_MAX_PERCENT - DESIGNER_ZOOM_MIN_PERCENT)
+            })`,
+          }}
+        />
+        {DESIGNER_ZOOM_LEVELS.map((percent) => (
+          <Button
+            key={percent}
+            className={`RogueStar__zoomStop${
+              percent < zoomPercent ? ' RogueStar__zoomStop--filled' : ''
+            }`}
+            selected={zoomPercent === percent}
+            aria-label={`Set designer zoom to ${percent}%`}
+            tooltip={
+              zoomPercent === percent
+                ? `Current zoom: ${percent}%`
+                : `Set zoom to ${percent}%`
+            }
+            tooltipPosition="bottom"
+            onClick={() => setZoomPercent(percent)}
+          />
+        ))}
+      </Box>
+      <Box className="RogueStar__zoomValue">{zoomPercent}%</Box>
+    </Box>
+  </>
+);
+
+type TabSwitchPromptState = {
+  sourceTab: DesignerTabId;
+  targetTab: DesignerTabId;
+};
+
+type PendingSpeciesTabSwitch = {
+  prompt: TabSwitchPromptState;
+  speciesId: string;
+  iconBase: string | null;
+};
+
+type PendingTraitsSaveRequest = {
+  requestId: string;
+  traitsChanged: boolean;
+  tabSwitchPrompt: TabSwitchPromptState | null;
+};
+
+type PendingIdentitySaveRequest = {
+  requestId: string;
+  tabSwitchPrompt: TabSwitchPromptState | null;
+};
+
+type PendingIdentityRandomNameRequest = {
+  requestId: string;
+  requestedName: string;
+};
+
+type TabSwitchOverlayProps = Readonly<{
+  prompt: TabSwitchPromptState | null;
+  busy: boolean;
+  saveDisabled: boolean;
+  onSave: () => void;
+  onDiscard: () => void;
+  onCancel: () => void;
+}>;
+
+const resolveTabSwitchLabel = (tab: DesignerTabId) => {
+  if (tab === 'custom') {
+    return 'Custom Marking Designer';
+  }
+  if (tab === 'body') {
+    return 'Body Markings tab';
+  }
+  if (tab === 'species') {
+    return 'Species tab';
+  }
+  if (tab === 'traits') {
+    return 'Traits tab';
+  }
+  if (tab === 'identity') {
+    return 'Identity tab';
+  }
+  return 'Basic Appearance tab';
+};
+
+const isTabSwitchSaveDisabled = (
+  prompt: TabSwitchPromptState | null,
+  speciesSelection: string | null,
+  customSpeciesName: string,
+  traitsValidationError: string | null,
+  identityValidationError: string | null
+) =>
+  (prompt?.sourceTab === 'species' &&
+    !isSpeciesSaveAllowed(speciesSelection, customSpeciesName)) ||
+  (prompt?.sourceTab === 'traits' && !!traitsValidationError) ||
+  (prompt?.sourceTab === 'identity' && !!identityValidationError);
+
+const TabSwitchOverlay = ({
+  prompt,
+  busy,
+  saveDisabled,
+  onSave,
+  onDiscard,
+  onCancel,
+}: TabSwitchOverlayProps) => {
+  if (!prompt) {
+    return null;
+  }
+  return (
+    <UnsavedChangesOverlay
+      title="Unsaved changes"
+      subtitle={
+        saveDisabled
+          ? prompt.sourceTab === 'traits'
+            ? 'Resolve the language selection issue before saving, or discard the changes.'
+            : prompt.sourceTab === 'identity'
+              ? 'Resolve the Identity validation issue before saving, or discard the changes.'
+              : 'A name is required before you can save this custom species. Keep editing to add one, or discard the changes.'
+          : `You have unsaved changes in the ${resolveTabSwitchLabel(
+              prompt.sourceTab
+            )}. Save them before switching?`
+      }
+      saveLabel="Save and switch"
+      discardLabel="Discard and switch"
+      busy={busy}
+      saveDisabled={saveDisabled}
+      onSave={onSave}
+      onDiscard={onDiscard}
+      onCancel={() => {
+        if (!busy) {
+          onCancel();
+        }
+      }}
+    />
+  );
+};
+
+const resolveDesignerLoadingState = (options: {
+  resolvedActiveTab: DesignerTabId;
+  loadingOverlay: boolean;
+  pendingSave: boolean;
+  pendingClose: boolean;
+  bodyPayloadSnapshot: BodyMarkingsPayload | null;
+  basicPayloadSnapshot: BasicAppearancePayload | null;
+  speciesPayload: SpeciesPayload | null;
+  identityPayload: IdentityPayload | null;
+  identityLoadInProgress: boolean;
+  tabSwitchBusy: boolean;
+  bodyPendingSave: boolean;
+  bodyPendingClose: boolean;
+  basicPendingSave: boolean;
+  basicPendingClose: boolean;
+  speciesPendingSave: boolean;
+  speciesPendingClose: boolean;
+  traitsPendingSave: boolean;
+  traitsPendingClose: boolean;
+  identityPendingSave: boolean;
+  identityPendingClose: boolean;
+}) => {
+  const {
+    resolvedActiveTab,
+    loadingOverlay,
+    pendingSave,
+    pendingClose,
+    bodyPayloadSnapshot,
+    basicPayloadSnapshot,
+    speciesPayload,
+    identityPayload,
+    identityLoadInProgress,
+    tabSwitchBusy,
+    bodyPendingSave,
+    bodyPendingClose,
+    basicPendingSave,
+    basicPendingClose,
+    speciesPendingSave,
+    speciesPendingClose,
+    traitsPendingSave,
+    traitsPendingClose,
+    identityPendingSave,
+    identityPendingClose,
+  } = options;
+  const shouldShowLoadingOverlay =
+    loadingOverlay && !pendingSave && !pendingClose;
+  const customTabLoading = resolvedActiveTab === 'custom' && loadingOverlay;
+  const bodyTabLoading = resolvedActiveTab === 'body' && !bodyPayloadSnapshot;
+  const basicPayloadReady =
+    !!basicPayloadSnapshot && !basicPayloadSnapshot.preview_only;
+  const basicTabLoading = resolvedActiveTab === 'basic' && !basicPayloadReady;
+  const speciesTabLoading = resolvedActiveTab === 'species' && !speciesPayload;
+  const identityTabLoading =
+    resolvedActiveTab === 'identity' &&
+    (!identityPayload || identityLoadInProgress);
+  const tabSwitchBusyState =
+    tabSwitchBusy ||
+    pendingSave ||
+    pendingClose ||
+    bodyPendingSave ||
+    bodyPendingClose ||
+    basicPendingSave ||
+    basicPendingClose ||
+    speciesPendingSave ||
+    speciesPendingClose ||
+    traitsPendingSave ||
+    traitsPendingClose ||
+    identityPendingSave ||
+    identityPendingClose;
+  const tabsLocked =
+    tabSwitchBusyState ||
+    customTabLoading ||
+    bodyTabLoading ||
+    basicTabLoading ||
+    speciesTabLoading ||
+    identityTabLoading;
+
+  return {
+    shouldShowLoadingOverlay,
+    tabSwitchBusyState,
+    tabsLocked,
+  };
+};
+
+const resolveTraitsDraftContext = (
+  data: CustomMarkingDesignerData,
+  stateToken: string
+) => {
+  const payload = data.traits_payload || null;
+  const revisionMatches =
+    !data.traits_revision || payload?.revision === data.traits_revision;
+  const speciesMatches =
+    !data.traits_species || payload?.species_id === data.traits_species;
+  const resolvedPayload =
+    payload && revisionMatches && speciesMatches ? payload : null;
+  const identity = resolvedPayload
+    ? `${resolvedPayload.revision}-${resolvedPayload.species_id}`
+    : `loading-${data.traits_revision || 0}-${data.traits_species || ''}`;
+  return {
+    resolvedPayload,
+    draftKey: `traitsDraft-${stateToken}-${identity}`,
+    dirtyKey: `traitsDirty-${stateToken}-${identity}`,
+  };
+};
+
+const buildInitialTraitsDraft = (payload: TraitsPayload | null) =>
+  payload ? buildTraitsDraftState(payload) : null;
+
+const resolveIdentityPayload = (
+  data: CustomMarkingDesignerData
+): IdentityPayload | null => {
+  const payload = data.identity_payload || null;
+  if (
+    !payload ||
+    (data.identity_revision && payload.revision !== data.identity_revision)
+  ) {
+    return null;
+  }
+  return payload;
+};
+
+let traitsSaveRequestCounter = 0;
+let identitySaveRequestCounter = 0;
+let identityRandomNameRequestCounter = 0;
+
+const createTraitsSaveRequestId = (stateToken: string) => {
+  traitsSaveRequestCounter = (traitsSaveRequestCounter + 1) % 1000000;
+  return `${stateToken}-${Date.now()}-${traitsSaveRequestCounter}`;
+};
+
+const createIdentitySaveRequestId = (stateToken: string) => {
+  identitySaveRequestCounter = (identitySaveRequestCounter + 1) % 1000000;
+  return `${stateToken}-identity-${Date.now()}-${identitySaveRequestCounter}`;
+};
+
+const createIdentityRandomNameRequestId = (stateToken: string) => {
+  identityRandomNameRequestCounter =
+    (identityRandomNameRequestCounter + 1) % 1000000;
+  return `${stateToken}-identity-name-${Date.now()}-${identityRandomNameRequestCounter}`;
+};
+
+// eslint-disable-next-line complexity
+const CustomMarkingDesignerContent = (_props, context) => {
   const { act, data } = useBackend<CustomMarkingDesignerData>(context);
   const stateToken = data.state_token || 'session';
+  const identityDraftKey = `identityDraft-${stateToken}`;
+  const identitySavedDraftKey = `identitySavedDraft-${stateToken}`;
+  const identityDirtyKey = `identityDirty-${stateToken}`;
+  const resolvedIdentityPayload = resolveIdentityPayload(data);
+  const {
+    resolvedPayload: resolvedTraitsPayload,
+    draftKey: traitsDraftKey,
+    dirtyKey: traitsDirtyKey,
+  } = resolveTraitsDraftContext(data, stateToken);
   const [activeTab, setActiveTab] = useLocalState<DesignerTabId>(
     context,
     'customMarkingTab',
@@ -1273,15 +2618,13 @@ export const CustomMarkingDesigner = (_props, context) => {
       `customMarkingLastInitialTab-${stateToken}`,
       null
     );
-  const [compactMode, setCompactMode] = useLocalState<boolean>(
+  const [zoomPercent, setZoomPercent] = useLocalState<number>(
     context,
-    `customMarkingDesignerCompact-${stateToken}`,
-    false
+    `customMarkingDesignerZoom-${stateToken}`,
+    DESIGNER_ZOOM_MAX_PERCENT
   );
   const allowCustomTab = data.allow_custom_tab ?? true;
-  const enableCustomDisclaimer =
-    data.custom_marking_enable_disclaimer ||
-    "This is an advanced character editing tool that allows you to edit individual pixels on your character to adjust or create new markings.  Custom markings have the same standards as markings added to the RogueStar codebase.  They should make realistic sense and must be SFW.  If it wouldn't get approved to add to the code, it should not be done here.  If you are uncertain about something, please let us know and we're happy to chatter about it.";
+  const enableCustomDisclaimer = resolveEnableCustomDisclaimer(data);
   const [enableCustomPromptOpen, setEnableCustomPromptOpen] =
     useLocalState<boolean>(
       context,
@@ -1327,13 +2670,8 @@ export const CustomMarkingDesigner = (_props, context) => {
     context,
     stateToken,
   });
-  const canvasBackgroundOptions: CanvasBackgroundOption[] = Array.isArray(
-    data.canvas_backgrounds
-  )
-    ? data.canvas_backgrounds
-    : [];
-  const defaultCanvasBackgroundKey =
-    data.default_canvas_background || 'default';
+  const { canvasBackgroundOptions, defaultCanvasBackgroundKey } =
+    resolveCanvasBackgroundDefaults(data);
   const {
     resolvedCanvasBackground,
     backgroundFallbackColor,
@@ -1375,6 +2713,8 @@ export const CustomMarkingDesigner = (_props, context) => {
     setAssetRevision,
     savingProgress,
     setSavingProgress,
+    showEquipment,
+    setShowEquipment,
     showJobGear,
     setShowJobGear,
     showLoadoutGear,
@@ -1382,6 +2722,7 @@ export const CustomMarkingDesigner = (_props, context) => {
     loadingOverlay,
     setLoadingOverlay,
   } = useDesignerUiState(context, stateToken, {
+    showEquipment: !!data.show_equipment,
     showJobGear: !!data.show_job_gear,
     showLoadoutGear: !!data.show_loadout_gear,
   });
@@ -1413,11 +2754,7 @@ export const CustomMarkingDesigner = (_props, context) => {
       false
     );
   const [bodyPayload, setBodyPayload] =
-    useLocalState<BodyMarkingsPayload | null>(
-      context,
-      'bodyPayload',
-      data.body_markings_payload || null
-    );
+    useLocalState<BodyMarkingsPayload | null>(context, 'bodyPayload', null);
   const [bodyMarkingsState, setBodyMarkingsState] = useLocalState<
     Record<string, BodyMarkingEntry>
   >(
@@ -1498,15 +2835,6 @@ export const CustomMarkingDesigner = (_props, context) => {
       'bodyMarkingsSavedState',
       buildBodySavedStateFromPayload(data.body_markings_payload)
     );
-  const [bodyPayloadSignature, setBodyPayloadSignature] = useLocalState<
-    string | null
-  >(
-    context,
-    `bodyMarkingsPayloadSignature-${stateToken}`,
-    data.body_markings_payload
-      ? buildBodyPayloadSignature(data.body_markings_payload)
-      : null
-  );
   const [bodyPendingSave, setBodyPendingSave] = useLocalState<boolean>(
     context,
     'bodyMarkingsPendingSave',
@@ -1547,6 +2875,12 @@ export const CustomMarkingDesigner = (_props, context) => {
     `customMarkingDesignerClientPreviewEpoch-${stateToken}`,
     0
   );
+  const [previewSourceSignature, setPreviewSourceSignature] =
+    useLocalState<string>(
+      context,
+      `customMarkingDesignerPreviewSourceSignature-${stateToken}`,
+      ''
+    );
   const [basicAppearanceLoadInProgress, setBasicAppearanceLoadInProgress] =
     useLocalState<boolean>(
       context,
@@ -1554,11 +2888,7 @@ export const CustomMarkingDesigner = (_props, context) => {
       false
     );
   const [basicPayload, setBasicPayload] =
-    useLocalState<BasicAppearancePayload | null>(
-      context,
-      'basicPayload',
-      data.basic_appearance_payload || null
-    );
+    useLocalState<BasicAppearancePayload | null>(context, 'basicPayload', null);
   const basicInitialState = buildBasicStateFromPayload(
     data.basic_appearance_payload
   );
@@ -1586,6 +2916,165 @@ export const CustomMarkingDesigner = (_props, context) => {
     'basicAppearancePendingClose',
     false
   );
+  const [speciesPayload, setSpeciesPayload] =
+    useLocalState<SpeciesPayload | null>(
+      context,
+      'speciesPayload',
+      data.species_payload || null
+    );
+  const [speciesSelection, setSpeciesSelection] = useLocalState<string | null>(
+    context,
+    'speciesSelection',
+    data.species_payload?.selected_species || null
+  );
+  const [speciesSavedSelection, setSpeciesSavedSelection] = useLocalState<
+    string | null
+  >(
+    context,
+    'speciesSavedSelection',
+    data.species_payload?.selected_species || null
+  );
+  const [speciesIconBaseSelection, setSpeciesIconBaseSelection] = useLocalState<
+    string | null
+  >(
+    context,
+    'speciesIconBaseSelection',
+    data.species_payload?.preview_icon_base ||
+      data.species_payload?.selected_icon_base ||
+      null
+  );
+  const [speciesSavedIconBaseSelection, setSpeciesSavedIconBaseSelection] =
+    useLocalState<string | null>(
+      context,
+      'speciesSavedIconBaseSelection',
+      data.species_payload?.selected_icon_base ||
+        data.species_payload?.preview_icon_base ||
+        null
+    );
+  const [speciesCustomName, setSpeciesCustomName] = useLocalState<string>(
+    context,
+    'speciesCustomName',
+    resolveSpeciesCustomName(data.species_payload)
+  );
+  const [speciesSavedCustomName, setSpeciesSavedCustomName] =
+    useLocalState<string>(
+      context,
+      'speciesSavedCustomName',
+      resolveSpeciesCustomName(data.species_payload)
+    );
+  const [speciesDirty, setSpeciesDirty] = useLocalState<boolean>(
+    context,
+    'speciesDirty',
+    false
+  );
+  const [speciesPendingSave, setSpeciesPendingSave] = useLocalState<boolean>(
+    context,
+    'speciesPendingSave',
+    false
+  );
+  const [speciesPendingClose, setSpeciesPendingClose] = useLocalState<boolean>(
+    context,
+    'speciesPendingClose',
+    false
+  );
+  const [traitsDraftState, setTraitsDraftState] =
+    useLocalState<TraitsDraftState | null>(
+      context,
+      traitsDraftKey,
+      buildInitialTraitsDraft(resolvedTraitsPayload)
+    );
+  const [traitsDirty, setTraitsDirty] = useLocalState<boolean>(
+    context,
+    traitsDirtyKey,
+    false
+  );
+  const [traitsPendingSave, setTraitsPendingSave] = useLocalState<boolean>(
+    context,
+    'traitsPendingSave',
+    false
+  );
+  const [traitsPendingClose, setTraitsPendingClose] = useLocalState<boolean>(
+    context,
+    'traitsPendingClose',
+    false
+  );
+  const [traitsPendingSaveRequest, setTraitsPendingSaveRequest] =
+    useLocalState<PendingTraitsSaveRequest | null>(
+      context,
+      `traitsPendingSaveRequest-${stateToken}`,
+      null
+    );
+  const [traitsSaveError, setTraitsSaveError] = useLocalState<string | null>(
+    context,
+    `traitsSaveError-${stateToken}`,
+    null
+  );
+  const initialIdentityDraft = resolvedIdentityPayload
+    ? buildIdentityDraftState(resolvedIdentityPayload)
+    : null;
+  const [identityDraft, setIdentityDraft] =
+    useLocalState<IdentityDraftState | null>(
+      context,
+      identityDraftKey,
+      initialIdentityDraft
+    );
+  const [identitySavedDraft, setIdentitySavedDraft] =
+    useLocalState<IdentityDraftState | null>(
+      context,
+      identitySavedDraftKey,
+      initialIdentityDraft
+    );
+  const [identityDirty, setIdentityDirty] = useLocalState<boolean>(
+    context,
+    identityDirtyKey,
+    false
+  );
+  const [identityLoadInProgress, setIdentityLoadInProgress] =
+    useLocalState<boolean>(
+      context,
+      `identityLoadInProgress-${stateToken}`,
+      false
+    );
+  const [identityPendingSave, setIdentityPendingSave] = useLocalState<boolean>(
+    context,
+    `identityPendingSave-${stateToken}`,
+    false
+  );
+  const [identityPendingClose, setIdentityPendingClose] =
+    useLocalState<boolean>(
+      context,
+      `identityPendingClose-${stateToken}`,
+      false
+    );
+  const [identityPendingSaveRequest, setIdentityPendingSaveRequest] =
+    useLocalState<PendingIdentitySaveRequest | null>(
+      context,
+      `identityPendingSaveRequest-${stateToken}`,
+      null
+    );
+  const [
+    identityPendingRandomNameRequest,
+    setIdentityPendingRandomNameRequest,
+  ] = useLocalState<PendingIdentityRandomNameRequest | null>(
+    context,
+    `identityPendingRandomNameRequest-${stateToken}`,
+    null
+  );
+  const [identitySaveError, setIdentitySaveError] = useLocalState<
+    string | null
+  >(context, `identitySaveError-${stateToken}`, null);
+  const [speciesLoadInProgress, setSpeciesLoadInProgress] =
+    useLocalState<boolean>(
+      context,
+      `speciesLoadInProgress-${stateToken}`,
+      false
+    );
+  const [speciesReloadPending, setSpeciesReloadPending] =
+    useLocalState<boolean>(
+      context,
+      `speciesReloadPending-${stateToken}`,
+      false
+    );
   const [strokeDraftState] = useLocalState<StrokeDraftState>(
     context,
     'strokeDrafts',
@@ -1596,15 +3085,23 @@ export const CustomMarkingDesigner = (_props, context) => {
     `customMarkingDraftMutationToken-${stateToken}`,
     0
   );
-  const [tabSwitchPrompt, setTabSwitchPrompt] = useLocalState<{
-    sourceTab: DesignerTabId;
-    targetTab: DesignerTabId;
-  } | null>(context, 'customMarkingTabSwitchPrompt', null);
+  const [tabSwitchPrompt, setTabSwitchPrompt] =
+    useLocalState<TabSwitchPromptState | null>(
+      context,
+      'customMarkingTabSwitchPrompt',
+      null
+    );
   const [tabSwitchBusy, setTabSwitchBusy] = useLocalState(
     context,
     'customMarkingTabSwitchBusy',
     false
   );
+  const [pendingSpeciesTabSwitch, setPendingSpeciesTabSwitch] =
+    useLocalState<PendingSpeciesTabSwitch | null>(
+      context,
+      `customMarkingPendingSpeciesTabSwitch-${stateToken}`,
+      null
+    );
   const notifyAssetReady = () =>
     setAssetRevision((assetRevision + 1) % 1000000);
   const limited = !!data.limited;
@@ -1615,7 +3112,10 @@ export const CustomMarkingDesigner = (_props, context) => {
     canvasPixelSize,
     canvasDisplayWidthPx,
     canvasDisplayHeightPx,
-    canvasTransform,
+    canvasRenderWidthPx,
+    canvasRenderHeightPx,
+    canvasOffsetX,
+    canvasOffsetY,
     canvasFitToFrame,
     previewFitToFrame,
     toggleCanvasFit,
@@ -1676,8 +3176,6 @@ export const CustomMarkingDesigner = (_props, context) => {
       context,
       bodyPayload,
       basicPayload,
-      dataBodyPayload: data.body_markings_payload,
-      dataBasicPayload: data.basic_appearance_payload,
     }
   );
   const directionSignature = resolveDirectionSignature(data.directions);
@@ -1687,6 +3185,17 @@ export const CustomMarkingDesigner = (_props, context) => {
       basicPayloadSnapshot,
       basicAppearanceState,
     });
+  const {
+    selectedSpeciesId,
+    selectedIconBase,
+    speciesPreviewSources,
+    speciesPreviewSignature,
+  } = resolveSpeciesPreviewSelection({
+    speciesPayload,
+    speciesSelection,
+    speciesIconBaseSelection,
+    digitigrade: markingsAppearanceState.digitigrade,
+  });
   const {
     bodyMarkingsContext,
     bodyMarkingsContextSignature,
@@ -1721,18 +3230,29 @@ export const CustomMarkingDesigner = (_props, context) => {
     bodyPayloadSnapshot,
     basicPayloadSnapshot,
     markingsAppearanceState,
+    selectedSpeciesId,
+    selectedIconBase,
+    speciesPreviewSources,
+    speciesPreviewSignature,
     previewStateRevision: previewState.revision,
     clientPreviewEpoch,
     setClientPreviewEpoch,
+    previewSourceSignature,
+    setPreviewSourceSignature,
     resolvedPartReplacementMap,
     resolvedPartPriorityMap,
     assetRevision,
     directionSignature,
     canvasWidth,
     canvasHeight,
+    showEquipment,
     showJobGear,
     showLoadoutGear,
   });
+  const sharedPreviewEnabled =
+    resolvedActiveTab === 'custom' ||
+    resolvedActiveTab === 'traits' ||
+    resolvedActiveTab === 'identity';
   const {
     derivedPreviewState,
     overlayLayerParts,
@@ -1768,6 +3288,7 @@ export const CustomMarkingDesigner = (_props, context) => {
     resolvedPartPriorityMap,
     resolvedPartReplacementMap,
     sessionToken,
+    showEquipment,
     showJobGear,
     showLoadoutGear,
     referencePartMarkingGridsByDir,
@@ -1775,7 +3296,7 @@ export const CustomMarkingDesigner = (_props, context) => {
     renderedPreviewCache,
     renderedPreviewSignature,
     draftMutationToken,
-    enabled: resolvedActiveTab === 'custom',
+    enabled: sharedPreviewEnabled,
   });
   const appearanceContext = resolveAppearanceContext({
     previewDirStates: derivedPreviewState.dirs,
@@ -1784,11 +3305,16 @@ export const CustomMarkingDesigner = (_props, context) => {
     fallbackDigitigrade: resolvedDigitigrade,
   });
   const previewWithBaseColors = applyEyeColorToPreview(
-    applyBodyColorToPreview(
-      renderedPreviewDirs,
-      appearanceContext.previewBaseBodyColor,
-      appearanceContext.previewTargetBodyColor,
-      appearanceContext.bodyColorExcludedParts
+    applyLimbHairColorToPreview(
+      applyBodyColorToPreview(
+        renderedPreviewDirs,
+        appearanceContext.previewBaseBodyColor,
+        appearanceContext.previewTargetBodyColor,
+        appearanceContext.bodyColorExcludedParts,
+        1,
+        appearanceContext.bodyColorBlendMode
+      ),
+      appearanceContext.appearanceState.hair_color
     ),
     appearanceContext.previewBaseEyeColor,
     appearanceContext.previewTargetEyeColor,
@@ -1800,6 +3326,7 @@ export const CustomMarkingDesigner = (_props, context) => {
     appearanceContext,
     canvasWidth,
     canvasHeight,
+    showEquipment,
     showJobGear,
     showLoadoutGear,
     signalAssetUpdate: notifyAssetReady,
@@ -1821,11 +3348,8 @@ export const CustomMarkingDesigner = (_props, context) => {
     cache: previewWithMarkingsCache,
     signature: previewMarkingsSignature,
   });
-  const {
-    referenceParts: canvasReferenceParts,
-    referenceGrid: canvasReferenceGrid,
-    referenceSignature: canvasReferenceSignature,
-  } = applyAppearanceToReferenceSources({
+  const tabLivePreview = sharedPreviewEnabled ? previewDirsWithMarkings : [];
+  const canvasReferenceSources = applyAppearanceToReferenceSources({
     referenceParts,
     referenceGrid,
     referenceSignature,
@@ -1833,6 +3357,17 @@ export const CustomMarkingDesigner = (_props, context) => {
     preview: previewWithAppearance,
     dirKey: currentDirectionKey,
   });
+  const canvasReferenceParts = buildGenericCanvasReference({
+    referenceParts: canvasReferenceSources.referenceParts,
+    referenceGrid: canvasReferenceSources.referenceGrid,
+    partOrder: derivedPreviewState.dirs[currentDirectionKey]?.partOrder,
+    canvasWidth,
+    canvasHeight,
+    activePartKey,
+    mergeGrid,
+  });
+  const canvasReferenceGrid = canvasReferenceSources.referenceGrid;
+  const canvasReferenceSignature = canvasReferenceSources.referenceSignature;
   const resolvedReferenceSignature = resolveReferenceSignature({
     canvasReferenceSignature,
     bodyMarkingsContextSignature,
@@ -1915,6 +3450,7 @@ export const CustomMarkingDesigner = (_props, context) => {
     setReferenceOpacityByPart,
     referenceParts: canvasReferenceParts,
     bodyParts: data.body_parts,
+    showEquipment,
     showJobGear,
     showLoadoutGear,
     activePartKey,
@@ -2204,43 +3740,6 @@ export const CustomMarkingDesigner = (_props, context) => {
       preview_revision: (payload.preview_revision || 0) + 1,
     };
   };
-  const applyPreviewOverridesToBasicPayload = (
-    payload: BasicAppearancePayload,
-    overrides: CustomPreviewOverrideMap
-  ) => {
-    let changed = false;
-    let next = payload;
-    const primary = mergePreviewSourcesWithCustomParts(
-      payload.preview_sources,
-      derivedPreviewState,
-      { previewOverrides: overrides }
-    );
-    if (primary.changed) {
-      changed = true;
-      next = {
-        ...next,
-        preview_sources: primary.sources,
-        preview_revision: (payload.preview_revision || 0) + 1,
-      };
-    }
-    const alt = mergePreviewSourcesWithCustomParts(
-      payload.preview_sources_alt,
-      derivedPreviewState,
-      { previewOverrides: overrides }
-    );
-    if (alt.changed) {
-      if (!changed) {
-        next = { ...next };
-      }
-      next = {
-        ...next,
-        preview_sources_alt: alt.sources,
-        preview_revision_alt: (payload.preview_revision_alt || 0) + 1,
-      };
-      changed = true;
-    }
-    return changed ? next : payload;
-  };
   const syncExternalPreviewSources = (
     overrides?: CustomPartsMergeOverrides
   ) => {
@@ -2264,7 +3763,7 @@ export const CustomMarkingDesigner = (_props, context) => {
       }
     }
     if (basicPayload) {
-      const nextBasic = applyPreviewOverridesToBasicPayload(
+      const nextBasic = applyCustomPreviewOverridesToBasicPayload(
         basicPayload,
         previewOverrides
       );
@@ -2298,7 +3797,7 @@ export const CustomMarkingDesigner = (_props, context) => {
       }
     }
     if (applyBasic && basicPayload) {
-      const nextBasic = applyPreviewOverridesToBasicPayload(
+      const nextBasic = applyCustomPreviewOverridesToBasicPayload(
         basicPayload,
         overrides
       );
@@ -2561,23 +4060,26 @@ export const CustomMarkingDesigner = (_props, context) => {
     />
   );
 
-  const shouldShowLoadingOverlay =
-    loadingOverlay && !pendingSave && !pendingClose;
-  const customTabLoading = resolvedActiveTab === 'custom' && loadingOverlay;
-  const serverBodyPayload = data.body_markings_payload || null;
-  syncServerBodyPayload({
+  const serverSpeciesPayload = data.species_payload || null;
+  syncServerSpeciesPayload({
     resolvedActiveTab,
-    serverBodyPayload,
-    bodyMarkingsDirty,
-    bodyPayload,
-    bodyPayloadSignature,
-    setBodyPayloadSignature,
-    setBodyPayload,
-    setBodySavedState,
-    setBodyMarkingsState,
-    setBodyMarkingsOrder,
-    setBodyMarkingsSelected,
-    setBodyMarkingsDirty,
+    serverSpeciesPayload,
+    speciesSavedSelection,
+    speciesSavedIconBaseSelection,
+    speciesSavedCustomName,
+    speciesDirty,
+    speciesPayload,
+    setSpeciesPayload,
+    setSpeciesSelection,
+    setSpeciesSavedSelection,
+    setSpeciesIconBaseSelection,
+    setSpeciesSavedIconBaseSelection,
+    setSpeciesCustomName,
+    setSpeciesSavedCustomName,
+    setSpeciesDirty,
+    speciesLoadInProgress,
+    setSpeciesLoadInProgress,
+    speciesReloadPending,
   });
   handlePreviewRefreshTokenUpdate({
     serverPreviewRefreshToken,
@@ -2599,20 +4101,29 @@ export const CustomMarkingDesigner = (_props, context) => {
     setBasicReloadPending,
     act,
   });
-  const basicPayloadReady =
-    !!basicPayloadSnapshot && !basicPayloadSnapshot.preview_only;
-  const bodyTabLoading = resolvedActiveTab === 'body' && !bodyPayloadSnapshot;
-  const basicTabLoading = resolvedActiveTab === 'basic' && !basicPayloadReady;
-  const tabSwitchBusyState =
-    tabSwitchBusy ||
-    pendingSave ||
-    pendingClose ||
-    bodyPendingSave ||
-    bodyPendingClose ||
-    basicPendingSave ||
-    basicPendingClose;
-  const tabsLocked =
-    tabSwitchBusyState || customTabLoading || bodyTabLoading || basicTabLoading;
+  const { shouldShowLoadingOverlay, tabSwitchBusyState, tabsLocked } =
+    resolveDesignerLoadingState({
+      resolvedActiveTab,
+      loadingOverlay,
+      pendingSave,
+      pendingClose,
+      bodyPayloadSnapshot,
+      basicPayloadSnapshot,
+      speciesPayload,
+      identityPayload: resolvedIdentityPayload,
+      identityLoadInProgress,
+      tabSwitchBusy,
+      bodyPendingSave,
+      bodyPendingClose,
+      basicPendingSave,
+      basicPendingClose,
+      speciesPendingSave,
+      speciesPendingClose,
+      traitsPendingSave,
+      traitsPendingClose,
+      identityPendingSave,
+      identityPendingClose,
+    });
 
   const canvasBackgroundId = resolvedCanvasBackground?.id || 'default';
   const directionTitle = `Direction: ${resolveDirectionLabel(
@@ -2640,6 +4151,8 @@ export const CustomMarkingDesigner = (_props, context) => {
     canvasBackgroundOptions,
     resolvedCanvasBackground,
     cycleCanvasBackground,
+    showEquipment,
+    onToggleEquipment: () => setShowEquipment(!showEquipment),
     showJobGear,
     onToggleJobGear: () => setShowJobGear(!showJobGear),
     showLoadoutGear,
@@ -2691,6 +4204,81 @@ export const CustomMarkingDesigner = (_props, context) => {
     return !!dirtyFlag;
   };
 
+  const detectSpeciesUnsaved = () => {
+    const sharedState = selectBackend(context.store.getState()).shared || {};
+    const dirtyFlag =
+      typeof sharedState.speciesDirty === 'boolean'
+        ? (sharedState.speciesDirty as boolean)
+        : speciesDirty;
+    return !!dirtyFlag;
+  };
+
+  const detectTraitsUnsaved = () => {
+    const sharedState = selectBackend(context.store.getState()).shared || {};
+    const dirtyFlag = sharedState[traitsDirtyKey];
+    return typeof dirtyFlag === 'boolean' ? dirtyFlag : traitsDirty;
+  };
+
+  const resolveLatestTraitsDraft = () => {
+    const sharedState = selectBackend(context.store.getState()).shared || {};
+    const draft = sharedState[traitsDraftKey] as
+      | TraitsDraftState
+      | null
+      | undefined;
+    return draft !== undefined ? draft : traitsDraftState;
+  };
+
+  const resolveLatestTraitsValidationError = () => {
+    const draft = resolveLatestTraitsDraft();
+    return resolvedTraitsPayload && draft
+      ? resolveLanguagesDraftValidationError(resolvedTraitsPayload, draft)
+      : null;
+  };
+
+  const detectIdentityUnsaved = () => {
+    const sharedState = selectBackend(context.store.getState()).shared || {};
+    const dirtyFlag = sharedState[identityDirtyKey];
+    return typeof dirtyFlag === 'boolean' ? dirtyFlag : identityDirty;
+  };
+
+  const resolveLatestIdentityDraft = () => {
+    const sharedState = selectBackend(context.store.getState()).shared || {};
+    const draft = sharedState[identityDraftKey] as
+      | IdentityDraftState
+      | null
+      | undefined;
+    return draft !== undefined ? draft : identityDraft;
+  };
+
+  const resolveLatestIdentitySavedDraft = () => {
+    const sharedState = selectBackend(context.store.getState()).shared || {};
+    const draft = sharedState[identitySavedDraftKey] as
+      | IdentityDraftState
+      | null
+      | undefined;
+    return draft !== undefined ? draft : identitySavedDraft;
+  };
+
+  const resolveLatestIdentityValidationError = () =>
+    resolvedIdentityPayload
+      ? resolveIdentityDraftValidationError(
+          resolvedIdentityPayload,
+          resolveLatestIdentityDraft()
+        )
+      : 'Identity data is still loading.';
+
+  const requestIdentityPayload = () => {
+    setIdentityLoadInProgress(true);
+    try {
+      act('load_identity');
+    } catch (error) {
+      setIdentityLoadInProgress(false);
+      setIdentitySaveError(
+        'Identity data could not be requested. Please try again.'
+      );
+    }
+  };
+
   const resolveBodyReloadPending = () => {
     const sharedState = selectBackend(context.store.getState()).shared || {};
     const pendingValue = sharedState[`bodyMarkingsReloadPending-${stateToken}`];
@@ -2708,6 +4296,20 @@ export const CustomMarkingDesigner = (_props, context) => {
       return pendingValue;
     }
     return basicReloadPending;
+  };
+
+  const resolveSpeciesReloadPending = () => {
+    const sharedState = selectBackend(context.store.getState()).shared || {};
+    const pendingValue = sharedState[`speciesReloadPending-${stateToken}`];
+    if (typeof pendingValue === 'boolean') {
+      return pendingValue;
+    }
+    return speciesReloadPending;
+  };
+
+  const hasSharedStateKey = (key: string) => {
+    const sharedState = selectBackend(context.store.getState()).shared || {};
+    return Object.prototype.hasOwnProperty.call(sharedState, key);
   };
 
   const resolveLatestBodyPayload = () => {
@@ -2728,12 +4330,95 @@ export const CustomMarkingDesigner = (_props, context) => {
     return payload !== undefined ? payload : basicPayload;
   };
 
-  const resolveUnsavedForTab = (tab: DesignerTabId) =>
-    tab === 'custom'
-      ? detectCustomUnsaved()
-      : tab === 'body'
-        ? detectBodyUnsaved()
-        : detectBasicUnsaved();
+  const requestBodyPayload = (
+    extra: Record<string, unknown> = {},
+    retainKnown = true
+  ) =>
+    act(
+      'load_body_markings',
+      buildBodyMarkingsLoadParams(
+        resolveLatestBodyPayload(),
+        resolveLatestBasicPayload(),
+        extra,
+        retainKnown
+      )
+    );
+
+  const requestBasicPayload = (
+    extra: Record<string, unknown> = {},
+    retainKnown = true
+  ) =>
+    act(
+      'load_basic_appearance',
+      buildBasicAppearanceLoadParams(
+        resolveLatestBasicPayload(),
+        resolveLatestBodyPayload(),
+        extra,
+        retainKnown
+      )
+    );
+
+  const resolveLatestSpeciesPayload = () => {
+    const sharedState = selectBackend(context.store.getState()).shared || {};
+    const payload = sharedState.speciesPayload as
+      | SpeciesPayload
+      | null
+      | undefined;
+    return payload !== undefined ? payload : speciesPayload;
+  };
+
+  const resolveBodyPayloadForSwitch = () => {
+    const latestBodyPayload = resolveLatestBodyPayload();
+    const latestReloadPending = resolveBodyReloadPending();
+    const dataBodyPayload = data.body_markings_payload || null;
+    const sharedBodyPayloadCleared =
+      hasSharedStateKey('bodyPayload') && latestBodyPayload === null;
+    const resolvedBodyPayload = sharedBodyPayloadCleared
+      ? null
+      : (latestBodyPayload ?? dataBodyPayload ?? null);
+    return {
+      latestBodyPayload,
+      latestReloadPending,
+      dataBodyPayload,
+      resolvedBodyPayload,
+      sharedBodyPayloadCleared,
+    };
+  };
+
+  const resolveBasicPayloadForSwitch = () => {
+    const latestBasicPayload = resolveLatestBasicPayload();
+    const latestReloadPending = resolveBasicReloadPending();
+    const dataBasicPayload = data.basic_appearance_payload || null;
+    const dataBasicUsable =
+      !!dataBasicPayload && !dataBasicPayload.preview_only;
+    const sharedBasicPayloadCleared =
+      hasSharedStateKey('basicPayload') && latestBasicPayload === null;
+    const resolvedBasicPayload = sharedBasicPayloadCleared
+      ? null
+      : latestBasicPayload && !latestBasicPayload.preview_only
+        ? latestBasicPayload
+        : dataBasicUsable
+          ? dataBasicPayload
+          : null;
+    return {
+      latestBasicPayload,
+      latestReloadPending,
+      dataBasicPayload,
+      dataBasicUsable,
+      resolvedBasicPayload,
+      sharedBasicPayloadCleared,
+    };
+  };
+
+  const unsavedDetectors: Record<DesignerTabId, () => boolean> = {
+    identity: detectIdentityUnsaved,
+    custom: detectCustomUnsaved,
+    body: detectBodyUnsaved,
+    basic: detectBasicUnsaved,
+    species: detectSpeciesUnsaved,
+    traits: detectTraitsUnsaved,
+  };
+  const resolveUnsavedForTab = (tab: DesignerTabId) => unsavedDetectors[tab]();
 
   const clearCustomChanges = () => {
     clearAllLocalDrafts();
@@ -2853,15 +4538,25 @@ export const CustomMarkingDesigner = (_props, context) => {
     if (!wasDirty) {
       return true;
     }
-    const { latestState } = resolveLatestBasicState();
+    const { latestState, latestSavedState } = resolveLatestBasicState();
+    const speciesPreviewStale =
+      shouldInvalidateSpeciesPayloadForBiologicalGenderChange(
+        latestSavedState.biological_gender,
+        latestState.biological_gender
+      );
     setBasicPendingSave(true);
     setBasicPendingClose(false);
     try {
       setPreviewRefreshSkips((previewRefreshSkips || 0) + 1);
       await act('save_basic_appearance', {
+        biological_gender: latestState.biological_gender,
         digitigrade: latestState.digitigrade ? 1 : 0,
         body_color: latestState.body_color,
         eye_color: latestState.eye_color,
+        blood_type: latestState.blood_type,
+        blood_reagent: latestState.blood_reagent,
+        blood_color: latestState.blood_color,
+        needs_glasses: latestState.needs_glasses ? 1 : 0,
         hair_style: latestState.hair_style,
         hair_color: latestState.hair_color,
         hair_gradient_style: latestState.hair_gradient_style,
@@ -2876,11 +4571,25 @@ export const CustomMarkingDesigner = (_props, context) => {
         tail_colors: latestState.tail_colors,
         wing_style: latestState.wing_style,
         wing_colors: latestState.wing_colors,
+        ...buildProstheticSaveParams(
+          latestState,
+          basicPayload?.prosthetic_context
+        ),
         close: false,
       });
+      if (speciesPreviewStale) {
+        setSpeciesPayload(null);
+        setSpeciesReloadPending(true);
+      }
+      const committedState: BasicAppearanceState = {
+        ...latestState,
+        limbs: cloneLimbOverrideState(latestState.limbs),
+        limb_operations: [],
+        organ_operations: [],
+      };
       setBasicAppearanceDirty(false);
-      setBasicSavedState(latestState);
-      setBasicAppearanceState(latestState);
+      setBasicSavedState(committedState);
+      setBasicAppearanceState(committedState);
       return true;
     } catch (error) {
       return false;
@@ -2899,9 +4608,347 @@ export const CustomMarkingDesigner = (_props, context) => {
       horn_colors: [...(fallbackSaved.horn_colors || [])],
       tail_colors: [...(fallbackSaved.tail_colors || [])],
       wing_colors: [...(fallbackSaved.wing_colors || [])],
+      limbs: cloneLimbOverrideState(fallbackSaved.limbs),
+      limb_operations: [],
+      organ_operations: [],
     };
     setBasicAppearanceState(next);
     setBasicAppearanceDirty(false);
+  };
+
+  const resolveLatestSpeciesSelection = () => {
+    const sharedState = selectBackend(context.store.getState()).shared || {};
+    const selection = sharedState.speciesSelection as string | null | undefined;
+    return selection !== undefined ? selection : speciesSelection;
+  };
+
+  const resolveLatestSpeciesIconBaseSelection = () => {
+    const sharedState = selectBackend(context.store.getState()).shared || {};
+    const selection = sharedState.speciesIconBaseSelection as
+      | string
+      | null
+      | undefined;
+    return selection !== undefined ? selection : speciesIconBaseSelection;
+  };
+
+  const resolveLatestSpeciesCustomName = () => {
+    const sharedState = selectBackend(context.store.getState()).shared || {};
+    const name = sharedState.speciesCustomName as string | undefined;
+    return name !== undefined ? name : speciesCustomName;
+  };
+
+  const isPayloadSpeciesStale = (
+    payload?: { species_id?: string | null; custom_base?: string | null } | null
+  ) => {
+    const currentSpecies =
+      resolveLatestSpeciesSelection() ||
+      speciesSavedSelection ||
+      speciesPayload?.selected_species ||
+      data.species_payload?.selected_species ||
+      null;
+    const currentIconBase =
+      resolveLatestSpeciesIconBaseSelection() ||
+      speciesSavedIconBaseSelection ||
+      speciesPayload?.preview_icon_base ||
+      speciesPayload?.selected_icon_base ||
+      data.species_payload?.preview_icon_base ||
+      data.species_payload?.selected_icon_base ||
+      null;
+    return (
+      !!payload &&
+      ((!!currentSpecies && payload.species_id !== currentSpecies) ||
+        (!!currentIconBase && payload.custom_base !== currentIconBase))
+    );
+  };
+
+  const saveSpeciesChanges = async (): Promise<boolean> => {
+    const wasDirty = detectSpeciesUnsaved();
+    if (!wasDirty) {
+      return true;
+    }
+    const latestSelection = resolveLatestSpeciesSelection();
+    const latestCustomSpeciesName = resolveLatestSpeciesCustomName();
+    if (!isSpeciesSaveAllowed(latestSelection, latestCustomSpeciesName)) {
+      return false;
+    }
+    const latestIconBase = resolveLatestSpeciesIconBaseSelection();
+    const previousSelection = speciesSavedSelection;
+    const previousIconBase = speciesSavedIconBaseSelection;
+    setSpeciesPendingSave(true);
+    setSpeciesPendingClose(false);
+    try {
+      await act('save_species', {
+        species: latestSelection,
+        icon_base: latestIconBase,
+        custom_species: latestCustomSpeciesName,
+        close: false,
+        ...buildSpeciesSaveCacheParams(
+          resolveLatestBodyPayload(),
+          resolveLatestBasicPayload()
+        ),
+      });
+      setSpeciesDirty(false);
+      setSpeciesSelection(latestSelection);
+      setSpeciesSavedSelection(latestSelection);
+      setSpeciesIconBaseSelection(latestIconBase);
+      setSpeciesSavedIconBaseSelection(latestIconBase);
+      setSpeciesCustomName(latestCustomSpeciesName);
+      setSpeciesSavedCustomName(latestCustomSpeciesName);
+      if (speciesPayload) {
+        setSpeciesPayload({
+          ...speciesPayload,
+          selected_species: latestSelection,
+          selected_icon_base: latestIconBase,
+          preview_icon_base: latestIconBase,
+          custom_species: latestCustomSpeciesName,
+        });
+      }
+      if (
+        previousSelection !== latestSelection ||
+        previousIconBase !== latestIconBase
+      ) {
+        setBodyReloadPending(true);
+        setBasicReloadPending(true);
+        setBodyMarkingsDirty(false);
+        setBasicAppearanceDirty(false);
+        setReloadTargetRevision(0);
+        setReloadPending(true);
+      }
+      return true;
+    } catch (error) {
+      return false;
+    } finally {
+      setSpeciesPendingSave(false);
+      setSpeciesPendingClose(false);
+    }
+  };
+
+  const discardSpeciesChanges = () => {
+    const fallbackSelection =
+      speciesSavedSelection || speciesPayload?.selected_species || null;
+    const fallbackIconBase =
+      speciesSavedIconBaseSelection ||
+      speciesPayload?.selected_icon_base ||
+      speciesPayload?.preview_icon_base ||
+      null;
+    const fallbackCustomSpeciesName = speciesSavedCustomName;
+    setSpeciesSelection(fallbackSelection);
+    setSpeciesIconBaseSelection(fallbackIconBase);
+    setSpeciesCustomName(fallbackCustomSpeciesName);
+    setSpeciesDirty(false);
+    if (speciesPayload && fallbackSelection) {
+      setSpeciesPayload({
+        ...speciesPayload,
+        selected_species: fallbackSelection,
+        preview_species: fallbackSelection,
+        selected_icon_base: fallbackIconBase,
+        preview_icon_base: fallbackIconBase,
+        custom_species: fallbackCustomSpeciesName,
+      });
+    }
+  };
+
+  const saveTraitsChanges = async (
+    close = false,
+    tabSwitchPrompt: TabSwitchPromptState | null = null
+  ): Promise<boolean> => {
+    const latestDraft = resolveLatestTraitsDraft();
+    if (!latestDraft) {
+      return false;
+    }
+    const wasDirty = detectTraitsUnsaved();
+    if (!wasDirty && !close) {
+      return true;
+    }
+    if (!resolvedTraitsPayload) {
+      setTraitsSaveError(
+        'The Traits draft is still loading. Please try again.'
+      );
+      return false;
+    }
+    const validationError = resolveLanguagesDraftValidationError(
+      resolvedTraitsPayload,
+      latestDraft
+    );
+    if (validationError) {
+      setTraitsSaveError(validationError);
+      return false;
+    }
+    const canonicalDraft = buildTraitsDraftState(resolvedTraitsPayload);
+    const traitsChanged = !traitDraftSelectionsEqual(
+      latestDraft,
+      canonicalDraft
+    );
+    setTraitsSaveError(null);
+    setPendingSave(true);
+    setPendingClose(close);
+    setTraitsPendingSave(true);
+    setTraitsPendingClose(close);
+    const requestId = createTraitsSaveRequestId(stateToken);
+    setTraitsPendingSaveRequest({
+      requestId,
+      traitsChanged,
+      tabSwitchPrompt,
+    });
+    try {
+      act('save_traits', {
+        ...buildTraitsSavePayload(latestDraft),
+        request_id: requestId,
+        close,
+      });
+      return true;
+    } catch (error) {
+      setPendingSave(false);
+      setPendingClose(false);
+      setTraitsPendingSave(false);
+      setTraitsPendingClose(false);
+      setTraitsPendingSaveRequest(null);
+      setTraitsSaveError(
+        'The Traits save could not be sent. Please try again.'
+      );
+      return false;
+    }
+  };
+
+  const discardTraitsChanges = () => {
+    setTraitsDraftState(
+      resolvedTraitsPayload
+        ? buildTraitsDraftState(resolvedTraitsPayload)
+        : null
+    );
+    setTraitsDirty(false);
+    setTraitsSaveError(null);
+  };
+
+  const closeTraitsWithoutSaving = async () => {
+    setTraitsSaveError(null);
+    setPendingClose(true);
+    setTraitsPendingClose(true);
+    try {
+      await act('close_traits');
+    } finally {
+      setPendingClose(false);
+      setTraitsPendingClose(false);
+    }
+  };
+
+  const syncIdentityPayload = (payload: IdentityPayload) => {
+    setIdentityLoadInProgress(false);
+    if (identityPendingSave) {
+      return false;
+    }
+    if (detectIdentityUnsaved()) {
+      return true;
+    }
+    const canonicalDraft = buildIdentityDraftState(payload);
+    setIdentityDraft(cloneIdentityDraftState(canonicalDraft));
+    setIdentitySavedDraft(cloneIdentityDraftState(canonicalDraft));
+    setIdentityDirty(false);
+    setIdentitySaveError(null);
+    return true;
+  };
+
+  const saveIdentityChanges = (
+    close = false,
+    switchPrompt: TabSwitchPromptState | null = null
+  ): boolean => {
+    const latestDraft = resolveLatestIdentityDraft();
+    if (!resolvedIdentityPayload || !latestDraft) {
+      setIdentitySaveError('Identity data is still loading. Please try again.');
+      return false;
+    }
+    const validationError = resolveIdentityDraftValidationError(
+      resolvedIdentityPayload,
+      latestDraft
+    );
+    if (validationError) {
+      setIdentitySaveError(validationError);
+      return false;
+    }
+    if (!detectIdentityUnsaved() && !close && !switchPrompt) {
+      return true;
+    }
+    const requestId = createIdentitySaveRequestId(stateToken);
+    setIdentitySaveError(null);
+    setPendingSave(true);
+    setPendingClose(close);
+    setIdentityPendingSave(true);
+    setIdentityPendingClose(close);
+    setIdentityPendingSaveRequest({
+      requestId,
+      tabSwitchPrompt: switchPrompt,
+    });
+    try {
+      act('save_identity', {
+        ...buildIdentitySavePayload(latestDraft, resolvedIdentityPayload),
+        request_id: requestId,
+        close,
+      });
+      return true;
+    } catch (error) {
+      setPendingSave(false);
+      setPendingClose(false);
+      setIdentityPendingSave(false);
+      setIdentityPendingClose(false);
+      setIdentityPendingSaveRequest(null);
+      setIdentitySaveError(
+        'The Identity save could not be sent. Please try again.'
+      );
+      return false;
+    }
+  };
+
+  const discardIdentityChanges = () => {
+    const savedDraft = resolveLatestIdentitySavedDraft();
+    setIdentityDraft(savedDraft ? cloneIdentityDraftState(savedDraft) : null);
+    setIdentityDirty(false);
+    setIdentitySaveError(null);
+  };
+
+  const closeIdentityWithoutSaving = async () => {
+    discardIdentityChanges();
+    setPendingClose(true);
+    setIdentityPendingClose(true);
+    try {
+      await act('close_identity');
+    } finally {
+      setPendingClose(false);
+      setIdentityPendingClose(false);
+    }
+  };
+
+  const randomizeIdentityName = (identifyingGender: string) => {
+    if (identityPendingRandomNameRequest) {
+      return;
+    }
+    const latestDraft = resolveLatestIdentityDraft();
+    if (!latestDraft) {
+      setIdentitySaveError('Identity data is still loading. Please try again.');
+      return;
+    }
+    const requestId = createIdentityRandomNameRequestId(stateToken);
+    setIdentitySaveError(null);
+    setIdentityPendingRandomNameRequest({
+      requestId,
+      requestedName: latestDraft.real_name,
+    });
+    try {
+      act('randomize_identity_name', {
+        identifying_gender: identifyingGender,
+        request_id: requestId,
+      });
+    } catch (error) {
+      setIdentityPendingRandomNameRequest(null);
+      setIdentitySaveError(
+        'A random name could not be requested. Please try again.'
+      );
+    }
+  };
+
+  const prepareIdentityTab = () => {
+    if (!resolvedIdentityPayload) {
+      requestIdentityPayload();
+    }
   };
 
   const handleTabChange = (nextTab: DesignerTabId) => {
@@ -2928,22 +4975,38 @@ export const CustomMarkingDesigner = (_props, context) => {
     }
     if (nextTab === 'body') {
       setBodyColorTarget({ type: 'galleryPreview' });
-      const latestBodyPayload = resolveLatestBodyPayload();
-      const latestReloadPending = resolveBodyReloadPending();
-      const dataBodyPayload = data.body_markings_payload || null;
-      const resolvedBodyPayload = latestBodyPayload ?? dataBodyPayload ?? null;
-      if (!latestBodyPayload && dataBodyPayload && !latestReloadPending) {
-        setBodyPayload(dataBodyPayload);
+      const {
+        latestBodyPayload,
+        latestReloadPending,
+        dataBodyPayload,
+        resolvedBodyPayload,
+        sharedBodyPayloadCleared,
+      } = resolveBodyPayloadForSwitch();
+      if (
+        !sharedBodyPayloadCleared &&
+        !latestBodyPayload &&
+        dataBodyPayload &&
+        !latestReloadPending &&
+        !isPayloadSpeciesStale(dataBodyPayload)
+      ) {
+        setBodyPayload(
+          mergeBodyMarkingsPayload(
+            null,
+            dataBodyPayload,
+            resolveLatestBasicPayload()
+          )
+        );
       }
-      if (!resolvedBodyPayload || latestReloadPending) {
-        if (!resolvedBodyPayload) {
+      const speciesStale = isPayloadSpeciesStale(resolvedBodyPayload);
+      if (!resolvedBodyPayload || latestReloadPending || speciesStale) {
+        if (!resolvedBodyPayload || speciesStale) {
           setBodyPayload(null);
         }
         setBodyMarkingsLoadInProgress(true);
-        if (resolvedBodyPayload && latestReloadPending) {
-          act('load_body_markings', { preview_only: 1 });
+        if (resolvedBodyPayload && latestReloadPending && !speciesStale) {
+          requestBodyPayload({ preview_only: 1 });
         } else {
-          act('load_body_markings');
+          requestBodyPayload();
         }
         if (latestReloadPending) {
           setBodyReloadPending(false);
@@ -2951,40 +5014,65 @@ export const CustomMarkingDesigner = (_props, context) => {
       }
     }
     if (nextTab === 'basic') {
-      const latestBasicPayload = resolveLatestBasicPayload();
-      const latestReloadPending = resolveBasicReloadPending();
-      const dataBasicPayload = data.basic_appearance_payload || null;
-      const dataBasicUsable =
-        !!dataBasicPayload && !dataBasicPayload.preview_only;
-      const resolvedBasicPayload =
-        latestBasicPayload && !latestBasicPayload.preview_only
-          ? latestBasicPayload
-          : dataBasicUsable
-            ? dataBasicPayload
-            : null;
+      const {
+        latestBasicPayload,
+        latestReloadPending,
+        dataBasicPayload,
+        dataBasicUsable,
+        resolvedBasicPayload,
+        sharedBasicPayloadCleared,
+      } = resolveBasicPayloadForSwitch();
       if (
+        !sharedBasicPayloadCleared &&
         (!latestBasicPayload || latestBasicPayload.preview_only) &&
         dataBasicUsable &&
-        !latestReloadPending
+        !latestReloadPending &&
+        !isPayloadSpeciesStale(dataBasicPayload)
       ) {
-        setBasicPayload(dataBasicPayload);
+        setBasicPayload(
+          mergeBasicAppearancePayload(
+            null,
+            dataBasicPayload!,
+            resolveLatestBodyPayload()
+          )
+        );
       }
-      if (!resolvedBasicPayload || latestReloadPending) {
-        if (!resolvedBasicPayload) {
+      const speciesStale = isPayloadSpeciesStale(resolvedBasicPayload);
+      if (!resolvedBasicPayload || latestReloadPending || speciesStale) {
+        if (!resolvedBasicPayload || speciesStale) {
           setBasicPayload(null);
         }
         setBasicAppearanceLoadInProgress(true);
-        if (resolvedBasicPayload && latestReloadPending) {
-          act('load_basic_appearance', { preview_only: 1 });
+        if (resolvedBasicPayload && latestReloadPending && !speciesStale) {
+          requestBasicPayload({ preview_only: 1 });
         } else {
-          act('load_basic_appearance');
+          requestBasicPayload();
         }
         if (latestReloadPending) {
           setBasicReloadPending(false);
         }
       }
     }
-    act('set_active_tab', { tab: nextTab });
+    if (nextTab === 'species') {
+      const latestSpeciesPayload = resolveLatestSpeciesPayload();
+      const latestReloadPending = resolveSpeciesReloadPending();
+      const dataSpeciesPayload = data.species_payload || null;
+      const resolvedSpeciesPayload =
+        latestSpeciesPayload ?? dataSpeciesPayload ?? null;
+      if (!latestSpeciesPayload && dataSpeciesPayload && !latestReloadPending) {
+        setSpeciesPayload(dataSpeciesPayload);
+      }
+      if (!resolvedSpeciesPayload || latestReloadPending) {
+        if (!resolvedSpeciesPayload) {
+          setSpeciesPayload(null);
+        }
+        setSpeciesLoadInProgress(true);
+        act('load_species');
+      }
+    }
+    if (nextTab === 'identity') {
+      prepareIdentityTab();
+    }
     setActiveTab(nextTab);
   };
 
@@ -3009,66 +5097,382 @@ export const CustomMarkingDesigner = (_props, context) => {
 
   const ensureBodyPayloadForSwitch = async (forceReload: boolean) => {
     setBodyColorTarget({ type: 'galleryPreview' });
-    const dataBodyPayload = data.body_markings_payload || null;
-    const resolvedBodyPayload = bodyPayload ?? dataBodyPayload ?? null;
-    if (!bodyPayload && dataBodyPayload && !bodyReloadPending) {
-      setBodyPayload(dataBodyPayload);
+    const {
+      latestBodyPayload,
+      latestReloadPending,
+      dataBodyPayload,
+      resolvedBodyPayload,
+      sharedBodyPayloadCleared,
+    } = resolveBodyPayloadForSwitch();
+    if (
+      !forceReload &&
+      !sharedBodyPayloadCleared &&
+      !latestBodyPayload &&
+      dataBodyPayload &&
+      !latestReloadPending &&
+      !isPayloadSpeciesStale(dataBodyPayload)
+    ) {
+      setBodyPayload(
+        mergeBodyMarkingsPayload(
+          null,
+          dataBodyPayload,
+          resolveLatestBasicPayload()
+        )
+      );
     }
+    const speciesStale = isPayloadSpeciesStale(resolvedBodyPayload);
     const shouldReload =
-      !resolvedBodyPayload || bodyReloadPending || forceReload;
+      !resolvedBodyPayload ||
+      latestReloadPending ||
+      forceReload ||
+      speciesStale;
     if (!shouldReload) {
       return;
     }
-    if (!resolvedBodyPayload) {
+    if (forceReload || speciesStale || !resolvedBodyPayload) {
       setBodyPayload(null);
     }
     setBodyMarkingsLoadInProgress(true);
-    if (resolvedBodyPayload && (bodyReloadPending || forceReload)) {
-      await act('load_body_markings', { preview_only: 1 });
+    if (
+      resolvedBodyPayload &&
+      latestReloadPending &&
+      !forceReload &&
+      !speciesStale
+    ) {
+      await requestBodyPayload({ preview_only: 1 });
     } else {
-      await act('load_body_markings');
+      await requestBodyPayload({}, !forceReload && !speciesStale);
     }
-    if (bodyReloadPending || forceReload) {
+    if (latestReloadPending || forceReload) {
       setBodyReloadPending(false);
     }
   };
 
   const ensureBasicPayloadForSwitch = async (forceReload: boolean) => {
-    const latestBasicPayload = resolveLatestBasicPayload();
-    const latestReloadPending = resolveBasicReloadPending();
-    const dataBasicPayload = data.basic_appearance_payload || null;
-    const dataBasicUsable =
-      !!dataBasicPayload && !dataBasicPayload.preview_only;
-    const resolvedBasicPayload =
-      latestBasicPayload && !latestBasicPayload.preview_only
-        ? latestBasicPayload
-        : dataBasicUsable
-          ? dataBasicPayload
-          : null;
+    const {
+      latestBasicPayload,
+      latestReloadPending,
+      dataBasicPayload,
+      dataBasicUsable,
+      resolvedBasicPayload,
+      sharedBasicPayloadCleared,
+    } = resolveBasicPayloadForSwitch();
     if (
+      !forceReload &&
+      !sharedBasicPayloadCleared &&
       (!latestBasicPayload || latestBasicPayload.preview_only) &&
       dataBasicUsable &&
-      !latestReloadPending
+      !latestReloadPending &&
+      !isPayloadSpeciesStale(dataBasicPayload)
     ) {
-      setBasicPayload(dataBasicPayload);
+      setBasicPayload(
+        mergeBasicAppearancePayload(
+          null,
+          dataBasicPayload!,
+          resolveLatestBodyPayload()
+        )
+      );
     }
+    const speciesStale = isPayloadSpeciesStale(resolvedBasicPayload);
     const shouldReload =
-      !resolvedBasicPayload || latestReloadPending || forceReload;
+      !resolvedBasicPayload ||
+      latestReloadPending ||
+      forceReload ||
+      speciesStale;
     if (!shouldReload) {
       return;
     }
-    if (!resolvedBasicPayload) {
+    if (forceReload || speciesStale || !resolvedBasicPayload) {
       setBasicPayload(null);
     }
     setBasicAppearanceLoadInProgress(true);
-    if (resolvedBasicPayload && (latestReloadPending || forceReload)) {
-      await act('load_basic_appearance', { preview_only: 1 });
+    if (
+      resolvedBasicPayload &&
+      latestReloadPending &&
+      !forceReload &&
+      !speciesStale
+    ) {
+      await requestBasicPayload({ preview_only: 1 });
     } else {
-      await act('load_basic_appearance');
+      await requestBasicPayload({}, !forceReload && !speciesStale);
     }
     if (latestReloadPending || forceReload) {
       setBasicReloadPending(false);
     }
+  };
+
+  const ensureSpeciesPayloadForSwitch = async (forceReload: boolean) => {
+    const latestSpeciesPayload = resolveLatestSpeciesPayload();
+    const latestReloadPending = resolveSpeciesReloadPending();
+    const dataSpeciesPayload = data.species_payload || null;
+    const resolvedSpeciesPayload =
+      latestSpeciesPayload ?? dataSpeciesPayload ?? null;
+    if (!latestSpeciesPayload && dataSpeciesPayload && !latestReloadPending) {
+      setSpeciesPayload(dataSpeciesPayload);
+    }
+    const shouldReload =
+      !resolvedSpeciesPayload || latestReloadPending || forceReload;
+    if (!shouldReload) {
+      return;
+    }
+    if (!resolvedSpeciesPayload) {
+      setSpeciesPayload(null);
+    }
+    setSpeciesLoadInProgress(true);
+    await act('load_species');
+  };
+
+  const ensureIdentityPayloadForSwitch = async (forceReload: boolean) => {
+    if (!forceReload && resolvedIdentityPayload) {
+      setIdentityLoadInProgress(false);
+      return;
+    }
+    setIdentityDraft(null);
+    setIdentitySavedDraft(null);
+    setIdentityDirty(false);
+    setIdentityLoadInProgress(true);
+    try {
+      await act('load_identity');
+    } catch (error) {
+      setIdentityLoadInProgress(false);
+      setIdentitySaveError(
+        'Identity data could not be requested. Please try again.'
+      );
+    }
+  };
+
+  const completeSpeciesTabSwitch = async (result: SpeciesSaveResult) => {
+    if (!pendingSpeciesTabSwitch) {
+      return;
+    }
+    if (result.accepted === false) {
+      setPendingSpeciesTabSwitch(null);
+      setTabSwitchPrompt(null);
+      setTabSwitchBusy(false);
+      return;
+    }
+    if (
+      result.species_id !== pendingSpeciesTabSwitch.speciesId ||
+      (!!pendingSpeciesTabSwitch.iconBase &&
+        result.custom_base !== pendingSpeciesTabSwitch.iconBase)
+    ) {
+      return;
+    }
+    const { prompt } = pendingSpeciesTabSwitch;
+    setPendingSpeciesTabSwitch(null);
+    try {
+      if (prompt.targetTab === 'custom') {
+        setReloadTargetRevision(0);
+        setLoadingOverlay(true);
+        setReloadOverlayMinUntil(Date.now() + 400);
+        setReloadPending(false);
+      }
+      if (prompt.targetTab === 'body') {
+        await ensureBodyPayloadForSwitch(false);
+      }
+      if (prompt.targetTab === 'basic') {
+        await ensureBasicPayloadForSwitch(false);
+      }
+      if (prompt.targetTab === 'species') {
+        await ensureSpeciesPayloadForSwitch(false);
+      }
+      if (prompt.targetTab === 'identity') {
+        await ensureIdentityPayloadForSwitch(true);
+      }
+      setActiveTab(prompt.targetTab);
+      setTabSwitchPrompt(null);
+    } finally {
+      setTabSwitchBusy(false);
+    }
+  };
+
+  const completeTraitsSave = async (
+    accepted: boolean,
+    pendingRequest: PendingTraitsSaveRequest,
+    saveResult: TraitsSaveResult
+  ) => {
+    setTraitsPendingSaveRequest(null);
+    const clearPendingState = () => {
+      setPendingSave(false);
+      setPendingClose(false);
+      setTraitsPendingSave(false);
+      setTraitsPendingClose(false);
+    };
+
+    const prompt = pendingRequest.tabSwitchPrompt;
+    if (!accepted) {
+      setTraitsSaveError(
+        saveResult.error ||
+          'The server rejected this trait set. Resolve its incompatibilities and try again.'
+      );
+      clearPendingState();
+      if (prompt) {
+        setTabSwitchPrompt(prompt);
+        setTabSwitchBusy(false);
+      }
+      return;
+    }
+
+    setTraitsSaveError(null);
+    setTraitsDirty(false);
+    if (pendingRequest.traitsChanged) {
+      setBodyReloadPending(true);
+      setBasicReloadPending(true);
+      setReloadTargetRevision(0);
+      setReloadPending(true);
+    }
+    if (!prompt) {
+      clearPendingState();
+      return;
+    }
+
+    try {
+      if (
+        prompt.targetTab === 'custom' &&
+        (pendingRequest.traitsChanged || reloadPending)
+      ) {
+        if (pendingRequest.traitsChanged) {
+          setReloadTargetRevision(0);
+        }
+        setLoadingOverlay(true);
+        setReloadOverlayMinUntil(Date.now() + 400);
+        setReloadPending(false);
+      }
+      if (prompt.targetTab === 'body') {
+        await ensureBodyPayloadForSwitch(pendingRequest.traitsChanged);
+      }
+      if (prompt.targetTab === 'basic') {
+        await ensureBasicPayloadForSwitch(pendingRequest.traitsChanged);
+      }
+      if (prompt.targetTab === 'species') {
+        await ensureSpeciesPayloadForSwitch(false);
+      }
+      if (prompt.targetTab === 'identity') {
+        await ensureIdentityPayloadForSwitch(false);
+      }
+      setActiveTab(prompt.targetTab);
+      setTabSwitchPrompt(null);
+    } finally {
+      clearPendingState();
+      setTabSwitchBusy(false);
+    }
+  };
+
+  const completeIdentitySave = async (
+    accepted: boolean,
+    pendingRequest: PendingIdentitySaveRequest,
+    saveResult: IdentitySaveResult,
+    payload: IdentityPayload | null
+  ) => {
+    setIdentityPendingSaveRequest(null);
+    const clearPendingState = () => {
+      setPendingSave(false);
+      setPendingClose(false);
+      setIdentityPendingSave(false);
+      setIdentityPendingClose(false);
+    };
+    const prompt = pendingRequest.tabSwitchPrompt;
+    if (!accepted || !payload) {
+      if (payload) {
+        const canonicalDraft = buildIdentityDraftState(payload);
+        const latestDraft = resolveLatestIdentityDraft();
+        setIdentitySavedDraft(cloneIdentityDraftState(canonicalDraft));
+        if (latestDraft) {
+          setIdentityDraft({
+            ...latestDraft,
+            revision: payload.revision,
+          });
+        }
+      }
+      setIdentitySaveError(
+        saveResult.error ||
+          'The server rejected these Identity changes. Review the fields and try again.'
+      );
+      clearPendingState();
+      if (prompt) {
+        setTabSwitchPrompt(prompt);
+        setTabSwitchBusy(false);
+      }
+      return;
+    }
+
+    const canonicalDraft = buildIdentityDraftState(payload);
+    setIdentityDraft(cloneIdentityDraftState(canonicalDraft));
+    setIdentitySavedDraft(cloneIdentityDraftState(canonicalDraft));
+    setIdentityDirty(false);
+    setIdentityLoadInProgress(false);
+    setIdentitySaveError(null);
+    if (!prompt) {
+      clearPendingState();
+      return;
+    }
+
+    try {
+      if (prompt.targetTab === 'body') {
+        await ensureBodyPayloadForSwitch(false);
+      }
+      if (prompt.targetTab === 'basic') {
+        await ensureBasicPayloadForSwitch(false);
+      }
+      if (prompt.targetTab === 'species') {
+        await ensureSpeciesPayloadForSwitch(false);
+      }
+      setActiveTab(prompt.targetTab);
+      setTabSwitchPrompt(null);
+    } finally {
+      clearPendingState();
+      setTabSwitchBusy(false);
+    }
+  };
+
+  const timeoutIdentitySave = (pendingRequest: PendingIdentitySaveRequest) => {
+    setIdentityPendingSaveRequest(null);
+    setPendingSave(false);
+    setPendingClose(false);
+    setIdentityPendingSave(false);
+    setIdentityPendingClose(false);
+    setIdentitySaveError(
+      'The server did not acknowledge the Identity save. Please try again.'
+    );
+    if (pendingRequest.tabSwitchPrompt) {
+      setTabSwitchPrompt(pendingRequest.tabSwitchPrompt);
+      setTabSwitchBusy(false);
+    }
+  };
+
+  const completeIdentityRandomName = (
+    result: IdentityRandomNameResult,
+    pendingRequest: PendingIdentityRandomNameRequest
+  ) => {
+    setIdentityPendingRandomNameRequest(null);
+    const latestDraft = resolveLatestIdentityDraft();
+    const savedDraft = resolveLatestIdentitySavedDraft();
+    if (!latestDraft || !savedDraft) {
+      setIdentitySaveError('Identity data changed while generating the name.');
+      requestIdentityPayload();
+      return;
+    }
+    if (
+      !isIdentityRandomNameRequestCurrent(
+        latestDraft,
+        pendingRequest.requestedName
+      )
+    ) {
+      return;
+    }
+    if (!result.name) {
+      setIdentitySaveError(
+        result.error || 'The server could not generate a random name.'
+      );
+      return;
+    }
+    const nextDraft = {
+      ...latestDraft,
+      real_name: result.name,
+    };
+    setIdentityDraft(nextDraft);
+    setIdentityDirty(!identityDraftStatesEqual(nextDraft, savedDraft));
+    setIdentitySaveError(null);
   };
 
   const saveTabBeforeSwitch = async (sourceTab: DesignerTabId) => {
@@ -3079,6 +5483,18 @@ export const CustomMarkingDesigner = (_props, context) => {
     if (sourceTab === 'body') {
       const saved = await saveBodyChanges();
       return !!saved && !detectBodyUnsaved();
+    }
+    if (sourceTab === 'species') {
+      const saved = await saveSpeciesChanges();
+      return !!saved && !detectSpeciesUnsaved();
+    }
+    if (sourceTab === 'traits') {
+      const saved = await saveTraitsChanges();
+      return !!saved && !detectTraitsUnsaved();
+    }
+    if (sourceTab === 'identity') {
+      const saved = saveIdentityChanges();
+      return !!saved && !detectIdentityUnsaved();
     }
     const saved = await saveBasicChanges();
     return !!saved && !detectBasicUnsaved();
@@ -3093,7 +5509,49 @@ export const CustomMarkingDesigner = (_props, context) => {
     const wasCustomDirty =
       prompt.sourceTab === 'custom' && detectCustomUnsaved();
     const wasBasicDirty = prompt.sourceTab === 'basic' && detectBasicUnsaved();
+    const wasSpeciesDirty =
+      prompt.sourceTab === 'species' && detectSpeciesUnsaved();
+    const wasTraitsDirty =
+      prompt.sourceTab === 'traits' && detectTraitsUnsaved();
+    const wasIdentityDirty =
+      prompt.sourceTab === 'identity' && detectIdentityUnsaved();
     setTabSwitchBusy(true);
+    if (wasSpeciesDirty) {
+      const pendingSpecies = resolveLatestSpeciesSelection();
+      if (!pendingSpecies) {
+        setTabSwitchBusy(false);
+        return;
+      }
+      setPendingSpeciesTabSwitch({
+        prompt,
+        speciesId: pendingSpecies,
+        iconBase: resolveLatestSpeciesIconBaseSelection(),
+      });
+      const saved = await saveSpeciesChanges();
+      if (!saved) {
+        setPendingSpeciesTabSwitch(null);
+        setTabSwitchBusy(false);
+      }
+      return;
+    }
+    if (wasTraitsDirty) {
+      setTabSwitchPrompt(null);
+      const saved = await saveTraitsChanges(false, prompt);
+      if (!saved) {
+        setTabSwitchPrompt(prompt);
+        setTabSwitchBusy(false);
+      }
+      return;
+    }
+    if (wasIdentityDirty) {
+      setTabSwitchPrompt(null);
+      const saved = saveIdentityChanges(false, prompt);
+      if (!saved) {
+        setTabSwitchPrompt(prompt);
+        setTabSwitchBusy(false);
+      }
+      return;
+    }
     setTabSwitchPrompt(null);
     try {
       const saved = await saveTabBeforeSwitch(prompt.sourceTab);
@@ -3103,7 +5561,11 @@ export const CustomMarkingDesigner = (_props, context) => {
       }
       if (
         prompt.targetTab === 'custom' &&
-        (reloadPending || wasBodyDirty || wasBasicDirty)
+        (reloadPending ||
+          wasBodyDirty ||
+          wasBasicDirty ||
+          wasSpeciesDirty ||
+          wasTraitsDirty)
       ) {
         if (!reloadPending) {
           setReloadTargetRevision(0);
@@ -3113,12 +5575,21 @@ export const CustomMarkingDesigner = (_props, context) => {
         setReloadPending(false);
       }
       if (prompt.targetTab === 'body') {
-        await ensureBodyPayloadForSwitch(wasCustomDirty);
+        await ensureBodyPayloadForSwitch(
+          wasCustomDirty || wasSpeciesDirty || wasTraitsDirty
+        );
       }
       if (prompt.targetTab === 'basic') {
-        await ensureBasicPayloadForSwitch(wasCustomDirty);
+        await ensureBasicPayloadForSwitch(
+          wasCustomDirty || wasSpeciesDirty || wasTraitsDirty
+        );
       }
-      act('set_active_tab', { tab: prompt.targetTab });
+      if (prompt.targetTab === 'species') {
+        await ensureSpeciesPayloadForSwitch(wasCustomDirty);
+      }
+      if (prompt.targetTab === 'identity') {
+        await ensureIdentityPayloadForSwitch(wasBasicDirty || wasSpeciesDirty);
+      }
       setActiveTab(prompt.targetTab);
     } finally {
       setTabSwitchBusy(false);
@@ -3136,6 +5607,12 @@ export const CustomMarkingDesigner = (_props, context) => {
         clearCustomChanges();
       } else if (tabSwitchPrompt.sourceTab === 'body') {
         discardBodyChanges();
+      } else if (tabSwitchPrompt.sourceTab === 'species') {
+        discardSpeciesChanges();
+      } else if (tabSwitchPrompt.sourceTab === 'traits') {
+        discardTraitsChanges();
+      } else if (tabSwitchPrompt.sourceTab === 'identity') {
+        discardIdentityChanges();
       } else {
         discardBasicChanges();
       }
@@ -3154,7 +5631,12 @@ export const CustomMarkingDesigner = (_props, context) => {
       if (tabSwitchPrompt.targetTab === 'basic') {
         await ensureBasicPayloadForSwitch(false);
       }
-      act('set_active_tab', { tab: tabSwitchPrompt.targetTab });
+      if (tabSwitchPrompt.targetTab === 'species') {
+        await ensureSpeciesPayloadForSwitch(false);
+      }
+      if (tabSwitchPrompt.targetTab === 'identity') {
+        await ensureIdentityPayloadForSwitch(false);
+      }
       setActiveTab(tabSwitchPrompt.targetTab);
     } finally {
       setTabSwitchBusy(false);
@@ -3162,62 +5644,15 @@ export const CustomMarkingDesigner = (_props, context) => {
   };
 
   const titleTabs = (
-    <>
-      <Tabs className="RogueStar__titleTabs">
-        <Tabs.Tab
-          selected={resolvedActiveTab === 'basic'}
-          icon="user"
-          className={tabsLocked ? 'Tab--disabled' : undefined}
-          aria-disabled={tabsLocked}
-          onClick={() => {
-            if (!tabsLocked) {
-              handleTabChange('basic');
-            }
-          }}>
-          Basic Appearance
-        </Tabs.Tab>
-        <Tabs.Tab
-          selected={resolvedActiveTab === 'body'}
-          icon="list"
-          className={tabsLocked ? 'Tab--disabled' : undefined}
-          aria-disabled={tabsLocked}
-          onClick={() => {
-            if (!tabsLocked) {
-              handleTabChange('body');
-            }
-          }}>
-          Body Markings
-        </Tabs.Tab>
-        <Tabs.Tab
-          selected={resolvedActiveTab === 'custom'}
-          icon={resolveCustomDesignerTabIcon(allowCustomTab)}
-          className={tabsLocked ? 'Tab--disabled' : undefined}
-          aria-disabled={tabsLocked}
-          tooltip={resolveCustomDesignerTabTooltip(allowCustomTab)}
-          onClick={() => {
-            if (tabsLocked) {
-              return;
-            }
-            if (!allowCustomTab) {
-              setEnableCustomPromptOpen(true);
-              return;
-            }
-            handleTabChange('custom');
-          }}>
-          Custom Marking Designer
-        </Tabs.Tab>
-      </Tabs>
-      <Button
-        className={CHIP_BUTTON_CLASS}
-        icon={compactMode ? 'search-plus' : 'search-minus'}
-        content={compactMode ? '50%' : '100%'}
-        tooltip={
-          compactMode ? 'Return to normal size.' : 'Toggle compact mode (50%).'
-        }
-        ml="auto"
-        onClick={() => setCompactMode(!compactMode)}
-      />
-    </>
+    <DesignerTitleTabs
+      resolvedActiveTab={resolvedActiveTab}
+      tabsLocked={tabsLocked}
+      allowCustomTab={allowCustomTab}
+      zoomPercent={zoomPercent}
+      setZoomPercent={setZoomPercent}
+      setEnableCustomPromptOpen={setEnableCustomPromptOpen}
+      onTabChange={handleTabChange}
+    />
   );
 
   return (
@@ -3225,7 +5660,7 @@ export const CustomMarkingDesigner = (_props, context) => {
       theme="nanotrasen rogue-star-window"
       width={1720}
       height={950}
-      scale={compactMode ? 0.5 : 1}
+      scale={zoomPercent / 100}
       resizable
       canClose={false}
       statusIcon={customStatusIcon}
@@ -3248,7 +5683,84 @@ export const CustomMarkingDesigner = (_props, context) => {
         setPhantomClickScheduled={setPhantomClickScheduled}
         setTool={setPrimaryTool}
       />
+      <ServerPayloadSyncScheduler
+        resolvedActiveTab={resolvedActiveTab}
+        serverBodyPayload={data.body_markings_payload || null}
+        serverBasicPayload={data.basic_appearance_payload || null}
+        targetSpeciesId={resolveLatestSpeciesSelection()}
+        targetIconBase={resolveLatestSpeciesIconBaseSelection()}
+        bodyPayload={bodyPayload}
+        basicPayload={basicPayload}
+        bodyMarkingsDirty={bodyMarkingsDirty}
+        basicAppearanceDirty={basicAppearanceDirty}
+        bodyReloadPending={bodyReloadPending}
+        basicReloadPending={basicReloadPending}
+        bodyLoadInProgress={bodyMarkingsLoadInProgress}
+        basicLoadInProgress={basicAppearanceLoadInProgress}
+        setBodyPayload={setBodyPayload}
+        setBasicPayload={setBasicPayload}
+        setBodySavedState={setBodySavedState}
+        setBodyMarkingsState={setBodyMarkingsState}
+        setBodyMarkingsOrder={setBodyMarkingsOrder}
+        setBodyMarkingsSelected={setBodyMarkingsSelected}
+        setBodyMarkingsDirty={setBodyMarkingsDirty}
+        setBasicAppearanceState={setBasicAppearanceState}
+        setBasicSavedState={setBasicSavedState}
+        setBasicAppearanceDirty={setBasicAppearanceDirty}
+        setBodyLoadInProgress={setBodyMarkingsLoadInProgress}
+        setBasicLoadInProgress={setBasicAppearanceLoadInProgress}
+        clearBodyReloadPending={() => setBodyReloadPending(false)}
+        clearBasicReloadPending={() => setBasicReloadPending(false)}
+      />
+      <SpeciesSaveResultSyncScheduler
+        speciesSaveResult={data.species_save_result || null}
+        onSaveResult={completeSpeciesTabSwitch}
+        speciesPayload={speciesPayload}
+        bodyPayload={bodyPayload}
+        basicPayload={basicPayload}
+        stateToken={stateToken}
+        writeStates={(states) =>
+          context.store.dispatch(backendSetSharedStates({ states }))
+        }
+      />
+      <TraitsSaveResultSyncScheduler
+        saveResult={data.traits_save_result || null}
+        payload={resolvedTraitsPayload}
+        pendingRequest={traitsPendingSaveRequest}
+        onAcknowledged={completeTraitsSave}
+      />
+      <IdentityPayloadRequestScheduler
+        key={`identity-request-${stateToken}`}
+        active={resolvedActiveTab === 'identity'}
+        payload={resolvedIdentityPayload}
+        loadInProgress={identityLoadInProgress}
+        onRequest={requestIdentityPayload}
+      />
+      <IdentityPayloadSyncScheduler
+        key={`identity-sync-${stateToken}`}
+        payload={resolvedIdentityPayload}
+        onPayload={syncIdentityPayload}
+      />
+      <IdentitySaveResultSyncScheduler
+        saveResult={data.identity_save_result || null}
+        payload={resolvedIdentityPayload}
+        pendingRequest={identityPendingSaveRequest}
+        onAcknowledged={completeIdentitySave}
+      />
+      <IdentitySaveTimeoutScheduler
+        pendingRequest={identityPendingSaveRequest}
+        onTimeout={timeoutIdentitySave}
+      />
+      <IdentityRandomNameResultSyncScheduler
+        result={data.identity_random_name_result || null}
+        pendingRequest={identityPendingRandomNameRequest}
+        onAcknowledged={completeIdentityRandomName}
+      />
       <PayloadPrefetchScheduler
+        enabled={
+          resolvedActiveTab !== 'species' ||
+          (!bodyReloadPending && !basicReloadPending)
+        }
         bodyPayload={bodyPayloadSnapshot}
         basicPayload={basicPayloadSnapshot}
         bodyLoadInProgress={bodyMarkingsLoadInProgress}
@@ -3259,8 +5771,8 @@ export const CustomMarkingDesigner = (_props, context) => {
         setBasicLoadInProgress={setBasicAppearanceLoadInProgress}
         clearBodyReloadPending={() => setBodyReloadPending(false)}
         clearBasicReloadPending={() => setBasicReloadPending(false)}
-        requestBody={() => act('load_body_markings')}
-        requestBasic={() => act('load_basic_appearance')}
+        requestBody={() => requestBodyPayload()}
+        requestBasic={() => requestBasicPayload()}
       />
       <PreviewOverrideScheduler
         pendingOverrides={pendingPreviewOverrides}
@@ -3274,7 +5786,45 @@ export const CustomMarkingDesigner = (_props, context) => {
       />
       <DesignerUndoHotkeyListener canUndo={canUndoDrafts} onUndo={handleUndo} />
       <Window.Content scrollable overflowX="auto">
-        {resolvedActiveTab === 'custom' ? (
+        {resolvedActiveTab === 'identity' ? (
+          <IdentityTab
+            context={context}
+            stateToken={stateToken}
+            payload={resolvedIdentityPayload}
+            draft={identityDraft}
+            savedDraft={identitySavedDraft}
+            setDraft={setIdentityDraft}
+            setDirty={setIdentityDirty}
+            dirty={identityDirty}
+            pendingSave={identityPendingSave}
+            pendingClose={identityPendingClose}
+            randomNamePending={!!identityPendingRandomNameRequest}
+            saveError={identitySaveError}
+            uiLocked={uiLocked}
+            onRandomizeName={randomizeIdentityName}
+            onSave={() => saveIdentityChanges(false)}
+            onSaveAndClose={() => saveIdentityChanges(true)}
+            onDiscardAndClose={closeIdentityWithoutSaving}
+            canvasBackgroundOptions={canvasBackgroundOptions}
+            resolvedCanvasBackground={resolvedCanvasBackground}
+            backgroundFallbackColor={backgroundFallbackColor}
+            cycleCanvasBackground={cycleCanvasBackground}
+            canvasBackgroundScale={canvasBackgroundScale}
+            livePreview={tabLivePreview}
+            canvasWidth={canvasWidth}
+            canvasHeight={canvasHeight}
+            iconScaleX={data.trait_icon_scale_x}
+            iconScaleY={data.trait_icon_scale_y}
+            previewFitToFrame={previewFitToFrame}
+            onTogglePreviewFit={toggleCanvasFit}
+            showEquipment={showEquipment}
+            onToggleEquipment={() => setShowEquipment(!showEquipment)}
+            showJobGear={showJobGear}
+            onToggleJobGear={() => setShowJobGear(!showJobGear)}
+            showLoadoutGear={showLoadoutGear}
+            onToggleLoadout={() => setShowLoadoutGear(!showLoadoutGear)}
+          />
+        ) : resolvedActiveTab === 'custom' ? (
           <Box className="RogueStar" position="relative" minHeight="100%">
             <Flex direction="row" fill gap={2} wrap={false} align="stretch">
               <DesignerLeftColumn
@@ -3325,7 +5875,10 @@ export const CustomMarkingDesigner = (_props, context) => {
                 title={directionTitle}
                 canvasFrameStyle={canvasFrameStyle}
                 canvasBackgroundStyle={canvasBackgroundStyle}
-                canvasTransform={canvasTransform}
+                canvasRenderWidthPx={canvasRenderWidthPx}
+                canvasRenderHeightPx={canvasRenderHeightPx}
+                canvasOffsetX={canvasOffsetX}
+                canvasOffsetY={canvasOffsetY}
                 canvasKey={canvasKey}
                 backgroundImage={backgroundImage}
                 backgroundFallbackColor={backgroundFallbackColor}
@@ -3366,6 +5919,8 @@ export const CustomMarkingDesigner = (_props, context) => {
                 resolvedCanvasBackground={resolvedCanvasBackground}
                 backgroundFallbackColor={backgroundFallbackColor}
                 canvasBackgroundScale={canvasBackgroundScale}
+                iconScaleX={data.trait_icon_scale_x}
+                iconScaleY={data.trait_icon_scale_y}
               />
             </Flex>
             {shouldShowLoadingOverlay ? <LoadingOverlay /> : null}
@@ -3386,8 +5941,60 @@ export const CustomMarkingDesigner = (_props, context) => {
             backgroundFallbackColor={backgroundFallbackColor}
             cycleCanvasBackground={cycleCanvasBackground}
             canvasBackgroundScale={canvasBackgroundScale}
+            livePreview={tabLivePreview}
             resolvedPartPriorityMap={resolvedPartPriorityMap}
             resolvedPartReplacementMap={resolvedPartReplacementMap}
+            showEquipment={showEquipment}
+            onToggleEquipment={() => setShowEquipment(!showEquipment)}
+            showJobGear={showJobGear}
+            onToggleJobGear={() => setShowJobGear(!showJobGear)}
+            showLoadoutGear={showLoadoutGear}
+            onToggleLoadout={() => setShowLoadoutGear(!showLoadoutGear)}
+          />
+        ) : resolvedActiveTab === 'species' ? (
+          <SpeciesTab
+            data={data}
+            setPendingClose={setPendingClose}
+            canvasBackgroundOptions={canvasBackgroundOptions}
+            resolvedCanvasBackground={resolvedCanvasBackground}
+            backgroundFallbackColor={backgroundFallbackColor}
+            cycleCanvasBackground={cycleCanvasBackground}
+            canvasBackgroundScale={canvasBackgroundScale}
+            livePreview={tabLivePreview}
+            resolvedPartPriorityMap={resolvedPartPriorityMap}
+            resolvedPartReplacementMap={resolvedPartReplacementMap}
+            showEquipment={showEquipment}
+            onToggleEquipment={() => setShowEquipment(!showEquipment)}
+            showJobGear={showJobGear}
+            onToggleJobGear={() => setShowJobGear(!showJobGear)}
+            showLoadoutGear={showLoadoutGear}
+            onToggleLoadout={() => setShowLoadoutGear(!showLoadoutGear)}
+          />
+        ) : resolvedActiveTab === 'traits' ? (
+          <TraitsTab
+            data={data}
+            draftState={traitsDraftState}
+            setDraftState={setTraitsDraftState}
+            dirty={traitsDirty}
+            setDirty={setTraitsDirty}
+            pendingSave={traitsPendingSave}
+            pendingClose={traitsPendingClose}
+            saveError={traitsSaveError}
+            onSave={() => saveTraitsChanges(false)}
+            onSaveAndClose={() => saveTraitsChanges(true)}
+            onDiscardAndClose={closeTraitsWithoutSaving}
+            canvasBackgroundOptions={canvasBackgroundOptions}
+            resolvedCanvasBackground={resolvedCanvasBackground}
+            backgroundFallbackColor={backgroundFallbackColor}
+            cycleCanvasBackground={cycleCanvasBackground}
+            canvasBackgroundScale={canvasBackgroundScale}
+            livePreview={tabLivePreview}
+            canvasWidth={canvasWidth}
+            canvasHeight={canvasHeight}
+            previewFitToFrame={previewFitToFrame}
+            onTogglePreviewFit={toggleCanvasFit}
+            showEquipment={showEquipment}
+            onToggleEquipment={() => setShowEquipment(!showEquipment)}
             showJobGear={showJobGear}
             onToggleJobGear={() => setShowJobGear(!showJobGear)}
             showLoadoutGear={showLoadoutGear}
@@ -3403,8 +6010,11 @@ export const CustomMarkingDesigner = (_props, context) => {
             backgroundFallbackColor={backgroundFallbackColor}
             cycleCanvasBackground={cycleCanvasBackground}
             canvasBackgroundScale={canvasBackgroundScale}
+            livePreview={tabLivePreview}
             resolvedPartPriorityMap={resolvedPartPriorityMap}
             resolvedPartReplacementMap={resolvedPartReplacementMap}
+            showEquipment={showEquipment}
+            onToggleEquipment={() => setShowEquipment(!showEquipment)}
             showJobGear={showJobGear}
             onToggleJobGear={() => setShowJobGear(!showJobGear)}
             showLoadoutGear={showLoadoutGear}
@@ -3412,28 +6022,20 @@ export const CustomMarkingDesigner = (_props, context) => {
           />
         )}
       </Window.Content>
-      {tabSwitchPrompt ? (
-        <UnsavedChangesOverlay
-          title="Unsaved changes"
-          subtitle={`You have unsaved changes in the ${
-            tabSwitchPrompt.sourceTab === 'custom'
-              ? 'Custom Marking Designer'
-              : tabSwitchPrompt.sourceTab === 'body'
-                ? 'Body Markings tab'
-                : 'Basic Appearance tab'
-          }. Save them before switching?`}
-          saveLabel="Save and switch"
-          discardLabel="Discard and switch"
-          busy={tabSwitchBusyState}
-          onSave={handleTabSwitchSave}
-          onDiscard={handleTabSwitchDiscard}
-          onCancel={() => {
-            if (!tabSwitchBusyState) {
-              setTabSwitchPrompt(null);
-            }
-          }}
-        />
-      ) : null}
+      <TabSwitchOverlay
+        prompt={tabSwitchPrompt}
+        busy={tabSwitchBusyState}
+        saveDisabled={isTabSwitchSaveDisabled(
+          tabSwitchPrompt,
+          resolveLatestSpeciesSelection(),
+          resolveLatestSpeciesCustomName(),
+          resolveLatestTraitsValidationError(),
+          resolveLatestIdentityValidationError()
+        )}
+        onSave={handleTabSwitchSave}
+        onDiscard={handleTabSwitchDiscard}
+        onCancel={() => setTabSwitchPrompt(null)}
+      />
       <EnableCustomMarkingsGate
         open={enableCustomPromptOpen}
         allowCustomTab={allowCustomTab}
@@ -3448,5 +6050,136 @@ export const CustomMarkingDesigner = (_props, context) => {
         }}
       />
     </Window>
+  );
+};
+
+type StaticAssetRegistryErrorProps = {
+  readonly message: string;
+  readonly onShown: () => void;
+};
+
+type StaticAssetRegistryReadyProps = {
+  readonly asset: string;
+  readonly revision: number;
+  readonly onReady: () => void;
+};
+
+type StaticAssetFallbackReadyProps = {
+  readonly onReady: () => void;
+};
+
+class StaticAssetRegistryReady extends Component<StaticAssetRegistryReadyProps> {
+  componentDidMount() {
+    this.props.onReady();
+  }
+
+  componentDidUpdate(prevProps: StaticAssetRegistryReadyProps) {
+    if (
+      prevProps.asset !== this.props.asset ||
+      prevProps.revision !== this.props.revision
+    ) {
+      this.props.onReady();
+    }
+  }
+
+  render() {
+    return <CustomMarkingDesignerContent />;
+  }
+}
+
+class StaticAssetFallbackReady extends Component<StaticAssetFallbackReadyProps> {
+  componentDidMount() {
+    this.props.onReady();
+  }
+
+  render() {
+    return <CustomMarkingDesignerContent />;
+  }
+}
+
+class StaticAssetRegistryError extends Component<StaticAssetRegistryErrorProps> {
+  componentDidMount() {
+    this.props.onShown();
+  }
+
+  render() {
+    return (
+      <Window
+        theme="nanotrasen rogue-star-window"
+        width={1720}
+        height={950}
+        resizable>
+        <Window.Content>
+          <Box
+            position="fixed"
+            style={{
+              top: 0,
+              left: 0,
+              right: 0,
+              bottom: 0,
+              display: 'flex',
+              'align-items': 'center',
+              'justify-content': 'center',
+              background:
+                'linear-gradient(135deg, rgba(4, 2, 8, 0.97), rgba(18, 6, 32, 0.95))',
+              'text-align': 'center',
+            }}>
+            <Box
+              style={{
+                width: 'min(560px, 90%)',
+                padding: '2.5rem 2rem',
+                'border-radius': '20px',
+                background: 'rgba(14, 7, 26, 0.94)',
+                border: '1px solid rgba(239, 96, 96, 0.55)',
+                'box-shadow': '0 25px 70px rgba(3, 1, 10, 0.85)',
+              }}>
+              <Box fontSize={1.35} bold mb={1}>
+                Sprite atlas could not be loaded
+              </Box>
+              <Box color="label" lineHeight={1.6}>
+                {this.props.message}
+              </Box>
+              <Box color="label" lineHeight={1.6} mt={1}>
+                Close and reopen the designer to retry.
+              </Box>
+            </Box>
+          </Box>
+        </Window.Content>
+      </Window>
+    );
+  }
+}
+
+export const CustomMarkingDesigner = (_props, context) => {
+  const { act, data } = useBackend<CustomMarkingDesignerData>(context);
+  const manifest = data.static_asset_manifest;
+  if (data.static_asset_manifest_fallback) {
+    return (
+      <StaticAssetFallbackReady
+        onReady={() => act('static_asset_manifest_fallback_ready')}
+      />
+    );
+  }
+  if (
+    data.static_asset_manifest_error ||
+    !manifest ||
+    !isStaticIconAssetRegistryLoaded(manifest)
+  ) {
+    return (
+      <StaticAssetRegistryError
+        message={
+          data.static_asset_manifest_error ||
+          'The server did not provide a hydrated sprite atlas manifest.'
+        }
+        onShown={() => act('static_asset_manifest_failed', manifest || {})}
+      />
+    );
+  }
+  return (
+    <StaticAssetRegistryReady
+      asset={manifest.asset}
+      revision={manifest.revision}
+      onReady={() => act('static_asset_manifest_ready', manifest)}
+    />
   );
 };

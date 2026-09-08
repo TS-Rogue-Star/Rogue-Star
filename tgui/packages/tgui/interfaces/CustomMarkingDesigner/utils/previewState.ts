@@ -7,6 +7,8 @@
 // //////////////////////////////////////////////////////////////////////////////////////////////////
 // Updated by Lira for Rogue Star December 2025: Updated to support new body marking selector ///////
 // //////////////////////////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star August 2026: Character Designer - Species and Prosthetics /////////
+// //////////////////////////////////////////////////////////////////////////////////////////////////
 
 import {
   GENERIC_PART_KEY,
@@ -14,16 +16,21 @@ import {
   cloneGridData,
   createBlankGrid,
   getPreviewGridFromAsset,
+  getPreviewGridFromGearAsset,
   getPreviewPartMapFromAssets,
   getPreviewGridMapFromGearAssets,
   gridHasPixels,
   IconAssetPayload,
   GearOverlayAsset,
+  resolveGearOverlayAssetReferences,
+  resolveIconAssetReference,
+  resolveIconAssetReferenceMap,
 } from '../../../utils/character-preview';
 import { TRANSPARENT_HEX } from '../../../utils/color';
 import { CANVAS_FIT_TARGET } from '../constants';
 import type {
   DiffEntry,
+  IconAssetRegistry,
   PreviewDirState,
   PreviewDirectionSource,
   PreviewState,
@@ -37,6 +44,7 @@ import type {
 import { convertCompositeGridToUi } from './gridConversion';
 
 const OVERLAY_SLOT_PRIORITY_MAP: Record<string, number> = {
+  underwear: 6,
   tail_lower: 7,
   wing_lower: 8,
   shoes: 9,
@@ -72,6 +80,43 @@ const LARGE_CANVAS_OVERLAY_SLOTS = new Set([
 ]);
 const HIDDEN_LEG_PARTS = new Set(['l_leg', 'r_leg', 'l_foot', 'r_foot']);
 const MARKING_MASK_ALPHA_THRESHOLD = 250;
+
+type HydratedCustomPartGrid = {
+  grid: string[][] | null;
+  hasPixels: boolean;
+};
+
+const hydratedCustomPartGridCache = new WeakMap<
+  object,
+  Map<string, HydratedCustomPartGrid>
+>();
+
+const resolveHydratedCustomPartGrid = (
+  partGrid: string[][],
+  canvasWidth: number,
+  canvasHeight: number
+): HydratedCustomPartGrid => {
+  const sizeKey = `${Math.max(1, Math.floor(canvasWidth))}x${Math.max(
+    1,
+    Math.floor(canvasHeight)
+  )}`;
+  let entries = hydratedCustomPartGridCache.get(partGrid);
+  const cached = entries?.get(sizeKey);
+  if (cached) {
+    return cached;
+  }
+  const grid = convertCompositeGridToUi(partGrid, canvasWidth, canvasHeight);
+  const hydrated = {
+    grid,
+    hasPixels: !!grid && gridHasPixels(grid),
+  };
+  if (!entries) {
+    entries = new Map();
+    hydratedCustomPartGridCache.set(partGrid, entries);
+  }
+  entries.set(sizeKey, hydrated);
+  return hydrated;
+};
 
 type OverlaySlotFilter = (options: {
   slot: string | null;
@@ -381,12 +426,18 @@ const buildReferenceSignature = ({
   partReplacementMap,
   partPaintPresenceMap,
   hiddenBodyParts,
+  showEquipment,
+  showJobGear,
+  showLoadoutGear,
 }: {
   previewRevision?: number;
   dirKey?: number;
   partReplacementMap?: Record<string, boolean>;
   partPaintPresenceMap?: Record<string, boolean>;
   hiddenBodyParts?: string[] | null;
+  showEquipment?: boolean;
+  showJobGear?: boolean;
+  showLoadoutGear?: boolean;
 }): string => {
   const replacementSignature = partReplacementMap
     ? Object.keys(partReplacementMap)
@@ -413,6 +464,9 @@ const buildReferenceSignature = ({
   return [
     revisionSignature,
     dirSignature,
+    `equipment:${showEquipment === false ? 0 : 1}`,
+    `job:${showJobGear === false ? 0 : 1}`,
+    `loadout:${showLoadoutGear === false ? 0 : 1}`,
     replacementSignature,
     hiddenSignature,
   ]
@@ -459,6 +513,7 @@ const buildOverlaySlotFilter = (
 };
 
 type GearLayerResult = {
+  gearEquipmentLayers: string[][][] | null;
   gearLoadoutLayers: string[][][] | null;
   gearJobLayers: string[][][] | null;
 };
@@ -468,6 +523,7 @@ const resolveGearLayers = (options: {
   canvasWidth: number;
   canvasHeight: number;
   signalAssetUpdate: () => void;
+  allowEquipment: boolean;
   allowLoadout: boolean;
   allowJob: boolean;
 }): GearLayerResult => {
@@ -476,6 +532,7 @@ const resolveGearLayers = (options: {
     canvasWidth,
     canvasHeight,
     signalAssetUpdate,
+    allowEquipment,
     allowLoadout,
     allowJob,
   } = options;
@@ -514,7 +571,27 @@ const resolveGearLayers = (options: {
             )
         )
       : null;
+  const higherPrioritySlots = new Set(
+    [...(jobEntries || []), ...(loadoutEntries || [])]
+      .map((entry) => entry.slot)
+      .filter((slot): slot is string => !!slot)
+  );
+  const gearEquipmentSlotMap = allowEquipment
+    ? getPreviewGridMapFromGearAssets(
+        activeDirState?.gearEquipmentOverlayAssets,
+        canvasWidth,
+        canvasHeight,
+        signalAssetUpdate
+      ) || null
+    : null;
+  const equipmentEntriesRaw = orderOverlaySlotLayers(gearEquipmentSlotMap);
+  const equipmentEntries = equipmentEntriesRaw?.filter(
+    (entry) => !entry.slot || !higherPrioritySlots.has(entry.slot)
+  );
   return {
+    gearEquipmentLayers: equipmentEntries
+      ? equipmentEntries.map((entry) => entry.grid)
+      : null,
     gearLoadoutLayers: loadoutEntries
       ? loadoutEntries.map((entry) => entry.grid)
       : null,
@@ -550,7 +627,7 @@ const resolveReferenceAssets = (options: {
       canvasHeight,
       signalAssetUpdate
     ) || null;
-  const referencePartMarkings: Record<string, string[][]> | null =
+  let referencePartMarkings: Record<string, string[][]> | null =
     (referencePartMarkingGrids ??
       getPreviewPartMapFromAssets(
         activeDirState?.referencePartMarkingAssets,
@@ -559,6 +636,13 @@ const resolveReferenceAssets = (options: {
         signalAssetUpdate
       )) ||
     null;
+  const markingExcludedParts = activeDirState?.markingExcludedParts;
+  if (referencePartMarkings && Array.isArray(markingExcludedParts)) {
+    referencePartMarkings = { ...referencePartMarkings };
+    for (const partId of markingExcludedParts) {
+      delete referencePartMarkings[partId];
+    }
+  }
   const combinedMarkingGrid = buildCombinedMarkingGrid(
     referencePartMarkings,
     canvasWidth,
@@ -566,7 +650,7 @@ const resolveReferenceAssets = (options: {
   );
   const referenceGrid: string[][] | null =
     getPreviewGridFromAsset(
-      activeDirState?.bodyAsset || activeDirState?.compositeAsset,
+      activeDirState?.bodyAsset,
       canvasWidth,
       canvasHeight,
       signalAssetUpdate
@@ -582,6 +666,7 @@ const resolveReferenceAssets = (options: {
 const buildReferencePartsWithGear = (options: {
   referenceParts: Record<string, string[][]> | null;
   overlayLayers: string[][][] | null;
+  gearEquipmentLayers: string[][][] | null;
   gearJobLayers: string[][][] | null;
   gearLoadoutLayers: string[][][] | null;
   restrictOverlaySlots: boolean;
@@ -592,6 +677,7 @@ const buildReferencePartsWithGear = (options: {
   const {
     referenceParts,
     overlayLayers,
+    gearEquipmentLayers,
     gearJobLayers,
     gearLoadoutLayers,
     restrictOverlaySlots,
@@ -602,6 +688,13 @@ const buildReferencePartsWithGear = (options: {
   const overlayGrid = restrictOverlaySlots
     ? mergeOverlayLayersNormalized(overlayLayers, canvasWidth, canvasHeight)
     : null;
+  const resolvedEquipmentGrid = gearEquipmentLayers
+    ? mergeOverlayLayersNormalized(
+        gearEquipmentLayers,
+        canvasWidth,
+        canvasHeight
+      )
+    : null;
   const resolvedJobGearGrid = gearJobLayers
     ? mergeOverlayLayersNormalized(gearJobLayers, canvasWidth, canvasHeight)
     : null;
@@ -610,6 +703,11 @@ const buildReferencePartsWithGear = (options: {
     : null;
   const maskedJobGearGrid = maskGridForHiddenLegParts(
     resolvedJobGearGrid,
+    referenceParts,
+    gearHiddenParts
+  );
+  const maskedEquipmentGrid = maskGridForHiddenLegParts(
+    resolvedEquipmentGrid,
     referenceParts,
     gearHiddenParts
   );
@@ -628,6 +726,10 @@ const buildReferencePartsWithGear = (options: {
   let referencePartsWithGear = referencePartsWithOverlays
     ? { ...referencePartsWithOverlays }
     : null;
+  if (maskedEquipmentGrid) {
+    referencePartsWithGear = referencePartsWithGear || {};
+    referencePartsWithGear.gear_equipment = maskedEquipmentGrid;
+  }
   if (maskedJobGearGrid) {
     referencePartsWithGear = referencePartsWithGear || {};
     referencePartsWithGear.gear_job = maskedJobGearGrid;
@@ -755,6 +857,7 @@ export const resolveDirectionCanvasSources = (
     diffSeq,
     stroke,
     signalAssetUpdate,
+    showEquipment,
     showJobGear,
     showLoadoutGear,
     partPaintPresenceMap,
@@ -776,14 +879,17 @@ export const resolveDirectionCanvasSources = (
   const overlaySlotFilter = buildOverlaySlotFilter(restrictOverlaySlots);
   const allowLoadout = showLoadoutGear !== false;
   const allowJob = showJobGear !== false;
-  const { gearLoadoutLayers, gearJobLayers } = resolveGearLayers({
-    activeDirState,
-    canvasWidth,
-    canvasHeight,
-    signalAssetUpdate,
-    allowLoadout,
-    allowJob,
-  });
+  const allowEquipment = showEquipment !== false;
+  const { gearEquipmentLayers, gearLoadoutLayers, gearJobLayers } =
+    resolveGearLayers({
+      activeDirState,
+      canvasWidth,
+      canvasHeight,
+      signalAssetUpdate,
+      allowEquipment,
+      allowLoadout,
+      allowJob,
+    });
   const overlayLayers = pickOverlayLayers(
     overlayAssets,
     canvasWidth,
@@ -802,6 +908,7 @@ export const resolveDirectionCanvasSources = (
   const referencePartsWithGear = buildReferencePartsWithGear({
     referenceParts: referencePartsRaw,
     overlayLayers,
+    gearEquipmentLayers,
     gearJobLayers,
     gearLoadoutLayers,
     restrictOverlaySlots,
@@ -855,6 +962,9 @@ export const resolveDirectionCanvasSources = (
     partReplacementMap,
     partPaintPresenceMap,
     hiddenBodyParts: resolvedHiddenParts,
+    showEquipment,
+    showJobGear,
+    showLoadoutGear,
   });
   return {
     referenceParts: resolvedReferencePartsFinal,
@@ -914,7 +1024,8 @@ export const updatePreviewStateFromPayload = (
           nextDirs[source.dir],
           source,
           canvasWidth,
-          canvasHeight
+          canvasHeight,
+          data.preview_asset_registry
         )
       );
     }
@@ -997,42 +1108,67 @@ export const mergePreviewSourceState = (
   existing: PreviewDirState | undefined,
   source: PreviewDirectionSource,
   canvasWidth: number,
-  canvasHeight: number
+  canvasHeight: number,
+  assetRegistry?: IconAssetRegistry | null
 ): PreviewDirState => {
   const next = cloneDirForUpdate(existing, source.dir, source.label);
-  next.bodyAsset = source.body_asset || existing?.bodyAsset;
-  next.compositeAsset = source.composite_asset || existing?.compositeAsset;
-  next.referencePartAssets =
-    source.reference_part_assets || existing?.referencePartAssets;
-  next.referencePartMarkingAssets =
-    source.reference_part_marking_assets ||
-    existing?.referencePartMarkingAssets;
-  next.bodyColorExcludedParts =
-    source.body_color_excluded_parts || existing?.bodyColorExcludedParts;
-  next.overlayAssets = source.overlay_assets as typeof next.overlayAssets;
-  next.gearJobOverlayAssets =
-    source.job_overlay_assets as typeof next.gearJobOverlayAssets;
-  next.gearLoadoutOverlayAssets =
-    source.loadout_overlay_assets as typeof next.gearLoadoutOverlayAssets;
-  next.partOrder = source.part_order || existing?.partOrder;
-  next.hiddenBodyParts =
-    source.hidden_body_parts || existing?.hiddenBodyParts || undefined;
+  next.bodyAsset = resolveIconAssetReference(source.body_asset, assetRegistry);
+  next.referencePartAssets = resolveIconAssetReferenceMap(
+    source.reference_part_assets,
+    assetRegistry
+  );
+  next.referencePartHairAssets = resolveIconAssetReferenceMap(
+    source.reference_part_hair_assets,
+    assetRegistry
+  );
+  next.referencePartMarkingAssets = resolveIconAssetReferenceMap(
+    source.reference_part_marking_assets,
+    assetRegistry
+  );
+  next.bodyColorExcludedParts = source.body_color_excluded_parts;
+  next.bodyColorBlendMode =
+    typeof source.body_color_blend_mode === 'number'
+      ? source.body_color_blend_mode
+      : null;
+  next.bodyAlpha =
+    typeof source.body_alpha === 'number' ? source.body_alpha : null;
+  next.eyeColorMode = source.eye_color_mode;
+  next.overlayAssets = resolveGearOverlayAssetReferences(
+    source.overlay_assets,
+    assetRegistry
+  );
+  next.gearEquipmentOverlayAssets = resolveGearOverlayAssetReferences(
+    source.equipment_overlay_assets,
+    assetRegistry
+  ) as typeof next.gearEquipmentOverlayAssets;
+  next.gearJobOverlayAssets = resolveGearOverlayAssetReferences(
+    source.job_overlay_assets,
+    assetRegistry
+  ) as typeof next.gearJobOverlayAssets;
+  next.gearLoadoutOverlayAssets = resolveGearOverlayAssetReferences(
+    source.loadout_overlay_assets,
+    assetRegistry
+  ) as typeof next.gearLoadoutOverlayAssets;
+  next.partOrder = source.part_order;
+  next.hiddenBodyParts = source.hidden_body_parts;
+  next.markingExcludedParts = source.marking_excluded_parts;
+  next.customParts = {};
   if (source.custom_parts) {
     for (const partId of Object.keys(source.custom_parts)) {
       const partGrid = source.custom_parts[partId];
       if (!partGrid) {
         continue;
       }
-      const converted = convertCompositeGridToUi(
+      const converted = resolveHydratedCustomPartGrid(
         partGrid,
         canvasWidth,
         canvasHeight
       );
-      if (!converted) {
+      if (!converted.grid || !converted.hasPixels) {
         continue;
       }
       next.customParts[partId] = {
-        grid: converted,
+        grid: converted.grid,
         lastSyncKey: null,
       };
     }
@@ -1399,8 +1535,8 @@ const pickOverlayLayers = (
     if (slotFilter && !slotFilter({ slot, isLarge })) {
       continue;
     }
-    const grid = getPreviewGridFromAsset(
-      payload,
+    const grid = getPreviewGridFromGearAsset(
+      entry,
       canvasWidth,
       canvasHeight,
       updateSignal
