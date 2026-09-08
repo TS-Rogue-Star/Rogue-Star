@@ -15,6 +15,8 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Updated by Lira for Rogue Star August 2026: Character Designer - Traits Tab /////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star September 2026: Character Designer - Identity Tab ////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 #define CUSTOM_MARKING_DEFAULT_WIDTH 32
 #define CUSTOM_MARKING_DEFAULT_HEIGHT 32
@@ -3336,6 +3338,10 @@ var/global/custom_marking_static_source_digest_complete = TRUE
 	var/species_save_result_revision = 0
 	var/traits_revision = 1 // Revisions for character trait payloads
 	var/traits_save_result_revision = 0
+	var/identity_revision = 1 // Revisions for identity, background, and records payloads
+	var/identity_save_result_revision = 0
+	var/identity_random_name_result_revision = 0
+	var/identity_save_in_progress = FALSE
 	var/preview_refresh_token = 0 // Tracks external preview refresh triggers
 	var/mark_dirty = FALSE // Dirty flag for pending save
 	var/save_in_progress = FALSE // Server-side guard against duplicate save actions
@@ -3748,7 +3754,7 @@ var/global/custom_marking_static_source_digest_complete = TRUE
 			"value" = preference_value
 		)
 		if(preference_definition[1] == TRAIT_PREF_TYPE_LIST)
-			var/list/options = trait.vars?["inject_chems"]
+			var/list/options = trait.vars?["list_options"]
 			if(islist(options))
 				entry["options"] = options.Copy()
 		entries += list(entry)
@@ -4154,7 +4160,7 @@ var/global/custom_marking_static_source_digest_complete = TRUE
 					number_value = isnum(default_value) ? default_value : 0
 				sanitized_preferences[preference_id] = CLAMP(number_value, 0, 5)
 			if(TRAIT_PREF_TYPE_LIST)
-				var/list/options = trait.vars?["inject_chems"]
+				var/list/options = trait.vars?["list_options"]
 				var/list_value = incoming_value
 				if(!islist(options) || !(list_value in options))
 					list_value = islist(options) && (default_value in options) ? default_value : options?[1]
@@ -4375,6 +4381,536 @@ var/global/custom_marking_static_source_digest_complete = TRUE
 	prefs.preferred_language = staged_languages["preferred_language"]
 	prefs.language_custom_keys = staged_languages["language_custom_keys"]
 	prefs.language_prefixes = staged_languages["language_prefixes"]
+	return TRUE
+
+/datum/tgui_module/custom_marking_designer/proc/get_identity_basic_item()
+	RETURN_TYPE(/datum/category_item/player_setup_item/general/basic)
+	if(!prefs?.player_setup)
+		return null
+	var/datum/category_group/player_setup_category/general_category = prefs.player_setup.categories_by_name["General"]
+	if(!istype(general_category))
+		return null
+	var/datum/category_item/player_setup_item/general/basic/basic_item = general_category.items_by_name["Basic"]
+	return istype(basic_item) ? basic_item : null
+
+/datum/tgui_module/custom_marking_designer/proc/build_identity_context_signature()
+	if(!prefs)
+		return null
+	var/torso_state = islist(prefs.organ_data) ? prefs.organ_data[BP_TORSO] : null
+	var/brain_state = islist(prefs.organ_data) ? prefs.organ_data[O_BRAIN] : null
+	return json_encode(list(
+		"species" = prefs.species,
+		"real_name" = prefs.real_name,
+		"identifying_gender" = prefs.identifying_gender,
+		"age" = prefs.age,
+		"torso" = torso_state,
+		"brain" = brain_state
+	))
+
+/datum/tgui_module/custom_marking_designer/proc/identity_text_for_payload(value)
+	if(!istext(value) || !length(value))
+		return ""
+	return html_decode(value)
+
+/datum/tgui_module/custom_marking_designer/proc/get_identity_flavor_text_fields()
+	var/static/list/flavor_text_fields = list(
+		"flavor_text_general" = "general",
+		"flavor_text_head" = "head",
+		"flavor_text_face" = "face",
+		"flavor_text_eyes" = "eyes",
+		"flavor_text_torso" = "torso",
+		"flavor_text_arms" = "arms",
+		"flavor_text_hands" = "hands",
+		"flavor_text_legs" = "legs",
+		"flavor_text_feet" = "feet"
+	)
+	return flavor_text_fields
+
+/datum/tgui_module/custom_marking_designer/proc/get_identity_robot_flavor_text_modules()
+	var/list/robot_flavor_text_modules = list("Default")
+	if(islist(robot_module_types))
+		robot_flavor_text_modules |= robot_module_types
+	return robot_flavor_text_modules
+
+/datum/tgui_module/custom_marking_designer/proc/identity_lore_text_for_payload(value)
+	if(!istext(value) || !length(value))
+		return ""
+	var/plain_text = replacetext(html_decode(value), "<br>", "\n")
+	return trim(strip_html_properly(plain_text))
+
+/datum/tgui_module/custom_marking_designer/proc/build_identity_organization_catalog_options(list/choice_names, list/choice_lore_names, missing_description)
+	var/list/catalog_options = list()
+	if(!islist(choice_names))
+		return catalog_options
+
+	var/list/organizations_by_name = list()
+	if(loremaster && islist(loremaster.organizations))
+		for(var/organization_path in loremaster.organizations)
+			var/datum/lore/organization/organization = loremaster.organizations[organization_path]
+			if(istype(organization) && istext(organization.name) && length(organization.name))
+				organizations_by_name[organization.name] = organization
+
+	var/list/sorted_choice_names = sortList(choice_names.Copy())
+	for(var/choice_name in sorted_choice_names)
+		var/lore_name = islist(choice_lore_names) ? choice_lore_names[choice_name] : null
+		if(!istext(lore_name) || !length(lore_name))
+			lore_name = choice_name
+		var/datum/lore/organization/organization = organizations_by_name[lore_name]
+		var/description = identity_lore_text_for_payload(organization?.desc)
+		if(!length(description))
+			description = missing_description
+		catalog_options += list(list(
+			"name" = choice_name,
+			"display_name" = organization?.identity_display_name,
+			"description" = description
+			))
+	return catalog_options
+
+/datum/tgui_module/custom_marking_designer/proc/build_identity_citizenship_catalog_options()
+	return build_identity_organization_catalog_options(citizenship_choices, citizenship_choice_lore_names, "No citizenship description is available.")
+
+/datum/tgui_module/custom_marking_designer/proc/build_identity_faction_catalog_options()
+	return build_identity_organization_catalog_options(faction_choices, faction_choice_lore_names, "No faction description is available.")
+
+/datum/tgui_module/custom_marking_designer/proc/build_identity_religion_catalog_options()
+	var/list/catalog_options = list()
+	if(!islist(religion_choices))
+		return catalog_options
+
+	var/list/religions_by_name = list()
+	if(loremaster && islist(loremaster.religions))
+		for(var/religion_path in loremaster.religions)
+			var/datum/lore/religion/religion = loremaster.religions[religion_path]
+			if(istype(religion) && istext(religion.name) && length(religion.name))
+				religions_by_name[religion.name] = religion
+
+	var/list/sorted_choice_names = sortList(religion_choices.Copy())
+	for(var/choice_name in sorted_choice_names)
+		var/datum/lore/religion/religion = religions_by_name[choice_name]
+		var/description = identity_lore_text_for_payload(religion?.desc)
+		if(!length(description))
+			description = "No religion description is available."
+		catalog_options += list(list(
+			"name" = choice_name,
+			"description" = description
+			))
+	return catalog_options
+
+/datum/tgui_module/custom_marking_designer/proc/build_identity_payload(mob/user)
+	if(!prefs)
+		return null
+	var/datum/category_item/player_setup_item/general/basic/basic_item = get_identity_basic_item()
+	var/datum/species/selected_species = GLOB.all_species?[prefs.species]
+	var/min_age = 18
+	var/max_age = 120
+	if(istype(basic_item))
+		min_age = basic_item.get_min_age()
+		max_age = basic_item.get_max_age()
+	else if(istype(selected_species))
+		if(isnum(selected_species.min_age))
+			min_age = selected_species.min_age
+		if(isnum(selected_species.max_age))
+			max_age = selected_species.max_age
+
+	var/list/home_options = islist(home_system_choices) ? home_system_choices.Copy() : list()
+	home_options |= "Unset"
+	var/list/location_options = list()
+	for(var/location_name in home_options)
+		var/datum/lore/location/location_lore = loremaster?.locations_by_preference_value?[location_name]
+		var/datum/lore/location/system/system_lore
+		if(istype(location_lore, /datum/lore/location/system))
+			system_lore = location_lore
+		else if(location_lore?.parent_system)
+			system_lore = loremaster?.locations?[location_lore.parent_system]
+		var/location_display_name = location_lore?.name
+		if(location_display_name == location_name)
+			location_display_name = null
+		var/location_description = identity_lore_text_for_payload(location_lore?.desc)
+		if(!length(location_description))
+			location_description = null
+		var/system_description_source = system_lore?.overview
+		if(!length(system_description_source))
+			system_description_source = system_lore?.desc
+		var/system_description = identity_lore_text_for_payload(system_description_source)
+		if(!length(system_description))
+			system_description = null
+		location_options += list(list(
+			"name" = location_name,
+			"display_name" = location_display_name,
+			"kind" = location_lore?.kind || "unknown",
+			"system" = system_lore?.name,
+			"system_description" = system_description,
+			"description" = location_description
+			))
+	var/list/citizenship_options = islist(citizenship_choices) ? citizenship_choices.Copy() : list()
+	citizenship_options |= "None"
+	var/list/citizenship_catalog_options = build_identity_citizenship_catalog_options()
+	var/list/faction_options = list("None")
+	if(islist(faction_choices))
+		faction_options += sortList(faction_choices.Copy())
+	var/list/faction_catalog_options = build_identity_faction_catalog_options()
+	var/list/religion_options = islist(religion_choices) ? religion_choices.Copy() : list()
+	religion_options |= "None"
+	var/list/religion_catalog_options = build_identity_religion_catalog_options()
+	var/records_banned = user ? !!jobban_isbanned(user, "Records") : FALSE
+	var/allow_ooc_notes = !!config.allow_Metadata
+	var/list/current_flavor_texts = islist(prefs.flavor_texts) ? prefs.flavor_texts : list()
+	var/list/current_robot_flavor_texts = islist(prefs.flavour_texts_robot) ? prefs.flavour_texts_robot : list()
+	var/list/robot_flavor_text_modules = get_identity_robot_flavor_text_modules()
+	var/list/robot_flavor_texts = list()
+	for(var/robot_module in robot_flavor_text_modules)
+		robot_flavor_texts[robot_module] = identity_text_for_payload(current_robot_flavor_texts[robot_module])
+
+	var/list/payload = list(
+		"revision" = identity_revision,
+		"real_name" = prefs.real_name || "",
+		"nickname" = prefs.nickname || "",
+		"name_color" = prefs.name_color,
+		"be_random_name" = !!prefs.be_random_name,
+		"identifying_gender" = prefs.identifying_gender,
+		"age" = prefs.age,
+		"bday_month" = prefs.bday_month,
+		"bday_day" = prefs.bday_day,
+		"bday_announce" = !!prefs.bday_announce,
+		"metadata" = allow_ooc_notes ? identity_text_for_payload(prefs.metadata) : "",
+		"metadata_likes" = allow_ooc_notes ? identity_text_for_payload(prefs.metadata_likes) : "",
+		"metadata_dislikes" = allow_ooc_notes ? identity_text_for_payload(prefs.metadata_dislikes) : "",
+		"custom_link" = identity_text_for_payload(prefs.custom_link),
+		"economic_status" = prefs.economic_status,
+		"home_system" = identity_text_for_payload(prefs.home_system || "Unset"),
+		"birthplace" = identity_text_for_payload(prefs.birthplace || "Unset"),
+		"citizenship" = identity_text_for_payload(prefs.citizenship || "None"),
+		"faction" = identity_text_for_payload(prefs.faction || "None"),
+		"religion" = identity_text_for_payload(prefs.religion || "None"),
+		"med_record" = records_banned ? "" : identity_text_for_payload(prefs.med_record),
+		"gen_record" = records_banned ? "" : identity_text_for_payload(prefs.gen_record),
+		"sec_record" = records_banned ? "" : identity_text_for_payload(prefs.sec_record),
+		"pronoun_options" = all_genders_define_list,
+		"economic_status_options" = ECONOMIC_CLASS,
+		"home_system_options" = home_options,
+		"location_options" = location_options,
+		"citizenship_options" = citizenship_options,
+		"citizenship_catalog_options" = citizenship_catalog_options,
+		"faction_options" = faction_options,
+		"faction_catalog_options" = faction_catalog_options,
+		"religion_options" = religion_options,
+		"religion_catalog_options" = religion_catalog_options,
+		"robot_flavor_text_modules" = robot_flavor_text_modules,
+		"robot_flavor_texts" = robot_flavor_texts,
+		"min_age" = min_age,
+		"max_age" = max_age,
+		"max_name_length" = MAX_NAME_LEN,
+		"max_ooc_notes_length" = MAX_MESSAGE_LEN,
+		"max_custom_link_length" = MAX_CUSTOM_LINK_LENGTH,
+		"max_flavor_text_length" = MAX_MESSAGE_LEN,
+		"max_record_length" = MAX_RECORD_LENGTH,
+		"allow_ooc_notes" = allow_ooc_notes,
+		"records_banned" = records_banned
+	)
+	var/list/flavor_text_fields = get_identity_flavor_text_fields()
+	for(var/flavor_text_field in flavor_text_fields)
+		payload[flavor_text_field] = identity_text_for_payload(current_flavor_texts[flavor_text_fields[flavor_text_field]])
+	return payload
+
+/datum/tgui_module/custom_marking_designer/proc/send_identity_payload(mob/user, list/save_result = null)
+	if(!user || !prefs)
+		return FALSE
+	// Preview variants temporarily replace preferences, including pronouns.
+	acquire_preview_payload_build_lock()
+	var/list/payload
+	try
+		payload = build_identity_payload(user)
+	catch(var/exception/e)
+		release_preview_payload_build_lock()
+		throw e
+	release_preview_payload_build_lock()
+	if(!islist(payload))
+		return FALSE
+	var/list/update = list(
+		"identity_revision" = identity_revision,
+		"identity_payload" = payload
+	)
+	if(islist(save_result))
+		update["identity_save_result"] = save_result
+	var/datum/tgui/active_ui = SStgui.get_open_ui(user, src)
+	if(active_ui)
+		active_ui.send_update(update)
+	else
+		SStgui.update_uis(src, update)
+	return TRUE
+
+/datum/tgui_module/custom_marking_designer/proc/build_identity_save_result(request_id, accepted, list/rejection_reasons = null)
+	if(!istext(request_id) || !length(request_id))
+		return null
+	identity_save_result_revision++
+	var/list/result = list(
+		"revision" = identity_save_result_revision,
+		"request_id" = request_id,
+		"accepted" = !!accepted,
+		"identity_revision" = identity_revision
+	)
+	if(LAZYLEN(rejection_reasons))
+		result["error"] = rejection_reasons[1]
+	return result
+
+/datum/tgui_module/custom_marking_designer/proc/send_identity_random_name_result(mob/user, request_id, generated_name = null, error = null)
+	if(!user || !istext(request_id) || !length(request_id))
+		return FALSE
+	identity_random_name_result_revision++
+	var/list/result = list(
+		"revision" = identity_random_name_result_revision,
+		"request_id" = request_id
+	)
+	if(istext(generated_name) && length(generated_name))
+		result["name"] = generated_name
+	else
+		result["error"] = istext(error) && length(error) ? error : "A random name could not be generated."
+	var/list/update = list("identity_random_name_result" = result)
+	var/datum/tgui/active_ui = SStgui.get_open_ui(user, src)
+	if(active_ui)
+		active_ui.send_update(update)
+	else
+		SStgui.update_uis(src, update)
+	return TRUE
+
+/datum/tgui_module/custom_marking_designer/proc/reject_identity_payload(list/rejection_reasons, reason)
+	if(islist(rejection_reasons) && istext(reason) && length(reason))
+		rejection_reasons += reason
+	return FALSE
+
+/datum/tgui_module/custom_marking_designer/proc/parse_identity_boolean(value)
+	if(isnum(value))
+		return !!value
+	if(istext(value))
+		var/lower_value = lowertext(value)
+		if(lower_value in list("1", "true", "yes", "on"))
+			return TRUE
+		if(lower_value in list("0", "false", "no", "off"))
+			return FALSE
+	return null
+
+/datum/tgui_module/custom_marking_designer/proc/identity_birthday_max_day(month)
+	switch(month)
+		if(2)
+			return 29
+		if(4, 6, 9, 11)
+			return 30
+		if(1, 3, 5, 7, 8, 10, 12)
+			return 31
+	return 0
+
+/datum/tgui_module/custom_marking_designer/proc/sanitize_identity_background_value(value, encode_value = FALSE, list/preset_values = null)
+	if(!istext(value))
+		return null
+	if(islist(preset_values) && (value in preset_values))
+		return value
+	if(length(value) > MAX_NAME_LEN)
+		return null
+	var/safe_value = trim(strip_html_simple(value, MAX_NAME_LEN + 1))
+	if(!length(safe_value))
+		return null
+	if(encode_value)
+		safe_value = sanitize(safe_value, MAX_NAME_LEN + 1)
+	return safe_value
+
+/datum/tgui_module/custom_marking_designer/proc/apply_identity_payload(list/params, list/rejection_reasons = null, mob/user = null, list/change_result = null)
+	if(!prefs || !islist(params))
+		return reject_identity_payload(rejection_reasons, "Identity data is unavailable.")
+	var/incoming_revision = params["revision"]
+	if(istext(incoming_revision))
+		incoming_revision = text2num(incoming_revision)
+	if(!isnum(incoming_revision) || incoming_revision != identity_revision)
+		return reject_identity_payload(rejection_reasons, "This Identity draft is out of date. Reload it and try again.")
+
+	var/list/required_fields = list(
+		"real_name", "nickname", "be_random_name", "identifying_gender",
+		"age", "bday_month", "bday_day", "bday_announce",
+		"custom_link", "economic_status", "home_system", "birthplace", "citizenship", "faction", "religion"
+	)
+	var/list/flavor_text_fields = get_identity_flavor_text_fields()
+	for(var/flavor_text_field in flavor_text_fields)
+		required_fields += flavor_text_field
+	required_fields += "robot_flavor_texts"
+	for(var/required_field in required_fields)
+		if(!(required_field in params))
+			return reject_identity_payload(rejection_reasons, "The Identity save did not contain [required_field].")
+
+	var/datum/category_item/player_setup_item/general/basic/basic_item = get_identity_basic_item()
+	var/raw_real_name = params["real_name"]
+	if(!istext(raw_real_name))
+		return reject_identity_payload(rejection_reasons, "Name must be text.")
+	var/new_real_name = sanitize_name(raw_real_name, prefs.species, basic_item?.is_FBP())
+	if(!new_real_name)
+		return reject_identity_payload(rejection_reasons, "Name must be between 2 and [MAX_NAME_LEN] characters and contain only valid name characters.")
+
+	var/raw_nickname = params["nickname"]
+	if(!istext(raw_nickname) || length(raw_nickname) > MAX_NAME_LEN)
+		return reject_identity_payload(rejection_reasons, "Nickname must be [MAX_NAME_LEN] characters or fewer.")
+	var/new_nickname = null
+	if(length(trim(raw_nickname)))
+		new_nickname = sanitize_name(raw_nickname, prefs.species, basic_item?.is_FBP())
+		if(!new_nickname)
+			return reject_identity_payload(rejection_reasons, "Nickname must contain at least 2 valid name characters, or be left blank.")
+
+	var/raw_name_color = params["name_color"]
+	var/new_name_color = null
+	if(!isnull(raw_name_color))
+		if(!istext(raw_name_color))
+			return reject_identity_payload(rejection_reasons, "Choose a valid name color or reset it to the default.")
+		if(length(raw_name_color))
+			var/safe_name_color = sanitize_hexcolor(raw_name_color, null)
+			if(!safe_name_color)
+				return reject_identity_payload(rejection_reasons, "Choose a valid name color or reset it to the default.")
+			new_name_color = sanitize_chat_name_color(safe_name_color, null)
+
+	var/new_random_name = parse_identity_boolean(params["be_random_name"])
+	if(isnull(new_random_name))
+		return reject_identity_payload(rejection_reasons, "Always Random Name must be enabled or disabled.")
+	var/new_identifying_gender = params["identifying_gender"]
+	if(!istext(new_identifying_gender) || !(new_identifying_gender in all_genders_define_list))
+		return reject_identity_payload(rejection_reasons, "Choose a valid pronoun option.")
+
+	var/new_age = params["age"]
+	if(istext(new_age))
+		new_age = text2num(new_age)
+	if(!isnum(new_age))
+		return reject_identity_payload(rejection_reasons, "Age must be a number.")
+	new_age = round(new_age)
+	var/min_age = istype(basic_item) ? basic_item.get_min_age() : 18
+	var/max_age = istype(basic_item) ? basic_item.get_max_age() : 120
+	if(new_age < min_age || new_age > max_age)
+		return reject_identity_payload(rejection_reasons, "Age must be between [min_age] and [max_age].")
+
+	var/new_bday_month = params["bday_month"]
+	var/new_bday_day = params["bday_day"]
+	if(istext(new_bday_month))
+		new_bday_month = text2num(new_bday_month)
+	if(istext(new_bday_day))
+		new_bday_day = text2num(new_bday_day)
+	if(!isnum(new_bday_month) || !isnum(new_bday_day))
+		return reject_identity_payload(rejection_reasons, "Birthday month and day must be numbers.")
+	new_bday_month = round(new_bday_month)
+	new_bday_day = round(new_bday_day)
+	if(new_bday_month < 0 || new_bday_month > 12)
+		return reject_identity_payload(rejection_reasons, "Birthday month must be between 1 and 12, or 0 when unset.")
+	var/max_bday_day = identity_birthday_max_day(new_bday_month)
+	if((!new_bday_month && new_bday_day) || (new_bday_month && (new_bday_day < 1 || new_bday_day > max_bday_day)))
+		return reject_identity_payload(rejection_reasons, "Choose a valid birthday day for the selected month, or clear both values.")
+	var/new_bday_announce = parse_identity_boolean(params["bday_announce"])
+	if(isnull(new_bday_announce))
+		return reject_identity_payload(rejection_reasons, "Birthday announcements must be enabled or disabled.")
+
+	var/new_economic_status = params["economic_status"]
+	if(!istext(new_economic_status) || !(new_economic_status in ECONOMIC_CLASS))
+		return reject_identity_payload(rejection_reasons, "Choose a valid economic status.")
+
+	var/list/valid_home_options = islist(home_system_choices) ? home_system_choices + list("Unset") : list("Unset")
+	var/list/valid_citizenship_options = islist(citizenship_choices) ? citizenship_choices + list("None") : list("None")
+	var/list/valid_faction_options = islist(faction_choices) ? faction_choices + list("None") : list("None")
+	var/list/valid_religion_options = islist(religion_choices) ? religion_choices + list("None") : list("None")
+	var/new_home_system = sanitize_identity_background_value(params["home_system"], FALSE, valid_home_options)
+	var/new_birthplace = sanitize_identity_background_value(params["birthplace"], FALSE, valid_home_options)
+	var/new_citizenship = sanitize_identity_background_value(params["citizenship"], FALSE, valid_citizenship_options)
+	var/new_faction = sanitize_identity_background_value(params["faction"], FALSE, valid_faction_options)
+	var/new_religion = sanitize_identity_background_value(params["religion"], TRUE, valid_religion_options)
+	if(isnull(new_home_system) || isnull(new_birthplace) || isnull(new_citizenship) || isnull(new_faction) || isnull(new_religion))
+		return reject_identity_payload(rejection_reasons, "Background fields cannot be blank and must be [MAX_NAME_LEN] characters or fewer.")
+
+	var/raw_custom_link = params["custom_link"]
+	if(!istext(raw_custom_link) || length(raw_custom_link) > MAX_CUSTOM_LINK_LENGTH)
+		return reject_identity_payload(rejection_reasons, "Custom Link must be [MAX_CUSTOM_LINK_LENGTH] characters or fewer.")
+	var/new_custom_link = trim(html_encode(raw_custom_link))
+	if(!length(new_custom_link))
+		new_custom_link = null
+
+	var/allow_ooc_notes = !!config.allow_Metadata
+	var/list/new_ooc_notes = list()
+	if(allow_ooc_notes)
+		for(var/ooc_field in list("metadata", "metadata_likes", "metadata_dislikes"))
+			if(!(ooc_field in params) || !istext(params[ooc_field]) || length(params[ooc_field]) > MAX_MESSAGE_LEN)
+				return reject_identity_payload(rejection_reasons, "OOC Notes fields must be [MAX_MESSAGE_LEN] characters or fewer.")
+			new_ooc_notes[ooc_field] = sanitize_ooc_notes(params[ooc_field]) || ""
+
+	var/list/new_flavor_texts = list()
+	for(var/flavor_text_field in flavor_text_fields)
+		var/raw_flavor_text = params[flavor_text_field]
+		if(!istext(raw_flavor_text) || length(raw_flavor_text) > MAX_MESSAGE_LEN)
+			return reject_identity_payload(rejection_reasons, "Flavor Text fields must be [MAX_MESSAGE_LEN] characters or fewer.")
+		new_flavor_texts[flavor_text_fields[flavor_text_field]] = strip_html_simple(raw_flavor_text, MAX_MESSAGE_LEN + 1)
+	var/list/updated_flavor_texts = islist(prefs.flavor_texts) ? prefs.flavor_texts.Copy() : list()
+	for(var/flavor_text_slot in new_flavor_texts)
+		updated_flavor_texts[flavor_text_slot] = new_flavor_texts[flavor_text_slot]
+
+	var/list/incoming_robot_flavor_texts = params["robot_flavor_texts"]
+	if(!islist(incoming_robot_flavor_texts))
+		return reject_identity_payload(rejection_reasons, "Robot Flavor Text data is unavailable.")
+	var/list/robot_flavor_text_modules = get_identity_robot_flavor_text_modules()
+	for(var/robot_module in incoming_robot_flavor_texts)
+		if(!(robot_module in robot_flavor_text_modules))
+			return reject_identity_payload(rejection_reasons, "Robot Flavor Text contained an unknown module.")
+	var/list/new_robot_flavor_texts = list()
+	for(var/robot_module in robot_flavor_text_modules)
+		if(!(robot_module in incoming_robot_flavor_texts))
+			return reject_identity_payload(rejection_reasons, "Robot Flavor Text did not contain the [robot_module] module.")
+		var/raw_robot_flavor_text = incoming_robot_flavor_texts[robot_module]
+		if(!istext(raw_robot_flavor_text) || length(raw_robot_flavor_text) > MAX_MESSAGE_LEN)
+			return reject_identity_payload(rejection_reasons, "Robot Flavor Text fields must be [MAX_MESSAGE_LEN] characters or fewer.")
+		new_robot_flavor_texts[robot_module] = strip_html_simple(raw_robot_flavor_text, MAX_MESSAGE_LEN + 1)
+	var/list/updated_robot_flavor_texts = islist(prefs.flavour_texts_robot) ? prefs.flavour_texts_robot.Copy() : list()
+	for(var/robot_module in new_robot_flavor_texts)
+		updated_robot_flavor_texts[robot_module] = new_robot_flavor_texts[robot_module]
+
+	var/records_banned = user ? !!jobban_isbanned(user, "Records") : FALSE
+	var/list/new_records = list()
+	if(!records_banned)
+		for(var/record_field in list("med_record", "gen_record", "sec_record"))
+			if(!(record_field in params) || !istext(params[record_field]) || length(params[record_field]) > MAX_RECORD_LENGTH)
+				return reject_identity_payload(rejection_reasons, "Records fields must be [MAX_RECORD_LENGTH] characters or fewer.")
+			new_records[record_field] = trim(strip_html_simple(params[record_field], MAX_RECORD_LENGTH + 1))
+
+	var/old_name = prefs.real_name
+	var/old_custom_link = prefs.custom_link
+	prefs.real_name = new_real_name
+	prefs.nickname = new_nickname
+	prefs.name_color = new_name_color
+	prefs.be_random_name = new_random_name
+	prefs.identifying_gender = new_identifying_gender
+	prefs.age = new_age
+	prefs.bday_month = new_bday_month
+	prefs.bday_day = new_bday_day
+	prefs.bday_announce = new_bday_announce
+	prefs.economic_status = new_economic_status
+	prefs.home_system = new_home_system
+	prefs.birthplace = new_birthplace
+	prefs.citizenship = new_citizenship
+	prefs.faction = new_faction
+	prefs.religion = new_religion
+	if(allow_ooc_notes)
+		prefs.metadata = new_ooc_notes["metadata"]
+		prefs.metadata_likes = new_ooc_notes["metadata_likes"]
+		prefs.metadata_dislikes = new_ooc_notes["metadata_dislikes"]
+	prefs.flavor_texts = updated_flavor_texts
+	prefs.flavour_texts_robot = updated_robot_flavor_texts
+	prefs.custom_link = new_custom_link
+	if(!records_banned)
+		prefs.med_record = new_records["med_record"]
+		prefs.gen_record = new_records["gen_record"]
+		prefs.sec_record = new_records["sec_record"]
+	if(islist(change_result) && old_name != new_real_name)
+		change_result["old_name"] = old_name
+		change_result["new_name"] = new_real_name
+	if(user && old_custom_link != new_custom_link)
+		log_admin("[user]/[user.ckey] set their custom link to [prefs.custom_link]")
+	return TRUE
+
+/datum/tgui_module/custom_marking_designer/proc/start_identity_etching_rename(mob/user, list/change_result)
+	if(!user || !islist(change_result))
+		return FALSE
+	var/old_name = change_result["old_name"]
+	var/new_name = change_result["new_name"]
+	if(!istext(old_name) || !length(old_name) || !istext(new_name) || !length(new_name) || old_name == new_name)
+		return FALSE
+	INVOKE_ASYNC(user, /mob/proc/queue_etching_rename, old_name, new_name)
 	return TRUE
 
 // Toggle dirty flag for pending saves
@@ -4964,12 +5500,13 @@ var/global/custom_marking_static_source_digest_complete = TRUE
 	if(islist(canvas_backgrounds_live) && canvas_backgrounds_live.len)
 		data["canvas_backgrounds"] = canvas_backgrounds_live
 		data["default_canvas_background"] = "default"
-	data["ui_locked"] = save_in_progress
+	data["ui_locked"] = save_in_progress || identity_save_in_progress
 	data["show_equipment"] = !!(prefs?.equip_preview_mob & EQUIP_PREVIEW_EQUIPMENT)
 	data["show_job_gear"] = !!(prefs?.equip_preview_mob & EQUIP_PREVIEW_JOB)
 	data["show_loadout_gear"] = !!(prefs?.equip_preview_mob & EQUIP_PREVIEW_LOADOUT)
 	data["traits_revision"] = traits_revision
 	data["traits_species"] = prefs?.species
+	data["identity_revision"] = identity_revision
 	append_traits_preview_scale(data)
 	data["reference_build_in_progress"] = reference_build_in_progress
 	return data
@@ -5963,6 +6500,52 @@ var/global/custom_marking_static_source_digest_complete = TRUE
 			static_manifest_client_ready = TRUE
 			prefs?.close_custom_marking_designer_loading()
 		return FALSE
+	if(action == "load_identity")
+		send_identity_payload(usr)
+		return TRUE
+	if(action == "randomize_identity_name")
+		var/request_id = params?["request_id"]
+		var/identifying_gender = params?["identifying_gender"]
+		if(!prefs || !istext(identifying_gender) || !(identifying_gender in all_genders_define_list))
+			send_identity_random_name_result(usr, request_id, null, "Choose a valid pronoun option before randomizing the name.")
+			return TRUE
+		var/datum/category_item/player_setup_item/general/basic/basic_item = get_identity_basic_item()
+		var/generated_name = sanitize_name(random_name(identifying_gender, prefs.species), prefs.species, basic_item?.is_FBP())
+		send_identity_random_name_result(usr, request_id, generated_name)
+		return TRUE
+	if(action == "save_identity")
+		if(identity_save_in_progress)
+			return TRUE
+		var/close_ui = !!params?["close"]
+		var/request_id = params?["request_id"]
+		var/list/rejection_reasons = list()
+		var/list/change_result = list()
+		var/identity_updated = FALSE
+		identity_save_in_progress = TRUE
+		acquire_preview_payload_build_lock()
+		try
+			identity_updated = apply_identity_payload(params, rejection_reasons, usr, change_result)
+		catch(var/exception/e)
+			release_preview_payload_build_lock()
+			identity_save_in_progress = FALSE
+			throw e
+		release_preview_payload_build_lock()
+		identity_save_in_progress = FALSE
+		if(identity_updated)
+			identity_revision++
+			refresh_preferences_window_if_visible(FALSE)
+		var/list/save_result = build_identity_save_result(request_id, identity_updated, rejection_reasons)
+		if(identity_updated && close_ui)
+			SStgui.close_uis(src)
+			start_identity_etching_rename(usr, change_result)
+			return FALSE
+		send_identity_payload(usr, save_result)
+		if(identity_updated)
+			start_identity_etching_rename(usr, change_result)
+		return TRUE
+	if(action == "close_identity")
+		SStgui.close_uis(src)
+		return FALSE
 	if(action == "load_traits")
 		send_traits_payload(usr)
 		return TRUE
@@ -6205,11 +6788,14 @@ var/global/custom_marking_static_source_digest_complete = TRUE
 		return TRUE
 	else if(action == "save_basic_appearance")
 		var/close_ui = params?["close"]
+		var/identity_context_before = build_identity_context_signature()
 		acquire_preview_payload_build_lock()
 		var/basic_updated = apply_basic_appearance_payload(params)
 		release_preview_payload_build_lock()
 		if(basic_updated)
 			traits_revision++
+			if(identity_context_before != build_identity_context_signature())
+				identity_revision++
 			refresh_preferences_window_if_visible(TRUE)
 			if(close_ui)
 				SStgui.close_uis(src)
@@ -6236,17 +6822,23 @@ var/global/custom_marking_static_source_digest_complete = TRUE
 		acquire_preview_payload_build_lock()
 		var/previous_species = prefs?.species
 		var/previous_icon_base = prefs?.custom_base
+		var/identity_context_before = build_identity_context_signature()
 		var/species_updated = apply_species_payload(params, usr)
 		var/list/species_save_result = build_species_save_result_if_needed(species_updated, close_ui, params)
 		release_preview_payload_build_lock()
 		if(species_updated)
 			if(prefs?.species != previous_species || prefs?.custom_base != previous_icon_base)
 				traits_revision++
+			if(identity_context_before != build_identity_context_signature())
+				identity_revision++
 			refresh_preferences_window_if_visible(TRUE)
 			if(close_ui)
 				SStgui.close_uis(src)
 				return FALSE
-		var/list/update = islist(species_save_result) ? list("species_save_result" = species_save_result) : null
+		var/list/update = islist(species_save_result) ? list(
+			"species_save_result" = species_save_result,
+			"identity_revision" = identity_revision
+		) : null
 		var/datum/tgui/active_ui = SStgui.get_open_ui(usr, src)
 		if(active_ui && islist(update))
 			active_ui.send_update(update)

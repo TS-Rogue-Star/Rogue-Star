@@ -460,7 +460,7 @@ digi-inner-thighs
 **License:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)<br>
 <br>
 **File:** `icons/inventory/head/item_rs.dmi, icons/inventory/head/mob_rs.dmi, icons/inventory/uniform/item_rs.dmi, icons/inventory/uniform/mob_rs.dmi, icons/inventory/suit/item_rs.dmi, icons/inventory/suit/mob_rs.dmi`<br>
-**Icon-States:** talon_basic_refreshed, talon_security_refreshed, talon_jumpsuit_refreshed, talon_pilot_refreshed, talon_captain_refreshed, talon_capcoat, talon_pilotjacket, talon_labcoat, taloncoat, talon_caphat, talon_pilothat, talonnewsoft, talon_beret, talon_officer_beret, winterhood_talon<br>
+**Icon-States:** talon_basic_refreshed, talon_security_refreshed, talon_medical_refreshed, talon_pilot_refreshed, talon_captain_refreshed, talon_capcoat, talon_pilotjacket, talon_labcoat, taloncoat, talon_caphat, talon_pilothat, talonnewsoft, talon_beret, talon_officer_beret, winterhood_talon<br>
 **Creator:** Comissioned by axietheaxolotl, Imaginos16<br>
 **Link:** https://github.com/tgstation/tgstation/pull/70226, https://github.com/tgstation/tgstation/pull/67286, https://github.com/tgstation/tgstation/pull/69842, https://github.com/tgstation/tgstation/pull/66355, https://github.com/tgstation/tgstation/pull/73795, https://github.com/tgstation/tgstation/pull/71479<br>
 <br>
@@ -638,4 +638,16 @@ sound/instruments/synthesis_samples/woodwind/fluid_tenor_sax,<br>
 **Creator**: crossexonar/sari, Toriate <br>
 **Link**: https://github.com/TS-Rogue-Star/Rogue-Star/pull/1354<br>
 **License**: CC BY-SA 3.0<br>
+<br>
+**File:** `icons/inventory/uniform/item_rs.dmi, icons/inventory/uniform/mob_rs.dmi`<br>
+**Icon-States:** talon_atmos_refreshed, talon_engineer_refreshed, talon_miner_refreshed<br>
+**Creator:** Comissioned by axietheaxolotl, Imaginos16. Modified by Azzy.Dreemurr<br>
+**Link:** https://github.com/TS-Rogue-Star/Rogue-Star/pull/766<br>
+**License:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)<br>
+<br>
+**File:** `icons/inventory/uniform/item_vr.dmi, icons/inventory/uniform/mob_vr.dmi, ‎icons/inventory/uniform/mob_vr_rolled_down.dmi‎`<br>
+**Icon-States:** talon_atmos_refreshed, talon_engineer_refreshed, talon_miner_refreshed<br>
+**Creator:** Original graphics by Youtubeboy139. Modified by Azzy.Dreemurr<br>
+**Link:** https://github.com/VOREStation/VOREStation/pull/10660<br>
+**License:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)<br>
 <br>

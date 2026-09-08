@@ -314,111 +314,7 @@
 		if("internal")
 			if(iscarbon(usr))
 				var/mob/living/carbon/C = usr
-				if(!C.stat && !C.stunned && !C.paralysis && !C.restrained())
-					if(C.internal)
-						C.internal = null
-						to_chat(C, "<span class='notice'>No longer running on internals.</span>")
-						if(C.internals)
-							C.internals.icon_state = "internal0"
-					else
-
-						var/no_mask
-						if(!(C.wear_mask && C.wear_mask.item_flags & AIRTIGHT))
-							var/mob/living/carbon/human/H = C
-							if(!(H.head && H.head.item_flags & AIRTIGHT))
-								no_mask = 1
-
-						if(no_mask)
-							to_chat(C, "<span class='notice'>You are not wearing a suitable mask or helmet.</span>")
-							return 1
-						else
-							var/list/nicename = null
-							var/list/tankcheck = null
-							var/breathes = "oxygen"    //default, we'll check later
-							var/list/contents = list()
-							var/from = "on"
-
-							if(ishuman(C))
-								var/mob/living/carbon/human/H = C
-								breathes = H.species.breath_type
-								nicename = list ("suit", "back", "belt", "right hand", "left hand", "left pocket", "right pocket")
-								tankcheck = list (H.s_store, C.back, H.belt, C.r_hand, C.l_hand, H.l_store, H.r_store)
-							else
-								nicename = list("right hand", "left hand", "back")
-								tankcheck = list(C.r_hand, C.l_hand, C.back)
-
-							// Rigs are a fucking pain since they keep an air tank in nullspace.
-							var/obj/item/weapon/rig/Rig = C.get_rig()
-							if(Rig)
-								if(Rig.air_supply && !Rig.offline)
-									from = "in"
-									nicename |= "hardsuit"
-									tankcheck |= Rig.air_supply
-
-							for(var/i=1, i<tankcheck.len+1, ++i)
-								if(istype(tankcheck[i], /obj/item/weapon/tank))
-									var/obj/item/weapon/tank/t = tankcheck[i]
-									if (!isnull(t.manipulated_by) && t.manipulated_by != C.real_name && findtext(t.desc,breathes))
-										contents.Add(t.air_contents.total_moles)	//Someone messed with the tank and put unknown gasses
-										continue					//in it, so we're going to believe the tank is what it says it is
-									switch(breathes)
-																		//These tanks we're sure of their contents
-										if("nitrogen") 							//So we're a bit more picky about them.
-
-											if(t.air_contents.gas["nitrogen"] && !t.air_contents.gas["oxygen"])
-												contents.Add(t.air_contents.gas["nitrogen"])
-											else
-												contents.Add(0)
-
-										if ("oxygen")
-											if(t.air_contents.gas["oxygen"] && !t.air_contents.gas["phoron"])
-												contents.Add(t.air_contents.gas["oxygen"])
-											else
-												contents.Add(0)
-
-										// No races breath this, but never know about downstream servers.
-										if ("carbon dioxide")
-											if(t.air_contents.gas["carbon_dioxide"] && !t.air_contents.gas["phoron"])
-												contents.Add(t.air_contents.gas["carbon_dioxide"])
-											else
-												contents.Add(0)
-
-										// And here's for the Vox
-										if ("phoron")
-											if(t.air_contents.gas["phoron"] && !t.air_contents.gas["oxygen"])
-												contents.Add(t.air_contents.gas["phoron"])
-											else
-												contents.Add(0)
-
-
-								else
-									//no tank so we set contents to 0
-									contents.Add(0)
-
-							//Alright now we know the contents of the tanks so we have to pick the best one.
-
-							var/best = 0
-							var/bestcontents = 0
-							for(var/i=1, i <  contents.len + 1 , ++i)
-								if(!contents[i])
-									continue
-								if(contents[i] > bestcontents)
-									best = i
-									bestcontents = contents[i]
-
-
-							//We've determined the best container now we set it as our internals
-
-							if(best)
-								to_chat(C, "<span class='notice'>You are now running on internals from [tankcheck[best]] [from] your [nicename[best]].</span>")
-								C.internal = tankcheck[best]
-
-
-							if(C.internal)
-								if(C.internals)
-									C.internals.icon_state = "internal1"
-							else
-								to_chat(C, "<span class='notice'>You don't have a[breathes=="oxygen" ? "n oxygen" : addtext(" ",breathes)] tank.</span>")
+				C.toggle_internals_hud() // RS ADD
 		if("act_intent")
 			usr.a_intent_change("right")
 		if(I_HELP)
@@ -1034,3 +930,114 @@
 			overlays += image('icons/mob/screen_ammo.dmi', src, "o9")
 			overlays += image('icons/mob/screen_ammo.dmi', src, "t9")
 			overlays += image('icons/mob/screen_ammo.dmi', src, "h9")
+
+// RS EDIT
+/mob/living/carbon/proc/toggle_internals_hud()
+	var/mob/living/carbon/C = src
+	if(C.stat || C.stunned || C.paralysis || C.restrained())
+		return FALSE
+	if(C.internal)
+		C.internal = null
+		to_chat(C, "<span class='notice'>No longer running on internals.</span>")
+		if(C.internals)
+			C.internals.icon_state = "internal0"
+		return TRUE
+
+	var/no_mask
+	if(!(C.wear_mask && C.wear_mask.item_flags & AIRTIGHT))
+		var/mob/living/carbon/human/H = C
+		if(!(H.head && H.head.item_flags & AIRTIGHT))
+			no_mask = 1
+
+	if(no_mask)
+		to_chat(C, "<span class='notice'>You are not wearing a suitable mask or helmet.</span>")
+		return FALSE
+	else
+		var/list/nicename = null
+		var/list/tankcheck = null
+		var/breathes = "oxygen"    //default, we'll check later
+		var/list/contents = list()
+		var/from = "on"
+
+		if(ishuman(C))
+			var/mob/living/carbon/human/H = C
+			breathes = H.species.breath_type
+			nicename = list ("suit", "back", "belt", "right hand", "left hand", "left pocket", "right pocket")
+			tankcheck = list (H.s_store, C.back, H.belt, C.r_hand, C.l_hand, H.l_store, H.r_store)
+		else
+			nicename = list("right hand", "left hand", "back")
+			tankcheck = list(C.r_hand, C.l_hand, C.back)
+
+		// Rigs are a fucking pain since they keep an air tank in nullspace.
+		var/obj/item/weapon/rig/Rig = C.get_rig()
+		if(Rig)
+			if(Rig.air_supply && !Rig.offline)
+				from = "in"
+				nicename |= "hardsuit"
+				tankcheck |= Rig.air_supply
+
+		for(var/i=1, i<tankcheck.len+1, ++i)
+			if(istype(tankcheck[i], /obj/item/weapon/tank))
+				var/obj/item/weapon/tank/t = tankcheck[i]
+				if (!isnull(t.manipulated_by) && t.manipulated_by != C.real_name && findtext(t.desc,breathes))
+					contents.Add(t.air_contents.total_moles)	//Someone messed with the tank and put unknown gasses
+					continue					//in it, so we're going to believe the tank is what it says it is
+				switch(breathes)
+													//These tanks we're sure of their contents
+					if("nitrogen") 							//So we're a bit more picky about them.
+
+						if(t.air_contents.gas["nitrogen"] && !t.air_contents.gas["oxygen"])
+							contents.Add(t.air_contents.gas["nitrogen"])
+						else
+							contents.Add(0)
+
+					if ("oxygen")
+						if(t.air_contents.gas["oxygen"] && !t.air_contents.gas["phoron"])
+							contents.Add(t.air_contents.gas["oxygen"])
+						else
+							contents.Add(0)
+
+					// No races breath this, but never know about downstream servers.
+					if ("carbon dioxide")
+						if(t.air_contents.gas["carbon_dioxide"] && !t.air_contents.gas["phoron"])
+							contents.Add(t.air_contents.gas["carbon_dioxide"])
+						else
+							contents.Add(0)
+
+					// And here's for the Vox
+					if ("phoron")
+						if(t.air_contents.gas["phoron"] && !t.air_contents.gas["oxygen"])
+							contents.Add(t.air_contents.gas["phoron"])
+						else
+							contents.Add(0)
+
+
+			else
+				//no tank so we set contents to 0
+				contents.Add(0)
+
+		//Alright now we know the contents of the tanks so we have to pick the best one.
+
+		var/best = 0
+		var/bestcontents = 0
+		for(var/i=1, i <  contents.len + 1 , ++i)
+			if(!contents[i])
+				continue
+			if(contents[i] > bestcontents)
+				best = i
+				bestcontents = contents[i]
+
+
+		//We've determined the best container now we set it as our internals
+
+		if(best)
+			to_chat(C, "<span class='notice'>You are now running on internals from [tankcheck[best]] [from] your [nicename[best]].</span>")
+			C.internal = tankcheck[best]
+
+
+		if(C.internal)
+			if(C.internals)
+				C.internals.icon_state = "internal1"
+		else
+			to_chat(C, "<span class='notice'>You don't have a[breathes=="oxygen" ? "n oxygen" : addtext(" ",breathes)] tank.</span>")
+	return C.internal ? TRUE : FALSE

@@ -304,6 +304,10 @@
 	if(on_fire)
 		msg += "<span class='warning'>[T.He] [T.is] on fire!.</span>"
 
+	// RS EDIT
+	if(ai_holder && stat == UNCONSCIOUS)
+		msg += "<span class='deadsay'>[T.He] [T.is] [sleeping ? "fast asleep" : "out cold"].</span>"
+
 	var/ssd_msg = species.get_ssd(src)
 	if(ssd_msg && (!should_have_organ("brain") || has_brain()) && stat != DEAD)
 		if(!key && !teleop)	//RS EDIT
