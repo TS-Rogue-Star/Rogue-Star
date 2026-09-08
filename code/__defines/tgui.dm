@@ -30,9 +30,9 @@
 
 // RS Add Start: TGUI message chunking (Lira, January 2026)
 /// Max number of chunks accepted for a single chunked payload.
-#define TGUI_CHUNK_MAX_PARTS 1024
+#define TGUI_CHUNK_MAX_PARTS 256
 /// Max assembled payload size (in characters) for chunked payloads.
-#define TGUI_CHUNK_MAX_PAYLOAD 524288
+#define TGUI_CHUNK_MAX_PAYLOAD 131072
 /// Drop incomplete chunk buffers after this age.
 #define TGUI_CHUNK_TIMEOUT 10 SECONDS
 // RS Add End

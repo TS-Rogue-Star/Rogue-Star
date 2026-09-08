@@ -87,7 +87,7 @@
 	timeoff_factor = 1
 	access = list(access_talon, access_talon_bridge, access_talon_medical, access_talon_engineer, access_talon_cargo, access_talon_security, access_talon_pilot) //RS Edit
 	minimal_access = list(access_talon, access_talon_bridge, access_talon_medical, access_talon_engineer, access_talon_cargo, access_talon_security, access_talon_pilot) //RS Edit
-	alt_titles = list("Talon Technician" = /datum/alt_title/talon_tech, "Talon Atmospheric Technician" = /datum/alt_title/talon_atmos)
+	alt_titles = list("Talon Technician" = /datum/alt_title/talon_tech)
 
 /datum/alt_title/talon_tech
 	title = "Talon Technician"
@@ -270,7 +270,7 @@
 	backpack = /obj/item/weapon/storage/backpack/industrial
 	satchel_one = /obj/item/weapon/storage/backpack/satchel/eng
 	messenger_bag = /obj/item/weapon/storage/backpack/messenger/engi
-	uniform = /obj/item/clothing/under/rank/talon/engineer
+	uniform = /obj/item/clothing/under/rank/talon
 	belt = /obj/item/weapon/storage/belt/utility/atmostech
 	backpack = /obj/item/weapon/storage/backpack/talon
 	satchel_one = /obj/item/weapon/storage/backpack/satchel/talon
@@ -289,7 +289,7 @@
 	shoes = /obj/item/clothing/shoes/boots/workboots
 	r_pocket = /obj/item/weapon/storage/bag/ore
 	l_pocket = /obj/item/weapon/tool/crowbar
-	uniform = /obj/item/clothing/under/rank/talon/miner
+	uniform = /obj/item/clothing/under/rank/talon
 	backpack = /obj/item/weapon/storage/backpack/talon
 	satchel_one = /obj/item/weapon/storage/backpack/satchel/talon
 	messenger_bag = /obj/item/weapon/storage/backpack/messenger/talon

@@ -14,7 +14,6 @@ export type UnsavedChangesOverlayProps = {
   readonly onDiscard: () => void;
   readonly onCancel?: () => void;
   readonly busy?: boolean;
-  readonly saveDisabled?: boolean;
 };
 
 export const UnsavedChangesOverlay = ({
@@ -26,7 +25,6 @@ export const UnsavedChangesOverlay = ({
   onDiscard,
   onCancel,
   busy = false,
-  saveDisabled = false,
 }: UnsavedChangesOverlayProps) => (
   <Box
     position="fixed"
@@ -91,7 +89,7 @@ export const UnsavedChangesOverlay = ({
           <Button
             icon="save"
             className={`${CHIP_BUTTON_CLASS} RogueStar__glowButton--positive`}
-            disabled={busy || saveDisabled}
+            disabled={busy}
             onClick={onSave}>
             {saveLabel}
           </Button>

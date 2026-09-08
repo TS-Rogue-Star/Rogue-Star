@@ -2,7 +2,6 @@
 	name = "heart"
 	icon_state = "heart-on"
 	organ_tag = O_HEART
-	chargen_prosthetic_flags = ORGAN_CHARGEN_STANDARD // RS Add: Character Designer - Species and Prosthetics (Lira, August 2026)
 	parent_organ = BP_TORSO
 	dead_icon = "heart-off"
 

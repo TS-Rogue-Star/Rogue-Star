@@ -283,7 +283,6 @@
 			add_attack_logs(H,src,"Disarmed")
 
 			M.do_attack_animation(src)
-			resolve_stimuli(M, STIM_DISARM)	//RS ADD
 
 			if(w_uniform)
 				w_uniform.add_fingerprint(M)
@@ -347,9 +346,6 @@
 
 	if(!damage)
 		return
-
-	if(ai_holder)	// RS ADD
-		ai_holder.react_to_attack(user)	// RS ADD
 
 	add_attack_logs(user,src,"Melee attacked with fists (miss/block)",admin_notify = FALSE) //No admin notice since this is usually fighting simple animals
 	src.visible_message("<span class='danger'>[user] has [attack_message] [src]!</span>")

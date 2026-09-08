@@ -46,15 +46,14 @@
 	else
 		return DEATHGASP_NO_MESSAGE
 
-// RS EDIT
 /datum/species/proc/get_ssd(var/mob/living/carbon/human/H)
 	if(H)
-		if(H.ai_holder)
-			return
 		if(H.looksSynthetic())
 			return "flashing a 'system offline' light"
-		else
+		else if(!H.ai_holder)
 			return show_ssd
+		else
+			return
 
 /datum/species/proc/get_blood_colour(var/mob/living/carbon/human/H)
 	if(H)

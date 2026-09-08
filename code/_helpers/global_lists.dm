@@ -115,16 +115,11 @@ var/global/list/string_slot_flags = list(
 )
 
 GLOBAL_LIST_EMPTY(mannequins)
-
-// RS Edit: Character Designer - Species and Prosthetics (Lira, August 2026)
-/proc/get_mannequin(var/ckey = "NULL", var/mannequin_type = /mob/living/carbon/human/dummy/mannequin)
-	if(!ispath(mannequin_type, /mob/living/carbon/human/dummy/mannequin))
-		mannequin_type = /mob/living/carbon/human/dummy/mannequin
+/proc/get_mannequin(var/ckey = "NULL")
 	var/mob/living/carbon/human/dummy/mannequin/M = GLOB.mannequins[ckey]
-	if(!istype(M, mannequin_type))
-		del_mannequin(ckey)
-		M = new mannequin_type(null)
-		GLOB.mannequins[ckey] = M
+	if(!istype(M))
+		GLOB.mannequins[ckey] = new /mob/living/carbon/human/dummy/mannequin(null)
+		M = GLOB.mannequins[ckey]
 	return M
 
 // RS Edit: Custom Marking Clean-Up (Lira, April 2026)
