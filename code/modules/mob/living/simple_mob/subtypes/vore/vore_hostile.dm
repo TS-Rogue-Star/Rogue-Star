@@ -88,22 +88,28 @@
 
 	if(client || !user.client || !ai_holder || !isliving(user))
 		return ..()
-	if(!spont_pref_check(src,user,SPONT_PRED))	//RS EDIT
+	if(!ai_holder.vore_check(user)) //RS EDIT || Vore hostile fix (Lira, May 2026)
 		return ..()
 	ai_holder.give_target(user, TRUE)
 	ai_holder.track_target_position()
 	ai_holder.set_stance(STANCE_FIGHT)
+	return ..() // RS Add: Vore hostile fix (Lira, May 2026)
 
 /datum/ai_holder/simple_mob/say_aggro
 	hostile = FALSE
-	forgive_resting = TRUE
+	vore_hostile = TRUE // RS Add: Vore hostile fix (Lira, May 2026)
+	forgive_resting = FALSE // RS Edit: Vore hostile fix (Lira, May 2026)
 	cooperative = FALSE
+
+ // RS Add: Vore hostile fix (Lira, May 2026)
+/datum/ai_holder/simple_mob/say_aggro/find_target(list/possible_targets, has_targets_list)
+	return null
 
 /datum/ai_holder/simple_mob/say_aggro/on_hear_say(mob/living/speaker, message)
 	. = ..()
 	if(holder.client || !speaker.client)
 		return
-	if(!spont_pref_check(holder,speaker,SPONT_PRED))	//RS EDIT
+	if(!vore_check(speaker)) //RS EDIT || Vore hostile fix (Lira, May 2026)
 		return
 	if(speaker.z != holder.z)
 		return

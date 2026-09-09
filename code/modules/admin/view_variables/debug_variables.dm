@@ -1,5 +1,5 @@
 #define VV_HTML_ENCODE(thing) ( sanitize ? html_encode(thing) : thing )
-/proc/debug_variable(name, value, level, datum/DA = null, sanitize = TRUE)
+/proc/debug_variable(name, value, level, DA = null, sanitize = TRUE) // RS Edit: Can be datum or list (Lira, April 2026)
 	var/header
 	if(DA)
 		if (islist(DA))

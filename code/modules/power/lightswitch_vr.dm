@@ -156,18 +156,19 @@
 		return
 	. = ..()
 
-/obj/structure/construction/get_description_interaction()
+// RS Edit: Examine Mode Fix (Lira, July 2026)
+/obj/structure/construction/get_description_interaction(var/for_chat = FALSE)
 	. = list()
 	switch(stage)
 		if(FRAME_UNFASTENED)
 			. += list(
-				"[desc_panel_image("screwdriver")]to continue construction.",
-				"[desc_panel_image("welder")]to deconstruct.")
+				"[desc_panel_image("screwdriver", for_chat)]to continue construction.",
+				"[desc_panel_image("welder", for_chat)]to deconstruct.")
 		if(FRAME_FASTENED)
 			. += list(
-				"[desc_panel_image("cable coil")]to continue construction.",
-				"[desc_panel_image("screwdriver")]to reverse construction.")
+				"[desc_panel_image("cable coil", for_chat)]to continue construction.",
+				"[desc_panel_image("screwdriver", for_chat)]to reverse construction.")
 		if(FRAME_WIRED)
 			. += list(
-				"[desc_panel_image("screwdriver")]to finish construction.",
-				"[desc_panel_image("wirecutters")]to reverse construction.")
+				"[desc_panel_image("screwdriver", for_chat)]to finish construction.",
+				"[desc_panel_image("wirecutters", for_chat)]to reverse construction.")

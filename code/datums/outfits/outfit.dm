@@ -58,6 +58,7 @@ var/list/outfits_decls_by_type_
 	var/messenger_bag = /obj/item/weapon/storage/backpack/messenger
 	var/sports_bag = /obj/item/weapon/storage/backpack/sport
 	var/satchel_three = /obj/item/weapon/storage/backpack/satchel/strapless
+	var/rig = /obj/item/weapon/storage/rig //RS Add, Rig bag Sari Bork 5/20/2026
 
 	var/flags // Specific flags
 
@@ -80,6 +81,7 @@ var/list/outfits_decls_by_type_
 			if(5) back = messenger_bag
 			if(6) back = sports_bag
 			if(7) back = satchel_three
+			if(8) back = rig //RS Add, Rigpack
 			else back = null
 
 /decl/hierarchy/outfit/proc/post_equip(mob/living/carbon/human/H)

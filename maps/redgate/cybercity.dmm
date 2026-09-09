@@ -11965,7 +11965,6 @@
 /area/redgate/city/laundry)
 "pGW" = (
 /obj/structure/table/alien,
-/obj/item/weapon/aliencoin/phoron,
 /turf/simulated/floor/wood/sif,
 /area/redgate/city/succ)
 "pGZ" = (

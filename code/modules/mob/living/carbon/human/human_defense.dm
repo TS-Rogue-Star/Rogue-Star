@@ -278,6 +278,9 @@ emp_act
 
 	visible_message("<span class='danger'>[src] has been [LAZYLEN(I.attack_verb) ? pick(I.attack_verb) : "attacked"] in the [affecting.name] with [I.name] by [user]!</span>")
 
+	if(ai_holder)	// RS ADD
+		ai_holder.react_to_attack(user)	// RS ADD
+
 	var/soaked = get_armor_soak(hit_zone, "melee", I.armor_penetration)
 
 	var/blocked = run_armor_check(hit_zone, "melee", I.armor_penetration, "Your armor has protected your [affecting.name].", "Your armor has softened the blow to your [affecting.name].")
@@ -439,7 +442,7 @@ emp_act
 				I.throwing = 0
 				I.forceMove(vore_selected)
 				return //RSEdit End
-		if(in_throw_mode && speed <= THROWFORCE_SPEED_DIVISOR)	//empty active hand and we're in throw mode
+		if(click_flags & CLICK_THROW && speed <= THROWFORCE_SPEED_DIVISOR)	//empty active hand and we're in throw mode	//RS EDIT
 			if(canmove && !restrained()&& !src.is_incorporeal()) //RS Edit Chomp port #7484 | CHOMPADD - No hands for the phased ones.
 				if(isturf(O.loc))
 					if(can_catch(O))

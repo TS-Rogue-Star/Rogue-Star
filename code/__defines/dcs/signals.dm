@@ -791,4 +791,8 @@
 #define COMSIG_VORE_HEALTHBAR_UPDATE "vore_healthbar_update"
 #define COMSIG_VORE_HEALTHBAR_CLEANUP "vore_healthbar_cleanup"
 #define HIDE_AND_SEEK_ROUND_END "round_end"
+#define COMSIG_KEY_ATTACK "key_event"
+#define COMSIG_DUNGEON_TRIGGER "dungeon_trigger"
+#define COMSIG_DUNGEON_UNTRIGGER "dungeon_untrigger"
+#define COMSIG_RESOLVE_ATTACKBY "resolve_attackby"
 //RS ADD END

@@ -291,6 +291,11 @@
 					return FALSE
 				vis_mobs = list(target, src)
 
+		// RS Add: Persistent memory system (lira, May 2026)
+		if(isliving(src))
+			var/mob/living/emoter = src
+			record_character_memory_recipients(emoter, vis_mobs, "subtle", -1, FALSE, AUDIBLE_MESSAGE, FALSE, FALSE, character_memory_source_known_contained_recipients(emoter))
+
 		for(var/mob/M as anything in vis_mobs)
 			if(isnewplayer(M))
 				continue
@@ -351,6 +356,7 @@
 
 ///// PSAY /////
 
+// RS Edit: Persistent memory system (lira, May 2026)
 /mob/verb/psay(message as text)
 	set category = "IC"
 	set name = "Psay"
@@ -384,8 +390,13 @@
 	var/f = FALSE		//did we find someone to send the message to other than ourself?
 	var/mob/living/pb	//predator body
 	var/mob/living/M = src
+	var/mob/living/character_memory_source = M
+	var/list/character_memory_recipients = list()
+	var/list/character_memory_source_recipients = list()
 	if(istype(M, /mob/living/dominated_brain))
 		var/mob/living/dominated_brain/db = M
+		if(isliving(db.prey_body))
+			character_memory_source = db.prey_body
 		if(db.loc != db.pred_body)
 			to_chat(db, "<span class='danger'>You aren't inside of a brain anymore!!!</span>")
 			qdel(db)	//Oh no, dominated brains shouldn't exist outside of the body, so if we got here something went very wrong.
@@ -393,12 +404,16 @@
 		else
 			pb = db.pred_body
 			to_chat(pb, "<span class='changeling'>The captive mind of \the [M] thinks, \"[formatted_message]\"</span>")	//To our pred if dominated brain || RS Edit: PSay/PMe formatting (Lira, February 2026)
+			character_memory_recipients |= pb
+			character_memory_source_recipients |= pb
 			if(pb.is_preference_enabled(/datum/client_preference/subtle_sounds))
 				pb << sound('sound/talksounds/subtle_sound.ogg', volume = 50)
 			f = TRUE
 	else if(M.absorbed && isbelly(M.loc))
 		pb = M.loc.loc
 		to_chat(pb, "<span class='changeling'>\The [M] thinks, \"[formatted_message]\"</span>")	//To our pred if absorbed || RS Edit: PSay/PMe formatting (Lira, February 2026)
+		character_memory_recipients |= pb
+		character_memory_source_recipients |= pb
 		if(pb.is_preference_enabled(/datum/client_preference/subtle_sounds))
 			pb << sound('sound/talksounds/subtle_sound.ogg', volume = 50)
 		f = TRUE
@@ -409,6 +424,7 @@
 			if(istype(I, /mob/living/dominated_brain) && I != M)
 				var/mob/living/dominated_brain/db = I
 				to_chat(db, "<span class='changeling'>The captive mind of \the [M] thinks, \"[formatted_message]\"</span>")	//To any dominated brains in the pred || RS Edit: PSay/PMe formatting (Lira, February 2026)
+				character_memory_recipients |= db
 				if(db.is_preference_enabled(/datum/client_preference/subtle_sounds))
 					db << sound('sound/talksounds/subtle_sound.ogg', volume = 50)
 				f = TRUE
@@ -416,6 +432,7 @@
 			for(var/mob/living/L in B)
 				if(L.absorbed && L != M && L.ckey)
 					to_chat(L, "<span class='changeling'>\The [M] thinks, \"[formatted_message]\"</span>")	//To any absorbed people in the pred || RS Edit: PSay/PMe formatting (Lira, February 2026)
+					character_memory_recipients |= L
 					if(L.is_preference_enabled(/datum/client_preference/subtle_sounds))
 						L << sound('sound/talksounds/subtle_sound.ogg', volume = 50)
 					f = TRUE
@@ -425,6 +442,8 @@
 		if(istype(I, /mob/living/dominated_brain))
 			var/mob/living/dominated_brain/db = I
 			to_chat(db, "<span class='changeling'><b>\The [M] thinks, \"[formatted_message]\"</b></span>")	//To any dominated brains inside us || RS Edit: PSay/PMe formatting (Lira, February 2026)
+			character_memory_recipients |= db
+			character_memory_source_recipients |= db
 			if(db.is_preference_enabled(/datum/client_preference/subtle_sounds))
 				db << sound('sound/talksounds/subtle_sound.ogg', volume = 50)
 			f = TRUE
@@ -432,11 +451,14 @@
 		for(var/mob/living/L in B)
 			if(L.absorbed)
 				to_chat(L, "<span class='changeling'><b>\The [M] thinks, \"[formatted_message]\"</b></span>")	//To any absorbed people inside us || RS Edit: PSay/PMe formatting (Lira, February 2026)
+				character_memory_recipients |= L
+				character_memory_source_recipients |= L
 				if(L.is_preference_enabled(/datum/client_preference/subtle_sounds))
 					L << sound('sound/talksounds/subtle_sound.ogg', volume = 50)
 				f = TRUE
 
 	if(f)	//We found someone to send the message to
+		record_character_memory_recipients(character_memory_source, character_memory_recipients, "absorbed_say", -1, FALSE, 0, FALSE, FALSE, character_memory_source_recipients)
 		if(pb)
 			to_chat(M, "<span class='changeling'>You think \"[formatted_message]\"</span>")	//To us if we are the prey || RS Edit: PSay/PMe formatting (Lira, February 2026)
 			if(M.is_preference_enabled(/datum/client_preference/subtle_sounds))
@@ -458,6 +480,7 @@
 
 ///// PME /////
 
+// RS Edit: Persistent memory system (lira, May 2026)
 /mob/verb/pme(message as message)
 	set category = "IC"
 	set name = "Pme"
@@ -490,8 +513,13 @@
 	var/f = FALSE		//did we find someone to send the message to other than ourself?
 	var/mob/living/pb	//predator body
 	var/mob/living/M = src
+	var/mob/living/character_memory_source = M
+	var/list/character_memory_recipients = list()
+	var/list/character_memory_source_recipients = list()
 	if(istype(M, /mob/living/dominated_brain))
 		var/mob/living/dominated_brain/db = M
+		if(isliving(db.prey_body))
+			character_memory_source = db.prey_body
 		if(db.loc != db.pred_body)
 			to_chat(db, "<span class='danger'>You aren't inside of a brain anymore!!!</span>")
 			qdel(db)	//Oh no, dominated brains shouldn't exist outside of the body, so if we got here something went very wrong.
@@ -499,6 +527,8 @@
 		else
 			pb = db.pred_body
 			to_chat(pb, "<span class='changeling'>\The [M] [formatted_message]</span>")	//To our pred if dominated brain || RS Edit: PSay/PMe formatting (Lira, February 2026)
+			character_memory_recipients |= pb
+			character_memory_source_recipients |= pb
 			if(pb.is_preference_enabled(/datum/client_preference/subtle_sounds))
 				pb << sound('sound/talksounds/subtle_sound.ogg', volume = 50)
 			f = TRUE
@@ -506,6 +536,8 @@
 	else if(M.absorbed && isbelly(M.loc))
 		pb = M.loc.loc
 		to_chat(pb, "<span class='changeling'>\The [M] [formatted_message]</span>")	//To our pred if absorbed || RS Edit: PSay/PMe formatting (Lira, February 2026)
+		character_memory_recipients |= pb
+		character_memory_source_recipients |= pb
 		if(pb.is_preference_enabled(/datum/client_preference/subtle_sounds))
 			pb << sound('sound/talksounds/subtle_sound.ogg', volume = 50)
 		f = TRUE
@@ -516,6 +548,7 @@
 			if(istype(I, /mob/living/dominated_brain) && I != M)
 				var/mob/living/dominated_brain/db = I
 				to_chat(db, "<span class='changeling'>\The [M] [formatted_message]</span>")	//To any dominated brains in the pred || RS Edit: PSay/PMe formatting (Lira, February 2026)
+				character_memory_recipients |= db
 				if(db.is_preference_enabled(/datum/client_preference/subtle_sounds))
 					db << sound('sound/talksounds/subtle_sound.ogg', volume = 50)
 				f = TRUE
@@ -523,6 +556,7 @@
 			for(var/mob/living/L in B)
 				if(L.absorbed && L != M && L.ckey)
 					to_chat(L, "<span class='changeling'>\The [M] [formatted_message]</span>")	//To any absorbed people in the pred || RS Edit: PSay/PMe formatting (Lira, February 2026)
+					character_memory_recipients |= L
 					if(L.is_preference_enabled(/datum/client_preference/subtle_sounds))
 						L << sound('sound/talksounds/subtle_sound.ogg', volume = 50)
 					f = TRUE
@@ -532,6 +566,8 @@
 		if(istype(I, /mob/living/dominated_brain))
 			var/mob/living/dominated_brain/db = I
 			to_chat(db, "<span class='changeling'><b>\The [M] [formatted_message]</b></span>")	//To any dominated brains inside us || RS Edit: PSay/PMe formatting (Lira, February 2026)
+			character_memory_recipients |= db
+			character_memory_source_recipients |= db
 			if(db.is_preference_enabled(/datum/client_preference/subtle_sounds))
 				db << sound('sound/talksounds/subtle_sound.ogg', volume = 50)
 			f = TRUE
@@ -539,11 +575,14 @@
 		for(var/mob/living/L in B)
 			if(L.absorbed)
 				to_chat(L, "<span class='changeling'><b>\The [M] [formatted_message]</b></span>")	//To any absorbed people inside us || RS Edit: PSay/PMe formatting (Lira, February 2026)
+				character_memory_recipients |= L
+				character_memory_source_recipients |= L
 				if(L.is_preference_enabled(/datum/client_preference/subtle_sounds))
 					L << sound('sound/talksounds/subtle_sound.ogg', volume = 50)
 				f = TRUE
 
 	if(f)	//We found someone to send the message to
+		record_character_memory_recipients(character_memory_source, character_memory_recipients, "absorbed_me", -1, FALSE, 0, FALSE, FALSE, character_memory_source_recipients)
 		if(pb)
 			to_chat(M, "<span class='changeling'>\The [M] [formatted_message]</span>")	//To us if we are the prey || RS Edit: PSay/PMe formatting (Lira, February 2026)
 			if(M.is_preference_enabled(/datum/client_preference/subtle_sounds))

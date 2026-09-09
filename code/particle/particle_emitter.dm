@@ -19,6 +19,15 @@
 	if(lifespan > 0)
 		START_PROCESSING(SSfastprocess,src)
 
+// Character particle size and placement transformation (Lira, July 2026)
+/obj/particle_emitter/proc/scale_to_character(var/mob/living/character)
+	if(!character)
+		return
+	var/matrix/character_transform = matrix()
+	character_transform.Scale(character.size_multiplier)
+	character_transform.Translate(0, (character.vis_height / 2) * (character.size_multiplier - 1))
+	transform = character_transform
+
 /obj/particle_emitter/Destroy()
 	. = ..()
 	STOP_PROCESSING(SSfastprocess,src)

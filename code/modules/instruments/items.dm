@@ -17,10 +17,12 @@
 	var/list/allowed_instrument_ids
 	/// How far away our song datum can be heard.
 	var/instrument_range = 15
+	/// RS Add: Advanced synth (Lira, March 2026)
+	var/song_type = /datum/song/handheld
 
 /obj/item/instrument/Initialize(mapload)
 	. = ..()
-	song = new(src, allowed_instrument_ids, instrument_range)
+	song = new song_type(src, allowed_instrument_ids, instrument_range) // RS Edit: Advanced synth (Lira, March 2026)
 	allowed_instrument_ids = null //We don't need this clogging memory after it's used.
 
 /obj/item/instrument/Destroy()
@@ -48,7 +50,7 @@
 	desc = "A wooden musical instrument with four strings and a bow. \"The devil went down to space, he was looking for an assistant to grief.\""
 	icon_state = "violin"
 	hitsound = "swing_hit"
-	allowed_instrument_ids = "violin"
+	allowed_instrument_ids = list("violin", "r3violin") // RS Edit: New instruments (Lira, April 2026)
 
 /obj/item/instrument/violin/golden
 	name = "golden violin"
@@ -59,7 +61,19 @@
 	name = "xylophone"
 	desc = "A percussion instrument consisting of a series of wooden bars graduated in length."
 	icon_state = "xylophone"
-	allowed_instrument_ids = "xylophone"
+	allowed_instrument_ids = list("xylophone", "r3xylo") // RS Edit: New instruments (Lira, April 2026)
+
+// RS Add: Drumkit (Lira, June 2026)
+/obj/item/instrument/drumkit
+	name = "drum kit"
+	desc = "A compact percussion kit with enough drums and cymbals to keep the beat. An inscription at the base reads: Dedicated to Astel Medison and Lucy Gettler of The Lighteners Hang."
+	icon = 'icons/rogue-star/musician.dmi'
+	icon_state = "drumkit"
+	item_icons = list(
+		slot_l_hand_str = 'icons/rogue-star/lefthand_instruments.dmi',
+		slot_r_hand_str = 'icons/rogue-star/righthand_instruments.dmi',
+	)
+	allowed_instrument_ids = "r3drums"
 
 /obj/item/instrument/piano_synth
 	name = "synthesizer"
@@ -70,6 +84,24 @@
 /obj/item/instrument/piano_synth/Initialize(mapload)
 	. = ..()
 	song.allowed_instrument_ids = SSinstruments.synthesizer_instrument_ids
+
+// RS Add: Advanced synth (Lira, March 2026)
+/obj/item/instrument/piano_synth/advanced
+	name = "advanced synthesizer"
+	desc = "An upgraded synthesizer that can layer up to three synthesized instruments at once."
+	icon_state = "synth"
+	allowed_instrument_ids = "r3grand"
+	song_type = /datum/song/handheld/multisynth
+
+// RS Add: Advanced synth (Lira, March 2026)
+/obj/item/instrument/piano_synth/advanced/Initialize(mapload)
+	. = ..()
+	var/datum/song/handheld/multisynth/M = song
+	if(length(SSinstruments.layerable_synth_instrument_ids))
+		M.allowed_instrument_ids = SSinstruments.layerable_synth_instrument_ids.Copy()
+	else
+		M.allowed_instrument_ids = list()
+	M.initialize_multisynth_layers()
 
 /obj/item/instrument/piano_synth/headphones
 	name = "headphones"
@@ -128,7 +160,7 @@
 	icon_state = "banjo"
 	attack_verb = list("scruggs-styled", "hum-diggitied", "shin-dug", "clawhammered")
 	hitsound = 'sound/weapons/banjoslap.ogg'
-	allowed_instrument_ids = "banjo"
+	allowed_instrument_ids = list("banjo", "r3banjo") // RS Edit: New instruments (Lira, April 2026)
 
 /obj/item/instrument/guitar
 	name = "guitar"
@@ -145,7 +177,7 @@
 	force = 12
 	attack_verb = list("played metal on", "shreded", "crashed", "smashed")
 	hitsound = 'sound/weapons/stringsmash.ogg'
-	allowed_instrument_ids = "eguitar"
+	allowed_instrument_ids = list("eguitar", "r3jazzgt", "ccleangt", "cmutedgt", "r3overgt", "r3distgt", "r3harmgt") // RS Edit: New instruments (Lira, April 2026)
 
 /obj/item/instrument/glockenspiel
 	name = "glockenspiel"
@@ -185,7 +217,7 @@
 	name = "saxophone"
 	desc = "This soothing sound will be sure to leave your audience in tears."
 	icon_state = "saxophone"
-	allowed_instrument_ids = "saxophone"
+	allowed_instrument_ids = list("saxophone", "r3tenorsax", "r3sopsax", "r3altosax", "r3barisax") // RS Edit: New instruments (Lira, April 2026)
 
 /obj/item/instrument/saxophone/spectral
 	name = "spectral saxophone"
@@ -232,7 +264,7 @@
 	desc = "Just like in school, playing ability and all."
 	force = 5
 	icon_state = "recorder"
-	allowed_instrument_ids = "recorder"
+	allowed_instrument_ids = list("recorder", "r3recorder") // RS Edit: New instruments (Lira, April 2026)
 
 /obj/item/instrument/harmonica
 	name = "harmonica"

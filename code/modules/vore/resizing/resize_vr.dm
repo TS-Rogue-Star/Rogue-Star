@@ -204,6 +204,27 @@
 		else
 			return 0; // Unable to scoop, let other code run
 
+//RS ADD START
+/mob/living/proc/attempt_to_scoop_into_object(mob/living/M, mob/living/G, obj/our_obj, ignore_size = FALSE)
+	if(!(pickup_pref && M.pickup_pref && M.pickup_active && spont_pref_check(M,src,MICRO_PICKUP)))
+		return FALSE
+	var/size_diff = M.get_effective_size(FALSE) - get_effective_size(TRUE)
+	if(!istype(M))
+		return FALSE
+	if(!istype(our_obj))
+		return FALSE
+	if(size_diff >= 0.50 || mob_size < MOB_SMALL || size_diff >= get_effective_size() || ignore_size)
+		if(buckled)
+			to_chat(usr,"<span class='notice'>You have to unbuckle \the [src] before you pick them up.</span>")
+			return FALSE
+		playsound(M, 'sound/rogue-star/plap.ogg', rand(75,100), 1)
+		forceMove(our_obj)
+		to_chat(src, SPAN_DANGER("\The [M] pushes you into \the [our_obj]!"))
+		to_chat(M, SPAN_NOTICE("You push [src] into \the [our_obj]!"))
+		return TRUE
+	return FALSE
+//RS ADD END
+
 #define STEP_TEXT_OWNER(x) "[replacetext(x,"%prey",tmob)]"
 #define STEP_TEXT_PREY(x) "[replacetext(x,"%owner",src)]"
 /**

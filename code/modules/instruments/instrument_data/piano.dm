@@ -14,16 +14,17 @@
 				   "96"='sound/instruments/synthesis_samples/piano/fluid_piano/c7.ogg',
 				   "108"='sound/instruments/synthesis_samples/piano/fluid_piano/c8.ogg')
 
+// RS Edit: Linux Fix (Lira, March 2026)
 /datum/instrument/piano/fluid_harpsichord
 	name = "FluidR3 Harpsichord"
 	id = "r3harpsi"
-	real_samples = list("36"='sound/instruments/synthesis_samples/piano/fluid_harpsi/c2.ogg',
-				   "48"='sound/instruments/synthesis_samples/piano/fluid_harpsi/c3.ogg',
-				   "60"='sound/instruments/synthesis_samples/piano/fluid_harpsi/c4.ogg',
-				   "72"='sound/instruments/synthesis_samples/piano/fluid_harpsi/c5.ogg',
-				   "84"='sound/instruments/synthesis_samples/piano/fluid_harpsi/c6.ogg',
-				   "96"='sound/instruments/synthesis_samples/piano/fluid_harpsi/c7.ogg',
-				   "108"='sound/instruments/synthesis_samples/piano/fluid_harpsi/c8.ogg')
+	real_samples = list("36"='sound/instruments/synthesis_samples/piano/fluid_harpsi/C2.ogg',
+				   "48"='sound/instruments/synthesis_samples/piano/fluid_harpsi/C3.ogg',
+				   "60"='sound/instruments/synthesis_samples/piano/fluid_harpsi/C4.ogg',
+				   "72"='sound/instruments/synthesis_samples/piano/fluid_harpsi/C5.ogg',
+				   "84"='sound/instruments/synthesis_samples/piano/fluid_harpsi/C6.ogg',
+				   "96"='sound/instruments/synthesis_samples/piano/fluid_harpsi/C7.ogg',
+				   "108"='sound/instruments/synthesis_samples/piano/fluid_harpsi/C8.ogg')
 
 /datum/instrument/piano/crisis_harpsichord
 	name = "Crisis Harpsichord"

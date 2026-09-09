@@ -1,7 +1,7 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aG" = (
 /obj/item/weapon/weldingtool/experimental,
-/turf/simulated/mineral/floor/vacuum/moonbase/outdoors,
+/turf/simulated/mineral/floor/vacuum/moonbase/outdoors/ignore_cavegen,
 /area/submap/moonbase/poi/east_crater/wreck5)
 "bg" = (
 /obj/structure/table/rack/shelf/steel,
@@ -34,7 +34,7 @@
 /turf/simulated/shuttle/floor/red/airless,
 /area/submap/moonbase/poi/east_crater/wreck5)
 "jj" = (
-/turf/simulated/mineral/floor/vacuum/moonbase/outdoors,
+/turf/simulated/mineral/floor/vacuum/moonbase/outdoors/ignore_cavegen,
 /area/submap/moonbase/poi/east_crater/wreck5)
 "jv" = (
 /obj/machinery/door/firedoor/border_only,
@@ -105,7 +105,7 @@
 	dir = 4;
 	icon_state = "burst_l"
 	},
-/turf/simulated/mineral/floor/vacuum/moonbase/ignore_mapgen,
+/turf/simulated/mineral/floor/vacuum/moonbase/ignore_cavegen,
 /area/submap/moonbase/poi/east_crater/wreck5)
 "vg" = (
 /obj/item/weapon/handcuffs,
@@ -117,7 +117,7 @@
 /obj/item/weapon/material/shard{
 	icon_state = "small"
 	},
-/turf/simulated/mineral/floor/vacuum/moonbase/outdoors,
+/turf/simulated/mineral/floor/vacuum/moonbase/outdoors/ignore_cavegen,
 /area/submap/moonbase/poi/east_crater/wreck5)
 "vW" = (
 /obj/structure/grille,
@@ -211,7 +211,7 @@
 /obj/item/weapon/material/shard{
 	icon_state = "medium"
 	},
-/turf/simulated/mineral/floor/vacuum/moonbase/outdoors,
+/turf/simulated/mineral/floor/vacuum/moonbase/outdoors/ignore_cavegen,
 /area/submap/moonbase/poi/east_crater/wreck5)
 "Lq" = (
 /obj/structure/prop/machine/nt_biocan,
@@ -247,7 +247,7 @@
 /turf/simulated/shuttle/floor/airless,
 /area/submap/moonbase/poi/east_crater/wreck5)
 "NS" = (
-/turf/simulated/mineral/moonbase/ignore_mapgen,
+/turf/simulated/mineral/moonbase/ignore_cavegen,
 /area/submap/moonbase/poi/east_crater/wreck5)
 "NW" = (
 /obj/structure/frame,
@@ -264,7 +264,7 @@
 /area/submap/moonbase/poi/east_crater/wreck5)
 "Tf" = (
 /obj/item/stack/rods,
-/turf/simulated/mineral/floor/vacuum/moonbase/outdoors,
+/turf/simulated/mineral/floor/vacuum/moonbase/outdoors/ignore_cavegen,
 /area/submap/moonbase/poi/east_crater/wreck5)
 "Tl" = (
 /obj/structure/bed/chair/bay/shuttle{

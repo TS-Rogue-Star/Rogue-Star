@@ -15,7 +15,21 @@
 	return REF(src)
 
 /datum/song/proc/can_use_browser_audio()
+	if(get_active_uploaded_midi_source_song())
+		return uploaded_midi_uses_selected_instrument()
 	return !!(using_instrument?.supports_browser_audio() && length(compiled_chords))
+
+/datum/song/proc/get_browser_master_volume_multiplier()
+	if(legacy)
+		return using_instrument?.volume_multiplier || 1
+	var/list/synth_instruments = get_synth_playback_instruments()
+	var/master_multiplier = 0
+	for(var/datum/instrument/I as anything in synth_instruments)
+		if(I)
+			master_multiplier = max(master_multiplier, I.volume_multiplier || 1)
+	if(master_multiplier > 0)
+		return master_multiplier
+	return using_instrument?.volume_multiplier || 1
 
 /datum/song/proc/browser_handles_listener(mob/M)
 	return !!M?.client?.instrument_audio?.song_uses_browser(src)
@@ -32,6 +46,8 @@
 
 /datum/song/proc/listener_needs_note_fallback(mob/M)
 	if(get_browser_listener_gain(M) <= 0)
+		return FALSE
+	if(M in browser_preserved_note_listeners)
 		return FALSE
 	if(legacy)
 		return !browser_listener_blocks_legacy_fallback(M)
@@ -123,6 +139,8 @@
 	return TRUE
 
 /datum/song/proc/get_browser_timeline_offset_ds()
+	if(selected_uploaded_browser_source() && get_active_uploaded_midi_source_song() == src)
+		return 0
 	if(band_is_follower())
 		return max(0, round(band_delay_ds, get_instrument_time_step()))
 	return 0
@@ -202,8 +220,12 @@
 	return TRUE
 
 /datum/song/proc/begin_playback(mob/user, playback_start_time = world.time)
+	if(!can_begin_playback())
+		return FALSE
 	playing = TRUE
 	playback_generation++
+	uploaded_midi_ready_confirmed = FALSE
+	uploaded_midi_waiting_for_initial_ready = !!get_active_uploaded_midi_source_song()
 	browser_resync_suspended = FALSE
 	browser_preserved_note_listeners.Cut()
 	browser_playback_start_time = playback_start_time
@@ -211,6 +233,8 @@
 	configure_browser_full_timeline()
 	queue_browser_timeline_build()
 	updateDialog(user)
+	user_playing = user
+	character_memory_music_listeners.Cut() // Persistent memory system (Lira, May 2026)
 	do_hearcheck()
 	SEND_SIGNAL(parent, COMSIG_SONG_START)
 	elapsed_delay = 0
@@ -219,11 +243,13 @@
 	band_active_chord_index = 0
 	band_active_chord_started_at = 0
 	band_active_chord_duration_ds = 0
-	user_playing = user
 	last_note_fx_time = world.time - note_fx_interval_ds
 	update_browser_source_tracking()
 	sync_all_browser_listeners()
+	if(browser_listener_launch_time > world.time)
+		schedule_browser_listener_resync(browser_listener_launch_time)
 	START_PROCESSING(SSinstruments, src)
+	return TRUE
 
 /datum/song/proc/get_browser_registered_listeners()
 	var/list/listeners = browser_tracked_listeners.Copy()
@@ -240,6 +266,7 @@
 
 /datum/song/proc/queue_browser_timeline_build()
 	drop_browser_registered_listeners()
+	browser_timeline_uploaded_midi = FALSE
 	browser_timeline_json = null
 	browser_timeline_key = null
 	browser_sample_manifest.Cut()
@@ -259,6 +286,7 @@
 		return
 	browser_timeline_building = FALSE
 	if(!playing || !can_use_browser_audio() || !islist(build_result))
+		browser_timeline_uploaded_midi = FALSE
 		browser_timeline_json = null
 		browser_timeline_key = null
 		browser_sample_manifest.Cut()
@@ -271,6 +299,7 @@
 	browser_timeline_duration_ds = build_result["duration_ds"]
 	browser_timeline_json = build_result["timeline_json"]
 	browser_timeline_key = build_result["timeline_key"]
+	browser_timeline_uploaded_midi = !!build_result["uploaded_midi"]
 	if(browser_should_defer_listener_starts())
 		do_hearcheck()
 		sync_all_browser_listeners()
@@ -282,16 +311,96 @@
 	var/list/sample_manifest = list()
 	if(!can_use_browser_audio())
 		return null
-	var/list/build_result = legacy ? build_browser_timeline_legacy(sample_manifest) : build_browser_timeline_synth(sample_manifest)
+	var/using_uploaded_midi_timeline = !!get_active_uploaded_midi_source_song()
+	var/list/build_result
+	if(using_uploaded_midi_timeline)
+		build_result = build_browser_timeline_uploaded_midi(sample_manifest)
+	else
+		build_result = legacy ? build_browser_timeline_legacy(sample_manifest) : build_browser_timeline_synth(sample_manifest)
 	if(!islist(build_result))
 		return null
-	var/list/events = build_result["events"]
-	if(!length(events))
-		return null
+	var/list/payload = build_result["payload"]
+	if(!islist(payload))
+		var/list/events = build_result["events"]
+		if(!length(events))
+			return null
+		payload = list("events" = events)
+	else if(!islist(payload["events"]))
+		payload["events"] = list()
 	build_result["sample_manifest"] = sample_manifest
-	build_result["timeline_json"] = json_encode(list("events" = events))
+	build_result["timeline_json"] = json_encode(payload)
 	build_result["timeline_key"] = md5(build_result["timeline_json"])
+	build_result["uploaded_midi"] = using_uploaded_midi_timeline
 	return build_result
+
+/datum/song/proc/get_browser_initial_sample_manifest()
+	var/datum/song/midi_source = get_active_uploaded_midi_source_song()
+	if(!midi_source?.uploaded_midi_alias)
+		return browser_sample_manifest
+	var/uploaded_midi_resource = browser_sample_manifest[midi_source.uploaded_midi_alias]
+	if(!uploaded_midi_resource)
+		return browser_sample_manifest
+	return list(midi_source.uploaded_midi_alias = uploaded_midi_resource)
+
+/datum/song/proc/build_browser_timeline_uploaded_midi(list/sample_manifest)
+	var/datum/song/midi_source = get_active_uploaded_midi_source_song()
+	if(!midi_source?.uploaded_midi_alias || !midi_source?.uploaded_midi_resource)
+		return null
+	if(!uploaded_midi_uses_selected_instrument())
+		return null
+	return build_browser_timeline_uploaded_midi_synth(sample_manifest, midi_source)
+
+/datum/song/proc/build_browser_timeline_uploaded_midi_synth(list/sample_manifest, datum/song/midi_source)
+	var/list/note_map = list()
+	var/list/synth_instruments = get_synth_playback_instruments()
+	var/timeline_offset_ds = get_browser_timeline_offset_ds()
+	var/timeline_duration_ds = 0
+	if(!length(synth_instruments))
+		return null
+	sample_manifest[midi_source.uploaded_midi_alias] = midi_source.uploaded_midi_resource
+	for(var/key in key_min to key_max)
+		var/list/key_mappings = list()
+		for(var/datum/instrument/I as anything in synth_instruments)
+			var/list/note_data = browser_resolve_synth_note(key, I)
+			if(!islist(note_data))
+				continue
+			var/sample_path = note_data["sample"]
+			if(!sample_path)
+				continue
+			var/alias = instrument_audio_sample_alias(sample_path)
+			sample_manifest[alias] = sample_path
+			var/list/mapped_note = list(
+				"s" = alias,
+				"r" = round(note_data["rate"] || 1, 0.0001)
+			)
+			var/note_volume = note_data["volume_multiplier"]
+			if(isnum(note_volume) && abs(note_volume - 1) > 0.0001)
+				mapped_note["v"] = round(max(0, note_volume), 0.0001)
+			key_mappings += list(mapped_note)
+		if(length(key_mappings))
+			note_map[num2text(key)] = key_mappings
+	var/list/payload = list(
+		"engine" = "midi_timeline",
+		"events" = list(),
+		"midi_alias" = midi_source.uploaded_midi_alias,
+		"note_map" = note_map,
+		"decay_mode" = (sustain_mode == SUSTAIN_LINEAR) ? BROWSER_INSTRUMENT_DECAY_LINEAR : BROWSER_INSTRUMENT_DECAY_EXPONENTIAL,
+		"dropoff_threshold" = round(max(sustain_dropoff_volume / 100, 0), 0.0001),
+		"linear_drop_per_ds" = round(max(cached_linear_dropoff / 100, 0), 0.0001),
+		"exponential_dropoff" = round(max(cached_exponential_dropoff, 0), 0.0001)
+	)
+	var/list/enabled_channels = get_midi_playback_channel_filter_payload()
+	if(islist(enabled_channels) && length(enabled_channels))
+		payload["enabled_channels"] = enabled_channels
+	if(timeline_offset_ds > 0)
+		payload["start_offset_seconds"] = round(timeline_offset_ds / 10, 0.001)
+	if(midi_source.uploaded_midi_duration_ds > 0)
+		timeline_duration_ds = timeline_offset_ds + midi_source.uploaded_midi_duration_ds
+		payload["duration_seconds"] = round(timeline_duration_ds / 10, 0.001)
+	return list(
+		"payload" = payload,
+		"duration_ds" = timeline_duration_ds
+	)
 
 /datum/song/proc/build_browser_chord_schedule()
 	var/list/schedule = list()
@@ -359,10 +468,13 @@
 
 /datum/song/proc/build_browser_timeline_synth(list/sample_manifest)
 	var/list/schedule = build_browser_chord_schedule()
+	var/list/synth_instruments = get_synth_playback_instruments()
+	if(!length(synth_instruments))
+		return null
 	var/list/all_events = list()
 	var/time_step = get_instrument_time_step()
 	var/song_stop_ds = max(time_step, get_browser_timeline_offset_ds() + time_step)
-	var/list/held_event = null
+	var/list/held_events_by_layer = list()
 	for(var/list/entry as anything in schedule)
 		CHECK_TICK
 		var/start_ds = entry["time_ds"]
@@ -370,24 +482,28 @@
 		var/chord_duration_ds = tempodiv_to_delay(chord[length(chord)]) * time_step
 		song_stop_ds = max(song_stop_ds, start_ds + chord_duration_ds)
 		for(var/i in 1 to (length(chord) - 1))
-			CHECK_TICK
-			var/list/note_data = browser_resolve_synth_note(chord[i])
-			if(!note_data)
-				continue
-			if(full_sustain_held_note && held_event)
-				browser_begin_decay(held_event, start_ds)
-			var/alias = instrument_audio_sample_alias(note_data["sample"])
-			sample_manifest[alias] = note_data["sample"]
-			var/list/event = list(
-				"_sample" = alias,
-				"_start_ds" = start_ds,
-				"_rate" = note_data["rate"]
-			)
-			all_events += list(event)
-			if(full_sustain_held_note)
-				held_event = event
-			else
-				browser_begin_decay(event, start_ds)
+			for(var/datum/instrument/I as anything in synth_instruments)
+				CHECK_TICK
+				var/list/note_data = browser_resolve_synth_note(chord[i], I)
+				if(!note_data)
+					continue
+				var/layer_key = get_synth_playback_layer_key(I)
+				var/list/held_event = held_events_by_layer[layer_key]
+				if(full_sustain_held_note && held_event)
+					browser_begin_decay(held_event, start_ds)
+				var/alias = instrument_audio_sample_alias(note_data["sample"])
+				sample_manifest[alias] = note_data["sample"]
+				var/list/event = list(
+					"_sample" = alias,
+					"_start_ds" = start_ds,
+					"_rate" = note_data["rate"],
+					"_volume" = note_data["volume_multiplier"]
+				)
+				all_events += list(event)
+				if(full_sustain_held_note)
+					held_events_by_layer[layer_key] = event
+				else
+					browser_begin_decay(event, start_ds)
 	if(!length(all_events))
 		return null
 
@@ -400,18 +516,28 @@
 		"duration_ds" = song_stop_ds
 	)
 
-/datum/song/proc/browser_resolve_synth_note(key)
+/datum/song/proc/browser_resolve_synth_note(key, datum/instrument/instrument_override = null)
 	if(can_noteshift)
 		key = clamp(key + note_shift, key_min, key_max)
 	if(note_filter_enabled && (key < note_filter_min || key > note_filter_max))
 		return null
-	var/datum/instrument_key/K = using_instrument?.samples[num2text(key)]
+	var/datum/instrument/active_instrument = instrument_override || using_instrument
+	var/datum/instrument_key/K = active_instrument?.samples[num2text(key)]
 	if(!K?.sample)
 		return null
 	return list(
 		"sample" = "[K.sample]",
-		"rate" = K.frequency || 1
+		"rate" = K.frequency || 1,
+		"volume_multiplier" = get_browser_synth_event_volume_multiplier(active_instrument)
 	)
+
+/datum/song/proc/get_browser_synth_event_volume_multiplier(datum/instrument/instrument_override = null)
+	var/datum/instrument/active_instrument = instrument_override || using_instrument
+	var/event_multiplier = active_instrument?.volume_multiplier || 1
+	var/master_multiplier = get_browser_master_volume_multiplier()
+	if(master_multiplier <= 0)
+		return event_multiplier
+	return event_multiplier / master_multiplier
 
 /datum/song/proc/browser_begin_decay(list/event, start_ds)
 	if(isnull(event["_decay_ds"]))
@@ -462,14 +588,30 @@
 			"r" = round(event["_rate"], 0.0001),
 			"e" = round(event["_stop_ds"] / 10, 0.001)
 		)
+		var/event_volume = event["_volume"]
 		var/decay_ds = event["_decay_ds"]
 		var/end_gain = event["_end_gain"]
+		if(isnum(event_volume) && abs(event_volume - 1) > 0.0001)
+			export_event["v"] = round(max(0, event_volume), 0.0001)
 		if(isnum(decay_ds) && decay_ds < event["_stop_ds"] && isnum(end_gain) && end_gain < 0.9999)
 			export_event["d"] = round(decay_ds / 10, 0.001)
 			export_event["m"] = event["_mode"]
 			export_event["g"] = round(max(0.0001, end_gain), 0.0001)
 		exported += list(export_event)
 	return exported
+
+/datum/song/proc/browser_timeline_ready(timeline_key, duration_seconds)
+	var/expected_key = browser_timeline_key || md5(browser_timeline_json || "")
+	if(!timeline_key || timeline_key != expected_key)
+		return FALSE
+	if(isnum(duration_seconds) && duration_seconds > 0)
+		var/duration_ds = max(1, round(duration_seconds * 10, 0.1))
+		browser_timeline_duration_ds = duration_ds
+		if(get_active_uploaded_midi_source_song() == src)
+			uploaded_midi_duration_ds = duration_ds
+	if(playing && browser_timeline_duration_ds && browser_playback_start_time && world.time >= (browser_playback_start_time + browser_timeline_duration_ds))
+		stop_playing(TRUE)
+	return TRUE
 
 /datum/song/proc/get_browser_listener_targets()
 	var/list/targets = hearing_mobs?.Copy() || list()
@@ -542,7 +684,7 @@
 	var/turf/target = get_turf(M)
 	if(!source || !target || source.z != target.z)
 		return 0
-	var/adjusted_volume = volume * using_instrument.volume_multiplier
+	var/adjusted_volume = volume * get_browser_master_volume_multiplier()
 	adjusted_volume *= M.client.get_preference_volume_channel(VOLUME_CHANNEL_INSTRUMENTS)
 	adjusted_volume *= M.client.get_preference_volume_channel(VOLUME_CHANNEL_MASTER)
 	adjusted_volume -= max(get_dist(target, source) - world.view, 0) * 2
@@ -592,6 +734,24 @@
 	browser_active_listeners -= M.client
 	return manager.prime_song(src)
 
+/datum/song/proc/refresh_uploaded_midi_initial_launch_anchor()
+	var/datum/song/active_uploaded_midi_source = get_active_uploaded_midi_source_song()
+	if(!playing || !uploaded_midi_waiting_for_initial_ready || !active_uploaded_midi_source)
+		return FALSE
+	if(!uploaded_midi_ready_confirmed && !uploaded_midi_browser_ready())
+		return FALSE
+	var/current_launch_time = max(browser_playback_start_time, browser_listener_launch_time)
+	if(world.time < current_launch_time)
+		uploaded_midi_waiting_for_initial_ready = FALSE
+		return FALSE
+	var/relaunch_time = world.time + get_instrument_time_step()
+	if(active_uploaded_midi_source == src)
+		browser_playback_start_time = relaunch_time
+	browser_listener_launch_time = relaunch_time
+	uploaded_midi_waiting_for_initial_ready = FALSE
+	schedule_browser_listener_resync(relaunch_time)
+	return TRUE
+
 /datum/song/proc/sync_browser_listener(mob/M, list/listener_targets = null)
 	var/client/C = M?.client
 	if(!C)
@@ -613,13 +773,14 @@
 	if(gain <= 0)
 		browser_stop_listener(M)
 		return FALSE
+	refresh_uploaded_midi_initial_launch_anchor()
 	var/listener_launch_time = max(browser_playback_start_time, browser_listener_launch_time)
 	if(world.time < listener_launch_time)
 		prime_browser_listener(M, manager, listener_targets)
 		return FALSE
 	var/elapsed_seconds = max(0, (world.time - browser_playback_start_time) / 10)
 	if(browser_timeline_duration_ds && elapsed_seconds > ((browser_timeline_duration_ds / 10) + 0.05))
-		browser_stop_listener(M)
+		browser_stop_listener(M, FALSE, TRUE)
 		return FALSE
 	register_browser_listener_tracking(M)
 	var/list/position = get_browser_listener_position(M)

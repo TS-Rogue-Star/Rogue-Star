@@ -15,7 +15,7 @@
 	var/custom_only = TRUE			// Trait only available for custom species
 	var/varchange_type = TRAIT_VARCHANGE_ALWAYS_OVERRIDE	//Mostly used for non-custom species.
 	var/has_preferences //if set, should be a list of the preferences for this trait in the format: list("identifier/name of var to edit" = list(typeofpref, "text to display in prefs", TRAIT_NO_VAREDIT_TARGET/TRAIT_VAREDIT_TARGET_SPECIES/etc, (optional: default value)), etc) typeofpref should follow the defines in _traits.dm (eg. TRAIT_PREF_TYPE_BOOLEAN)
-
+	var/list/list_options	//RS ADD - If using TRAIT_PREF_TYPE_LIST, it will look for what is in this var for options
 //Proc can be overridden lower to include special changes, make sure to call up though for the vars changes
 /datum/trait/proc/apply(var/datum/species/S,var/mob/living/carbon/human/H, var/trait_prefs = null) //VOREStation edit: trait_prefs is a list in the format: list(identifier = value, etc)
 	ASSERT(S)
@@ -76,3 +76,15 @@
 		if(TRAIT_PREF_TYPE_COLOR) //color
 			return "#ffffff"
 	return
+
+/mob/living/carbon/human/proc/get_trait(var/ourtrait)
+	if(!ourtrait)
+		return FALSE
+	if(!species)
+		return FALSE
+	if(ourtrait in species.traits)
+		var/list/ourlist = species.traits[ourtrait]
+		if(ourlist)
+			return ourlist
+		return TRUE
+	return FALSE

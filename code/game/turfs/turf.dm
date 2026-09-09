@@ -260,6 +260,11 @@
 			. += T
 
 /turf/proc/Distance(turf/t)
+	// RS EDIT
+	if(!t)
+		return -1
+	if(z != t.z)
+		return 2
 	if(get_dist(src,t) == 1)
 		var/cost = (src.x - t.x) * (src.x - t.x) + (src.y - t.y) * (src.y - t.y)
 		cost *= (pathweight+t.pathweight)/2

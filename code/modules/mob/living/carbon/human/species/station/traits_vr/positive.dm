@@ -375,7 +375,8 @@
 	name = "Chameleon Blend In"
 	desc = "Allows one to blend in to their environment while immobile, becoming very difficult to see!"
 	cost = 1
-	custom_only = TRUE
+	custom_only = FALSE
+	allowed_species = list(SPECIES_CUSTOM,SPECIES_PROMETHEAN,SPECIES_PROTEAN,SPECIES_UNATHI)
 
 /datum/trait/positive/blend_in/apply(var/datum/species/S,var/mob/living/carbon/human/H)
 	..()

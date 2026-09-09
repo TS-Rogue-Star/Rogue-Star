@@ -4309,7 +4309,10 @@
 "Aq" = (
 /obj/structure/closet/cabinet,
 /obj/item/weapon/moneybag,
-/obj/item/weapon/simple_key/dungeon,
+/obj/item/key/dungeon,
+/obj/component_adder/key{
+	id = "dungeon"
+	},
 /turf/simulated/floor/wood/alt,
 /area/redgate/fantasy/house)
 "As" = (

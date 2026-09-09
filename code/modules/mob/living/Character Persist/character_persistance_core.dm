@@ -2,6 +2,7 @@
 
 /mob
 	var/datum/etching/etching
+	var/datum/character_memory/character_memory // Persistent memory system (Lira, May 2026)
 	var/admin_magic = FALSE
 
 /mob/living/Initialize()
@@ -12,12 +13,17 @@
 	. = ..()
 	if(!etching)
 		return
-	if(etching.save_path)	//We already got loaded
-		return
-	log_debug("<span class = 'danger'>Etching started: Registered to [ckey]</span>")
-	etching.load(client.prefs)
+	if(!etching.save_path)
+		log_debug("<span class = 'danger'>Etching started: Registered to [ckey]</span>")
+		etching.load(client.prefs)
+	// Persistent memory system (Lira, May 2026)
+	if(character_memory && !character_memory.save_path)
+		character_memory.load(client.prefs)
 
 /mob/living/Destroy()
+	// Persistent memory system (Lira, May 2026)
+	if(character_memory && istype(character_memory, /datum/character_memory))
+		character_memory.save(TRUE)
 	if(etching && istype(etching, /datum/etching))
 		etching.save(TRUE)
 	..()
@@ -26,10 +32,14 @@
 	. = ..()
 	if(etching)
 		etching.process_etching()
+	// Persistent memory system (Lira, May 2026)
+	if(character_memory)
+		character_memory.process_memory()
 
 /mob/living/proc/init_etching()
 	if((ishuman(src) && !(istype(src, /mob/living/carbon/human/dummy))) || isanimal(src))
 		etching = new /datum/etching(src)
+		character_memory = new /datum/character_memory(src) // Persistent memory system (Lira, May 2026)
 
 /mob/living/proc/update_etching(mode,value)
 	if(etching)
@@ -58,12 +68,45 @@
 	if(etching)
 		etching.report_status()
 
+// Character Designer - Identity Tab (Lira, September 2026)
+/mob
+	var/character_persist_rename_in_progress = FALSE
+	var/list/character_persist_rename_queue
+
+// Character Designer - Identity Tab (Lira, September 2026)
+/mob/proc/queue_etching_rename(var/old_name,var/new_name)
+	if(!istext(old_name) || !length(old_name) || !istext(new_name) || !length(new_name) || old_name == new_name)
+		return FALSE
+	if(!islist(character_persist_rename_queue))
+		character_persist_rename_queue = list()
+	character_persist_rename_queue += list(list(
+		"old_name" = old_name,
+		"new_name" = new_name
+	))
+	if(character_persist_rename_in_progress)
+		return TRUE
+
+	character_persist_rename_in_progress = TRUE
+	try
+		while(LAZYLEN(character_persist_rename_queue))
+			var/list/rename_request = character_persist_rename_queue[1]
+			character_persist_rename_queue.Cut(1, 2)
+			etching_rename(rename_request["old_name"], rename_request["new_name"])
+	catch(var/exception/error)
+		character_persist_rename_queue = null
+		character_persist_rename_in_progress = FALSE
+		throw error
+	character_persist_rename_queue = null
+	character_persist_rename_in_progress = FALSE
+	return TRUE
+
 /mob/proc/etching_rename(var/old_name,var/new_name)
 	var/old_path = "data/player_saves/[copytext(ckey, 1, 2)]/[ckey]/magic/[old_name]-etching.json"
 	if(!fexists(old_path))
 		return
 	var/name_option = "Transfer to [new_name]"
-	if(tgui_alert(src,"There is player persistent data associated with [old_name]. Do you want the charater persist data to be transferred to [new_name]? If so, the data will become available to [new_name], and become unavailable to [old_name]. Also, if there is any data associated with [new_name], it will be overwritten.","CHARACTER PERSIST RENAME",list(name_option,"Do not")) != name_option)
+	var/rename_prompt = "There is player persistent data associated with [old_name]. Do you want the charater persist data to be transferred to [new_name]? If so, the data will become available to [new_name], and become unavailable to [old_name]. Also, if there is any data associated with [new_name], it will be overwritten."
+	if(tgui_alert(src, rename_prompt, "CHARACTER PERSIST RENAME", list(name_option,"Do not"), minimum_width = 450, minimum_height = 260) != name_option)
 		return
 	var/list/load = json_decode(file2text(old_path))
 
@@ -90,6 +133,66 @@
 	if(fexists(old_path))
 		log_debug("Saving: [old_path] failed to delete on rename function")
 		return
+
+	// Persistent memory system (Lira, May 2026)
+	var/old_memory_path = "data/player_saves/[copytext(ckey, 1, 2)]/[ckey]/magic/[old_name]-memory.db"
+	var/new_memory_path = "data/player_saves/[copytext(ckey, 1, 2)]/[ckey]/magic/[new_name]-memory.db"
+	var/datum/character_memory/active_memory
+	var/old_memory_save_path
+	if(isliving(src))
+		var/mob/living/L = src
+		if(L.real_name == old_name && L.character_memory)
+			active_memory = L.character_memory
+			old_memory_save_path = active_memory.save_path
+			active_memory.save(force = TRUE)
+			if(active_memory.memory_db)
+				active_memory.execute_database_update("PRAGMA wal_checkpoint(TRUNCATE)", "checkpoint character memory database before rename")
+			active_memory.memory_db = null
+	if(fexists(old_memory_path))
+		if(!rename_character_memory_database(old_memory_path, new_memory_path))
+			if(active_memory)
+				active_memory.save_path = old_memory_save_path
+				active_memory.memory_db = null
+			return
+	if(active_memory)
+		active_memory.save_path = new_memory_path
+
+// Persistent memory system (Lira, May 2026)
+/proc/rename_character_memory_database(var/old_memory_path, var/new_memory_path)
+	var/list/database_suffixes = list("", "-wal", "-shm")
+	if(!delete_character_memory_database_files(new_memory_path, "overwrite"))
+		return FALSE
+
+	for(var/suffix in database_suffixes)
+		var/old_file_path = "[old_memory_path][suffix]"
+		if(!fexists(old_file_path))
+			continue
+		var/new_file_path = "[new_memory_path][suffix]"
+		if(!fcopy(old_file_path, new_file_path))
+			log_debug("Saving: [new_file_path] failed database copy on rename function")
+			delete_character_memory_database_files(new_memory_path, "clean up")
+			return FALSE
+		if(!fexists(new_file_path))
+			log_debug("Saving: [new_file_path] failed file write on rename function")
+			delete_character_memory_database_files(new_memory_path, "clean up")
+			return FALSE
+
+	if(!delete_character_memory_database_files(old_memory_path, "delete"))
+		return FALSE
+	return TRUE
+
+// Persistent memory system (Lira, May 2026)
+/proc/delete_character_memory_database_files(var/memory_path, var/action)
+	var/list/database_suffixes = list("", "-wal", "-shm")
+	for(var/suffix in database_suffixes)
+		var/file_path = "[memory_path][suffix]"
+		if(!fexists(file_path))
+			continue
+		fdel(file_path)
+		if(fexists(file_path))
+			log_debug("Saving: [file_path] failed to [action] on rename function")
+			return FALSE
+	return TRUE
 
 /client
 	var/datum/etching/etching
@@ -324,6 +427,7 @@
 	event_character = TRUE
 	get_save_path()
 	savable = FALSE
+	ourmob?.character_memory?.enable_event_character() // Persistent memory system (Lira, May 2026)
 
 /client/view_var_Topic(href, href_list, hsrc)
 	. = ..()

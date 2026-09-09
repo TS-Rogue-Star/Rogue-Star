@@ -15,6 +15,9 @@
 	ignore_cavegen = 1
 	ignore_oregen  = 1
 
+/turf/simulated/mineral/moonbase/ignore_cavegen
+	ignore_cavegen = 1
+
 //Air-y moonrock walls
 /turf/simulated/mineral/cave/moonbase
 	name = "Moonrock"
@@ -44,6 +47,8 @@
 	ignore_mapgen = 1
 	ignore_cavegen = 1
 	ignore_oregen  = 1
+/turf/simulated/mineral/floor/vacuum/moonbase/ignore_cavegen
+	ignore_cavegen = 1
 /turf/simulated/floor/airless/moonbaseplating
 	icon = 'maps/sirius_point/sp_asteroid.dmi'
 	icon_state = "asteroidfloor"
@@ -74,6 +79,9 @@
 //outdoors versions of the above and some existing turfs
 /turf/simulated/mineral/floor/vacuum/moonbase/outdoors
 	outdoors = 1
+/turf/simulated/mineral/floor/vacuum/moonbase/outdoors/ignore_cavegen
+	outdoors = 1
+	ignore_cavegen = 1
 /turf/simulated/floor/airless/moonbaseplating/outdoors
 	outdoors = 1
 /turf/simulated/floor/airless/outdoors

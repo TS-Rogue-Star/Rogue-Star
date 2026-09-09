@@ -405,6 +405,11 @@
 
 	return apply_sprite_selection(selection, consume_try, announce, lock_on_exhaust)
 
+// RS Add: Robot Glamour fix (Lira, June 2026)
+/mob/living/silicon/robot/proc/apply_sprite_equipment_glamour()
+	if(sprite_datum && module)
+		sprite_datum.do_equipment_glamour(module)
+
 // RS Add End
 
 // RS Edit: Add borg selector TGUI (Lira, October 2025)
@@ -453,6 +458,7 @@
 		icon_selection_tries = 0
 		if(lock_on_exhaust)
 			icon_selected = TRUE
+			apply_sprite_equipment_glamour() // RS Add: Robot Glamour fix (Lira, June 2026)
 			if(robot_species)
 				sprite_type = robot_species
 			if(hands)
@@ -1404,6 +1410,7 @@
 		apply_sprite_selection(sprite_datum, FALSE, FALSE)
 		icon_selected = TRUE
 		icon_selection_tries = 0
+		apply_sprite_equipment_glamour() // RS Add: Robot Glamour fix (Lira, June 2026)
 		if(!istype(src,/mob/living/silicon/robot/drone) && sprite_datum)
 			sprite_type = sprite_datum.name
 		if(hands)

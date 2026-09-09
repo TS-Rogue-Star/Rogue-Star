@@ -17,12 +17,48 @@
 	var/temp = null
 	var/max_uses = 5
 	var/op = 1
+	var/universal = FALSE // RS Add: Universal wizard (Lira, April 2026)
+	var/mob/living/carbon/human/owner = null // RS Add: Universal wizard (Lira, April 2026)
+
+// RS Edit: Universal wizard (Lira, April 2026)
+/obj/item/weapon/spellbook/proc/can_use_spellbook(var/mob/user)
+	if(!user)
+		return FALSE
+	if(!universal)
+		if(user.mind && !wizards.is_antagonist(user.mind))
+			to_chat(user, "<span class='warning'>You stare at the book but cannot make sense of the markings!</span>")
+			return FALSE
+		return TRUE
+
+	if(!istype(user, /mob/living/carbon/human))
+		to_chat(user, "<span class='warning'>You stare at the book but cannot make sense of the markings!</span>")
+		return FALSE
+	if(owner && user != owner)
+		to_chat(user, "<span class='warning'>\The [src] refuses to open for anyone but its owner.</span>")
+		return FALSE
+	if(!owner)
+		owner = user
+	return TRUE
+
+// RS Add: Universal wizard (Lira, April 2026)
+/obj/item/weapon/spellbook/universal
+	name = "universal spell book"
+	desc = "The legendary book of spells, copied and annotated for use by the magically uninitiated. Under the cover, <i>'Export Edition'</i> is printed."
+	universal = TRUE
+
+// RS Add: Soulstone book (Lira, April 2026)
+/obj/item/weapon/spellbook/proc/grant_soulstone_artificer(var/mob/user)
+	if(!user)
+		return FALSE
+
+	new /obj/item/weapon/storage/belt/soulstone/full(get_turf(user))
+	user.add_spell(new/spell/aoe_turf/conjure/construct)
+	return TRUE
 
 /obj/item/weapon/spellbook/attack_self(mob/user = usr)
 	if(!user)
 		return
-	if((user.mind && !wizards.is_antagonist(user.mind)))
-		to_chat(usr, "<span class='warning'>You stare at the book but cannot make sense of the markings!</span>")
+	if(!can_use_spellbook(user)) // RS Edit: Universal wizard (Lira, April 2026)
 		return
 
 	user.set_machine(src)
@@ -92,16 +128,20 @@
 	onclose(user, "radio")
 	return
 
+// RS Edit: Universal wizard and animation staff (Lira, April 2026)
 /obj/item/weapon/spellbook/Topic(href, href_list)
 	..()
 	var/mob/living/carbon/human/H = usr
 
-	if(H.stat || H.restrained())
-		return
 	if(!istype(H, /mob/living/carbon/human))
 		return 1
+	if(H.stat || H.restrained())
+		return
 
-	if(H.mind.special_role == "apprentice")
+	if(!can_use_spellbook(H))
+		return
+
+	if(!universal && H.mind && H.mind.special_role == "apprentice")
 		temp = "If you got caught sneaking a peak from your teacher's spellbook, you'd likely be expelled from the Wizard Academy. Better not."
 		return
 
@@ -124,7 +164,7 @@
 				uses--
 			/*
 			*/
-				var/list/available_spells = list(magicmissile = "Magic Missile", fireball = "Fireball", disabletech = "Disable Tech", smoke = "Smoke", blind = "Blind", subjugation = "Subjugation", mindswap = "Mind Transfer", forcewall = "Forcewall", blink = "Blink", teleport = "Teleport", mutate = "Mutate", etherealjaunt = "Ethereal Jaunt", knock = "Knock", horseman = "Curse of the Horseman", staffchange = "Staff of Change", mentalfocus = "Mental Focus", soulstone = "Six Soul Stone Shards and the spell Artificer", armor = "Mastercrafted Armor Set", staffanimate = "Staff of Animation", noclothes = "No Clothes")
+				var/list/available_spells = list(magicmissile = "Magic Missile", fireball = "Fireball", disabletech = "Disable Tech", smoke = "Smoke", blind = "Blind", subjugation = "Subjugation", mindswap = "Mind Transfer", forcewall = "Forcewall", blink = "Blink", teleport = "Teleport", mutate = "Mutate", etherealjaunt = "Ethereal Jaunt", knock = "Knock", horseman = "Curse of the Horseman", staffchange = "Staff of Change", mentalfocus = "Mental Focus", soulstone = "Six Soul Stone Shards and the spell Artificer", armor = "Mastercrafted Armor Set", staffanimation = "Staff of Animation", noclothes = "No Clothes")
 				var/already_knows = 0
 				for(var/spell/aspell in H.spell_list)
 					if(available_spells[href_list["spell_choice"]] == initial(aspell.name))
@@ -214,13 +254,13 @@
 //							temp = "You have learned curse of the horseman."
 						if("mentalfocus")
 							feedback_add_details("wizard_spell_learned","MF") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
-							new /obj/item/weapon/gun/energy/staff/focus(get_turf(H))
+							var/focus_type = universal ? /obj/item/weapon/gun/energy/staff/focus/universal : /obj/item/weapon/gun/energy/staff/focus
+							new focus_type(get_turf(H))
 							temp = "An artefact that channels the will of the user into destructive bolts of force."
 							max_uses--
 						if("soulstone")
 							feedback_add_details("wizard_spell_learned","SS") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
-							new /obj/item/weapon/storage/belt/soulstone/full(get_turf(H))
-							H.add_spell(new/spell/aoe_turf/conjure/construct)
+							grant_soulstone_artificer(H) // RS Edit: Soulstone book (Lira, April 2026)
 							temp = "You have purchased a belt full of soulstones and have learned the artificer spell."
 							max_uses--
 						if("armor")
@@ -231,9 +271,16 @@
 							new /obj/item/clothing/head/helmet/space/void/wizard(get_turf(H))
 							temp = "You have purchased a suit of wizard armor."
 							max_uses--
+						if("staffanimation")
+							feedback_add_details("wizard_spell_learned","SA") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
+							var/staff_type = universal ? /obj/item/weapon/gun/energy/staff/animate/universal : /obj/item/weapon/gun/energy/staff/animate
+							new staff_type(get_turf(H))
+							temp = "You have purchased a staff of animation."
+							max_uses--
 						if("scrying")
 							feedback_add_details("wizard_spell_learned","SO") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
-							new /obj/item/weapon/scrying(get_turf(H))
+							var/scrying_type = universal ? /obj/item/weapon/scrying/universal : /obj/item/weapon/scrying
+							new scrying_type(get_turf(H))
 							if (!(XRAY in H.mutations))
 								H.mutations.Add(XRAY)
 								H.sight |= (SEE_MOBS|SEE_OBJS|SEE_TURFS)
@@ -245,7 +292,7 @@
 		else
 			if(href_list["temp"])
 				temp = null
-		attack_self()
+		attack_self(H)
 
 	return
 
@@ -264,20 +311,27 @@
 	..()
 	name += spellname
 
-/obj/item/weapon/spellbook/oneuse/attack_self(mob/user as mob)
-	var/spell/S = new spell(user)
+// RS Edit: Soulstone book (Lira, April 2026)
+/obj/item/weapon/spellbook/oneuse/proc/user_already_knows_spell(mob/user as mob)
 	for(var/spell/knownspell in user.spell_list)
-		if(knownspell.type == S.type)
+		if(knownspell.type == spell)
 			if(user.mind)
 				// TODO: Update to new antagonist system.
 				if(user.mind.special_role == "apprentice" || user.mind.special_role == "Wizard")
 					to_chat(user, "<span class='notice'>You're already far more versed in this spell than this flimsy how-to book can provide.</span>")
 				else
 					to_chat(user, "<span class='notice'>You've already read this one.</span>")
-			return
+			return TRUE
+	return FALSE
+
+// RS Edit: Soulstone book (Lira, April 2026)
+/obj/item/weapon/spellbook/oneuse/attack_self(mob/user as mob)
+	if(user_already_knows_spell(user))
+		return
 	if(used)
 		recoil(user)
 	else
+		var/spell/S = new spell(user)
 		user.add_spell(S)
 		to_chat(user, "<span class='notice'>you rapidly read through the arcane book. Suddenly you realize you understand [spellname]!</span>")
 		user.attack_log += text("\[[time_stamp()]\] <font color='orange'>[user.real_name] ([user.ckey]) learned the spell [spellname] ([S]).</font>")
@@ -292,6 +346,27 @@
 
 /obj/item/weapon/spellbook/oneuse/attackby()
 	return
+
+// RS Add: Soulstone book (Lira, April 2026)
+/obj/item/weapon/spellbook/oneuse/soulstone
+	spell = /spell/aoe_turf/conjure/construct
+	spellname = "soulstone artificer"
+	desc = "This book's margins are covered in diagrams of spirit shards and unfinished construct shells."
+
+// RS Add: Soulstone book (Lira, April 2026)
+/obj/item/weapon/spellbook/oneuse/soulstone/attack_self(mob/user as mob)
+	if(!user)
+		return
+	if(user_already_knows_spell(user))
+		return
+	if(used)
+		recoil(user)
+		return
+
+	grant_soulstone_artificer(user)
+	to_chat(user, "<span class='notice'>You rapidly read through the arcane book. A belt of soul stone shards appears nearby, and you understand the Artificer spell!</span>")
+	user.attack_log += text("\[[time_stamp()]\] <font color='orange'>[user.real_name] ([user.ckey]) used [src] to gain soulstones and learn Artificer.</font>")
+	onlearned(user)
 
 /obj/item/weapon/spellbook/oneuse/fireball
 	spell = /spell/targeted/projectile/dumbfire/fireball

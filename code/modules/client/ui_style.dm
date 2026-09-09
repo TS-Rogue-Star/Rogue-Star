@@ -34,6 +34,87 @@ var/global/list/all_tooltip_styles = list(
 		return all_ui_styles[ui_style]
 	return all_ui_styles["White"]
 
+// RS Add: Preference settings panel (Lira, July 2026)
+/mob/proc/get_ui_style_icon_for_mob(var/ui_style)
+	if(isrobot(src))
+		if(ui_style in all_ui_styles_robot)
+			return all_ui_styles_robot[ui_style]
+		return all_ui_styles_robot["White"]
+
+	return ui_style2icon(ui_style)
+
+// RS Add: Preference settings panel (Lira, July 2026)
+/mob/proc/apply_ui_preferences_to_hud()
+	if(!client?.prefs)
+		return FALSE
+
+	return apply_ui_style_to_hud(client.prefs.UI_style, client.prefs.UI_style_color, client.prefs.UI_style_alpha)
+
+// RS Add: Preference settings panel (Lira, July 2026)
+/mob/proc/apply_ui_style_to_hud(var/ui_style, var/ui_color, var/ui_alpha)
+	if(!hud_used)
+		return FALSE
+	if(!ishuman(src) && !isrobot(src))
+		return FALSE
+
+	var/icon/new_ui_style = get_ui_style_icon_for_mob(ui_style)
+	if(!new_ui_style)
+		return FALSE
+
+	var/icon/old_ui_style = hud_used.ui_style
+	var/list/new_ui_states = icon_states(new_ui_style)
+	hud_used.ui_style = new_ui_style
+	hud_used.ui_color = ui_color
+	hud_used.ui_alpha = ui_alpha
+
+	var/list/screen_objects = list()
+	if(hud_used.adding)
+		screen_objects |= hud_used.adding
+	if(hud_used.other)
+		screen_objects |= hud_used.other
+	if(hud_used.other_important)
+		screen_objects |= hud_used.other_important
+	if(hud_used.hotkeybuttons)
+		screen_objects |= hud_used.hotkeybuttons
+	if(zone_sel)
+		screen_objects |= zone_sel
+	if(gun_setting_icon)
+		screen_objects |= gun_setting_icon
+	if(item_use_icon)
+		screen_objects |= item_use_icon
+	if(gun_move_icon)
+		screen_objects |= gun_move_icon
+	if(radio_use_icon)
+		screen_objects |= radio_use_icon
+	if(healths)
+		screen_objects |= healths
+	if(internals)
+		screen_objects |= internals
+	if(pullin)
+		screen_objects |= pullin
+	if(throw_icon)
+		screen_objects |= throw_icon
+	if(hands)
+		screen_objects |= hands
+
+	var/list/intent_names = list(I_HELP, I_HURT, I_DISARM, I_GRAB)
+	for(var/obj/screen/screen_object in screen_objects)
+		if(screen_object.name in intent_names)
+			continue
+		if(screen_object.icon != old_ui_style)
+			continue
+		if(screen_object.icon_state && !(screen_object.icon_state in new_ui_states))
+			continue
+		screen_object.icon = new_ui_style
+		screen_object.color = ui_color
+		screen_object.alpha = ui_alpha
+
+	if(zone_sel)
+		zone_sel.cut_overlays()
+		zone_sel.update_icon()
+
+	return TRUE
+
 
 /client/verb/change_ui()
 	set name = "Change UI"
@@ -54,24 +135,7 @@ var/global/list/all_tooltip_styles = list(
 	var/UI_style_color_new = input(usr, "Choose your UI color. Dark colors are not recommended!") as color|null
 	if(!UI_style_color_new) return
 
-	//update UI
-	var/list/icons = usr.hud_used.adding + usr.hud_used.other + usr.hud_used.hotkeybuttons
-	icons.Add(usr.zone_sel)
-	icons.Add(usr.gun_setting_icon)
-	icons.Add(usr.item_use_icon)
-	icons.Add(usr.gun_move_icon)
-	icons.Add(usr.radio_use_icon)
-
-	var/icon/ic = all_ui_styles[UI_style_new]
-	if(isrobot(usr))
-		ic = all_ui_styles_robot[UI_style_new]
-
-	for(var/obj/screen/I in icons)
-		if(I.name in list(I_HELP, I_HURT, I_DISARM, I_GRAB)) continue
-		I.icon = ic
-		I.color = UI_style_color_new
-		I.alpha = UI_style_alpha_new
-
+	usr.apply_ui_style_to_hud(UI_style_new, UI_style_color_new, UI_style_alpha_new) // RS Edit: Preference settings panel (Lira, July 2026)
 
 	if(tgui_alert(usr, "Like it? Save changes?","Save?",list("Yes", "No")) == "Yes")
 		prefs.UI_style = UI_style_new

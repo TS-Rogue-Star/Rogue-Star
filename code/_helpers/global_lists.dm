@@ -63,7 +63,7 @@ GLOBAL_LIST_INIT(custom_species_bases, new) // Species that can be used for a Cu
 var/datum/category_collection/underwear/global_underwear = new()
 
 	//Backpacks
-var/global/list/backbaglist = list("Nothing", "Backpack", "Satchel", "Satchel Alt", "Messenger Bag", "Sports Bag", "Strapless Satchel") //VOREStation edit
+var/global/list/backbaglist = list("Nothing", "Backpack", "Satchel", "Satchel Alt", "Messenger Bag", "Sports Bag", "Strapless Satchel", "R.I.G. module") //VOREStation edit //RS Add, Rig bag Sari Bork 5/20/2026
 var/global/list/pdachoicelist = list("Default", "Slim", "Old", "Rugged", "Holographic", "Wrist-Bound", "Slider")
 var/global/list/exclude_jobs = list(/datum/job/ai,/datum/job/cyborg)
 
@@ -115,15 +115,24 @@ var/global/list/string_slot_flags = list(
 )
 
 GLOBAL_LIST_EMPTY(mannequins)
-/proc/get_mannequin(var/ckey = "NULL")
+
+// RS Edit: Character Designer - Species and Prosthetics (Lira, August 2026)
+/proc/get_mannequin(var/ckey = "NULL", var/mannequin_type = /mob/living/carbon/human/dummy/mannequin)
+	if(!ispath(mannequin_type, /mob/living/carbon/human/dummy/mannequin))
+		mannequin_type = /mob/living/carbon/human/dummy/mannequin
 	var/mob/living/carbon/human/dummy/mannequin/M = GLOB.mannequins[ckey]
-	if(!istype(M))
-		GLOB.mannequins[ckey] = new /mob/living/carbon/human/dummy/mannequin(null)
-		M = GLOB.mannequins[ckey]
+	if(!istype(M, mannequin_type))
+		del_mannequin(ckey)
+		M = new mannequin_type(null)
+		GLOB.mannequins[ckey] = M
 	return M
 
+// RS Edit: Custom Marking Clean-Up (Lira, April 2026)
 /proc/del_mannequin(var/ckey = "NULL")
-	GLOB.mannequins-= ckey
+	var/mob/living/carbon/human/dummy/mannequin/M = GLOB.mannequins[ckey]
+	GLOB.mannequins -= ckey
+	if(istype(M) && !QDELETED(M))
+		qdel(M)
 
 //////////////////////////
 /////Initial Building/////

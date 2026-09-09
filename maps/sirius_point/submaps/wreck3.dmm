@@ -33,7 +33,7 @@
 /turf/simulated/shuttle/floor/yellow/airless,
 /area/submap/moonbase/poi/east_crater/wreck3)
 "fI" = (
-/turf/simulated/mineral/floor/vacuum/moonbase/ignore_mapgen,
+/turf/simulated/mineral/floor/vacuum/moonbase/ignore_cavegen,
 /area/submap/moonbase/poi/east_crater/wreck3)
 "gJ" = (
 /obj/structure/bed/chair/sofa/corp{
@@ -52,7 +52,7 @@
 /area/submap/moonbase/poi/east_crater/wreck3)
 "hy" = (
 /obj/structure/shuttle/engine/propulsion,
-/turf/simulated/mineral/floor/vacuum/moonbase/outdoors,
+/turf/simulated/mineral/floor/vacuum/moonbase/outdoors/ignore_cavegen,
 /area/submap/moonbase/poi/east_crater/wreck3)
 "hV" = (
 /turf/simulated/shuttle/floor/airless,
@@ -136,11 +136,11 @@
 /area/submap/moonbase/poi/east_crater/wreck3)
 "td" = (
 /obj/structure/shuttle/engine/propulsion,
-/turf/simulated/mineral/floor/vacuum/moonbase/ignore_mapgen,
+/turf/simulated/mineral/floor/vacuum/moonbase/ignore_cavegen,
 /area/submap/moonbase/poi/east_crater/wreck3)
 "ui" = (
 /obj/structure/prop/rock/crystal,
-/turf/simulated/mineral/floor/vacuum/moonbase/outdoors,
+/turf/simulated/mineral/floor/vacuum/moonbase/outdoors/ignore_cavegen,
 /area/submap/moonbase/poi/east_crater/wreck3)
 "uq" = (
 /obj/structure/bed/double,
@@ -183,14 +183,14 @@
 /area/submap/moonbase/poi/east_crater/wreck3)
 "AP" = (
 /obj/item/stack/rods,
-/turf/simulated/mineral/floor/vacuum/moonbase/outdoors,
+/turf/simulated/mineral/floor/vacuum/moonbase/outdoors/ignore_cavegen,
 /area/submap/moonbase/poi/east_crater/wreck3)
 "Bd" = (
 /obj/structure/table/woodentable,
 /turf/simulated/floor/wood/airless,
 /area/submap/moonbase/poi/east_crater/wreck3)
 "Cx" = (
-/turf/simulated/mineral/moonbase/ignore_mapgen,
+/turf/simulated/mineral/moonbase/ignore_cavegen,
 /area/submap/moonbase/poi/east_crater/wreck3)
 "Cy" = (
 /obj/machinery/light{
@@ -214,7 +214,7 @@
 /area/submap/moonbase/poi/east_crater/wreck3)
 "FF" = (
 /obj/item/stack/rods,
-/turf/simulated/mineral/floor/vacuum/moonbase/ignore_mapgen,
+/turf/simulated/mineral/floor/vacuum/moonbase/ignore_cavegen,
 /area/submap/moonbase/poi/east_crater/wreck3)
 "GQ" = (
 /obj/structure/table/woodentable,
@@ -273,7 +273,7 @@
 /turf/simulated/floor/tiled/steel_ridged,
 /area/submap/moonbase/poi/east_crater/wreck3)
 "OY" = (
-/turf/simulated/mineral/floor/vacuum/moonbase/outdoors,
+/turf/simulated/mineral/floor/vacuum/moonbase/outdoors/ignore_cavegen,
 /area/submap/moonbase/poi/east_crater/wreck3)
 "Ph" = (
 /obj/item/stack/rods,

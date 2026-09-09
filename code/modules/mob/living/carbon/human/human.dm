@@ -22,6 +22,7 @@
 	var/tmp/preview_trait_signature	// Cached custom trait signature for preview short-circuiting.
 	var/tmp/preview_slot_id				// Tracks which preference slot last populated this mob.
 	var/tmp/ignore_sprite_accessory_body_hide = FALSE // When TRUE, always render organs even if sprite accessories request hiding them (Lira, December 2025)
+	var/tmp/appearance_only = FALSE // RS Add: Character Designer - Species and Prosthetics (Lira, August 2026)
 	// RS Add End
 
 	var/can_defib = 1					//Horrible damage (like beheadings) will prevent defibbing organics.
@@ -29,7 +30,7 @@
 	var/active_regen_delay = 300
 
 /mob/living/carbon/human/Initialize(mapload, var/new_species = null)
-	if(!dna)
+	if(!dna && !appearance_only) // RS Edit: Character Designer - Species and Prosthetics (Lira, August 2026)
 		dna = new /datum/dna(null)
 		// Species name is handled by set_species()
 
@@ -316,7 +317,7 @@
 
 //Removed the horrible safety parameter. It was only being used by ninja code anyways.
 //Now checks siemens_coefficient of the affected area by default
-/mob/living/carbon/human/electrocute_act(var/shock_damage, var/obj/source, var/base_siemens_coeff = 1.0, var/def_zone = null)
+/mob/living/carbon/human/electrocute_act(var/shock_damage, var/obj/source, var/base_siemens_coeff = 1.0, var/def_zone = null, var/stun = 1) // RS Edit: Stun var (Lira, April 2026)
 
 	if(status_flags & GODMODE)	return 0	//godmode
 
@@ -335,7 +336,7 @@
 	if(fire_stacks < 0) // Water makes you more conductive.
 		siemens_coeff *= 1.5
 
-	return ..(shock_damage, source, siemens_coeff, def_zone)
+	return ..(shock_damage, source, siemens_coeff, def_zone, stun) // RS Edit: Stun var (Lira, April 2026)
 
 
 /mob/living/carbon/human/Topic(href, href_list)
@@ -1272,7 +1273,7 @@
 
 	spawn(0)
 		if(regen_icons) regenerate_icons()
-	if(!fast_preview) // RS Add: Custom markings support (Lira, September 2025)
+	if(!fast_preview && !appearance_only) // RS Add: Custom markings support (Lira, September 2025)
 		make_blood()
 		if(vessel.total_volume < species.blood_volume)
 			vessel.maximum_volume = species.blood_volume
@@ -1424,12 +1425,14 @@
 		if(C.body_parts_covered & FEET)
 			feet_exposed = 0
 
-	flavor_text = ""
+	// RS Edit Start: Examine Mode Fix (Lira, July 2026)
+	var/list/visible_flavor_texts = list()
 	for (var/T in flavor_texts)
 		if(flavor_texts[T] && flavor_texts[T] != "")
 			if((T == "general") || (T == "head" && head_exposed) || (T == "face" && face_exposed) || (T == "eyes" && eyes_exposed) || (T == "torso" && torso_exposed) || (T == "arms" && arms_exposed) || (T == "hands" && hands_exposed) || (T == "legs" && legs_exposed) || (T == "feet" && feet_exposed))
-				flavor_text += flavor_texts[T]
-				flavor_text += "\n\n"
+				visible_flavor_texts += flavor_texts[T]
+	flavor_text = visible_flavor_texts.Join("\n\n")
+	// RS Edit End
 	if(!shrink)
 		return flavor_text
 	else

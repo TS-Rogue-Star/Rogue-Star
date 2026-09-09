@@ -923,7 +923,7 @@
 /area/outpost/research/anomaly_analysis)
 "hF" = (
 /obj/structure/prop/rock/round,
-/turf/simulated/mineral/floor/vacuum/moonbase/outdoors,
+/turf/simulated/mineral/floor/vacuum/moonbase/outdoors/ignore_cavegen,
 /area/moonbase/surface/west_crater)
 "hH" = (
 /obj/effect/floor_decal/industrial/danger{
@@ -1596,7 +1596,7 @@
 /area/moonbase/fixedpoi/homestead)
 "pj" = (
 /obj/structure/prop/rock/flat,
-/turf/simulated/mineral/floor/vacuum/moonbase/outdoors,
+/turf/simulated/mineral/floor/vacuum/moonbase/outdoors/ignore_cavegen,
 /area/moonbase/surface/west_crater)
 "pk" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -1779,7 +1779,7 @@
 /area/outpost/research/dorms)
 "rs" = (
 /obj/structure/prop/rock/crystal_dust,
-/turf/simulated/mineral/floor/vacuum/moonbase/outdoors,
+/turf/simulated/mineral/floor/vacuum/moonbase/outdoors/ignore_cavegen,
 /area/moonbase/surface/west_crater)
 "ru" = (
 /obj/machinery/atmospherics/unary/vent_pump/high_volume{
@@ -2395,7 +2395,7 @@
 /turf/simulated/floor/tiled/eris/dark/gray_platform,
 /area/outpost/research/hallway)
 "yh" = (
-/turf/simulated/mineral/floor/vacuum/moonbase/outdoors,
+/turf/simulated/mineral/floor/vacuum/moonbase/outdoors/ignore_cavegen,
 /area/moonbase/surface/west_crater)
 "yq" = (
 /obj/effect/floor_decal/steeldecal/steel_decals9,
@@ -2642,7 +2642,7 @@
 /obj/structure/marker_beacon{
 	mapped_in_color = "Lime"
 	},
-/turf/simulated/mineral/floor/vacuum/moonbase/outdoors,
+/turf/simulated/mineral/floor/vacuum/moonbase/outdoors/ignore_cavegen,
 /area/moonbase/surface/west_crater)
 "Ac" = (
 /obj/machinery/atmospherics/unary/vent_scrubber{
@@ -2688,7 +2688,7 @@
 /turf/simulated/floor/wood,
 /area/outpost/research/dorms)
 "AQ" = (
-/turf/simulated/mineral/floor/vacuum/moonbase/outdoors,
+/turf/simulated/mineral/floor/vacuum/moonbase/outdoors/ignore_cavegen,
 /area/moonbase/surface/west_crater/unexplored)
 "Bg" = (
 /obj/machinery/atmospherics/pipe/simple/visible/red{
@@ -3371,7 +3371,7 @@
 /area/outpost/research/anomaly)
 "IS" = (
 /obj/structure/prop/rock/small/alt,
-/turf/simulated/mineral/floor/vacuum/moonbase/outdoors,
+/turf/simulated/mineral/floor/vacuum/moonbase/outdoors/ignore_cavegen,
 /area/moonbase/surface/west_crater)
 "IU" = (
 /obj/structure/flora/pottedplant/large,
@@ -3590,7 +3590,7 @@
 /obj/machinery/atmospherics/unary/outlet_injector{
 	dir = 4;
 	frequency = 1445;
-	id = "homestead_airs";
+	id = "burn_in";
 	volume_rate = 700
 	},
 /turf/simulated/floor/reinforced/airless,
@@ -3725,7 +3725,7 @@
 /turf/simulated/floor/tiled/steel_ridged,
 /area/outpost/research/toxins_misc_lab)
 "MA" = (
-/turf/simulated/mineral/moonbase/ignore_mapgen,
+/turf/simulated/mineral/moonbase/ignore_cavegen,
 /area/moonbase/surface/west_crater)
 "MD" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/black,
@@ -4134,7 +4134,7 @@
 /area/outpost/research/mixing)
 "RQ" = (
 /obj/structure/prop/rock/small,
-/turf/simulated/mineral/floor/vacuum/moonbase/outdoors,
+/turf/simulated/mineral/floor/vacuum/moonbase/outdoors/ignore_cavegen,
 /area/moonbase/surface/west_crater)
 "RY" = (
 /obj/effect/map_effect/portal/line/side_b{
@@ -4462,7 +4462,7 @@
 	how_many_mobs_max = 30;
 	how_many_mobs_min = 10
 	},
-/turf/simulated/mineral/floor/vacuum/moonbase/outdoors,
+/turf/simulated/mineral/floor/vacuum/moonbase/outdoors/ignore_cavegen,
 /area/moonbase/surface/west_crater/unexplored)
 "Wo" = (
 /obj/machinery/door/firedoor/glass,
@@ -4484,7 +4484,7 @@
 /area/moonbase/fixedpoi/homestead)
 "Wv" = (
 /obj/structure/prop/rock/crystal,
-/turf/simulated/mineral/floor/vacuum/moonbase/outdoors,
+/turf/simulated/mineral/floor/vacuum/moonbase/outdoors/ignore_cavegen,
 /area/moonbase/surface/west_crater)
 "WA" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/black{
@@ -4535,7 +4535,7 @@
 /area/outpost/research/dorms)
 "Xk" = (
 /obj/structure/prop/rock/sharp,
-/turf/simulated/mineral/floor/vacuum/moonbase/outdoors,
+/turf/simulated/mineral/floor/vacuum/moonbase/outdoors/ignore_cavegen,
 /area/moonbase/surface/west_crater)
 "Xm" = (
 /obj/machinery/meter,
@@ -4563,7 +4563,7 @@
 /turf/simulated/floor/tiled,
 /area/outpost/research/anomaly_analysis)
 "Xw" = (
-/turf/simulated/mineral/moonbase/ignore_mapgen,
+/turf/simulated/mineral/moonbase/ignore_cavegen,
 /area/moonbase/surface/west_crater/unexplored)
 "XA" = (
 /obj/effect/floor_decal/industrial/warning{

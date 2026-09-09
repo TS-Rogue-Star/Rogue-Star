@@ -35,46 +35,49 @@
 	description_info = "Click the door to open or close it.  It only stops air while closed.<br>\
 	To remove these safely, use the 'deflate' verb.  Hitting these with any objects will probably puncture and break it forever."
 
-/obj/machinery/door/get_description_interaction()
+// RS Edit: Examine Mode Fix (Lira, July 2026)
+/obj/machinery/door/get_description_interaction(var/for_chat = FALSE)
 	var/list/results = list()
 	if(!repairing && (health < maxhealth) && !(stat & BROKEN))
-		results += "[desc_panel_image("metal sheet")]to start repairing damage (May require different material type)."
+		results += "[desc_panel_image("metal sheet", for_chat)]to start repairing damage (May require different material type)."
 	if(repairing && density)
-		results += "[desc_panel_image("welder")]to finish repairs."
-		results += "[desc_panel_image("crowbar")]to undo adding sheets for repairs."
+		results += "[desc_panel_image("welder", for_chat)]to finish repairs."
+		results += "[desc_panel_image("crowbar", for_chat)]to undo adding sheets for repairs."
 
 	return results
 
-/obj/machinery/door/airlock/get_description_interaction()
+// RS Edit: Examine Mode Fix (Lira, July 2026)
+/obj/machinery/door/airlock/get_description_interaction(var/for_chat = FALSE)
 	description_info = "To ring an airlock's doorbell, hold Alt and click on the airlock with the Left Mouse Button on Green/Help intent.  Doing the same on Harm intent will instead hammer on the airlock." //vorestation edit
 	
 	var/list/results = list()
 
 	if(can_remove_electronics())
-		results += "[desc_panel_image("crowbar")]to remove the airlock electronics."
+		results += "[desc_panel_image("crowbar", for_chat)]to remove the airlock electronics."
 	else
-		results += "[desc_panel_image("crowbar")]to open or close if unpowered/broken, and unbolted."
+		results += "[desc_panel_image("crowbar", for_chat)]to open or close if unpowered/broken, and unbolted."
 
 	if(welded)
-		results += "[desc_panel_image("welder")]to unweld, allowing it to open again."
+		results += "[desc_panel_image("welder", for_chat)]to unweld, allowing it to open again."
 	else
-		results += "[desc_panel_image("welder")]to weld, preventing it from opening."
+		results += "[desc_panel_image("welder", for_chat)]to weld, preventing it from opening."
 
 	if(p_open)
-		results += "[desc_panel_image("screwdriver")]to close the wire panel."
-		results += "[desc_panel_image("wirecutters")]to cut an internal wire while hacking."
-		results += "[desc_panel_image("multitool")]to pulse an internal wire while hacking."
+		results += "[desc_panel_image("screwdriver", for_chat)]to close the wire panel."
+		results += "[desc_panel_image("wirecutters", for_chat)]to cut an internal wire while hacking."
+		results += "[desc_panel_image("multitool", for_chat)]to pulse an internal wire while hacking."
 	else
-		results += "[desc_panel_image("screwdriver")]to open the wire panel, enabling the ability to hack."
+		results += "[desc_panel_image("screwdriver", for_chat)]to open the wire panel, enabling the ability to hack."
 
-	results += ..()
+	results += ..(for_chat)
 
 	return results
 
-/obj/machinery/portable_atmospherics/canister/get_description_interaction()
+// RS Edit: Examine Mode Fix (Lira, July 2026)
+/obj/machinery/portable_atmospherics/canister/get_description_interaction(var/for_chat = FALSE)
 	var/list/results = list()
 
-	results += "[desc_panel_image("wrench")]to connect or disconnect from a connector port below."
-	results += "[desc_panel_image("air tank")]to fill the air tank from this canister."
+	results += "[desc_panel_image("wrench", for_chat)]to connect or disconnect from a connector port below."
+	results += "[desc_panel_image("air tank", for_chat)]to fill the air tank from this canister."
 
 	return results

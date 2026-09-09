@@ -363,27 +363,14 @@ GLOBAL_LIST_EMPTY(suit_cycler_typecache)
 
 	switch(action)
 		if("dispense")
-			switch(params["item"])
-				if("helmet")
-					helmet.forceMove(get_turf(src))
-					helmet = null
-				if("suit")
-					suit.forceMove(get_turf(src))
-					suit = null
+			dispense_item(params["item"]) // RS EDIT
 			. = TRUE
 
 		if("department")
-			var/choice = params["department"]
-			if(choice in departments)
-				target_department = departments[choice]
-			else if(emagged && (choice in emagged_departments))
-				target_department = emagged_departments[choice]
-				. = TRUE
+			set_target_department(params["department"]) // RS EDIT
 
 		if("species")
-			var/choice = params["species"]
-			if(choice in species)
-				target_species = species[choice]
+			if(set_target_species(params["species"])) // RS EDIT
 				. = TRUE
 
 		if("radlevel")
@@ -400,20 +387,12 @@ GLOBAL_LIST_EMPTY(suit_cycler_typecache)
 			. = TRUE
 
 		if("apply_paintjob")
-			if(!suit && !helmet)
+			if(!begin_paintjob()) // RS EDIT
 				return
-			active = 1
-			spawn(100)
-				apply_paintjob()
-				finished_job()
 			. = TRUE
 
 		if("lock")
-			if(allowed(usr))
-				locked = !locked
-				to_chat(usr, "You [locked ? "" : "un"]lock \the [src].")
-			else
-				to_chat(usr, "<span class='danger'>Access denied.</span>")
+			toggle_lock(usr) // RS EDIT
 			. = TRUE
 
 		if("eject_guy")
@@ -525,6 +504,63 @@ GLOBAL_LIST_EMPTY(suit_cycler_typecache)
 	return
 
 // "Streamlined" before? Ok. -Aro
+
+// RS EDIT
+/obj/machinery/suit_cycler/proc/dispense_item(which)
+	switch(which)
+		if("helmet")
+			if(!helmet)
+				return FALSE
+			helmet.forceMove(get_turf(src))
+			helmet = null
+			return TRUE
+		if("suit")
+			if(!suit)
+				return FALSE
+			suit.forceMove(get_turf(src))
+			suit = null
+			return TRUE
+	return FALSE
+
+// RS EDIT
+/obj/machinery/suit_cycler/proc/set_target_species(choice)
+	if(!(choice in species))
+		return FALSE
+	target_species = species[choice]
+	return TRUE
+
+/obj/machinery/suit_cycler/proc/set_target_department(choice)
+	if(choice in departments)
+		target_department = departments[choice]
+		return TRUE
+	else if(emagged && (choice in emagged_departments))
+		target_department = emagged_departments[choice]
+		return TRUE
+	return FALSE
+
+// RS EDIT
+/obj/machinery/suit_cycler/proc/begin_paintjob()
+	if(!suit && !helmet)
+		return FALSE
+	if(active)
+		return FALSE
+	active = 1
+	spawn(100)
+		apply_paintjob()
+		finished_job()
+	return TRUE
+
+// RS EDIT
+/obj/machinery/suit_cycler/proc/toggle_lock(mob/user)
+	if(!user)
+		return FALSE
+	if(!allowed(user))
+		to_chat(user, "<span class='danger'>Access denied.</span>")
+		return FALSE
+	locked = !locked
+	to_chat(user, "You [locked ? "" : "un"]lock \the [src].")
+	return TRUE
+
 /obj/machinery/suit_cycler/proc/apply_paintjob()
 	if(!target_species || !target_department)
 		return
@@ -536,7 +572,7 @@ GLOBAL_LIST_EMPTY(suit_cycler_typecache)
 	if(target_department.can_refit_suit(suit))
 		target_department.do_refit_suit(suit)
 	// Attached voidsuit helmet to new paint
-	if(target_department.can_refit_helmet(suit?.helmet))
+	if(suit?.helmet && target_department.can_refit_helmet(suit.helmet)) // RS EDIT
 		target_department.do_refit_helmet(suit.helmet)
 
 	// Species fitting for all 3 potential changes

@@ -18,11 +18,7 @@
 	spawn_nothing_percentage = 50
 
 /obj/random/awayloot/item_to_spawn()
-	return pick(//prob(50);/obj/item/weapon/aliencoin/basic,	//RS TEMP REMOVAL
-				//prob(40);/obj/item/weapon/aliencoin/silver,
-				//prob(30);/obj/item/weapon/aliencoin/gold,
-				//prob(20);/obj/item/weapon/aliencoin/phoron,
-				prob(10);/obj/item/device/denecrotizer,
+	return pick(prob(10);/obj/item/device/denecrotizer,
 				prob(5);/obj/item/capture_crystal,
 				prob(5);/obj/item/device/perfect_tele,
 				prob(5);/obj/item/weapon/bluespace_harpoon,
@@ -54,11 +50,7 @@
 
 /obj/random/awayloot/looseloot
 /obj/random/awayloot/looseloot/item_to_spawn()
-	return pick(//prob(50);/obj/item/weapon/aliencoin,	//RS TEMP REMOVAL
-				//prob(40);/obj/item/weapon/aliencoin/silver,
-				//prob(30);/obj/item/weapon/aliencoin/gold,
-				//prob(20);/obj/item/weapon/aliencoin/phoron,
-				prob(10);/obj/item/device/denecrotizer,
+	return pick(prob(10);/obj/item/device/denecrotizer,
 				prob(5);/obj/item/capture_crystal,
 				prob(3);/obj/item/capture_crystal/great,
 				prob(1);/obj/item/capture_crystal/ultra,
@@ -109,11 +101,7 @@
 	spawn_nothing_percentage = 50
 
 /obj/random/mainttoyloot/item_to_spawn()
-	return pick(//prob(50);/obj/item/weapon/aliencoin/basic,	//RS TEMP REMOVAL
-				//prob(40);/obj/item/weapon/aliencoin/silver,
-				//prob(30);/obj/item/weapon/aliencoin/gold,
-				//prob(20);/obj/item/weapon/aliencoin/phoron,
-				prob(5);/obj/item/capture_crystal,
+	return pick(prob(5);/obj/item/capture_crystal,
 				prob(5);/obj/random/mouseray,
 				prob(5);/obj/item/device/perfect_tele,
 				prob(5);/obj/item/weapon/bluespace_harpoon,

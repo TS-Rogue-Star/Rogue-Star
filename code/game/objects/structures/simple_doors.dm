@@ -17,15 +17,13 @@
 	var/knock_hammer_sound = 'sound/weapons/sonic_jackhammer.ogg'
 
 	var/locked = FALSE	//has the door been locked?
-	var/lock_id = null	//does the door have an associated key?
 	var/keysound = 'sound/items/toolbelt_equip.ogg'
 
 /obj/structure/simple_door/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	TemperatureAct(exposed_temperature)
 
 /obj/structure/simple_door/proc/TemperatureAct(temperature)
-	hardness -= material.combustion_effect(get_turf(src),temperature, 0.3)
-	CheckHardness()
+	take_damage(material.combustion_effect(get_turf(src),temperature, 0.3) * 10)	//RS EDIT - Use the dang damage proc bro
 
 /obj/structure/simple_door/Initialize(mapload, var/material_name)
 	. = ..()
@@ -154,17 +152,11 @@
 
 /obj/structure/simple_door/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	user.setClickCooldown(DEFAULT_ATTACK_COOLDOWN)
-	if(istype(W,/obj/item/weapon/simple_key))
-		var/obj/item/weapon/simple_key/key = W
-		if(state)
-			to_chat(user,"<span class='notice'>\The [src] must be closed in order for you to lock it.</span>")
-		else if(key.key_id != src.lock_id)
-			to_chat(user,"<span class='warning'>The [key] doesn't fit \the [src]'s lock!</span>")
-		else if(key.key_id == src.lock_id)
-			visible_message("<span class='notice'>[user] [key.keyverb] \the [key] and [locked ? "unlocks" : "locks"] \the [src].</span>")
-			locked = !locked
-			playsound(src, keysound,100, 1)
-		return
+	if(SEND_SIGNAL(src, COMSIG_PARENT_ATTACKBY, W, user) & COMPONENT_CANCEL_ATTACK_CHAIN)	//RS ADD START
+		return TRUE
+	if(islocked())
+		if(W.getkey())
+			return		//RS ADD END
 	if(istype(W,/obj/item/weapon/pickaxe) && breakable)
 		var/obj/item/weapon/pickaxe/digTool = W
 		visible_message("<span class='danger'>[user] starts digging [src]!</span>")
@@ -172,7 +164,7 @@
 			visible_message("<span class='danger'>[user] finished digging [src]!</span>")
 			Dismantle()
 	else if(istype(W,/obj/item/weapon) && breakable) //not sure, can't not just weapons get passed to this proc?
-		hardness -= W.force/10
+		take_damage(W.force)	//RS EDIT - Use the dang damage proc bro
 		visible_message("<span class='danger'>[user] hits [src] with [W]!</span>")
 		if(material == get_material_by_name("resin"))
 			playsound(src, 'sound/effects/attackblob.ogg', 100, 1)
@@ -180,7 +172,6 @@
 			playsound(src, 'sound/effects/woodcutting.ogg', 100, 1)
 		else
 			playsound(src, 'sound/weapons/smash.ogg', 50, 1)
-		CheckHardness()
 	else if(istype(W,/obj/item/weapon/weldingtool) && breakable)
 		var/obj/item/weapon/weldingtool/WT = W
 		if(material.ignition_point && WT.remove_fuel(0, user))
@@ -191,9 +182,10 @@
 
 /obj/structure/simple_door/bullet_act(var/obj/item/projectile/Proj)
 	take_damage(Proj.damage/10)
-	CheckHardness()
 
 /obj/structure/simple_door/take_damage(var/damage)
+	if(islocked())	//RS ADD
+		return		//RS ADD
 	hardness -= damage/10
 	CheckHardness()
 
@@ -206,19 +198,22 @@
 	else
 		playsound(src, 'sound/weapons/smash.ogg', 50, 1)
 	user.do_attack_animation(src)
-	hardness -= damage/10
-	CheckHardness()
+	take_damage(damage)	//RS EDIT - Use the dang damage proc bro
 
 /obj/structure/simple_door/proc/CheckHardness()
 	if(hardness <= 0)
 		Dismantle(1)
 
 /obj/structure/simple_door/proc/Dismantle(devastated = 0)
+	if(islocked())	//RS ADD
+		return		//RS ADD
 	material.place_dismantled_product(get_turf(src))
 	visible_message("<span class='danger'>The [src] is destroyed!</span>")
 	qdel(src)
 
 /obj/structure/simple_door/ex_act(severity = 1)
+	if(islocked())	//RS ADD
+		return		//RS ADD
 	switch(severity)
 		if(1)
 			Dismantle(1)
@@ -226,11 +221,9 @@
 			if(prob(20))
 				Dismantle(1)
 			else
-				hardness--
-				CheckHardness()
+				take_damage(10)	//RS EDIT - Use the dang damage proc bro
 		if(3)
-			hardness -= 0.1
-			CheckHardness()
+			take_damage(1)	//RS EDIT - Use the dang damage proc bro
 	return
 
 /obj/structure/simple_door/process()
@@ -281,3 +274,31 @@
 		if(!iscultist(L) && !istype(L, /mob/living/simple_mob/construct))
 			return
 	..()
+
+//RS ADD START
+/obj/structure/simple_door/dungeon_trigger(mob/user)
+	var/datum/component/dungeon_mechanic/lock/ourlock = getlock()
+	if(ourlock)
+		if(ourlock.locked)
+			dungeon_unlock(user)
+		else if(!ourlock.onetime)
+			dungeon_lock(user)
+	else
+		if(locked)
+			dungeon_unlock(user)
+		else
+			dungeon_lock(user)
+
+/obj/structure/simple_door/dungeon_lock()
+	locked = TRUE
+	visible_message(SPAN_NOTICE("\The [src] clunks as it is locked."))
+	playsound(src, keysound,100, 1)
+	SEND_SIGNAL(src,COMSIG_DUNGEON_UNTRIGGER)
+	return TRUE
+
+/obj/structure/simple_door/dungeon_unlock()
+	locked = FALSE
+	visible_message(SPAN_NOTICE("\The [src] clunks as it is unlocked."))
+	playsound(src, keysound,100, 1)
+	SEND_SIGNAL(src,COMSIG_DUNGEON_TRIGGER)
+	return TRUE

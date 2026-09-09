@@ -5,6 +5,7 @@ GLOBAL_LIST_BOILERPLATE(all_brain_organs, /obj/item/organ/internal/brain)
 	health = 400 //They need to live awhile longer than other organs. Is this even used by organ code anymore?
 	desc = "A piece of juicy meat found in a person's head."
 	organ_tag = "brain"
+	chargen_prosthetic_flags = ORGAN_CHARGEN_BRAIN // RS Add: Character Designer - Species and Prosthetics (Lira, August 2026)
 	parent_organ = BP_HEAD
 	vital = 1
 	icon_state = "brain2"
@@ -170,6 +171,7 @@ GLOBAL_LIST_BOILERPLATE(all_brain_organs, /obj/item/organ/internal/brain)
 	icon_state = "chitin"
 	vital = 1
 	can_assist = FALSE
+	chargen_prosthetic_flags = 0 // RS Add: Character Designer - Species and Prosthetics (Lira, August 2026)
 
 /obj/item/organ/internal/brain/xeno
 	name = "thinkpan"
@@ -177,6 +179,7 @@ GLOBAL_LIST_BOILERPLATE(all_brain_organs, /obj/item/organ/internal/brain)
 	icon = 'icons/mob/alien.dmi'
 	icon_state = "chitin"
 	can_assist = FALSE
+	chargen_prosthetic_flags = 0 // RS Add: Character Designer - Species and Prosthetics (Lira, August 2026)
 
 /obj/item/organ/internal/brain/slime
 	icon = 'icons/obj/surgery_vr.dmi' // Vorestation edit
@@ -187,6 +190,7 @@ GLOBAL_LIST_BOILERPLATE(all_brain_organs, /obj/item/organ/internal/brain)
 	parent_organ = BP_TORSO
 	clone_source = TRUE
 	flags = OPENCONTAINER
+	chargen_prosthetic_flags = 0 // RS Add: Character Designer - Species and Prosthetics (Lira, August 2026)
 	var/list/owner_flavor_text = list()
 
 /obj/item/organ/internal/brain/slime/is_open_container()
@@ -305,6 +309,7 @@ GLOBAL_LIST_BOILERPLATE(all_brain_organs, /obj/item/organ/internal/brain)
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "scroll"
 	can_assist = FALSE
+	chargen_prosthetic_flags = 0 // RS Add: Character Designer - Species and Prosthetics (Lira, August 2026)
 
 /obj/item/organ/internal/brain/grey
 	desc = "A piece of juicy meat found in a person's head. This one is strange."

@@ -44,6 +44,7 @@
 	var/instruments = list(
 		"Violin" = /obj/item/instrument/violin,
 		"Banjo" = /obj/item/instrument/banjo,
+		"Drum Kit" = /obj/item/instrument/drumkit, // RS Add: Drumkit (Lira, June 2026)
 		"Guitar" = /obj/item/instrument/guitar,
 		"Electric Guitar"= /obj/item/instrument/eguitar,
 		"Accordion" = /obj/item/instrument/accordion,

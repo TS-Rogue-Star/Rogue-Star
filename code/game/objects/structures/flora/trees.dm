@@ -129,13 +129,14 @@
 	adjust_health(-power / 100, TRUE) // Kills most trees in one lightning strike.
 	..()
 
-/obj/structure/flora/tree/get_description_interaction()
+// RS Edit: Examine Mode Fix (Lira, July 2026)
+/obj/structure/flora/tree/get_description_interaction(var/for_chat = FALSE)
 	var/list/results = list()
 
 	if(!is_stump)
-		results += "[desc_panel_image("hatchet")]to cut down this tree into logs.  Any sharp and strong weapon will do."
+		results += "[desc_panel_image("hatchet", for_chat)]to cut down this tree into logs.  Any sharp and strong weapon will do."
 
-	results += ..()
+	results += ..(for_chat)
 
 	return results
 

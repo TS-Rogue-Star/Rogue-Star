@@ -465,7 +465,14 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/cube/proc/Expand()
 	src.visible_message("<b>\The [src]</b> expands!")
-	new food_type(get_turf(src))
+	var/turf/T = get_turf(src)	//RS EDIT START
+	var/food_actual
+	if(islist(food_type))
+		food_actual = pickweight(food_type)
+	else
+		food_actual = food_type
+	new food_actual(T)
+	playsound(T, 'sound/effects/bubbles.ogg', 50, 1)	//RS EDIT END
 	qdel(src)
 
 /obj/item/weapon/reagent_containers/food/snacks/cube/on_reagent_change()
@@ -522,8 +529,24 @@
 		/obj/item/weapon/reagent_containers/food/snacks/cube/protein = 4,
 		/obj/item/weapon/reagent_containers/food/snacks/cube/nutriment = 4
 	)
-	can_hold = list(/obj/item/weapon/reagent_containers/food/snacks/cube/protein,
-					/obj/item/weapon/reagent_containers/food/snacks/cube/nutriment)
+	can_hold = list(/obj/item/weapon/reagent_containers/food/snacks/cube)	//RS EDIT
+
+/obj/item/weapon/storage/box/wings/tray/water_act(amount)	//RS ADD START
+	visible_message(SPAN_DANGER("\The [src] gets wet, soaking its contents!"),runemessage = "splash")
+	START_PROCESSING(SSfastprocess, src)
+
+/obj/item/weapon/storage/box/wings/tray/process()
+	if(src.contents.len <= 0)
+		STOP_PROCESSING(SSfastprocess,src)
+		return
+	if(prob(20))
+		var/howmany = contents.len
+		var/obj/item/weapon/reagent_containers/food/snacks/cube/C = pick(contents)
+		if(istype(C,/obj/item/weapon/reagent_containers/food/snacks/cube))
+			C.Expand()
+		if(howmany == contents.len)	//We have something in there that isn't expanding so let's stop trying instead of trying forever
+			STOP_PROCESSING(SSfastprocess,src)
+	update_icon()	//RS ADD END
 
 /obj/item/weapon/reagent_containers/food/snacks/carpmeat/sif //Making fish meat non-toxic!  As advised by Ascian!
 	toxin_type = null

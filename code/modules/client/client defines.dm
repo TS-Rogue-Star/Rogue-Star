@@ -26,6 +26,7 @@
 	var/datum/tooltip/tooltips 	= null
 	var/datum/chatOutput/chatOutput
 	var/datum/volume_panel/volume_panel = null // Initialized by /client/verb/volume_panel()
+	var/datum/preference_settings_panel/preference_settings_panel = null // RS Add: Preference settings panel (Lira, July 2026)
 	var/chatOutputLoadedAt
 	var/seen_news = 0
 

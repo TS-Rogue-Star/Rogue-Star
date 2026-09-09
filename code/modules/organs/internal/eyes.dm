@@ -3,6 +3,7 @@
 	icon_state = "eyes"
 	gender = PLURAL
 	organ_tag = O_EYES
+	chargen_prosthetic_flags = ORGAN_CHARGEN_STANDARD // RS Add: Character Designer - Species and Prosthetics (Lira, August 2026)
 	parent_organ = BP_HEAD
 	var/list/eye_colour = list(0,0,0)
 	var/innate_flash_protection = FLASH_PROTECTION_NONE

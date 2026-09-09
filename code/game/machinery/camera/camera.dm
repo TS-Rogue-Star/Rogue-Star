@@ -340,7 +340,7 @@
 /atom/proc/auto_turn()
 	//Automatically turns based on nearby walls.
 	var/turf/simulated/wall/T = null
-	for(var/i = 1, i <= 8; i += i)
+	for(var/i = 1, i <= 8, i += i) // RS Edit: Syntax Fix (Lira, April 2026)
 		T = get_ranged_target_turf(src, i, 1)
 		if(istype(T))
 			//If someone knows a better way to do this, let me know. -Giacom

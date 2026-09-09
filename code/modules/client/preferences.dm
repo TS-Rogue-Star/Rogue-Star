@@ -199,7 +199,7 @@ var/list/preferences_datums = list()
 	var/lastnews // Hash of last seen lobby news content.
 	var/lastlorenews //ID of last seen lore news article.
 
-	var/examine_text_mode = 0 // Just examine text, include usage (description_info), switch to examine panel.
+	var/examine_text_mode = 0 // Just examine text, include extended information, switch to examine panel. || RS Edit: Examine Mode Fix (Lira, July 2026)
 	var/multilingual_mode = 0 // Default behaviour, delimiter-key-space, delimiter-key-delimiter, off
 
 	var/list/volume_channels = list()
@@ -315,14 +315,24 @@ var/list/preferences_datums = list()
 	out[mark.id] = mark.to_save()
 	return out
 
-// Load custom markings data
-/datum/preferences/proc/load_custom_markings_from_payload(list/payload)
-	reset_custom_marking_caches()
+// Clear custom marking state
+/datum/preferences/proc/clear_custom_marking_runtime_data(clear_body_entries = TRUE)
+	pending_custom_marking_refresh = null
+	pending_custom_marking_force_preview = FALSE
+	pending_custom_marking_reset_cache = FALSE
 	if(islist(custom_markings))
 		for(var/id in custom_markings.Copy())
 			remove_custom_marking(id)
 	custom_markings = list()
+	if(clear_body_entries)
+		remove_custom_marking_body_entries()
+	reset_custom_marking_caches()
+
+// Load custom markings data
+/datum/preferences/proc/load_custom_markings_from_payload(list/payload)
+	clear_custom_marking_runtime_data(FALSE)
 	if(!islist(payload))
+		remove_custom_marking_body_entries()
 		return
 	var/loaded = FALSE
 	var/datum/custom_marking/queued_mark = null
@@ -362,6 +372,8 @@ var/list/preferences_datums = list()
 		sync_loaded_custom_marking(mark)
 		loaded = TRUE
 		queued_mark = mark
+	if(!loaded)
+		remove_custom_marking_body_entries()
 	prune_disallowed_body_markings()
 	if(queued_mark)
 		defer_custom_marking_refresh(queued_mark, TRUE, TRUE)
@@ -384,6 +396,7 @@ var/list/preferences_datums = list()
 		return
 	del_mannequin(cache_ckey)
 	del_mannequin("[cache_ckey]-markref")
+	del_mannequin("[cache_ckey]-markref-species-preview")
 
 // Remove body marking assignments the current player shouldn't be able to use
 /datum/preferences/proc/prune_disallowed_body_markings()
@@ -473,12 +486,14 @@ var/list/preferences_datums = list()
 	if(!module)
 		module = new(src, mark)
 		custom_marking_designer_ui = module
+	open_custom_marking_designer_loading(user)
 	module.tgui_interact(user)
 
 // RS Add: Open the body markings gallery tab (Lira, December 2025)
 /datum/preferences/proc/open_body_markings_designer(mob/user)
 	if(!user)
 		return
+	open_custom_marking_designer_loading(user)
 	var/datum/custom_marking/mark = get_primary_custom_marking()
 	var/datum/tgui_module/custom_marking_designer/module = custom_marking_designer_ui
 	if(module)
@@ -490,13 +505,13 @@ var/list/preferences_datums = list()
 			custom_marking_designer_ui = null
 			module = null
 	if(!module)
-		module = new(src, mark, "basic", TRUE)
+		module = new(src, mark, "species", TRUE)
 		custom_marking_designer_ui = module
 	else
-		module.initial_tab = "basic"
-		module.active_tab = "basic"
+		module.initial_tab = "species"
 		module.allow_custom_tab = !!mark
 		SStgui.update_uis(module)
+	open_custom_marking_designer_loading(user)
 	module.tgui_interact(user)
 
 // Provide a user-friendly label for a stored body marking key
@@ -510,14 +525,44 @@ var/list/preferences_datums = list()
 			return display
 	return marking_key
 
+// Remove body marking preference entries for old custom markings
+/datum/preferences/proc/remove_custom_marking_body_entries(datum/custom_marking/mark = null, id = null)
+	if(!islist(body_markings) || !body_markings.len)
+		return FALSE
+	var/current_style_name = mark?.get_style_name()
+	var/list/remove_queue = list()
+	for(var/key in body_markings)
+		if(!istext(key) || key == "color")
+			continue
+		var/list/entry = body_markings[key]
+		var/datum/sprite_accessory/marking/entry_style = body_marking_styles_list?[key]
+		if(!istype(entry_style) && islist(entry))
+			entry_style = entry["datum"]
+		var/datum/sprite_accessory/marking/custom/style = null
+		if(istype(entry_style, /datum/sprite_accessory/marking/custom))
+			style = entry_style
+		var/is_custom_key = findtext(key, " (Custom ")
+		var/remove_entry = FALSE
+		if(current_style_name && key == current_style_name)
+			remove_entry = TRUE
+		else if(custom_marking_style_matches(style, null, id, mark))
+			remove_entry = TRUE
+		else if(is_custom_key && (!istype(entry_style) || style))
+			remove_entry = TRUE
+		if(remove_entry)
+			remove_queue += key
+	if(!remove_queue.len)
+		return FALSE
+	for(var/key in remove_queue)
+		body_markings -= key
+	return TRUE
+
 // Remove runtime registrations for an obsolete custom marking
 /datum/preferences/proc/remove_custom_marking(id)
 	if(!custom_markings || !(id in custom_markings))
 		return
 	var/datum/custom_marking/mark = custom_markings[id]
-	var/style_name = mark ? mark.get_style_name() : null
-	if(style_name && islist(body_markings))
-		body_markings -= style_name
+	remove_custom_marking_body_entries(mark, id)
 	if(custom_marking_designer_ui && !QDELETED(custom_marking_designer_ui))
 		if(custom_marking_designer_ui.mark?.id == id)
 			qdel(custom_marking_designer_ui)
@@ -525,6 +570,8 @@ var/list/preferences_datums = list()
 	custom_markings -= id
 	unregister_custom_marking_style(id)
 	GLOB.custom_markings_by_id -= id
+	if(istype(mark) && !QDELETED(mark))
+		qdel(mark)
 
 // Close designer
 /datum/preferences/proc/close_custom_marking_designer()
@@ -982,7 +1029,7 @@ var/list/preferences_datums = list()
 			character.species.create_organs(character)
 	if(needs_species_update)
 	// RS Add End
-		character.set_species(species, null, TRUE, null, fast_preview) // RS Edit: Custom markings support (Lira, September 2025)
+		character.set_species(species, null, icon_updates, null, fast_preview) // RS Edit: Custom markings support (Lira, September 2025)
 	// Special Case: This references variables owned by two different datums, so do it here.
 	if(be_random_name)
 		real_name = random_name(identifying_gender,species)

@@ -75,7 +75,7 @@
 				to_chat(user, "<span class='notice'>You aren't close enough.</span>")
 				trading = FALSE
 				return
-			return_funds()
+			return_funds(user)	//RS EDIT
 			trading = FALSE
 			return
 		else if(ask != "Yes")
@@ -130,7 +130,7 @@
 				to_chat(user, "<span class='notice'>You aren't close enough.</span>")
 				trading = FALSE
 				return
-			return_funds()
+			return_funds(user)	//RS EDIT
 		else
 			to_chat(user, "<span class='notice'>You decided leave your change banked.</span>")
 		trading = FALSE
@@ -142,8 +142,8 @@
 	. = ..()
 	switch(accepts)
 		if("coin")
-			if(istype(O, /obj/item/weapon/aliencoin))
-				var/obj/item/weapon/aliencoin/a = O
+			if(istype(O, /obj/item/triangle))	//RS EDIT
+				var/obj/item/triangle/a = O		//RS EDIT
 				coinbalance += a.value
 				visible_message("<span class='notice'>\The [src] accepts \the [user]'s [O].</span>")
 				qdel(a)
@@ -213,25 +213,14 @@
 						qdel(c)
 						v -= accepted_item_worth
 
-/obj/trader/proc/return_funds()
+/obj/trader/proc/return_funds(var/mob/living/user)	//RS EDIT
 	var/u_get_refund = FALSE
 	switch(accepts)
 		if("coin")
 			if(coinbalance)
 				u_get_refund = TRUE
-			while(coinbalance > 0)
-				if(coinbalance >= 20)
-					new /obj/item/weapon/aliencoin/phoron(get_turf(loc))
-					coinbalance -= 20
-				else if(coinbalance >= 10)
-					new /obj/item/weapon/aliencoin/gold(get_turf(loc))
-					coinbalance -= 10
-				else if(coinbalance >= 5)
-					new /obj/item/weapon/aliencoin/silver(get_turf(loc))
-					coinbalance -= 5
-				else
-					new /obj/item/weapon/aliencoin/basic(get_turf(loc))
-					coinbalance --
+				dispense_triangle_coins(coinbalance,get_turf(src),user)	//RS ADD
+				coinbalance = 0	//RS ADD
 		if("money")
 			for(var/obj/c in bank)
 				u_get_refund = TRUE

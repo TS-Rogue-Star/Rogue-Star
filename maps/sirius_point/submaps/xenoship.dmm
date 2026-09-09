@@ -56,7 +56,7 @@
 /area/submap/moonbase/poi/east_crater/xenoship)
 "gg" = (
 /mob/living/simple_mob/animal/space/alien,
-/turf/simulated/mineral/floor/vacuum/moonbase/ignore_mapgen,
+/turf/simulated/mineral/floor/vacuum/moonbase/ignore_cavegen,
 /area/submap/moonbase/poi/east_crater/xenoship)
 "gL" = (
 /obj/structure/salvageable/server,
@@ -127,7 +127,7 @@
 /area/submap/moonbase/poi/east_crater/xenoship)
 "pU" = (
 /obj/effect/decal/cleanable/blood/xeno,
-/turf/simulated/mineral/floor/vacuum/moonbase/ignore_mapgen,
+/turf/simulated/mineral/floor/vacuum/moonbase/ignore_cavegen,
 /area/submap/moonbase/poi/east_crater/xenoship)
 "re" = (
 /obj/structure/salvageable/implant_container,
@@ -139,7 +139,7 @@
 /turf/simulated/floor/tiled/techmaint/airless,
 /area/submap/moonbase/poi/east_crater/xenoship)
 "sh" = (
-/turf/simulated/mineral/moonbase/ignore_mapgen,
+/turf/simulated/mineral/moonbase/ignore_cavegen,
 /area/submap/moonbase/poi/east_crater/xenoship)
 "sy" = (
 /obj/structure/prop/machine/alien_tank,
@@ -161,7 +161,7 @@
 	dir = 4;
 	icon_state = "burst_l"
 	},
-/turf/simulated/mineral/floor/vacuum/moonbase/ignore_mapgen,
+/turf/simulated/mineral/floor/vacuum/moonbase/ignore_cavegen,
 /area/submap/moonbase/poi/east_crater/xenoship)
 "uF" = (
 /obj/structure/bed/chair/bay/comfy{
@@ -197,14 +197,14 @@
 /turf/simulated/floor/airless,
 /area/submap/moonbase/poi/east_crater/xenoship)
 "yk" = (
-/turf/simulated/mineral/floor/vacuum/moonbase/ignore_mapgen,
+/turf/simulated/mineral/floor/vacuum/moonbase/ignore_cavegen,
 /area/submap/moonbase/poi/east_crater/xenoship)
 "ys" = (
 /obj/structure/prop/rock/crystal,
 /obj/effect/map_effect/perma_light{
 	light_color = "#87CEEB"
 	},
-/turf/simulated/mineral/floor/vacuum/moonbase/ignore_mapgen,
+/turf/simulated/mineral/floor/vacuum/moonbase/ignore_cavegen,
 /area/submap/moonbase/poi/east_crater/xenoship)
 "yv" = (
 /obj/structure/window/reinforced{
@@ -252,7 +252,7 @@
 /obj/item/weapon/material/shard{
 	icon_state = "small"
 	},
-/turf/simulated/mineral/floor/vacuum/moonbase/ignore_mapgen,
+/turf/simulated/mineral/floor/vacuum/moonbase/ignore_cavegen,
 /area/submap/moonbase/poi/east_crater/xenoship)
 "Cd" = (
 /obj/item/weapon/bedsheet/green,
@@ -313,13 +313,13 @@
 /obj/item/weapon/material/shard{
 	icon_state = "medium"
 	},
-/turf/simulated/mineral/floor/vacuum/moonbase/ignore_mapgen,
+/turf/simulated/mineral/floor/vacuum/moonbase/ignore_cavegen,
 /area/submap/moonbase/poi/east_crater/xenoship)
 "Ju" = (
 /obj/effect/decal/cleanable/blood{
 	icon_state = "mfloor2"
 	},
-/turf/simulated/mineral/floor/vacuum/moonbase/ignore_mapgen,
+/turf/simulated/mineral/floor/vacuum/moonbase/ignore_cavegen,
 /area/submap/moonbase/poi/east_crater/xenoship)
 "Ks" = (
 /obj/structure/prop/machine/tube,
@@ -364,7 +364,7 @@
 /obj/effect/decal/cleanable/blood{
 	icon_state = "mfloor6"
 	},
-/turf/simulated/mineral/floor/vacuum/moonbase/ignore_mapgen,
+/turf/simulated/mineral/floor/vacuum/moonbase/ignore_cavegen,
 /area/submap/moonbase/poi/east_crater/xenoship)
 "Qn" = (
 /obj/effect/decal/remains/human,
@@ -433,7 +433,7 @@
 /area/submap/moonbase/poi/east_crater/xenoship)
 "WA" = (
 /obj/structure/foamedmetal,
-/turf/simulated/mineral/floor/vacuum/moonbase/ignore_mapgen,
+/turf/simulated/mineral/floor/vacuum/moonbase/ignore_cavegen,
 /area/submap/moonbase/poi/east_crater/xenoship)
 "Zn" = (
 /obj/machinery/button/remote/blast_door{
@@ -442,7 +442,7 @@
 	pixel_y = 32;
 	pixel_x = 24
 	},
-/turf/simulated/mineral/floor/vacuum/moonbase/ignore_mapgen,
+/turf/simulated/mineral/floor/vacuum/moonbase/ignore_cavegen,
 /area/submap/moonbase/poi/east_crater/xenoship)
 
 (1,1,1) = {"

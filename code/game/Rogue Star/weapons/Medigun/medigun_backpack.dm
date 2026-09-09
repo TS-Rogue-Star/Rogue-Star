@@ -1,6 +1,6 @@
 //backpack item
 /obj/item/device/continuous_medigun
-	name = "prototype bluespace medigun backpack"
+	name = "BSM-92 bluespace medigun backpack"
 	desc = "Contains a bluespace medigun, this portable unit digitizes and stores chems and battery power used by the attached gun."
 	icon = 'code/game/Rogue Star/icons/itemicons/borkmedigun.dmi'
 	icon_override = 'code/game/Rogue Star/icons/itemicons/borkmedigun.dmi'
@@ -36,32 +36,49 @@
 	var/maintenance = FALSE
 	var/smaniptier = 1
 	var/sbintier = 1
+	var/scaptier = 1
+	var/slasertier = 1
 	var/gridstatus = 0
 	var/chargecap = 1000
 	var/compact = 0
 	var/busy = FALSE
 	var/kenzie = FALSE
+	var/preloaded = FALSE
 
-//belt item
-/obj/item/device/continuous_medigun/compact
-	name = "prototype bluespace medigun backpack - compact"
-	desc = "Contains a compact version of the bluespace medigun able to be used one handed, this portable unit digitizes and stores chems and battery power used by the attached gun."
-	icon_state = "mg-belt"
-	item_state = "mg-belt-onmob"
-	compact = TRUE
-	w_class = ITEMSIZE_LARGE
-	slot_flags = SLOT_BELT
+//Preloaded for map spawn
+/obj/item/device/continuous_medigun/preloaded
+	brutecharge = 30
+	toxcharge = 30
+	burncharge = 30
+	preloaded = TRUE
+	//bcell.charge = 1000
 
+/obj/item/device/continuous_medigun/preloaded/medigun_cmo
+	brutecharge = 60
+	toxcharge = 60
+	burncharge = 60
+	smaniptier = 2
+	sbintier = 2
+	scaptier = 2
+	slasertier = 2
+	chemcap = 120
+	tankmax = 60
+	sbin = /obj/item/weapon/stock_parts/matter_bin/adv
+	smodule = /obj/item/weapon/stock_parts/scanning_module/adv
+	smanipulator = /obj/item/weapon/stock_parts/manipulator/nano
+	scapacitor = /obj/item/weapon/stock_parts/capacitor/adv
+	slaser = /obj/item/weapon/stock_parts/micro_laser/high
+	chargecap = 2000
 
 /obj/item/weapon/paper/continuous_medigun_manual
-	name = "Bluespace LongRange Experimental Medigun manual"
-	info = {"<h4>Bluespace Longrange  Experimental Medigun</h4>
+	name = "BlueSpace Medigun manual"
+	info = {"<h4>BlueSpace Medigun</h4>
 	<p></p>
-	<p>A prototype bluespace medigun in development by BORK</p>
+	<p>A bluespace medigun developed by BORK</p>
 	<p></p>
 	<br />
 	<ul>
-		<li>Hello and welcome to your quick field guide for the Blem</li>
+		<li>Hello and welcome to your quick field guide for the BSM-92 (or blem)</li>
 		<li>Device accepts power cells, feel free to bother security!</li>
 		<li>Device is refilled using chems, namely Bicaridine, Dylovene, and Kelotane.</li>
 		<li>Device must be worn to use, backpack variant will fit on your back, while the compact one may be worn as a belt.</li>
@@ -80,6 +97,42 @@
 	icon = 'code/game/Rogue Star/icons/itemicons/borkmedigun.dmi'
 	icon_state = "mg-modkit"
 
+/obj/item/weapon/storage/continuous_medigun_box
+	name = "Continuous Medigun Package"
+	desc = "A Box containing a BSM-92 Medigun"
+	icon = 'code/game/Rogue Star/icons/itemicons/borkmedigun.dmi'
+	icon_state = "medibox"
+	var/apply_sounds
+	drop_sound = 'sound/items/drop/cardboardbox.ogg'
+	pickup_sound = 'sound/items/pickup/cardboardbox.ogg'
+	starts_with = list(/obj/item/weapon/paper/continuous_medigun_manual,
+	/obj/item/device/continuous_medigun/preloaded
+	)
+
+/obj/item/weapon/storage/continuous_medigun_box/medigun_cmo
+	name = "Continuous Medigun CMO Package"
+	desc = "A Box containing a BSM-92 Medigun upgrade, and basic supplies"
+	icon = 'code/game/Rogue Star/icons/itemicons/borkmedigun.dmi'
+	icon_state = "medibox"
+	starts_with = list(/obj/item/weapon/paper/continuous_medigun_manual,
+	/obj/item/device/continuous_medigun/preloaded/medigun_cmo,
+	/obj/item/device/continuous_medigun_modkit
+	)
+
+/obj/item/weapon/storage/continuous_medigun_box/attack_self(mob/user)
+	. = ..()
+	if(do_after(user, 10))
+		user.temporarilyRemoveItemFromInventory(src, TRUE)
+		for(var/obj/stuff as anything in contents)
+			if(isitem(stuff))
+				user.put_in_hands(stuff)
+			else
+				stuff.forceMove(drop_location())
+		playsound(loc, 'sound/items/poster_ripped.ogg', 100, TRUE)
+		qdel(src)
+
+/obj/item/weapon/storage/continuous_medigun_box/AltClick(mob/user)
+	return
 
 /obj/item/device/continuous_medigun/proc/is_twohanded()
 	return !compact
@@ -100,7 +153,7 @@
 
 
 /obj/item/device/continuous_medigun/proc/do_upgrade()
-	name = "prototype bluespace medigun backpack - compact"
+	name = "BSM-92 bluespace medigun belt"
 	desc = "Contains a compact version of the bluespace medigun able to be used one handed, this portable unit digitizes and stores chems and battery power used by the attached gun."
 	icon_state = "mg-belt"
 	item_state = "mg-belt-onmob"
@@ -254,9 +307,7 @@
 		medigun = new medigun(src, src)
 	else
 		medigun = new(src, src)
-	if(ispath(bcell))
-		bcell = new bcell(src)
-		bcell.charge = 0
+
 	if(ispath(sbin))
 		sbin = new sbin(src)
 	if(ispath(smodule))
@@ -268,6 +319,14 @@
 		scapacitor = new scapacitor(src)
 	if(ispath(slaser))
 		slaser = new slaser(src)
+	if(ispath(bcell))
+		bcell = new bcell(src)
+		if(!preloaded)
+			bcell.charge = 0
+		else
+			bcell.charge = chargecap
+			bcell.maxcharge = chargecap
+			medigun.beam_range = 3+smodule.get_rating()
 	update_icon()
 
 
@@ -497,7 +556,7 @@
 					playsound(src, 'sound/weapons/flipblade.ogg', 25, 1)
 				W.forceMove(src)
 				scapacitor = W
-				var/scaptier = scapacitor.get_rating()
+				scaptier = scapacitor.get_rating()
 				if(scaptier == 1)
 					chargecap = 1000
 					bcell.maxcharge = 1000

@@ -259,6 +259,18 @@ var/global/floorIsLava = 0
 	var/datum/tgui_module/admin/client_etching_viewer/A = new(src)
 	A.tgui_interact(usr)
 
+// RS Add: Memory viewer support (Lira, May 2026)
+/datum/admins/proc/MemoryViewer()
+	set category = "Admin"
+	set name = "Memory Viewer"
+	if (!istype(src,/datum/admins))
+		src = usr.client.holder
+	if (!istype(src,/datum/admins))
+		to_chat(usr, "Error: you are not an admin!")
+		return
+	var/datum/tgui_module/admin/client_memory_viewer/A = new(src)
+	A.tgui_interact(usr)
+
 
 /datum/admins/proc/player_has_info(var/key as text)
 	var/savefile/info = new("data/player_saves/[copytext(key, 1, 2)]/[key]/info.sav")
@@ -534,13 +546,13 @@ var/global/floorIsLava = 0
 /datum/admins/proc/Jobbans()
 	if(!check_rights(R_BAN))	return
 
-	var/dat = "<B>Job Bans!</B><HR><table>"
+	var/dat = "<html><B>Job Bans!</B><HR><table>" // RS Edit: Job ban html fix (Lira, April 2026)
 	for(var/t in jobban_keylist)
 		var/r = t
 		if( findtext(r,"##") )
 			r = copytext( r, 1, findtext(r,"##") )//removes the description
 		dat += text("<tr><td>[t] (<A href='?src=\ref[src];[HrefToken()];removejobban=[r]'>unban</A>)</td></tr>")
-	dat += "</table>"
+	dat += "</table></html>" // RS Edit: Job ban html fix (Lira, April 2026)
 	usr << browse(dat, "window=ban;size=400x400")
 
 /datum/admins/proc/Game()

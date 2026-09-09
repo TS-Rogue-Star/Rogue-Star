@@ -9,3 +9,7 @@ updates:
     directory: "/tools"
     schedule:
       interval: "daily"
+  - package-ecosystem: npm
+    directory: "/tgui"
+    schedule:
+      interval: "daily"

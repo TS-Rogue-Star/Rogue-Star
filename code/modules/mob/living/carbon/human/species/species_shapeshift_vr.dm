@@ -217,7 +217,9 @@
 	if(!new_species)
 		return
 
-	dna.base_species = new_species
+	// RS Edit: Character Designer - Species and Prosthetics (Lira, August 2026)
+	if(dna)
+		dna.base_species = new_species
 	species.base_species = new_species
 	wrapped_species_by_ref["\ref[src]"] = new_species
 	if (visible)

@@ -122,6 +122,7 @@
 	human_brute = humanform.getActualBruteLoss()
 	human_burn = humanform.getActualFireLoss()
 	health = maxHealth - humanform.getOxyLoss() - humanform.getToxLoss() - humanform.getCloneLoss() - human_brute - human_burn
+	handle_ether_damage()	//RS ADD
 
 	//Alive, becoming dead
 	if((stat < DEAD) && (health <= 0))
@@ -310,7 +311,7 @@
 	color = new_skin
 	update_icon()
 
-/mob/living/simple_mob/slime/promethean/get_description_interaction()
+/mob/living/simple_mob/slime/promethean/get_description_interaction(var/for_chat = FALSE) // RS Edit: Examine Mode Fix (Lira, July 2026)
 	return
 
 

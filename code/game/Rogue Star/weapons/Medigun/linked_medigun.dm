@@ -236,7 +236,7 @@
 
 		for(var/name in BP_ALL)
 			var/obj/item/organ/external/O = H.organs_by_name[name]
-			for(var/datum/wound/W in O.wounds)
+			for(var/datum/wound/W in shuffle(O.wounds))
 				if (W.internal)
 					continue
 				if (W.damage_type == BRUISE || W.damage_type == CUT || W.damage_type == PIERCE)

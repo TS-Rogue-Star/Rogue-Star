@@ -27,6 +27,9 @@
 #define STARTING_SPECIES_POINTS 2
 #define MAX_SPECIES_TRAITS 3	//RS EDIT
 
+// RS Add: Custom examine link (Lira, September 2026)
+#define MAX_CUSTOM_LINK_LENGTH 100
+
 // Xenochimera thing mostly
 #define REVIVING_NOW		-1
 #define REVIVING_DONE		0

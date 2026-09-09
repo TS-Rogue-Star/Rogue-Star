@@ -14,6 +14,16 @@
 /obj/machinery/suspension_gen/Initialize()
 	. = ..()
 	cell = new /obj/item/weapon/cell/high(src)
+	power_change() // RS Add: Suspension TGUI Fix (Lira, April 2026)
+
+// RS Add: Suspension TGUI Fix (Lira, April 2026)
+/obj/machinery/suspension_gen/power_change()
+	var/oldstat = stat
+	if(cell)
+		stat &= ~NOPOWER
+	else
+		stat |= NOPOWER
+	return (stat != oldstat)
 
 /obj/machinery/suspension_gen/process()
 	if(suspension_field)
@@ -45,6 +55,7 @@
 
 		icon_state = "suspension"
 		cell = null
+		power_change() // RS Add: Suspension TGUI Fix (Lira, April 2026)
 		to_chat(user, "<span class='info'>You remove the power cell</span>")
 
 /obj/machinery/suspension_gen/tgui_interact(mob/user, datum/tgui/ui)
@@ -74,7 +85,7 @@
 			if(locked)
 				return
 			if(!suspension_field)
-				if(cell.charge > 0)
+				if(cell?.charge > 0) // RS Edit: Suspension TGUI Fix (Lira, April 2026)
 					if(anchored)
 						activate()
 					else
@@ -117,6 +128,7 @@
 				user.drop_item()
 				W.loc = src
 				cell = W
+				power_change() // RS Add: Suspension TGUI Fix (Lira, April 2026)
 				to_chat(user, "<span class='info'>You insert the power cell.</span>")
 				icon_state = "suspension"
 	else if(istype(W, /obj/item/weapon/card))
@@ -139,7 +151,7 @@
 			return 1
 
 /obj/machinery/suspension_gen/emag_act(var/remaining_charges, var/mob/user)
-	if(cell.charge > 0 && locked)
+	if(cell?.charge > 0 && locked) // RS Edit: Suspension TGUI Fix (Lira, April 2026)
 		locked = 0
 		return 1
 

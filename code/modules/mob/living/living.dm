@@ -125,6 +125,7 @@
 		set_stat(CONSCIOUS)
 	else
 		health = getMaxHealth() - getOxyLoss() - getToxLoss() - getFireLoss() - getBruteLoss() - getCloneLoss() - halloss
+		handle_ether_damage()	//RS ADD
 
 //This proc is used for mobs which are affected by pressure to calculate the amount of pressure that actually
 //affects them once clothing is factored in. ~Errorage
@@ -1187,7 +1188,7 @@
 	if(a_intent == I_HELP && Adjacent(target) && isitem(item) && ishuman(target))
 		var/obj/item/I = item
 		var/mob/living/carbon/human/H = target
-		if(H.in_throw_mode && H.a_intent == I_HELP && unEquip(I))
+		if(H.click_flags & CLICK_THROW && H.a_intent == I_HELP && unEquip(I))	//RS EDIT
 			H.put_in_hands(I) // If this fails it will just end up on the floor, but that's fitting for things like dionaea.
 			visible_message("<span class='filter_notice'><b>[src]</b> hands \the [H] \a [I].</span>", SPAN_NOTICE("You give \the [target] \a [I]."))
 		else

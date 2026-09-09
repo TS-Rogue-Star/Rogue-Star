@@ -2204,7 +2204,6 @@
 /turf/simulated/floor/water/underwater,
 /area/redgate/islands/underwater)
 "Su" = (
-/obj/item/weapon/aliencoin/gold,
 /turf/simulated/floor/water/underwater,
 /area/redgate/islands/underwater)
 "Sx" = (

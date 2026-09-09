@@ -38,18 +38,67 @@
 			if(length(compiled_chord))
 				compiled_chords[++compiled_chords.len] = compiled_chord
 
+// RS Add Start: Advanced synth (Lira, March 2026)
+
+/datum/song/proc/get_synth_playback_instruments()
+	if(!using_instrument)
+		return list()
+	return list(using_instrument)
+
+/datum/song/proc/get_synth_playback_layer_key(datum/instrument/instrument_override = null)
+	var/datum/instrument/active_instrument = instrument_override || using_instrument
+	if(active_instrument)
+		return REF(active_instrument)
+	return "__default__"
+
+/datum/song/proc/register_held_synth_channel(channel_text, datum/instrument/instrument_override = null)
+	if(!channel_text)
+		return FALSE
+	held_synth_channels_by_layer[get_synth_playback_layer_key(instrument_override)] = channel_text
+	return TRUE
+
+/datum/song/proc/synth_channel_is_held(channel_text)
+	if(!full_sustain_held_note || !channel_text || !length(held_synth_channels_by_layer))
+		return FALSE
+	for(var/layer_key in held_synth_channels_by_layer)
+		if(held_synth_channels_by_layer[layer_key] == channel_text)
+			return TRUE
+	return FALSE
+
+/datum/song/proc/unregister_held_synth_channel(channel_text)
+	if(!channel_text || !length(held_synth_channels_by_layer))
+		return FALSE
+	. = FALSE
+	for(var/layer_key in held_synth_channels_by_layer.Copy())
+		if(held_synth_channels_by_layer[layer_key] != channel_text)
+			continue
+		held_synth_channels_by_layer -= layer_key
+		. = TRUE
+
+/datum/song/proc/get_synth_channel_volume_multiplier(channel_text)
+	var/list/channel_data = channel_playback_data[channel_text]
+	if(islist(channel_data) && isnum(channel_data["volume_multiplier"]))
+		return channel_data["volume_multiplier"]
+	return using_instrument?.volume_multiplier || 1
+
+/datum/song/proc/get_synth_channel_actual_volume(channel_text, current_volume)
+	return (current_volume * 0.01) * volume * get_synth_channel_volume_multiplier(channel_text)
+
+// RS Add End
+
 /**
  * Plays a specific numerical key from our instrument to anyone who can hear us.
  * Does a hearing check if enough time has passed.
  */
 // RS Edit: Browser-based instrument audio (Lira, March 2026)
-/datum/song/proc/register_synth_channel_state(key)
+/datum/song/proc/register_synth_channel_state(key, datum/instrument/instrument_override = null)
 	if(can_noteshift)
 		key = clamp(key + note_shift, key_min, key_max)
 	if(note_filter_enabled) //RS Add: Note range filtering (Lira, August 2025)
 		if(key < note_filter_min || key > note_filter_max)
 			return null
-	var/datum/instrument_key/K = using_instrument?.samples[num2text(key)] //See how fucking easy it is to make a number text? You don't need a complicated 9 line proc!
+	var/datum/instrument/active_instrument = instrument_override || using_instrument
+	var/datum/instrument_key/K = active_instrument?.samples[num2text(key)] //See how fucking easy it is to make a number text? You don't need a complicated 9 line proc!
 	if(!K?.sample)
 		return null
 	//Should probably add channel limiters here at some point but I don't care right now.
@@ -60,14 +109,15 @@
 	channels_playing[channel_text] = 100
 	channel_playback_data[channel_text] = list(
 		"sample" = K.sample,
-		"frequency" = K.frequency
+		"frequency" = K.frequency,
+		"volume_multiplier" = active_instrument?.volume_multiplier || 1
 	)
-	last_channel_played = channel_text
+	register_held_synth_channel(channel_text, active_instrument)
 	return list(
 		"channel" = channel,
 		"sample" = K.sample,
 		"frequency" = K.frequency,
-		"volume" = src.volume * using_instrument.volume_multiplier
+		"volume" = src.volume * (active_instrument?.volume_multiplier || 1)
 	)
 
 // RS Add: Browser-based instrument audio (Lira, March 2026)
@@ -80,10 +130,10 @@
 	return FALSE
 
 // RS Edit: Browser-based instrument audio (Lira, March 2026)
-/datum/song/proc/playkey_synth(key, mob/user, list/targets_override) //RS Edit: Add override list (Lira, August 2025)
+/datum/song/proc/playkey_synth(key, mob/user, list/targets_override, datum/instrument/instrument_override = null) //RS Edit: Add override list (Lira, August 2025)
 	if(!islist(targets_override) && ((world.time - MUSICIAN_HEARCHECK_MINDELAY) > last_hearcheck))
 		do_hearcheck()
-	var/list/channel_state = register_synth_channel_state(key)
+	var/list/channel_state = register_synth_channel_state(key, instrument_override)
 	if(!islist(channel_state))
 		return FALSE
 	. = TRUE
@@ -135,7 +185,7 @@
 	if(!sample)
 		return FALSE
 	var/frequency = channel_data["frequency"]
-	var/actual_volume = (current_volume * 0.01) * volume * using_instrument.volume_multiplier
+	var/actual_volume = get_synth_channel_actual_volume(channel_text, current_volume)
 	if(actual_volume <= 0)
 		return FALSE
 	var/sound/copy = sound(sample)
@@ -169,6 +219,7 @@
 		channels_playing.len = 0
 		channels_idle.len = 0
 		channel_playback_data.Cut()
+		held_synth_channels_by_layer.Cut()
 		synth_fallback_listeners.Cut()
 		SSinstruments.current_instrument_channels -= using_sound_channels
 		using_sound_channels = 0
@@ -192,7 +243,7 @@
 		. = text2num(channels_idle[1])
 		channels_idle.Cut(1,2)
 		return
-	if(using_sound_channels >= max_sound_channels)
+	if(using_sound_channels >= get_max_sound_channels()) // RS Edit: Advanced synth (Lira, March 2026)
 		return
 	. = SSinstruments.reserve_instrument_channel(src)
 	if(!isnull(.))
@@ -208,6 +259,7 @@
 /datum/song/proc/process_decay(wait_ds)
 	if(!length(channels_playing))
 		channel_playback_data.Cut()
+		held_synth_channels_by_layer.Cut()
 		synth_fallback_listeners.Cut()
 		return
 	var/list/current_targets = get_browser_listener_targets()
@@ -242,7 +294,7 @@
 	var/linear_dropoff = cached_linear_dropoff * wait_ds
 	var/exponential_dropoff = cached_exponential_dropoff ** wait_ds
 	for(var/channel in channels_playing)
-		if(full_sustain_held_note && (channel == last_channel_played))
+		if(synth_channel_is_held(channel))
 			continue
 		var/current_volume = channels_playing[channel]
 		switch(sustain_mode)
@@ -256,6 +308,7 @@
 		if(dead)
 			channels_playing -= channel
 			channel_playback_data -= channel
+			unregister_held_synth_channel(channel)
 			channels_idle += channel
 			for(var/mob/M in active_fallback_targets)
 				if(!M)
@@ -267,7 +320,8 @@
 				if(!M)
 					hearing_mobs -= M
 					continue
-				M.set_sound_channel_volume(channelnumber, (current_volume * 0.01) * volume * using_instrument.volume_multiplier)
+				M.set_sound_channel_volume(channelnumber, get_synth_channel_actual_volume(channel, current_volume))
 	if(!length(channels_playing))
 		channel_playback_data.Cut()
+		held_synth_channels_by_layer.Cut()
 		synth_fallback_listeners.Cut()

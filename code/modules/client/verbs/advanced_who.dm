@@ -1,6 +1,6 @@
 
 /client/verb/who_advanced()
-	set name = "Advanced Who"
+	set name = "Who"	//RS EDIT
 	set category = "OOC"
 
 	var/msg = "<b>Current Players:</b>\n"

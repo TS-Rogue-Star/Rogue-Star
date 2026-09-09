@@ -239,6 +239,10 @@
 		var/list/in_range = get_mobs_and_objs_in_view_fast(T,range,2,remote_ghosts = client ? TRUE : FALSE)
 		var/list/m_viewers = in_range["mobs"]
 		var/list/o_viewers = in_range["objs"]
+		// RS Add: Persistent memory system (Lira, May 2026)
+		if(isliving(src))
+			var/mob/living/emoter = src
+			record_character_memory_recipients(emoter, m_viewers, "me", -1, FALSE, m_type, TRUE, FALSE, character_memory_source_known_contained_recipients(emoter))
 
 		for(var/mob/M as anything in m_viewers)
 			spawn(0) // It's possible that it could be deleted in the meantime, or that it runtimes.

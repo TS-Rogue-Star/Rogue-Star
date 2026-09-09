@@ -53,7 +53,12 @@ var/global/list/marking_icon_cache = list() // RS Add: Icon cache (Lira, Septemb
 	var/cache_token
 	if(istype(mark_style, /datum/sprite_accessory/marking/custom))
 		var/datum/sprite_accessory/marking/custom/custom_style = mark_style
-		cache_token = custom_style.cache_hash || custom_style.get_cache_key()
+		if(custom_style.cache_hash)
+			cache_token = custom_style.cache_hash
+		else if(custom_style.source && !QDELETED(custom_style.source))
+			cache_token = custom_style.get_cache_key()
+		else
+			cache_token = mark_style.icon_state
 	else
 		cache_token = mark_style.icon_state
 	if(!cache_token)
@@ -191,12 +196,15 @@ var/global/list/marking_icon_cache = list() // RS Add: Icon cache (Lira, Septemb
 	if(force_icon && !skip_forced_icon) //RS EDIT (CS PR #5565)
 		mob_icon = new /icon(force_icon, "[icon_name][gendered_icon ? "_[gender]" : ""]")
 	else
-		if(!dna)
+		if(!owner && !dna) // RS Edit: Character Designer - Species and Prosthetics (Lira, August 2026)
 			mob_icon = new /icon('icons/mob/human_races/r_human.dmi', "[icon_name][gendered_icon ? "_[gender]" : ""]")
 		else
 
 			if(!gendered_icon)
 				gender = null
+			// RS Add: Character Designer - Species and Prosthetics (Lira, August 2026)
+			else if(owner)
+				gender = owner.gender == FEMALE ? "f" : "m"
 			else
 				if(dna.GetUIState(DNA_UI_GENDER))
 					gender = "f"

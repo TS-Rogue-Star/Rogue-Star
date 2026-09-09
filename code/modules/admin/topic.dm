@@ -666,8 +666,8 @@
 		jobs += "</tr></table>"
 
 		// Finished
-		body = "<body>[jobs]</body>"
-		dat = "<tt>[header][body]</tt>"
+		body = "<body><tt>[jobs]</tt></body>" // RS Edit: Job ban html fix (Lira, April 2026)
+		dat = "<html>[header][body]</html>" // RS Edit: Job ban html fix (Lira, April 2026)
 		usr << browse(dat, "window=jobban2;size=800x490")
 		return
 

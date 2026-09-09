@@ -76,7 +76,7 @@
 		/obj/item/weapon/tool,
 		/obj/item/weapon/reagent_containers/food,
 		/obj/item/weapon/coin,
-		/obj/item/weapon/aliencoin,
+		/obj/item/triangle,	//RS EDIT
 		/obj/item/weapon/ore,
 		/obj/item/weapon/disk/nuclear,
 		/obj/item/toy,

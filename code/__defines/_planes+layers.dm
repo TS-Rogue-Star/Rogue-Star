@@ -170,6 +170,13 @@ What is the naming convention for planes or layers?
 #define PLANE_FULLSCREEN		90 //Blindness, mesons, druggy, etc
 	#define OBFUSCATION_LAYER	5 //Where images covering the view for eyes are put
 	#define FULLSCREEN_LAYER	18
+	// RS Add Start: Belly effect layering (Lira, April 2026)
+	#define BELLY_FULLSCREEN_BASE_LAYER		(FULLSCREEN_LAYER - 0.05)
+	#define BELLY_FULLSCREEN_LAYER_1		(FULLSCREEN_LAYER - 0.04)
+	#define BELLY_FULLSCREEN_LAYER_2		(FULLSCREEN_LAYER - 0.03)
+	#define BELLY_FULLSCREEN_LAYER_3		(FULLSCREEN_LAYER - 0.02)
+	#define BELLY_FULLSCREEN_REAGENT_LAYER	(FULLSCREEN_LAYER - 0.01)
+	// RS Add End
 	#define DAMAGE_LAYER		18.1
 	#define BLIND_LAYER			18.2
 	#define CRIT_LAYER			18.3

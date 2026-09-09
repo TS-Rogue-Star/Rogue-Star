@@ -29,8 +29,8 @@
 	pto_type = PTO_TALON
 	timeoff_factor = 1
 	dept_time_required = 60
-	access = list(access_talon, access_talon_bridge, access_talon_medical, access_talon_engineer, access_talon_cargo, access_talon_security)
-	minimal_access = list(access_talon, access_talon_bridge, access_talon_medical, access_talon_engineer, access_talon_cargo, access_talon_security)
+	access = list(access_talon, access_talon_bridge, access_talon_medical, access_talon_engineer, access_talon_cargo, access_talon_security, access_talon_pilot) //RS Edit
+	minimal_access = list(access_talon, access_talon_bridge, access_talon_medical, access_talon_engineer, access_talon_cargo, access_talon_security, access_talon_pilot) //RS Edit
 	alt_titles = list("Talon Commander" = /datum/alt_title/talon_commander, "Rogue Trader" = /datum/alt_title/rogue_trader)
 
 /datum/alt_title/talon_commander
@@ -58,8 +58,8 @@
 	playtime_only = TRUE
 	pto_type = PTO_TALON
 	timeoff_factor = 1
-	access = list(access_talon, access_talon_bridge, access_talon_medical, access_talon_engineer, access_talon_cargo, access_talon_security)
-	minimal_access = list(access_talon, access_talon_bridge, access_talon_medical, access_talon_engineer, access_talon_cargo, access_talon_security)
+	access = list(access_talon, access_talon_bridge, access_talon_medical, access_talon_engineer, access_talon_cargo, access_talon_security, access_talon_pilot) //RS Edit
+	minimal_access = list(access_talon, access_talon_bridge, access_talon_medical, access_talon_engineer, access_talon_cargo, access_talon_security, access_talon_pilot) //RS Edit
 	alt_titles = list("Talon Medic" = /datum/alt_title/talon_medic)
 
 /datum/alt_title/talon_medic
@@ -85,12 +85,15 @@
 	playtime_only = TRUE
 	pto_type = PTO_TALON
 	timeoff_factor = 1
-	access = list(access_talon, access_talon_bridge, access_talon_medical, access_talon_engineer, access_talon_cargo, access_talon_security)
-	minimal_access = list(access_talon, access_talon_bridge, access_talon_medical, access_talon_engineer, access_talon_cargo, access_talon_security)
-	alt_titles = list("Talon Technician" = /datum/alt_title/talon_tech)
+	access = list(access_talon, access_talon_bridge, access_talon_medical, access_talon_engineer, access_talon_cargo, access_talon_security, access_talon_pilot) //RS Edit
+	minimal_access = list(access_talon, access_talon_bridge, access_talon_medical, access_talon_engineer, access_talon_cargo, access_talon_security, access_talon_pilot) //RS Edit
+	alt_titles = list("Talon Technician" = /datum/alt_title/talon_tech, "Talon Atmospheric Technician" = /datum/alt_title/talon_atmos)
 
 /datum/alt_title/talon_tech
 	title = "Talon Technician"
+
+/datum/alt_title/talon_atmos
+	title = "Talon Atmospheric Technician"
 
 
 /datum/job/talon_pilot
@@ -112,8 +115,8 @@
 	playtime_only = TRUE
 	pto_type = PTO_TALON
 	timeoff_factor = 1
-	access = list(access_talon, access_talon_bridge, access_talon_medical, access_talon_engineer, access_talon_cargo, access_talon_security)
-	minimal_access = list(access_talon, access_talon_bridge, access_talon_medical, access_talon_engineer, access_talon_cargo, access_talon_security)
+	access = list(access_talon, access_talon_bridge, access_talon_medical, access_talon_engineer, access_talon_cargo, access_talon_security, access_talon_pilot) //RS Edit
+	minimal_access = list(access_talon, access_talon_bridge, access_talon_medical, access_talon_engineer, access_talon_cargo, access_talon_security, access_talon_pilot) //RS Edit
 	alt_titles = list("Talon Helmsman" = /datum/alt_title/talon_helmsman)
 
 /datum/alt_title/talon_helmsman
@@ -139,8 +142,8 @@
 	playtime_only = TRUE
 	pto_type = PTO_TALON
 	timeoff_factor = 1
-	access = list(access_talon, access_talon_bridge, access_talon_medical, access_talon_engineer, access_talon_cargo, access_talon_security)
-	minimal_access = list(access_talon, access_talon_bridge, access_talon_medical, access_talon_engineer, access_talon_cargo, access_talon_security)
+	access = list(access_talon, access_talon_bridge, access_talon_medical, access_talon_engineer, access_talon_cargo, access_talon_security, access_talon_pilot) //RS Edit
+	minimal_access = list(access_talon, access_talon_bridge, access_talon_medical, access_talon_engineer, access_talon_cargo, access_talon_security, access_talon_pilot) //RS Edit
 	alt_titles = list("Talon Security" = /datum/alt_title/talon_security)
 
 /datum/alt_title/talon_security
@@ -165,8 +168,8 @@
 	playtime_only = TRUE
 	pto_type = PTO_TALON
 	timeoff_factor = 1
-	access = list(access_talon, access_talon_bridge, access_talon_medical, access_talon_engineer, access_talon_cargo, access_talon_security)
-	minimal_access = list(access_talon, access_talon_bridge, access_talon_medical, access_talon_engineer, access_talon_cargo, access_talon_security)
+	access = list(access_talon, access_talon_bridge, access_talon_medical, access_talon_engineer, access_talon_cargo, access_talon_security, access_talon_pilot) //RS Edit
+	minimal_access = list(access_talon, access_talon_bridge, access_talon_medical, access_talon_engineer, access_talon_cargo, access_talon_security, access_talon_pilot) //RS Edit
 	alt_titles = list("Talon Excavator" = /datum/alt_title/talon_excavator)
 
 /datum/alt_title/talon_excavator
@@ -222,7 +225,7 @@
 	backpack = /obj/item/weapon/storage/backpack/medic
 	satchel_one = /obj/item/weapon/storage/backpack/satchel/med
 	messenger_bag = /obj/item/weapon/storage/backpack/messenger/med
-	uniform = /obj/item/clothing/under/rank/talon/proper
+	uniform = /obj/item/clothing/under/rank/talon/medical //RS Edit
 	suit = /obj/item/clothing/suit/storage/toggle/labcoat
 	l_hand = /obj/item/weapon/storage/firstaid/regular
 	r_pocket = /obj/item/device/flashlight/pen
@@ -267,7 +270,7 @@
 	backpack = /obj/item/weapon/storage/backpack/industrial
 	satchel_one = /obj/item/weapon/storage/backpack/satchel/eng
 	messenger_bag = /obj/item/weapon/storage/backpack/messenger/engi
-	uniform = /obj/item/clothing/under/rank/talon/basic
+	uniform = /obj/item/clothing/under/rank/talon/engineer
 	belt = /obj/item/weapon/storage/belt/utility/atmostech
 	backpack = /obj/item/weapon/storage/backpack/talon
 	satchel_one = /obj/item/weapon/storage/backpack/satchel/talon
@@ -286,7 +289,7 @@
 	shoes = /obj/item/clothing/shoes/boots/workboots
 	r_pocket = /obj/item/weapon/storage/bag/ore
 	l_pocket = /obj/item/weapon/tool/crowbar
-	uniform = /obj/item/clothing/under/rank/talon/basic
+	uniform = /obj/item/clothing/under/rank/talon/miner
 	backpack = /obj/item/weapon/storage/backpack/talon
 	satchel_one = /obj/item/weapon/storage/backpack/satchel/talon
 	messenger_bag = /obj/item/weapon/storage/backpack/messenger/talon

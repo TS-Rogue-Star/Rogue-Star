@@ -1,9 +1,23 @@
+
 var/list/obj/machinery/photocopier/faxmachine/allfaxes = list()
-var/list/admin_departments = list("[using_map.boss_name]", "Virgo-Prime Governmental Authority", "Virgo-Erigonne Job Boards", "Supply")
+var/list/admin_departments = list() // RS Edit: Fax machine fix (Lira, March 2026)
 var/list/alldepartments = list()
 var/global/last_fax_role_request
 
 var/list/adminfaxes = list()	//cache for faxes that have been sent to admins
+
+// RS Add: Fax machine fix (Lira, March 2026)
+/proc/setup_fax_admin_departments()
+	if(!using_map)
+		return
+
+	admin_departments = list(
+		"[using_map.boss_name]",
+		"Virgo-Prime Governmental Authority",
+		"Virgo-Erigonne Job Boards",
+		"Talon Headquarters", //RS Add
+		"Supply"
+	)
 
 /obj/machinery/photocopier/faxmachine
 	name = "fax machine"
@@ -387,6 +401,8 @@ var/list/adminfaxes = list()	//cache for faxes that have been sent to admins
 		message_admins(sender, "VIRGO GOVERNMENT FAX", rcvdcopy, "CentComFaxReply", "#1F66A0")
 	else if(destination == "Supply")
 		message_admins(sender, "[uppertext(using_map.boss_short)] SUPPLY FAX", rcvdcopy, "CentComFaxReply", "#5F4519")
+	else if(destination == "Talon Headquarters") //RS Add
+		message_admins(sender, "TALON HEADQUARTERS FAX", rcvdcopy, "TalonHeadquartersFaxReply", "#e96046")
 	else
 		message_admins(sender, "[uppertext(destination)] FAX", rcvdcopy, "UNKNOWN")
 

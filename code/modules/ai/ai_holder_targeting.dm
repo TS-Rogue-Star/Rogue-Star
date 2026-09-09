@@ -300,7 +300,7 @@
 		ai_log("can_see_target() : Timed out. Exiting.", AI_LOG_TRACE)
 		remove_target()
 		return FALSE
-	if(!hostile && !holder.hunter)
+	if(!hostile && !vore_hostile && !holder.hunter) // RS Edit: Vore hostile fix (Lira, May 2026)
 		if(holder.health > (holder.maxHealth * 0.75))
 			if(last_attacked_time + 5 SECONDS <= world.time)
 				remove_target()

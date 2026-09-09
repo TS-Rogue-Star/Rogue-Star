@@ -69,13 +69,17 @@
 		var/mob/observer/dead/ghost
 		if(build_mode)
 			togglebuildmode(body)
-			ghost = body.ghostize(1)
+		// RS Edit Start: Fix aghost in ghost blocked areas (Lira, April 2026)
+		ghost = body.ghostize(1)
+		if(ghost)
 			ghost.admin_ghosted = 1
-			if(build_mode == "Yes")
-				togglebuildmode(ghost)
-		else
-			ghost = body.ghostize(1)
-			ghost.admin_ghosted = 1
+			var/turf/body_turf = get_turf(body)
+			if(body_turf)
+				ghost.forceMove(body_turf)
+			ghost.reset_view(null)
+		if(ghost && build_mode == "Yes")
+			togglebuildmode(ghost)
+		// RS Edit End
 		if(body)
 			body.teleop = ghost
 			if(!body.key)
@@ -163,6 +167,7 @@
 /client/proc/colorooc()
 	set category = "Fun"
 	set name = "OOC Text Color"
+	set hidden = TRUE // RS Add: Preference settings panel (Lira, July 2026)
 	if(!holder)	return
 	var/response = tgui_alert(src, "Please choose a distinct color that is easy to read and doesn't mix with all the other chat and radio frequency colors.", "Change own OOC color", list("Pick new color", "Reset to default", "Cancel"))
 	if(response == "Pick new color")

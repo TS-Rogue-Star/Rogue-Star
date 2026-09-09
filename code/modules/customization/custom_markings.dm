@@ -147,6 +147,72 @@ GLOBAL_LIST_INIT(custom_marking_replacement_children, list(
 	bake_hash = null
 	return TRUE
 
+// Check whether a runtime custom marking style belongs to a specific marking
+/proc/custom_marking_style_matches(datum/sprite_accessory/marking/custom/style, datum/sprite_accessory/marking/custom/match_style = null, id = null, datum/custom_marking/source = null)
+	if(!istype(style))
+		return FALSE
+	if(match_style && style == match_style)
+		return TRUE
+	if(source && style.source == source)
+		return TRUE
+	if(id && style.source?.id == id)
+		return TRUE
+	return FALSE
+
+// Check whether spawned mobs still hold runtime style in organ markings
+/proc/custom_marking_style_has_mob_references(datum/sprite_accessory/marking/custom/style)
+	if(!istype(style) || !islist(human_mob_list))
+		return FALSE
+	for(var/mob/living/carbon/human/H in human_mob_list)
+		if(!istype(H) || QDELETED(H) || !islist(H.organs))
+			continue
+		for(var/obj/item/organ/external/O in H.organs)
+			if(!istype(O) || !islist(O.markings))
+				continue
+			for(var/marking_name in O.markings)
+				var/list/mark_data = O.markings[marking_name]
+				if(islist(mark_data) && mark_data["datum"] == style)
+					return TRUE
+	return FALSE
+
+// Remove matching custom marking styles from global style list
+/proc/remove_custom_marking_styles_from_list(list/style_list, datum/sprite_accessory/marking/custom/match_style = null, id = null, datum/custom_marking/source = null, list/dispose_queue = null)
+	if(!islist(style_list) || !style_list.len)
+		return FALSE
+	var/list/remove_keys = list()
+	var/list/removed_styles = list()
+	for(var/key in style_list)
+		var/datum/sprite_accessory/marking/custom/style = style_list[key]
+		if(style && QDELETED(style))
+			remove_keys += key
+			continue
+		if(!custom_marking_style_matches(style, match_style, id, source))
+			continue
+		remove_keys += key
+		if(!(style in removed_styles))
+			removed_styles += style
+	for(var/key in remove_keys)
+		style_list -= key
+	for(var/datum/sprite_accessory/marking/custom/style in removed_styles)
+		clear_cached_marking_icons_for_style(style)
+		if(islist(dispose_queue) && !(style in dispose_queue))
+			dispose_queue += style
+	return remove_keys.len > 0
+
+// Remove matching custom marking styles from global body marking registry
+/proc/remove_custom_marking_styles_from_global_lists(datum/sprite_accessory/marking/custom/match_style = null, id = null, datum/custom_marking/source = null, dispose_removed = FALSE)
+	var/removed = FALSE
+	var/list/style_lists = list(body_marking_styles_list, body_marking_nopersist_list, body_marking_addons)
+	var/list/dispose_queue = dispose_removed ? list() : null
+	for(var/list/style_list in style_lists)
+		if(remove_custom_marking_styles_from_list(style_list, match_style, id, source, dispose_queue))
+			removed = TRUE
+	if(islist(dispose_queue))
+		for(var/datum/sprite_accessory/marking/custom/style in dispose_queue)
+			if(style != match_style && !QDELETED(style) && !custom_marking_style_has_mob_references(style))
+				qdel(style)
+	return removed
+
 // Register or update a custom marking style within global accessory lists
 /proc/register_custom_marking_style(datum/custom_marking/mark, defer_regeneration = FALSE)
 	if(!istype(mark))
@@ -154,12 +220,9 @@ GLOBAL_LIST_INIT(custom_marking_replacement_children, list(
 	var/datum/sprite_accessory/marking/custom/style = mark.ensure_sprite_accessory(defer_regeneration)
 	if(!style)
 		return null
-	LAZYINITLIST(body_marking_styles_list)
-	if(islist(body_marking_styles_list))
-		for(var/key in body_marking_styles_list)
-			if(body_marking_styles_list[key] == style && key != mark.get_style_name())
-				body_marking_styles_list -= key
 	var/style_name = mark.get_style_name()
+	remove_custom_marking_styles_from_global_lists(style, mark.id, mark, TRUE)
+	LAZYINITLIST(body_marking_styles_list)
 	style.name = style_name
 	style.sorting_group = MARKINGS_TATSCAR
 	style.genetic = FALSE
@@ -174,13 +237,6 @@ GLOBAL_LIST_INIT(custom_marking_replacement_children, list(
 	body_marking_nopersist_list[style_name] = style
 	LAZYINITLIST(body_marking_addons)
 	body_marking_addons[style_name] = style
-	var/list/aux_lists = list(body_marking_nopersist_list, body_marking_addons)
-	for(var/list/L in aux_lists)
-		if(!islist(L))
-			continue
-		for(var/key in L)
-			if(L[key] == style && key != style_name)
-				L -= key
 	return style
 
 // Remove a custom marking style from global lists
@@ -188,22 +244,16 @@ GLOBAL_LIST_INIT(custom_marking_replacement_children, list(
 	if(!id)
 		return
 	var/datum/sprite_accessory/marking/custom/style = GLOB.custom_marking_styles[id]
-	if(!style)
-		return
-	if(islist(body_marking_styles_list))
-		for(var/key in body_marking_styles_list)
-			if(body_marking_styles_list[key] == style)
-				body_marking_styles_list -= key
-	if(islist(body_marking_nopersist_list))
-		for(var/key in body_marking_nopersist_list)
-			if(body_marking_nopersist_list[key] == style)
-				body_marking_nopersist_list -= key
-	if(islist(body_marking_addons))
-		for(var/key in body_marking_addons)
-			if(body_marking_addons[key] == style)
-				body_marking_addons -= key
-	clear_cached_marking_icons_for_style(style)
+	if(style)
+		remove_custom_marking_styles_from_global_lists(style, id, style.source, TRUE)
+	else
+		remove_custom_marking_styles_from_global_lists(null, id, null, TRUE)
 	GLOB.custom_marking_styles -= id
+	if(style && !QDELETED(style))
+		if(custom_marking_style_has_mob_references(style))
+			style.source = null
+		else
+			qdel(style)
 
 // Safe numeric coercion helper
 /proc/text2num_safe(value)
@@ -266,6 +316,21 @@ GLOBAL_LIST_INIT(custom_marking_replacement_children, list(
 	src.options = list()
 	src.frames = list()
 	ensure_part_frames(src.body_parts)
+
+/datum/custom_marking/Destroy()
+	if(id)
+		unregister_custom_marking_style(id)
+		GLOB.custom_markings_by_id -= id
+	if(islist(frames))
+		QDEL_LIST_ASSOC_VAL(frames)
+	id = null
+	name = null
+	owner_ckey = null
+	body_parts = null
+	options = null
+	frames = null
+	bake_hash = null
+	return ..()
 
 // Resolve arbitrary direction inputs into canonical cardinal constants
 /datum/custom_marking/proc/normalize_dir(dir, fallback = NORTH)
@@ -786,8 +851,6 @@ GLOBAL_LIST_INIT(custom_marking_replacement_children, list(
 	var/datum/sprite_accessory/marking/custom/style = GLOB.custom_marking_styles[id]
 	if(style)
 		style.invalidate_cache()
-	style = null
-	GLOB.custom_marking_styles -= id
 
 // Serialize the marking definition for preference persistence
 /datum/custom_marking/proc/to_save()
@@ -900,6 +963,9 @@ GLOBAL_LIST_INIT(custom_marking_replacement_children, list(
 	if(!id)
 		return null
 	var/datum/sprite_accessory/marking/custom/style = GLOB.custom_marking_styles[id]
+	if(style && QDELETED(style))
+		GLOB.custom_marking_styles -= id
+		style = null
 	if(!style)
 		style = new /datum/sprite_accessory/marking/custom(src, defer_regeneration)
 	else
@@ -921,6 +987,11 @@ GLOBAL_LIST_INIT(custom_marking_replacement_children, list(
 	src.width = isnum(width) ? max(1, round(width)) : CUSTOM_MARKING_CANVAS_WIDTH
 	src.height = isnum(height) ? max(1, round(height)) : CUSTOM_MARKING_CANVAS_HEIGHT
 	reset()
+
+/datum/custom_marking_frame/Destroy()
+	layers = null
+	composite_cache = null
+	return ..()
 
 // Allocate an empty column-major grid for one paint layer
 /datum/custom_marking_frame/proc/build_layer()
@@ -1190,6 +1261,24 @@ GLOBAL_LIST_INIT(custom_marking_replacement_children, list(
 	src.body_parts = source?.body_parts?.Copy() || list()
 	update_registration(!defer_regeneration)
 
+/datum/sprite_accessory/marking/custom/Destroy()
+	release_runtime_payload()
+	return ..()
+
+// Drop generated icon payloads and source references held by an inactive custom style
+/datum/sprite_accessory/marking/custom/proc/release_runtime_payload()
+	clear_cached_marking_icons_for_style(src)
+	source = null
+	generated_icon = null
+	cache_hash = null
+	icon = null
+	digitigrade_icon = null
+	icon_state = null
+	preview_state = null
+	body_parts = null
+	render_above_body_parts = null
+	hide_body_parts = null
+
 // Keep the sprite accessory metadata in sync with the source datum
 /datum/sprite_accessory/marking/custom/proc/update_registration(regenerate = TRUE)
 	if(!source)
@@ -1206,6 +1295,8 @@ GLOBAL_LIST_INIT(custom_marking_replacement_children, list(
 /datum/sprite_accessory/marking/custom/proc/get_cache_key()
 	if(source?.bake_hash)
 		return source.bake_hash
+	if(!source || QDELETED(source))
+		return cache_hash || icon_state || name || REF(src)
 	var/hash_input = list(source?.id, source?.name, source?.get_effective_canvas_width(), source?.get_effective_canvas_height())
 	var/list/parts = source?.body_parts?.Copy() || list()
 	hash_input += list(list("parts" = parts))
@@ -1226,12 +1317,8 @@ GLOBAL_LIST_INIT(custom_marking_replacement_children, list(
 
 // Rebuild the backing icon file when the cached hash changes
 /datum/sprite_accessory/marking/custom/proc/regenerate_if_needed()
-	if(!source || !source.id)
+	if(!source || QDELETED(source) || !source.id)
 		generated_icon = null
-		icon = null
-		digitigrade_icon = null
-		icon_state = null
-		preview_state = null
 		cache_hash = null
 		return
 	var/new_hash = get_cache_key()
@@ -1240,13 +1327,11 @@ GLOBAL_LIST_INIT(custom_marking_replacement_children, list(
 	cache_hash = new_hash
 	var/hash_suffix = cache_hash ? copytext(cache_hash, 1, 9) : "00000000"
 	var/base_state = "custom_[source.id]_[hash_suffix]"
-	generated_icon = build_composite_icon(base_state)
-	if(!generated_icon)
-		icon = null
-		digitigrade_icon = null
-		icon_state = null
-		preview_state = null
+	var/icon/new_generated_icon = build_composite_icon(base_state)
+	if(!new_generated_icon)
+		generated_icon = null
 		return
+	generated_icon = new_generated_icon
 	icon = generated_icon
 	digitigrade_icon = generated_icon
 	icon_state = base_state

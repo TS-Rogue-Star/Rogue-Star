@@ -1490,7 +1490,7 @@
 	display_name = "Tempest's Medical Hud"
 	slot = slot_glasses
 	ckeywhitelist = list("wickedtemp")
-	character_name = list("Chakat Tempest Venosare")
+	character_name = list("Chakat Tempest Trismaer") // RS Edit: Whitelist tweak (Lira, March 2026)
 	allowed_roles = list("Chief Medical Officer","Medical Doctor","Chemist","Psychiatrist","Paramedic", "Off-duty Medic")
 
 /datum/gear/fluff/tempest_hypospray
@@ -1498,7 +1498,7 @@
 	display_name = "Tempest's Hypospray"
 	slot = slot_belt
 	ckeywhitelist = list("wickedtemp")
-	character_name = list("Chakat Tempest Venosare")
+	character_name = list("Chakat Tempest Trismaer") // RS Edit: Whitelist tweak (Lira, March 2026)
 	allowed_roles = list("Chief Medical Officer","Medical Doctor","Chemist","Psychiatrist","Paramedic", "Off-duty Medic")
 
 /datum/gear/fluff/tempest_backpack
@@ -1506,7 +1506,7 @@
 	display_name = "Tempest's Saddlebag"
 	slot = slot_back
 	ckeywhitelist = list("wickedtemp")
-	character_name = list("Chakat Tempest Venosare")
+	character_name = list("Chakat Tempest Trismaer") // RS Edit: Whitelist tweak (Lira, March 2026)
 
 //  X CKEYS
 /datum/gear/fluff/penelope_box

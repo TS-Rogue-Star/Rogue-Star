@@ -183,9 +183,10 @@
 	cell_type = /obj/item/weapon/cell/device/weapon/recharge
 	battery_lock = 1
 	charge_meter = 0
+	var/universal = FALSE // RS Add: Universal wizard (Lira, April 2026)
 
 /obj/item/weapon/gun/energy/staff/special_check(var/mob/user)
-	if((user.mind && !wizards.is_antagonist(user.mind)))
+	if(!universal && (user.mind && !wizards.is_antagonist(user.mind))) // RS Edit: Universal wizard (Lira, April 2026)
 		to_chat(usr, "<span class='warning'>You focus your mind on \the [src], but nothing happens!</span>")
 		return 0
 
@@ -197,13 +198,24 @@
 	else
 		src.visible_message("*fizzle*")
 	playsound(src, 'sound/effects/sparks1.ogg', 100, 1)
-/*
+
 /obj/item/weapon/gun/energy/staff/animate
 	name = "staff of animation"
 	desc = "An artifact that spits bolts of life force, which causes objects which are hit by it to animate and come to life! This magic doesn't affect machines."
+	// RS Add Start: Icon fix (Lira, April 2026)
+	icon = 'icons/obj/wizard.dmi'
+	icon_state = "staffofanimation"
+	// RS Add End
 	projectile_type = /obj/item/projectile/animate
 	charge_cost = 240
-*/
+
+// RS Add: Universal wizard (Lira, April 2026)
+/obj/item/weapon/gun/energy/staff/animate/universal
+	name = "universal staff of animation"
+	desc = "An artifact that spits bolts of life force, calibrated for the magically uninitiated."
+	projectile_type = /obj/item/projectile/animate/universal
+	universal = TRUE
+
 /obj/item/weapon/gun/energy/staff/focus
 	name = "mental focus"
 	desc = "An artifact that channels the will of the user into destructive bolts of force. If you aren't careful with it, you might poke someone's brain out."
@@ -222,6 +234,12 @@
 			to_chat(user, "<span class='warning'>The [src.name] will now strike only a single person.</span>")
 			projectile_type = "/obj/item/projectile/forcebolt"
 	*/
+
+// RS Add: Universal wizard (Lira, April 2026)
+/obj/item/weapon/gun/energy/staff/focus/universal
+	name = "universal mental focus"
+	desc = "An artifact that channels the will of the user into destructive bolts of force. This copy is calibrated for the magically uninitiated."
+	universal = TRUE
 
 /obj/item/weapon/gun/energy/dakkalaser
 	name = "suppression gun"

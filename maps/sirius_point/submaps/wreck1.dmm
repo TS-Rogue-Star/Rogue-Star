@@ -1,6 +1,6 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
-/turf/simulated/mineral/floor/vacuum/moonbase/outdoors,
+/turf/simulated/mineral/floor/vacuum/moonbase/outdoors/ignore_cavegen,
 /area/submap/moonbase/poi/east_crater/wreck1)
 "b" = (
 /turf/template_noop,
@@ -26,7 +26,7 @@
 /area/submap/moonbase/poi/east_crater/wreck1)
 "g" = (
 /obj/structure/shuttle/engine/propulsion,
-/turf/simulated/mineral/floor/vacuum/moonbase/outdoors,
+/turf/simulated/mineral/floor/vacuum/moonbase/outdoors/ignore_cavegen,
 /area/submap/moonbase/poi/east_crater/wreck1)
 "k" = (
 /obj/structure/girder,
@@ -62,7 +62,7 @@
 /turf/simulated/shuttle/floor/yellow/airless,
 /area/submap/moonbase/poi/east_crater/wreck1)
 "w" = (
-/turf/simulated/mineral/moonbase/ignore_mapgen,
+/turf/simulated/mineral/moonbase/ignore_cavegen,
 /area/submap/moonbase/poi/east_crater/wreck1)
 "x" = (
 /obj/structure/shuttle/window,
@@ -104,7 +104,7 @@
 /area/submap/moonbase/poi/east_crater/wreck1)
 "I" = (
 /obj/item/stack/rods,
-/turf/simulated/mineral/floor/vacuum/moonbase/outdoors,
+/turf/simulated/mineral/floor/vacuum/moonbase/outdoors/ignore_cavegen,
 /area/submap/moonbase/poi/east_crater/wreck1)
 "K" = (
 /obj/structure/salvageable/server_os,
@@ -122,7 +122,7 @@
 /area/submap/moonbase/poi/east_crater/wreck1)
 "O" = (
 /obj/structure/prop/rock/crystal,
-/turf/simulated/mineral/floor/vacuum/moonbase/outdoors,
+/turf/simulated/mineral/floor/vacuum/moonbase/outdoors/ignore_cavegen,
 /area/submap/moonbase/poi/east_crater/wreck1)
 "P" = (
 /obj/item/bodybag/cryobag,

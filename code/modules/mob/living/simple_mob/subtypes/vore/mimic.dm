@@ -125,6 +125,108 @@
 	wander = FALSE
 	hostile = TRUE
 
+// RS Add: Animation Staff Mimic (Lira, April 2026)
+/mob/living/simple_mob/hostile/mimic/copy
+	name = "animated object"
+	desc = "An object animated by magic."
+	icon_state = "crate"
+	icon_living = "crate"
+	icon_dead = "crate"
+	icon = 'icons/obj/storage.dmi'
+
+	faction = "mimic"
+
+	maxHealth = 40
+	health = 40
+	movement_cooldown = 2
+
+	response_help = "touches"
+	response_disarm = "pushes"
+	response_harm = "hits"
+
+	melee_damage_lower = 3
+	melee_damage_upper = 8
+	attacktext = list("struck", "bashed")
+	attack_sound = 'sound/weapons/genhit3.ogg'
+
+	min_oxy = 0
+	max_oxy = 0
+	min_tox = 0
+	max_tox = 0
+	min_co2 = 0
+	max_co2 = 0
+	min_n2 = 0
+	max_n2 = 0
+	minbodytemp = 0
+
+	ai_holder_type = /datum/ai_holder/mimic
+
+	var/obj/animated_object
+
+// RS Add: Animation Staff Mimic (Lira, April 2026)
+/mob/living/simple_mob/hostile/mimic/copy/Initialize(mapload, var/atom/movable/source, var/mob/creator, var/inherit_creator_faction = FALSE)
+	. = ..()
+	if(source)
+		copy_source(source)
+	if(creator)
+		friends += creator
+		if(inherit_creator_faction)
+			faction = creator.faction
+			ai_holder?.build_faction_friends()
+
+// RS Add: Animation Staff Mimic (Lira, April 2026)
+/mob/living/simple_mob/hostile/mimic/copy/Destroy()
+	animated_object = null
+	return ..()
+
+// RS Add: Animation Staff Mimic (Lira, April 2026)
+/mob/living/simple_mob/hostile/mimic/copy/update_icon()
+	return
+
+// RS Add: Animation Staff Mimic (Lira, April 2026)
+/mob/living/simple_mob/hostile/mimic/copy/death()
+	. = ..()
+	if(animated_object)
+		animated_object.forceMove(loc)
+		animated_object = null
+	qdel(src)
+
+// RS Add: Animation Staff Mimic (Lira, April 2026)
+/mob/living/simple_mob/hostile/mimic/copy/proc/copy_source(var/atom/movable/source)
+	if(!source)
+		return FALSE
+	if(!istype(source, /obj))
+		return FALSE
+
+	var/obj/O = source
+
+	if(source.flags & OVERLAY_QUEUED)
+		source.ImmediateOverlayUpdate()
+
+	name = source.name
+	desc = source.desc
+	appearance = source.appearance
+	if(LAZYLEN(source.overlays))
+		our_overlays = source.overlays.Copy()
+		QueueOverlayUpdate()
+	icon_living = icon_state
+	icon_dead = icon_state
+	density = TRUE
+
+	if(istype(source, /obj/item))
+		var/obj/item/I = source
+		if(I.force > 0)
+			melee_damage_lower = max(1, round(I.force / 2))
+			melee_damage_upper = max(melee_damage_lower, I.force)
+		if(LAZYLEN(I.attack_verb))
+			attacktext = I.attack_verb.Copy()
+		if(I.hitsound)
+			attack_sound = I.hitsound
+
+	animated_object = O
+	O.forceMove(src)
+	return TRUE
+
 /mob/living/simple_mob/vore/aggressive/mimic/apply_melee_effects(var/atom/A)
 	if(isliving(A))
 		var/mob/living/L = A

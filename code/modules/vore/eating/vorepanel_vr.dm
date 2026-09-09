@@ -573,9 +573,9 @@ var/global/list/rsui_healthbar_preview_cache = list()
 		selected_list["belly_fullscreen_color_trinary"] = selected.belly_fullscreen_color_trinary
 
 		if(selected.colorization_enabled)
-			selected_list["possible_fullscreens"] = icon_states('icons/mob/screen_full_colorized_vore.dmi') //Makes any icons inside of here selectable.
+			selected_list["possible_fullscreens"] = vore_fullscreen_icon_states(TRUE) //Makes any icons inside of here selectable. || RS Edit: Overlay caching and DMI improvements (Lira, June 2026)
 		else
-			selected_list["possible_fullscreens"] = icon_states('icons/mob/screen_full_vore.dmi') //Where all stomachs - colorable and not - are stored.
+			selected_list["possible_fullscreens"] = vore_fullscreen_icon_states() //Where all stomachs - colorable and not - are stored. || RS Edit: Overlay caching and DMI improvements (Lira, June 2026)
 			//INSERT COLORIZE-ONLY STOMACHS HERE.
 			//This manually removed color-only stomachs from the above list.
 			//For some reason, colorized stomachs have to be added to both colorized_vore(to be selected) and full_vore (to show the preview in tgui)
@@ -881,6 +881,25 @@ var/global/list/rsui_healthbar_preview_cache = list()
 			host.vore_smell = new_smell
 			unsaved_changes = TRUE
 			return TRUE
+		// RS Add: Move Belch color to VPrefs (Lira, July 2026)
+		if("set_belch_color")
+			if(!host.client || !host.client.prefs_vr)
+				return TRUE
+			var/color_choice = input(usr, "Choose your belch color", "Belch Color", host.client.prefs_vr.belch_color) as color|null
+			if(color_choice)
+				host.client.prefs_vr.belch_color = sanitize_hexcolor(color_choice)
+				unsaved_changes = TRUE
+			return TRUE
+		//RS ADD START
+		if("set_huff_color")
+			if(!host.client || !host.client.prefs_vr)
+				return TRUE
+			var/color_choice = input(usr, "Choose your huff color", "Huff Color", host.client.prefs_vr.huff_color) as color|null
+			if(color_choice)
+				host.client.prefs_vr.huff_color = sanitize_hexcolor(color_choice)
+				unsaved_changes = TRUE
+			return TRUE
+		//RS ADD END
 		if("toggle_dropnom_pred")
 			set_trustlist_preference_state("dropnom_pred") // RS Add: Trustlist integration (Lira, September 2025)
 			return TRUE

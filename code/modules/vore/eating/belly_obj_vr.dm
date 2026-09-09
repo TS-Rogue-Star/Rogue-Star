@@ -539,6 +539,7 @@
 				L.toggle_hud_vis()
 		if((L.stat != DEAD) && L.ai_holder)
 			L.ai_holder.go_wake()
+		L.reset_view_after_container_exit() // RS Add: Fix tum camera bug (Lira, April 2026)
 
 	// Begin RS edit
 	if (istype(owner, /mob/living/carbon/human))
@@ -546,6 +547,7 @@
 		hum.update_fullness()
 	// End RS edit
 
+// RS Edit: Belly overlay and layering enhancements (Lira, April 2026) || Overlay caching and DMI improvements (Lira, June 2026)
 /obj/belly/proc/vore_fx(mob/living/L)
 	if(!istype(L))
 		return
@@ -553,6 +555,10 @@
 		return
 	if(!L.show_vore_fx)
 		L.clear_fullscreen("belly")
+		L.clear_fullscreen("belly2")
+		L.clear_fullscreen("belly3")
+		L.clear_fullscreen("belly4")
+		L.clear_fullscreen("belly5")
 		return
 
 	var/image/ReagentImages = null //Reagent bellies || RS Add || Chomp Port
@@ -560,27 +566,40 @@
 	if(belly_fullscreen)
 		if(colorization_enabled)
 			var/obj/screen/fullscreen/F = L.overlay_fullscreen("belly", /obj/screen/fullscreen/belly/colorized)
+			F.icon = vore_fullscreen_icon(belly_fullscreen, TRUE)
 			F.icon_state = belly_fullscreen
 			F.color = belly_fullscreen_color
-			if("[belly_fullscreen]_l1" in icon_states('icons/mob/screen_full_colorized_vore_overlays.dmi'))
+			F.layer = BELLY_FULLSCREEN_BASE_LAYER
+			var/layer_one = "[belly_fullscreen]_l1"
+			if(vore_fullscreen_overlay_icon_state_exists(layer_one))
 				var/obj/screen/fullscreen/F2 = L.overlay_fullscreen("belly2", /obj/screen/fullscreen/belly/colorized/overlay)
-				F2.icon_state = "[belly_fullscreen]_l1"
+				F2.icon = vore_fullscreen_overlay_icon(layer_one)
+				F2.icon_state = layer_one
 				F2.color = belly_fullscreen_color_secondary
+				F2.layer = BELLY_FULLSCREEN_LAYER_1
 			else
 				L.clear_fullscreen("belly2")
-			if("[belly_fullscreen]_l2" in icon_states('icons/mob/screen_full_colorized_vore_overlays.dmi'))
+			var/layer_two = "[belly_fullscreen]_l2"
+			if(vore_fullscreen_overlay_icon_state_exists(layer_two))
 				var/obj/screen/fullscreen/F3 = L.overlay_fullscreen("belly3", /obj/screen/fullscreen/belly/colorized/overlay)
-				F3.icon_state = "[belly_fullscreen]_l2"
+				F3.icon = vore_fullscreen_overlay_icon(layer_two)
+				F3.icon_state = layer_two
 				F3.color = belly_fullscreen_color_trinary
+				F3.layer = BELLY_FULLSCREEN_LAYER_2
 			else
 				L.clear_fullscreen("belly3")
-			if("[belly_fullscreen]_nc" in icon_states('icons/mob/screen_full_colorized_vore_overlays.dmi'))
+			var/non_colored = "[belly_fullscreen]_nc"
+			if(vore_fullscreen_overlay_icon_state_exists(non_colored))
 				var/obj/screen/fullscreen/F4 = L.overlay_fullscreen("belly4", /obj/screen/fullscreen/belly/colorized/overlay)
-				F4.icon_state = "[belly_fullscreen]_nc"
+				F4.icon = vore_fullscreen_overlay_icon(non_colored)
+				F4.icon_state = non_colored
+				F4.layer = BELLY_FULLSCREEN_LAYER_3
 			else
 				L.clear_fullscreen("belly4")
-			var/obj/screen/fullscreen/F5 = L.overlay_fullscreen("belly5", /obj/screen/fullscreen/belly/colorized/overlay) // Reagent bellies || RS Add || Chomp Port
+			var/obj/screen/fullscreen/F5 = L.overlay_fullscreen("belly5", /obj/screen/fullscreen/belly/reagent_overlay) // Reagent bellies || RS Add || Chomp Port
+			F5.icon = vore_fullscreen_overlay_icon(belly_fullscreen)
 			F5.icon_state = belly_fullscreen //Reagent bellies || RS Add || Chomp Port
+			F5.layer = BELLY_FULLSCREEN_REAGENT_LAYER
 			F5.cut_overlays() // RS Add: Fix sticky overlays (Lira, November 2025)
 			if(L.liquidbelly_visuals && mush_overlay && (owner.nutrition > 0 || max_mush == 0 || min_mush > 0)) // Reagent bellies start || RS Add || Chomp Port
 				ReagentImages = image('icons/mob/vore/bubbles.dmi', "mush")
@@ -599,17 +618,18 @@
 					ReagentImages.color = custom_reagentcolor
 				else
 					ReagentImages.color = reagentcolor
-				if(custom_reagentalpha)
-					ReagentImages.alpha = custom_reagentalpha
-				else
-					ReagentImages.alpha = max(150, min(custom_max_volume, 255)) - (255 - belly_fullscreen_alpha)
+				ReagentImages.alpha = get_liquid_overlay_alpha()
 				ReagentImages.pixel_y = -450 + min((450 / custom_max_volume * reagents.total_volume), 450 / 100 * max_liquid_level)
 				F5.add_overlay(ReagentImages) // End reagent bellies
 		else
 			var/obj/screen/fullscreen/F = L.overlay_fullscreen("belly", /obj/screen/fullscreen/belly)
-			var/obj/screen/fullscreen/F5 = L.overlay_fullscreen("belly5", /obj/screen/fullscreen/belly/colorized/overlay) //Reagent bellies || RS Add || Chomp Port
+			var/obj/screen/fullscreen/F5 = L.overlay_fullscreen("belly5", /obj/screen/fullscreen/belly/reagent_overlay) //Reagent bellies || RS Add || Chomp Port
+			F.icon = vore_fullscreen_icon(belly_fullscreen)
 			F.icon_state = belly_fullscreen
+			F.layer = BELLY_FULLSCREEN_BASE_LAYER
+			F5.icon = vore_fullscreen_overlay_icon(belly_fullscreen)
 			F5.icon_state = belly_fullscreen //Reagent bellies || RS Add || Chomp Port
+			F5.layer = BELLY_FULLSCREEN_REAGENT_LAYER
 			F5.cut_overlays() // RS Add: Fix sticky overlays (Lira, November 2025)
 			if(L.liquidbelly_visuals && mush_overlay && (owner.nutrition > 0 || max_mush == 0 || min_mush > 0)) // Reagent bellies start || RS Add || Chomp Port
 				ReagentImages = image('icons/mob/vore/bubbles.dmi', "mush")
@@ -628,10 +648,7 @@
 					ReagentImages.color = custom_reagentcolor
 				else
 					ReagentImages.color = reagentcolor
-				if(custom_reagentalpha)
-					ReagentImages.alpha = custom_reagentalpha
-				else
-					ReagentImages.alpha = max(150, min(custom_max_volume, 255)) - (255 - belly_fullscreen_alpha)
+				ReagentImages.alpha = get_liquid_overlay_alpha()
 				ReagentImages.pixel_y = -450 + min((450 / custom_max_volume * reagents.total_volume), 450 / 100 * max_liquid_level)
 				F5.add_overlay(ReagentImages) // End reagent bellies
 	else
@@ -646,6 +663,13 @@
 			to_chat(L, "<span class='notice'>((Your pred has disabled huds in their belly. Turn off vore FX and hit F12 to get it back; or relax, and enjoy the serenity.))</span>")
 			L.toggle_hud_vis(TRUE)
 
+// RS Add: Liquid belly alpha fix (Lira, April 2026)
+/obj/belly/proc/get_liquid_overlay_alpha()
+	if(custom_reagentalpha)
+		return custom_reagentalpha
+	return CLAMP(custom_max_volume, belly_fullscreen_alpha, 255)
+
+// RS Edit: Belly overlay and layering enhancements (Lira, April 2026) || Overlay caching and DMI improvements (Lira, June 2026)
 /obj/belly/proc/vore_preview(mob/living/L)
 	if(!istype(L))
 		return
@@ -657,21 +681,34 @@
 	if(belly_fullscreen)
 		if(colorization_enabled)
 			var/obj/screen/fullscreen/F = L.overlay_fullscreen("belly", /obj/screen/fullscreen/belly/colorized)
+			F.icon = vore_fullscreen_icon(belly_fullscreen, TRUE)
 			F.icon_state = belly_fullscreen
 			F.color = belly_fullscreen_color
-			if("[belly_fullscreen]_l1" in icon_states('icons/mob/screen_full_colorized_vore_overlays.dmi'))
+			F.layer = BELLY_FULLSCREEN_BASE_LAYER
+			var/layer_one = "[belly_fullscreen]_l1"
+			if(vore_fullscreen_overlay_icon_state_exists(layer_one))
 				var/obj/screen/fullscreen/F2 = L.overlay_fullscreen("belly2", /obj/screen/fullscreen/belly/colorized/overlay)
-				F2.icon_state = "[belly_fullscreen]_l1"
+				F2.icon = vore_fullscreen_overlay_icon(layer_one)
+				F2.icon_state = layer_one
 				F2.color = belly_fullscreen_color_secondary
-			if("[belly_fullscreen]_l2" in icon_states('icons/mob/screen_full_colorized_vore_overlays.dmi'))
+				F2.layer = BELLY_FULLSCREEN_LAYER_1
+			var/layer_two = "[belly_fullscreen]_l2"
+			if(vore_fullscreen_overlay_icon_state_exists(layer_two))
 				var/obj/screen/fullscreen/F3 = L.overlay_fullscreen("belly3", /obj/screen/fullscreen/belly/colorized/overlay)
-				F3.icon_state = "[belly_fullscreen]_l2"
+				F3.icon = vore_fullscreen_overlay_icon(layer_two)
+				F3.icon_state = layer_two
 				F3.color = belly_fullscreen_color_trinary
-			if("[belly_fullscreen]_nc" in icon_states('icons/mob/screen_full_colorized_vore_overlays.dmi'))
+				F3.layer = BELLY_FULLSCREEN_LAYER_2
+			var/non_colored = "[belly_fullscreen]_nc"
+			if(vore_fullscreen_overlay_icon_state_exists(non_colored))
 				var/obj/screen/fullscreen/F4 = L.overlay_fullscreen("belly4", /obj/screen/fullscreen/belly/colorized/overlay)
-				F4.icon_state = "[belly_fullscreen]_nc"
-			var/obj/screen/fullscreen/F5 = L.overlay_fullscreen("belly5", /obj/screen/fullscreen/belly/colorized/overlay)  //Reagent bellies || RS Add || Chomp Port
+				F4.icon = vore_fullscreen_overlay_icon(non_colored)
+				F4.icon_state = non_colored
+				F4.layer = BELLY_FULLSCREEN_LAYER_3
+			var/obj/screen/fullscreen/F5 = L.overlay_fullscreen("belly5", /obj/screen/fullscreen/belly/reagent_overlay)  //Reagent bellies || RS Add || Chomp Port
+			F5.icon = vore_fullscreen_overlay_icon(belly_fullscreen)
 			F5.icon_state = belly_fullscreen //Reagent bellies || RS Add || Chomp Port
+			F5.layer = BELLY_FULLSCREEN_REAGENT_LAYER
 			F5.cut_overlays() // RS Add: Fix sticky overlays (Lira, November 2025)
 			if(L.liquidbelly_visuals && mush_overlay && (owner.nutrition > 0 || max_mush == 0 || min_mush > 0)) // Reagent bellies start || RS Add || Chomp Port
 				ReagentImages = image('icons/mob/vore/bubbles.dmi', "mush")
@@ -690,17 +727,18 @@
 					ReagentImages.color = custom_reagentcolor
 				else
 					ReagentImages.color = reagentcolor
-				if(custom_reagentalpha)
-					ReagentImages.alpha = custom_reagentalpha
-				else
-					ReagentImages.alpha = max(150, min(custom_max_volume, 255)) - (255 - belly_fullscreen_alpha)
+				ReagentImages.alpha = get_liquid_overlay_alpha()
 				ReagentImages.pixel_y = -450 + min((450 / custom_max_volume * reagents.total_volume), 450 / 100 * max_liquid_level)
 				F5.add_overlay(ReagentImages) // End reagent bellies
 		else
 			var/obj/screen/fullscreen/F = L.overlay_fullscreen("belly", /obj/screen/fullscreen/belly)
-			var/obj/screen/fullscreen/F5 = L.overlay_fullscreen("belly5", /obj/screen/fullscreen/belly/colorized/overlay) //Reagent bellies || RS Add || Chomp Port
+			var/obj/screen/fullscreen/F5 = L.overlay_fullscreen("belly5", /obj/screen/fullscreen/belly/reagent_overlay) //Reagent bellies || RS Add || Chomp Port
+			F.icon = vore_fullscreen_icon(belly_fullscreen)
 			F.icon_state = belly_fullscreen
+			F.layer = BELLY_FULLSCREEN_BASE_LAYER
+			F5.icon = vore_fullscreen_overlay_icon(belly_fullscreen)
 			F5.icon_state = belly_fullscreen //Reagent bellies || RS Add || Chomp Port
+			F5.layer = BELLY_FULLSCREEN_REAGENT_LAYER
 			F5.cut_overlays() // RS Add: Fix sticky overlays (Lira, November 2025)
 			if(L.liquidbelly_visuals && mush_overlay && (owner.nutrition > 0 || max_mush == 0 || min_mush > 0)) // Reagent bellies start || RS Add || Chomp Port
 				ReagentImages = image('icons/mob/vore/bubbles.dmi', "mush")
@@ -719,10 +757,7 @@
 					ReagentImages.color = custom_reagentcolor
 				else
 					ReagentImages.color = reagentcolor
-				if(custom_reagentalpha)
-					ReagentImages.alpha = custom_reagentalpha
-				else
-					ReagentImages.alpha = max(150, min(custom_max_volume, 255)) - (255 - belly_fullscreen_alpha)
+				ReagentImages.alpha = get_liquid_overlay_alpha()
 				ReagentImages.pixel_y = -450 + min((450 / custom_max_volume * reagents.total_volume), 450 / 100 * max_liquid_level)
 				F5.add_overlay(ReagentImages) // End reagent bellies
 	else
@@ -818,10 +853,20 @@
 		slip.slip_protect = world.time + 25 // This is to prevent slipping back into your pred if they stand on soap or something.
 	//Place them into our drop_location
 	M.forceMove(drop_location())
-	if(ismob(M))
-		var/mob/ourmob = M
-		ourmob.reset_view(null)
+	// RS Edit Start: Fix tum camera bug (Lira, April 2026)
+	if(isliving(M))
+		var/mob/living/released_mob = M
+		released_mob.reset_view_after_container_exit()
+	else if(ismob(M))
+		var/mob/released_mob_generic = M
+		released_mob_generic.reset_view(null)
+	// RS Edit End
 	items_preserved -= M
+	// RS Add: Persistent memory system (Lira, May 2026)
+	if(isliving(owner) && isliving(M))
+		var/mob/living/release_pred = owner
+		var/mob/living/release_prey = M
+		record_character_memory_pair(release_pred, release_prey, "vore_release", "as_pred", "as_prey", name)
 
 	//Special treatment for absorbed prey
 	if(isliving(M))
@@ -910,6 +955,11 @@
 	if(ismob(prey))
 		var/mob/ourmob = prey
 		ourmob.reset_view(owner)
+	// RS Add: Persistent memory system (Lira, May 2026)
+	if(isliving(owner) && isliving(prey))
+		var/mob/living/place_pred = owner
+		var/mob/living/place_prey = prey
+		record_character_memory_pair(place_pred, place_prey, "vore_place", "as_pred", "as_prey", name)
 	owner.updateVRPanel()
 	if(isanimal(owner))
 		owner.update_icon()
@@ -1213,6 +1263,10 @@
 		handle_absorb_langs(M, owner)
 
 		GLOB.prey_absorbed_roundstat++
+	// RS Add: Persistent memory system (Lira, May 2026)
+	if(isliving(owner))
+		var/mob/living/absorb_pred = owner
+		record_character_memory_pair(absorb_pred, M, "vore_absorb", "as_pred", "as_prey", name)
 
 	to_chat(M, "<span class='notice'>[absorb_alert_prey]</span>")
 	to_chat(owner, "<span class='notice'>[absorb_alert_owner]</span>")
@@ -1301,6 +1355,10 @@
 
 	M.absorbed = FALSE
 	handle_absorb_langs(M, owner)
+	// RS Add: Persistent memory system (Lira, May 2026)
+	if(isliving(owner))
+		var/mob/living/unabsorb_pred = owner
+		record_character_memory_pair(unabsorb_pred, M, "vore_unabsorb", "as_pred", "as_prey", name)
 	to_chat(M, "<span class='notice'>[unabsorb_alert_prey]</span>")
 	to_chat(owner, "<span class='notice'>[unabsorb_alert_owner]</span>")
 
@@ -1873,6 +1931,20 @@
 /obj/belly/proc/transfer_contents(atom/movable/content, obj/belly/target, silent = 0)
 	if(!(content in src) || !istype(target))
 		return
+	// RS Add: Persistent memory system (Lira, May 2026)
+	if(isliving(content))
+		var/mob/living/transfer_prey = content
+		var/transfer_detail = character_memory_belly_transfer_detail(src, target)
+		if(isliving(owner) && owner == target.owner)
+			var/mob/living/transfer_pred = owner
+			record_character_memory_pair(transfer_pred, transfer_prey, "vore_transfer", "as_pred", "as_prey", transfer_detail)
+		else
+			if(isliving(owner))
+				var/mob/living/source_pred = owner
+				record_character_memory_pair(source_pred, transfer_prey, "vore_transfer", "as_source_pred", "as_prey", transfer_detail)
+			if(isliving(target.owner))
+				var/mob/living/target_pred = target.owner
+				record_character_memory_pair(target_pred, transfer_prey, "vore_transfer", "as_target_pred", "as_prey", transfer_detail)
 	content.forceMove(target)
 	if(ismob(content) && !isobserver(content)) //RSEdit: Ports VOREStation PR15918 | Fixes bug where camera is not set to follow the ghost
 		var/mob/ourmob = content

@@ -1292,6 +1292,9 @@
 /area/redgate/fantasy/dungeon)
 "Bg" = (
 /obj/structure/simple_door/dungeon/locked,
+/obj/component_adder/lock{
+	id = "dungeon"
+	},
 /turf/simulated/floor/wmarble,
 /area/redgate/fantasy/dungeon)
 "Bh" = (

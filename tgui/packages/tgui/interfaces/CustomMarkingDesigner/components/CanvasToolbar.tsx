@@ -1,6 +1,8 @@
 // /////////////////////////////////////////////////////////////////////////////////////////////////////
 // Created by Lira for Rogue Star December 2025: Canvas toolbar component for custom marking designer //
 // /////////////////////////////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star August 2026: Character Designer - Species and Prosthetics ////////////
+// /////////////////////////////////////////////////////////////////////////////////////////////////////
 
 import { Button, Flex } from '../../../components';
 import { CHIP_BUTTON_CLASS, TOOLBAR_GROUP_CLASS } from '../constants';
@@ -37,6 +39,9 @@ export type CanvasToolbarProps = Readonly<{
   canvasBackgroundOptions: CanvasBackgroundOption[];
   resolvedCanvasBackground: CanvasBackgroundOption | null;
   cycleCanvasBackground: () => void;
+  showGearControls?: boolean;
+  showEquipment: boolean;
+  onToggleEquipment: () => void;
   showJobGear: boolean;
   onToggleJobGear: () => void;
   showLoadoutGear: boolean;
@@ -49,6 +54,9 @@ export const CanvasToolbar = ({
   canvasBackgroundOptions,
   resolvedCanvasBackground,
   cycleCanvasBackground,
+  showGearControls = true,
+  showEquipment,
+  onToggleEquipment,
   showJobGear,
   onToggleJobGear,
   showLoadoutGear,
@@ -73,21 +81,33 @@ export const CanvasToolbar = ({
       resolvedCanvasBackground={resolvedCanvasBackground}
       onCycle={cycleCanvasBackground}
     />
-    <Button
-      className={CHIP_BUTTON_CLASS}
-      icon="id-card"
-      selected={showJobGear}
-      tooltip="Show or hide job gear overlays."
-      onClick={onToggleJobGear}>
-      Job gear
-    </Button>
-    <Button
-      className={CHIP_BUTTON_CLASS}
-      icon="toolbox"
-      selected={showLoadoutGear}
-      tooltip="Show or hide loadout overlays."
-      onClick={onToggleLoadout}>
-      Loadout
-    </Button>
+    {showGearControls ? (
+      <>
+        <Button
+          className={CHIP_BUTTON_CLASS}
+          icon="shopping-bag"
+          selected={showEquipment}
+          aria-label="Toggle equipment visibility"
+          tooltip="Show or hide underwear, socks, undershirt, and the selected bag."
+          onClick={onToggleEquipment}
+        />
+        <Button
+          className={CHIP_BUTTON_CLASS}
+          icon="id-card"
+          selected={showJobGear}
+          aria-label="Toggle job gear visibility"
+          tooltip="Show or hide job gear overlays."
+          onClick={onToggleJobGear}
+        />
+        <Button
+          className={CHIP_BUTTON_CLASS}
+          icon="toolbox"
+          selected={showLoadoutGear}
+          aria-label="Toggle loadout visibility"
+          tooltip="Show or hide loadout overlays."
+          onClick={onToggleLoadout}
+        />
+      </>
+    ) : null}
   </Flex>
 );

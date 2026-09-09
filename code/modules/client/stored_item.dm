@@ -274,24 +274,9 @@
 
 	busy_bank = TRUE
 	E.triangles -= withdrawal_amount
-	E.needs_saving = TRUE
 	visible_message("<span class='notice'>\The [src] rattles as it dispenses coins!</span>")
-	var/turf/here = get_turf(src)
-	var/obj/item/weapon/aliencoin/A
-	while(withdrawal_amount > 0)
-		if(withdrawal_amount >= 1000)
-			A = new /obj/item/weapon/aliencoin/exotic(here)
-		else if(withdrawal_amount >= 100)
-			A = new /obj/item/weapon/aliencoin/diamond(here)
-		else if(withdrawal_amount >= 20)
-			A = new /obj/item/weapon/aliencoin/phoron(here)
-		else if(withdrawal_amount >= 10)
-			A = new /obj/item/weapon/aliencoin/gold(here)
-		else if(withdrawal_amount >= 5)
-			A = new /obj/item/weapon/aliencoin/silver(here)
-		else
-			A = new /obj/item/weapon/aliencoin/basic(here)
-		withdrawal_amount -= A.value
+	dispense_triangle_coins(withdrawal_amount,get_turf(src),user)	//RS EDIT
+	E.needs_saving = TRUE	//RS EDIT
 	busy_bank = FALSE
 	return TRUE
 
@@ -405,9 +390,9 @@
 		return FALSE
 
 	busy_bank = TRUE
-	if(istype(held, /obj/item/weapon/aliencoin))
+	if(istype(held, /obj/item/triangle))	//RS EDIT
 		if(user.etching)
-			var/obj/item/weapon/aliencoin/coin = held
+			var/obj/item/triangle/coin = held	//RS EDIT
 			user.update_etching("triangles", coin.value)
 			user.drop_item()
 			to_chat(user, "<span class='warning'>\The [src] SCHLORPS up \the [held]!!!</span>")
@@ -469,15 +454,19 @@
 		return
 	busy_bank = TRUE
 	//RS EDIT BEGIN
-	if(istype(O, /obj/item/weapon/aliencoin))
-		if(user.etching)
-			var/obj/item/weapon/aliencoin/coin = O
-			user.update_etching("triangles", coin.value)
-			user.drop_item()
-			to_chat(user, "<span class='warning'>\The [src] SCHLORPS up \the [O]!!!</span>")
-			qdel(O)
-			busy_bank = FALSE
-			return
+	if(istype(O, /obj/item/triangle))
+		store_coin(O,user)
+		busy_bank = FALSE
+		return
+	if(istype(O,/obj/item/coinstack) || istype(O,/obj/item/coinpouch))
+		var/obj/item/coinpouch/pouch = O
+		for(var/thing in pouch.bank())
+			if(istype(thing,/obj/item/triangle))
+				var/obj/item/triangle/coin = thing
+				store_coin(coin,user)
+		busy_bank = FALSE
+		return
+
 	//RS EDIT END
 	user.etching.store_item(O,src)
 /*	//RS REMOVAL START - //Removed the old way of storing items, as it is no longer needed.
@@ -517,6 +506,62 @@
 //I am only really intending this to be used for single items. Mostly stuff you got right now, but can't/don't want to use right now.
 //It is not at all intended to be a thing that just lets you hold on to stuff forever, but just until it's the right time to use it.
 
+//RS ADD - Multiple ways to store coins now so let's just make a proc that all of them can use
+/obj/machinery/item_bank/proc/store_coin(var/obj/item/triangle/coin,var/mob/living/user)
+	if(!coin || !user)
+		return
+	if(!user.etching)
+		return
+	if(!istype(coin,/obj/item/triangle))
+		return
+	user.update_etching("triangles", coin.value)
+	user.drop_from_inventory(coin)
+	to_chat(user, "<span class='warning'>\The [src] SCHLORPS up \the [coin]!!!</span>")
+	qdel(coin)
+	busy_bank = FALSE
+
+/proc/dispense_triangle_coins(var/value,var/turf/dispense_loc,var/mob/living/user)
+	if(!value || !dispense_loc)
+		return FALSE
+	if(!isturf(dispense_loc))
+		dispense_loc = get_turf(dispense_loc)
+	var/obj/item/triangle/A
+	if(value == 7)
+		A = new /obj/item/triangle/u7(dispense_loc)
+		value -= A.value
+	if(value == 13)
+		A = new /obj/item/triangle/u13(dispense_loc)
+		value -= A.value
+
+	var/list/dispensed = list()
+	var/obj/item/coinstack/stack
+	while(value > 0)
+		if(value >= 1000)
+			A = new /obj/item/triangle/u1000(dispense_loc)
+		else if(value >= 100)
+			A = new /obj/item/triangle/u100(dispense_loc)
+		else if(value >= 25)
+			A = new /obj/item/triangle/u25(dispense_loc)
+		else if(value >= 10)
+			A = new /obj/item/triangle/u10(dispense_loc)
+		else if(value >= 5)
+			A = new /obj/item/triangle/u5(dispense_loc)
+		else if(value >= 1)
+			A = new /obj/item/triangle/u1(dispense_loc)
+		else
+			A = new /obj/item/triangle/u02(dispense_loc)
+		value -= A.value
+		dispensed += A
+
+	if(dispensed.len > 1)
+		stack = new(dispense_loc)
+		if(isliving(user))
+			user.put_in_hands(stack)
+		for(var/obj/item/triangle/coin in dispensed)
+			stack.stack(coin)
+	return TRUE
+
+//RS ADD END
 /obj
 
 	var/persist_storable = TRUE		//If this is true, this item can be stored in the item bank.

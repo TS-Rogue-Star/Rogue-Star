@@ -296,6 +296,13 @@ var/global/list/loadout_human_wearable_cache = list()
 					if(isicon(ib))
 						I = ib
 
+			//Use coin pouch colored icon (Lira, April 2026)
+			if(!isicon(I) && ispath(itemtype, /obj/item/coinpouch))
+				var/obj/item/coinpouch/pouch_tmp = new itemtype(null)
+				if(pouch_tmp)
+					I = pouch_tmp.build_colored_icon()
+					qdel(pouch_tmp)
+
 			//If preview failed or not requested, try base icon
 			if(!isicon(I))
 				var/icon_file = initial(itemtype.icon)

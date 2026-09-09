@@ -1,7 +1,7 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "av" = (
 /obj/structure/shuttle/engine/propulsion,
-/turf/simulated/mineral/floor/vacuum/moonbase/ignore_mapgen,
+/turf/simulated/mineral/floor/vacuum/moonbase/ignore_cavegen,
 /area/submap/moonbase/poi/east_crater/wreck4)
 "aA" = (
 /obj/structure/grille,
@@ -66,7 +66,7 @@
 /area/submap/moonbase/poi/east_crater/wreck4)
 "fG" = (
 /obj/item/weapon/material/shard,
-/turf/simulated/mineral/floor/vacuum/moonbase/outdoors,
+/turf/simulated/mineral/floor/vacuum/moonbase/outdoors/ignore_cavegen,
 /area/submap/moonbase/poi/east_crater/wreck4)
 "gv" = (
 /obj/structure/prop/machine/tgmc_console1,
@@ -76,7 +76,7 @@
 /obj/structure/hull_corner/long_vert{
 	dir = 10
 	},
-/turf/simulated/mineral/floor/vacuum/moonbase/outdoors,
+/turf/simulated/mineral/floor/vacuum/moonbase/outdoors/ignore_cavegen,
 /area/submap/moonbase/poi/east_crater/wreck4)
 "hA" = (
 /obj/machinery/door/firedoor/border_only,
@@ -180,7 +180,7 @@
 /obj/item/weapon/material/shard{
 	icon_state = "medium"
 	},
-/turf/simulated/mineral/floor/vacuum/moonbase/outdoors,
+/turf/simulated/mineral/floor/vacuum/moonbase/outdoors/ignore_cavegen,
 /area/submap/moonbase/poi/east_crater/wreck4)
 "Bc" = (
 /obj/machinery/power/apc{
@@ -297,7 +297,7 @@
 /obj/structure/hull_corner/long_vert{
 	dir = 6
 	},
-/turf/simulated/mineral/floor/vacuum/moonbase/outdoors,
+/turf/simulated/mineral/floor/vacuum/moonbase/outdoors/ignore_cavegen,
 /area/submap/moonbase/poi/east_crater/wreck4)
 "Vg" = (
 /obj/structure/bed/chair/bay/shuttle{
@@ -314,7 +314,7 @@
 /turf/simulated/floor,
 /area/submap/moonbase/poi/east_crater/wreck4)
 "Xu" = (
-/turf/simulated/mineral/moonbase/ignore_mapgen,
+/turf/simulated/mineral/moonbase/ignore_cavegen,
 /area/submap/moonbase/poi/east_crater/wreck4)
 "YR" = (
 /obj/structure/grille,
@@ -347,7 +347,7 @@
 /turf/simulated/floor/airless,
 /area/submap/moonbase/poi/east_crater/wreck4)
 "ZY" = (
-/turf/simulated/mineral/floor/vacuum/moonbase/outdoors,
+/turf/simulated/mineral/floor/vacuum/moonbase/outdoors/ignore_cavegen,
 /area/submap/moonbase/poi/east_crater/wreck4)
 
 (1,1,1) = {"

@@ -1,5 +1,5 @@
 /mob/living/silicon/pai/Life()
-
+	handle_modifiers()	//RS ADD
 	if(src.cable)
 		if(get_dist(src, src.cable) > 1)
 			var/turf/T = get_turf_or_move(src.loc)
@@ -12,6 +12,8 @@
 
 	if (src.stat == DEAD)
 		return
+
+	updatehealth()	//RS ADD
 
 	if(card.cell != PP_FUNCTIONAL|| card.processor != PP_FUNCTIONAL || card.board != PP_FUNCTIONAL || card.capacitor != PP_FUNCTIONAL)
 		death()
@@ -48,3 +50,4 @@
 		set_stat(CONSCIOUS)
 	else
 		health = 100 - getBruteLoss() - getFireLoss()
+		handle_ether_damage()	//RS ADD

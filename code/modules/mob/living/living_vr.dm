@@ -29,7 +29,7 @@
 
 	if(usr != src)
 		return
-	var/new_metadata = strip_html_simple(tgui_input_text(usr, "Enter any information you'd like others to see, such as Roleplay-preferences. This will not be saved permanently unless you click save in the OOC notes panel!", "Game Preference" , html_decode(ooc_notes), multiline = TRUE,  prevent_enter = TRUE))
+	var/new_metadata = sanitize_ooc_notes(tgui_input_text(usr, "Enter any information you'd like others to see, such as Roleplay-preferences. This will not be saved permanently unless you click save in the OOC notes panel!", "Game Preference" , ooc_notes_to_text(ooc_notes), multiline = TRUE,  prevent_enter = TRUE)) // RS Edit: Allow special characters (Lira, May 2026)
 	if(new_metadata && CanUseTopic(usr))
 		ooc_notes = new_metadata
 		client.prefs.metadata = new_metadata
@@ -42,7 +42,7 @@
 /mob/living/proc/set_metainfo_panel()
 	if(usr != src)
 		return
-	var/new_metadata = strip_html_simple(tgui_input_text(usr, "Enter any information you'd like others to see, such as Roleplay-preferences. This will not be saved permanently unless you click save in the OOC notes panel!", "Game Preference" , html_decode(ooc_notes), multiline = TRUE,  prevent_enter = TRUE))
+	var/new_metadata = sanitize_ooc_notes(tgui_input_text(usr, "Enter any information you'd like others to see, such as Roleplay-preferences. This will not be saved permanently unless you click save in the OOC notes panel!", "Game Preference" , ooc_notes_to_text(ooc_notes), multiline = TRUE,  prevent_enter = TRUE)) // RS Edit: Allow special characters (Lira, May 2026)
 	if(new_metadata && CanUseTopic(usr))
 		ooc_notes = new_metadata
 		client.prefs.metadata = new_metadata
@@ -53,7 +53,7 @@
 /mob/living/proc/set_metainfo_likes(var/reopen = TRUE)
 	if(usr != src)
 		return
-	var/new_metadata = strip_html_simple(tgui_input_text(usr, "Enter any information you'd like others to see relating to your LIKED roleplay preferences. This will not be saved permanently unless you click save in the OOC notes panel!", "Game Preference" , html_decode(ooc_notes_likes), multiline = TRUE,  prevent_enter = TRUE))
+	var/new_metadata = sanitize_ooc_notes(tgui_input_text(usr, "Enter any information you'd like others to see relating to your LIKED roleplay preferences. This will not be saved permanently unless you click save in the OOC notes panel!", "Game Preference" , ooc_notes_to_text(ooc_notes_likes), multiline = TRUE,  prevent_enter = TRUE)) // RS Edit: Allow special characters (Lira, May 2026)
 	if(new_metadata && CanUseTopic(usr))
 		ooc_notes_likes = new_metadata
 		client.prefs.metadata_likes = new_metadata
@@ -65,7 +65,7 @@
 /mob/living/proc/set_metainfo_dislikes(var/reopen = TRUE)
 	if(usr != src)
 		return
-	var/new_metadata = strip_html_simple(tgui_input_text(usr, "Enter any information you'd like others to see relating to your DISLIKED roleplay preferences. This will not be saved permanently unless you click save in the OOC notes panel!", "Game Preference" , html_decode(ooc_notes_dislikes), multiline = TRUE,  prevent_enter = TRUE))
+	var/new_metadata = sanitize_ooc_notes(tgui_input_text(usr, "Enter any information you'd like others to see relating to your DISLIKED roleplay preferences. This will not be saved permanently unless you click save in the OOC notes panel!", "Game Preference" , ooc_notes_to_text(ooc_notes_dislikes), multiline = TRUE,  prevent_enter = TRUE)) // RS Edit: Allow special characters (Lira, May 2026)
 	if(new_metadata && CanUseTopic(usr))
 		ooc_notes_dislikes = new_metadata
 		client.prefs.metadata_dislikes = new_metadata
@@ -86,13 +86,14 @@
 /mob/living/proc/print_ooc_notes_to_chat()
 	if(!ooc_notes)
 		return
-	var/msg = ooc_notes
+	var/msg = ooc_notes_to_html(ooc_notes) // RS Edit: Allow special characters (Lira, May 2026)
 	if(ooc_notes_likes)
-		msg += "<br><br><b>LIKES</b><br><br>[ooc_notes_likes]"
+		msg += "<br><br><b>LIKES</b><br><br>[ooc_notes_to_html(ooc_notes_likes)]" // RS Edit: Allow special characters (Lira, May 2026)
 	if(ooc_notes_dislikes)
-		msg += "<br><br><b>DISLIKES</b><br><br>[ooc_notes_dislikes]"
+		msg += "<br><br><b>DISLIKES</b><br><br>[ooc_notes_to_html(ooc_notes_dislikes)]" // RS Edit: Allow special characters (Lira, May 2026)
 	to_chat(usr, "<span class='filter_notice'>[src]'s Metainfo:<br>[msg]</span>")
 
+// RS Edit: Character Designer - Identity Tab (Lira, September 2026)
 /mob/living/verb/set_custom_link()
 	set name = "Set Custom Link"
 	set desc = "Set a custom link to show up with your examine text."
@@ -100,10 +101,10 @@
 
 	if(usr != src)
 		return
-	var/new_link = strip_html_simple(tgui_input_text(usr, "Enter a link to add on to your examine text! This should be a related image link/gallery, or things like your F-list. This is not the place for memes.", "Custom Link" , html_decode(custom_link), max_length = 100, encode = TRUE,  prevent_enter = TRUE))
+	var/new_link = strip_html_simple(tgui_input_text(usr, "Enter a link to add on to your examine text! This should be a related image link/gallery, or things like your F-list. This is not the place for memes.", "Custom Link" , html_decode(custom_link), max_length = MAX_CUSTOM_LINK_LENGTH, encode = TRUE,  prevent_enter = TRUE))
 	if(new_link && CanUseTopic(usr))
-		if(length(new_link) > 100)
-			to_chat(usr, "<span class = 'warning'>Your entry is too long, it must be 100 characters or less.</span>")
+		if(length(new_link) > MAX_CUSTOM_LINK_LENGTH)
+			to_chat(usr, "<span class = 'warning'>Your entry is too long, it must be [MAX_CUSTOM_LINK_LENGTH] characters or less.</span>")
 			return
 
 		custom_link = new_link

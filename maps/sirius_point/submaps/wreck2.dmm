@@ -20,7 +20,7 @@
 /area/submap/moonbase/poi/east_crater/wreck2)
 "i" = (
 /obj/structure/prop/rock/crystal,
-/turf/simulated/mineral/floor/vacuum/moonbase/ignore_mapgen,
+/turf/simulated/mineral/floor/vacuum/moonbase/ignore_cavegen,
 /area/submap/moonbase/poi/east_crater/wreck2)
 "j" = (
 /turf/simulated/shuttle/wall/hard_corner,
@@ -36,7 +36,7 @@
 /turf/simulated/shuttle/floor/yellow/airless,
 /area/submap/moonbase/poi/east_crater/wreck2)
 "m" = (
-/turf/simulated/mineral/moonbase/ignore_mapgen,
+/turf/simulated/mineral/moonbase/ignore_cavegen,
 /area/submap/moonbase/poi/east_crater/wreck2)
 "r" = (
 /obj/random/multiple/corp_crate,
@@ -54,7 +54,7 @@
 	dir = 8;
 	icon_state = "burst_l"
 	},
-/turf/simulated/mineral/floor/vacuum/moonbase/outdoors,
+/turf/simulated/mineral/floor/vacuum/moonbase/outdoors/ignore_cavegen,
 /area/submap/moonbase/poi/east_crater/wreck2)
 "x" = (
 /obj/item/stack/rods,
@@ -124,7 +124,7 @@
 /turf/simulated/floor/airless/outdoors,
 /area/submap/moonbase/poi/east_crater/wreck2)
 "O" = (
-/turf/simulated/mineral/floor/vacuum/moonbase/outdoors,
+/turf/simulated/mineral/floor/vacuum/moonbase/outdoors/ignore_cavegen,
 /area/submap/moonbase/poi/east_crater/wreck2)
 "R" = (
 /obj/structure/table/steel,
@@ -137,7 +137,7 @@
 /area/submap/moonbase/poi/east_crater/wreck2)
 "T" = (
 /obj/structure/prop/rock/crystal,
-/turf/simulated/mineral/floor/vacuum/moonbase/outdoors,
+/turf/simulated/mineral/floor/vacuum/moonbase/outdoors/ignore_cavegen,
 /area/submap/moonbase/poi/east_crater/wreck2)
 "U" = (
 /obj/structure/frame,
@@ -163,7 +163,7 @@
 /area/submap/moonbase/poi/east_crater/wreck2)
 "Z" = (
 /obj/item/stack/rods,
-/turf/simulated/mineral/floor/vacuum/moonbase/outdoors,
+/turf/simulated/mineral/floor/vacuum/moonbase/outdoors/ignore_cavegen,
 /area/submap/moonbase/poi/east_crater/wreck2)
 
 (1,1,1) = {"

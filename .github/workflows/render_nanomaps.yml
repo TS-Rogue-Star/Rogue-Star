@@ -19,10 +19,10 @@ jobs:
       pull-requests: write # to create pull requests (repo-sync/pull-request)
 
     name: 'Generate NanoMaps'
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04 # RS Edit - use supported runner
     steps:
     - name: Clone
-      uses: actions/checkout@v4
+      uses: actions/checkout@v6 # RS Edit - use supported action version
 
     - name: Branch
       run: |
@@ -46,6 +46,8 @@ jobs:
         git push -f -u origin nanomaps_generation
 
     - name: Create Pull Request
+      env:
+        FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true # RS Edit - use supported node version on archived action
       uses: repo-sync/pull-request@v2
       with:
         source_branch: "nanomaps_generation"

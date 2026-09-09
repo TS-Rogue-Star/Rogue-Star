@@ -214,6 +214,36 @@
 				client.eye = loc
 		return TRUE
 
+// RS Add: Fix holder camera bug (Lira, April 2026)
+/mob/proc/reset_view_after_container_exit()
+	if(!client || !loc)
+		return FALSE
+	if(isbelly(loc))
+		reset_view(null)
+		return TRUE
+	nudge_container_exit_view()
+	addtimer(CALLBACK(src, PROC_REF(nudge_container_exit_view)), 1)
+	return TRUE
+
+// RS Add: Fix holder camera bug (Lira, April 2026)
+/mob/proc/nudge_container_exit_view()
+	if(!client || !loc || isbelly(loc))
+		return
+	if(!isturf(loc))
+		reset_view(null)
+		return
+
+	var/turf/current_turf = loc
+	client.perspective = EYE_PERSPECTIVE
+	client.eye = current_turf
+	addtimer(CALLBACK(src, PROC_REF(finish_container_exit_view_reset)), 1)
+
+// RS Add: Fix holder camera bug (Lira, April 2026)
+/mob/proc/finish_container_exit_view_reset()
+	if(!client || !loc || isbelly(loc))
+		return
+	reset_view(null)
+
 /mob/verb/pointed(atom/A as mob|obj|turf in view())
 	set name = "Point To"
 	set category = "Object"
@@ -1150,18 +1180,18 @@
 //Throwing stuff
 
 /mob/proc/toggle_throw_mode()
-	if (src.in_throw_mode)
+	if(click_flags & CLICK_THROW)	//RS EDIT START
 		throw_mode_off()
 	else
-		throw_mode_on()
+		throw_mode_on()	//RS EDIT END
 
 /mob/proc/throw_mode_off()
-	src.in_throw_mode = 0
+	click_flags &= ~CLICK_THROW	//RS EDIT
 	if(src.throw_icon) //in case we don't have the HUD and we use the hotkey
 		src.throw_icon.icon_state = "act_throw_off"
 
 /mob/proc/throw_mode_on()
-	src.in_throw_mode = 1
+	click_flags |= CLICK_THROW	//RS EDIT
 	if(src.throw_icon)
 		src.throw_icon.icon_state = "act_throw_on"
 

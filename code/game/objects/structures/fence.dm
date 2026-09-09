@@ -36,10 +36,11 @@
 		if(LARGE_HOLE)
 			. += "It has been completely cut through."
 
-/obj/structure/fence/get_description_interaction()
+// RS Edit: Examine Mode Fix (Lira, July 2026)
+/obj/structure/fence/get_description_interaction(var/for_chat = FALSE)
 	var/list/results = list()
 	if(cuttable && !invulnerable && hole_size < MAX_HOLE_SIZE)
-		results += "[desc_panel_image("wirecutters")]to [hole_size > NO_HOLE ? "expand the":"cut a"] hole into the fence, allowing passage."
+		results += "[desc_panel_image("wirecutters", for_chat)]to [hole_size > NO_HOLE ? "expand the":"cut a"] hole into the fence, allowing passage."
 	return results
 
 /obj/structure/fence/end

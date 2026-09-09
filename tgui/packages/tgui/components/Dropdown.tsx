@@ -18,8 +18,10 @@ type DropdownUniqueProps = {
   readonly iconRotation?: number;
   readonly clipSelectedText?: boolean;
   readonly dropdownStyle?: string; // RS Add: Improvements for emote interface (Lira, February 2026)
+  readonly controlContentClassName?: string; // RS Add: Preference settings panel (Lira, July 2026)
   readonly width?: string;
   readonly menuWidth?: string;
+  readonly menuZIndex?: string | number; // RS Add: Character Designer - Traits Tab (Lira, August 2026)
   readonly over?: boolean;
   readonly color?: string;
   readonly nochevron?: boolean;
@@ -116,6 +118,11 @@ export class Dropdown extends Component<DropdownProps, DropdownState> {
       // Hack, but domNode should *always* be the parent control meaning it will have width
       // @ts-ignore
       `${domNode.offsetWidth}px`;
+
+    // RS Add: Character Designer - Traits Tab (Lira, August 2026)
+    renderedMenu.style.zIndex =
+      this.props.menuZIndex === undefined ? '' : String(this.props.menuZIndex);
+
     // RS Add Start: Improvements for emote interface (Lira, February 2026)
     const isRogueStarDropdown =
       this.props.dropdownStyle?.trim() === 'rogue-star';
@@ -346,9 +353,11 @@ export class Dropdown extends Component<DropdownProps, DropdownState> {
       clipSelectedText = true,
       color = 'default',
       dropdownStyle,
+      controlContentClassName, // RS Add: Preference settings panel (Lira, July 2026)
       over,
       nochevron,
       width,
+      menuZIndex, // RS Add: Character Designer - Traits Tab (Lira, August 2026)
       onClick,
       onSelected,
       selected,
@@ -360,6 +369,32 @@ export class Dropdown extends Component<DropdownProps, DropdownState> {
     const { className, ...rest } = boxProps;
 
     const adjustedOpen = over ? !this.state.open : this.state.open;
+    // RS Add Start: Preference settings panel (Lira, July 2026)
+    const controlContent = (
+      <>
+        {icon && (
+          <Icon
+            name={icon}
+            rotation={iconRotation}
+            spin={iconSpin}
+            mr={controlContentClassName ? undefined : 1}
+          />
+        )}
+        <span
+          className="Dropdown__selected-text"
+          style={{
+            overflow: clipSelectedText ? 'hidden' : 'visible',
+          }}>
+          {displayText || this.state.selected}
+        </span>
+        {nochevron || (
+          <span className="Dropdown__arrow-button">
+            <Icon name={adjustedOpen ? 'chevron-up' : 'chevron-down'} />
+          </span>
+        )}
+      </>
+    );
+    // RS Add End
 
     return (
       <Stack fill>
@@ -383,25 +418,10 @@ export class Dropdown extends Component<DropdownProps, DropdownState> {
               }
             }}
             {...rest}>
-            {icon && (
-              <Icon
-                name={icon}
-                rotation={iconRotation}
-                spin={iconSpin}
-                mr={1}
-              />
-            )}
-            <span
-              className="Dropdown__selected-text"
-              style={{
-                overflow: clipSelectedText ? 'hidden' : 'visible',
-              }}>
-              {displayText || this.state.selected}
-            </span>
-            {nochevron || (
-              <span className="Dropdown__arrow-button">
-                <Icon name={adjustedOpen ? 'chevron-up' : 'chevron-down'} />
-              </span>
+            {controlContentClassName ? (
+              <div className={controlContentClassName}>{controlContent}</div>
+            ) : (
+              controlContent
             )}
           </Box>
         </Stack.Item>

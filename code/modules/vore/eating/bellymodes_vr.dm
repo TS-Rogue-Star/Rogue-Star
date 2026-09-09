@@ -197,9 +197,6 @@
 			if(L.absorbed && !issilicon(L))
 				L.Weaken(5)
 
-			// Fullscreen overlays
-			vore_fx(L)
-
 			//Handle 'human'
 			if(ishuman(L))
 				var/mob/living/carbon/human/H = L
@@ -352,6 +349,11 @@
 
 	if((mode_flags & DM_FLAG_LEAVEREMAINS) && M.digest_leave_remains)
 		handle_remains_leaving(M)
+	// RS Add: Persistent memory system (Lira, May 2026)
+	if(isliving(owner))
+		var/mob/living/digest_pred = owner
+		record_character_memory_pair(digest_pred, M, "vore_digest", "as_pred", "as_prey", name)
+		M.character_memory?.save(force = TRUE)
 	digestion_death(M)
 	owner.post_digestion()	//RS ADD
 	if(!ishuman(owner))

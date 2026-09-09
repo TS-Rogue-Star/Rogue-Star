@@ -37,7 +37,8 @@
 		/obj/item/clothing/accessory/permit,
 		/obj/item/clothing/accessory/badge,
 		/obj/item/weapon/makeover,
-		/obj/item/pizzavoucher //VOREStation edit
+		/obj/item/pizzavoucher, //VOREStation edit
+		/obj/item/triangle	//RS ADD - It's a kind of coin uwu
 		)
 	cant_hold = list(/obj/item/weapon/tool/screwdriver/power)
 	slot_flags = SLOT_ID

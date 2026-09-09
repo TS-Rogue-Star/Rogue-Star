@@ -38,7 +38,7 @@
 	},
 /area/submap/moonbase/poi/west_crater/construction2)
 "W" = (
-/turf/simulated/mineral/floor/vacuum/moonbase/outdoors,
+/turf/simulated/mineral/floor/vacuum/moonbase/outdoors/ignore_cavegen,
 /area/submap/moonbase/poi/west_crater/construction2)
 "X" = (
 /obj/structure/girder,

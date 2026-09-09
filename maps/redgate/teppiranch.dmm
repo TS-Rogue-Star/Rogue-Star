@@ -771,7 +771,6 @@
 /area/redgate/structure/powered/teppi_ranch/barn)
 "Xg" = (
 /obj/structure/flora/tree/bigtree,
-/obj/item/weapon/aliencoin/silver,
 /turf/simulated/floor/outdoors/grass/seasonal/notrees_nomobs,
 /area/redgate/wilds)
 "XA" = (

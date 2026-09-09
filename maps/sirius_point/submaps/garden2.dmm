@@ -263,7 +263,7 @@
 /turf/simulated/floor/tiled,
 /area/submap/moonbase/poi/west_crater/garden2)
 "Io" = (
-/turf/simulated/mineral/floor/vacuum/moonbase/outdoors,
+/turf/simulated/mineral/floor/vacuum/moonbase/outdoors/ignore_cavegen,
 /area/submap/moonbase/poi/west_crater/garden2)
 "Kk" = (
 /obj/machinery/atmospherics/unary/vent_pump/high_volume{

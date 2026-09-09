@@ -407,13 +407,31 @@
 	if(!istype(tasted) || tasted == src) // RS Edit: No self licking or smelling (Lira, March 2026)
 		return
 
-	if(!checkClickCooldown() || incapacitated(INCAPACITATION_ALL))
+	// RS Edit Start: Lick when buckedled and laying down (Lira, April 2026)
+	var/incapacitation_flags = INCAPACITATION_ALL & ~(INCAPACITATION_RESTRAINED | INCAPACITATION_BUCKLED_PARTIALLY | INCAPACITATION_BUCKLED_FULLY | INCAPACITATION_FORCELYING)
+	if(!checkClickCooldown() || incapacitated(incapacitation_flags))
+	// RS Edit End
 		return
 
 	setClickCooldown(DEFAULT_ATTACK_COOLDOWN)
 
 	visible_message("<span class='warning'>[src] licks [tasted]!</span>","<span class='notice'>You lick [tasted]. They taste rather like [tasted.get_taste_message()].</span>","<b>Slurp!</b>")
 
+	//RS ADD START
+	for(var/datum/modifier/sense/taste/T in tasted.modifiers)
+		if(istype(T,/datum/modifier/sense/taste))
+			var/taste_report = "You can also taste "
+			var/iteration = 0
+			for(var/thing in T.flavor)
+				iteration ++
+				if(iteration == 1)
+					taste_report += "[thing]"
+				else if(iteration != T.flavor.len)
+					taste_report += ", [thing]"
+				else if(iteration > 1)
+					taste_report += ", and [thing]"
+			to_chat(src,SPAN_OCCULT("[taste_report]."))
+	//RS ADD END
 
 /mob/living/proc/get_taste_message(allow_generic = 1)
 	if(!vore_taste && !allow_generic)
@@ -447,13 +465,31 @@
 
 	if(!istype(smelled) || smelled == src)	//RS EDIT - Don't smell yourself
 		return
-	if(!checkClickCooldown() || incapacitated(INCAPACITATION_ALL))
+	// RS Edit Start: Smell when buckedled and laying down (Lira, April 2026)
+	var/incapacitation_flags = INCAPACITATION_ALL & ~(INCAPACITATION_RESTRAINED | INCAPACITATION_BUCKLED_PARTIALLY | INCAPACITATION_BUCKLED_FULLY | INCAPACITATION_FORCELYING)
+	if(!checkClickCooldown() || incapacitated(incapacitation_flags))
+	// RS Edit End
 		return
 
 	setClickCooldown(DEFAULT_ATTACK_COOLDOWN)
 	visible_message("<span class='warning'>[src] smells [smelled]!</span>","<span class='notice'>You smell [smelled]. They smell like [smelled.get_smell_message()].</span>","<b>Sniff!</b>")
 
-	if(olfaction_track)	//RS ADD START
+	//RS ADD START
+	for(var/datum/modifier/sense/smell/S in smelled.modifiers)
+		if(istype(S,/datum/modifier/sense/smell))
+			var/smell_report = "You can also smell "
+			var/iteration = 0
+			for(var/thing in S.flavor)
+				iteration ++
+				if(iteration == 1)
+					smell_report += "[thing]"
+				else if(iteration != S.flavor.len)
+					smell_report += ", [thing]"
+				else if(iteration > 1)
+					smell_report += ", and [thing]"
+			to_chat(src,SPAN_OCCULT("[smell_report]."))
+
+	if(olfaction_track)
 		SEND_SIGNAL(src,COMSIG_MOB_SMELLED)
 		add_modifier(/datum/modifier/olfaction_track, origin = smelled)	//RS ADD END
 
@@ -1299,21 +1335,23 @@
 		dispvoreprefs += "<b>Stripping:</b> [H.allow_stripping ? "<font color='green'>Enabled</font>" : "<font color='red'>Disabled</font>"]<br>"
 		dispvoreprefs += "<b>Contamination:</b> [H.allow_contaminate ? "<font color='green'>Enabled</font>" : "<font color='red'>Disabled</font>"]<br>"	//RS ADD END
 	dispvoreprefs += "<u><b>-SPONTANEOUS PREFERENCES-</b></u><br>"
-	dispvoreprefs += "<b>Spontaneous vore prey:</b> [(spont_pref_check(src,user,SPONT_PREY) && can_be_drop_prey) ? "<font color='green'>Enabled</font>" : "<font color='red'>Disabled</font>"]<br>"	//ADD EXAMINE WHITELIST STUFF HERE
-	dispvoreprefs += "<b>Spontaneous vore pred:</b> [(spont_pref_check(user,src,SPONT_PRED) && can_be_drop_pred) ? "<font color='green'>Enabled</font>" : "<font color='red'>Disabled</font>"]<br>"
-	dispvoreprefs += "<b>Drop Vore:</b> [(spont_pref_check(user,src,DROP_VORE) && drop_vore) ? "<font color='green'>Enabled</font>" : "<font color='red'>Disabled</font>"]<br>"
-	dispvoreprefs += "<b>Slip Vore:</b> [(spont_pref_check(user,src,SLIP_VORE) && slip_vore) ? "<font color='green'>Enabled</font>" : "<font color='red'>Disabled</font>"]<br>"
-	dispvoreprefs += "<b>Throw vore:</b> [(spont_pref_check(user,src,THROW_VORE) && throw_vore) ? "<font color='green'>Enabled</font>" : "<font color='red'>Disabled</font>"]<br>"
-	dispvoreprefs += "<b>Stumble Vore:</b> [(spont_pref_check(user,src,STUMBLE_VORE) && stumble_vore) ? "<font color='green'>Enabled</font>" : "<font color='red'>Disabled</font>"]<br>"
-	dispvoreprefs += "<b>Buckle Vore:</b> [(spont_pref_check(user,src,BUCKLE_VORE) && buckle_vore) ? "<font color='green'>Enabled</font>" : "<font color='red'>Disabled</font>"]<br>" // RS Add: Split from stumble (Lira, January 2026)
-	dispvoreprefs += "<b>Food Vore:</b> [(spont_pref_check(user,src,FOOD_VORE) && food_vore) ? "<font color='green'>Enabled</font>" : "<font color='red'>Disabled</font>"]<br>"
-	dispvoreprefs += "<b>Emote Vore:</b> [(spont_pref_check(user,src,EMOTE_VORE) && emote_vore) ? "<font color='green'>Enabled</font>" : "<font color='red'>Disabled</font>"]<br>" // RS Add: New emote spont vore (Lira, February 2026)
+	//RS EDIT START
+	dispvoreprefs += "<b>Spontaneous vore prey:</b> [(spont_pref_check(src,user,SPONT_PREY,TRUE)) ? "<font color='green'>Enabled</font>" : "<font color='red'>Disabled</font>"]<br>"
+	dispvoreprefs += "<b>Spontaneous vore pred:</b> [(spont_pref_check(user,src,SPONT_PRED,TRUE)) ? "<font color='green'>Enabled</font>" : "<font color='red'>Disabled</font>"]<br>"
+	dispvoreprefs += "<b>Drop Vore:</b> [(spont_pref_check(user,src,DROP_VORE,TRUE)) ? "<font color='green'>Enabled</font>" : "<font color='red'>Disabled</font>"]<br>"
+	dispvoreprefs += "<b>Slip Vore:</b> [(spont_pref_check(user,src,SLIP_VORE,TRUE)) ? "<font color='green'>Enabled</font>" : "<font color='red'>Disabled</font>"]<br>"
+	dispvoreprefs += "<b>Throw vore:</b> [(spont_pref_check(user,src,THROW_VORE,TRUE)) ? "<font color='green'>Enabled</font>" : "<font color='red'>Disabled</font>"]<br>"
+	dispvoreprefs += "<b>Stumble Vore:</b> [(spont_pref_check(user,src,STUMBLE_VORE,TRUE)) ? "<font color='green'>Enabled</font>" : "<font color='red'>Disabled</font>"]<br>"
+	dispvoreprefs += "<b>Buckle Vore:</b> [(spont_pref_check(user,src,BUCKLE_VORE,TRUE)) ? "<font color='green'>Enabled</font>" : "<font color='red'>Disabled</font>"]<br>"
+	dispvoreprefs += "<b>Food Vore:</b> [(spont_pref_check(user,src,FOOD_VORE,TRUE)) ? "<font color='green'>Enabled</font>" : "<font color='red'>Disabled</font>"]<br>"
+	dispvoreprefs += "<b>Emote Vore:</b> [(spont_pref_check(user,src,EMOTE_VORE,TRUE)) ? "<font color='green'>Enabled</font>" : "<font color='red'>Disabled</font>"]<br>"
 	dispvoreprefs += "<u><b>-OTHER PREFERENCES-</b></u><br>"
-	dispvoreprefs += "<b>Size changing:</b> [(spont_pref_check(user,src,RESIZING) && resizable) ? "<font color='green'>Enabled</font>" : "<font color='red'>Disabled</font>"]<br>"
+	dispvoreprefs += "<b>Size changing:</b> [(spont_pref_check(user,src,RESIZING,TRUE)) ? "<font color='green'>Enabled</font>" : "<font color='red'>Disabled</font>"]<br>"
 	dispvoreprefs += "<b>Inbelly Spawning:</b> [allow_inbelly_spawning ? "<font color='green'>Allowed</font>" : "<font color='red'>Disallowed</font>"]<br>"
-	dispvoreprefs += "<b>Spontaneous transformation:</b> [(spont_pref_check(user,src,SPONT_TF) && allow_spontaneous_tf) ? "<font color='green'>Enabled</font>" : "<font color='red'>Disabled</font>"]<br>"
+	dispvoreprefs += "<b>Spontaneous transformation:</b> [(spont_pref_check(user,src,SPONT_TF,TRUE)) ? "<font color='green'>Enabled</font>" : "<font color='red'>Disabled</font>"]<br>"
 	dispvoreprefs += "<b>Can be stepped on/over:</b> [step_mechanics_pref ? "<font color='green'>Allowed</font>" : "<font color='red'>Disallowed</font>"]<br>"
-	dispvoreprefs += "<b>Can be picked up:</b> [(spont_pref_check(user,src,MICRO_PICKUP) && pickup_pref) ? "<font color='green'>Allowed</font>" : "<font color='red'>Disallowed</font>"]<br>"
+	dispvoreprefs += "<b>Can be picked up:</b> [(spont_pref_check(user,src,MICRO_PICKUP,TRUE)) ? "<font color='green'>Allowed</font>" : "<font color='red'>Disallowed</font>"]<br>"
+	//RS EDIT END
 	dispvoreprefs += "<b>Global Vore Privacy is:</b> [eating_privacy_global ? "Subtle" : "Loud"]<br>"
 	user << browse("<html><head><title>Vore prefs: [src]</title></head><body><center>[dispvoreprefs]</center></body></html>", "window=[name]mvp;size=300x600;can_resize=1;can_minimize=0")
 	onclose(user, "[name]")
@@ -1328,6 +1366,10 @@
 	icon = 'icons/mob/screen_full_colorized_vore.dmi'
 
 /obj/screen/fullscreen/belly/colorized/overlay
+	icon = 'icons/mob/screen_full_colorized_vore_overlays.dmi'
+
+// RS Add: Regent overlay object (Lira, April 2026)
+/obj/screen/fullscreen/belly/reagent_overlay
 	icon = 'icons/mob/screen_full_colorized_vore_overlays.dmi'
 
 /mob/living/proc/vorebelly_printout() //Spew the vorepanel belly messages into chat window for copypasting.

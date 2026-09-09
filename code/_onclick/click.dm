@@ -48,6 +48,9 @@
 		build_click(src, client.buildmode, params, A)
 		return
 
+	if(client?.dungeon_maker)	//RS ADD
+		dungeon_maker_click(src,client.dungeon_maker, params, A)	//RS ADD
+
 	if(is_incorporeal())	//RS ADD START - don't shoot at or attack people while you are intangible
 		face_atom(A)
 		return				//RS ADD END
@@ -93,10 +96,17 @@
 		RestrainedClickOn(A)
 		return 1
 
-	if(in_throw_mode && (isturf(A) || isturf(A.loc)) && throw_item(A))
-		trigger_aiming(TARGET_CAN_CLICK)
-		throw_mode_off()
-		return TRUE
+	//RS EDIT START
+	if(click_flags)
+		if(click_flags & CLICK_THROW && (isturf(A) || isturf(A.loc)) && throw_item(A))
+			trigger_aiming(TARGET_CAN_CLICK)
+			throw_mode_off()
+			return TRUE
+
+		if(click_flags & CLICK_SEARCH)
+			A.search()
+			return TRUE
+	//RS EDIT END
 
 	var/obj/item/W = get_active_hand()
 

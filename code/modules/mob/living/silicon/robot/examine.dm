@@ -36,7 +36,12 @@
 
 	. += "*---------*"
 
-	if(print_flavor_text()) . += "<br>[print_flavor_text()]"
+	// RS Edit Start: Examine Mode Fix (Lira, July 2026)
+	if(user.client?.prefs.examine_text_mode != EXAMINE_MODE_INCLUDE_USAGE)
+		var/flavor_text = print_flavor_text()
+		if(flavor_text)
+			. += "<br>[flavor_text]"
+	// RS Edit End
 
 	if (pose)
 		if(!findtext(pose, regex("\[.?!]$"))) // Will be zero if the last character is not a member of [.?!]

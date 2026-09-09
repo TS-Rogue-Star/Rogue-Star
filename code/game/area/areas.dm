@@ -511,18 +511,28 @@ var/list/mob/living/forced_ambiance_list = new
 /*I am far too lazy to make it a proper list of areas so I'll just make it run the usual telepot routine at the start of the game*/
 var/list/teleportlocs = list()
 
+// RS Edit: Area Tele Cleanup (Lira, April 2026)
 /hook/startup/proc/setupTeleportLocs()
+	rebuild_teleport_locs()
+	return 1
+
+/proc/rebuild_teleport_locs(var/list/valid_levels)
+	teleportlocs = list()
+	if(!valid_levels)
+		valid_levels = using_map?.station_levels
+	if(!valid_levels || !valid_levels.len)
+		return teleportlocs
+
 	for(var/area/AR in world)
 		if(istype(AR, /area/shuttle) || istype(AR, /area/syndicate_station) || istype(AR, /area/wizard_station)) continue
 		if(teleportlocs.Find(AR.name)) continue
-		var/turf/picked = pick(get_area_turfs(AR.type))
-		if (picked.z in using_map.station_levels)
-			teleportlocs += AR.name
-			teleportlocs[AR.name] = AR
+		for(var/turf/T in AR)
+			if(T.z in valid_levels)
+				teleportlocs[AR.name] = AR
+				break
 
 	teleportlocs = sortAssoc(teleportlocs)
-
-	return 1
+	return teleportlocs
 
 var/list/ghostteleportlocs = list()
 

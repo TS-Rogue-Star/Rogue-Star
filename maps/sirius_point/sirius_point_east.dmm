@@ -19,7 +19,7 @@
 /turf/simulated/floor/airless/moonbaseplating,
 /area/moonbase/surface/east_crater)
 "j" = (
-/turf/simulated/mineral/floor/vacuum/moonbase/outdoors,
+/turf/simulated/mineral/floor/vacuum/moonbase/outdoors/ignore_cavegen,
 /area/moonbase/surface/east_crater)
 "l" = (
 /obj/effect/map_effect/portal/master/side_b{
@@ -35,11 +35,11 @@
 /turf/space/cracked_asteroid/moonbase/outdoors,
 /area/moonbase/surface/east_crater)
 "p" = (
-/turf/simulated/mineral/moonbase/ignore_mapgen,
+/turf/simulated/mineral/moonbase/ignore_cavegen,
 /area/moonbase/surface/east_crater/unexplored)
 "r" = (
 /obj/structure/prop/rock/flat,
-/turf/simulated/mineral/floor/vacuum/moonbase/outdoors,
+/turf/simulated/mineral/floor/vacuum/moonbase/outdoors/ignore_cavegen,
 /area/moonbase/surface/east_crater)
 "x" = (
 /obj/effect/map_effect/portal/line/side_b{
@@ -48,22 +48,22 @@
 /turf/simulated/floor/airless/moonbaseplating,
 /area/moonbase/surface/east_crater)
 "E" = (
-/turf/simulated/mineral/moonbase/ignore_mapgen,
+/turf/simulated/mineral/moonbase/ignore_cavegen,
 /area/moonbase/surface/east_crater)
 "G" = (
 /obj/structure/prop/rock/crystal,
-/turf/simulated/mineral/floor/vacuum/moonbase/outdoors,
+/turf/simulated/mineral/floor/vacuum/moonbase/outdoors/ignore_cavegen,
 /area/moonbase/surface/east_crater/unexplored)
 "I" = (
-/turf/simulated/mineral/floor/vacuum/moonbase/outdoors,
+/turf/simulated/mineral/floor/vacuum/moonbase/outdoors/ignore_cavegen,
 /area/moonbase/surface/east_crater/unexplored)
 "J" = (
 /obj/structure/prop/rock/small,
-/turf/simulated/mineral/floor/vacuum/moonbase/outdoors,
+/turf/simulated/mineral/floor/vacuum/moonbase/outdoors/ignore_cavegen,
 /area/moonbase/surface/east_crater)
 "M" = (
 /obj/structure/prop/rock/round,
-/turf/simulated/mineral/floor/vacuum/moonbase/outdoors,
+/turf/simulated/mineral/floor/vacuum/moonbase/outdoors/ignore_cavegen,
 /area/moonbase/surface/east_crater/unexplored)
 "O" = (
 /turf/simulated/floor/airless/moonbaseplating,
@@ -73,11 +73,11 @@
 	how_many_mobs_max = 30;
 	how_many_mobs_min = 10
 	},
-/turf/simulated/mineral/moonbase/ignore_mapgen,
+/turf/simulated/mineral/moonbase/ignore_cavegen,
 /area/moonbase/surface/east_crater/unexplored)
 "T" = (
 /obj/structure/prop/rock/crystal,
-/turf/simulated/mineral/floor/vacuum/moonbase/outdoors,
+/turf/simulated/mineral/floor/vacuum/moonbase/outdoors/ignore_cavegen,
 /area/moonbase/surface/east_crater)
 "X" = (
 /obj/structure/railing/grey{
@@ -87,7 +87,7 @@
 /area/moonbase/surface/east_crater)
 "Y" = (
 /obj/structure/prop/rock/small/alt,
-/turf/simulated/mineral/floor/vacuum/moonbase/outdoors,
+/turf/simulated/mineral/floor/vacuum/moonbase/outdoors/ignore_cavegen,
 /area/moonbase/surface/east_crater/unexplored)
 
 (1,1,1) = {"

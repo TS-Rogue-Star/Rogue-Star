@@ -20,10 +20,13 @@ PROCESSING_SUBSYSTEM_DEF(instruments)
 	var/static/current_instrument_channels = 0
 	/// Single cached list for synthesizer instrument ids, so you don't have to have a new list with every synthesizer.
 	var/static/list/synthesizer_instrument_ids
+	/// RS Add: Cached list for layered synth instruments (Lira, March 2026)
+	var/static/list/layerable_synth_instrument_ids
 
 /datum/controller/subsystem/processing/instruments/Initialize()
 	initialize_instrument_data()
 	synthesizer_instrument_ids = get_allowed_instrument_ids()
+	layerable_synth_instrument_ids = get_layerable_synth_instrument_ids() // RS Add: Advanced synth (Lira, March 2026)
 	return ..()
 
 /datum/controller/subsystem/processing/instruments/proc/on_song_new(datum/song/S)
