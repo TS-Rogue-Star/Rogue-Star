@@ -1484,20 +1484,27 @@
 		if(!istype(L))
 			to_chat(usr, "<span class='filter_adminlog'>This can only be used on instances of type /mob/living/</span>")
 			return
-
+		//RS ADD
+		if(!L.CanObtainCentcommMessage())
+			to_chat(usr, "The person you are trying to contact is not wearing a headset")
+			return
+		message_admins("[key_name_admin(usr)] has started replying to Emergency message.")
+		//RS ADD End
 		if(L.can_centcom_reply())
 			var/input = sanitize(tgui_input_text(src.owner, "Please enter a message to reply to [key_name(L)] via their headset.","Outgoing message from CentCom", ""))
-			if(!input)		return
+			if(!input) //RS ADD
+				message_admins("[key_name_admin(usr)] has cancelled their reply to Emergency message.")
+				return //RS ADD End
 
 			to_chat(src.owner, "<span class='filter_adminlog'>You sent [input] to [L] via a secure channel.</span>")
 			log_admin("[src.owner] replied to [key_name(L)]'s CentCom message with the message [input].")
 			message_admins("[src.owner] replied to [key_name(L)]'s CentCom message with: \"[input]\"")
 			if(!isAI(L))
 				to_chat(L, "<span class='info'>You hear something crackle in your headset for a moment before a voice speaks.</span>")
-			to_chat(L, "<span class='info'>Please stand by for a message from Central Command.</span>")
+			to_chat(L, "<span class='info'>Please stand by for a message from <b><font color='blue'>Central Command</font></b>.</span>") //RS Edit
 			to_chat(L, "<span class='info'>Message as follows.</span>")
 			to_chat(L, "<span class='notice'>[input]</span>")
-			to_chat(L, "<span class='info'>Message ends.</span>")
+			to_chat(L, "<span class='info'>End of transmission.</span>") //RS Edit
 		else
 			to_chat(src.owner, "<span class='filter_adminlog'>The person you are trying to contact does not have functional radio equipment.</span>")
 
@@ -1505,19 +1512,22 @@
 	else if(href_list["SyndicateReply"])
 		var/mob/living/carbon/human/H = locate(href_list["SyndicateReply"])
 		if(!istype(H))
-			to_chat(usr, "<span class='filter_adminlog'>This can only be used on instances of type /mob/living/carbon/human</span>")
+			to_chat(usr, "<span class='filter_adminlog'>This can only be used on instances of type /mob/living</span>") //RS Edit
 			return
-		if(!istype(H.l_ear, /obj/item/device/radio/headset) && !istype(H.r_ear, /obj/item/device/radio/headset))
-			to_chat(usr, "<span class='filter_adminlog'>The person you are trying to contact is not wearing a headset</span>")
+		if(!H.CanObtainCentcommMessage()) //RS ADD
+			to_chat(usr, "The person you are trying to contact is not wearing a headset")
 			return
-
+		message_admins("[key_name_admin(usr)] has started replying to Syndicate Emergency message.")
+		//RS ADD End
 		var/input = sanitize(tgui_input_text(src.owner, "Please enter a message to reply to [key_name(H)] via their headset.","Outgoing message from a shadowy figure...", ""))
-		if(!input)	return
+		if(!input) //RS ADD
+			message_admins("[key_name_admin(usr)] has cancelled their reply to Syndicate Emergency message.")
+			return //RS ADD End
 
 		to_chat(src.owner, "<span class='filter_adminlog'>You sent [input] to [H] via a secure channel.</span>")
 		log_admin("[src.owner] replied to [key_name(H)]'s illegal message with the message [input].")
 		to_chat(H, "<span class='filter_notice'>You hear something crackle in your headset for a moment before a voice speaks.  \
-					\"Please stand by for a message from your benefactor.  Message as follows, agent. <b>\"[input]\"</b>  Message ends.\"</span>")
+					\"Please stand by for a message from <b><font color='red'><i>Syndicate</i></font></b>. Message as follows, agent. <b>\"[input]\"</b>  End of transmission.\"</span>")//RS Edit
 
 	else if(href_list["AdminFaxView"])
 		var/obj/item/fax = locate(href_list["AdminFaxView"])
