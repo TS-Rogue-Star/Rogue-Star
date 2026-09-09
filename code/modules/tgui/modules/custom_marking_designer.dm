@@ -1863,6 +1863,10 @@ var/global/custom_marking_static_source_digest_complete = TRUE
 	var/list/sources_by_key = list()
 	var/list/states_by_key = list()
 	note_static_gear_source_state(sources_by_key, states_by_key, 'icons/effects/effects.dmi', "nothing")
+	for(var/pda_choice = 1 to pdachoicelist.len)
+		note_static_gear_source_state(sources_by_key, states_by_key, get_pda_choice_icon(pda_choice), "pda")
+	note_static_gear_source_state(sources_by_key, states_by_key, 'icons/mob/pda_wrist.dmi', null, TRUE)
+	note_static_gear_source_state(sources_by_key, states_by_key, 'icons/mob/species/teshari/pda_wrist.dmi', null, TRUE)
 	if(global_underwear)
 		for(var/datum/category_group/underwear/underwear_category in global_underwear.categories)
 			for(var/datum/category_item/underwear/underwear_item in underwear_category.items)
@@ -2470,6 +2474,7 @@ var/global/custom_marking_static_source_digest_complete = TRUE
 		"tail_style" = prefs.tail_style,
 		"digitigrade" = prefs.digitigrade,
 		"backbag" = prefs.backbag,
+		"pdachoice" = prefs.pdachoice,
 		"underwear" = prefs.all_underwear?.Copy(),
 		"underwear_metadata" = prefs.all_underwear_metadata?.Copy(),
 		"shoe_hater" = prefs.shoe_hater,
@@ -4096,7 +4101,8 @@ var/global/custom_marking_static_source_digest_complete = TRUE
 	var/list/update = list(
 		"traits_revision" = traits_revision,
 		"traits_species" = prefs.species,
-		"traits_payload" = payload
+		"traits_payload" = payload,
+		"equipment_context_signature" = get_equipment_context_signature()
 	)
 	if(islist(save_result))
 		update["traits_save_result"] = save_result
@@ -4628,7 +4634,8 @@ var/global/custom_marking_static_source_digest_complete = TRUE
 		return FALSE
 	var/list/update = list(
 		"identity_revision" = identity_revision,
-		"identity_payload" = payload
+		"identity_payload" = payload,
+		"equipment_context_signature" = get_equipment_context_signature()
 	)
 	if(islist(save_result))
 		update["identity_save_result"] = save_result
@@ -5500,7 +5507,9 @@ var/global/custom_marking_static_source_digest_complete = TRUE
 	if(islist(canvas_backgrounds_live) && canvas_backgrounds_live.len)
 		data["canvas_backgrounds"] = canvas_backgrounds_live
 		data["default_canvas_background"] = "default"
-	data["ui_locked"] = save_in_progress || identity_save_in_progress
+	data["ui_locked"] = save_in_progress || identity_save_in_progress || equipment_save_in_progress
+	data["equipment_revision"] = equipment_revision
+	data["equipment_context_signature"] = get_equipment_context_signature()
 	data["show_equipment"] = !!(prefs?.equip_preview_mob & EQUIP_PREVIEW_EQUIPMENT)
 	data["show_job_gear"] = !!(prefs?.equip_preview_mob & EQUIP_PREVIEW_JOB)
 	data["show_loadout_gear"] = !!(prefs?.equip_preview_mob & EQUIP_PREVIEW_LOADOUT)
@@ -6473,6 +6482,8 @@ var/global/custom_marking_static_source_digest_complete = TRUE
 	if(..())
 		return TRUE
 	var/handled = TRUE
+	if(handle_equipment_action(action, params, usr))
+		return TRUE
 	if(action == "static_asset_manifest_failed")
 		static_manifest_client_ready = FALSE
 		prefs?.close_custom_marking_designer_loading()
@@ -6837,7 +6848,8 @@ var/global/custom_marking_static_source_digest_complete = TRUE
 				return FALSE
 		var/list/update = islist(species_save_result) ? list(
 			"species_save_result" = species_save_result,
-			"identity_revision" = identity_revision
+			"identity_revision" = identity_revision,
+			"equipment_context_signature" = get_equipment_context_signature()
 		) : null
 		var/datum/tgui/active_ui = SStgui.get_open_ui(usr, src)
 		if(active_ui && islist(update))

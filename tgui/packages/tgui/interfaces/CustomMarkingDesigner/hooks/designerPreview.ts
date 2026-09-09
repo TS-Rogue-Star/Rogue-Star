@@ -18,7 +18,6 @@ import {
   convertCompositeGridToUi,
   updatePreviewEntryCustomLayer,
   resolveDirectionCanvasSources,
-  syncPreviewStateIfNeeded,
   updatePreviewStateFromPayload,
 } from '../utils';
 import {
@@ -41,7 +40,6 @@ export type RenderedPreviewCache = {
 type Params = Readonly<{
   data: CustomMarkingDesignerData;
   previewState: PreviewState;
-  setPreviewState: (state: PreviewState) => void;
   strokeDraftState: StrokeDraftState;
   currentDirectionKey: number;
   activePartKey: string;
@@ -214,7 +212,6 @@ const resolveCachedRenderedPreview = (
 export const useDesignerPreview = ({
   data,
   previewState,
-  setPreviewState,
   strokeDraftState,
   currentDirectionKey,
   activePartKey,
@@ -286,8 +283,6 @@ export const useDesignerPreview = ({
     canvasHeight,
     canvasGrid: serverCanvasGrid,
   });
-
-  syncPreviewStateIfNeeded(derivedPreviewState, previewState, setPreviewState);
 
   const draftDiffIndex = buildDraftDiffIndex(strokeDraftState);
   const pendingActiveDirDiffs =

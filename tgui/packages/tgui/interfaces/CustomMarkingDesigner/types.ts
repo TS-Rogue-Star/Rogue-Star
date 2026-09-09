@@ -11,6 +11,8 @@
 // ////////////////////////////////////////////////////////////////////////////////////////////////////
 // Updated by Lira for Rogue Star September 2026: Character Designer - Identity Tab ///////////////////
 // ////////////////////////////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star September 2026: Character Designer - Equipment //////////////////////
+// ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 import type { BooleanLike } from '../../../common/react';
 import type {
@@ -54,7 +56,14 @@ export type DraftStrokePayload = {
 export type CustomMarkingDesignerData = {
   marking_id?: string;
   mark_name?: string;
-  initial_tab?: 'identity' | 'custom' | 'body' | 'basic' | 'species' | 'traits';
+  initial_tab?:
+    | 'identity'
+    | 'custom'
+    | 'body'
+    | 'basic'
+    | 'species'
+    | 'traits'
+    | 'equipment';
   allow_custom_tab?: boolean;
   custom_marking_enable_disclaimer?: string;
   active_dir: string;
@@ -111,6 +120,10 @@ export type CustomMarkingDesignerData = {
   identity_save_result?: IdentitySaveResult | null;
   identity_random_name_result?: IdentityRandomNameResult | null;
   identity_revision?: number;
+  equipment_revision?: number;
+  equipment_context_signature?: string | null;
+  equipment_payload?: EquipmentPayload | null;
+  equipment_save_result?: EquipmentSaveResult | null;
   trait_icon_scale_x?: number;
   trait_icon_scale_y?: number;
   species_save_result?: SpeciesSaveResult | null;
@@ -120,6 +133,72 @@ export type CustomMarkingDesignerData = {
 };
 
 export type CustomColorSlotsState = Array<string | null>;
+
+export type EquipmentCategory =
+  | 'Underwear, top'
+  | 'Underwear, bottom'
+  | 'Socks'
+  | 'Undershirt'
+  | 'backpack'
+  | 'pda';
+
+export type EquipmentDraftState = {
+  revision: number;
+  underwear: Record<string, string>;
+  colors: Record<string, string>;
+  backbag: number;
+  pdachoice: number;
+  communicator_visibility: boolean;
+  shoe_hater: boolean;
+};
+
+export type EquipmentDirectionalRecipes = Record<
+  string,
+  import('../../utils/character-preview').GearOverlayAssetReference[]
+>;
+
+export type EquipmentGearRecipes = {
+  equipment: EquipmentDirectionalRecipes;
+  job: EquipmentDirectionalRecipes;
+  loadout: EquipmentDirectionalRecipes;
+};
+
+export type EquipmentGearOptions = {
+  job_by_backbag: Record<string, EquipmentDirectionalRecipes>;
+  loadout_by_pda: Record<string, EquipmentDirectionalRecipes>;
+};
+
+export type EquipmentCatalogEntry = {
+  id: string;
+  name: string;
+  colorable?: BooleanLike;
+  singlePreview?: boolean;
+  recipes?: EquipmentDirectionalRecipes;
+  icon?: IconAssetReference | null;
+};
+
+export type EquipmentCatalog = Record<
+  EquipmentCategory,
+  EquipmentCatalogEntry[]
+>;
+
+export type EquipmentPayload = {
+  request_id: string;
+  values?: EquipmentDraftState;
+  catalog_signature?: string;
+  catalog?: EquipmentCatalog;
+  gear_options?: EquipmentGearOptions | null;
+  error?: string;
+};
+
+export type EquipmentSaveResult = {
+  request_id: string;
+  accepted: BooleanLike;
+  gear_options?: EquipmentGearOptions | null;
+  revision?: number;
+  values?: EquipmentDraftState;
+  error?: string;
+};
 
 export type BooleanMapState = {
   map: Record<string, boolean>;

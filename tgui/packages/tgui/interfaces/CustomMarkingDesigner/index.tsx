@@ -19,6 +19,8 @@
 // /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Updated by Lira for Rogue Star September 2026: Character Designer - Identity Tab ////////////////////////////////////
 // /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star September 2026: Character Designer - Equipment Tab ///////////////////////////////////
+// /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 import { Component } from 'inferno';
 
@@ -194,9 +196,14 @@ import {
 import { SpeciesTab } from './SpeciesTab';
 import { TraitsTab } from './TraitsTab';
 import { IdentityTab } from './IdentityTab';
+import { EquipmentTab } from './EquipmentTab';
+import { EquipmentSession } from './services/equipmentSession';
+import { EquipmentSessionSync } from './components/EquipmentSessionSync';
+import { resolveGearOverlayAssetReferences } from '../../utils/character-preview';
+import type { EquipmentGearRecipes } from './types';
 
 type DesignerTabId =
-  'identity' | 'custom' | 'body' | 'basic' | 'species' | 'traits';
+  'identity' | 'custom' | 'body' | 'basic' | 'species' | 'traits' | 'equipment';
 
 type PreviewWithMarkingsCache = {
   signature: string;
@@ -1063,9 +1070,7 @@ const resolvePreviewSourceState = (options: {
   speciesPreviewSignature: string;
   previewStateRevision: number;
   clientPreviewEpoch: number;
-  setClientPreviewEpoch: (value: number) => void;
   previewSourceSignature: string;
-  setPreviewSourceSignature: (value: string) => void;
   resolvedPartReplacementMap: Record<string, boolean>;
   resolvedPartPriorityMap: Record<string, boolean>;
   assetRevision: number;
@@ -1080,6 +1085,8 @@ const resolvePreviewSourceState = (options: {
   usingClientPreview: boolean;
   clientPreviewRevision: number;
   renderedPreviewSignature: string;
+  resolvedEpoch: number;
+  previewSourceKey: string;
 } => {
   const {
     data,
@@ -1092,9 +1099,7 @@ const resolvePreviewSourceState = (options: {
     speciesPreviewSignature,
     previewStateRevision,
     clientPreviewEpoch,
-    setClientPreviewEpoch,
     previewSourceSignature,
-    setPreviewSourceSignature,
     resolvedPartReplacementMap,
     resolvedPartPriorityMap,
     assetRevision,
@@ -1166,12 +1171,6 @@ const resolvePreviewSourceState = (options: {
       clientPreviewEpoch: requestedEpoch,
       previewStateRevision,
     });
-  if (signatureChanged) {
-    setPreviewSourceSignature(previewSourceKey);
-  }
-  if (usingClientPreview && resolvedEpoch !== clientPreviewEpoch) {
-    setClientPreviewEpoch(resolvedEpoch);
-  }
   const previewData =
     usingClientPreview && clientPreviewSources
       ? {
@@ -1211,6 +1210,8 @@ const resolvePreviewSourceState = (options: {
     usingClientPreview,
     clientPreviewRevision,
     renderedPreviewSignature,
+    resolvedEpoch,
+    previewSourceKey,
   };
 };
 
@@ -1283,23 +1284,15 @@ type DesignerTabStateOptions = {
   allowCustomTab: boolean;
   activeTab: DesignerTabId;
   lastInitialTab: DesignerTabId | null;
-  setActiveTab: (tab: DesignerTabId) => void;
-  setLastInitialTab: (tab: DesignerTabId | null) => void;
 };
 
 const resolveDesignerTabState = (
   options: DesignerTabStateOptions
 ): {
   resolvedActiveTab: DesignerTabId;
+  desiredTab: DesignerTabId | null;
 } => {
-  const {
-    initialTab,
-    allowCustomTab,
-    activeTab,
-    lastInitialTab,
-    setActiveTab,
-    setLastInitialTab,
-  } = options;
+  const { initialTab, allowCustomTab, activeTab, lastInitialTab } = options;
   let desiredTab: DesignerTabId | null = null;
   if (
     initialTab === 'body' ||
@@ -1307,28 +1300,48 @@ const resolveDesignerTabState = (
     initialTab === 'custom' ||
     initialTab === 'basic' ||
     initialTab === 'species' ||
-    initialTab === 'traits'
+    initialTab === 'traits' ||
+    initialTab === 'equipment'
   ) {
     desiredTab = initialTab;
   }
   if (!allowCustomTab && desiredTab === 'custom') {
     desiredTab = 'body';
   }
-  if (desiredTab && desiredTab !== lastInitialTab) {
-    if (desiredTab !== activeTab) {
-      setActiveTab(desiredTab);
-    }
-    setLastInitialTab(desiredTab);
-  }
+  const nextTab =
+    desiredTab && desiredTab !== lastInitialTab ? desiredTab : activeTab;
   const fallbackTab: DesignerTabId =
     desiredTab && desiredTab !== 'custom' ? desiredTab : 'body';
-  if (!allowCustomTab && activeTab === 'custom') {
-    setActiveTab(fallbackTab);
-  }
   const resolvedActiveTab: DesignerTabId =
-    !allowCustomTab && activeTab === 'custom' ? fallbackTab : activeTab;
-  return { resolvedActiveTab };
+    !allowCustomTab && nextTab === 'custom' ? fallbackTab : nextTab;
+  return { resolvedActiveTab, desiredTab };
 };
+
+class DesignerStateSyncScheduler extends Component<
+  Readonly<{
+    states: Record<string, unknown>;
+    writeStates: (states: Record<string, unknown>) => void;
+  }>
+> {
+  componentDidMount() {
+    this.sync();
+  }
+
+  componentDidUpdate() {
+    this.sync();
+  }
+
+  private sync() {
+    const { states, writeStates } = this.props;
+    if (Object.keys(states).length) {
+      writeStates(states);
+    }
+  }
+
+  render() {
+    return null;
+  }
+}
 
 const syncReferencePartMarkingCache = (options: {
   cache: ReferencePartMarkingCache;
@@ -2105,6 +2118,22 @@ const syncServerSpeciesPayload = (options: {
   }
 };
 
+class ServerSpeciesPayloadSyncScheduler extends Component<
+  Parameters<typeof syncServerSpeciesPayload>[0]
+> {
+  componentDidMount() {
+    syncServerSpeciesPayload(this.props);
+  }
+
+  componentDidUpdate() {
+    syncServerSpeciesPayload(this.props);
+  }
+
+  render() {
+    return null;
+  }
+}
+
 type ActFn = (action: string, params?: Record<string, unknown>) => void;
 
 const resolveSpeciesCustomName = (payload?: SpeciesPayload | null) =>
@@ -2269,6 +2298,18 @@ const DesignerTitleTabs = ({
         Body Markings
       </Tabs.Tab>
       <Tabs.Tab
+        selected={resolvedActiveTab === 'equipment'}
+        icon="shopping-bag"
+        className={tabsLocked ? 'Tab--disabled' : undefined}
+        aria-disabled={tabsLocked}
+        onClick={() => {
+          if (!tabsLocked) {
+            onTabChange('equipment');
+          }
+        }}>
+        Equipment
+      </Tabs.Tab>
+      <Tabs.Tab
         selected={resolvedActiveTab === 'traits'}
         icon="dna"
         className={tabsLocked ? 'Tab--disabled' : undefined}
@@ -2392,6 +2433,9 @@ const resolveTabSwitchLabel = (tab: DesignerTabId) => {
   }
   if (tab === 'identity') {
     return 'Identity tab';
+  }
+  if (tab === 'equipment') {
+    return 'Equipment tab';
   }
   return 'Basic Appearance tab';
 };
@@ -2593,6 +2637,12 @@ const createIdentityRandomNameRequestId = (stateToken: string) => {
 const CustomMarkingDesignerContent = (_props, context) => {
   const { act, data } = useBackend<CustomMarkingDesignerData>(context);
   const stateToken = data.state_token || 'session';
+  const synchronizedStates: Record<string, unknown> = {};
+  const [equipmentSession, setEquipmentSession] = useLocalState(
+    context,
+    `equipmentSession-${stateToken}`,
+    new EquipmentSession(stateToken, act)
+  );
   const identityDraftKey = `identityDraft-${stateToken}`;
   const identitySavedDraftKey = `identitySavedDraft-${stateToken}`;
   const identityDirtyKey = `identityDirty-${stateToken}`;
@@ -2607,12 +2657,11 @@ const CustomMarkingDesignerContent = (_props, context) => {
     'customMarkingTab',
     'custom'
   );
-  const [lastInitialTab, setLastInitialTab] =
-    useLocalState<DesignerTabId | null>(
-      context,
-      `customMarkingLastInitialTab-${stateToken}`,
-      null
-    );
+  const [lastInitialTab] = useLocalState<DesignerTabId | null>(
+    context,
+    `customMarkingLastInitialTab-${stateToken}`,
+    null
+  );
   const [zoomPercent, setZoomPercent] = useLocalState<number>(
     context,
     `customMarkingDesignerZoom-${stateToken}`,
@@ -2638,14 +2687,19 @@ const CustomMarkingDesignerContent = (_props, context) => {
       `customMarkingEnablePromptSwitchPending-${stateToken}`,
       false
     );
-  const { resolvedActiveTab } = resolveDesignerTabState({
+  const { resolvedActiveTab, desiredTab } = resolveDesignerTabState({
     initialTab: data.initial_tab,
     allowCustomTab,
     activeTab,
     lastInitialTab,
-    setActiveTab,
-    setLastInitialTab,
   });
+  if (activeTab !== resolvedActiveTab) {
+    synchronizedStates.customMarkingTab = resolvedActiveTab;
+  }
+  if (desiredTab && desiredTab !== lastInitialTab) {
+    synchronizedStates[`customMarkingLastInitialTab-${stateToken}`] =
+      desiredTab;
+  }
   const {
     isPlaceholderTool,
     activePrimaryTool,
@@ -2865,17 +2919,16 @@ const CustomMarkingDesignerContent = (_props, context) => {
       `customMarkingPreviewOverrides-${stateToken}`,
       null
     );
-  const [clientPreviewEpoch, setClientPreviewEpoch] = useLocalState<number>(
+  const [clientPreviewEpoch] = useLocalState<number>(
     context,
     `customMarkingDesignerClientPreviewEpoch-${stateToken}`,
     0
   );
-  const [previewSourceSignature, setPreviewSourceSignature] =
-    useLocalState<string>(
-      context,
-      `customMarkingDesignerPreviewSourceSignature-${stateToken}`,
-      ''
-    );
+  const [previewSourceSignature] = useLocalState<string>(
+    context,
+    `customMarkingDesignerPreviewSourceSignature-${stateToken}`,
+    ''
+  );
   const [basicAppearanceLoadInProgress, setBasicAppearanceLoadInProgress] =
     useLocalState<boolean>(
       context,
@@ -3220,6 +3273,8 @@ const CustomMarkingDesignerContent = (_props, context) => {
     usingClientPreview,
     clientPreviewRevision,
     renderedPreviewSignature,
+    resolvedEpoch,
+    previewSourceKey,
   } = resolvePreviewSourceState({
     data,
     bodyPayloadSnapshot,
@@ -3231,9 +3286,7 @@ const CustomMarkingDesignerContent = (_props, context) => {
     speciesPreviewSignature,
     previewStateRevision: previewState.revision,
     clientPreviewEpoch,
-    setClientPreviewEpoch,
     previewSourceSignature,
-    setPreviewSourceSignature,
     resolvedPartReplacementMap,
     resolvedPartPriorityMap,
     assetRevision,
@@ -3244,10 +3297,21 @@ const CustomMarkingDesignerContent = (_props, context) => {
     showJobGear,
     showLoadoutGear,
   });
+  if (previewSourceKey !== previewSourceSignature) {
+    synchronizedStates[
+      `customMarkingDesignerPreviewSourceSignature-${stateToken}`
+    ] = previewSourceKey;
+  }
+  if (usingClientPreview && resolvedEpoch !== clientPreviewEpoch) {
+    synchronizedStates[
+      `customMarkingDesignerClientPreviewEpoch-${stateToken}`
+    ] = resolvedEpoch;
+  }
   const sharedPreviewEnabled =
     resolvedActiveTab === 'custom' ||
     resolvedActiveTab === 'traits' ||
-    resolvedActiveTab === 'identity';
+    resolvedActiveTab === 'identity' ||
+    resolvedActiveTab === 'equipment';
   const {
     derivedPreviewState,
     overlayLayerParts,
@@ -3270,7 +3334,6 @@ const CustomMarkingDesignerContent = (_props, context) => {
   } = useDesignerPreview({
     data: previewData,
     previewState,
-    setPreviewState,
     strokeDraftState,
     currentDirectionKey,
     activePartKey,
@@ -3293,6 +3356,9 @@ const CustomMarkingDesignerContent = (_props, context) => {
     draftMutationToken,
     enabled: sharedPreviewEnabled,
   });
+  if (derivedPreviewState !== previewState) {
+    synchronizedStates[`previewState-${stateToken}`] = derivedPreviewState;
+  }
   const appearanceContext = resolveAppearanceContext({
     previewDirStates: derivedPreviewState.dirs,
     basicPayload: basicPayloadSnapshot,
@@ -3344,6 +3410,44 @@ const CustomMarkingDesignerContent = (_props, context) => {
     signature: previewMarkingsSignature,
   });
   const tabLivePreview = sharedPreviewEnabled ? previewDirsWithMarkings : [];
+  const renderEquipmentPreview = (
+    recipes: EquipmentGearRecipes,
+    gallery: boolean
+  ) => {
+    const previewDirStatesForLive = Object.fromEntries(
+      Object.entries(appearanceContext.previewDirStatesForLive).map(
+        ([dir, state]) => [
+          dir,
+          {
+            ...state,
+            gearEquipmentOverlayAssets:
+              resolveGearOverlayAssetReferences(recipes.equipment[dir]) || [],
+            gearJobOverlayAssets:
+              resolveGearOverlayAssetReferences(recipes.job[dir]) || [],
+            gearLoadoutOverlayAssets:
+              resolveGearOverlayAssetReferences(recipes.loadout[dir]) || [],
+          },
+        ]
+      )
+    );
+    const preview = applyAppearanceOverlaysToPreview({
+      preview: previewWithBaseColors,
+      previewDirStatesForLive,
+      appearanceContext,
+      canvasWidth,
+      canvasHeight,
+      showEquipment: gallery || showEquipment,
+      showJobGear: !gallery && showJobGear,
+      showLoadoutGear: !gallery && showLoadoutGear,
+      signalAssetUpdate: notifyAssetReady,
+    });
+    return applyBodyMarkingsToPreview({
+      preview,
+      context: bodyMarkingsContext,
+      stripReferenceMarkings,
+      suppressedPartsByDir: previewHiddenPartsByDir,
+    });
+  };
   const canvasReferenceSources = applyAppearanceToReferenceSources({
     referenceParts,
     referenceGrid,
@@ -4056,7 +4160,7 @@ const CustomMarkingDesignerContent = (_props, context) => {
   );
 
   const serverSpeciesPayload = data.species_payload || null;
-  syncServerSpeciesPayload({
+  const speciesPayloadSyncProps = {
     resolvedActiveTab,
     serverSpeciesPayload,
     speciesSavedSelection,
@@ -4075,7 +4179,7 @@ const CustomMarkingDesignerContent = (_props, context) => {
     speciesLoadInProgress,
     setSpeciesLoadInProgress,
     speciesReloadPending,
-  });
+  };
   handlePreviewRefreshTokenUpdate({
     serverPreviewRefreshToken,
     lastPreviewRefreshToken,
@@ -4096,30 +4200,34 @@ const CustomMarkingDesignerContent = (_props, context) => {
     setBasicReloadPending,
     act,
   });
-  const { shouldShowLoadingOverlay, tabSwitchBusyState, tabsLocked } =
-    resolveDesignerLoadingState({
-      resolvedActiveTab,
-      loadingOverlay,
-      pendingSave,
-      pendingClose,
-      bodyPayloadSnapshot,
-      basicPayloadSnapshot,
-      speciesPayload,
-      identityPayload: resolvedIdentityPayload,
-      identityLoadInProgress,
-      tabSwitchBusy,
-      bodyPendingSave,
-      bodyPendingClose,
-      basicPendingSave,
-      basicPendingClose,
-      speciesPendingSave,
-      speciesPendingClose,
-      traitsPendingSave,
-      traitsPendingClose,
-      identityPendingSave,
-      identityPendingClose,
-    });
+  const {
+    shouldShowLoadingOverlay,
+    tabSwitchBusyState,
+    tabsLocked: otherTabsLocked,
+  } = resolveDesignerLoadingState({
+    resolvedActiveTab,
+    loadingOverlay,
+    pendingSave,
+    pendingClose,
+    bodyPayloadSnapshot,
+    basicPayloadSnapshot,
+    speciesPayload,
+    identityPayload: resolvedIdentityPayload,
+    identityLoadInProgress,
+    tabSwitchBusy,
+    bodyPendingSave,
+    bodyPendingClose,
+    basicPendingSave,
+    basicPendingClose,
+    speciesPendingSave,
+    speciesPendingClose,
+    traitsPendingSave,
+    traitsPendingClose,
+    identityPendingSave,
+    identityPendingClose,
+  });
 
+  const tabsLocked = otherTabsLocked || equipmentSession.saving;
   const canvasBackgroundId = resolvedCanvasBackground?.id || 'default';
   const directionTitle = `Direction: ${resolveDirectionLabel(
     currentDirectionKey
@@ -4400,6 +4508,7 @@ const CustomMarkingDesignerContent = (_props, context) => {
     basic: detectBasicUnsaved,
     species: detectSpeciesUnsaved,
     traits: detectTraitsUnsaved,
+    equipment: () => equipmentSession.dirty,
   };
   const resolveUnsavedForTab = (tab: DesignerTabId) => unsavedDetectors[tab]();
 
@@ -5457,6 +5566,9 @@ const CustomMarkingDesignerContent = (_props, context) => {
   };
 
   const saveTabBeforeSwitch = async (sourceTab: DesignerTabId) => {
+    if (sourceTab === 'equipment') {
+      return equipmentSession.save();
+    }
     if (sourceTab === 'custom') {
       await handleSaveProgress();
       return !detectCustomUnsaved();
@@ -5594,6 +5706,8 @@ const CustomMarkingDesignerContent = (_props, context) => {
         discardTraitsChanges();
       } else if (tabSwitchPrompt.sourceTab === 'identity') {
         discardIdentityChanges();
+      } else if (tabSwitchPrompt.sourceTab === 'equipment') {
+        equipmentSession.discard();
       } else {
         discardBasicChanges();
       }
@@ -5646,6 +5760,13 @@ const CustomMarkingDesignerContent = (_props, context) => {
       canClose={false}
       statusIcon={customStatusIcon}
       buttons={titleTabs}>
+      <DesignerStateSyncScheduler
+        states={synchronizedStates}
+        writeStates={(states) =>
+          context.store.dispatch(backendSetSharedStates({ states }))
+        }
+      />
+      <ServerSpeciesPayloadSyncScheduler {...speciesPayloadSyncProps} />
       <ToolBootstrapScheduler
         isPlaceholderTool={isPlaceholderTool}
         toolBootstrapScheduled={toolBootstrapScheduled}
@@ -5710,6 +5831,51 @@ const CustomMarkingDesignerContent = (_props, context) => {
         pendingRequest={traitsPendingSaveRequest}
         onAcknowledged={completeTraitsSave}
       />
+      <EquipmentSessionSync
+        key={`equipment-session-${stateToken}`}
+        session={equipmentSession}
+        data={data}
+        preloadReady={
+          !!bodyPayloadSnapshot &&
+          !bodyPayloadSnapshot.preview_only &&
+          !!basicPayloadSnapshot &&
+          !basicPayloadSnapshot.preview_only &&
+          !bodyMarkingsLoadInProgress &&
+          !basicAppearanceLoadInProgress &&
+          !bodyReloadPending &&
+          !basicReloadPending &&
+          !uiLocked
+        }
+        onChange={() => setEquipmentSession(equipmentSession)}
+        onSaved={() => {
+          requestBodyPayload();
+          requestBasicPayload();
+          setSpeciesReloadPending(true);
+          setSpeciesPayload(null);
+        }}
+        onBodyPreview={(payload) => {
+          if (!isPayloadSpeciesStale(payload)) {
+            setBodyPayload(
+              mergeBodyMarkingsPayload(
+                resolveLatestBodyPayload(),
+                payload,
+                resolveLatestBasicPayload()
+              )
+            );
+          }
+        }}
+        onBasicPreview={(payload) => {
+          if (!isPayloadSpeciesStale(payload)) {
+            setBasicPayload(
+              mergeBasicAppearancePayload(
+                resolveLatestBasicPayload(),
+                payload,
+                resolveLatestBodyPayload()
+              )
+            );
+          }
+        }}
+      />
       <IdentityPayloadRequestScheduler
         key={`identity-request-${stateToken}`}
         active={resolvedActiveTab === 'identity'}
@@ -5767,7 +5933,39 @@ const CustomMarkingDesignerContent = (_props, context) => {
       />
       <DesignerUndoHotkeyListener canUndo={canUndoDrafts} onUndo={handleUndo} />
       <Window.Content scrollable overflowX="auto">
-        {resolvedActiveTab === 'identity' ? (
+        {resolvedActiveTab === 'equipment' ? (
+          <EquipmentTab
+            session={equipmentSession}
+            stateToken={stateToken}
+            uiLocked={uiLocked}
+            previewReady={
+              !!basicPayloadSnapshot &&
+              !!bodyPayloadSnapshot &&
+              !!previewWithBaseColors.length
+            }
+            previewSignature={`${stateToken}|${data.preview_revision}|${data.body_part_layer_revision}|${bodyPayloadSnapshot?.preview_signature}|${basicPayloadSnapshot?.preview_signature}|${appearanceContext.appearanceSignature}|${resolvedBodyMarkingsSignature}|${stripReferenceMarkings}`}
+            assetRevision={assetRevision}
+            notifyAssetReady={notifyAssetReady}
+            renderPreview={renderEquipmentPreview}
+            canvasWidth={canvasWidth}
+            canvasHeight={canvasHeight}
+            iconScaleX={data.trait_icon_scale_x}
+            iconScaleY={data.trait_icon_scale_y}
+            previewFitToFrame={previewFitToFrame}
+            onTogglePreviewFit={toggleCanvasFit}
+            showEquipment={showEquipment}
+            onToggleEquipment={() => setShowEquipment(!showEquipment)}
+            showJobGear={showJobGear}
+            onToggleJobGear={() => setShowJobGear(!showJobGear)}
+            showLoadoutGear={showLoadoutGear}
+            onToggleLoadout={() => setShowLoadoutGear(!showLoadoutGear)}
+            canvasBackgroundOptions={canvasBackgroundOptions}
+            resolvedCanvasBackground={resolvedCanvasBackground}
+            backgroundFallbackColor={backgroundFallbackColor}
+            cycleCanvasBackground={cycleCanvasBackground}
+            canvasBackgroundScale={canvasBackgroundScale}
+          />
+        ) : resolvedActiveTab === 'identity' ? (
           <IdentityTab
             context={context}
             stateToken={stateToken}
