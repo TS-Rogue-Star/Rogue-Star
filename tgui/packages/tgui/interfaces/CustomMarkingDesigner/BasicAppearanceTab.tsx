@@ -1398,13 +1398,7 @@ const BasicAppearanceSettingsSection = ({
   setStyle,
 }: BasicAppearanceSettingsSectionProps) => {
   type BasicAppearanceStyleType =
-    | 'hair'
-    | 'gradient'
-    | 'facial_hair'
-    | 'ears'
-    | 'horns'
-    | 'tail'
-    | 'wings';
+    'hair' | 'gradient' | 'facial_hair' | 'ears' | 'horns' | 'tail' | 'wings';
 
   const StyleRow = (
     props: Readonly<{
@@ -5237,8 +5231,7 @@ const buildGearOverlayLayers = (
   const loadoutLayers = showLoadoutGear
     ? buildOrderedOverlayLayers(
         (dirState.gearLoadoutOverlayAssets as (
-          | GearOverlayAsset
-          | IconAssetPayload
+          GearOverlayAsset | IconAssetPayload
         )[]) || [],
         canvasWidth,
         canvasHeight,
@@ -5255,8 +5248,7 @@ const buildGearOverlayLayers = (
   const jobLayersUnfiltered = showJobGear
     ? buildOrderedOverlayLayers(
         (dirState.gearJobOverlayAssets as (
-          | GearOverlayAsset
-          | IconAssetPayload
+          GearOverlayAsset | IconAssetPayload
         )[]) || [],
         canvasWidth,
         canvasHeight,
@@ -5279,8 +5271,7 @@ const buildGearOverlayLayers = (
   const equipmentLayers = showEquipment
     ? buildOrderedOverlayLayers(
         (dirState.gearEquipmentOverlayAssets as (
-          | GearOverlayAsset
-          | IconAssetPayload
+          GearOverlayAsset | IconAssetPayload
         )[]) || [],
         canvasWidth,
         canvasHeight,

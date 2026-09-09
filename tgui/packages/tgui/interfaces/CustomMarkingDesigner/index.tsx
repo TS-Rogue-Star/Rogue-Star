@@ -196,12 +196,7 @@ import { TraitsTab } from './TraitsTab';
 import { IdentityTab } from './IdentityTab';
 
 type DesignerTabId =
-  | 'identity'
-  | 'custom'
-  | 'body'
-  | 'basic'
-  | 'species'
-  | 'traits';
+  'identity' | 'custom' | 'body' | 'basic' | 'species' | 'traits';
 
 type PreviewWithMarkingsCache = {
   signature: string;
@@ -4222,9 +4217,7 @@ const CustomMarkingDesignerContent = (_props, context) => {
   const resolveLatestTraitsDraft = () => {
     const sharedState = selectBackend(context.store.getState()).shared || {};
     const draft = sharedState[traitsDraftKey] as
-      | TraitsDraftState
-      | null
-      | undefined;
+      TraitsDraftState | null | undefined;
     return draft !== undefined ? draft : traitsDraftState;
   };
 
@@ -4244,18 +4237,14 @@ const CustomMarkingDesignerContent = (_props, context) => {
   const resolveLatestIdentityDraft = () => {
     const sharedState = selectBackend(context.store.getState()).shared || {};
     const draft = sharedState[identityDraftKey] as
-      | IdentityDraftState
-      | null
-      | undefined;
+      IdentityDraftState | null | undefined;
     return draft !== undefined ? draft : identityDraft;
   };
 
   const resolveLatestIdentitySavedDraft = () => {
     const sharedState = selectBackend(context.store.getState()).shared || {};
     const draft = sharedState[identitySavedDraftKey] as
-      | IdentityDraftState
-      | null
-      | undefined;
+      IdentityDraftState | null | undefined;
     return draft !== undefined ? draft : identitySavedDraft;
   };
 
@@ -4315,18 +4304,14 @@ const CustomMarkingDesignerContent = (_props, context) => {
   const resolveLatestBodyPayload = () => {
     const sharedState = selectBackend(context.store.getState()).shared || {};
     const payload = sharedState.bodyPayload as
-      | BodyMarkingsPayload
-      | null
-      | undefined;
+      BodyMarkingsPayload | null | undefined;
     return payload !== undefined ? payload : bodyPayload;
   };
 
   const resolveLatestBasicPayload = () => {
     const sharedState = selectBackend(context.store.getState()).shared || {};
     const payload = sharedState.basicPayload as
-      | BasicAppearancePayload
-      | null
-      | undefined;
+      BasicAppearancePayload | null | undefined;
     return payload !== undefined ? payload : basicPayload;
   };
 
@@ -4361,9 +4346,7 @@ const CustomMarkingDesignerContent = (_props, context) => {
   const resolveLatestSpeciesPayload = () => {
     const sharedState = selectBackend(context.store.getState()).shared || {};
     const payload = sharedState.speciesPayload as
-      | SpeciesPayload
-      | null
-      | undefined;
+      SpeciesPayload | null | undefined;
     return payload !== undefined ? payload : speciesPayload;
   };
 
@@ -4625,9 +4608,7 @@ const CustomMarkingDesignerContent = (_props, context) => {
   const resolveLatestSpeciesIconBaseSelection = () => {
     const sharedState = selectBackend(context.store.getState()).shared || {};
     const selection = sharedState.speciesIconBaseSelection as
-      | string
-      | null
-      | undefined;
+      string | null | undefined;
     return selection !== undefined ? selection : speciesIconBaseSelection;
   };
 

@@ -6,10 +6,7 @@ import type { IdentityLocationGroup, IdentityLocationOption } from '../types';
 import { IDENTITY_MOBILE_LOCATION_GROUP } from './identity';
 
 export type IdentityStarMapLabelPlacement =
-  | 'above'
-  | 'below'
-  | 'left'
-  | 'right';
+  'above' | 'below' | 'left' | 'right';
 
 export type IdentityStarMapNode = {
   id: string;

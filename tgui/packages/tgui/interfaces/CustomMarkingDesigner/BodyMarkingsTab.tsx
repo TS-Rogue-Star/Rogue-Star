@@ -1431,8 +1431,7 @@ const buildAppearanceOverlayEntriesForDir = (options: {
   const loadoutLayers = showLoadoutGear
     ? buildOrderedOverlayLayers(
         (dirState.gearLoadoutOverlayAssets as (
-          | GearOverlayAsset
-          | IconAssetPayload
+          GearOverlayAsset | IconAssetPayload
         )[]) || [],
         canvasWidth,
         canvasHeight,
@@ -1449,8 +1448,7 @@ const buildAppearanceOverlayEntriesForDir = (options: {
   const jobLayersUnfiltered = showJobGear
     ? buildOrderedOverlayLayers(
         (dirState.gearJobOverlayAssets as (
-          | GearOverlayAsset
-          | IconAssetPayload
+          GearOverlayAsset | IconAssetPayload
         )[]) || [],
         canvasWidth,
         canvasHeight,
@@ -1473,8 +1471,7 @@ const buildAppearanceOverlayEntriesForDir = (options: {
   const equipmentLayers = showEquipment
     ? buildOrderedOverlayLayers(
         (dirState.gearEquipmentOverlayAssets as (
-          | GearOverlayAsset
-          | IconAssetPayload
+          GearOverlayAsset | IconAssetPayload
         )[]) || [],
         canvasWidth,
         canvasHeight,
@@ -3674,8 +3671,7 @@ export const BodyMarkingsTab = (props: BodyMarkingsTabProps, context) => {
     const { latestMarkings } = resolveLatestBodyState();
     const existingEntry = latestMarkings[markId];
     const existingPartState = existingEntry?.[partId] as
-      | BodyMarkingPartState
-      | undefined;
+      BodyMarkingPartState | undefined;
     const existingColor = normalizeHex(existingPartState?.color) || null;
     if (existingEntry?.color === null && existingColor === normalized) {
       return;

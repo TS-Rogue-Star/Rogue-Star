@@ -333,8 +333,7 @@ export const buildRenderedPreviewDirs = (
       previewReferencePartMarkings = null;
     }
     const overlayAssets = dirState.overlayAssets as
-      | (GearOverlayAsset | IconAssetPayload)[]
-      | undefined;
+      (GearOverlayAsset | IconAssetPayload)[] | undefined;
     const overlaySlotFilter = stripReferenceMarkings
       ? (slot: string | null | undefined) => slot !== 'custom_marking'
       : undefined;
@@ -352,8 +351,7 @@ export const buildRenderedPreviewDirs = (
     const loadoutOverlayLayers = allowLoadout
       ? buildOrderedOverlayLayers(
           dirState.gearLoadoutOverlayAssets as
-            | (GearOverlayAsset | IconAssetPayload)[]
-            | undefined,
+            (GearOverlayAsset | IconAssetPayload)[] | undefined,
           canvasWidth,
           canvasHeight,
           'loadout',
@@ -370,8 +368,7 @@ export const buildRenderedPreviewDirs = (
     const jobOverlayLayersUnfiltered = allowJob
       ? buildOrderedOverlayLayers(
           dirState.gearJobOverlayAssets as
-            | (GearOverlayAsset | IconAssetPayload)[]
-            | undefined,
+            (GearOverlayAsset | IconAssetPayload)[] | undefined,
           canvasWidth,
           canvasHeight,
           'job',
@@ -394,8 +391,7 @@ export const buildRenderedPreviewDirs = (
     const equipmentOverlayLayersUnfiltered = allowEquipment
       ? buildOrderedOverlayLayers(
           dirState.gearEquipmentOverlayAssets as
-            | (GearOverlayAsset | IconAssetPayload)[]
-            | undefined,
+            (GearOverlayAsset | IconAssetPayload)[] | undefined,
           canvasWidth,
           canvasHeight,
           'equipment',
