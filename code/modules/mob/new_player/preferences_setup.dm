@@ -200,8 +200,8 @@
 	equip_prepared_preview_mob(mannequin, equip_mask_override) // RS Add: Character Designer - Species and Prosthetics (Lira, August 2026)
 
 // RS Add: Character Designer - Species and Prosthetics (Lira, August 2026)
-/datum/preferences/proc/get_generic_preview_backbag_path()
-	switch(backbag)
+/datum/preferences/proc/get_generic_preview_backbag_path(backbag_override = null)
+	switch(isnull(backbag_override) ? backbag : backbag_override)
 		if(2)
 			return /obj/item/weapon/storage/backpack
 		if(3)

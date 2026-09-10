@@ -52,7 +52,11 @@ import {
   LoadingOverlay,
   ProstheticMannequin,
 } from './components';
-import { CHIP_BUTTON_CLASS } from './constants';
+import {
+  CHIP_BUTTON_CLASS,
+  APPEARANCE_GALLERY_COLUMN_WIDTH,
+  APPEARANCE_SETTINGS_COLUMN_WIDTH,
+} from './constants';
 import {
   applyBodyColorToPreview,
   applyEyeColorToPreview,
@@ -867,7 +871,7 @@ const resolveBasicColorTarget = (options: {
   }
 };
 
-type BasicTilePreviewEntry = PreviewDirectionEntry & {
+export type BasicTilePreviewEntry = PreviewDirectionEntry & {
   layerGroups?: PreviewLayerGroup[];
   baseLayers?: PreviewLayerEntry[];
   underlayLayers?: PreviewLayerEntry[];
@@ -885,6 +889,7 @@ type BasicTileDefinition = Readonly<{
   disabledReason?: string | null;
   tooltip?: string | null;
   colorMode?: ProstheticColorMode;
+  singlePreview?: boolean;
 }>;
 
 const ProstheticColorModeBadge = ({
@@ -926,6 +931,7 @@ class BasicTile extends Component<BasicTileProps> {
       next.def.disabledReason !== this.props.def.disabledReason ||
       next.def.tooltip !== this.props.def.tooltip ||
       next.def.colorMode !== this.props.def.colorMode ||
+      next.def.singlePreview !== this.props.def.singlePreview ||
       next.backgroundImage !== this.props.backgroundImage ||
       next.backgroundColor !== this.props.backgroundColor ||
       next.backgroundScale !== this.props.backgroundScale ||
@@ -961,7 +967,8 @@ class BasicTile extends Component<BasicTileProps> {
         aria-disabled={disabled}
         title={def.tooltip || def.disabledReason || def.description || def.name}
         onClick={disabled ? undefined : onToggle}>
-        <Box className="RogueStar__markingTilePreviewGrid">
+        <Box
+          className={`RogueStar__markingTilePreviewGrid${def.singlePreview ? ' RogueStar__markingTilePreviewGrid--single' : ''}`}>
           {previews.map((preview) => (
             <Box
               key={`${def.id}-${preview.dir}`}
@@ -1030,7 +1037,7 @@ type BasicTileSectionProps = Readonly<{
   allowDeselect?: boolean;
 }>;
 
-class BasicTileSection extends Component<BasicTileSectionProps> {
+export class BasicTileSection extends Component<BasicTileSectionProps> {
   shouldComponentUpdate(next: BasicTileSectionProps) {
     return (
       next.search !== this.props.search ||
@@ -1066,7 +1073,6 @@ class BasicTileSection extends Component<BasicTileSectionProps> {
       backgroundTileWidth,
       backgroundTileHeight,
       getTilePreviewEntries,
-      onSelect,
       emptyMessage,
       allowDeselect = true,
     } = this.props;
@@ -1114,10 +1120,13 @@ class BasicTileSection extends Component<BasicTileSectionProps> {
                 backgroundScale={backgroundScale}
                 backgroundTileWidth={backgroundTileWidth}
                 backgroundTileHeight={backgroundTileHeight}
-                onToggle={() =>
-                  !def.disabled &&
-                  onSelect(selected && allowDeselect ? null : def.id)
-                }
+                onToggle={() => {
+                  if (!def.disabled) {
+                    this.props.onSelect(
+                      selected && allowDeselect ? null : def.id
+                    );
+                  }
+                }}
               />
             );
           })}
@@ -1279,7 +1288,7 @@ type BasicAppearanceSaveSectionProps = Readonly<{
   onDiscardAndClose: () => void;
 }>;
 
-const BasicAppearanceSaveSection = ({
+export const BasicAppearanceSaveSection = ({
   pendingSave,
   pendingClose,
   uiLocked,
@@ -2213,9 +2222,10 @@ type BasicAppearancePreviewColumnProps = Readonly<{
   cycleCanvasBackground: () => void;
   colorPickerValue: string;
   applyColorTarget: (hex: string) => void;
+  colorPickerDisabled?: boolean;
 }>;
 
-const BasicAppearancePreviewColumn = ({
+export const BasicAppearancePreviewColumn = ({
   preview,
   canvasWidth,
   canvasHeight,
@@ -2239,6 +2249,7 @@ const BasicAppearancePreviewColumn = ({
   cycleCanvasBackground,
   colorPickerValue,
   applyColorTarget,
+  colorPickerDisabled = false,
 }: BasicAppearancePreviewColumnProps) => (
   <Flex direction="column" gap={1}>
     <LivePreviewCard
@@ -2265,7 +2276,19 @@ const BasicAppearancePreviewColumn = ({
       cycleCanvasBackground={cycleCanvasBackground}
     />
     <Section title="Color Picker">
-      <Box className="RogueStar__inlineColorPicker">
+      <Box
+        as="fieldset"
+        disabled={colorPickerDisabled}
+        aria-disabled={colorPickerDisabled}
+        className="RogueStar__inlineColorPicker"
+        style={{
+          border: 0,
+          margin: 0,
+          padding: 0,
+          minWidth: 0,
+          pointerEvents: colorPickerDisabled ? 'none' : undefined,
+          opacity: colorPickerDisabled ? 0.5 : 1,
+        }}>
         <RogueStarColorPicker
           color={colorPickerValue}
           currentColor={colorPickerValue}
@@ -8177,7 +8200,7 @@ export const BasicAppearanceTab = (props: BasicAppearanceTabProps, context) => {
         }}
       />
       <Flex direction="row" gap={1} wrap={false} height="100%">
-        <Flex.Item basis="840px" shrink={0}>
+        <Flex.Item basis={APPEARANCE_GALLERY_COLUMN_WIDTH} shrink={0}>
           <Flex direction="column" gap={1}>
             <BasicAppearanceGallerySection
               type={type}
@@ -8219,7 +8242,7 @@ export const BasicAppearanceTab = (props: BasicAppearanceTabProps, context) => {
             />
           </Flex>
         </Flex.Item>
-        <Flex.Item basis="418px" shrink={0}>
+        <Flex.Item basis={APPEARANCE_SETTINGS_COLUMN_WIDTH} shrink={0}>
           <Flex direction="column" gap={1}>
             <BasicAppearanceSaveSection
               pendingSave={pendingSave}
