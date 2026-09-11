@@ -398,7 +398,7 @@
 /obj/item/clothing/head/beret/corp/pcrc
 	name = "\improper PCRC beret"
 	desc = "A black beret with a PCRC logo insignia, denoting service with Proxima Centauri Risk Control. For private security personnel that are more inclined towards style than safety."
-	icon_state = "beret_black_observatory"
+	icon_state = "beret_black_pcrc" // RS Edit: Character Designer - Loadout (Lira, September 2026)
 
 
 /obj/item/clothing/head/beret/corp/hedberg

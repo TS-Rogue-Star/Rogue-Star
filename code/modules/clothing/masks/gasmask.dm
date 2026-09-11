@@ -73,6 +73,7 @@
 	name = "gold plague doctor mask"
 	desc = "A modernised version of the classic design, this mask will not only filter out phoron but it can also be connected to an air supply. This one is gold."
 	icon_state = "plaguedoctor2"
+	item_icons = list(slot_wear_mask_str = 'icons/inventory/face/mob.dmi') // RS Add: Character Designer - Loadout (Lira, September 2026)
 
 /obj/item/clothing/mask/gas/swat
 	name = "\improper SWAT mask"
