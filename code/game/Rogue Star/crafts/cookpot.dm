@@ -163,6 +163,10 @@
 			if(istype(A,/obj/item/weapon/bone) || istype(A,/obj/item/weapon/digestion_remains/organic))
 				broth(A)
 
+			if(istype(A,/obj/item/fat))
+				reagents.add_reagent("triglyceride",rand(1,10))
+				qdel(A)
+
 /obj/item/cookpot/proc/dehydrate()
 	var/datum/reagent/water/W = reagents.get_reagent("water")
 	if(W?.volume > 0)
@@ -175,17 +179,23 @@
 	return FALSE
 
 /obj/item/cookpot/proc/burn()
-	var/datum/reagents/R = new /datum/reagents()
-	var/howmuch = 1
-	if(high_heat())
-		howmuch = 5
-	howmuch = reagents.trans_to_holder(R,howmuch)
-	reagents.add_reagent("slop",howmuch * 0.1)
+	var/fat = TRUE
+	for(var/datum/reagent/thing in reagents.reagent_list)
+		if(thing.type != /datum/reagent/nutriment/triglyceride)
+			fat = FALSE
+	if(!fat || prob(1))
+		var/datum/reagents/R = new /datum/reagents()
+		var/howmuch = 1
+		if(high_heat())
+			howmuch = 5
+		howmuch = reagents.trans_to_holder(R,howmuch)
+		reagents.add_reagent("slop",howmuch * 0.1)
+		qdel(R)
 
 /obj/item/cookpot/proc/broth(var/obj/item/bone)
 	var/datum/reagent/water/W = reagents.get_reagent("water")
 	if(!W)
-		return
+		return FALSE
 	var/howmuch = W.volume
 	if(howmuch > 20)
 		howmuch = 20
@@ -208,6 +218,7 @@
 				qdel(bone)
 				new /obj/particle_emitter/smelly(src.loc)
 				reagents.add_reagent("calcium",rand(1,2))
+	return TRUE
 
 /obj/item/cookpot/proc/process_reagents()
 	for(var/datum/reagent/R in reagents.reagent_list)
