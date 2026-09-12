@@ -280,9 +280,17 @@ var/list/preferences_datums = list()
 	custom_markings[mark.id] = mark
 	return mark
 
+/datum/preferences/proc/can_open_custom_marking_designer(mob/user)
+	if(!user)
+		return FALSE
+	if(!Master?.current_runlevel)
+		to_chat_immediate(user, world.time, SPAN_WARNING("The server is still initializing. Please wait until initialization is complete before opening the Character Designer."))
+		return FALSE
+	return TRUE
+
 // Open loading window for the custom marking designer (Lira, December 2025)
 /datum/preferences/proc/open_custom_marking_designer_loading(mob/user)
-	if(!user)
+	if(!can_open_custom_marking_designer(user))
 		return
 	if(custom_marking_designer_loading_ui && QDELETED(custom_marking_designer_loading_ui))
 		custom_marking_designer_loading_ui = null
@@ -463,7 +471,7 @@ var/list/preferences_datums = list()
 
 // Open the editor UI targeting the specified marking id
 /datum/preferences/proc/open_custom_marking_designer(mob/user, id)
-	if(!user)
+	if(!can_open_custom_marking_designer(user))
 		return
 	open_custom_marking_designer_loading(user)
 	var/datum/custom_marking/mark = null
@@ -490,8 +498,8 @@ var/list/preferences_datums = list()
 	module.tgui_interact(user)
 
 // RS Add: Open the body markings gallery tab (Lira, December 2025)
-/datum/preferences/proc/open_body_markings_designer(mob/user)
-	if(!user)
+/datum/preferences/proc/open_body_markings_designer(mob/user, designer_tab = "species")
+	if(!can_open_custom_marking_designer(user))
 		return
 	open_custom_marking_designer_loading(user)
 	var/datum/custom_marking/mark = get_primary_custom_marking()
@@ -505,10 +513,10 @@ var/list/preferences_datums = list()
 			custom_marking_designer_ui = null
 			module = null
 	if(!module)
-		module = new(src, mark, "species", TRUE)
+		module = new(src, mark, designer_tab, TRUE)
 		custom_marking_designer_ui = module
 	else
-		module.initial_tab = "species"
+		module.initial_tab = designer_tab
 		module.allow_custom_tab = !!mark
 		SStgui.update_uis(module)
 	open_custom_marking_designer_loading(user)

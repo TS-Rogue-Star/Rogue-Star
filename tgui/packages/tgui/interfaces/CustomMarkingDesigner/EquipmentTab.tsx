@@ -44,7 +44,7 @@ import {
   selectedEquipmentId,
 } from './utils/equipment';
 
-type Props = Readonly<{
+export type EquipmentTabProps = Readonly<{
   session: EquipmentSession;
   stateToken: string;
   uiLocked: boolean;
@@ -88,7 +88,7 @@ class EquipmentTileCache {
 
 const equipmentTileCaches = new WeakMap<EquipmentSession, EquipmentTileCache>();
 
-export const EquipmentTab = (props: Props, context) => {
+export const EquipmentTab = (props: EquipmentTabProps, context) => {
   const { session, stateToken, canvasWidth, canvasHeight, assetRevision } =
     props;
   const [category, setCategory] = useLocalState<EquipmentCategory>(

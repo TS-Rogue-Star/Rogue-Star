@@ -17,6 +17,8 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Updated by Lira for Rogue Star September 2026: Character Designer - Identity Tab ////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star September 2026: Character Designer - Loadout /////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 #define CUSTOM_MARKING_DEFAULT_WIDTH 32
 #define CUSTOM_MARKING_DEFAULT_HEIGHT 32
@@ -121,6 +123,11 @@ var/global/custom_marking_static_source_digest_complete = TRUE
 
 /mob/living/carbon/human/dummy/mannequin/custom_marking_gear
 	appearance_only = TRUE
+
+/mob/living/carbon/human/dummy/mannequin/custom_marking_gear/get_equipped_items()
+	. = list()
+	for(var/obj/item/item in list(back, belt, l_ear, r_ear, glasses, gloves, head, shoes, wear_id, wear_mask, wear_suit, w_uniform, l_hand, r_hand))
+		. += item
 
 /mob/living/carbon/human/dummy/mannequin/custom_marking_gear/update_icons_body()
 	return
@@ -1857,11 +1864,133 @@ var/global/custom_marking_static_source_digest_complete = TRUE
 	else if(istext(icon_state) && length(icon_state))
 		source_states[icon_state] = TRUE
 
+/datum/tgui_module/custom_marking_designer/proc/note_static_gear_item_sources(list/sources_by_key, list/states_by_key, obj/item/item_type, obj/item/item_instance = null)
+	var/list/item_states = list()
+	var/item_state = initial(item_type.item_state)
+	var/icon_state = initial(item_type.icon_state)
+	var/addblend_state = initial(item_type.addblends)
+	if(istext(item_state) && length(item_state))
+		item_states[item_state] = TRUE
+	if(istext(icon_state) && length(icon_state))
+		item_states[icon_state] = TRUE
+	if(istext(addblend_state) && length(addblend_state))
+		item_states[addblend_state] = TRUE
+	if(item_instance)
+		for(var/state_name in list(item_instance.item_state, item_instance.icon_state, item_instance.addblends))
+			if(istext(state_name) && length(state_name))
+				item_states[state_name] = TRUE
+	if(ispath(item_type, /obj/item/weapon/storage/backpack/dufflebag) || ispath(item_type, /obj/item/weapon/storage/backpack/holding/duffle))
+		item_states["[icon_state]_tilted"] = TRUE
+	if(ispath(item_type, /obj/item/clothing/head/fluff/avida))
+		item_states["avidahatnoears"] = TRUE
+	var/list/item_state_slots = item_instance?.item_state_slots
+	if(islist(item_state_slots))
+		for(var/slot_name in item_state_slots)
+			if(slot_name == slot_l_hand_str || slot_name == slot_r_hand_str)
+				continue
+			var/slot_state = item_state_slots[slot_name]
+			if(istext(slot_state) && length(slot_state))
+				item_states[slot_state] = TRUE
+	if(ispath(item_type, /obj/item/clothing/under))
+		var/obj/item/clothing/under/under_type = item_type
+		var/worn_state = initial(under_type.worn_state)
+		if(istext(worn_state) && length(worn_state))
+			item_states[worn_state] = TRUE
+			item_states["[worn_state]_d"] = TRUE
+			item_states["[worn_state]_r"] = TRUE
+	if(ispath(item_type, /obj/item/clothing/accessory))
+		var/obj/item/clothing/accessory/accessory_type = item_type
+		var/overlay_state = initial(accessory_type.overlay_state) || icon_state
+		if(istext(overlay_state) && length(overlay_state))
+			item_states[overlay_state] = TRUE
+			item_states["[overlay_state]_mob"] = TRUE
+			item_states["[overlay_state]_tie"] = TRUE
+		var/obj/item/clothing/accessory/accessory_instance = item_instance
+		var/list/rolled_states = accessory_instance?.on_rolled
+		if(islist(rolled_states))
+			for(var/rolled_key in rolled_states)
+				var/rolled_state = rolled_states[rolled_key]
+				if(istext(rolled_state) && length(rolled_state) && rolled_state != "none")
+					item_states[rolled_state] = TRUE
+	var/list/item_sources = list()
+	var/slot_flags = initial(item_type.slot_flags)
+	if(slot_flags & SLOT_ID)
+		item_sources |= INV_WEAR_ID_DEF_ICON
+	if(slot_flags & SLOT_HEAD)
+		item_sources |= INV_HEAD_DEF_ICON
+	if(slot_flags & SLOT_BACK)
+		item_sources |= INV_BACK_DEF_ICON
+	if(slot_flags & SLOT_ICLOTHING)
+		item_sources |= INV_W_UNIFORM_DEF_ICON
+	if(slot_flags & SLOT_TIE)
+		item_sources |= INV_ACCESSORIES_DEF_ICON
+	if(slot_flags & SLOT_OCLOTHING)
+		item_sources |= INV_SUIT_DEF_ICON
+	if(slot_flags & SLOT_GLOVES)
+		item_sources |= INV_GLOVES_DEF_ICON
+	if(slot_flags & SLOT_EYES)
+		item_sources |= INV_EYES_DEF_ICON
+	if(slot_flags & SLOT_EARS)
+		item_sources |= INV_EARS_DEF_ICON
+	if(slot_flags & SLOT_FEET)
+		item_sources |= INV_FEET_DEF_ICON
+	if(slot_flags & SLOT_BELT)
+		item_sources |= INV_BELT_DEF_ICON
+	if(slot_flags & SLOT_MASK)
+		item_sources |= INV_MASK_DEF_ICON
+	var/default_worn_icon = initial(item_type.default_worn_icon)
+	var/icon_override = initial(item_type.icon_override)
+	if(default_worn_icon)
+		item_sources |= default_worn_icon
+	if(icon_override)
+		item_sources |= icon_override
+	if(item_instance?.default_worn_icon)
+		item_sources |= item_instance.default_worn_icon
+	if(item_instance?.icon_override)
+		item_sources |= item_instance.icon_override
+	var/list/item_icons = item_instance?.item_icons
+	if(islist(item_icons))
+		for(var/slot_name in item_icons)
+			if(slot_name == slot_l_hand_str || slot_name == slot_r_hand_str)
+				continue
+			var/slot_source = item_icons[slot_name]
+			if(slot_source)
+				item_sources |= slot_source
+	var/list/sprite_sheets = item_instance?.sprite_sheets
+	if(islist(sprite_sheets))
+		for(var/body_type in sprite_sheets)
+			var/body_source = sprite_sheets[body_type]
+			if(body_source)
+				item_sources |= body_source
+	if(ispath(item_type, /obj/item/clothing))
+		var/obj/item/clothing/clothing_type = item_type
+		for(var/clothing_source in list(
+			initial(clothing_type.update_icon_define),
+			initial(clothing_type.update_icon_define_orig),
+			initial(clothing_type.update_icon_define_digi)
+		))
+			if(clothing_source)
+				item_sources |= clothing_source
+	if(ispath(item_type, /obj/item/weapon/storage/belt))
+		note_static_gear_source_state(sources_by_key, states_by_key, INV_BELT_DEF_ICON, null, TRUE)
+	var/all_source_states = ispath(item_type, /obj/item/weapon/storage/rig) || ispath(item_type, /obj/item/clothing/under/fluff/sari)
+	if(all_source_states)
+		var/item_icon = initial(item_type.icon)
+		if(item_icon)
+			item_sources |= item_icon
+	for(var/source in item_sources)
+		if(all_source_states)
+			note_static_gear_source_state(sources_by_key, states_by_key, source, null, TRUE)
+			continue
+		for(var/state_name in item_states)
+			note_static_gear_source_state(sources_by_key, states_by_key, source, state_name)
+
 /datum/tgui_module/custom_marking_designer/proc/prewarm_static_gear_preview_assets()
 	if(!use_shared_atlas || !islist(GLOB.all_species) || !GLOB.all_species.len)
 		return FALSE
 	var/list/sources_by_key = list()
 	var/list/states_by_key = list()
+	prewarm_loadout_item_sources(sources_by_key, states_by_key)
 	note_static_gear_source_state(sources_by_key, states_by_key, 'icons/effects/effects.dmi', "nothing")
 	for(var/pda_choice = 1 to pdachoicelist.len)
 		note_static_gear_source_state(sources_by_key, states_by_key, get_pda_choice_icon(pda_choice), "pda")
@@ -1890,108 +2019,7 @@ var/global/custom_marking_static_source_digest_complete = TRUE
 				note_static_gear_source_state(sources_by_key, states_by_key, taur_style.suit_sprites, null, TRUE)
 	for(var/obj/item/item_type as anything in typesof(/obj/item))
 		CUSTOM_MARKING_CHECK_TICK
-		var/list/item_states = list()
-		var/item_state = initial(item_type.item_state)
-		var/icon_state = initial(item_type.icon_state)
-		var/addblend_state = initial(item_type.addblends)
-		if(istext(item_state) && length(item_state))
-			item_states[item_state] = TRUE
-		if(istext(icon_state) && length(icon_state))
-			item_states[icon_state] = TRUE
-		if(istext(addblend_state) && length(addblend_state))
-			item_states[addblend_state] = TRUE
-		var/list/item_state_slots = initial(item_type.item_state_slots)
-		if(islist(item_state_slots))
-			for(var/slot_name in item_state_slots)
-				var/slot_state = item_state_slots[slot_name]
-				if(istext(slot_state) && length(slot_state))
-					item_states[slot_state] = TRUE
-		if(ispath(item_type, /obj/item/clothing/under))
-			var/obj/item/clothing/under/under_type = item_type
-			var/worn_state = initial(under_type.worn_state)
-			if(istext(worn_state) && length(worn_state))
-				item_states[worn_state] = TRUE
-				item_states["[worn_state]_d"] = TRUE
-				item_states["[worn_state]_r"] = TRUE
-		if(ispath(item_type, /obj/item/clothing/accessory))
-			var/obj/item/clothing/accessory/accessory_type = item_type
-			var/overlay_state = initial(accessory_type.overlay_state) || icon_state
-			if(istext(overlay_state) && length(overlay_state))
-				item_states[overlay_state] = TRUE
-				item_states["[overlay_state]_mob"] = TRUE
-				item_states["[overlay_state]_tie"] = TRUE
-			var/list/rolled_states = initial(accessory_type.on_rolled)
-			if(islist(rolled_states))
-				for(var/rolled_key in rolled_states)
-					var/rolled_state = rolled_states[rolled_key]
-					if(istext(rolled_state) && length(rolled_state) && rolled_state != "none")
-						item_states[rolled_state] = TRUE
-		var/list/item_sources = list()
-		var/slot_flags = initial(item_type.slot_flags)
-		if(slot_flags & SLOT_ID)
-			item_sources |= INV_WEAR_ID_DEF_ICON
-		if(slot_flags & SLOT_HEAD)
-			item_sources |= INV_HEAD_DEF_ICON
-		if(slot_flags & SLOT_BACK)
-			item_sources |= INV_BACK_DEF_ICON
-		if(slot_flags & SLOT_ICLOTHING)
-			item_sources |= INV_W_UNIFORM_DEF_ICON
-		if(slot_flags & SLOT_TIE)
-			item_sources |= INV_ACCESSORIES_DEF_ICON
-		if(slot_flags & SLOT_OCLOTHING)
-			item_sources |= INV_SUIT_DEF_ICON
-		if(slot_flags & SLOT_GLOVES)
-			item_sources |= INV_GLOVES_DEF_ICON
-		if(slot_flags & SLOT_EYES)
-			item_sources |= INV_EYES_DEF_ICON
-		if(slot_flags & SLOT_EARS)
-			item_sources |= INV_EARS_DEF_ICON
-		if(slot_flags & SLOT_FEET)
-			item_sources |= INV_FEET_DEF_ICON
-		if(slot_flags & SLOT_BELT)
-			item_sources |= INV_BELT_DEF_ICON
-		if(slot_flags & SLOT_MASK)
-			item_sources |= INV_MASK_DEF_ICON
-		var/default_worn_icon = initial(item_type.default_worn_icon)
-		var/icon_override = initial(item_type.icon_override)
-		if(default_worn_icon)
-			item_sources |= default_worn_icon
-		if(icon_override)
-			item_sources |= icon_override
-		var/list/item_icons = initial(item_type.item_icons)
-		if(islist(item_icons))
-			for(var/slot_name in item_icons)
-				var/slot_source = item_icons[slot_name]
-				if(slot_source)
-					item_sources |= slot_source
-		var/list/sprite_sheets = initial(item_type.sprite_sheets)
-		if(islist(sprite_sheets))
-			for(var/body_type in sprite_sheets)
-				var/body_source = sprite_sheets[body_type]
-				if(body_source)
-					item_sources |= body_source
-		if(ispath(item_type, /obj/item/clothing))
-			var/obj/item/clothing/clothing_type = item_type
-			for(var/clothing_source in list(
-				initial(clothing_type.update_icon_define),
-				initial(clothing_type.update_icon_define_orig),
-				initial(clothing_type.update_icon_define_digi)
-			))
-				if(clothing_source)
-					item_sources |= clothing_source
-		if(ispath(item_type, /obj/item/weapon/storage/belt))
-			note_static_gear_source_state(sources_by_key, states_by_key, INV_BELT_DEF_ICON, null, TRUE)
-		var/all_source_states = ispath(item_type, /obj/item/weapon/storage/rig) || ispath(item_type, /obj/item/clothing/under/fluff/sari)
-		if(all_source_states)
-			var/item_icon = initial(item_type.icon)
-			if(item_icon)
-				item_sources |= item_icon
-		for(var/source in item_sources)
-			if(all_source_states)
-				note_static_gear_source_state(sources_by_key, states_by_key, source, null, TRUE)
-				continue
-			for(var/state_name in item_states)
-				note_static_gear_source_state(sources_by_key, states_by_key, source, state_name)
+		note_static_gear_item_sources(sources_by_key, states_by_key, item_type)
 	for(var/source_key in sources_by_key)
 		var/icon_source = sources_by_key[source_key]
 		var/list/requested_states = states_by_key[source_key]
@@ -2518,6 +2546,9 @@ var/global/custom_marking_static_source_digest_complete = TRUE
 /datum/tgui_module/custom_marking_designer/proc/is_static_gear_appearance_transparent(icon_source, icon_state, dir)
 	if(!is_static_gear_icon_source(icon_source) || !istext(icon_state) || !length(icon_state))
 		return FALSE
+	var/list/states = cached_icon_states(icon_source)
+	if(islist(states) && !(icon_state in states))
+		return TRUE
 	var/canonical_key = build_static_icon_canonical_key(icon_source, icon_state, dir, "gear-raw")
 	return istext(canonical_key) && islist(custom_marking_visible_pixel_cache) && (canonical_key in custom_marking_visible_pixel_cache) && !custom_marking_visible_pixel_cache[canonical_key]
 
@@ -2588,7 +2619,8 @@ var/global/custom_marking_static_source_digest_complete = TRUE
 	var/icon_source = entry:icon
 	var/icon_state = entry:icon_state
 	if(icon_source && istext(icon_state) && length(icon_state))
-		var/asset = resolve_static_gear_appearance_asset(icon_source, icon_state, dir)
+		var/transparent = is_static_gear_appearance_transparent(icon_source, icon_state, dir)
+		var/asset = transparent ? null : resolve_static_gear_appearance_asset(icon_source, icon_state, dir)
 		if(asset)
 			var/list/component = list("asset" = asset)
 			if(effective_colors.len)
@@ -2602,7 +2634,7 @@ var/global/custom_marking_static_source_digest_complete = TRUE
 			if(blend_mode == BLEND_ADD)
 				component["blend"] = "add"
 			components += list(component)
-		else if(!is_static_gear_appearance_transparent(icon_source, icon_state, dir))
+		else if(!transparent)
 			return FALSE
 	var/list/overlays = entry:overlays
 	if(islist(overlays))
@@ -3430,6 +3462,8 @@ var/global/custom_marking_static_source_digest_complete = TRUE
 	tgui_interact(user)
 
 /datum/tgui_module/custom_marking_designer/tgui_interact(mob/user, datum/tgui/ui = null, datum/tgui/parent_ui = null)
+	if(!prefs?.can_open_custom_marking_designer(user))
+		return
 	if(wait_for_static_atlas_prewarm(user))
 		return
 	..(user, ui, parent_ui)
@@ -4102,7 +4136,8 @@ var/global/custom_marking_static_source_digest_complete = TRUE
 		"traits_revision" = traits_revision,
 		"traits_species" = prefs.species,
 		"traits_payload" = payload,
-		"equipment_context_signature" = get_equipment_context_signature()
+		"equipment_context_signature" = get_equipment_context_signature(),
+		"loadout_context_signature" = get_loadout_context_signature()
 	)
 	if(islist(save_result))
 		update["traits_save_result"] = save_result
@@ -4635,7 +4670,8 @@ var/global/custom_marking_static_source_digest_complete = TRUE
 	var/list/update = list(
 		"identity_revision" = identity_revision,
 		"identity_payload" = payload,
-		"equipment_context_signature" = get_equipment_context_signature()
+		"equipment_context_signature" = get_equipment_context_signature(),
+		"loadout_context_signature" = get_loadout_context_signature()
 	)
 	if(islist(save_result))
 		update["identity_save_result"] = save_result
@@ -5507,7 +5543,9 @@ var/global/custom_marking_static_source_digest_complete = TRUE
 	if(islist(canvas_backgrounds_live) && canvas_backgrounds_live.len)
 		data["canvas_backgrounds"] = canvas_backgrounds_live
 		data["default_canvas_background"] = "default"
-	data["ui_locked"] = save_in_progress || identity_save_in_progress || equipment_save_in_progress
+	data["ui_locked"] = save_in_progress || identity_save_in_progress || equipment_save_in_progress || loadout_save_in_progress
+	data["loadout_context_signature"] = get_loadout_context_signature()
+	data["loadout_recipe_signature"] = get_loadout_recipe_signature()
 	data["equipment_revision"] = equipment_revision
 	data["equipment_context_signature"] = get_equipment_context_signature()
 	data["show_equipment"] = !!(prefs?.equip_preview_mob & EQUIP_PREVIEW_EQUIPMENT)
@@ -6482,6 +6520,8 @@ var/global/custom_marking_static_source_digest_complete = TRUE
 	if(..())
 		return TRUE
 	var/handled = TRUE
+	if(handle_loadout_action(action, params, usr))
+		return TRUE
 	if(handle_equipment_action(action, params, usr))
 		return TRUE
 	if(action == "static_asset_manifest_failed")
@@ -6849,7 +6889,8 @@ var/global/custom_marking_static_source_digest_complete = TRUE
 		var/list/update = islist(species_save_result) ? list(
 			"species_save_result" = species_save_result,
 			"identity_revision" = identity_revision,
-			"equipment_context_signature" = get_equipment_context_signature()
+			"equipment_context_signature" = get_equipment_context_signature(),
+			"loadout_context_signature" = get_loadout_context_signature()
 		) : null
 		var/datum/tgui/active_ui = SStgui.get_open_ui(usr, src)
 		if(active_ui && islist(update))

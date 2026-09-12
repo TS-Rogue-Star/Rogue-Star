@@ -358,6 +358,8 @@
 	var/accepting_assets = TRUE
 	var/finalized = FALSE
 	var/assets_registered = FALSE
+	var/finalization_failure_reason = null
+	var/list/sheet_dimensions_by_size_id = list()
 	var/construction_state_released = FALSE
 	var/finalized_frame_count = 0
 	var/finalized_sheet_count = 0
@@ -387,10 +389,83 @@
 	var/list/persistent_cache_used_keys = null
 
 /datum/asset/spritesheet/custom_marking_designer/register()
-	if(!finalized || assets_registered)
-		return
-	..()
+	if(!finalized)
+		return FALSE
+	if(assets_registered)
+		return TRUE
+	if(!ensure_stripped())
+		return FALSE
+	for(var/size_id in sizes)
+		var/list/size = sizes[size_id]
+		if(!register_atlas_resource("[name]_[size_id].png", size[CUSTOM_MARKING_ATLAS_SIZE_STRIPPED]))
+			return FALSE
+	var/asset_name = "spritesheet_[name].css"
+	var/css_path = get_construction_path(asset_name)
+	fdel(css_path)
+	if(!text2file(generate_css(), css_path))
+		return fail_finalization("could not write stylesheet '[asset_name]'")
+	var/css_resource = fcopy_rsc(css_path)
+	fdel(css_path)
+	if(!register_atlas_resource(asset_name, css_resource))
+		return FALSE
 	assets_registered = TRUE
+	return TRUE
+
+/datum/asset/spritesheet/custom_marking_designer/ensure_stripped(sizes_to_strip = sizes)
+	for(var/size_id in sizes_to_strip)
+		var/list/size = sizes[size_id]
+		if(size?[CUSTOM_MARKING_ATLAS_SIZE_STRIPPED] && islist(sheet_dimensions_by_size_id[size_id]))
+			continue
+		var/icon/source = size?[CUSTOM_MARKING_ATLAS_SIZE_ICON]
+		if(!isicon(source))
+			return fail_finalization("sheet '[size_id]' has no construction icon")
+		var/sheet_path = get_construction_path("[name]_[size_id].png")
+		if(!fcopy(source, sheet_path))
+			return fail_finalization("could not write sheet '[size_id]'")
+		var/error = rustg_dmi_strip_metadata(sheet_path)
+		if(length(error))
+			fdel(sheet_path)
+			return fail_finalization("could not strip sheet '[size_id]': [error]")
+		var/sheet_resource = fcopy_rsc(sheet_path)
+		fdel(sheet_path)
+		if(!isfile(sheet_resource) || !md5(sheet_resource))
+			return fail_finalization("could not retain PNG resource for sheet '[size_id]'")
+		var/width
+		var/height
+		try
+			var/icon/sheet_icon = icon(sheet_resource)
+			width = sheet_icon.Width()
+			height = sheet_icon.Height()
+		catch(var/exception/e)
+			return fail_finalization("could not decode retained PNG for sheet '[size_id]': [e]")
+		if(!isnum(width) || !isnum(height) || width <= 0 || height <= 0 || width % source.Width() || height % source.Height())
+			return fail_finalization("sheet '[size_id]' has invalid PNG dimensions")
+		if((width / source.Width()) * (height / source.Height()) < size[CUSTOM_MARKING_ATLAS_SIZE_COUNT])
+			return fail_finalization("sheet '[size_id]' does not contain all of its frames")
+		size[CUSTOM_MARKING_ATLAS_SIZE_STRIPPED] = sheet_resource
+		sheet_dimensions_by_size_id[size_id] = list("width" = width, "height" = height)
+	return TRUE
+
+/datum/asset/spritesheet/custom_marking_designer/proc/get_construction_path(asset_name)
+	return "data/spritesheets/[world.realtime]_[rand(100000, 999999)]_[asset_name]"
+
+/datum/asset/spritesheet/custom_marking_designer/proc/fail_finalization(reason)
+	finalization_failure_reason = reason
+	return FALSE
+
+/datum/asset/spritesheet/custom_marking_designer/proc/register_atlas_resource(asset_name, resource)
+	if(!SSassets || !islist(SSassets.cache))
+		return fail_finalization("the asset subsystem is unavailable")
+	if(!isfile(resource))
+		return fail_finalization("resource '[asset_name]' is unavailable")
+	var/resource_md5 = md5(resource)
+	if(!istext(resource_md5) || length(resource_md5) != 32)
+		return fail_finalization("resource '[asset_name]' could not be hashed")
+	var/datum/asset_cache_item/cached_asset = SSassets.cache[asset_name]
+	if(!istype(cached_asset) || !cached_asset.resource || cached_asset.md5 != resource_md5)
+		cached_asset = register_asset(asset_name, resource)
+	if(!istype(cached_asset) || !cached_asset.resource || cached_asset.md5 != resource_md5)
+		return fail_finalization("resource '[asset_name]' could not be registered")
 	return TRUE
 
 /datum/asset/spritesheet/custom_marking_designer/send(client/C)
@@ -742,6 +817,8 @@
 	accepting_assets = TRUE
 	finalized = FALSE
 	assets_registered = FALSE
+	finalization_failure_reason = null
+	sheet_dimensions_by_size_id = list()
 	construction_state_released = FALSE
 	finalized_frame_count = 0
 	finalized_sheet_count = 0
@@ -936,7 +1013,7 @@
 	if(!istext(manifest_digest) || !length(manifest_digest))
 		return null
 	var/asset_name = "[name]_manifest_v[CUSTOM_MARKING_ATLAS_MANIFEST_REVISION]_[manifest_digest].json"
-	var/manifest_path = "data/spritesheets/[asset_name]"
+	var/manifest_path = get_construction_path(asset_name)
 	fdel(manifest_path)
 	if(!text2file(manifest_json, manifest_path))
 		return null
@@ -944,33 +1021,33 @@
 	fdel(manifest_path)
 	if(!isfile(manifest_resource))
 		return null
-	var/datum/asset_cache_item/cached_manifest = register_asset(asset_name, manifest_resource)
-	if(!istype(cached_manifest) || !cached_manifest.resource)
+	if(!register_atlas_resource(asset_name, manifest_resource))
 		return null
 	finalized_manifest_asset_name = asset_name
 	return asset_name
 
 /datum/asset/spritesheet/custom_marking_designer/proc/finalize()
-	if(finalized)
-		return is_ready()
-	if(!accepting_assets)
+	if(is_ready())
+		return TRUE
+	if(persistent_cache_validation_pending || construction_state_released)
 		return FALSE
+	finalization_failure_reason = null
+	assets_registered = FALSE
 	accepting_assets = FALSE
 	if(!has_assets())
 		return FALSE
 	finalized_frame_count = sprites.len
 	finalized_sheet_count = sizes.len
 	finalized = TRUE
-	register()
-	if(!assets_registered)
+	if(!register())
 		return FALSE
 	var/list/pending_asset_names = list("spritesheet_[name].css")
 	var/list/pending_sheet_diagnostics = list()
 	var/diagnostic_frame_total = 0
 	for(var/size_id in sizes)
 		var/list/size = sizes[size_id]
-		var/icon/atlas_icon = size?[CUSTOM_MARKING_ATLAS_SIZE_STRIPPED]
-		if(!islist(size) || !isicon(atlas_icon))
+		var/list/dimensions = sheet_dimensions_by_size_id[size_id]
+		if(!islist(size) || !isfile(size[CUSTOM_MARKING_ATLAS_SIZE_STRIPPED]) || !islist(dimensions))
 			stack_trace("Custom Marking Designer atlas could not retain diagnostics for sheet [size_id].")
 			return FALSE
 		var/asset_name = "[name]_[size_id].png"
@@ -983,8 +1060,8 @@
 		pending_asset_names += asset_name
 		pending_sheet_diagnostics[asset_name] = list(
 			"frames" = sheet_frames,
-			"width" = atlas_icon.Width(),
-			"height" = atlas_icon.Height(),
+			"width" = dimensions["width"],
+			"height" = dimensions["height"],
 			"family" = family
 		)
 		var/list/statistics = get_or_create_family_statistics(family)
@@ -994,7 +1071,7 @@
 		if(!islist(family_sheets))
 			family_sheets = list()
 			statistics["sheets"] = family_sheets
-		family_sheets += asset_name
+		family_sheets |= asset_name
 	if(pending_sheet_diagnostics.len != finalized_sheet_count || diagnostic_frame_total != finalized_frame_count)
 		stack_trace("Custom Marking Designer atlas diagnostics do not match finalized construction state ([diagnostic_frame_total]/[finalized_frame_count] frames, [pending_sheet_diagnostics.len]/[finalized_sheet_count] sheets).")
 		return FALSE
@@ -1009,11 +1086,11 @@
 		var/index = sprite[CUSTOM_MARKING_ATLAS_SPRITE_INDEX]
 		var/list/size = sizes?[size_id]
 		var/icon/cell_icon = size?[CUSTOM_MARKING_ATLAS_SIZE_ICON]
-		var/icon/atlas_icon = size?[CUSTOM_MARKING_ATLAS_SIZE_STRIPPED]
-		if(!isicon(cell_icon) || !isicon(atlas_icon))
+		var/list/dimensions = sheet_dimensions_by_size_id[size_id]
+		if(!isicon(cell_icon) || !islist(dimensions))
 			stack_trace("Custom Marking Designer atlas could not resolve sheet [size_id] for [sprite_name].")
 			return FALSE
-		var/per_line = max(1, round(atlas_icon.Width() / cell_icon.Width()))
+		var/per_line = max(1, round(dimensions["width"] / cell_icon.Width()))
 		payload["atlas"] = "[name]_[size_id].png"
 		payload["atlas_x"] = (index % per_line) * cell_icon.Width()
 		payload["atlas_y"] = round(index / per_line) * cell_icon.Height()
@@ -1035,6 +1112,7 @@
 	payloads_by_sprite = null
 	sprites = null
 	sizes = null
+	sheet_dimensions_by_size_id = null
 	payloads_by_asset_id = null
 	canonical_keys_by_asset_id = null
 	family_by_size_id = null
