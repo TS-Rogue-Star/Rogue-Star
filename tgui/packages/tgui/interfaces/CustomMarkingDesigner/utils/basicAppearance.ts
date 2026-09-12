@@ -27,10 +27,7 @@ export type BasicPreviewSourceSelection = Readonly<{
   assetRegistry: IconAssetRegistry | null;
   revision: number;
   sourceKey:
-    | 'basic'
-    | 'basic-alt'
-    | 'basic-gender-alt'
-    | 'basic-gender-alt-digitigrade';
+    'basic' | 'basic-alt' | 'basic-gender-alt' | 'basic-gender-alt-digitigrade';
 }>;
 
 type BasicPreviewSourceVariant = Readonly<{
@@ -359,13 +356,7 @@ export const shouldRetainLocalBasicPayload = (options: {
 };
 
 export type BasicAppearanceGalleryType =
-  | 'hair'
-  | 'gradient'
-  | 'facial_hair'
-  | 'ears'
-  | 'horns'
-  | 'tail'
-  | 'wings';
+  'hair' | 'gradient' | 'facial_hair' | 'ears' | 'horns' | 'tail' | 'wings';
 
 export const normalizeBasicAppearanceGalleryStyleId = (
   styleId: string | null | undefined

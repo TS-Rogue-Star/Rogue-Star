@@ -15,6 +15,7 @@ SUBSYSTEM_DEF(custom_marking)
 	var/list/task_queue = list()
 	var/static_atlas_prewarm_complete = FALSE
 	var/static_atlas_prewarm_exhausted = FALSE
+	var/static_atlas_finalization_attempts = 0
 	var/static_atlas_persistent_cache_checked = FALSE
 	var/static_atlas_persistent_cache_loaded = FALSE
 
@@ -64,6 +65,7 @@ GLOBAL_VAR_INIT(custom_marking_yield_epoch, 0)
 	task_queue = SScustom_marking.task_queue
 	static_atlas_prewarm_complete = SScustom_marking.static_atlas_prewarm_complete
 	static_atlas_prewarm_exhausted = SScustom_marking.static_atlas_prewarm_exhausted
+	static_atlas_finalization_attempts = SScustom_marking.static_atlas_finalization_attempts
 	static_atlas_persistent_cache_checked = SScustom_marking.static_atlas_persistent_cache_checked
 	static_atlas_persistent_cache_loaded = SScustom_marking.static_atlas_persistent_cache_loaded
 	subsystem_initialized = SScustom_marking.subsystem_initialized
@@ -82,7 +84,16 @@ GLOBAL_VAR_INIT(custom_marking_yield_epoch, 0)
 		return atlas.is_ready()
 	if(!istype(atlas))
 		atlas = get_asset_datum(/datum/asset/spritesheet/custom_marking_designer)
-	var/finalized = finalize_static_atlas(atlas)
+	static_atlas_finalization_attempts++
+	var/finalized = FALSE
+	try
+		finalized = finalize_static_atlas(atlas)
+	catch(var/exception/e)
+		atlas.fail_finalization("runtime during finalization: [e]")
+	if(!finalized && !exhausted && static_atlas_finalization_attempts < 3)
+		log_debug("CustomMarkings: Canonical atlas finalization attempt [static_atlas_finalization_attempts] failed: [atlas.finalization_failure_reason || "resources are not ready"]. Retrying retained construction state.")
+		addtimer(CALLBACK(src, PROC_REF(complete_static_atlas_prewarm), exhausted, atlas), 10, TIMER_UNIQUE | TIMER_NO_HASH_WAIT)
+		return FALSE
 	static_atlas_prewarm_exhausted = !!exhausted || !finalized
 	static_atlas_prewarm_complete = TRUE
 	if(finalized)
@@ -98,7 +109,7 @@ GLOBAL_VAR_INIT(custom_marking_yield_epoch, 0)
 		report_custom_marking_atlas_fallback(
 			"static-manifest-fallback-enabled",
 			exhausted ? "cache prewarm exhausted before the canonical atlas became client-ready" : "canonical atlas finalization failed before it became client-ready",
-			"frames=[atlas.get_frame_count()], sheets=[atlas.get_sheet_count()]"
+			"frames=[atlas.get_frame_count()], sheets=[atlas.get_sheet_count()], attempts=[static_atlas_finalization_attempts], failure=[atlas.finalization_failure_reason || "resources are not ready"]"
 		)
 	return finalized
 
@@ -114,6 +125,8 @@ GLOBAL_VAR_INIT(custom_marking_yield_epoch, 0)
 
 // Retry static cache prewarming until accessory lists are ready (Lira, December 2025)
 /datum/controller/subsystem/custom_marking/proc/try_prewarm_custom_marking_caches(retry = 0)
+	if(static_atlas_prewarm_complete)
+		return
 	var/body_ready = islist(body_marking_styles_list) && body_marking_styles_list.len
 	var/basic_ready = islist(hair_styles_list) && hair_styles_list.len && islist(facial_hair_styles_list) && facial_hair_styles_list.len && islist(ear_styles_list) && ear_styles_list.len && islist(tail_styles_list) && tail_styles_list.len && islist(wing_styles_list) && wing_styles_list.len && islist(GLOB.hair_gradients) && GLOB.hair_gradients.len
 	var/species_ready = islist(GLOB.all_species) && GLOB.all_species.len && islist(GLOB.playable_species) && GLOB.playable_species.len && islist(all_traits) && all_traits.len

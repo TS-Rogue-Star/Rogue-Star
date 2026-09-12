@@ -3,6 +3,8 @@
 // ///////////////////////////////////////////////////////////////////////////////////////////
 // Updated by Lira for Rogue Star August 2026: Character Designer - Species and Prosthetics //
 // ///////////////////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star September 2026: Character Designer - Loadout ///////////////
+// ///////////////////////////////////////////////////////////////////////////////////////////
 
 import { Component } from 'inferno';
 import {
@@ -738,7 +740,8 @@ const buildOrderedOverlayLayers = (
   canvasHeight: number,
   source: OrderedOverlayLayer['source'],
   signalAssetUpdate?: () => void,
-  orderOffset = 0
+  orderOffset = 0,
+  priority: CharacterPreviewWorkPriority = 'visible'
 ): OrderedOverlayLayer[] => {
   const layers: OrderedOverlayLayer[] = [];
   const updateSignal = signalAssetUpdate || (() => undefined);
@@ -748,7 +751,8 @@ const buildOrderedOverlayLayers = (
       entry,
       canvasWidth,
       canvasHeight,
-      updateSignal
+      updateSignal,
+      priority
     );
     if (!grid) {
       continue;
@@ -1137,7 +1141,7 @@ const collectAccessoryAssetPayloads = (
   }
 };
 
-const collectTileBaseAssetPayloads = (options: {
+export const collectTileBaseAssetPayloads = (options: {
   previewDirStates: Record<number, PreviewDirState>;
   appearanceContext: AppearancePreviewContext;
   directions: Array<{ dir: number }>;
@@ -1350,7 +1354,7 @@ export const resolveAppearanceContext = (options: {
   };
 };
 
-const buildAppearanceOverlayEntriesForDir = (options: {
+const prepareAppearanceOverlayEntriesForDir = (options: {
   dir: number;
   dirState?: PreviewDirState;
   appearanceState: BasicAppearanceState;
@@ -1372,7 +1376,7 @@ const buildAppearanceOverlayEntriesForDir = (options: {
   showJobGear: boolean;
   showLoadoutGear: boolean;
   signalAssetUpdate: () => void;
-}): PreviewLayerEntry[] => {
+}) => {
   const {
     dir,
     dirState,
@@ -1397,7 +1401,7 @@ const buildAppearanceOverlayEntriesForDir = (options: {
     signalAssetUpdate,
   } = options;
   if (!dirState) {
-    return [];
+    return () => [] as PreviewLayerEntry[];
   }
   const hiddenLegParts = collectHiddenLegParts(dirState.hiddenBodyParts);
   const hideShoes =
@@ -1428,61 +1432,6 @@ const buildAppearanceOverlayEntriesForDir = (options: {
     'base',
     signalAssetUpdate
   );
-  const loadoutLayers = showLoadoutGear
-    ? buildOrderedOverlayLayers(
-        (dirState.gearLoadoutOverlayAssets as (
-          | GearOverlayAsset
-          | IconAssetPayload
-        )[]) || [],
-        canvasWidth,
-        canvasHeight,
-        'loadout',
-        signalAssetUpdate,
-        baseOverlayLayers.length
-      )
-    : [];
-  const loadoutSlots = new Set(
-    loadoutLayers
-      .map((entry) => entry.slot)
-      .filter((slot): slot is string => !!slot)
-  );
-  const jobLayersUnfiltered = showJobGear
-    ? buildOrderedOverlayLayers(
-        (dirState.gearJobOverlayAssets as (
-          | GearOverlayAsset
-          | IconAssetPayload
-        )[]) || [],
-        canvasWidth,
-        canvasHeight,
-        'job',
-        signalAssetUpdate,
-        baseOverlayLayers.length + loadoutLayers.length
-      )
-    : [];
-  const jobLayers =
-    showLoadoutGear && showJobGear
-      ? jobLayersUnfiltered.filter(
-          (entry) => !entry.slot || !loadoutSlots.has(entry.slot)
-        )
-      : jobLayersUnfiltered;
-  const higherPrioritySlots = new Set(
-    [...jobLayers, ...loadoutLayers]
-      .map((entry) => entry.slot)
-      .filter((slot): slot is string => !!slot)
-  );
-  const equipmentLayers = showEquipment
-    ? buildOrderedOverlayLayers(
-        (dirState.gearEquipmentOverlayAssets as (
-          | GearOverlayAsset
-          | IconAssetPayload
-        )[]) || [],
-        canvasWidth,
-        canvasHeight,
-        'equipment',
-        signalAssetUpdate,
-        baseOverlayLayers.length + jobLayers.length + loadoutLayers.length
-      ).filter((entry) => !entry.slot || !higherPrioritySlots.has(entry.slot))
-    : [];
 
   const appearanceLayers: OrderedOverlayLayer[] = [];
 
@@ -1631,16 +1580,14 @@ const buildAppearanceOverlayEntriesForDir = (options: {
     }
   }
 
-  const merged = mergeOverlayLayerLists(
-    [...baseOverlayLayers, ...appearanceLayers],
-    equipmentLayers,
-    jobLayers,
-    loadoutLayers
-  );
-  const overlayEntries: PreviewLayerEntry[] = [];
-  merged.forEach((entry, index) => {
+  const preparedBase = [...baseOverlayLayers, ...appearanceLayers];
+  const baseEntries = new Map<OrderedOverlayLayer, PreviewLayerEntry>();
+  const prepareEntry = (
+    entry: OrderedOverlayLayer,
+    index: number
+  ): PreviewLayerEntry | null => {
     if (hideShoes && entry.slot === 'shoes') {
-      return;
+      return null;
     }
     let grid = cloneGridData(entry.grid);
     if (entry.slot === 'species_tail' && previewTargetBodyColor) {
@@ -1658,9 +1605,9 @@ const buildAppearanceOverlayEntriesForDir = (options: {
       maskGridForHiddenLegParts(grid, referenceParts, hiddenLegParts);
     }
     if (!gridHasPixels(grid)) {
-      return;
+      return null;
     }
-    overlayEntries.push({
+    return {
       type: 'overlay',
       key: `overlay_body_${dir}_${entry.source}_${entry.slot || index}_${index}`,
       label:
@@ -1674,12 +1621,91 @@ const buildAppearanceOverlayEntriesForDir = (options: {
       source: entry.source,
       grid,
       opacity: 1,
-    });
+    };
+  };
+  preparedBase.forEach((entry, index) => {
+    const preview = prepareEntry(entry, index);
+    if (preview) {
+      baseEntries.set(entry, preview);
+    }
   });
-  return overlayEntries;
+  return (
+    gearState: PreviewDirState = dirState,
+    onUpdated = signalAssetUpdate,
+    priority: CharacterPreviewWorkPriority = 'visible'
+  ): PreviewLayerEntry[] => {
+    const loadoutLayers = showLoadoutGear
+      ? buildOrderedOverlayLayers(
+          (gearState.gearLoadoutOverlayAssets as (
+            GearOverlayAsset | IconAssetPayload
+          )[]) || [],
+          canvasWidth,
+          canvasHeight,
+          'loadout',
+          onUpdated,
+          baseOverlayLayers.length,
+          priority
+        )
+      : [];
+    const loadoutSlots = new Set(
+      loadoutLayers
+        .map((entry) => entry.slot)
+        .filter((slot): slot is string => !!slot)
+    );
+    const jobLayersUnfiltered = showJobGear
+      ? buildOrderedOverlayLayers(
+          (gearState.gearJobOverlayAssets as (
+            GearOverlayAsset | IconAssetPayload
+          )[]) || [],
+          canvasWidth,
+          canvasHeight,
+          'job',
+          onUpdated,
+          baseOverlayLayers.length + loadoutLayers.length,
+          priority
+        )
+      : [];
+    const jobLayers =
+      showLoadoutGear && showJobGear
+        ? jobLayersUnfiltered.filter(
+            (entry) => !entry.slot || !loadoutSlots.has(entry.slot)
+          )
+        : jobLayersUnfiltered;
+    const higherPrioritySlots = new Set(
+      [...jobLayers, ...loadoutLayers]
+        .map((entry) => entry.slot)
+        .filter((slot): slot is string => !!slot)
+    );
+    const equipmentLayers = showEquipment
+      ? buildOrderedOverlayLayers(
+          (gearState.gearEquipmentOverlayAssets as (
+            GearOverlayAsset | IconAssetPayload
+          )[]) || [],
+          canvasWidth,
+          canvasHeight,
+          'equipment',
+          onUpdated,
+          baseOverlayLayers.length + jobLayers.length + loadoutLayers.length,
+          priority
+        ).filter((entry) => !entry.slot || !higherPrioritySlots.has(entry.slot))
+      : [];
+    const merged = mergeOverlayLayerLists(
+      preparedBase,
+      equipmentLayers,
+      jobLayers,
+      loadoutLayers
+    );
+    return merged.flatMap((entry, index) => {
+      const preview =
+        entry.source === 'base'
+          ? baseEntries.get(entry)
+          : prepareEntry(entry, index);
+      return preview ? [preview] : [];
+    });
+  };
 };
 
-export const applyAppearanceOverlaysToPreview = (options: {
+export const prepareAppearanceOverlaysToPreview = (options: {
   preview: PreviewDirectionEntry[];
   previewDirStatesForLive: Record<number, PreviewDirState>;
   appearanceContext: AppearancePreviewContext;
@@ -1689,7 +1715,7 @@ export const applyAppearanceOverlaysToPreview = (options: {
   showJobGear: boolean;
   showLoadoutGear: boolean;
   signalAssetUpdate: () => void;
-}): PreviewDirectionEntry[] => {
+}) => {
   const {
     preview,
     previewDirStatesForLive,
@@ -1702,12 +1728,12 @@ export const applyAppearanceOverlaysToPreview = (options: {
     signalAssetUpdate,
   } = options;
   if (!appearanceContext.canApplyAppearance) {
-    return preview;
+    return () => preview;
   }
-  return preview.map((dirEntry) => {
+  const prepared = preview.map((dirEntry) => {
     const layers = dirEntry.layers || [];
     const { before, after } = splitPreviewOverlayLayers(layers);
-    const overlayEntries = buildAppearanceOverlayEntriesForDir({
+    const renderOverlays = prepareAppearanceOverlayEntriesForDir({
       dir: dirEntry.dir,
       dirState: previewDirStatesForLive[dirEntry.dir],
       appearanceState: appearanceContext.appearanceState,
@@ -1730,12 +1756,26 @@ export const applyAppearanceOverlaysToPreview = (options: {
       showLoadoutGear,
       signalAssetUpdate,
     });
-    return {
-      ...dirEntry,
-      layers: [...before, ...overlayEntries, ...after],
-    };
+    return { dirEntry, before, after, renderOverlays };
   });
+  return (
+    states = previewDirStatesForLive,
+    onUpdated = signalAssetUpdate,
+    priority: CharacterPreviewWorkPriority = 'visible'
+  ): PreviewDirectionEntry[] =>
+    prepared.map(({ dirEntry, before, after, renderOverlays }) => ({
+      ...dirEntry,
+      layers: [
+        ...before,
+        ...renderOverlays(states[dirEntry.dir], onUpdated, priority),
+        ...after,
+      ],
+    }));
 };
+
+export const applyAppearanceOverlaysToPreview = (
+  options: Parameters<typeof prepareAppearanceOverlaysToPreview>[0]
+): PreviewDirectionEntry[] => prepareAppearanceOverlaysToPreview(options)();
 
 export const buildBodyMarkingsPreviewBases = (options: {
   previewDirStates: Record<number, PreviewDirState>;
@@ -3674,8 +3714,7 @@ export const BodyMarkingsTab = (props: BodyMarkingsTabProps, context) => {
     const { latestMarkings } = resolveLatestBodyState();
     const existingEntry = latestMarkings[markId];
     const existingPartState = existingEntry?.[partId] as
-      | BodyMarkingPartState
-      | undefined;
+      BodyMarkingPartState | undefined;
     const existingColor = normalizeHex(existingPartState?.color) || null;
     if (existingEntry?.color === null && existingColor === normalized) {
       return;

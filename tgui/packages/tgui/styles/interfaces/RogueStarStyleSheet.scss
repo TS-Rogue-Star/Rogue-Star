@@ -19,6 +19,8 @@
 // /////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Updated by Lira for Rogue Star August 2026: Character Designer - Identity ///////////////////////////////
 // /////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star September 2026: Character Designer - Loadout /////////////////////////////
+// /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 @use '../colors.scss';
 
@@ -1384,6 +1386,80 @@ $titlebar-height: 38px;
   gap: 0;
   width: 100%;
   aspect-ratio: 1 / 1;
+}
+
+.RogueStar__markingTilePreviewGrid--single {
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr;
+}
+
+.RogueStar--loadout .RogueStar__markingTilePreviewGrid--single canvas {
+  width: 100% !important;
+  height: 100% !important;
+  left: 0 !important;
+  top: 0 !important;
+  object-fit: contain;
+}
+
+.RogueStar__loadoutGallery > .Section__title {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+
+  > .Section__titleText {
+    flex-shrink: 0;
+  }
+
+  > .Section__buttons {
+    position: static;
+    margin: 0 0 0 auto;
+  }
+}
+
+.RogueStar__markingTile--points {
+  position: relative;
+}
+
+.RogueStar__markingTilePoints,
+.RogueStar__loadoutItemPoints {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 36px;
+  height: 22px;
+  padding: 0 7px;
+  box-sizing: border-box;
+  border: 1px solid rgba(229, 188, 106, 0.8);
+  border-radius: 999px;
+  background: linear-gradient(135deg, #563819, #261327);
+  color: #ffe7ae;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.RogueStar__markingTilePoints {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  z-index: 1;
+  min-width: 22px;
+  padding: 0 5px;
+  pointer-events: none;
+}
+
+.RogueStar--loadout .RogueStar__selectedTraitName {
+  font-size: 12px;
+}
+
+.RogueStar--loadout .RogueStar__numberInput .NumberInput__input {
+  box-sizing: border-box;
+  height: 100%;
+  padding: inherit;
+  border-radius: inherit;
+  background: inherit;
+  color: inherit;
 }
 
 .RogueStar__markingTilePreview {

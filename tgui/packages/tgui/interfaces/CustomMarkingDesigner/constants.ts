@@ -5,6 +5,8 @@
 // //////////////////////////////////////////////////////////////////////////////////////
 
 export const CHIP_BUTTON_CLASS = 'RogueStar__chip';
+export const APPEARANCE_GALLERY_COLUMN_WIDTH = '840px';
+export const APPEARANCE_SETTINGS_COLUMN_WIDTH = '418px';
 export const COLOR_PICKER_CUSTOM_SLOTS = 16;
 export const DEFAULT_BODY_PART_REFERENCE_OPACITY = 0;
 export const DEFAULT_BRUSH_HEX = '#FFFFFF';

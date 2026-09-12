@@ -196,8 +196,7 @@ const storeSharedGridColorResult = (key: string, grid: string[][]) => {
   sharedGridColorResults.set(key, grid);
   while (sharedGridColorResults.size > MAX_SHARED_GRID_COLOR_RESULTS) {
     const oldestKey = sharedGridColorResults.keys().next().value as
-      | string
-      | undefined;
+      string | undefined;
     if (!oldestKey) {
       break;
     }
