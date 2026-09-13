@@ -331,6 +331,25 @@
 	has_vore_belly_sprites = FALSE
 	rest_sprite_options = list("Default", "Bellyup")
 
+/datum/robot_sprite/dogborg/tall/service_dullahan
+	module_type = "Service"
+	sprite_icon = 'icons/mob/dullahanborg/dullahan_serv.dmi'
+
+/datum/robot_sprite/dogborg/tall/service_dullahan/dullahanserv
+	name = "Dullahan"
+	sprite_icon_state = "dullahanserv"
+	has_eye_light_sprites = TRUE
+	has_custom_open_sprites = TRUE
+	has_vore_belly_sprites = TRUE
+	rest_sprite_options = list("Default", "Sit")
+
+/datum/robot_sprite/dogborg/tall/service_dullahan/dullahanserv_alt
+	name = "Dullahan alt"
+	sprite_icon_state = "dullahanserv_alt"
+	has_eye_light_sprites = TRUE
+	has_custom_open_sprites = TRUE
+	has_vore_belly_sprites = TRUE
+	rest_sprite_options = list("Default", "Sit")
 
 // Clerical
 
@@ -417,3 +436,36 @@
 
 		// None yet
 */
+
+
+//dullahan sprite stuff cont.
+
+/datum/robot_sprite/dogborg/tall/dullahanservicemodule
+	module_type = "Service"
+	sprite_icon = 'icons/mob/dullahanborg/dullahan_serv.dmi'
+
+/datum/robot_sprite/dogborg/tall/dullahanservicemodule/do_equipment_glamour(var/obj/item/weapon/robot_module/module)
+	if(!has_custom_equipment_sprites)
+		return
+
+	..()
+
+	var/obj/item/device/dogborg/sleeper/compactor/brewer/DB = locate() in module.modules
+	if(DB)
+		DB.icon_state = "brewer"
+
+/datum/robot_sprite/dogborg/tall/dullahanservicemodule/dullahanservice
+	name = "Dullahan service"
+	sprite_icon_state = "dullahanserv"
+	has_eye_light_sprites = TRUE
+	has_custom_open_sprites = TRUE
+	has_vore_belly_sprites = TRUE
+	rest_sprite_options = list("Default", "Sit")
+
+/datum/robot_sprite/dogborg/tall/dullahanservicemodule/dullahanservicealt
+	name = "Dullahan service v2"
+	sprite_icon_state = "dullahanserv_alt"
+	has_eye_light_sprites = TRUE
+	has_custom_open_sprites = TRUE
+	has_vore_belly_sprites = TRUE
+	rest_sprite_options = list("Default", "Sit")
