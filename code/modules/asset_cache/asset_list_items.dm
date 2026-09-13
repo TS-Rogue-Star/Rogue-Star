@@ -351,7 +351,7 @@
 #define CUSTOM_MARKING_ATLAS_SIZE_STRIPPED 3
 #define CUSTOM_MARKING_ATLAS_MANIFEST_REVISION 4
 #define CUSTOM_MARKING_ATLAS_MAX_DIMENSION 2048
-#define CUSTOM_MARKING_ATLAS_PERSISTENT_CACHE_REVISION 1
+#define CUSTOM_MARKING_ATLAS_PERSISTENT_CACHE_REVISION 2
 
 /datum/asset/spritesheet/custom_marking_designer
 	name = "custom_marking_designer"
@@ -359,6 +359,8 @@
 	var/finalized = FALSE
 	var/assets_registered = FALSE
 	var/finalization_failure_reason = null
+	var/construction_failure_reason = null
+	var/list/sheet_asset_names_by_size_id = list()
 	var/list/sheet_dimensions_by_size_id = list()
 	var/construction_state_released = FALSE
 	var/finalized_frame_count = 0
@@ -397,7 +399,7 @@
 		return FALSE
 	for(var/size_id in sizes)
 		var/list/size = sizes[size_id]
-		if(!register_atlas_resource("[name]_[size_id].png", size[CUSTOM_MARKING_ATLAS_SIZE_STRIPPED]))
+		if(!register_atlas_resource(sheet_asset_names_by_size_id[size_id], size[CUSTOM_MARKING_ATLAS_SIZE_STRIPPED]))
 			return FALSE
 	var/asset_name = "spritesheet_[name].css"
 	var/css_path = get_construction_path(asset_name)
@@ -419,6 +421,13 @@
 		var/icon/source = size?[CUSTOM_MARKING_ATLAS_SIZE_ICON]
 		if(!isicon(source))
 			return fail_finalization("sheet '[size_id]' has no construction icon")
+		var/list/states = icon_states(source)
+		if(states.len != size[CUSTOM_MARKING_ATLAS_SIZE_COUNT])
+			return fail_finalization("sheet '[size_id]' does not contain all of its frames ([states.len]/[size[CUSTOM_MARKING_ATLAS_SIZE_COUNT]])")
+		for(var/state_index = 2 to states.len)
+			var/list/sprite = sprites[states[state_index]]
+			if(!islist(sprite) || sprite[CUSTOM_MARKING_ATLAS_SPRITE_SIZE] != size_id || sprite[CUSTOM_MARKING_ATLAS_SPRITE_INDEX] != state_index - 1)
+				return fail_finalization("sheet '[size_id]' has incorrect frame order at [state_index]")
 		var/sheet_path = get_construction_path("[name]_[size_id].png")
 		if(!fcopy(source, sheet_path))
 			return fail_finalization("could not write sheet '[size_id]'")
@@ -443,6 +452,7 @@
 		if((width / source.Width()) * (height / source.Height()) < size[CUSTOM_MARKING_ATLAS_SIZE_COUNT])
 			return fail_finalization("sheet '[size_id]' does not contain all of its frames")
 		size[CUSTOM_MARKING_ATLAS_SIZE_STRIPPED] = sheet_resource
+		sheet_asset_names_by_size_id[size_id] = "[name]_[size_id]_[md5(sheet_resource)].png"
 		sheet_dimensions_by_size_id[size_id] = list("width" = width, "height" = height)
 	return TRUE
 
@@ -492,7 +502,7 @@
 	return finalized && assets_registered && construction_state_released && !persistent_cache_validation_pending && finalized_frame_count > 0 && finalized_sheet_count > 0
 
 /datum/asset/spritesheet/custom_marking_designer/proc/can_accept_assets()
-	return accepting_assets && !finalized
+	return accepting_assets && !finalized && !construction_failure_reason
 
 /datum/asset/spritesheet/custom_marking_designer/proc/get_frame_count()
 	return finalized ? finalized_frame_count : (islist(sprites) ? sprites.len : 0)
@@ -583,6 +593,8 @@
 	return payload
 
 /datum/asset/spritesheet/custom_marking_designer/proc/insert_family_frame(sprite_name, icon/source, family)
+	if(!can_accept_assets())
+		return FALSE
 	if(!istext(sprite_name) || !length(sprite_name) || !isicon(source))
 		return FALSE
 	if(!is_valid_family(family))
@@ -608,10 +620,15 @@
 		size_id = "[family]_[shard_index]_[frame_width]x[frame_height]"
 		size = sizes[size_id]
 	if(islist(size))
-		var/position = size[CUSTOM_MARKING_ATLAS_SIZE_COUNT]++
+		var/position = size[CUSTOM_MARKING_ATLAS_SIZE_COUNT]
 		var/icon/sheet = size[CUSTOM_MARKING_ATLAS_SIZE_ICON]
+		try
+			if(!insert_sheet_frame(sheet, frame_icon, sprite_name))
+				return fail_construction("could not insert frame '[sprite_name]' into sheet '[size_id]' at [position]")
+		catch(var/exception/e)
+			return fail_construction("could not insert frame '[sprite_name]' into sheet '[size_id]' at [position]: [e]")
+		size[CUSTOM_MARKING_ATLAS_SIZE_COUNT] = position + 1
 		size[CUSTOM_MARKING_ATLAS_SIZE_STRIPPED] = null
-		sheet.Insert(frame_icon, icon_state = sprite_name)
 		sprites[sprite_name] = list(size_id, position)
 	else
 		shard_index_by_bucket[bucket_id] = shard_index
@@ -619,6 +636,16 @@
 		sprites[sprite_name] = list(size_id, 0)
 		family_by_size_id[size_id] = family
 	return islist(sprites[sprite_name])
+
+/datum/asset/spritesheet/custom_marking_designer/proc/insert_sheet_frame(icon/sheet, icon/frame_icon, sprite_name)
+	sheet.Insert(frame_icon, icon_state = sprite_name)
+	return TRUE
+
+/datum/asset/spritesheet/custom_marking_designer/proc/fail_construction(reason)
+	if(!construction_failure_reason)
+		construction_failure_reason = reason
+	accepting_assets = FALSE
+	return fail_finalization(construction_failure_reason)
 
 /datum/asset/spritesheet/custom_marking_designer/proc/get_sheet_diagnostic_summary()
 	if(!islist(finalized_sheet_diagnostics) || !finalized_sheet_diagnostics.len)
@@ -818,6 +845,8 @@
 	finalized = FALSE
 	assets_registered = FALSE
 	finalization_failure_reason = null
+	construction_failure_reason = null
+	sheet_asset_names_by_size_id = list()
 	sheet_dimensions_by_size_id = list()
 	construction_state_released = FALSE
 	finalized_frame_count = 0
@@ -965,6 +994,9 @@
 	request_statistics["requested"] = (request_statistics["requested"] || 0) + 1
 	var/sprite_name = canonical_digest
 	if(!insert_family_frame(sprite_name, source, family))
+		fail_construction(construction_failure_reason || "could not construct canonical frame '[sprite_name]' in family '[family]'")
+		if(GLOB.custom_marking_static_atlas_building)
+			throw EXCEPTION(construction_failure_reason)
 		return null
 	var/list/payload = list(
 		"token" = asset_id,
@@ -1029,6 +1061,8 @@
 /datum/asset/spritesheet/custom_marking_designer/proc/finalize()
 	if(is_ready())
 		return TRUE
+	if(construction_failure_reason)
+		return fail_finalization(construction_failure_reason)
 	if(persistent_cache_validation_pending || construction_state_released)
 		return FALSE
 	finalization_failure_reason = null
@@ -1050,7 +1084,7 @@
 		if(!islist(size) || !isfile(size[CUSTOM_MARKING_ATLAS_SIZE_STRIPPED]) || !islist(dimensions))
 			stack_trace("Custom Marking Designer atlas could not retain diagnostics for sheet [size_id].")
 			return FALSE
-		var/asset_name = "[name]_[size_id].png"
+		var/asset_name = sheet_asset_names_by_size_id[size_id]
 		var/sheet_frames = size[CUSTOM_MARKING_ATLAS_SIZE_COUNT] || 0
 		var/family = family_by_size_id[size_id]
 		if(!is_valid_family(family))
@@ -1091,7 +1125,7 @@
 			stack_trace("Custom Marking Designer atlas could not resolve sheet [size_id] for [sprite_name].")
 			return FALSE
 		var/per_line = max(1, round(dimensions["width"] / cell_icon.Width()))
-		payload["atlas"] = "[name]_[size_id].png"
+		payload["atlas"] = sheet_asset_names_by_size_id[size_id]
 		payload["atlas_x"] = (index % per_line) * cell_icon.Width()
 		payload["atlas_y"] = round(index / per_line) * cell_icon.Height()
 		coordinates_assigned++
@@ -1113,6 +1147,7 @@
 	sprites = null
 	sizes = null
 	sheet_dimensions_by_size_id = null
+	sheet_asset_names_by_size_id = null
 	payloads_by_asset_id = null
 	canonical_keys_by_asset_id = null
 	family_by_size_id = null

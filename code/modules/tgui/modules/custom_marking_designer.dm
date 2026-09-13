@@ -9611,7 +9611,7 @@ var/global/custom_marking_static_source_digest_complete = TRUE
 		for(var/marking_id in body_marking_styles_list)
 			CUSTOM_MARKING_CHECK_TICK
 			var/datum/sprite_accessory/marking/style = body_marking_styles_list[marking_id]
-			if(!istype(style))
+			if(!istype(style) || istype(style, /datum/sprite_accessory/marking/custom))
 				continue
 			var/list/def = list(
 				"id" = marking_id,
