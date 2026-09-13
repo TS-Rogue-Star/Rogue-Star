@@ -27,7 +27,10 @@
 		new /obj/item/weapon/reagent_containers/food/snacks/rawcutlet(src)
 		new /obj/item/weapon/reagent_containers/food/snacks/rawcutlet(src)
 		new /obj/item/weapon/reagent_containers/food/snacks/rawcutlet(src)
-		to_chat(user, "You cut the meat into thin strips.")
+		new /obj/item/fat(src)	//RS ADD START
+		if(prob(25))
+			new /obj/item/fat(src)	//RS ADD END
+		to_chat(user, "You cut the meat into thin strips and separate the fat.")	//RS EDIT
 		qdel(src)
 	else
 		..()
