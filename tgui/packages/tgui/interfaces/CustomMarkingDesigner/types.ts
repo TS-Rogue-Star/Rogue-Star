@@ -15,6 +15,8 @@
 // /////////////////////////////////////////////////////////////////////////////////////////////
 // Updated by Lira for Rogue Star September 2026: Character Designer - Loadout /////////////////
 // /////////////////////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star September 2026: Character Designer - Occupation //////////////
+// /////////////////////////////////////////////////////////////////////////////////////////////
 
 import type { BooleanLike } from '../../../common/react';
 import type {
@@ -66,7 +68,8 @@ export type CustomMarkingDesignerData = {
     | 'species'
     | 'traits'
     | 'equipment'
-    | 'loadout';
+    | 'loadout'
+    | 'occupation';
   allow_custom_tab?: boolean;
   custom_marking_enable_disclaimer?: string;
   active_dir: string;
@@ -123,6 +126,12 @@ export type CustomMarkingDesignerData = {
   identity_save_result?: IdentitySaveResult | null;
   identity_random_name_result?: IdentityRandomNameResult | null;
   identity_revision?: number;
+  occupation_context_signature?: string | null;
+  occupation_payload?: import('./occupationTypes').OccupationPayload | null;
+  occupation_save_result?:
+    import('./occupationTypes').OccupationSaveResult | null;
+  occupation_preview_batch?:
+    import('./occupationTypes').OccupationPreviewBatch | null;
   loadout_context_signature?: string | null;
   loadout_payload?: import('./loadoutTypes').LoadoutPayload | null;
   loadout_preview_batch?: import('./loadoutTypes').LoadoutPreviewBatch | null;
