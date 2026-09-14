@@ -7,6 +7,8 @@
 // /////////////////////////////////////////////////////////////////////////////////////////////
 // Updated by Lira for Rogue Star August 2026: Character Designer - Species and Prosthetics ////
 // /////////////////////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star September 2026: Character Designer - Identity ////////////////
+// /////////////////////////////////////////////////////////////////////////////////////////////
 
 export * from './colorSlots';
 export * from './draftStore';
@@ -29,4 +31,5 @@ export * from './prosthetics';
 export * from './speciesPreview';
 export * from './speciesSave';
 export * from './traits';
+export * from './identity';
 export * from './payloadCache';

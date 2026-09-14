@@ -2098,8 +2098,7 @@ export const buildProstheticPreviewLayerGroups = (options: {
   let currentKind = 'base';
   let currentCacheSignature = cacheSignature;
   let currentColorTransform:
-    | { color: string; multiply: boolean; passes: number }
-    | undefined;
+    { color: string; multiply: boolean; passes: number } | undefined;
   let currentSharedRasterSignature: string | undefined;
   const flush = () => {
     if (!currentLayers.length || currentTransformKey === null) {

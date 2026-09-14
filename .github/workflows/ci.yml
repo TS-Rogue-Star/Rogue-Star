@@ -51,18 +51,17 @@ jobs:
         run: |
           tools/ci/install_spaceman_dmm.sh dreamchecker
 
+      # RS Edit: DreamAnnotate v3 registers a problem matcher instead of parsing a
+      # file, so it must run before the linter and the linter must log to stdout.
+      - name: Setup Linter Annotations
+        uses: alexkar598/DreamAnnotate@v3
+        with:
+          dreammaker: false
+
       - name: Run Linter
         id: linter
         run: |
-          ~/dreamchecker > ${GITHUB_WORKSPACE}/output-annotations.txt 2>&1
-
-      - name: Annotate Linter
-        env:
-          FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true # RS Edit - use supported node version on archived action
-        uses: yogstation13/DreamAnnotate@v2
-        if: always()
-        with:
-          outputFile: output-annotations.txt
+          ~/dreamchecker 2>&1
 
   unit_tests:
     strategy:

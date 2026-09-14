@@ -68,12 +68,45 @@
 	if(etching)
 		etching.report_status()
 
+// Character Designer - Identity Tab (Lira, September 2026)
+/mob
+	var/character_persist_rename_in_progress = FALSE
+	var/list/character_persist_rename_queue
+
+// Character Designer - Identity Tab (Lira, September 2026)
+/mob/proc/queue_etching_rename(var/old_name,var/new_name)
+	if(!istext(old_name) || !length(old_name) || !istext(new_name) || !length(new_name) || old_name == new_name)
+		return FALSE
+	if(!islist(character_persist_rename_queue))
+		character_persist_rename_queue = list()
+	character_persist_rename_queue += list(list(
+		"old_name" = old_name,
+		"new_name" = new_name
+	))
+	if(character_persist_rename_in_progress)
+		return TRUE
+
+	character_persist_rename_in_progress = TRUE
+	try
+		while(LAZYLEN(character_persist_rename_queue))
+			var/list/rename_request = character_persist_rename_queue[1]
+			character_persist_rename_queue.Cut(1, 2)
+			etching_rename(rename_request["old_name"], rename_request["new_name"])
+	catch(var/exception/error)
+		character_persist_rename_queue = null
+		character_persist_rename_in_progress = FALSE
+		throw error
+	character_persist_rename_queue = null
+	character_persist_rename_in_progress = FALSE
+	return TRUE
+
 /mob/proc/etching_rename(var/old_name,var/new_name)
 	var/old_path = "data/player_saves/[copytext(ckey, 1, 2)]/[ckey]/magic/[old_name]-etching.json"
 	if(!fexists(old_path))
 		return
 	var/name_option = "Transfer to [new_name]"
-	if(tgui_alert(src,"There is player persistent data associated with [old_name]. Do you want the charater persist data to be transferred to [new_name]? If so, the data will become available to [new_name], and become unavailable to [old_name]. Also, if there is any data associated with [new_name], it will be overwritten.","CHARACTER PERSIST RENAME",list(name_option,"Do not")) != name_option)
+	var/rename_prompt = "There is player persistent data associated with [old_name]. Do you want the charater persist data to be transferred to [new_name]? If so, the data will become available to [new_name], and become unavailable to [old_name]. Also, if there is any data associated with [new_name], it will be overwritten."
+	if(tgui_alert(src, rename_prompt, "CHARACTER PERSIST RENAME", list(name_option,"Do not"), minimum_width = 450, minimum_height = 260) != name_option)
 		return
 	var/list/load = json_decode(file2text(old_path))
 

@@ -3,6 +3,8 @@
 // ///////////////////////////////////////////////////////////////////////////////////////////
 // Updated by Lira for Rogue Star August 2026: Character Designer - Species and Prosthetics //
 // ///////////////////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star September 2026: Character Designer - Loadout ///////////////
+// ///////////////////////////////////////////////////////////////////////////////////////////
 
 import { Component } from 'inferno';
 import {
@@ -52,7 +54,11 @@ import {
   LoadingOverlay,
   ProstheticMannequin,
 } from './components';
-import { CHIP_BUTTON_CLASS } from './constants';
+import {
+  CHIP_BUTTON_CLASS,
+  APPEARANCE_GALLERY_COLUMN_WIDTH,
+  APPEARANCE_SETTINGS_COLUMN_WIDTH,
+} from './constants';
 import {
   applyBodyColorToPreview,
   applyEyeColorToPreview,
@@ -281,7 +287,7 @@ const BODY_COLOR_OVERLAY_SLOTS = new Set([
 
 let assetUpdateScheduled = false;
 
-const compareByName = (
+export const compareByName = (
   a: { id: string; name: string },
   b: { id: string; name: string }
 ) =>
@@ -867,7 +873,9 @@ const resolveBasicColorTarget = (options: {
   }
 };
 
-type BasicTilePreviewEntry = PreviewDirectionEntry & {
+export type BasicTilePreviewEntry = PreviewDirectionEntry & {
+  canvasWidth?: number;
+  canvasHeight?: number;
   layerGroups?: PreviewLayerGroup[];
   baseLayers?: PreviewLayerEntry[];
   underlayLayers?: PreviewLayerEntry[];
@@ -877,14 +885,17 @@ type BasicTilePreviewEntry = PreviewDirectionEntry & {
   retainRenderedCanvasOnUnmount?: boolean;
 };
 
-type BasicTileDefinition = Readonly<{
+export type BasicTileDefinition = Readonly<{
   id: string;
   name: string;
   description?: string | null;
   disabled?: boolean;
   disabledReason?: string | null;
   tooltip?: string | null;
+  pointCost?: number;
   colorMode?: ProstheticColorMode;
+  singlePreview?: boolean;
+  previewPending?: boolean;
 }>;
 
 const ProstheticColorModeBadge = ({
@@ -915,7 +926,7 @@ type BasicTileProps = Readonly<{
   backgroundTileHeight?: number;
 }>;
 
-class BasicTile extends Component<BasicTileProps> {
+export class BasicTile extends Component<BasicTileProps> {
   shouldComponentUpdate(next: BasicTileProps) {
     return (
       next.selected !== this.props.selected ||
@@ -925,7 +936,10 @@ class BasicTile extends Component<BasicTileProps> {
       next.def.disabled !== this.props.def.disabled ||
       next.def.disabledReason !== this.props.def.disabledReason ||
       next.def.tooltip !== this.props.def.tooltip ||
+      next.def.pointCost !== this.props.def.pointCost ||
       next.def.colorMode !== this.props.def.colorMode ||
+      next.def.singlePreview !== this.props.def.singlePreview ||
+      next.def.previewPending !== this.props.def.previewPending ||
       next.backgroundImage !== this.props.backgroundImage ||
       next.backgroundColor !== this.props.backgroundColor ||
       next.backgroundScale !== this.props.backgroundScale ||
@@ -954,6 +968,8 @@ class BasicTile extends Component<BasicTileProps> {
         className={`RogueStar__markingTile${
           selected ? ' RogueStar__markingTile--selected' : ''
         }${disabled ? ' RogueStar__markingTile--disabled' : ''}${
+          def.pointCost !== undefined ? ' RogueStar__markingTile--points' : ''
+        }${
           def.colorMode === 'prosthetic' || def.colorMode === 'body'
             ? ` RogueStar__markingTile--color-${def.colorMode}`
             : ''
@@ -961,7 +977,21 @@ class BasicTile extends Component<BasicTileProps> {
         aria-disabled={disabled}
         title={def.tooltip || def.disabledReason || def.description || def.name}
         onClick={disabled ? undefined : onToggle}>
-        <Box className="RogueStar__markingTilePreviewGrid">
+        {def.pointCost !== undefined && (
+          <Box
+            as="span"
+            className="RogueStar__markingTilePoints"
+            aria-label={`Loadout points: ${def.pointCost}`}>
+            {def.pointCost}
+          </Box>
+        )}
+        <Box
+          className={`RogueStar__markingTilePreviewGrid${def.singlePreview ? ' RogueStar__markingTilePreviewGrid--single' : ''}`}>
+          {def.previewPending && (
+            <Box className="RogueStar__markingTilePreview" color="label">
+              Loading preview…
+            </Box>
+          )}
           {previews.map((preview) => (
             <Box
               key={`${def.id}-${preview.dir}`}
@@ -986,8 +1016,8 @@ class BasicTile extends Component<BasicTileProps> {
                   preview.retainRenderedCanvasOnUnmount
                 }
                 pixelSize={MARKING_TILE_PIXEL_SIZE}
-                width={canvasWidth}
-                height={canvasHeight}
+                width={preview.canvasWidth || canvasWidth}
+                height={preview.canvasHeight || canvasHeight}
                 backgroundImage={backgroundImage}
                 backgroundColor={backgroundColor}
                 backgroundScale={backgroundScale}
@@ -1009,7 +1039,7 @@ class BasicTile extends Component<BasicTileProps> {
   }
 }
 
-type BasicTileSectionProps = Readonly<{
+export type BasicTileSectionProps = Readonly<{
   definitions: BasicTileDefinition[];
   canvasWidth: number;
   canvasHeight: number;
@@ -1019,18 +1049,20 @@ type BasicTileSectionProps = Readonly<{
   tileDirectionsSignature: string;
   assetRevision: number;
   selectedId: string | null;
+  selectedIds?: ReadonlySet<string>;
   backgroundImage: string | null;
   backgroundColor: string;
   backgroundScale: number;
   backgroundTileWidth?: number;
   backgroundTileHeight?: number;
   getTilePreviewEntries: (def: BasicTileDefinition) => BasicTilePreviewEntry[];
+  renderTile?: (def: BasicTileDefinition, selected: boolean) => any;
   onSelect: (id: string | null) => void;
   emptyMessage?: string;
   allowDeselect?: boolean;
 }>;
 
-class BasicTileSection extends Component<BasicTileSectionProps> {
+export class BasicTileSection extends Component<BasicTileSectionProps> {
   shouldComponentUpdate(next: BasicTileSectionProps) {
     return (
       next.search !== this.props.search ||
@@ -1040,6 +1072,7 @@ class BasicTileSection extends Component<BasicTileSectionProps> {
       next.tileDirectionsSignature !== this.props.tileDirectionsSignature ||
       next.assetRevision !== this.props.assetRevision ||
       next.selectedId !== this.props.selectedId ||
+      next.selectedIds !== this.props.selectedIds ||
       next.definitions !== this.props.definitions ||
       next.backgroundImage !== this.props.backgroundImage ||
       next.backgroundColor !== this.props.backgroundColor ||
@@ -1066,7 +1099,6 @@ class BasicTileSection extends Component<BasicTileSectionProps> {
       backgroundTileWidth,
       backgroundTileHeight,
       getTilePreviewEntries,
-      onSelect,
       emptyMessage,
       allowDeselect = true,
     } = this.props;
@@ -1099,7 +1131,12 @@ class BasicTileSection extends Component<BasicTileSectionProps> {
       <>
         <Box className="RogueStar__markingGrid">
           {paged.map((def) => {
-            const selected = !!selectedId && selectedId === def.id;
+            const selected =
+              this.props.selectedIds?.has(def.id) ||
+              (!!selectedId && selectedId === def.id);
+            if (this.props.renderTile) {
+              return this.props.renderTile(def, selected);
+            }
             const tilePreviews = getTilePreviewEntries(def);
             return (
               <BasicTile
@@ -1114,10 +1151,13 @@ class BasicTileSection extends Component<BasicTileSectionProps> {
                 backgroundScale={backgroundScale}
                 backgroundTileWidth={backgroundTileWidth}
                 backgroundTileHeight={backgroundTileHeight}
-                onToggle={() =>
-                  !def.disabled &&
-                  onSelect(selected && allowDeselect ? null : def.id)
-                }
+                onToggle={() => {
+                  if (!def.disabled) {
+                    this.props.onSelect(
+                      selected && allowDeselect ? null : def.id
+                    );
+                  }
+                }}
               />
             );
           })}
@@ -1279,7 +1319,7 @@ type BasicAppearanceSaveSectionProps = Readonly<{
   onDiscardAndClose: () => void;
 }>;
 
-const BasicAppearanceSaveSection = ({
+export const BasicAppearanceSaveSection = ({
   pendingSave,
   pendingClose,
   uiLocked,
@@ -1398,13 +1438,7 @@ const BasicAppearanceSettingsSection = ({
   setStyle,
 }: BasicAppearanceSettingsSectionProps) => {
   type BasicAppearanceStyleType =
-    | 'hair'
-    | 'gradient'
-    | 'facial_hair'
-    | 'ears'
-    | 'horns'
-    | 'tail'
-    | 'wings';
+    'hair' | 'gradient' | 'facial_hair' | 'ears' | 'horns' | 'tail' | 'wings';
 
   const StyleRow = (
     props: Readonly<{
@@ -2219,9 +2253,10 @@ type BasicAppearancePreviewColumnProps = Readonly<{
   cycleCanvasBackground: () => void;
   colorPickerValue: string;
   applyColorTarget: (hex: string) => void;
+  colorPickerDisabled?: boolean;
 }>;
 
-const BasicAppearancePreviewColumn = ({
+export const BasicAppearancePreviewColumn = ({
   preview,
   canvasWidth,
   canvasHeight,
@@ -2245,6 +2280,7 @@ const BasicAppearancePreviewColumn = ({
   cycleCanvasBackground,
   colorPickerValue,
   applyColorTarget,
+  colorPickerDisabled = false,
 }: BasicAppearancePreviewColumnProps) => (
   <Flex direction="column" gap={1}>
     <LivePreviewCard
@@ -2271,7 +2307,19 @@ const BasicAppearancePreviewColumn = ({
       cycleCanvasBackground={cycleCanvasBackground}
     />
     <Section title="Color Picker">
-      <Box className="RogueStar__inlineColorPicker">
+      <Box
+        as="fieldset"
+        disabled={colorPickerDisabled}
+        aria-disabled={colorPickerDisabled}
+        className="RogueStar__inlineColorPicker"
+        style={{
+          border: 0,
+          margin: 0,
+          padding: 0,
+          minWidth: 0,
+          pointerEvents: colorPickerDisabled ? 'none' : undefined,
+          opacity: colorPickerDisabled ? 0.5 : 1,
+        }}>
         <RogueStarColorPicker
           color={colorPickerValue}
           currentColor={colorPickerValue}
@@ -5237,8 +5285,7 @@ const buildGearOverlayLayers = (
   const loadoutLayers = showLoadoutGear
     ? buildOrderedOverlayLayers(
         (dirState.gearLoadoutOverlayAssets as (
-          | GearOverlayAsset
-          | IconAssetPayload
+          GearOverlayAsset | IconAssetPayload
         )[]) || [],
         canvasWidth,
         canvasHeight,
@@ -5255,8 +5302,7 @@ const buildGearOverlayLayers = (
   const jobLayersUnfiltered = showJobGear
     ? buildOrderedOverlayLayers(
         (dirState.gearJobOverlayAssets as (
-          | GearOverlayAsset
-          | IconAssetPayload
+          GearOverlayAsset | IconAssetPayload
         )[]) || [],
         canvasWidth,
         canvasHeight,
@@ -5279,8 +5325,7 @@ const buildGearOverlayLayers = (
   const equipmentLayers = showEquipment
     ? buildOrderedOverlayLayers(
         (dirState.gearEquipmentOverlayAssets as (
-          | GearOverlayAsset
-          | IconAssetPayload
+          GearOverlayAsset | IconAssetPayload
         )[]) || [],
         canvasWidth,
         canvasHeight,
@@ -8186,7 +8231,7 @@ export const BasicAppearanceTab = (props: BasicAppearanceTabProps, context) => {
         }}
       />
       <Flex direction="row" gap={1} wrap={false} height="100%">
-        <Flex.Item basis="840px" shrink={0}>
+        <Flex.Item basis={APPEARANCE_GALLERY_COLUMN_WIDTH} shrink={0}>
           <Flex direction="column" gap={1}>
             <BasicAppearanceGallerySection
               type={type}
@@ -8228,7 +8273,7 @@ export const BasicAppearanceTab = (props: BasicAppearanceTabProps, context) => {
             />
           </Flex>
         </Flex.Item>
-        <Flex.Item basis="418px" shrink={0}>
+        <Flex.Item basis={APPEARANCE_SETTINGS_COLUMN_WIDTH} shrink={0}>
           <Flex direction="column" gap={1}>
             <BasicAppearanceSaveSection
               pendingSave={pendingSave}

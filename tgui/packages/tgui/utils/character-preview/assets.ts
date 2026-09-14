@@ -206,8 +206,7 @@ const storeDynamicAtlasSource = (token: string, png: string) => {
   delete atlasImagePromises[token];
   while (dynamicAtlasSources.size > MAX_DYNAMIC_ATLAS_SOURCES) {
     const oldestToken = dynamicAtlasSources.keys().next().value as
-      | string
-      | undefined;
+      string | undefined;
     if (!oldestToken) {
       break;
     }
@@ -725,8 +724,7 @@ const storeDecodedAsset = (cacheKey: string, asset: IconDecodedAsset) => {
   decodedAssetCache.set(cacheKey, asset);
   while (decodedAssetCache.size > MAX_DECODED_ASSETS) {
     const oldestKey = decodedAssetCache.keys().next().value as
-      | string
-      | undefined;
+      string | undefined;
     if (!oldestKey) {
       break;
     }
@@ -765,8 +763,7 @@ const getAtlasScratchCanvas = (width: number, height: number) => {
   atlasScratchCanvases.set(key, canvas);
   while (atlasScratchCanvases.size > MAX_ATLAS_SCRATCH_CANVASES) {
     const oldestKey = atlasScratchCanvases.keys().next().value as
-      | string
-      | undefined;
+      string | undefined;
     if (!oldestKey) {
       break;
     }
