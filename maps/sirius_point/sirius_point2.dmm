@@ -22243,7 +22243,7 @@
 /obj/machinery/door/airlock{
 	id_tag = "barbathroom1"
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/tiled/steel_ridged,
 /area/crew_quarters/barrestroom)
 "oju" = (
 /obj/structure/table/rack,
@@ -34193,7 +34193,7 @@
 /obj/machinery/door/airlock{
 	id_tag = "barbathroom2"
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/tiled/steel_ridged,
 /area/crew_quarters/barrestroom)
 "waN" = (
 /obj/structure/table/woodentable,
