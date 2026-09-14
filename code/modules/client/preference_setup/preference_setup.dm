@@ -83,7 +83,7 @@
 	var/dat = ""
 	for(var/datum/category_group/player_setup_category/PS in categories)
 		// RS Add: Hide skills and antagonism (Lira, March 2026)
-		if(istype(PS, /datum/category_group/player_setup_category/loadout_preferences) || istype(PS, /datum/category_group/player_setup_category/skill_preferences) || istype(PS, /datum/category_group/player_setup_category/appearance_preferences))
+		if(istype(PS, /datum/category_group/player_setup_category/occupation_preferences) || istype(PS, /datum/category_group/player_setup_category/loadout_preferences) || istype(PS, /datum/category_group/player_setup_category/skill_preferences) || istype(PS, /datum/category_group/player_setup_category/appearance_preferences))
 			continue
 		if(PS == selected_category)
 			dat += "[PS.name] "	// TODO: Check how to properly mark a href/button selected in a classic browser window
@@ -113,6 +113,11 @@
 			// RS Add Start: Character Designer - Loadout (Lira, September 2026)
 			if(istype(category, /datum/category_group/player_setup_category/loadout_preferences))
 				user.client.prefs.open_body_markings_designer(user, "loadout")
+				return 1
+			// RS Add End
+			// RS Add Start: Character Designer - Occupation (Lira, September 2026)
+			if(istype(category, /datum/category_group/player_setup_category/occupation_preferences))
+				user.client.prefs.open_body_markings_designer(user, "occupation")
 				return 1
 			// RS Add End
 			selected_category = category
@@ -180,9 +185,11 @@
 		. += "[PI.content(user)]<br>"
 	. += "</td></tr></table>"
 
+// RS Edit: Character Designer - Occupation (Lira, September 2026)
 /datum/category_group/player_setup_category/occupation_preferences/content(var/mob/user)
 	for(var/datum/category_item/player_setup_item/PI in items)
-		. += "[PI.content(user)]<br>"
+		if(PI.show_in_character_setup)
+			. += "[PI.content(user)]<br>"
 
 /**********************
 * Category Item Setup *

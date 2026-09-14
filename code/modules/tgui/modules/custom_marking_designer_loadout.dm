@@ -491,6 +491,8 @@
 				job_flag = job_medsci_high
 			if(ENGSEC)
 				job_flag = job_engsec_high
+			if(TALON)
+				job_flag = job_talon_high
 		if(job.flag == job_flag)
 			return job
 	return null
@@ -623,7 +625,7 @@
 		response["accepted"] = accepted
 	var/datum/tgui/ui = SStgui.get_open_ui(user, src)
 	if(ui)
-		ui.send_update(list((saving ? "loadout_save_result" : "loadout_payload") = response, "loadout_context_signature" = get_loadout_context_signature(), "equipment_context_signature" = get_equipment_context_signature(), "loadout_recipe_signature" = get_loadout_recipe_signature()))
+		ui.send_update(list((saving ? "loadout_save_result" : "loadout_payload") = response, "occupation_context_signature" = get_occupation_context_signature(), "loadout_context_signature" = get_loadout_context_signature(), "equipment_context_signature" = get_equipment_context_signature(), "loadout_recipe_signature" = get_loadout_recipe_signature()))
 	if(ui && !saving && !errors.len && length(preview_queue))
 		stream_loadout_previews(user, request_id, generation, response["recipe_signature"], preview_queue)
 	if(accepted)
