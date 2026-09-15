@@ -77,7 +77,14 @@ GLOBAL_VAR_INIT(vchat_current_round_id, null) //RS Add: Round ID (Lira, Septembe
 	var/database/query/q
 
 	if(islist(query))
-		q = new(arglist(query))
+		// RS Edit Start: VChat Query Fix (Lira, September 2026)
+		var/list/parameters = query
+		parameters = parameters.Copy()
+		for(var/i = 2, i <= parameters.len, i++)
+			if(isnum(parameters[i]))
+				parameters[i] = num2text(parameters[i], 20)
+		q = new(arglist(parameters))
+		// RS Edit End
 	else
 		q = new(query)
 
