@@ -21,6 +21,8 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Updated by Lira for Rogue Star September 2026: Character Designer - Occupation //////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star September 2026: Character Designer - Expression //////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 #define CUSTOM_MARKING_DEFAULT_WIDTH 32
 #define CUSTOM_MARKING_DEFAULT_HEIGHT 32
@@ -45,6 +47,8 @@ var/global/list/custom_marking_body_definition_cache = null
 
 // Shared cache for the global basic appearance definitions payload (Lira, December 2025)
 var/global/list/custom_marking_basic_appearance_definition_cache = null
+
+var/global/list/custom_marking_speech_bubble_style_cache = null
 
 // Shared cache for canvas background payloads (Lira, December 2025)
 var/global/list/custom_marking_canvas_background_cache = null
@@ -173,6 +177,7 @@ var/global/custom_marking_static_source_digest_complete = TRUE
 		return null
 	var/list/yield_context = custom_marking_begin_manual_yield()
 	var/datum/tgui_module/custom_marking_designer/basic_appearance_cache_builder/helper = new
+	helper.build_speech_bubble_styles()
 	custom_marking_basic_appearance_definition_cache = helper.build_basic_appearance_definitions()
 	custom_marking_end_manual_yield(yield_context)
 	return custom_marking_basic_appearance_definition_cache
@@ -2650,25 +2655,28 @@ var/global/custom_marking_static_source_digest_complete = TRUE
 				return FALSE
 	return TRUE
 
-/datum/tgui_module/custom_marking_designer/proc/resolve_static_gear_clip_mask(mob/living/carbon/human/dummy/mannequin/custom_marking_gear/mannequin, layer_index, dir)
-	var/datum/sprite_accessory/tail/tail_style = mannequin?.tail_style
-	if(!istype(tail_style) || !tail_style.clip_mask_state)
-		return null
+/datum/tgui_module/custom_marking_designer/proc/static_gear_layer_uses_tail_mask(mob/living/carbon/human/dummy/mannequin/custom_marking_gear/mannequin, layer_index)
+	if(!istype(mannequin))
+		return FALSE
 	var/should_mask = FALSE
 	var/obj/item/clothing/suit/suit = mannequin.wear_suit
 	switch(layer_index)
 		if(10) // UNIFORM_LAYER
-			should_mask = !(suit && ((suit.flags_inv & HIDETAIL) || suit.taurized))
+			should_mask = !(suit && ((suit.flags_inv & HIDETAIL) || (istype(suit) && suit.taurized)))
 		if(14, 18) // BELT_LAYER, BELT_LAYER_ALT
 			should_mask = TRUE
 		if(15) // SUIT_LAYER
-			should_mask = !(suit && ((suit.flags_inv & HIDETAIL) || suit.taurized))
+			should_mask = !(suit && ((suit.flags_inv & HIDETAIL) || (istype(suit) && suit.taurized)))
 		if(20) // BACK_LAYER
 			should_mask = !istype(mannequin.back, /obj/item/weapon/storage/backpack/saddlebag) && !istype(mannequin.back, /obj/item/weapon/storage/backpack/saddlebag_common)
-	if(!should_mask)
+	return should_mask
+
+/datum/tgui_module/custom_marking_designer/proc/resolve_static_gear_clip_mask(mob/living/carbon/human/dummy/mannequin/custom_marking_gear/mannequin, layer_index, dir)
+	var/datum/sprite_accessory/tail/tail_style = mannequin?.tail_style
+	if(!istype(tail_style) || !tail_style.clip_mask_state || !static_gear_layer_uses_tail_mask(mannequin, layer_index))
 		return null
 	var/icon_source = tail_style.clip_mask_icon || tail_style.icon
-	return resolve_static_gear_appearance_asset(icon_source, tail_style.clip_mask_state, dir)
+	return resolve_static_gear_appearance_asset(icon_source, tail_style.clip_mask_state, SOUTH)
 
 /datum/tgui_module/custom_marking_designer/proc/build_static_gear_overlay_assets_for_layers(mob/living/carbon/human/dummy/mannequin/custom_marking_gear/mannequin, dir, list/allowed_layers)
 	if(!istype(mannequin) || !islist(allowed_layers) || !allowed_layers.len || !islist(mannequin.overlays_standing))
@@ -2694,6 +2702,8 @@ var/global/custom_marking_static_source_digest_complete = TRUE
 			for(var/component_index = 2 to components.len)
 				component_overlays += list(components[component_index])
 			overlay_entry["overlays"] = component_overlays
+		if(static_gear_layer_uses_tail_mask(mannequin, layer_index))
+			overlay_entry["use_tail_mask"] = TRUE
 		var/mask_asset = resolve_static_gear_clip_mask(mannequin, layer_index, dir)
 		if(mask_asset)
 			overlay_entry["mask_asset"] = mask_asset
@@ -3302,6 +3312,7 @@ var/global/custom_marking_static_source_digest_complete = TRUE
 			"detail_sections" = list(),
 			"icon_base_count" = 0
 		)
+		def["preview_transform"] = build_size_weight_preview_transform(species_name)
 		if(species_name == SPECIES_CUSTOM)
 			def["name"] = SPECIES_CUSTOM
 		var/list/detail_notes = species.get_species_detail_notes(user)
@@ -3438,6 +3449,7 @@ var/global/custom_marking_static_source_digest_complete = TRUE
 
 /datum/tgui_module/custom_marking_designer/ui_assets(mob/user)
 	var/list/assets = ..()
+	assets += get_asset_datum(/datum/asset/simple/character_designer_voices)
 	var/datum/asset/spritesheet/custom_marking_designer/atlas = get_asset_datum(/datum/asset/spritesheet/custom_marking_designer)
 	if(atlas.is_ready())
 		assets += atlas
@@ -5563,6 +5575,8 @@ var/global/custom_marking_static_source_digest_complete = TRUE
 	data["traits_species"] = prefs?.species
 	data["identity_revision"] = identity_revision
 	append_traits_preview_scale(data)
+	data["size_weight"] = build_size_weight_values()
+	data["preview_transform"] = build_size_weight_preview_transform()
 	data["reference_build_in_progress"] = reference_build_in_progress
 	return data
 
@@ -5841,6 +5855,8 @@ var/global/custom_marking_static_source_digest_complete = TRUE
 		def["channel_count"] = get_basic_accessory_channel_count(style)
 		def["hide_body_parts"] = islist(style.hide_body_parts) ? style.hide_body_parts.Copy() : null
 		def["lower_layer_dirs"] = islist(style.lower_layer_dirs) ? style.lower_layer_dirs.Copy() : list(SOUTH)
+		if(style.clip_mask_state)
+			def["clip_mask"] = build_static_source_icon_reference(style.clip_mask_icon || style.icon, style.clip_mask_state, SOUTH, "gear", "gear-raw")
 		var/list/dir_assets = list()
 		if(style.icon && style.icon_state)
 			for(var/dir in list(NORTH, SOUTH, EAST, WEST))
@@ -6373,6 +6389,90 @@ var/global/custom_marking_static_source_digest_complete = TRUE
 		"gender_alternate_digitigrade" = preview_bundle_gender_alt_digitigrade
 	)
 
+/datum/tgui_module/custom_marking_designer/proc/build_speech_bubble_styles()
+	if(islist(custom_marking_speech_bubble_style_cache))
+		return custom_marking_speech_bubble_style_cache
+	var/list/styles = list()
+	for(var/style_id in selectable_speech_bubbles)
+		var/list/style = list("id" = style_id)
+		if(style_id != "default")
+			style["icon"] = build_static_source_icon_reference('icons/mob/talk_vr.dmi', "[style_id]0", SOUTH, "accessories")
+		styles += list(style)
+	custom_marking_speech_bubble_style_cache = styles
+	return styles
+
+/datum/tgui_module/custom_marking_designer/proc/apply_basic_speech_bubble_settings(list/params)
+	if(!prefs || !islist(params))
+		return FALSE
+	var/style_id = params["custom_speech_bubble"]
+	if(!istext(style_id) || !(style_id in selectable_speech_bubbles))
+		return FALSE
+	prefs.custom_speech_bubble = style_id
+	return TRUE
+
+/datum/tgui_module/custom_marking_designer/proc/build_size_weight_values()
+	if(!prefs)
+		return null
+	return list(
+		"size_multiplier" = prefs.size_multiplier,
+		"fuzzy" = !!prefs.fuzzy,
+		"offset_override" = !!prefs.offset_override,
+		"weight_vr" = prefs.weight_vr,
+		"weight_gain" = prefs.weight_gain,
+		"weight_loss" = prefs.weight_loss
+	)
+
+/datum/tgui_module/custom_marking_designer/proc/build_size_weight_preview_transform(species_id = null)
+	var/datum/species/species = GLOB.all_species?[species_id || prefs?.species]
+	return list(
+		"icon_scale_x" = species ? species.icon_scale_x : 1,
+		"icon_scale_y" = species ? species.icon_scale_y : 1,
+		"center_offset" = species ? species.center_offset : 0.5
+	)
+
+/datum/tgui_module/custom_marking_designer/proc/append_basic_size_weight_payload(list/payload)
+	if(!islist(payload) || !prefs)
+		return
+	var/list/values = build_size_weight_values()
+	for(var/key in values)
+		payload[key] = values[key]
+	payload["size_weight_limits"] = list(
+		"scale_min" = RESIZE_TINY * 100,
+		"scale_max" = RESIZE_HUGE * 100,
+		"weight_min" = WEIGHT_MIN,
+		"weight_max" = WEIGHT_MAX,
+		"rate_min" = WEIGHT_CHANGE_MIN,
+		"rate_max" = WEIGHT_CHANGE_MAX
+	)
+	payload["preview_transform"] = build_size_weight_preview_transform()
+
+/datum/tgui_module/custom_marking_designer/proc/apply_basic_size_weight_settings(list/params)
+	if(!prefs || !islist(params))
+		return FALSE
+	for(var/key in list("size_multiplier", "weight_vr", "weight_gain", "weight_loss", "fuzzy", "offset_override"))
+		if(!(key in params))
+			continue
+		var/value = params[key]
+		if(istext(value))
+			value = text2num(value)
+		if(!isnum(value))
+			continue
+		switch(key)
+			if("size_multiplier")
+				if(value >= RESIZE_TINY && value <= RESIZE_HUGE)
+					prefs.size_multiplier = value
+			if("weight_vr")
+				prefs.weight_vr = sanitize_integer(value, WEIGHT_MIN, WEIGHT_MAX, prefs.weight_vr)
+			if("weight_gain")
+				prefs.weight_gain = sanitize_integer(value, WEIGHT_CHANGE_MIN, WEIGHT_CHANGE_MAX, prefs.weight_gain)
+			if("weight_loss")
+				prefs.weight_loss = sanitize_integer(value, WEIGHT_CHANGE_MIN, WEIGHT_CHANGE_MAX, prefs.weight_loss)
+			if("fuzzy")
+				prefs.fuzzy = sanitize_integer(value, 0, 1, prefs.fuzzy)
+			if("offset_override")
+				prefs.offset_override = sanitize_integer(value, 0, 1, prefs.offset_override)
+	return TRUE
+
 // Build payload for the basic appearance tab (Lira, December 2025)
 /datum/tgui_module/custom_marking_designer/proc/build_basic_appearance_payload(preview_digitigrade = null, preview_only = FALSE, known_definition_revision = null, known_preview_revision = null, known_preview_signature = null, known_preview_revision_alt = null, known_preview_signature_alt = null, known_preview_revision_gender_alt = null, known_preview_signature_gender_alt = null, known_preview_revision_gender_alt_digitigrade = null, known_preview_signature_gender_alt_digitigrade = null)
 	var/list/yield_context = custom_marking_begin_manual_yield()
@@ -6401,6 +6501,11 @@ var/global/custom_marking_static_source_digest_complete = TRUE
 	if(preview_only)
 		payload["preview_only"] = TRUE
 	if(!preview_only)
+		append_basic_size_weight_payload(payload)
+		append_basic_expression_payload(payload)
+		payload["expression_voices"] = build_expression_voices()
+		payload["custom_speech_bubble"] = prefs.custom_speech_bubble
+		payload["speech_bubble_styles"] = build_speech_bubble_styles()
 		payload["blood_type"] = prefs.b_type
 		payload["blood_reagent"] = prefs.blood_reagents
 		payload["blood_color"] = prefs.blood_color
@@ -6952,8 +7057,14 @@ var/global/custom_marking_static_source_digest_complete = TRUE
 		return FALSE
 	if(!islist(params))
 		return FALSE
+	var/list/expression_values = validate_basic_expression_settings(params)
+	if(!islist(expression_values))
+		return FALSE
 	if(!apply_basic_prosthetic_settings(params))
 		return FALSE
+	apply_basic_expression_settings(expression_values)
+	apply_basic_size_weight_settings(params)
+	apply_basic_speech_bubble_settings(params)
 	var/requested_biological_gender = params?["biological_gender"]
 	var/list/possible_genders = build_basic_biological_gender_options()
 	if(!istext(requested_biological_gender) || !(requested_biological_gender in possible_genders))
@@ -7325,6 +7436,9 @@ var/global/custom_marking_static_source_digest_complete = TRUE
 	payload["blood_reagent"] = prefs.blood_reagents
 	payload["blood_color"] = prefs.blood_color
 	payload["needs_glasses"] = !!(prefs.disabilities & NEARSIGHTED)
+	append_basic_size_weight_payload(payload)
+	append_basic_expression_payload(payload)
+	payload["custom_speech_bubble"] = prefs.custom_speech_bubble
 	payload["body_color"] = rgb(prefs.r_skin, prefs.g_skin, prefs.b_skin)
 	payload["eye_color"] = rgb(prefs.r_eyes, prefs.g_eyes, prefs.b_eyes)
 	payload["hair_style"] = prefs.h_style

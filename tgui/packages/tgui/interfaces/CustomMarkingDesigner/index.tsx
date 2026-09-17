@@ -25,8 +25,15 @@
 // /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Updated by Lira for Rogue Star September 2026: Character Designer - Occupation //////////////////////////////////////
 // /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star September 2026: Character Designer - Expression //////////////////////////////////////
+// /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 import { Component } from 'inferno';
+import { buildSizeWeightSaveParams } from './utils/sizeWeight';
+import {
+  buildExpressionState,
+  expressionValidationError,
+} from './utils/expression';
 
 import {
   backendSetSharedStates,
@@ -1783,7 +1790,10 @@ class SpeciesSaveResultSyncScheduler extends Component<SpeciesSaveResultSyncSche
       return;
     }
     this.lastRevision = speciesSaveResult.revision;
+    const shared = selectBackend(this.context.store.getState()).shared;
     syncSpeciesSaveResultState(writeStates, {
+      basicDraft: shared?.basicAppearanceState,
+      basicSaved: shared?.basicAppearanceSavedState,
       result: speciesSaveResult,
       stateToken,
       speciesPayload,
@@ -3003,9 +3013,10 @@ const CustomMarkingDesignerContent = (_props, context) => {
     );
   const [basicPayload, setBasicPayload] =
     useLocalState<BasicAppearancePayload | null>(context, 'basicPayload', null);
-  const basicInitialState = buildBasicStateFromPayload(
-    data.basic_appearance_payload
-  );
+  const basicInitialState = buildBasicStateFromPayload({
+    ...data.size_weight,
+    ...data.basic_appearance_payload,
+  });
   const [basicAppearanceState, setBasicAppearanceState] =
     useLocalState<BasicAppearanceState>(
       context,
@@ -4706,6 +4717,9 @@ const CustomMarkingDesignerContent = (_props, context) => {
       return true;
     }
     const { latestState, latestSavedState } = resolveLatestBasicState();
+    if (expressionValidationError(latestState)) {
+      return false;
+    }
     const speciesPreviewStale =
       shouldInvalidateSpeciesPayloadForBiologicalGenderChange(
         latestSavedState.biological_gender,
@@ -4716,6 +4730,9 @@ const CustomMarkingDesignerContent = (_props, context) => {
     try {
       setPreviewRefreshSkips((previewRefreshSkips || 0) + 1);
       await act('save_basic_appearance', {
+        ...buildSizeWeightSaveParams(latestState),
+        ...buildExpressionState(latestState),
+        custom_speech_bubble: latestState.custom_speech_bubble,
         biological_gender: latestState.biological_gender,
         digitigrade: latestState.digitigrade ? 1 : 0,
         body_color: latestState.body_color,
