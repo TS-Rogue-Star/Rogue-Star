@@ -721,8 +721,8 @@
 
 /mob/living/simple_mob/vore/isopod/mob_bank_load(mob/living/user, list/load)
 	. = ..()
-	if(user?.etching?.pet_data?.len > 0)
-		load = user.etching.pet_data.Copy()
+	if(user.etching?.pet_data?[name])
+		load = user.etching.pet_data[name].Copy()
 
 	body_color = load["body_color"]
 	under_color = load["under_color"]

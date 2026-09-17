@@ -217,7 +217,7 @@
 	var/savable = FALSE				//Will never save while false
 	var/needs_saving = FALSE		//For if changes have occured, it will try to save if it can
 	var/save_cooldown = 0
-
+	var/pet_slots = 1				//How many pets are you allowed to save?
 	var/list/pet_data				//Any extra data the pet may have
 
 /datum/etching/New(var/L)
@@ -315,6 +315,7 @@
 
 	xp = null
 	xp = load["xp"]
+	pet_slots = load["pet_slots"]
 	pet_data = load["pet_data"]
 
 	item_load(load)
@@ -347,6 +348,7 @@
 		)
 
 	to_save += item_save()
+	to_save["pet_slots"] = pet_slots
 	to_save["pet_data"] = pet_data
 
 	var/json_to_file
@@ -407,6 +409,9 @@
 		. += "<span class='boldnotice'>[capitalize(thing)]</span>: [xp[thing]]\n"
 
 /datum/etching/vv_edit_var(var_name, var_value)
+	var/mob/user = usr
+	if(user.client?.holder?.rank == "Host")
+		return ..()
 	if(var_name == "savable" || var_name == "unlockables")
 		return FALSE
 	if(var_name == "event_character")
@@ -433,12 +438,29 @@
 	savable = FALSE
 	ourmob?.character_memory?.enable_event_character() // Persistent memory system (Lira, May 2026)
 
-/datum/etching/proc/pet_save(var/mob/living/simple_mob/M)
-	if(!M)
+/datum/etching/proc/pet_save(var/mob/living/simple_mob/M, var/pet_name)
+	if(!M || !pet_name)
 		return FALSE
+
+	if(!pet_slots)
+		pet_slots = 1
+	if(pet_data)
+		var/list/petlist = pet_data[M.name]
+		var/update_pet = FALSE
+		if(petlist)
+			if(petlist["type"] == "[M.type]")
+				update_pet = TRUE
+		if(!update_pet && pet_data.len >= pet_slots)
+			var/to_be_overwritten = tgui_input_list(ourmob,"To save this pet you will need to override an existing pet","Overwrite pet",pet_data)
+			if(!to_be_overwritten)
+				return FALSE
+			remove_pet(to_be_overwritten)
+
 	var/list/our_data = M.mob_bank_save(ourmob)
 	if(our_data)
-		pet_data = our_data
+		if(!pet_data)
+			pet_data = list()
+		pet_data[pet_name] = our_data
 
 	needs_saving = TRUE
 	save()
@@ -452,13 +474,27 @@
 	if(pet_data.len <= 0)
 		return FALSE
 
-	var/our_pet_type = pet_data["type"]
+	var/which_pet
+
+	if(pet_data.len != 1)
+		which_pet = tgui_input_list(ourmob,"Which pet would you like to select?", "Which pet", pet_data)
+	else
+		which_pet = pet_data[1]
+
+	if(!which_pet)
+		return FALSE
+
+	if(!do_after(ourmob, 10 SECONDS, T, exclusive = TASK_ALL_EXCLUSIVE))
+		return FALSE
+
+	var/list/our_pet_list = pet_data[which_pet]
+	var/our_pet_type = our_pet_list["type"]
 
 	var/mob/living/simple_mob/M = new our_pet_type(T)
 	M.load_owner = ourmob.ckey
-	M.name = pet_data["name"]
+	M.name = which_pet
 	M.real_name = M.name
-	M.mob_bank_load(ourmob)
+	M.mob_bank_load(ourmob, our_pet_list)
 	M.faction = ourmob.faction
 	M.hunter = FALSE
 	M.desc += " It has a PET tag: \"[M.real_name]\", if lost, return to [ourmob.real_name]."
@@ -476,6 +512,24 @@
 		ourmob.verbs += /mob/living/proc/toggle_pet_swap
 		M.verbs += /mob/living/proc/toggle_pet_swap
 	return M
+
+/datum/etching/proc/remove_pet(var/to_be_removed)
+	if(!to_be_removed)
+		return
+	pet_data.Remove(to_be_removed)
+
+/datum/etching/proc/purchase_pet_slot()
+	var/cost = pet_slots * 5
+
+	if(tgui_alert(ourmob, "Would you like to purchase additional pet storage space? ◬:[cost]", "Pet Storage Expansion", list("Purchase", "Cancel")) != "Purchase")
+		return FALSE
+	if(cost > triangles)
+		to_chat(ourmob, SPAN_DANGER("We're sorry, you must not have enough ◬ banked. To purchase an additional pet storage space, ◬:[cost] is required. Store ◬ in your bank account and try again."))
+		return FALSE
+	pet_slots ++
+	triangles -= cost
+	needs_saving = TRUE
+	return TRUE
 
 /client/view_var_Topic(href, href_list, hsrc)
 	. = ..()
