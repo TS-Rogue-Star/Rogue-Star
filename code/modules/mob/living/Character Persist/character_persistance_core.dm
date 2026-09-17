@@ -519,6 +519,9 @@
 	pet_data.Remove(to_be_removed)
 
 /datum/etching/proc/purchase_pet_slot()
+	if(pet_slots >= 10)
+		to_chat(ourmob, SPAN_DANGER("Your petatronic storage cannot be expanded further at this time."))
+		return FALSE
 	var/cost = pet_slots * 5
 
 	if(tgui_alert(ourmob, "Would you like to purchase additional pet storage space? ◬:[cost]", "Pet Storage Expansion", list("Purchase", "Cancel")) != "Purchase")
