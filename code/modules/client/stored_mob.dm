@@ -58,16 +58,11 @@
 				to_chat(user, "<span class='warning'>You have already saved or retrieved a pet from \the [src] this shift.</span>")
 				busy_bank = FALSE
 				return
-			choice = tgui_alert(user, "Are you sure you want to retrieve your pet?", "[src]", list("No", "Yes"), timeout = 10 SECONDS)
 			update_icon()
-			if(!choice || choice == "No" || !Adjacent(user) || inoperable() || panel_open)
+			if(!Adjacent(user) || inoperable() || panel_open)
 				busy_bank = FALSE
 				update_icon()
 				visible_message("<span class='warning'>\The [src] boops sadly...</span>", runemessage = "boop...")
-				return
-			if(inoperable())
-				busy_bank = FALSE
-				update_icon()
 				return
 			if(!persist_mob_load(user))
 				visible_message("<span class='warning'>\The [src] boops sadly...</span>", runemessage = "boop...")
