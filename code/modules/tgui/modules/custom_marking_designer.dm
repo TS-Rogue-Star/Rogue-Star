@@ -19,6 +19,8 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Updated by Lira for Rogue Star September 2026: Character Designer - Loadout /////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star September 2026: Character Designer - Occupation //////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 #define CUSTOM_MARKING_DEFAULT_WIDTH 32
 #define CUSTOM_MARKING_DEFAULT_HEIGHT 32
@@ -1991,6 +1993,7 @@ var/global/custom_marking_static_source_digest_complete = TRUE
 	var/list/sources_by_key = list()
 	var/list/states_by_key = list()
 	prewarm_loadout_item_sources(sources_by_key, states_by_key)
+	prewarm_occupation_item_sources(sources_by_key, states_by_key)
 	note_static_gear_source_state(sources_by_key, states_by_key, 'icons/effects/effects.dmi', "nothing")
 	for(var/pda_choice = 1 to pdachoicelist.len)
 		note_static_gear_source_state(sources_by_key, states_by_key, get_pda_choice_icon(pda_choice), "pda")
@@ -2508,6 +2511,7 @@ var/global/custom_marking_static_source_digest_complete = TRUE
 		"shoe_hater" = prefs.shoe_hater,
 		"job_civilian_low" = prefs.job_civilian_low,
 		"job_civilian_high" = prefs.job_civilian_high,
+		"job_talon_high" = prefs.job_talon_high,
 		"job_medsci_high" = prefs.job_medsci_high,
 		"job_engsec_high" = prefs.job_engsec_high,
 		"player_alt_titles" = prefs.player_alt_titles?.Copy(),
@@ -3476,6 +3480,7 @@ var/global/custom_marking_static_source_digest_complete = TRUE
 
 // Finalize edits and refresh previews when the UI closes
 /datum/tgui_module/custom_marking_designer/tgui_close(mob/user)
+	occupation_preview_generation++
 	var/saved = save_marking_changes(mark_dirty, TRUE)
 	. = ..()
 	if(saved && prefs && user)
@@ -4137,6 +4142,7 @@ var/global/custom_marking_static_source_digest_complete = TRUE
 		"traits_species" = prefs.species,
 		"traits_payload" = payload,
 		"equipment_context_signature" = get_equipment_context_signature(),
+		"occupation_context_signature" = get_occupation_context_signature(),
 		"loadout_context_signature" = get_loadout_context_signature()
 	)
 	if(islist(save_result))
@@ -4671,6 +4677,7 @@ var/global/custom_marking_static_source_digest_complete = TRUE
 		"identity_revision" = identity_revision,
 		"identity_payload" = payload,
 		"equipment_context_signature" = get_equipment_context_signature(),
+		"occupation_context_signature" = get_occupation_context_signature(),
 		"loadout_context_signature" = get_loadout_context_signature()
 	)
 	if(islist(save_result))
@@ -5543,7 +5550,8 @@ var/global/custom_marking_static_source_digest_complete = TRUE
 	if(islist(canvas_backgrounds_live) && canvas_backgrounds_live.len)
 		data["canvas_backgrounds"] = canvas_backgrounds_live
 		data["default_canvas_background"] = "default"
-	data["ui_locked"] = save_in_progress || identity_save_in_progress || equipment_save_in_progress || loadout_save_in_progress
+	data["ui_locked"] = save_in_progress || identity_save_in_progress || equipment_save_in_progress || loadout_save_in_progress || occupation_save_in_progress
+	data["occupation_context_signature"] = get_occupation_context_signature()
 	data["loadout_context_signature"] = get_loadout_context_signature()
 	data["loadout_recipe_signature"] = get_loadout_recipe_signature()
 	data["equipment_revision"] = equipment_revision
@@ -6520,6 +6528,8 @@ var/global/custom_marking_static_source_digest_complete = TRUE
 	if(..())
 		return TRUE
 	var/handled = TRUE
+	if(handle_occupation_action(action, params, usr))
+		return TRUE
 	if(handle_loadout_action(action, params, usr))
 		return TRUE
 	if(handle_equipment_action(action, params, usr))
@@ -6890,6 +6900,7 @@ var/global/custom_marking_static_source_digest_complete = TRUE
 			"species_save_result" = species_save_result,
 			"identity_revision" = identity_revision,
 			"equipment_context_signature" = get_equipment_context_signature(),
+			"occupation_context_signature" = get_occupation_context_signature(),
 			"loadout_context_signature" = get_loadout_context_signature()
 		) : null
 		var/datum/tgui/active_ui = SStgui.get_open_ui(usr, src)
@@ -7909,7 +7920,8 @@ var/global/custom_marking_static_source_digest_complete = TRUE
 		"job_pref_high" = list(
 			"civilian" = prefs.job_civilian_high,
 			"medsci" = prefs.job_medsci_high,
-			"engsec" = prefs.job_engsec_high
+			"engsec" = prefs.job_engsec_high,
+			"talon" = prefs.job_talon_high
 		),
 		"equip_preview_mask" = prefs.equip_preview_mob,
 		"gear_loadout" = prefs.gear?.Copy(),

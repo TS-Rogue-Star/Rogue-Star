@@ -1081,7 +1081,7 @@ const IdentityOrganizationEditor = ({
   );
 };
 
-const IdentitySaveSection = ({
+export const IdentitySaveSection = ({
   dirty,
   pendingSave,
   pendingClose,

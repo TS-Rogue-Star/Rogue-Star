@@ -219,7 +219,7 @@
 	return null
 
 // RS Add: Character Designer - Species and Prosthetics (Lira, August 2026)
-/datum/preferences/proc/equip_prepared_preview_mob(var/mob/living/carbon/human/mannequin, equip_mask_override = null)
+/datum/preferences/proc/equip_prepared_preview_mob(var/mob/living/carbon/human/mannequin, equip_mask_override = null, list/occupation_override = null)
 	if(!mannequin)
 		return
 
@@ -233,7 +233,11 @@
 
 	var/datum/job/previewJob
 	// Determine what job is marked as 'High' priority, and dress them up as such.
-	if(job_civilian_low & ASSISTANT)
+	// RS Edit Start: Character Designer - Occupation (Lira, September 2026)
+	if(islist(occupation_override))
+		previewJob = occupation_override["job"]
+	else if(job_civilian_low & ASSISTANT)
+	// RS Edit End
 		previewJob = job_master.GetJob(USELESS_JOB)
 	else if(ispAI(client.mob))	//VOREStation Edit! - pAIs shouldn't wear job gear~!
 		//Don't do anything!
@@ -247,6 +251,10 @@
 					job_flag = job_medsci_high
 				if(ENGSEC)
 					job_flag = job_engsec_high
+				// RS Add Start: Character Designer - Occupation (Lira, September 2026)
+				if(TALON)
+					job_flag = job_talon_high
+				// RS Add End
 			if(job.flag == job_flag)
 				previewJob = job
 				break
@@ -283,7 +291,7 @@
 
 	if((equip_mask & EQUIP_PREVIEW_JOB) && previewJob) // RS Edit: Custom markings support(Lira, December 2025)
 		mannequin.job = previewJob.title
-		previewJob.equip_preview(mannequin, player_alt_titles[previewJob.title])
+		previewJob.equip_preview(mannequin, islist(occupation_override) ? occupation_override["title"] : player_alt_titles[previewJob.title]) // RS Edit: Character Designer - Occupation (Lira, September 2026)
 
 	// RS Add Start: Character Designer - Species and Prosthetics (Lira, August 2026)
 	if(shoe_hater && mannequin.shoes)
@@ -342,7 +350,7 @@
 	var/datum/job/highJob
 	// Determine what job is marked as 'High' priority, and dress them up as such.
 	if(job_civilian_low & ASSISTANT)
-		highJob = job_master.GetJob("Assistant")
+		highJob = job_master.GetJob(USELESS_JOB) // RS Edit: Character Designer - Occupation (Lira, September 2026)
 	else
 		for(var/datum/job/job in job_master.occupations)
 			var/job_flag
@@ -353,6 +361,10 @@
 					job_flag = job_medsci_high
 				if(ENGSEC)
 					job_flag = job_engsec_high
+				// RS Add Start: Character Designer - Occupation (Lira, September 2026)
+				if(TALON)
+					job_flag = job_talon_high
+				// RS Add End
 			if(job.flag == job_flag)
 				highJob = job
 				break

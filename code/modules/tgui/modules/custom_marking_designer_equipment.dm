@@ -201,6 +201,7 @@
 	var/datum/tgui/ui = SStgui.get_open_ui(user, src)
 	if(ui)
 		update["equipment_context_signature"] = get_equipment_context_signature()
+		update["occupation_context_signature"] = get_occupation_context_signature()
 		update["loadout_context_signature"] = get_loadout_context_signature()
 		ui.send_update(update)
 

@@ -23,6 +23,8 @@
 // /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Updated by Lira for Rogue Star September 2026: Character Designer - Loadout /////////////////////////////////////////
 // /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star September 2026: Character Designer - Occupation //////////////////////////////////////
+// /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 import { Component } from 'inferno';
 
@@ -201,6 +203,9 @@ import { SpeciesTab } from './SpeciesTab';
 import { TraitsTab } from './TraitsTab';
 import { IdentityTab } from './IdentityTab';
 import { EquipmentTab } from './EquipmentTab';
+import { OccupationTab } from './OccupationTab';
+import { OccupationSession } from './services/occupationSession';
+import { OccupationSessionSync } from './components/OccupationSessionSync';
 import { LoadoutTab } from './LoadoutTab';
 import { LoadoutSession } from './services/loadoutSession';
 import { prepareLoadoutGalleryPreview } from './utils/loadoutPreview';
@@ -221,7 +226,8 @@ type DesignerTabId =
   | 'species'
   | 'traits'
   | 'equipment'
-  | 'loadout';
+  | 'loadout'
+  | 'occupation';
 
 type PreviewWithMarkingsCache = {
   signature: string;
@@ -1320,7 +1326,8 @@ const resolveDesignerTabState = (
     initialTab === 'species' ||
     initialTab === 'traits' ||
     initialTab === 'equipment' ||
-    initialTab === 'loadout'
+    initialTab === 'loadout' ||
+    initialTab === 'occupation'
   ) {
     desiredTab = initialTab;
   }
@@ -2302,7 +2309,7 @@ const DesignerTitleTabs = ({
             onTabChange('basic');
           }
         }}>
-        Basic Appearance
+        Appearance
       </Tabs.Tab>
       <Tabs.Tab
         selected={resolvedActiveTab === 'body'}
@@ -2314,7 +2321,19 @@ const DesignerTitleTabs = ({
             onTabChange('body');
           }
         }}>
-        Body Markings
+        Markings
+      </Tabs.Tab>
+      <Tabs.Tab
+        selected={resolvedActiveTab === 'occupation'}
+        icon="briefcase"
+        className={tabsLocked ? 'Tab--disabled' : undefined}
+        aria-disabled={tabsLocked}
+        onClick={() => {
+          if (!tabsLocked) {
+            onTabChange('occupation');
+          }
+        }}>
+        Occupation
       </Tabs.Tab>
       <Tabs.Tab
         selected={resolvedActiveTab === 'equipment'}
@@ -2368,7 +2387,7 @@ const DesignerTitleTabs = ({
           }
           onTabChange('custom');
         }}>
-        Custom Marking Designer
+        Custom Markings
       </Tabs.Tab>
     </Tabs>
     <Box
@@ -2451,10 +2470,10 @@ type TabSwitchOverlayProps = Readonly<{
 
 const resolveTabSwitchLabel = (tab: DesignerTabId) => {
   if (tab === 'custom') {
-    return 'Custom Marking Designer';
+    return 'Custom Markings';
   }
   if (tab === 'body') {
-    return 'Body Markings tab';
+    return 'Markings tab';
   }
   if (tab === 'species') {
     return 'Species tab';
@@ -2465,13 +2484,16 @@ const resolveTabSwitchLabel = (tab: DesignerTabId) => {
   if (tab === 'identity') {
     return 'Identity tab';
   }
+  if (tab === 'occupation') {
+    return 'Occupation tab';
+  }
   if (tab === 'loadout') {
     return 'Loadout tab';
   }
   if (tab === 'equipment') {
     return 'Equipment tab';
   }
-  return 'Basic Appearance tab';
+  return 'Appearance tab';
 };
 
 const isTabSwitchSaveDisabled = (
@@ -2681,6 +2703,11 @@ const CustomMarkingDesignerContent = (_props, context) => {
     context,
     `loadoutSession-${stateToken}`,
     new LoadoutSession(stateToken, act)
+  );
+  const [occupationSession, setOccupationSession] = useLocalState(
+    context,
+    `occupationSession-${stateToken}`,
+    new OccupationSession(stateToken, act)
   );
   const identityDraftKey = `identityDraft-${stateToken}`;
   const identitySavedDraftKey = `identitySavedDraft-${stateToken}`;
@@ -3351,7 +3378,8 @@ const CustomMarkingDesignerContent = (_props, context) => {
     resolvedActiveTab === 'traits' ||
     resolvedActiveTab === 'identity' ||
     resolvedActiveTab === 'equipment' ||
-    resolvedActiveTab === 'loadout';
+    resolvedActiveTab === 'loadout' ||
+    resolvedActiveTab === 'occupation';
   const {
     derivedPreviewState,
     overlayLayerParts,
@@ -4269,7 +4297,10 @@ const CustomMarkingDesignerContent = (_props, context) => {
   });
 
   const tabsLocked =
-    otherTabsLocked || equipmentSession.saving || loadoutSession.saving;
+    otherTabsLocked ||
+    equipmentSession.saving ||
+    loadoutSession.saving ||
+    occupationSession.saving;
   const canvasBackgroundId = resolvedCanvasBackground?.id || 'default';
   const directionTitle = `Direction: ${resolveDirectionLabel(
     currentDirectionKey
@@ -4552,6 +4583,7 @@ const CustomMarkingDesignerContent = (_props, context) => {
     traits: detectTraitsUnsaved,
     equipment: () => equipmentSession.dirty,
     loadout: () => loadoutSession.dirty,
+    occupation: () => occupationSession.dirty,
   };
   const resolveUnsavedForTab = (tab: DesignerTabId) => unsavedDetectors[tab]();
 
@@ -5609,6 +5641,9 @@ const CustomMarkingDesignerContent = (_props, context) => {
   };
 
   const saveTabBeforeSwitch = async (sourceTab: DesignerTabId) => {
+    if (sourceTab === 'occupation') {
+      return occupationSession.save();
+    }
     if (sourceTab === 'loadout') {
       return loadoutSession.save();
     }
@@ -5752,6 +5787,8 @@ const CustomMarkingDesignerContent = (_props, context) => {
         discardTraitsChanges();
       } else if (tabSwitchPrompt.sourceTab === 'identity') {
         discardIdentityChanges();
+      } else if (tabSwitchPrompt.sourceTab === 'occupation') {
+        occupationSession.discard();
       } else if (tabSwitchPrompt.sourceTab === 'loadout') {
         loadoutSession.discard();
       } else if (tabSwitchPrompt.sourceTab === 'equipment') {
@@ -5897,6 +5934,52 @@ const CustomMarkingDesignerContent = (_props, context) => {
           !uiLocked
         }
         onChange={() => setLoadoutSession(loadoutSession)}
+        onSaved={() => {
+          requestBodyPayload();
+          requestBasicPayload();
+          setSpeciesReloadPending(true);
+          setSpeciesPayload(null);
+        }}
+        onBodyPreview={(payload) => {
+          if (!isPayloadSpeciesStale(payload)) {
+            setBodyPayload(
+              mergeBodyMarkingsPayload(
+                resolveLatestBodyPayload(),
+                payload,
+                resolveLatestBasicPayload()
+              )
+            );
+          }
+        }}
+        onBasicPreview={(payload) => {
+          if (!isPayloadSpeciesStale(payload)) {
+            setBasicPayload(
+              mergeBasicAppearancePayload(
+                resolveLatestBasicPayload(),
+                payload,
+                resolveLatestBodyPayload()
+              )
+            );
+          }
+        }}
+      />
+      <OccupationSessionSync
+        key={`occupation-session-${stateToken}`}
+        session={occupationSession}
+        data={data}
+        ready={
+          (resolvedActiveTab === 'occupation' || !!occupationSession.catalog) &&
+          !!bodyPayloadSnapshot &&
+          !bodyPayloadSnapshot.preview_only &&
+          !!basicPayloadSnapshot &&
+          !basicPayloadSnapshot.preview_only &&
+          !bodyMarkingsLoadInProgress &&
+          !basicAppearanceLoadInProgress &&
+          !bodyReloadPending &&
+          !basicReloadPending &&
+          !uiLocked
+        }
+        onChange={() => setOccupationSession(occupationSession)}
         onSaved={() => {
           requestBodyPayload();
           requestBasicPayload();
@@ -6105,6 +6188,38 @@ const CustomMarkingDesignerContent = (_props, context) => {
             renderPreview={(recipes, gallery) =>
               renderEquipmentPreview(recipes, gallery, 'loadout')
             }
+            canvasWidth={canvasWidth}
+            canvasHeight={canvasHeight}
+            iconScaleX={data.trait_icon_scale_x}
+            iconScaleY={data.trait_icon_scale_y}
+            previewFitToFrame={previewFitToFrame}
+            onTogglePreviewFit={toggleCanvasFit}
+            showEquipment={showEquipment}
+            onToggleEquipment={() => setShowEquipment(!showEquipment)}
+            showJobGear={showJobGear}
+            onToggleJobGear={() => setShowJobGear(!showJobGear)}
+            showLoadoutGear={showLoadoutGear}
+            onToggleLoadout={() => setShowLoadoutGear(!showLoadoutGear)}
+            canvasBackgroundOptions={canvasBackgroundOptions}
+            resolvedCanvasBackground={resolvedCanvasBackground}
+            backgroundFallbackColor={backgroundFallbackColor}
+            cycleCanvasBackground={cycleCanvasBackground}
+            canvasBackgroundScale={canvasBackgroundScale}
+          />
+        ) : resolvedActiveTab === 'occupation' ? (
+          <OccupationTab
+            session={occupationSession}
+            stateToken={stateToken}
+            uiLocked={uiLocked}
+            previewReady={
+              !!basicPayloadSnapshot &&
+              !!bodyPayloadSnapshot &&
+              !!previewWithBaseColors.length
+            }
+            previewSignature={`${stateToken}|${data.preview_revision}|${data.body_part_layer_revision}|${bodyPayloadSnapshot?.preview_signature}|${basicPayloadSnapshot?.preview_signature}|${appearanceContext.appearanceSignature}|${resolvedBodyMarkingsSignature}|${stripReferenceMarkings}`}
+            assetRevision={assetRevision}
+            notifyAssetReady={notifyAssetReady}
+            renderPreview={renderEquipmentPreview}
             canvasWidth={canvasWidth}
             canvasHeight={canvasHeight}
             iconScaleX={data.trait_icon_scale_x}
