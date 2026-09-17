@@ -1,5 +1,5 @@
 #define ADMIN_CUSTOM_MAP_LOAD_PATH			"data/persistent/next_round_maps.json"
-
+#define PET_NAME_MAX 						25
 ///// CLICK FLAGS /////
 #define CLICK_THROW 1
 #define CLICK_SEARCH 2

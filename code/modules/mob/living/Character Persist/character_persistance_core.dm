@@ -219,6 +219,7 @@
 	var/save_cooldown = 0
 	var/pet_slots = 1				//How many pets are you allowed to save?
 	var/list/pet_data				//Any extra data the pet may have
+	var/loaded_pet					//The name of whatever pet you may have pulled
 
 /datum/etching/New(var/L)
 	if(!L)
@@ -487,6 +488,8 @@
 	if(!do_after(ourmob, 10 SECONDS, T, exclusive = TASK_ALL_EXCLUSIVE))
 		return FALSE
 
+	loaded_pet = which_pet
+
 	var/list/our_pet_list = pet_data[which_pet]
 	var/our_pet_type = our_pet_list["type"]
 
@@ -533,6 +536,56 @@
 	triangles -= cost
 	needs_saving = TRUE
 	return TRUE
+
+/datum/etching/proc/manage_pets()
+	var/choice = tgui_input_list(ourmob, "Which pet would you like to manage?", "Manage Pets", pet_data)
+	if(!choice)
+		return
+	if(choice == loaded_pet)
+		to_chat(ourmob, SPAN_WARNING("You will need to return [choice] to storage to manage their data."))
+		return
+	var/list/our_pet_data = pet_data[choice]
+
+	var/operation = tgui_input_list(ourmob, "What would you like to do?", "Choose System Operation",list("Rename", "Edit Note"))
+
+	switch(operation)
+		if("Rename")
+			var/new_name = tgui_input_text(ourmob, "What will the new name be?", "Rename [choice]", choice)
+			if(length(new_name) > PET_NAME_MAX)
+				to_chat(ourmob, SPAN_WARNING("[new_name] is too long. ([PET_NAME_MAX] characters)"))
+				return
+			if(!new_name)
+				to_chat(ourmob, SPAN_WARNING("Renaming cancelled."))
+				return
+			pet_data[new_name] = our_pet_data
+			if(!pet_data[new_name])
+				to_chat(ourmob, SPAN_WARNING("Renaming failed for some reason. Please contact a developer."))
+				return
+			pet_data.Remove(choice)
+			to_chat(ourmob, SPAN_NOTICE("Renaming success."))
+			needs_saving = TRUE
+			save()
+
+		if("Edit Note")
+			var/note_default = null
+			if(our_pet_data["note"])
+				note_default = our_pet_data["note"]
+			var/new_note = tgui_input_text(ourmob, "What will the new note be? (500)", "Note Edit: [choice]", note_default, 500)
+			if(length(new_note) > 500)
+				to_chat(ourmob, SPAN_WARNING("\"[new_note]\" is too long. ([length(new_note)]/500 characters)"))
+				return
+			if(new_note)
+				our_pet_data["note"] = new_note
+				pet_data[choice] = our_pet_data
+				to_chat(ourmob, SPAN_OCCULT("Note added to [choice]: [new_note]"))
+				needs_saving = TRUE
+			else if(tgui_alert(ourmob, "Do you want to clear the existing note?", "Clear Note", list("No", "Yes")) == "Yes")
+				our_pet_data.Remove("note")
+				pet_data[choice] = our_pet_data
+				to_chat(ourmob, SPAN_NOTICE("Note removed."))
+				needs_saving = TRUE
+		else
+			to_chat(ourmob, SPAN_WARNING("Pet management cancelled."))
 
 /client/view_var_Topic(href, href_list, hsrc)
 	. = ..()
