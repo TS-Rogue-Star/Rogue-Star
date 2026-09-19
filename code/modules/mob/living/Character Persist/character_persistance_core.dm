@@ -217,6 +217,9 @@
 	var/savable = FALSE				//Will never save while false
 	var/needs_saving = FALSE		//For if changes have occured, it will try to save if it can
 	var/save_cooldown = 0
+	var/pet_slots = 1				//How many pets are you allowed to save?
+	var/list/pet_data				//Any extra data the pet may have
+	var/loaded_pet					//The name of whatever pet you may have pulled
 
 /datum/etching/New(var/L)
 	if(!L)
@@ -313,6 +316,8 @@
 
 	xp = null
 	xp = load["xp"]
+	pet_slots = load["pet_slots"]
+	pet_data = load["pet_data"]
 
 	item_load(load)
 	if(ourmob)
@@ -344,6 +349,8 @@
 		)
 
 	to_save += item_save()
+	to_save["pet_slots"] = pet_slots
+	to_save["pet_data"] = pet_data
 
 	var/json_to_file
 	try
@@ -403,6 +410,9 @@
 		. += "<span class='boldnotice'>[capitalize(thing)]</span>: [xp[thing]]\n"
 
 /datum/etching/vv_edit_var(var_name, var_value)
+	var/mob/user = usr
+	if(user.client?.holder?.rank == "Host")
+		return ..()
 	if(var_name == "savable" || var_name == "unlockables")
 		return FALSE
 	if(var_name == "event_character")
@@ -428,6 +438,154 @@
 	get_save_path()
 	savable = FALSE
 	ourmob?.character_memory?.enable_event_character() // Persistent memory system (Lira, May 2026)
+
+/datum/etching/proc/pet_save(var/mob/living/simple_mob/M, var/pet_name)
+	if(!M || !pet_name)
+		return FALSE
+
+	if(!pet_slots)
+		pet_slots = 1
+	if(pet_data)
+		var/list/petlist = pet_data[M.name]
+		var/update_pet = FALSE
+		if(petlist)
+			if(petlist["type"] == "[M.type]")
+				update_pet = TRUE
+		if(!update_pet && pet_data.len >= pet_slots)
+			var/to_be_overwritten = tgui_input_list(ourmob,"To save this pet you will need to override an existing pet","Overwrite pet",pet_data)
+			if(!to_be_overwritten)
+				return FALSE
+			remove_pet(to_be_overwritten)
+
+	var/list/our_data = M.mob_bank_save(ourmob)
+	if(our_data)
+		if(!pet_data)
+			pet_data = list()
+		pet_data[pet_name] = our_data
+
+	needs_saving = TRUE
+	save()
+	return TRUE
+
+/datum/etching/proc/pet_load(var/turf/T)
+	if(!T)
+		return FALSE
+	if(!pet_data)
+		return FALSE
+	if(pet_data.len <= 0)
+		return FALSE
+
+	var/which_pet
+
+	if(pet_data.len != 1)
+		which_pet = tgui_input_list(ourmob,"Which pet would you like to select?", "Which pet", pet_data)
+	else
+		which_pet = pet_data[1]
+
+	if(!which_pet)
+		return FALSE
+
+	if(!do_after(ourmob, 10 SECONDS, T, exclusive = TASK_ALL_EXCLUSIVE))
+		return FALSE
+
+	loaded_pet = which_pet
+
+	var/list/our_pet_list = pet_data[which_pet]
+	var/our_pet_type = our_pet_list["type"]
+
+	var/mob/living/simple_mob/M = new our_pet_type(T)
+	M.load_owner = ourmob.ckey
+	M.name = which_pet
+	M.real_name = M.name
+	M.mob_bank_load(ourmob, our_pet_list)
+	M.faction = ourmob.faction
+	M.hunter = FALSE
+	M.desc += " It has a PET tag: \"[M.real_name]\", if lost, return to [ourmob.real_name]."
+	M.revivedby = ourmob.real_name
+	M.verbs += /mob/living/simple_mob/proc/toggle_ghostjoin
+	M.verbs += /mob/living/simple_mob/proc/toggle_follow
+	if(M.ai_holder?.hostile)
+		M.verbs += /mob/living/simple_mob/proc/toggle_hostile
+		M.ai_holder.hostile = FALSE
+		M.ai_holder.vore_hostile = FALSE
+	if(!ourmob.client.multichar_last)
+		ourmob.client.multichar_list |= M
+		ourmob.client.multichar_list |= ourmob
+		ourmob.client.multichar_last = M
+		ourmob.verbs += /mob/living/proc/toggle_pet_swap
+		M.verbs += /mob/living/proc/toggle_pet_swap
+	return M
+
+/datum/etching/proc/remove_pet(var/to_be_removed)
+	if(!to_be_removed)
+		return
+	pet_data.Remove(to_be_removed)
+
+/datum/etching/proc/purchase_pet_slot()
+	if(pet_slots >= 10)
+		to_chat(ourmob, SPAN_DANGER("Your petatronic storage cannot be expanded further at this time."))
+		return FALSE
+	var/cost = pet_slots * 5
+
+	if(tgui_alert(ourmob, "Would you like to purchase additional pet storage space? ◬:[cost]", "Pet Storage Expansion", list("Purchase", "Cancel")) != "Purchase")
+		return FALSE
+	if(cost > triangles)
+		to_chat(ourmob, SPAN_DANGER("We're sorry, you must not have enough ◬ banked. To purchase an additional pet storage space, ◬:[cost] is required. Store ◬ in your bank account and try again."))
+		return FALSE
+	pet_slots ++
+	triangles -= cost
+	needs_saving = TRUE
+	return TRUE
+
+/datum/etching/proc/manage_pets()
+	var/choice = tgui_input_list(ourmob, "Which pet would you like to manage?", "Manage Pets", pet_data)
+	if(!choice)
+		return
+	if(choice == loaded_pet)
+		to_chat(ourmob, SPAN_WARNING("You will need to return [choice] to storage to manage their data."))
+		return
+	var/list/our_pet_data = pet_data[choice]
+
+	var/operation = tgui_input_list(ourmob, "What would you like to do?", "Choose System Operation",list("Rename", "Edit Note"))
+
+	switch(operation)
+		if("Rename")
+			var/new_name = tgui_input_text(ourmob, "What will the new name be?", "Rename [choice]", choice)
+			if(length(new_name) > PET_NAME_MAX)
+				to_chat(ourmob, SPAN_WARNING("[new_name] is too long. ([PET_NAME_MAX] characters)"))
+				return
+			if(!new_name)
+				to_chat(ourmob, SPAN_WARNING("Renaming cancelled."))
+				return
+			pet_data[new_name] = our_pet_data
+			if(!pet_data[new_name])
+				to_chat(ourmob, SPAN_WARNING("Renaming failed for some reason. Please contact a developer."))
+				return
+			pet_data.Remove(choice)
+			to_chat(ourmob, SPAN_NOTICE("Renaming success."))
+			needs_saving = TRUE
+			save()
+
+		if("Edit Note")
+			var/note_default = null
+			if(our_pet_data["note"])
+				note_default = our_pet_data["note"]
+			var/new_note = tgui_input_text(ourmob, "What will the new note be? (500)", "Note Edit: [choice]", note_default, 500)
+			if(length(new_note) > 500)
+				to_chat(ourmob, SPAN_WARNING("\"[new_note]\" is too long. ([length(new_note)]/500 characters)"))
+				return
+			if(new_note)
+				our_pet_data["note"] = new_note
+				pet_data[choice] = our_pet_data
+				to_chat(ourmob, SPAN_OCCULT("Note added to [choice]: [new_note]"))
+				needs_saving = TRUE
+			else if(tgui_alert(ourmob, "Do you want to clear the existing note?", "Clear Note", list("No", "Yes")) == "Yes")
+				our_pet_data.Remove("note")
+				pet_data[choice] = our_pet_data
+				to_chat(ourmob, SPAN_NOTICE("Note removed."))
+				needs_saving = TRUE
+		else
+			to_chat(ourmob, SPAN_WARNING("Pet management cancelled."))
 
 /client/view_var_Topic(href, href_list, hsrc)
 	. = ..()

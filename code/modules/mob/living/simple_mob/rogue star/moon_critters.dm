@@ -311,19 +311,17 @@
 	value = CATALOGUER_REWARD_TRIVIAL
 
 /mob/living/simple_mob/vore/prancer/mob_bank_save(mob/living/user)
-	var/list/to_save = list(
-		"ckey" = user.ckey,
-		"type" = type,
-		"name" = name,
-		"color" = color,
-		"crystal" = crystal_color
-		)
+	. = ..()
 
-	return to_save
+	.["color"] = color
+	.["crystal"] = crystal_color
+
+	return .
 
 /mob/living/simple_mob/vore/prancer/mob_bank_load(mob/living/user, var/list/load)
-	name = load["name"]
-	real_name = name
+	. = ..()
+	if(user?.etching?.pet_data?[name])
+		load = user.etching.pet_data[name]
 	color = load["color"]
 	crystal_color = load["crystal"]
 	update_icon()
@@ -501,19 +499,15 @@
 	value = CATALOGUER_REWARD_TRIVIAL
 
 /mob/living/simple_mob/vore/stellagan/mob_bank_save(mob/living/user)
+	. = ..()
+	.["color"] = color
 
-	var/list/to_save = list(
-		"ckey" = user.ckey,
-		"type" = type,
-		"name" = name,
-		"color" = color
-		)
-
-	return to_save
+	return .
 
 /mob/living/simple_mob/vore/stellagan/mob_bank_load(mob/living/user, var/list/load)
-	name = load["name"]
-	real_name = name
+	. = ..()
+	if(user?.etching?.pet_data?[name])
+		load = user.etching.pet_data[name]
 	color = load["color"]
 	update_icon()
 
@@ -844,20 +838,17 @@
 	value = CATALOGUER_REWARD_MEDIUM
 
 /mob/living/simple_mob/vore/dust_stalker/mob_bank_save(mob/living/user)
-	var/list/to_save = list(
-		"ckey" = user.ckey,
-		"type" = type,
-		"name" = name,
-		"color" = color,
-		"marking_color" = marking_color,
-		"eye_color" = eye_color
-		)
+	. = ..()
+	.["color"] = color
+	.["marking_color"] = marking_color
+	.["eye_color"] = eye_color
 
-	return to_save
+	return .
 
 /mob/living/simple_mob/vore/dust_stalker/mob_bank_load(mob/living/user, var/list/load)
-	name = load["name"]
-	real_name = name
+	. = ..()
+	if(user?.etching?.pet_data?[name])
+		load = user.etching.pet_data[name]
 	color = load["color"]
 	marking_color = load["marking_color"]
 	eye_color = load["eye_color"]

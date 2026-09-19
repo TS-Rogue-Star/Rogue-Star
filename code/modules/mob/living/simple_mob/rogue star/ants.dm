@@ -455,24 +455,16 @@
 	return TRUE
 
 /mob/living/simple_mob/vore/ant/mob_bank_save(mob/living/user)
+	. = ..()
+	.["team_color"] = team_color
+	.["eye_color"] = eye_color
 
-	var/list/to_save = list(
-		"ckey" = user.ckey,
-		"type" = /mob/living/simple_mob/vore/ant,
-		"name" = name,
-		"team_color" = team_color,
-		"eye_color" = eye_color
-		)
-
-	return to_save
+	return .
 
 /mob/living/simple_mob/vore/ant/mob_bank_load(mob/living/user, var/list/load)
-	if(user)
-		load_owner = user.ckey
-	else
-		load_owner = "STATION"
-	name = load["name"]
-	real_name = name
+	. = ..()
+	if(user?.etching?.pet_data?[name])
+		load = user.etching.pet_data[name]
 	team_color = load["team_color"]
 	color = team_color
 	eye_color = load["eye_color"]

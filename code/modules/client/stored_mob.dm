@@ -32,53 +32,68 @@
 		..()
 
 /obj/machinery/mob_bank/proc/start_using(mob/living/user)
-	if(busy_bank)
-		to_chat(user, "<span class='warning'>\The [src] is already in use.</span>")
-		return
+	/*
+	//Etching doesn't care
 	if(user.real_name != user.client.prefs.real_name)
 		to_chat(user, "<span class = 'warning'>The slot you have selected in character setup is mismatched with the character you are playing as. In order to use the PET system, please select the slot that matches your character.</span>")
 		return
+	*/
+	var/choice = tgui_input_list(user, "What would you like to do [src]?", "[src]", list("Retrieve","Manage","Purchase Storage","Info","Cancel"))
 
-	busy_bank = TRUE
-	var/choice = tgui_alert(user, "What would you like to do [src]?", "[src]", list("Info", "Retrieve Pet","Cancel"), timeout = 10 SECONDS)
-
-	if(choice == "Info")
-		to_chat(user,"<span class = 'notice'>You can use this machine to take a scan of your pets so that they can be retrieved in future shifts. This system allows you to save one mob as a pet per character. Saving or loading mobs is only available one time per shift on an account basis. (Ckey) Saving a pet makes loading a pet unavalable for the duration of the shift. </span><span class = 'warning'>There are a number of restrictions about what pets can be stored. No crew members or other similarly complicated/intelligent creatures (monkeys/carbons/borgs), no otherwise sapient creatures (player controlled mobs), and no hostile entities. Any already registered pets will also not be able to be registered. Further, some kinds of creatures may have their own individual restrictions.</span><span class = 'notice'> One can register a pet by presenting the pet to the scanning device. (Click and drag your mob's sprite onto the sprite of the bank.) Once one has registered a pet, they can retrieve that pet in future shifts. One can not retrieve their pet on the same shift that they registered it, as the pet will still be present!</span>")
-		busy_bank = FALSE
-	else if (choice == "Retrieve Pet")
-		if(user.ckey in mob_takers)
-			to_chat(user, "<span class='warning'>You have already saved or retrieved a pet from \the [src] this shift.</span>")
-			busy_bank = FALSE
-			return
-		choice = tgui_alert(user, "Are you sure you want to retrieve your pet?", "[src]", list("No", "Yes"), timeout = 10 SECONDS)
-		update_icon()
-		if(!choice || choice == "No" || !Adjacent(user) || inoperable() || panel_open)
-			busy_bank = FALSE
-			update_icon()
-			visible_message("<span class='warning'>\The [src] boops sadly...</span>", runemessage = "boop...")
-			return
-		else if(!do_after(user, 10 SECONDS, src, exclusive = TASK_ALL_EXCLUSIVE) || inoperable())
-			busy_bank = FALSE
-			update_icon()
-			visible_message("<span class='warning'>\The [src] boops sadly...</span>", runemessage = "boop...")
-			return
-		persist_mob_load(user)
-		busy_bank = FALSE
-		update_icon()
-		visible_message("<span class='notice'>\The [src] pings happily!</span>", runemessage = "Ping!")
-	else
-		busy_bank = FALSE
-		return
+	switch(choice)
+		if("Info")
+			to_chat(user,"<span class = 'notice'>You can use this machine to take a scan of your pets so that they can be retrieved in future shifts. This system allows you to save one mob as a pet per character. Saving or loading mobs is only available one time per shift on an account basis. (Ckey) Saving a pet makes loading a pet unavalable for the duration of the shift. </span><span class = 'warning'>There are a number of restrictions about what pets can be stored. No crew members or other similarly complicated/intelligent creatures (monkeys/carbons/borgs), no otherwise sapient creatures (player controlled mobs), and no hostile entities. Any already registered pets will also not be able to be registered. Further, some kinds of creatures may have their own individual restrictions.</span><span class = 'notice'> One can register a pet by presenting the pet to the scanning device. (Click and drag your mob's sprite onto the sprite of the bank.) Once one has registered a pet, they can retrieve that pet in future shifts. One can not retrieve their pet on the same shift that they registered it, as the pet will still be present!</span>")
+		if("Purchase Storage")
+			if(user.etching?.purchase_pet_slot())
+				visible_message(SPAN_NOTICE("\The [src] pings happily!"), runemessage = "ping!")
+			else
+				visible_message(SPAN_WARNING("\The [src] boops..."), runemessage = "boop. . .")
+		if("Retrieve")
+			if(user.ckey in mob_takers)
+				to_chat(user, "<span class='warning'>You have already saved or retrieved a pet from \the [src] this shift.</span>")
+				return
+			if(!Adjacent(user) || inoperable() || panel_open)
+				visible_message("<span class='warning'>\The [src] boops sadly...</span>", runemessage = "boop...")
+				return
+			begin_use(10)
+			if(!persist_mob_load(user))
+				visible_message("<span class='warning'>\The [src] boops sadly...</span>", runemessage = "boop...")
+			else
+				visible_message("<span class='notice'>\The [src] pings happily!</span>", runemessage = "Ping!")
+		if("Manage")
+			user.etching.manage_pets()
 
 /obj/machinery/mob_bank/proc/persist_mob_savefile_path(mob/user)
 	return "data/player_saves/[copytext(user.ckey, 1, 2)]/[user.ckey]/pet/slot[user.client.prefs.default_slot].json"
 
 /obj/machinery/mob_bank/proc/persist_mob_save(mob/user, mob/living/simple_mob/ourmob)
-	if(busy_bank)
-		to_chat(user, "<span class='warning'>\The [src] is already in use.</span>")
-		return
 	if(IsGuestKey(user.key))
 		return
+	if(!user.etching)
+		return
+	if(user.etching.pet_data)
+		var/list/petlist = user.etching.pet_data[ourmob.name]
+		if(petlist)
+			if(petlist["type"] == "[ourmob.type]")
+				if(!tgui_alert(user, "Do you want to put [ourmob] away?", "Store [ourmob]",list("Store", "No way!"), 10 SECONDS) == "Store")
+					to_chat(user, SPAN_DANGER("You decide not to put \the [ourmob] away."))
+					return
+				begin_use(10)
+				if(!do_after(user, 10 SECONDS, src, exclusive = TASK_ALL_EXCLUSIVE) || inoperable())
+					visible_message("<span class='warning'>\The [src] boops sadly...</span>", runemessage = "boop...")
+					return
+				if(!user.etching.pet_save(ourmob, ourmob.name))	//Save mob to character etching
+					to_chat(user,SPAN_DANGER("The pet was not saved."))
+					visible_message("<span class='warning'>\The [src] boops sadly...</span>", runemessage = "boop...")
+					return
+				else
+					var/list/verbs = list("ingests", "slurps", "gobbles", "gulps", "gathers", "snarfs", "guzzles", "glorps", "devours", "inserts")
+					visible_message(span_green("\The [src] [pick(verbs)] \the [ourmob] into its petatronic storage matrix!"), runemessage = "burps. . .")
+				if(ourmob.name == user.etching.loaded_pet)
+					user.etching.loaded_pet = null
+				qdel(ourmob)
+				mob_takers -= user.ckey
+			return
 
 	if(user.ckey in mob_savers)
 		to_chat(user, "<span class = 'warning'>You have already registered a pet this shift, and can not register another until next shift. Sorry about that!</span>")
@@ -86,78 +101,82 @@
 	if(!ourmob.save_conditions(user))
 		to_chat(user, "<span class = 'warning'>\The [ourmob] can not be registered into the PET system.</span>")
 		return
+/*	//Etching doesn't care about what slot you have loaded so neither do we
 	if(user.real_name != user.client.prefs.real_name)
 		to_chat(user, "<span class = 'warning'>The slot you have selected in character setup is mismatched with the character you are playing as. In order to use the PET system, please select the slot that matches your character.</span>")
 		return
-	busy_bank = TRUE
-	var/whatname = tgui_input_text(user, "What name do you want to register for \the [ourmob]? (25 characters)", "Pet name?", ourmob.name, max_length = 25)
-	if(length(whatname) > 25)
-		to_chat(user, "<span class = 'warning'>[whatname] is too long. (25 characters)</span>")
+*/
+	var/whatname = tgui_input_text(user, "What name do you want to register for \the [ourmob]? ([PET_NAME_MAX] characters)", "Pet name?", ourmob.name, max_length = PET_NAME_MAX)
+	if(length(whatname) > PET_NAME_MAX)
+		to_chat(user, SPAN_WARNING("[whatname] is too long. ([PET_NAME_MAX] characters)"))
 		return
 	if(!whatname)
-		busy_bank = FALSE
 		return
-	var/choice = tgui_alert(user, "Do you want to store this pet for yourself, or for the station pool?", "[src]", list("For me!", "For the station", "Cancel"), timeout = 10 SECONDS)
+	var/choice = tgui_alert(user, "Do you want to store this pet for yourself, or for the station pool?", "[src]", list("For me!", "For the station", "Cancel"))
 	if(choice == "For the station")
 		if(ourmob.load_owner)
 			to_chat(user, "<span class = 'warning'>\The [ourmob] has already been registered. It can not also be registered to the station!</span>")
-			busy_bank = FALSE
 			return
 		visible_message("<span class='notice'>\The [src] scans \the [ourmob] thoroughly...</span>", runemessage = "wrrr...")
-		update_icon()
+		begin_use(10)
 		if(!do_after(user, 10 SECONDS, src, exclusive = TASK_ALL_EXCLUSIVE) || inoperable())
 			visible_message("<span class='warning'>\The [src] boops sadly...</span>", runemessage = "boop...")
-			busy_bank = FALSE
-			update_icon()
 			return
 		ourmob.name = whatname
 		ourmob.real_name = whatname
 		ourmob.load_owner = "STATION"
 		persist_mob_save_station(user, ourmob)
-		busy_bank = FALSE
 		log_admin("[user.ckey] saved [ourmob] - [ourmob.type] to the station pet pool.")
 		visible_message("<span class='notice'>\The [src] pings happily as it finishes scanning \the [ourmob]!</span>", runemessage = "Ping!")
 		mob_savers |= user.ckey
-		update_icon()
 		return
 
 	else if(choice != "For me!")
-		busy_bank = FALSE
 		return
-
 	visible_message("<span class='notice'>\The [src] scans \the [ourmob] thoroughly...</span>", runemessage = "wrrr...")
-	update_icon()
+	begin_use(10)
 	if(!do_after(user, 10 SECONDS, src, exclusive = TASK_ALL_EXCLUSIVE) || inoperable())
-		busy_bank = FALSE
 		visible_message("<span class='warning'>\The [src] boops sadly...</span>", runemessage = "boop...")
-		update_icon()
 		return
 
-	var/path = persist_mob_savefile_path(user)
-
-	if(path)
+//	var/path = persist_mob_savefile_path(user)
+/*	if(path)
 		if(fexists(path))
 			var/list/load = json_decode(file2text(path))
 			if(load)
 				var/ourtype = load["type"]
 				if(ourtype)
-					if(tgui_alert(user, "It appears that you already have a pet registered! Are you sure you would like to overwrite your existing pet?", "[src]", list("No", "Yes"), timeout = 10 SECONDS) != "Yes")
-						busy_bank = FALSE
-						visible_message("<span class='warning'>\The [src] boops sadly...</span>", runemessage = "boop...")
-						update_icon()
-						return
+
+	var/to_be_overwritten
+	if(user.etching.pet_slots >= user.etching.pet_data?.len)
+		to_be_overwritten = if(user,"To save this pet you will need to override an existing pet","Overwrite pet",user.etching.pet_data)
+		if(!to_be_overwritten)
+			to_chat(user,SPAN_DANGER("The pet was not saved."))
+			busy_bank = FALSE
+			visible_message("<span class='warning'>\The [src] boops sadly...</span>", runemessage = "boop...")
+			update_icon()
+			return
+*/
+	if(!user.etching.pet_save(ourmob, whatname))	//Save mob to character etching
+		to_chat(user,SPAN_DANGER("The pet was not saved."))
+		visible_message("<span class='warning'>\The [src] boops sadly...</span>", runemessage = "boop...")
+		return FALSE
+	user.etching.loaded_pet = whatname
 	ourmob.name = whatname
 	ourmob.real_name = whatname
 	ourmob.load_owner = user.ckey
 	ourmob.faction = user.faction
 	ourmob.hunter = FALSE
-	var/list/to_save = ourmob.mob_bank_save(user)
+//	var/list/to_save = ourmob.mob_bank_save(user)
 	ourmob.verbs += /mob/living/simple_mob/proc/toggle_ghostjoin
 	ourmob.verbs += /mob/living/simple_mob/proc/toggle_follow
 	user.verbs += /mob/living/proc/toggle_pet_swap
+	LAZYCLEARLIST(user.client.multichar_list)
+	if(!user.client.multichar_list)
+		user.client.multichar_list = list()
 	user.client.multichar_list += ourmob
 	user.client.multichar_list += user
-	user.client.multichar_last += ourmob
+	user.client.multichar_last = ourmob
 	ourmob.verbs += /mob/living/proc/toggle_pet_swap
 
 	if(ourmob.ai_holder.hostile)
@@ -165,6 +184,8 @@
 		ourmob.ai_holder.hostile = FALSE
 		ourmob.ai_holder.vore_hostile = FALSE
 
+
+/*
 	if(!to_save)
 		busy_bank = FALSE
 		visible_message("<span class='warning'>\The [src] boops unhappily. It encountered an error when attempting to save \the [ourmob]'s scan.</span>", runemessage = "boop...")
@@ -188,70 +209,113 @@
 		visible_message("<span class='warning'>\The [src] boops unhappily. It encountered an error when attempting to save \the [ourmob]'s scan.</span>", runemessage = "boop...")
 		update_icon()
 		return
+*/
 	mob_takers |= user.ckey
 	mob_savers |= user.ckey
 	to_chat(user,"<span class = 'notice'>\The [src] completes its scan of \the [ourmob].</span>")
 	log_admin("[user.ckey] saved [ourmob] - [ourmob.type] to their personal file.")
-	busy_bank = FALSE
 	visible_message("<span class='notice'>\The [src] pings happily as it finishes scanning \the [ourmob]!</span>", runemessage = "Ping!")
-	update_icon()
 
 /obj/machinery/mob_bank/proc/persist_mob_load(mob/user)
 	if(IsGuestKey(user.key))
 		return FALSE
-
-	var/path = persist_mob_savefile_path(user)
-
-	if(!path)
+	if(!user.etching)
 		return FALSE
-	if(!fexists(path))
-		return FALSE
+	var/mob/living/simple_mob/M = user.etching.pet_load(get_turf(src))
+	if(!M)
+		if(user.real_name != user.client.prefs.real_name)	//Legacy pets were saved using the character slot, so we care when trying to check for backwards compatibility
+			to_chat(user, SPAN_WARNING("The slot you have selected in character setup is mismatched with the character you are playing as. In order to use the PET system, please select the slot that matches your character."))
+			return
+		//Backwards compatibility
+		var/path = persist_mob_savefile_path(user)
+		if(!path)
+			return FALSE
+		if(!fexists(path))
+			return FALSE
 
-	var/list/load = json_decode(file2text(path))
-	if(!load)
-		return FALSE
+		var/list/load = json_decode(file2text(path))
+		if(!load)
+			return FALSE
 
-	var/ourtype = load["type"]
+		var/ourtype = load["type"]
 
-	var/mob/living/simple_mob/M = new ourtype(get_turf(src))
-	M.mob_bank_load(user, load)
-	M.faction = user.faction
-	M.hunter = FALSE
-	M.desc += " It has a PET tag: \"[M.real_name]\", if lost, return to [user.real_name]."
-	M.revivedby = user.real_name
+		M = new ourtype(get_turf(src))
+		M.mob_bank_load(user, load)
+		M.name = load["name"]
+		M.real_name = M.name
+		M.load_owner = user.ckey
+		M.faction = user.faction
+		M.hunter = FALSE
+		M.desc += " It has a PET tag: \"[M.real_name]\", if lost, return to [user.real_name]."
+		M.revivedby = user.real_name
+		M.verbs += /mob/living/simple_mob/proc/toggle_ghostjoin
+		M.verbs += /mob/living/simple_mob/proc/toggle_follow
+		if(M.ai_holder?.hostile)
+			M.verbs += /mob/living/simple_mob/proc/toggle_hostile
+			M.ai_holder.hostile = FALSE
+			M.ai_holder.vore_hostile = FALSE
+		if(!user.client.multichar_last)
+			user.client.multichar_list |= M
+			user.client.multichar_list |= user
+			user.client.multichar_last = M
+			user.verbs += /mob/living/proc/toggle_pet_swap
+			M.verbs += /mob/living/proc/toggle_pet_swap
+		if(M)
+			var/msg = ""
+			if(user.etching.pet_save(M, M.name))
+				if(user.etching.pet_data[M.name])
+					msg += "Pet file successfully adapted to etching format, legacy file will now be deleted."
+					for(var/thing in load)
+						msg += " || [thing] = [load[thing]]"
+					log_debug(msg)
+					fdel(path)
+				else
+					msg = "PET FILE ADAPTED TO ETCHING FORMAT, BUT PET NAME IS MISSING FROM PET_DATA, SOMETHING WENT WRONG, LEGACY FILE NOT DELETED, LEGACY DATA FOLLOWS || [path]"
+					for(var/thing in load)
+						msg += " || [thing] = [load[thing]]"
+					log_and_message_admins(msg)
+
+			else
+				msg = "[user] ATTEMPTED TO LEGACY LOAD PET BUT PET SAVE FAILED, ABORTING FILE DELETE || [path]"
+				for(var/thing in load)
+					msg += " || [thing] = [load[thing]]"
+				log_and_message_admins(msg)
 	to_chat(user,"<span class = 'notice'>\The [M] appears from \the [src]!</span>")
-	log_admin("[key_name_admin(user)] retrieved [M] - [M.type] from the mob bank.")
+	log_admin("[key_name_admin(user)] retrieved [M] || [M.type] from the mob bank.")
 	mob_takers += user.ckey
-	M.verbs += /mob/living/simple_mob/proc/toggle_ghostjoin
-	M.verbs += /mob/living/simple_mob/proc/toggle_follow
-	if(M.ai_holder?.hostile)
-		M.verbs += /mob/living/simple_mob/proc/toggle_hostile
-		M.ai_holder.hostile = FALSE
-		M.ai_holder.vore_hostile = FALSE
-	if(!user.client.multichar_last)
-		user.client.multichar_list |= M
-		user.client.multichar_list |= user
-		user.client.multichar_last = M
-		user.verbs += /mob/living/proc/toggle_pet_swap
-		M.verbs += /mob/living/proc/toggle_pet_swap
+	return M
 
 /obj/machinery/mob_bank/MouseDrop_T(mob/living/M, mob/living/user)
 	. = ..()
 	persist_mob_save(user, M)
 
+/obj/machinery/mob_bank/proc/begin_use(var/howmany)
+	if(howmany)
+		busy_bank = howmany
+	START_PROCESSING(SSobj, src)
+	update_icon()
+
+/obj/machinery/mob_bank/process()
+	busy_bank --
+	if(busy_bank <= 0)
+		stop_use()
+
+/obj/machinery/mob_bank/proc/stop_use()
+	STOP_PROCESSING(SSobj, src)
+	busy_bank = 0
+	update_icon()
+
 //Only simple mobs, please don't be insane
 /mob/living/simple_mob
 	var/load_owner = null
 
-/mob/living/simple_mob/proc/mob_bank_save(mob/living/user)
+/mob/living/simple_mob/proc/mob_bank_save(mob/living/user, var/for_station = FALSE)
+	. = list()
+	if(for_station)
+		.["ckey"] = user.ckey
+	.["type"] = "[type]"
 
-	var/list/to_save = list(
-		"ckey" = user.ckey,
-		"type" = type,
-		"name" = name
-		)
-
-	return to_save
+	return .
 
 /mob/living/simple_mob/proc/save_conditions(mob/living/user)
 	if(load_owner == "STATION")
@@ -287,12 +351,12 @@
 	return TRUE
 
 /mob/living/simple_mob/proc/mob_bank_load(mob/living/user, var/list/load)
-	if(user)
-		load_owner = user.ckey
-	else
+	if(!user)
 		load_owner = "STATION"
-	name = load["name"]
-	real_name = name
+		name = load["name"]
+		real_name = name
+	else
+		load_owner = user.ckey
 
 /mob/living/simple_mob/proc/toggle_ghostjoin()
 	set name = "Toggle Ghost Join"
@@ -387,7 +451,7 @@
 		pet.do_yo_thang_gurrrrllllllll()
 
 /obj/machinery/mob_bank/proc/persist_mob_save_station(mob/user, mob/living/simple_mob/ourmob)
-	var/list/to_save = ourmob.mob_bank_save(user)
+	var/list/to_save = ourmob.mob_bank_save(user, TRUE)
 
 	if(!to_save)
 		return
