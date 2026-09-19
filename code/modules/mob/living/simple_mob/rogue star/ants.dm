@@ -463,7 +463,7 @@
 
 /mob/living/simple_mob/vore/ant/mob_bank_load(mob/living/user, var/list/load)
 	. = ..()
-	if(user.etching?.pet_data?[name])
+	if(user?.etching?.pet_data?[name])
 		load = user.etching.pet_data[name].Copy()
 	team_color = load["team_color"]
 	color = team_color

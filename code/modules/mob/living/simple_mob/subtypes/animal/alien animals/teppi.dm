@@ -1245,7 +1245,8 @@ GLOBAL_VAR_INIT(teppi_count, 0)	// How mant teppi DO we have?
 
 /mob/living/simple_mob/vore/alienanimals/teppi/mob_bank_load(mob/living/user, var/list/load)
 	. = ..()
-	if(user)
+	if(user?.etching?.pet_data?[name])
+		load = user.etching.pet_data[name].Copy()
 		affinity[user.real_name] = load["affinity"]
 	allergen_preference = load["allergen_preference"]
 	allergen_unpreference = load["allergen_unpreference"]

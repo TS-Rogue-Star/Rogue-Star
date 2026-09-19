@@ -320,7 +320,7 @@
 
 /mob/living/simple_mob/vore/prancer/mob_bank_load(mob/living/user, var/list/load)
 	. = ..()
-	if(user.etching?.pet_data?[name])
+	if(user?.etching?.pet_data?[name])
 		load = user.etching.pet_data[name].Copy()
 	color = load["color"]
 	crystal_color = load["crystal"]
@@ -506,7 +506,7 @@
 
 /mob/living/simple_mob/vore/stellagan/mob_bank_load(mob/living/user, var/list/load)
 	. = ..()
-	if(user.etching?.pet_data?[name])
+	if(user?.etching?.pet_data?[name])
 		load = user.etching.pet_data[name].Copy()
 	color = load["color"]
 	update_icon()
@@ -847,7 +847,7 @@
 
 /mob/living/simple_mob/vore/dust_stalker/mob_bank_load(mob/living/user, var/list/load)
 	. = ..()
-	if(user.etching?.pet_data?[name])
+	if(user?.etching?.pet_data?[name])
 		load = user.etching.pet_data[name].Copy()
 	color = load["color"]
 	marking_color = load["marking_color"]
