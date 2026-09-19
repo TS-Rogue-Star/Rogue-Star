@@ -7,6 +7,8 @@
 // //////////////////////////////////////////////////////////////////////////////////////////////////
 // Updated by Lira for Rogue Star August 2026: Character Designer - Species and Prosthetics /////////
 // //////////////////////////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star September 2026: Character Designer - Expression ///////////////////
+// //////////////////////////////////////////////////////////////////////////////////////////////////
 
 import {
   GENERIC_PART_KEY,
@@ -62,14 +64,6 @@ const OVERLAY_SLOT_PRIORITY_MAP: Record<string, number> = {
   vore_tail: 39,
   custom_marking: 40,
 };
-const HIDDEN_LEG_PARTS = new Set(['l_leg', 'r_leg', 'l_foot', 'r_foot']);
-const TAUR_CLOTHING_SLOTS = new Set([
-  'underwear',
-  'uniform',
-  'belt',
-  'suit',
-  'back',
-]);
 const MARKING_MASK_ALPHA_THRESHOLD = 250;
 const RENDER_PRIORITY_SOURCE = 'render_priority';
 
@@ -463,35 +457,6 @@ const buildHiddenPartsMap = (
   return map;
 };
 
-const collectHiddenLegParts = (
-  hiddenPartsMap: Record<string, boolean>
-): string[] => {
-  const parts: string[] = [];
-  for (const partId of Object.keys(hiddenPartsMap)) {
-    if (hiddenPartsMap[partId] && HIDDEN_LEG_PARTS.has(partId)) {
-      parts.push(partId);
-    }
-  }
-  return parts;
-};
-
-const maskGridForHiddenParts = (
-  grid: string[][],
-  referenceParts: Record<string, string[][]>,
-  hiddenParts: string[]
-) => {
-  if (!hiddenParts.length) {
-    return;
-  }
-  for (const partId of hiddenParts) {
-    const maskGrid = referenceParts[partId];
-    if (!maskGrid) {
-      continue;
-    }
-    applyReplacementMaskToGrid(grid, maskGrid);
-  }
-};
-
 const cloneMarkingGridForPart = (
   grid: string[][] | undefined,
   partId: string,
@@ -771,38 +736,23 @@ const appendOverlayEntries = ({
   showEquipment,
   showJobGear,
   showLoadoutGear,
-  hiddenLegParts,
   hideShoes,
-  referenceParts,
 }: {
   overlayEntries: PreviewLayerEntry[];
   orderedOverlayLayers?: OrderedOverlayLayer[] | null;
   showEquipment?: boolean;
   showJobGear?: boolean;
   showLoadoutGear?: boolean;
-  hiddenLegParts?: string[];
   hideShoes?: boolean;
-  referenceParts?: Record<string, string[][]> | null;
 }) => {
   if (!Array.isArray(orderedOverlayLayers) || !orderedOverlayLayers.length) {
     return;
   }
-  const shouldMaskOverlays =
-    !!referenceParts && !!hiddenLegParts && hiddenLegParts.length > 0;
   orderedOverlayLayers.forEach((entry, index) => {
     if (hideShoes && entry.slot === 'shoes') {
       return;
     }
     const cloned = cloneGridData(entry.grid);
-    if (
-      shouldMaskOverlays &&
-      referenceParts &&
-      hiddenLegParts &&
-      entry.slot &&
-      TAUR_CLOTHING_SLOTS.has(entry.slot)
-    ) {
-      maskGridForHiddenParts(cloned, referenceParts, hiddenLegParts);
-    }
     if (!gridHasPixels(cloned)) {
       return;
     }
@@ -897,7 +847,6 @@ const composePreviewLayers = (
     ? cloneGridData(resolvedBodyGrid)
     : undefined;
   const hiddenPartsMap = buildHiddenPartsMap(dirState.hiddenBodyParts);
-  const hiddenLegParts = collectHiddenLegParts(hiddenPartsMap);
   const hideShoes = !!hiddenPartsMap['l_foot'] || !!hiddenPartsMap['r_foot'];
   const bodyGrid = maskBodyGridForReplacements(
     clonedBodyGrid,
@@ -1046,9 +995,7 @@ const composePreviewLayers = (
     showEquipment,
     showJobGear,
     showLoadoutGear,
-    hiddenLegParts,
     hideShoes,
-    referenceParts,
   });
   const mergedLayers = [
     ...orderedPartLayers,

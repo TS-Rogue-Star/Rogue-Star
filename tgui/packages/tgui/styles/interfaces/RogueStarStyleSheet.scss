@@ -3472,6 +3472,18 @@ $titlebar-height: 38px;
   text-shadow: 0 0 6px rgba(229, 188, 106, 0.15);
 }
 
+.RogueStar__speechBubbleInline {
+  position: relative;
+  width: 24px;
+  height: 24px;
+
+  .RogueStar__previewCanvasFrame {
+    border: 0;
+    background: transparent !important;
+    box-shadow: none;
+  }
+}
+
 .RogueStar__sessionButtons {
   gap: 1rem;
 }
@@ -4115,6 +4127,10 @@ $titlebar-height: 38px;
     align-items: center;
     width: 100%;
     line-height: 1;
+  }
+
+  .RogueStar__physiologyDropdownContent--textOnly {
+    grid-template-columns: minmax(0, 1fr) auto;
   }
 
   .RogueStar__physiologyDropdownContent > .Icon {

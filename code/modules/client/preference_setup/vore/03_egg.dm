@@ -41,10 +41,11 @@
 					pref.client.autohiss_mode = AUTOHISS_OFF
 	// VOREStation Add
 
+// RS Edit: Character Designer - Expression (Lira, September 2026)
 /datum/category_item/player_setup_item/vore/egg/content(var/mob/user)
 	. += " Egg Type: <a href='?src=\ref[src];vore_egg_type=1'>[pref.vore_egg_type]</a><br>"
-	. += "<b>Autohiss Default Setting:</b> <a href='?src=\ref[src];autohiss=1'>[pref.autohiss]</a><br>" // VOREStation Add
 
+// RS Edit: Character Designer - Expression (Lira, September 2026)
 /datum/category_item/player_setup_item/vore/egg/OnTopic(var/href, var/list/href_list, var/mob/user)
 	if(!CanUseTopic(user))
 		return TOPIC_NOACTION
@@ -55,16 +56,7 @@
 		if(selection)
 			pref.vore_egg_type = selection
 			return TOPIC_REFRESH
-	// VOREStation Add Start
-	else if(href_list["autohiss"])
-		var/list/autohiss_selection = list("Full", "Basic", "Off")
-		var/selection = tgui_input_list(user, "Choose your default autohiss setting:", "Character Preference", autohiss_selection, pref.autohiss)
-		if(selection)
-			pref.autohiss = selection
-		else if(!selection)
-			pref.autohiss = "Full"
-		return TOPIC_REFRESH
-	// VOREStation Add End
+
 	else
 		return
 

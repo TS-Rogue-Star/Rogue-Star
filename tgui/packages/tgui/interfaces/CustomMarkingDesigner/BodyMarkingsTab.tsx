@@ -5,8 +5,11 @@
 // ///////////////////////////////////////////////////////////////////////////////////////////
 // Updated by Lira for Rogue Star September 2026: Character Designer - Loadout ///////////////
 // ///////////////////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star September 2026: Character Designer - Expression ////////////
+// ///////////////////////////////////////////////////////////////////////////////////////////
 
 import { Component } from 'inferno';
+import { resolveGearAssetForTail } from './utils/gearTailMask';
 import {
   backendSetSharedState,
   selectBackend,
@@ -57,7 +60,6 @@ import {
   getIconAssetReadinessSignature,
   getPreviewGridFromAsset,
   getPreviewGridFromGearAsset,
-  getPreviewPartMapFromAssets,
   gridHasPixels,
   resolveIconAssetReference,
   scheduleCharacterPreviewWork,
@@ -232,13 +234,6 @@ const OVERLAY_SLOT_PRIORITY_MAP: Record<string, number> = {
 };
 
 const HIDDEN_LEG_PARTS = new Set(['l_leg', 'r_leg', 'l_foot', 'r_foot']);
-const TAUR_CLOTHING_SLOTS = new Set([
-  'underwear',
-  'uniform',
-  'belt',
-  'suit',
-  'back',
-]);
 const APPEARANCE_OVERLAY_SLOTS = new Set([
   'hair',
   'hair_accessory',
@@ -408,29 +403,6 @@ const applyMaskToGrid = (target: string[][], mask: string[][]) => {
   }
 };
 
-const applyClipMaskToGrid = (target: string[][], mask: string[][]) => {
-  if (!Array.isArray(target) || !Array.isArray(mask)) {
-    return;
-  }
-  const width = Math.min(target.length, mask.length);
-  for (let x = 0; x < width; x += 1) {
-    const targetColumn = target[x];
-    const maskColumn = mask[x];
-    if (!Array.isArray(targetColumn) || !Array.isArray(maskColumn)) {
-      continue;
-    }
-    const height = Math.min(targetColumn.length, maskColumn.length);
-    for (let y = 0; y < height; y += 1) {
-      if (!pixelHasColor(targetColumn[y])) {
-        continue;
-      }
-      if (pixelHasColor(maskColumn[y])) {
-        targetColumn[y] = TRANSPARENT_HEX;
-      }
-    }
-  }
-};
-
 const collectHiddenLegParts = (hiddenBodyParts?: string[] | null): string[] => {
   if (!Array.isArray(hiddenBodyParts)) {
     return [];
@@ -467,23 +439,6 @@ const buildSuppressedMarkingPartsByDir = (
     }
   }
   return result;
-};
-
-const maskGridForHiddenLegParts = (
-  grid: string[][],
-  referenceParts: Record<string, string[][]>,
-  hiddenLegParts: string[]
-) => {
-  if (!hiddenLegParts.length) {
-    return;
-  }
-  for (const partId of hiddenLegParts) {
-    const maskGrid = referenceParts[partId];
-    if (!maskGrid) {
-      continue;
-    }
-    applyClipMaskToGrid(grid, maskGrid);
-  }
 };
 
 const buildHairGradientOverlayGrid = (options: {
@@ -741,12 +696,13 @@ const buildOrderedOverlayLayers = (
   source: OrderedOverlayLayer['source'],
   signalAssetUpdate?: () => void,
   orderOffset = 0,
-  priority: CharacterPreviewWorkPriority = 'visible'
+  priority: CharacterPreviewWorkPriority = 'visible',
+  clipMask?: IconAssetReference | null
 ): OrderedOverlayLayer[] => {
   const layers: OrderedOverlayLayer[] = [];
   const updateSignal = signalAssetUpdate || (() => undefined);
   for (let i = 0; i < assets.length; i += 1) {
-    const entry = assets[i] as GearOverlayAsset | IconAssetPayload;
+    const entry = resolveGearAssetForTail(assets[i], clipMask);
     const grid = getPreviewGridFromGearAsset(
       entry,
       canvasWidth,
@@ -1406,15 +1362,7 @@ const prepareAppearanceOverlayEntriesForDir = (options: {
   const hiddenLegParts = collectHiddenLegParts(dirState.hiddenBodyParts);
   const hideShoes =
     hiddenLegParts.includes('l_foot') || hiddenLegParts.includes('r_foot');
-  const referenceParts =
-    hiddenLegParts.length > 0
-      ? getPreviewPartMapFromAssets(
-          dirState.referencePartAssets,
-          canvasWidth,
-          canvasHeight,
-          signalAssetUpdate
-        )
-      : null;
+  const clipMask = tailDef?.clip_mask;
   const overlayAssetsRaw = Array.isArray(dirState.overlayAssets)
     ? (dirState.overlayAssets as Array<GearOverlayAsset | IconAssetPayload>)
     : [];
@@ -1430,7 +1378,10 @@ const prepareAppearanceOverlayEntriesForDir = (options: {
     canvasWidth,
     canvasHeight,
     'base',
-    signalAssetUpdate
+    signalAssetUpdate,
+    0,
+    'visible',
+    clipMask
   );
 
   const appearanceLayers: OrderedOverlayLayer[] = [];
@@ -1601,9 +1552,6 @@ const prepareAppearanceOverlayEntriesForDir = (options: {
     if (entry.slot === 'eyes' && previewBaseEyeColor && previewTargetEyeColor) {
       grid = recolorGrid(grid, previewBaseEyeColor, previewTargetEyeColor, 3);
     }
-    if (referenceParts && entry.slot && TAUR_CLOTHING_SLOTS.has(entry.slot)) {
-      maskGridForHiddenLegParts(grid, referenceParts, hiddenLegParts);
-    }
     if (!gridHasPixels(grid)) {
       return null;
     }
@@ -1644,7 +1592,8 @@ const prepareAppearanceOverlayEntriesForDir = (options: {
           'loadout',
           onUpdated,
           baseOverlayLayers.length,
-          priority
+          priority,
+          clipMask
         )
       : [];
     const loadoutSlots = new Set(
@@ -1662,7 +1611,8 @@ const prepareAppearanceOverlayEntriesForDir = (options: {
           'job',
           onUpdated,
           baseOverlayLayers.length + loadoutLayers.length,
-          priority
+          priority,
+          clipMask
         )
       : [];
     const jobLayers =
@@ -1686,7 +1636,8 @@ const prepareAppearanceOverlayEntriesForDir = (options: {
           'equipment',
           onUpdated,
           baseOverlayLayers.length + jobLayers.length + loadoutLayers.length,
-          priority
+          priority,
+          clipMask
         ).filter((entry) => !entry.slot || !higherPrioritySlots.has(entry.slot))
       : [];
     const merged = mergeOverlayLayerLists(

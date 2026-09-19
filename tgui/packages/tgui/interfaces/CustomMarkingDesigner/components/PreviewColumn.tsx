@@ -7,7 +7,7 @@
 import { Box, Flex } from '../../../components';
 import { PREVIEW_PIXEL_SIZE } from '../constants';
 import type { CanvasBackgroundOption } from '../types';
-import { DirectionPreviewCanvas } from './DirectionPreviewCanvas';
+import { LiveDirectionPreviewCanvas } from './LiveDirectionPreviewCanvas';
 
 type PreviewColumnProps = Readonly<{
   renderedPreviewDirs: ReadonlyArray<any>;
@@ -52,13 +52,15 @@ export const PreviewColumn = ({
             <Box
               key={`${entry.dir}-${previewFitToFrame ? 'fit' : 'crop'}-${previewRevision}`}
               className="RogueStar__previewItem">
-              <DirectionPreviewCanvas
+              <LiveDirectionPreviewCanvas
+                direction={entry.dir}
                 layers={entry.layers}
                 bodyAlpha={entry.bodyAlpha}
                 pixelSize={Math.max(1, PREVIEW_PIXEL_SIZE)}
                 width={canvasWidth}
                 height={canvasHeight}
                 fitToFrame={previewFitToFrame}
+                showSizeOptions={false}
                 backgroundImage={
                   resolvedCanvasBackground?.asset?.png
                     ? `data:image/png;base64,${resolvedCanvasBackground.asset.png}`
