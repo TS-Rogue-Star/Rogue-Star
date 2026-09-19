@@ -5,8 +5,25 @@
 // ///////////////////////////////////////////////////////////////////////////////////////////
 // Updated by Lira for Rogue Star September 2026: Character Designer - Loadout ///////////////
 // ///////////////////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star September 2026: Character Designer - Expression ////////////
+// ///////////////////////////////////////////////////////////////////////////////////////////
 
-import { Component } from 'inferno';
+import { Component, type InfernoNode } from 'inferno';
+import { resolveGearAssetForTail } from './utils/gearTailMask';
+import {
+  buildSizeWeightSaveParams,
+  buildSizeWeightState,
+  DEFAULT_SIZE_WEIGHT_LIMITS,
+  type SizeWeightState,
+} from './utils/sizeWeight';
+import { SizeSettings, WeightSettings } from './components/SizeWeightSettings';
+import { SpeechBubbleGallery } from './components/SpeechBubbleGallery';
+import { ExpressionSettings } from './components/ExpressionSettings';
+import {
+  buildExpressionState,
+  expressionValidationError,
+  type ExpressionState,
+} from './utils/expression';
 import {
   backendSetSharedState,
   selectBackend,
@@ -36,7 +53,6 @@ import {
   getIconAssetReadinessSignature,
   getPreviewGridFromAsset,
   getPreviewGridFromGearAsset,
-  getPreviewPartMapFromAssets,
   gridHasPixels,
   resolveIconAssetReference,
   type GearOverlayAsset,
@@ -185,7 +201,8 @@ type BasicAppearanceType =
   | 'wings'
   | 'eyes'
   | 'body'
-  | 'prosthetics';
+  | 'prosthetics'
+  | 'size_weight';
 
 type BasicAppearanceColorTarget =
   | { type: 'hair' }
@@ -229,12 +246,14 @@ const TYPE_LABELS: Record<BasicAppearanceType, string> = {
   eyes: 'Eyes',
   body: 'Body',
   prosthetics: 'Body',
+  size_weight: 'Size/Weight/Expression',
 };
 
 const DEFAULT_BASIC_APPEARANCE_TYPE: BasicAppearanceType = 'prosthetics';
 
 const GALLERY_TYPES: BasicAppearanceType[] = [
   DEFAULT_BASIC_APPEARANCE_TYPE,
+  'size_weight',
   'hair',
   'gradient',
   'facial_hair',
@@ -272,13 +291,6 @@ const OVERLAY_SLOT_PRIORITY_MAP: Record<string, number> = {
   custom_marking: 40,
 };
 const HIDDEN_LEG_PARTS = new Set(['l_leg', 'r_leg', 'l_foot', 'r_foot']);
-const TAUR_CLOTHING_SLOTS = new Set([
-  'underwear',
-  'uniform',
-  'belt',
-  'suit',
-  'back',
-]);
 const BODY_COLOR_OVERLAY_SLOTS = new Set([
   'species_tail',
   'prosthetic_tail',
@@ -490,29 +502,6 @@ const applyMaskToGrid = (target: string[][], mask: string[][]) => {
   }
 };
 
-const applyClipMaskToGrid = (target: string[][], mask: string[][]) => {
-  if (!Array.isArray(target) || !Array.isArray(mask)) {
-    return;
-  }
-  const width = Math.min(target.length, mask.length);
-  for (let x = 0; x < width; x += 1) {
-    const targetColumn = target[x];
-    const maskColumn = mask[x];
-    if (!Array.isArray(targetColumn) || !Array.isArray(maskColumn)) {
-      continue;
-    }
-    const height = Math.min(targetColumn.length, maskColumn.length);
-    for (let y = 0; y < height; y += 1) {
-      if (!pixelHasColor(targetColumn[y])) {
-        continue;
-      }
-      if (pixelHasColor(maskColumn[y])) {
-        targetColumn[y] = TRANSPARENT_HEX;
-      }
-    }
-  }
-};
-
 const collectHiddenLegParts = (hiddenBodyParts?: string[] | null): string[] => {
   if (!Array.isArray(hiddenBodyParts)) {
     return [];
@@ -581,23 +570,6 @@ const buildSuppressedMarkingPartsByDir = (
     }
   }
   return result;
-};
-
-const maskGridForHiddenLegParts = (
-  grid: string[][],
-  referenceParts: Record<string, string[][]>,
-  hiddenLegParts: string[]
-) => {
-  if (!hiddenLegParts.length) {
-    return;
-  }
-  for (const partId of hiddenLegParts) {
-    const maskGrid = referenceParts[partId];
-    if (!maskGrid) {
-      continue;
-    }
-    applyClipMaskToGrid(grid, maskGrid);
-  }
 };
 
 const buildHairGradientOverlayGrid = (options: {
@@ -735,8 +707,24 @@ export const buildBasicPayloadSignature = (
   }:${(payload.base_biological_genders || []).join('|')}:${(
     payload.biological_genders || []
   ).join('|')}`;
-  return `${species}:${revision}:${altRevision}:${genderAltRevision}:${genderAltDigitigradeRevision}:${size}:${digitigrade}:${digitigradeAllowed}:${biologicalGender}:${defsSignature}:${prostheticSignature}`;
+  const sizeWeightSignature = JSON.stringify([
+    buildSizeWeightState(payload),
+    payload.preview_transform,
+    payload.custom_speech_bubble,
+    buildExpressionState(payload),
+  ]);
+  return `${species}:${revision}:${altRevision}:${genderAltRevision}:${genderAltDigitigradeRevision}:${size}:${digitigrade}:${digitigradeAllowed}:${biologicalGender}:${defsSignature}:${prostheticSignature}:${sizeWeightSignature}`;
 };
+
+const resolveExpressionSettings = (
+  payload: BasicAppearancePayload | null,
+  state: BasicAppearanceState
+) => ({
+  voices: payload?.expression_voices || [],
+  bubble: (payload?.speech_bubble_styles || []).find(
+    ({ id }) => id === state.custom_speech_bubble
+  ) || { id: state.custom_speech_bubble },
+});
 
 const resolveSelectedDef = <T extends { id: string }>(
   defs: T[] | undefined,
@@ -764,6 +752,31 @@ const resolveAccessoryMaxChannels = (
   }
   return max;
 };
+
+const resolveSizeWeightSettings = (
+  payload: BasicAppearancePayload | null,
+  uiLocked: boolean,
+  pendingSave: boolean
+) => ({
+  limits: payload?.size_weight_limits || DEFAULT_SIZE_WEIGHT_LIMITS,
+  speechBubbleStyles: payload?.speech_bubble_styles || [],
+  disabled: uiLocked || pendingSave,
+});
+
+const resolveAccessoryChannelCaps = (
+  ears: BasicAppearanceAccessoryDefinition[] | undefined,
+  tails: BasicAppearanceAccessoryDefinition[] | undefined,
+  wings: BasicAppearanceAccessoryDefinition[] | undefined,
+  hornColors: (string | null)[]
+): BasicAppearanceAccessoryChannelCaps => ({
+  ears: resolveAccessoryMaxChannels(ears),
+  horns: Math.max(
+    resolveAccessoryMaxChannels(ears),
+    Array.isArray(hornColors) ? hornColors.length : 0
+  ),
+  tail: resolveAccessoryMaxChannels(tails),
+  wings: resolveAccessoryMaxChannels(wings),
+});
 
 const resolveDefaultColorTarget = (
   type: BasicAppearanceType
@@ -1228,6 +1241,7 @@ type BasicAppearanceGallerySectionProps = Readonly<{
   backgroundTileHeight?: number;
   onSelect: (id: string | null) => void;
   emptyMessage?: string;
+  speechBubbleGallery?: InfernoNode;
 }>;
 
 const BasicAppearanceGallerySection = ({
@@ -1251,10 +1265,16 @@ const BasicAppearanceGallerySection = ({
   backgroundTileHeight,
   onSelect,
   emptyMessage,
+  speechBubbleGallery,
 }: BasicAppearanceGallerySectionProps) => (
   <Section
+    fill={type === 'size_weight'}
     title={
-      type === 'prosthetics' ? 'Prosthetic Gallery' : 'Basic Appearance Gallery'
+      type === 'size_weight'
+        ? 'Speech Bubble Gallery'
+        : type === 'prosthetics'
+          ? 'Prosthetic Gallery'
+          : 'Basic Appearance Gallery'
     }
     buttons={
       <Flex align="center" gap={0.5} wrap="wrap">
@@ -1275,37 +1295,43 @@ const BasicAppearanceGallerySection = ({
         </Flex.Item>
       </Flex>
     }>
-    <Box mb={1}>
-      <Input
-        fluid
-        value={search}
-        placeholder={`Search ${TYPE_LABELS[type].toLowerCase()}…`}
-        onInput={(e, value) => {
-          setSearch(value);
-          setTilePage(0);
-        }}
-      />
-    </Box>
-    <BasicTileSection
-      definitions={definitions}
-      canvasWidth={canvasWidth}
-      canvasHeight={canvasHeight}
-      search={search}
-      page={tilePage}
-      onPageChange={setTilePage}
-      tileDirectionsSignature={tileDirectionsSignature}
-      assetRevision={assetRevision}
-      selectedId={selectedId}
-      backgroundImage={backgroundImage}
-      backgroundColor={backgroundColor}
-      backgroundScale={backgroundScale}
-      backgroundTileWidth={backgroundTileWidth}
-      backgroundTileHeight={backgroundTileHeight}
-      getTilePreviewEntries={getTilePreviewEntries}
-      onSelect={onSelect}
-      emptyMessage={emptyMessage}
-      allowDeselect={type !== 'prosthetics'}
-    />
+    {type === 'size_weight' ? (
+      speechBubbleGallery
+    ) : (
+      <>
+        <Box mb={1}>
+          <Input
+            fluid
+            value={search}
+            placeholder={`Search ${TYPE_LABELS[type].toLowerCase()}…`}
+            onInput={(e, value) => {
+              setSearch(value);
+              setTilePage(0);
+            }}
+          />
+        </Box>
+        <BasicTileSection
+          definitions={definitions}
+          canvasWidth={canvasWidth}
+          canvasHeight={canvasHeight}
+          search={search}
+          page={tilePage}
+          onPageChange={setTilePage}
+          tileDirectionsSignature={tileDirectionsSignature}
+          assetRevision={assetRevision}
+          selectedId={selectedId}
+          backgroundImage={backgroundImage}
+          backgroundColor={backgroundColor}
+          backgroundScale={backgroundScale}
+          backgroundTileWidth={backgroundTileWidth}
+          backgroundTileHeight={backgroundTileHeight}
+          getTilePreviewEntries={getTilePreviewEntries}
+          onSelect={onSelect}
+          emptyMessage={emptyMessage}
+          allowDeselect={type !== 'prosthetics'}
+        />
+      </>
+    )}
   </Section>
 );
 
@@ -1317,6 +1343,7 @@ type BasicAppearanceSaveSectionProps = Readonly<{
   onSave: () => void;
   onSaveAndClose: () => void;
   onDiscardAndClose: () => void;
+  validationError?: string | null;
 }>;
 
 export const BasicAppearanceSaveSection = ({
@@ -1327,6 +1354,7 @@ export const BasicAppearanceSaveSection = ({
   onSave,
   onSaveAndClose,
   onDiscardAndClose,
+  validationError,
 }: BasicAppearanceSaveSectionProps) => (
   <Section title="Save">
     <Flex justify="space-between" wrap className="RogueStar__sessionButtons">
@@ -1335,7 +1363,13 @@ export const BasicAppearanceSaveSection = ({
           className={`${CHIP_BUTTON_CLASS} RogueStar__glowButton--positive`}
           icon={pendingSave ? 'spinner-third' : 'save'}
           iconSpin={pendingSave}
-          disabled={pendingClose || pendingSave || uiLocked || !dirty}
+          disabled={
+            pendingClose ||
+            pendingSave ||
+            uiLocked ||
+            !dirty ||
+            !!validationError
+          }
           onClick={onSave}>
           Save
         </Button>
@@ -1345,7 +1379,9 @@ export const BasicAppearanceSaveSection = ({
           className={`${CHIP_BUTTON_CLASS} RogueStar__glowButton--positive`}
           icon={pendingClose ? 'spinner-third' : 'floppy-disk'}
           iconSpin={pendingClose}
-          disabled={pendingClose || pendingSave || uiLocked}
+          disabled={
+            pendingClose || pendingSave || uiLocked || !!validationError
+          }
           onClick={onSaveAndClose}>
           Save &amp; Close
         </Button>
@@ -1364,6 +1400,7 @@ export const BasicAppearanceSaveSection = ({
         />
       </Flex.Item>
     </Flex>
+    {validationError && <NoticeBox mt={1}>{validationError}</NoticeBox>}
   </Section>
 );
 
@@ -2254,6 +2291,8 @@ type BasicAppearancePreviewColumnProps = Readonly<{
   colorPickerValue: string;
   applyColorTarget: (hex: string) => void;
   colorPickerDisabled?: boolean;
+  showColorPicker?: boolean;
+  alternateSettings?: InfernoNode;
 }>;
 
 export const BasicAppearancePreviewColumn = ({
@@ -2281,6 +2320,8 @@ export const BasicAppearancePreviewColumn = ({
   colorPickerValue,
   applyColorTarget,
   colorPickerDisabled = false,
+  showColorPicker = true,
+  alternateSettings,
 }: BasicAppearancePreviewColumnProps) => (
   <Flex direction="column" gap={1}>
     <LivePreviewCard
@@ -2306,30 +2347,34 @@ export const BasicAppearancePreviewColumn = ({
       resolvedCanvasBackground={resolvedCanvasBackground}
       cycleCanvasBackground={cycleCanvasBackground}
     />
-    <Section title="Color Picker">
-      <Box
-        as="fieldset"
-        disabled={colorPickerDisabled}
-        aria-disabled={colorPickerDisabled}
-        className="RogueStar__inlineColorPicker"
-        style={{
-          border: 0,
-          margin: 0,
-          padding: 0,
-          minWidth: 0,
-          pointerEvents: colorPickerDisabled ? 'none' : undefined,
-          opacity: colorPickerDisabled ? 0.5 : 1,
-        }}>
-        <RogueStarColorPicker
-          color={colorPickerValue}
-          currentColor={colorPickerValue}
-          onChange={applyColorTarget}
-          onCommit={applyColorTarget}
-          showPreview={false}
-          showCustomColors={false}
-        />
-      </Box>
-    </Section>
+    {showColorPicker ? (
+      <Section title="Color Picker">
+        <Box
+          as="fieldset"
+          disabled={colorPickerDisabled}
+          aria-disabled={colorPickerDisabled}
+          className="RogueStar__inlineColorPicker"
+          style={{
+            border: 0,
+            margin: 0,
+            padding: 0,
+            minWidth: 0,
+            pointerEvents: colorPickerDisabled ? 'none' : undefined,
+            opacity: colorPickerDisabled ? 0.5 : 1,
+          }}>
+          <RogueStarColorPicker
+            color={colorPickerValue}
+            currentColor={colorPickerValue}
+            onChange={applyColorTarget}
+            onCommit={applyColorTarget}
+            showPreview={false}
+            showCustomColors={false}
+          />
+        </Box>
+      </Section>
+    ) : (
+      alternateSettings
+    )}
   </Flex>
 );
 
@@ -2609,7 +2654,8 @@ const buildOrderedOverlayLayers = (
   canvasHeight: number,
   source: OrderedOverlayLayer['source'],
   signalAssetUpdate: () => void,
-  orderOffset = 0
+  orderOffset = 0,
+  clipMask?: IconAssetReference | null
 ): OrderedOverlayLayer[] => {
   if (!Array.isArray(assets) || !assets.length) {
     return [];
@@ -2617,7 +2663,7 @@ const buildOrderedOverlayLayers = (
   const layers: OrderedOverlayLayer[] = [];
   const updateSignal = signalAssetUpdate || (() => undefined);
   for (let i = 0; i < assets.length; i += 1) {
-    const entry = assets[i] as GearOverlayAsset | IconAssetPayload;
+    const entry = resolveGearAssetForTail(assets[i], clipMask);
     const grid = getPreviewGridFromGearAsset(
       entry,
       canvasWidth,
@@ -5248,6 +5294,7 @@ type OverlayEntriesOptions = {
 
 type GearOverlayLayerOptions = {
   dirState: PreviewDirState;
+  clipMask?: IconAssetReference | null;
   canvasWidth: number;
   canvasHeight: number;
   showEquipment: boolean;
@@ -5268,6 +5315,7 @@ const buildGearOverlayLayers = (
 ): GearOverlayLayerGroups => {
   const {
     dirState,
+    clipMask,
     canvasWidth,
     canvasHeight,
     showEquipment,
@@ -5280,7 +5328,9 @@ const buildGearOverlayLayers = (
     canvasWidth,
     canvasHeight,
     'base',
-    signalAssetUpdate
+    signalAssetUpdate,
+    0,
+    clipMask
   );
   const loadoutLayers = showLoadoutGear
     ? buildOrderedOverlayLayers(
@@ -5291,7 +5341,8 @@ const buildGearOverlayLayers = (
         canvasHeight,
         'loadout',
         signalAssetUpdate,
-        baseOverlayLayers.length
+        baseOverlayLayers.length,
+        clipMask
       )
     : [];
   const loadoutSlots = new Set(
@@ -5308,7 +5359,8 @@ const buildGearOverlayLayers = (
         canvasHeight,
         'job',
         signalAssetUpdate,
-        baseOverlayLayers.length + loadoutLayers.length
+        baseOverlayLayers.length + loadoutLayers.length,
+        clipMask
       )
     : [];
   const jobLayers =
@@ -5331,7 +5383,8 @@ const buildGearOverlayLayers = (
         canvasHeight,
         'equipment',
         signalAssetUpdate,
-        baseOverlayLayers.length + jobLayers.length + loadoutLayers.length
+        baseOverlayLayers.length + jobLayers.length + loadoutLayers.length,
+        clipMask
       ).filter((entry) => !entry.slot || !higherPrioritySlots.has(entry.slot))
     : [];
   return {
@@ -5581,21 +5634,15 @@ const buildOverlayEntriesFromMergedLayers = (options: {
   merged: OrderedOverlayLayer[];
   dir: number;
   hideShoes: boolean;
-  referenceParts: Record<string, string[][]> | null;
-  hiddenLegParts: string[];
 }): PreviewLayerEntry[] => {
-  const { merged, dir, hideShoes, referenceParts, hiddenLegParts } = options;
+  const { merged, dir, hideShoes } = options;
   const overlayEntries: PreviewLayerEntry[] = [];
   merged.forEach((entry, index) => {
     if (hideShoes && entry.slot === 'shoes') {
       return;
     }
     const grid = cloneGridData(entry.grid);
-    let rasterIdentity = entry.rasterIdentity;
-    if (referenceParts && entry.slot && TAUR_CLOTHING_SLOTS.has(entry.slot)) {
-      maskGridForHiddenLegParts(grid, referenceParts, hiddenLegParts);
-      rasterIdentity = undefined;
-    }
+    const rasterIdentity = entry.rasterIdentity;
     if (!gridHasPixels(grid)) {
       return;
     }
@@ -5661,18 +5708,10 @@ const buildBasicAppearanceOverlayEntries = (
   const hiddenLegParts = collectHiddenLegParts(dirState.hiddenBodyParts);
   const hideShoes =
     hiddenLegParts.includes('l_foot') || hiddenLegParts.includes('r_foot');
-  const referenceParts =
-    hiddenLegParts.length > 0
-      ? getPreviewPartMapFromAssets(
-          dirState.referencePartAssets,
-          canvasWidth,
-          canvasHeight,
-          signalAssetUpdate
-        )
-      : null;
   const { baseOverlayLayers, equipmentLayers, loadoutLayers, jobLayers } =
     buildGearOverlayLayers({
       dirState,
+      clipMask: tailDef?.clip_mask,
       canvasWidth,
       canvasHeight,
       showEquipment,
@@ -5724,15 +5763,18 @@ const buildBasicAppearanceOverlayEntries = (
     merged,
     dir,
     hideShoes,
-    referenceParts,
-    hiddenLegParts,
   });
 };
 
 const resolveGalleryType = (
   type: BasicAppearanceType
 ): BasicAppearanceGalleryType =>
-  type === 'eyes' || type === 'body' || type === 'prosthetics' ? 'hair' : type;
+  type === 'eyes' ||
+  type === 'body' ||
+  type === 'prosthetics' ||
+  type === 'size_weight'
+    ? 'hair'
+    : type;
 
 type PreviewSourceSelection = {
   previewUsesAltSources: boolean;
@@ -6461,6 +6503,9 @@ const resolveBasicAppearanceGalleryPresentation = (options: {
     prostheticContext,
     selectedProstheticModelId,
   } = options;
+  if (type === 'size_weight') {
+    return { definitions: [], selectedId: null, emptyMessage: undefined };
+  }
   if (type === 'prosthetics') {
     return {
       definitions: prostheticDefinitions,
@@ -6935,6 +6980,47 @@ export const BasicAppearanceTab = (props: BasicAppearanceTabProps, context) => {
   const bloodTypes = resolveStringOptions(basicPayload?.blood_types);
   const bloodReagents = resolveStringOptions(basicPayload?.blood_reagents);
   const prostheticsMode = type === 'prosthetics';
+  const sizeWeightMode = type === 'size_weight';
+  const {
+    limits: sizeWeightLimits,
+    speechBubbleStyles,
+    disabled: sizeWeightLocked,
+  } = resolveSizeWeightSettings(basicPayload, uiLocked, pendingSave);
+  const updateSizeWeight = (values: Partial<SizeWeightState>) => {
+    if (uiLocked || pendingSave) {
+      return;
+    }
+    const { latestState, latestSavedState } = resolveLatestBasicState();
+    const nextState = { ...latestState, ...values };
+    updateAppearanceState(() => nextState);
+    setDirty(!basicAppearanceStatesEqual(nextState, latestSavedState));
+  };
+  const expressionSettings = resolveExpressionSettings(
+    basicPayload,
+    appearanceState
+  );
+  const updateExpression = (values: Partial<ExpressionState>) => {
+    if (sizeWeightLocked) {
+      return;
+    }
+    const { latestState, latestSavedState } = resolveLatestBasicState();
+    const nextState = { ...latestState, ...values };
+    updateAppearanceState(() => nextState);
+    setDirty(!basicAppearanceStatesEqual(nextState, latestSavedState));
+  };
+  const selectSpeechBubble = (id: string) => {
+    if (
+      uiLocked ||
+      pendingSave ||
+      !speechBubbleStyles.some((style) => style.id === id)
+    ) {
+      return;
+    }
+    const { latestState, latestSavedState } = resolveLatestBasicState();
+    const nextState = { ...latestState, custom_speech_bubble: id };
+    updateAppearanceState(() => nextState);
+    setDirty(!basicAppearanceStatesEqual(nextState, latestSavedState));
+  };
   const normalizedActiveProstheticTargets = normalizeProstheticTargets(
     activeProstheticTargets
   );
@@ -7151,6 +7237,9 @@ export const BasicAppearanceTab = (props: BasicAppearanceTabProps, context) => {
   const handleSave = async (close = false) => {
     const { latestState, latestSavedState, latestDirty } =
       resolveLatestBasicState();
+    if (expressionValidationError(latestState)) {
+      return;
+    }
     const wasDirty = latestDirty;
     const speciesPreviewStale =
       shouldInvalidateSpeciesPayloadForBiologicalGenderChange(
@@ -7170,6 +7259,9 @@ export const BasicAppearanceTab = (props: BasicAppearanceTabProps, context) => {
         setPreviewRefreshSkips((previewRefreshSkips || 0) + 1);
       }
       await act('save_basic_appearance', {
+        ...buildSizeWeightSaveParams(latestState),
+        ...buildExpressionState(latestState),
+        custom_speech_bubble: latestState.custom_speech_bubble,
         biological_gender: latestState.biological_gender,
         digitigrade: latestState.digitigrade ? 1 : 0,
         body_color: latestState.body_color,
@@ -7242,17 +7334,12 @@ export const BasicAppearanceTab = (props: BasicAppearanceTabProps, context) => {
     wing_styles,
   } = basicPayload || ({} as BasicAppearancePayload);
 
-  const maxAccessoryChannels: BasicAppearanceAccessoryChannelCaps = {
-    ears: resolveAccessoryMaxChannels(ear_styles),
-    horns: Math.max(
-      resolveAccessoryMaxChannels(ear_styles),
-      Array.isArray(appearanceState.horn_colors)
-        ? appearanceState.horn_colors.length
-        : 0
-    ),
-    tail: resolveAccessoryMaxChannels(tail_styles),
-    wings: resolveAccessoryMaxChannels(wing_styles),
-  };
+  const maxAccessoryChannels = resolveAccessoryChannelCaps(
+    ear_styles,
+    tail_styles,
+    wing_styles,
+    appearanceState.horn_colors
+  );
 
   const hairDef = resolveSelectedDef(hair_styles, appearanceState.hair_style);
   const gradientDef = resolveSelectedDef(
@@ -8232,8 +8319,24 @@ export const BasicAppearanceTab = (props: BasicAppearanceTabProps, context) => {
       />
       <Flex direction="row" gap={1} wrap={false} height="100%">
         <Flex.Item basis={APPEARANCE_GALLERY_COLUMN_WIDTH} shrink={0}>
-          <Flex direction="column" gap={1}>
+          <Flex direction="column" gap={1} height="100%">
             <BasicAppearanceGallerySection
+              speechBubbleGallery={
+                <SpeechBubbleGallery
+                  styles={speechBubbleStyles}
+                  onAssetReady={signalAssetUpdate}
+                  selectedId={appearanceState.custom_speech_bubble}
+                  disabled={sizeWeightLocked}
+                  onSelect={selectSpeechBubble}
+                  search={search}
+                  onSearch={(value) => {
+                    setSearch(value);
+                    setTilePage(0);
+                  }}
+                  page={tilePage}
+                  onPageChange={setTilePage}
+                />
+              }
               type={type}
               setType={(nextType) => {
                 setType(nextType);
@@ -8274,7 +8377,7 @@ export const BasicAppearanceTab = (props: BasicAppearanceTabProps, context) => {
           </Flex>
         </Flex.Item>
         <Flex.Item basis={APPEARANCE_SETTINGS_COLUMN_WIDTH} shrink={0}>
-          <Flex direction="column" gap={1}>
+          <Flex direction="column" gap={1} height="100%">
             <BasicAppearanceSaveSection
               pendingSave={pendingSave}
               pendingClose={pendingClose}
@@ -8283,8 +8386,17 @@ export const BasicAppearanceTab = (props: BasicAppearanceTabProps, context) => {
               onSave={() => handleSave(false)}
               onSaveAndClose={() => handleSave(true)}
               onDiscardAndClose={handleDiscard}
+              validationError={expressionValidationError(appearanceState)}
             />
-            {prostheticsMode ? (
+            {sizeWeightMode ? (
+              <ExpressionSettings
+                state={appearanceState}
+                {...expressionSettings}
+                disabled={sizeWeightLocked}
+                onChange={updateExpression}
+                onAssetReady={signalAssetUpdate}
+              />
+            ) : prostheticsMode ? (
               prostheticContext ? (
                 <ProstheticSettingsSection
                   state={appearanceState}
@@ -8333,6 +8445,26 @@ export const BasicAppearanceTab = (props: BasicAppearanceTabProps, context) => {
         </Flex.Item>
         <Flex.Item grow>
           <BasicAppearancePreviewColumn
+            showColorPicker={!sizeWeightMode}
+            alternateSettings={
+              <>
+                <Section title="Size">
+                  <SizeSettings
+                    state={appearanceState}
+                    limits={sizeWeightLimits}
+                    disabled={sizeWeightLocked}
+                    onChange={updateSizeWeight}
+                  />
+                </Section>
+                <WeightSettings
+                  state={appearanceState}
+                  limits={sizeWeightLimits}
+                  disabled={sizeWeightLocked}
+                  onChange={updateSizeWeight}
+                  stateToken={stateToken}
+                />
+              </>
+            }
             preview={previewForLive}
             canvasWidth={canvasWidth}
             canvasHeight={canvasHeight}

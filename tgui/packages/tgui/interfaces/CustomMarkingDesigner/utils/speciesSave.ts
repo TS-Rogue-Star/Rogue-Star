@@ -2,15 +2,19 @@
 // Created by Lira for Rogue Star August 2026: Character Designer species save utilities //
 // ////////////////////////////////////////////////////////////////////////////////////////
 
+import { retainExpressionDraft } from './expression';
 import type { PreviewDirectionSource } from '../../../utils/character-preview';
 import type { IconAssetRegistry } from '../../../utils/character-preview';
 import type {
   BasicAppearancePayload,
+  BasicAppearanceState,
   BodyMarkingsPayload,
   SpeciesPayload,
   SpeciesSaveResult,
 } from '../types';
 import { buildBasicStateFromPayload } from './basicAppearance';
+import { retainSizeWeightDraft } from './sizeWeight';
+import { basicAppearanceStatesEqual } from './prosthetics';
 import { deepCopyMarkings } from './bodyMarkings';
 import {
   mergeBasicAppearancePayload,
@@ -108,6 +112,8 @@ type SpeciesSaveStateSyncOptions = Readonly<{
   speciesPayload: SpeciesPayload | null;
   bodyPayload: BodyMarkingsPayload | null;
   basicPayload: BasicAppearancePayload | null;
+  basicDraft?: BasicAppearanceState;
+  basicSaved?: BasicAppearanceState;
 }>;
 
 export const CUSTOM_SPECIES_ID = 'Custom Species';
@@ -210,7 +216,27 @@ export const syncSpeciesSaveResultState = (
     },
     nextBodyPayload
   );
-  const nextBasicState = buildBasicStateFromPayload(nextBasicPayload);
+  const nextBasicSavedState = buildBasicStateFromPayload(nextBasicPayload);
+  const nextBasicState = {
+    ...nextBasicSavedState,
+    custom_speech_bubble:
+      options.basicDraft &&
+      options.basicSaved &&
+      options.basicDraft.custom_speech_bubble !==
+        options.basicSaved.custom_speech_bubble
+        ? options.basicDraft.custom_speech_bubble
+        : nextBasicSavedState.custom_speech_bubble,
+    ...retainExpressionDraft(
+      nextBasicSavedState,
+      options.basicDraft,
+      options.basicSaved
+    ),
+    ...retainSizeWeightDraft(
+      nextBasicSavedState,
+      options.basicDraft,
+      options.basicSaved
+    ),
+  };
 
   writeStates({
     ...(speciesPayload
@@ -248,8 +274,11 @@ export const syncSpeciesSaveResultState = (
     bodyPayload: nextBodyPayload,
     basicPayload: nextBasicPayload,
     basicAppearanceState: nextBasicState,
-    basicAppearanceSavedState: nextBasicState,
-    basicAppearanceDirty: false,
+    basicAppearanceSavedState: nextBasicSavedState,
+    basicAppearanceDirty: !basicAppearanceStatesEqual(
+      nextBasicState,
+      nextBasicSavedState
+    ),
     [`bodyMarkingsReloadPending-${stateToken}`]: false,
     [`basicAppearanceReloadPending-${stateToken}`]: false,
     speciesPendingSave: false,

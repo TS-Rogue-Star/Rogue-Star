@@ -52,6 +52,7 @@ GLOBAL_VAR_INIT(custom_marking_static_atlas_building, FALSE)
 /proc/reset_custom_marking_static_atlas_caches()
 	custom_marking_body_definition_cache = null
 	custom_marking_basic_appearance_definition_cache = null
+	custom_marking_speech_bubble_style_cache = null
 	custom_marking_visible_pixel_cache = null
 	custom_marking_species_body_preview_cache = null
 	custom_marking_species_catalog_cache = null
@@ -90,6 +91,8 @@ GLOBAL_VAR_INIT(custom_marking_static_atlas_building, FALSE)
 	atlas.accepting_assets = FALSE
 	static_atlas_prewarm_exhausted = !!exhausted || !finalized
 	static_atlas_prewarm_complete = TRUE
+	if(!finalized)
+		custom_marking_speech_bubble_style_cache = null
 	if(finalized)
 		log_debug("CustomMarkings: Canonical atlas finalized [atlas.get_frame_count()] unique frames from [atlas.get_requested_frame_count()] requests ([atlas.get_reused_frame_count()] reused) across [atlas.get_sheet_count()] family shards. [atlas.get_sheet_diagnostic_summary()]")
 		if(!atlas.was_loaded_from_persistent_cache())
@@ -305,6 +308,7 @@ GLOBAL_VAR_INIT(custom_marking_static_atlas_building, FALSE)
 	return list(
 		"body" = custom_marking_body_definition_cache,
 		"basic" = custom_marking_basic_appearance_definition_cache,
+		"speech_bubbles" = custom_marking_speech_bubble_style_cache,
 		"visible" = custom_marking_visible_pixel_cache,
 		"species_body" = custom_marking_species_body_preview_cache,
 		"species_catalog" = custom_marking_species_catalog_cache,
@@ -318,6 +322,7 @@ GLOBAL_VAR_INIT(custom_marking_static_atlas_building, FALSE)
 /proc/restore_custom_marking_static_atlas_caches(list/caches)
 	custom_marking_body_definition_cache = caches["body"]
 	custom_marking_basic_appearance_definition_cache = caches["basic"]
+	custom_marking_speech_bubble_style_cache = caches["speech_bubbles"]
 	custom_marking_visible_pixel_cache = caches["visible"]
 	custom_marking_species_body_preview_cache = caches["species_body"]
 	custom_marking_species_catalog_cache = caches["species_catalog"]
