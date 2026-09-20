@@ -7,6 +7,8 @@
 // ///////////////////////////////////////////////////////////////////////////////////////////
 // Updated by Lira for Rogue Star September 2026: Character Designer - Expression ////////////
 // ///////////////////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star September 2026: Character Designer - Misc Settings /////////
+// ///////////////////////////////////////////////////////////////////////////////////////////
 
 import { Component, type InfernoNode } from 'inferno';
 import { resolveGearAssetForTail } from './utils/gearTailMask';
@@ -17,6 +19,8 @@ import {
   type SizeWeightState,
 } from './utils/sizeWeight';
 import { SizeSettings, WeightSettings } from './components/SizeWeightSettings';
+import { PersistenceToggle } from './components/PersistenceToggle';
+import { buildAppearancePersistenceState } from './utils/persistence';
 import { SpeechBubbleGallery } from './components/SpeechBubbleGallery';
 import { ExpressionSettings } from './components/ExpressionSettings';
 import {
@@ -709,6 +713,7 @@ export const buildBasicPayloadSignature = (
   ).join('|')}`;
   const sizeWeightSignature = JSON.stringify([
     buildSizeWeightState(payload),
+    buildAppearancePersistenceState(payload),
     payload.preview_transform,
     payload.custom_speech_bubble,
     buildExpressionState(payload),
@@ -1655,6 +1660,7 @@ type ProstheticSettingsSectionProps = Readonly<{
   setSynthColorEnabled: (enabled: boolean) => void;
   setSynthMarkings: (enabled: boolean) => void;
   resetSettings: () => void;
+  setPersistOrgans: (enabled: boolean) => void;
 }>;
 
 const PROSTHETIC_SELECTION_SUMMARY_PARTS: Array<{
@@ -1783,6 +1789,7 @@ const ProstheticSettingsSection = ({
   setSynthColorEnabled,
   setSynthMarkings,
   resetSettings,
+  setPersistOrgans,
 }: ProstheticSettingsSectionProps) => {
   const normalizedActiveTargets = normalizeProstheticTargets(activeTargets);
   const activeTargetLabels = normalizedActiveTargets.map(
@@ -1833,7 +1840,18 @@ const ProstheticSettingsSection = ({
   };
 
   return (
-    <Section title="Body Settings" fill>
+    <Section
+      title="Body Settings"
+      className="RogueStar__persistenceSection"
+      fill
+      buttons={
+        <PersistenceToggle
+          subject="organs"
+          enabled={state.persist_organs ?? true}
+          disabled={uiLocked}
+          onChange={setPersistOrgans}
+        />
+      }>
       <Flex direction="column" gap={1}>
         <Box>
           <Box bold mb={0.5}>
@@ -7068,6 +7086,8 @@ export const BasicAppearanceTab = (props: BasicAppearanceTabProps, context) => {
       )
     : selectedProstheticModelId;
 
+  const persistenceState = buildAppearancePersistenceState(appearanceState);
+
   const updateBasicDraft = (
     updater: (state: BasicAppearanceState) => BasicAppearanceState
   ) => {
@@ -7260,6 +7280,7 @@ export const BasicAppearanceTab = (props: BasicAppearanceTabProps, context) => {
       }
       await act('save_basic_appearance', {
         ...buildSizeWeightSaveParams(latestState),
+        ...buildAppearancePersistenceState(latestState),
         ...buildExpressionState(latestState),
         custom_speech_bubble: latestState.custom_speech_bubble,
         biological_gender: latestState.biological_gender,
@@ -8421,6 +8442,9 @@ export const BasicAppearanceTab = (props: BasicAppearanceTabProps, context) => {
                   setSynthColorEnabled={setSynthColorEnabled}
                   setSynthMarkings={setSynthMarkings}
                   resetSettings={resetProstheticSettings}
+                  setPersistOrgans={(persist_organs) =>
+                    updateBasicDraft((state) => ({ ...state, persist_organs }))
+                  }
                 />
               ) : (
                 <Section title="Body Settings" fill>
@@ -8454,6 +8478,19 @@ export const BasicAppearanceTab = (props: BasicAppearanceTabProps, context) => {
                     limits={sizeWeightLimits}
                     disabled={sizeWeightLocked}
                     onChange={updateSizeWeight}
+                    persistenceControl={
+                      <PersistenceToggle
+                        subject="scale"
+                        enabled={persistenceState.persist_size}
+                        disabled={sizeWeightLocked}
+                        onChange={(persist_size) =>
+                          updateBasicDraft((state) => ({
+                            ...state,
+                            persist_size,
+                          }))
+                        }
+                      />
+                    }
                   />
                 </Section>
                 <WeightSettings
@@ -8462,6 +8499,19 @@ export const BasicAppearanceTab = (props: BasicAppearanceTabProps, context) => {
                   disabled={sizeWeightLocked}
                   onChange={updateSizeWeight}
                   stateToken={stateToken}
+                  persistenceControl={
+                    <PersistenceToggle
+                      subject="weight"
+                      enabled={persistenceState.persist_weight}
+                      disabled={sizeWeightLocked}
+                      onChange={(persist_weight) =>
+                        updateBasicDraft((state) => ({
+                          ...state,
+                          persist_weight,
+                        }))
+                      }
+                    />
+                  }
                 />
               </>
             }

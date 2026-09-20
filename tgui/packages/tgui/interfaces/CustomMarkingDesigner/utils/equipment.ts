@@ -51,6 +51,7 @@ export const equipmentDraftsEqual = (
   left.pdachoice === right.pdachoice &&
   left.communicator_visibility === right.communicator_visibility &&
   left.shoe_hater === right.shoe_hater &&
+  left.sensorpref === right.sensorpref &&
   EQUIPMENT_CATEGORIES.slice(0, 4).every(
     ({ id }) =>
       left.underwear[id] === right.underwear[id] &&

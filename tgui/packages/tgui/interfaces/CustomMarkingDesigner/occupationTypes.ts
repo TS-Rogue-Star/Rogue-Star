@@ -12,6 +12,10 @@ export type OccupationDraft = {
   priorities: Record<string, OccupationPriority>;
   titles: Record<string, string>;
   alternate_option: number;
+  spawnpoint: string;
+  persist_spawn?: boolean;
+  vantag_volunteer: boolean;
+  vantag_preference: string;
   reset: boolean;
 };
 
@@ -34,6 +38,8 @@ export type OccupationCatalog = {
   departments: { id: string; color: string }[];
   hours: { department: string; played: number; pto: number }[];
   suppress_job_preview: BooleanLike;
+  spawnpoint_options: string[];
+  event_preference_options: { value: string; label: string }[];
 };
 
 export type OccupationPreview = {

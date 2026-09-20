@@ -1,6 +1,8 @@
-// ///////////////////////////////////////////////////////////////////////////////////
-// Created by Lira for Rogue Star September 2026: Character Designer - Identity Tab //
-// ///////////////////////////////////////////////////////////////////////////////////
+// ////////////////////////////////////////////////////////////////////////////////////
+// Created by Lira for Rogue Star September 2026: Character Designer - Identity Tab ///
+// ////////////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star September 2026: Character Designer - Misc Settings //
+// ////////////////////////////////////////////////////////////////////////////////////
 
 import type {
   IdentityDraftState,
@@ -62,6 +64,15 @@ const IDENTITY_VALUE_KEYS = [
   'metadata_likes',
   'metadata_dislikes',
   'custom_link',
+  'resleeve_scan',
+  'resleeve_lock',
+  'synth_cookie',
+  'capture_crystal',
+  'auto_backup_implant',
+  'show_in_directory',
+  'directory_tag',
+  'directory_erptag',
+  'directory_ad',
   'flavor_text_general',
   'flavor_text_head',
   'flavor_text_face',
@@ -92,6 +103,12 @@ export const buildIdentityDraftState = (
   }
   draft.be_random_name = !!payload.be_random_name;
   draft.bday_announce = !!payload.bday_announce;
+  draft.show_in_directory = !!payload.show_in_directory;
+  draft.resleeve_scan = !!payload.resleeve_scan;
+  draft.resleeve_lock = !!payload.resleeve_lock;
+  draft.synth_cookie = !!payload.synth_cookie;
+  draft.capture_crystal = !!payload.capture_crystal;
+  draft.auto_backup_implant = !!payload.auto_backup_implant;
   const birthday = normalizeIdentityBirthday(
     payload.bday_month,
     payload.bday_day
@@ -359,6 +376,15 @@ export const resolveIdentityDraftValidationError = (
     )
   ) {
     return `OOC Notes fields must be ${payload.max_ooc_notes_length} characters or fewer.`;
+  }
+  if (!payload.directory_tag_options.includes(draft.directory_tag)) {
+    return 'Choose a valid Character Directory Vore tag.';
+  }
+  if (!payload.directory_erptag_options.includes(draft.directory_erptag)) {
+    return 'Choose a valid Character Directory ERP tag.';
+  }
+  if (exceeds(draft.directory_ad, payload.max_directory_ad_length)) {
+    return `Character Directory Advertisement must be ${payload.max_directory_ad_length} characters or fewer.`;
   }
   if (exceeds(draft.custom_link, payload.max_custom_link_length)) {
     return `Custom Link must be ${payload.max_custom_link_length} characters or fewer.`;

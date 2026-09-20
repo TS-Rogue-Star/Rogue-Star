@@ -1,6 +1,8 @@
-////////////////////////////////////////////////////////////////////////////////////
-// Created by Lira for Rogue Star September 2026: Character Designer - Occupation //
-////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////
+// Created by Lira for Rogue Star September 2026: Character Designer - Occupation /////
+///////////////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star September 2026: Character Designer - Misc Settings //
+///////////////////////////////////////////////////////////////////////////////////////
 
 /datum/tgui_module/custom_marking_designer
 	var/occupation_save_in_progress = FALSE
@@ -81,6 +83,10 @@
 			snapshot[field] = prefs.vars[field]
 	snapshot["player_alt_titles"] = prefs.player_alt_titles?.Copy() || list()
 	snapshot["alternate_option"] = prefs.alternate_option
+	snapshot["spawnpoint"] = prefs.spawnpoint
+	snapshot["vantag_volunteer"] = prefs.vantag_volunteer
+	snapshot["vantag_preference"] = prefs.vantag_preference
+	snapshot["persistence_settings"] = prefs.persistence_settings & PERSIST_SPAWN
 	return snapshot
 
 /datum/tgui_module/custom_marking_designer/proc/get_occupation_context_signature()
@@ -107,7 +113,7 @@
 		var/datum/job/job = jobs[name]
 		priorities[name] = get_occupation_priority(job)
 		titles[name] = prefs.GetPlayerAltTitle(job)
-	return list("revision" = get_occupation_revision(), "priorities" = priorities, "titles" = titles, "alternate_option" = prefs.alternate_option, "reset" = FALSE)
+	return list("revision" = get_occupation_revision(), "priorities" = priorities, "titles" = titles, "alternate_option" = prefs.alternate_option, "spawnpoint" = prefs.spawnpoint, "persist_spawn" = !!(prefs.persistence_settings & PERSIST_SPAWN), "vantag_volunteer" = !!prefs.vantag_volunteer, "vantag_preference" = prefs.vantag_preference, "reset" = FALSE)
 
 /datum/tgui_module/custom_marking_designer/proc/get_occupation_restriction(datum/job/job, mob/user)
 	if(!user?.client)
@@ -165,7 +171,13 @@
 			descriptions[title] = paragraphs
 		var/restriction = get_occupation_restriction(job, user)
 		entries += list(list("id" = name, "department" = department.name, "assistant" = job.type == /datum/job/assistant, "available" = !restriction, "restriction" = restriction, "titles" = titles, "descriptions" = descriptions, "supervisors" = html_decode(strip_html_simple(job.supervisors || "")), "departments" = job.departments || list(), "manages" = job.departments_managed || list(), "wiki_url" = config.wikiurl ? "[config.wikiurl][job.title]" : null))
-	return list("jobs" = entries, "departments" = departments, "hours" = build_occupation_hours(user), "suppress_job_preview" = ispAI(user))
+	var/list/spawnpoint_options = list()
+	for(var/name in spawntypes)
+		spawnpoint_options += name
+	var/list/event_preference_options = list()
+	for(var/preference in vantag_choices_list)
+		event_preference_options += list(list("value" = preference, "label" = vantag_choices_list[preference]))
+	return list("jobs" = entries, "departments" = departments, "hours" = build_occupation_hours(user), "suppress_job_preview" = ispAI(user), "spawnpoint_options" = spawnpoint_options, "event_preference_options" = event_preference_options)
 
 /datum/tgui_module/custom_marking_designer/proc/validate_occupation_payload(list/values, mob/user, list/errors)
 	if(!islist(values) || values["revision"] != get_occupation_revision())
@@ -179,6 +191,19 @@
 		return null
 	if(!(values["alternate_option"] in list(GET_RANDOM_JOB, BE_ASSISTANT, RETURN_TO_LOBBY)) || !(values["reset"] in list(TRUE, FALSE)))
 		errors += "Choose a valid fallback option."
+		return null
+	if(!istext(values["spawnpoint"]) || !spawntypes[values["spawnpoint"]])
+		errors += "Choose a valid spawn location."
+		return null
+	if(!(values["vantag_volunteer"] in list(TRUE, FALSE)))
+		errors += "Choose a valid event participation setting."
+		return null
+	if(!istext(values["vantag_preference"]) || !(values["vantag_preference"] in vantag_choices_list))
+		errors += "Choose a valid event preference."
+		return null
+	var/persistence_values = validate_designer_persistence_settings(prefs.persistence_settings, values, list("persist_spawn" = PERSIST_SPAWN))
+	if(isnull(persistence_values))
+		errors += "Choose a valid spawn persistence setting."
 		return null
 	var/datum/job/new_high
 	for(var/name in jobs)
@@ -226,6 +251,10 @@
 		if(title != name)
 			alt_titles[name] = title
 	staged["alternate_option"] = values["alternate_option"]
+	staged["spawnpoint"] = values["spawnpoint"]
+	staged["vantag_volunteer"] = values["vantag_volunteer"]
+	staged["vantag_preference"] = values["vantag_preference"]
+	staged["persistence_settings"] = persistence_values
 	return staged
 
 /datum/tgui_module/custom_marking_designer/proc/build_occupation_preview(datum/job/job, title)

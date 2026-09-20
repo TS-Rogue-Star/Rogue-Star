@@ -1,7 +1,8 @@
-// ////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Created by Lira for Rogue Star September 2026: Character Designer - Expression (Lira, September 2026) //
-// ////////////////////////////////////////////////////////////////////////////////////////////////////////
+// /////////////////////////////////////////////////////////////////////////////////
+// Created by Lira for Rogue Star September 2026: Character Designer - Expression //
+// /////////////////////////////////////////////////////////////////////////////////
 
+import type { InfernoNode } from 'inferno';
 import { useLocalState } from '../../../backend';
 import {
   Box,
@@ -25,6 +26,7 @@ type SizeWeightSettingsProps = Readonly<{
   limits: SizeWeightLimits;
   disabled: boolean;
   onChange: (values: Partial<SizeWeightState>) => void;
+  persistenceControl?: InfernoNode;
 }>;
 
 export const SizeSettings = ({
@@ -32,6 +34,7 @@ export const SizeSettings = ({
   limits,
   disabled,
   onChange,
+  persistenceControl,
 }: SizeWeightSettingsProps) => (
   <Box
     as="fieldset"
@@ -44,7 +47,7 @@ export const SizeSettings = ({
       opacity: disabled ? 0.5 : 1,
     }}>
     <LabeledList>
-      <LabeledList.Item label="Scale">
+      <LabeledList.Item label="Scale" buttons={persistenceControl}>
         <NumberInput
           className="RogueStar__numberInput"
           width="100px"
@@ -97,7 +100,9 @@ export const SizeSettings = ({
 );
 
 export const WeightSettings = (
-  props: SizeWeightSettingsProps & { readonly stateToken: string },
+  props: SizeWeightSettingsProps & {
+    readonly stateToken: string;
+  },
   context
 ) => {
   const { state, limits, disabled, onChange, stateToken } = props;
@@ -119,7 +124,9 @@ export const WeightSettings = (
           opacity: disabled ? 0.5 : 1,
         }}>
         <LabeledList>
-          <LabeledList.Item label="Relative Weight">
+          <LabeledList.Item
+            label="Relative Weight"
+            buttons={props.persistenceControl}>
             <NumberInput
               key={unit}
               className="RogueStar__numberInput"

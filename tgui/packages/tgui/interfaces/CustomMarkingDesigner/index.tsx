@@ -27,9 +27,12 @@
 // /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Updated by Lira for Rogue Star September 2026: Character Designer - Expression //////////////////////////////////////
 // /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star September 2026: Character Designer - Misc Settings ///////////////////////////////////
+// /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 import { Component } from 'inferno';
 import { buildSizeWeightSaveParams } from './utils/sizeWeight';
+import { buildAppearancePersistenceState } from './utils/persistence';
 import {
   buildExpressionState,
   expressionValidationError,
@@ -4627,6 +4630,7 @@ const CustomMarkingDesignerContent = (_props, context) => {
         await act('save_body_markings', {
           body_markings: outgoing,
           order: outgoingOrder,
+          persist_markings: bodyPayload?.persist_markings ?? true,
           close: false,
         });
       } else {
@@ -4642,6 +4646,7 @@ const CustomMarkingDesignerContent = (_props, context) => {
             chunk_index: idx,
             chunk_total: totalChunks,
             body_markings: chunks[idx] || {},
+            persist_markings: bodyPayload?.persist_markings ?? true,
           };
           if (idx === 0) {
             payload.order = outgoingOrder;
@@ -4652,6 +4657,7 @@ const CustomMarkingDesignerContent = (_props, context) => {
       const nextSelected = bodyMarkingsSelected || outgoingOrder[0] || null;
       setBodyMarkingsDirty(false);
       setBodySavedState({
+        persist_markings: bodyPayload?.persist_markings ?? true,
         order: [...outgoingOrder],
         markings: deepCopyMarkings(outgoing),
         selectedId: nextSelected,
@@ -4693,6 +4699,7 @@ const CustomMarkingDesignerContent = (_props, context) => {
         ...bodyPayload,
         body_markings: nextMarkings,
         order: nextOrder,
+        persist_markings: fallbackSaved.persist_markings ?? true,
       };
       setBodyPayload(updatedPayload);
     }
@@ -4731,6 +4738,7 @@ const CustomMarkingDesignerContent = (_props, context) => {
       setPreviewRefreshSkips((previewRefreshSkips || 0) + 1);
       await act('save_basic_appearance', {
         ...buildSizeWeightSaveParams(latestState),
+        ...buildAppearancePersistenceState(latestState),
         ...buildExpressionState(latestState),
         custom_speech_bubble: latestState.custom_speech_bubble,
         biological_gender: latestState.biological_gender,
