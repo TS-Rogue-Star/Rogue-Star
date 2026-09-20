@@ -40,13 +40,8 @@
 	var/pet_total = 0
 	if(user.etching.pet_data)
 		pet_total = user.etching.pet_data.len
-<<<<<<< HEAD
 	var/msg = "Pet slots: [pet_total]/[user.etching.pet_slots]"
 	var/choice = tgui_input_list(user, msg, "[src]", list("Retrieve","Manage","Purchase Storage"))
-=======
-
-	var/choice = tgui_input_list(user, "Pet slots: [pet_total]/[user.etching.pet_slots]", "[src]", list("Retrieve","Manage","Purchase Storage"))
->>>>>>> e477c2a2d4749f994460195ba4a442053ef845a0
 
 	switch(choice)
 		if("Purchase Storage")
