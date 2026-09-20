@@ -3,6 +3,7 @@
 /obj/machinery/mob_bank
 	name = "PET System"
 	desc = "It's the petatronic energy transport system! It's a machine that can scan and retrieve your pets!"
+	description_fluff = "You can use this machine to take a scan of your pets so that they can be retrieved in future shifts. This system allows you to save one mob as a pet per character. Saving or loading mobs is only available one time per shift on an account basis. (Ckey) Saving a pet makes loading a pet unavalable for the duration of the shift. There are a number of restrictions about what pets can be stored. No crew members or other similarly complicated/intelligent creatures (monkeys/carbons/borgs), no otherwise sapient creatures (player controlled mobs), and no hostile entities. Any already registered pets will also not be able to be registered. Further, some kinds of creatures may have their own individual restrictions. One can register a pet by presenting the pet to the scanning device. (Click and drag your mob's sprite onto the sprite of the bank.) Once one has registered a pet, they can retrieve that pet in future shifts. One can not retrieve their pet on the same shift that they registered it, as the pet will still be present!"
 	icon = 'icons/rogue-star/machinex32.dmi'
 	icon_state = "mob_bank"
 	idle_power_usage = 1
@@ -32,19 +33,19 @@
 		..()
 
 /obj/machinery/mob_bank/proc/start_using(mob/living/user)
-	/*
-	//Etching doesn't care
-	if(user.real_name != user.client.prefs.real_name)
-		to_chat(user, "<span class = 'warning'>The slot you have selected in character setup is mismatched with the character you are playing as. In order to use the PET system, please select the slot that matches your character.</span>")
+
+	if(!user.etching)
+		to_chat(user, SPAN_WARNING("You cannot use \the [src] at this time. Your mob either cannot use \the [src] or something has gone wrong and you should contact a developer."))
 		return
-	*/
-	var/choice = tgui_input_list(user, "What would you like to do [src]?", "[src]", list("Retrieve","Manage","Purchase Storage","Info","Cancel"))
+	var/pet_total = 0
+	if(user.etching.pet_data)
+		pet_total = user.etching.pet_data.len
+
+	var/choice = tgui_input_list(user, "Pet slots: [pet_total]/[user.etching.pet_slots]", "[src]", list("Retrieve","Manage","Purchase Storage"))
 
 	switch(choice)
-		if("Info")
-			to_chat(user,"<span class = 'notice'>You can use this machine to take a scan of your pets so that they can be retrieved in future shifts. This system allows you to save one mob as a pet per character. Saving or loading mobs is only available one time per shift on an account basis. (Ckey) Saving a pet makes loading a pet unavalable for the duration of the shift. </span><span class = 'warning'>There are a number of restrictions about what pets can be stored. No crew members or other similarly complicated/intelligent creatures (monkeys/carbons/borgs), no otherwise sapient creatures (player controlled mobs), and no hostile entities. Any already registered pets will also not be able to be registered. Further, some kinds of creatures may have their own individual restrictions.</span><span class = 'notice'> One can register a pet by presenting the pet to the scanning device. (Click and drag your mob's sprite onto the sprite of the bank.) Once one has registered a pet, they can retrieve that pet in future shifts. One can not retrieve their pet on the same shift that they registered it, as the pet will still be present!</span>")
 		if("Purchase Storage")
-			if(user.etching?.purchase_pet_slot())
+			if(user.etching.purchase_pet_slot())
 				visible_message(SPAN_NOTICE("\The [src] pings happily!"), runemessage = "ping!")
 			else
 				visible_message(SPAN_WARNING("\The [src] boops..."), runemessage = "boop. . .")
@@ -101,11 +102,7 @@
 	if(!ourmob.save_conditions(user))
 		to_chat(user, "<span class = 'warning'>\The [ourmob] can not be registered into the PET system.</span>")
 		return
-/*	//Etching doesn't care about what slot you have loaded so neither do we
-	if(user.real_name != user.client.prefs.real_name)
-		to_chat(user, "<span class = 'warning'>The slot you have selected in character setup is mismatched with the character you are playing as. In order to use the PET system, please select the slot that matches your character.</span>")
-		return
-*/
+
 	var/whatname = tgui_input_text(user, "What name do you want to register for \the [ourmob]? ([PET_NAME_MAX] characters)", "Pet name?", ourmob.name, max_length = PET_NAME_MAX)
 	if(length(whatname) > PET_NAME_MAX)
 		to_chat(user, SPAN_WARNING("[whatname] is too long. ([PET_NAME_MAX] characters)"))
@@ -133,30 +130,16 @@
 
 	else if(choice != "For me!")
 		return
+	if(user.etching.pet_data)
+		if(whatname in user.etching.pet_data)
+			if(tgui_alert(user, "[whatname] is a name already present in your pet storage, using this name will OVERWRITE the [whatname] you have already saved. Do you want to proceed?","OVERWRITE [whatname]",list("Cancel", "OVERWRITE")) != "OVERWRITE")
+				return
 	visible_message("<span class='notice'>\The [src] scans \the [ourmob] thoroughly...</span>", runemessage = "wrrr...")
 	begin_use(10)
 	if(!do_after(user, 10 SECONDS, src, exclusive = TASK_ALL_EXCLUSIVE) || inoperable())
 		visible_message("<span class='warning'>\The [src] boops sadly...</span>", runemessage = "boop...")
 		return
 
-//	var/path = persist_mob_savefile_path(user)
-/*	if(path)
-		if(fexists(path))
-			var/list/load = json_decode(file2text(path))
-			if(load)
-				var/ourtype = load["type"]
-				if(ourtype)
-
-	var/to_be_overwritten
-	if(user.etching.pet_slots >= user.etching.pet_data?.len)
-		to_be_overwritten = if(user,"To save this pet you will need to override an existing pet","Overwrite pet",user.etching.pet_data)
-		if(!to_be_overwritten)
-			to_chat(user,SPAN_DANGER("The pet was not saved."))
-			busy_bank = FALSE
-			visible_message("<span class='warning'>\The [src] boops sadly...</span>", runemessage = "boop...")
-			update_icon()
-			return
-*/
 	if(!user.etching.pet_save(ourmob, whatname))	//Save mob to character etching
 		to_chat(user,SPAN_DANGER("The pet was not saved."))
 		visible_message("<span class='warning'>\The [src] boops sadly...</span>", runemessage = "boop...")
@@ -167,7 +150,6 @@
 	ourmob.load_owner = user.ckey
 	ourmob.faction = user.faction
 	ourmob.hunter = FALSE
-//	var/list/to_save = ourmob.mob_bank_save(user)
 	ourmob.verbs += /mob/living/simple_mob/proc/toggle_ghostjoin
 	ourmob.verbs += /mob/living/simple_mob/proc/toggle_follow
 	user.verbs += /mob/living/proc/toggle_pet_swap
@@ -183,33 +165,6 @@
 		ourmob.verbs += /mob/living/simple_mob/proc/toggle_hostile
 		ourmob.ai_holder.hostile = FALSE
 		ourmob.ai_holder.vore_hostile = FALSE
-
-
-/*
-	if(!to_save)
-		busy_bank = FALSE
-		visible_message("<span class='warning'>\The [src] boops unhappily. It encountered an error when attempting to save \the [ourmob]'s scan.</span>", runemessage = "boop...")
-		update_icon()
-		return
-
-	var/json_to_file = json_encode(to_save)
-	if(!json_to_file)
-		log_debug("Saving: [path] failed jsonencode")
-		busy_bank = FALSE
-		visible_message("<span class='warning'>\The [src] boops unhappily. It encountered an error when attempting to save \the [ourmob]'s scan.</span>", runemessage = "boop...")
-		update_icon()
-		return
-
-	//Write it out
-	rustg_file_write(json_to_file, path)
-
-	if(!fexists(path))
-		log_debug("Saving: [path] failed file write")
-		busy_bank = FALSE
-		visible_message("<span class='warning'>\The [src] boops unhappily. It encountered an error when attempting to save \the [ourmob]'s scan.</span>", runemessage = "boop...")
-		update_icon()
-		return
-*/
 	mob_takers |= user.ckey
 	mob_savers |= user.ckey
 	to_chat(user,"<span class = 'notice'>\The [src] completes its scan of \the [ourmob].</span>")
