@@ -23,6 +23,8 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Updated by Lira for Rogue Star September 2026: Character Designer - Expression //////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star September 2026: Character Designer - Misc Settings ///////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 #define CUSTOM_MARKING_DEFAULT_WIDTH 32
 #define CUSTOM_MARKING_DEFAULT_HEIGHT 32
@@ -4635,6 +4637,18 @@ var/global/custom_marking_static_source_digest_complete = TRUE
 		"metadata_likes" = allow_ooc_notes ? identity_text_for_payload(prefs.metadata_likes) : "",
 		"metadata_dislikes" = allow_ooc_notes ? identity_text_for_payload(prefs.metadata_dislikes) : "",
 		"custom_link" = identity_text_for_payload(prefs.custom_link),
+		"resleeve_scan" = !!prefs.resleeve_scan,
+		"resleeve_lock" = !!prefs.resleeve_lock,
+		"synth_cookie" = !!prefs.synth_cookie,
+		"capture_crystal" = !!prefs.capture_crystal,
+		"auto_backup_implant" = !!prefs.auto_backup_implant,
+		"show_in_directory" = !!prefs.show_in_directory,
+		"directory_tag" = prefs.directory_tag,
+		"directory_erptag" = prefs.directory_erptag,
+		"directory_ad" = identity_text_for_payload(prefs.directory_ad),
+		"directory_tag_options" = GLOB.char_directory_tags.Copy(),
+		"directory_erptag_options" = GLOB.char_directory_erptags.Copy(),
+		"max_directory_ad_length" = MAX_MESSAGE_LEN - 1,
 		"economic_status" = prefs.economic_status,
 		"home_system" = identity_text_for_payload(prefs.home_system || "Unset"),
 		"birthplace" = identity_text_for_payload(prefs.birthplace || "Unset"),
@@ -4787,7 +4801,9 @@ var/global/custom_marking_static_source_digest_complete = TRUE
 	var/list/required_fields = list(
 		"real_name", "nickname", "be_random_name", "identifying_gender",
 		"age", "bday_month", "bday_day", "bday_announce",
-		"custom_link", "economic_status", "home_system", "birthplace", "citizenship", "faction", "religion"
+		"custom_link", "economic_status", "home_system", "birthplace", "citizenship", "faction", "religion",
+		"show_in_directory", "directory_tag", "directory_erptag", "directory_ad",
+		"resleeve_scan", "resleeve_lock", "synth_cookie", "capture_crystal", "auto_backup_implant"
 	)
 	var/list/flavor_text_fields = get_identity_flavor_text_fields()
 	for(var/flavor_text_field in flavor_text_fields)
@@ -4885,6 +4901,34 @@ var/global/custom_marking_static_source_digest_complete = TRUE
 	if(!length(new_custom_link))
 		new_custom_link = null
 
+	var/list/identity_preference_labels = list(
+		"resleeve_scan" = "Start with Body Scan",
+		"resleeve_lock" = "Prevent Body Impersonation",
+		"synth_cookie" = "Allow Cookie Replicas",
+		"capture_crystal" = "Capture Crystal Preferences",
+		"auto_backup_implant" = "Start with Backup Implant"
+	)
+	var/list/new_identity_preferences = list()
+	for(var/field in identity_preference_labels)
+		var/value = params[field]
+		if(!isnum(value) || !(value in list(TRUE, FALSE)))
+			return reject_identity_payload(rejection_reasons, "[identity_preference_labels[field]] must be enabled or disabled.")
+		new_identity_preferences[field] = value
+
+	var/new_show_in_directory = parse_identity_boolean(params["show_in_directory"])
+	if(isnull(new_show_in_directory))
+		return reject_identity_payload(rejection_reasons, "Character Directory visibility must be enabled or disabled.")
+	var/new_directory_tag = params["directory_tag"]
+	if(!istext(new_directory_tag) || !(new_directory_tag in GLOB.char_directory_tags))
+		return reject_identity_payload(rejection_reasons, "Choose a valid Character Directory Vore tag.")
+	var/new_directory_erptag = params["directory_erptag"]
+	if(!istext(new_directory_erptag) || !(new_directory_erptag in GLOB.char_directory_erptags))
+		return reject_identity_payload(rejection_reasons, "Choose a valid Character Directory ERP tag.")
+	var/raw_directory_ad = params["directory_ad"]
+	if(!istext(raw_directory_ad) || length(raw_directory_ad) >= MAX_MESSAGE_LEN)
+		return reject_identity_payload(rejection_reasons, "Character Directory Advertisement must be [MAX_MESSAGE_LEN - 1] characters or fewer.")
+	var/new_directory_ad = sanitize(raw_directory_ad, extra = 0) || ""
+
 	var/allow_ooc_notes = !!config.allow_Metadata
 	var/list/new_ooc_notes = list()
 	if(allow_ooc_notes)
@@ -4954,6 +4998,12 @@ var/global/custom_marking_static_source_digest_complete = TRUE
 	prefs.flavor_texts = updated_flavor_texts
 	prefs.flavour_texts_robot = updated_robot_flavor_texts
 	prefs.custom_link = new_custom_link
+	prefs.show_in_directory = new_show_in_directory
+	prefs.directory_tag = new_directory_tag
+	prefs.directory_erptag = new_directory_erptag
+	prefs.directory_ad = new_directory_ad
+	for(var/field in new_identity_preferences)
+		prefs.vars[field] = new_identity_preferences[field]
 	if(!records_banned)
 		prefs.med_record = new_records["med_record"]
 		prefs.gen_record = new_records["gen_record"]
@@ -5606,6 +5656,33 @@ var/global/custom_marking_static_source_digest_complete = TRUE
 	payload[registry_key] = bundle["asset_registry"]
 	return TRUE
 
+/proc/validate_designer_persistence_settings(current_settings, list/params, list/fields)
+	if(!isnum(current_settings) || !islist(params) || !islist(fields))
+		return null
+	var/updated = current_settings
+	for(var/field in fields)
+		if(!(field in params))
+			continue
+		var/value = params[field]
+		if(istext(value))
+			if(value == "1")
+				value = TRUE
+			else if(value == "0")
+				value = FALSE
+		if(!isnum(value) || !(value in list(FALSE, TRUE)))
+			return null
+		var/flag = fields[field]
+		if(value)
+			updated |= flag
+		else
+			updated &= ~flag
+	return updated
+
+/datum/tgui_module/custom_marking_designer/proc/append_basic_persistence_payload(list/payload)
+	payload["persist_size"] = !!(prefs.persistence_settings & PERSIST_SIZE)
+	payload["persist_weight"] = !!(prefs.persistence_settings & PERSIST_WEIGHT)
+	payload["persist_organs"] = !!(prefs.persistence_settings & PERSIST_ORGANS)
+
 // Build the payload for the standard body markings tab (Lira, December 2025)
 /datum/tgui_module/custom_marking_designer/proc/build_body_markings_payload(known_definition_revision = null, known_preview_revision = null, known_preview_signature = null, preview_only = FALSE)
 	var/list/yield_context = custom_marking_begin_manual_yield()
@@ -5621,6 +5698,7 @@ var/global/custom_marking_static_source_digest_complete = TRUE
 	if(preview_only)
 		payload["preview_only"] = TRUE
 	if(!preview_only)
+		payload["persist_markings"] = !!(prefs.persistence_settings & PERSIST_MARKINGS)
 		var/list/original_body_markings = prefs.body_markings ? prefs.body_markings.Copy() : list()
 		var/list/filtered_body_markings = list()
 		if(islist(original_body_markings))
@@ -6501,6 +6579,7 @@ var/global/custom_marking_static_source_digest_complete = TRUE
 	if(preview_only)
 		payload["preview_only"] = TRUE
 	if(!preview_only)
+		append_basic_persistence_payload(payload)
 		append_basic_size_weight_payload(payload)
 		append_basic_expression_payload(payload)
 		payload["expression_voices"] = build_expression_voices()
@@ -7057,11 +7136,15 @@ var/global/custom_marking_static_source_digest_complete = TRUE
 		return FALSE
 	if(!islist(params))
 		return FALSE
+	var/persistence_values = validate_designer_persistence_settings(prefs.persistence_settings, params, list("persist_size" = PERSIST_SIZE, "persist_weight" = PERSIST_WEIGHT, "persist_organs" = PERSIST_ORGANS))
+	if(isnull(persistence_values))
+		return FALSE
 	var/list/expression_values = validate_basic_expression_settings(params)
 	if(!islist(expression_values))
 		return FALSE
 	if(!apply_basic_prosthetic_settings(params))
 		return FALSE
+	prefs.persistence_settings = persistence_values
 	apply_basic_expression_settings(expression_values)
 	apply_basic_size_weight_settings(params)
 	apply_basic_speech_bubble_settings(params)
@@ -7410,6 +7493,7 @@ var/global/custom_marking_static_source_digest_complete = TRUE
 			order += marking_id
 	return list(
 		"body_markings" = markings,
+		"persist_markings" = !!(prefs.persistence_settings & PERSIST_MARKINGS),
 		"order" = order
 	)
 
@@ -7436,6 +7520,7 @@ var/global/custom_marking_static_source_digest_complete = TRUE
 	payload["blood_reagent"] = prefs.blood_reagents
 	payload["blood_color"] = prefs.blood_color
 	payload["needs_glasses"] = !!(prefs.disabilities & NEARSIGHTED)
+	append_basic_persistence_payload(payload)
 	append_basic_size_weight_payload(payload)
 	append_basic_expression_payload(payload)
 	payload["custom_speech_bubble"] = prefs.custom_speech_bubble
@@ -7532,6 +7617,7 @@ var/global/custom_marking_static_source_digest_complete = TRUE
 		"custom_base" = prefs.custom_base,
 		"custom_species" = istext(prefs.custom_species) ? html_decode(prefs.custom_species) : null,
 		"body_markings" = body_state["body_markings"],
+		"persist_markings" = body_state["persist_markings"],
 		"order" = body_state["order"],
 		"basic_appearance" = build_species_save_basic_appearance_payload(known_payload_state?["known_basic_definition_revision"])
 	)
@@ -9864,15 +9950,21 @@ var/global/custom_marking_static_source_digest_complete = TRUE
 			for(var/mark_id in final_map)
 				final_order += mark_id
 		reset_body_marking_chunk_state()
-		return list(
+		var/list/final_payload = list(
 			"body_markings" = final_map,
 			"order" = final_order
 		)
+		if("persist_markings" in params)
+			final_payload["persist_markings"] = params["persist_markings"]
+		return final_payload
 	return BODY_MARKING_CHUNK_PENDING
 
 // Apply a body markings payload coming from the client
 /datum/tgui_module/custom_marking_designer/proc/apply_body_marking_payload(list/params)
 	if(!prefs)
+		return FALSE
+	var/persistence_values = validate_designer_persistence_settings(prefs.persistence_settings, params, list("persist_markings" = PERSIST_MARKINGS))
+	if(isnull(persistence_values))
 		return FALSE
 	var/list/incoming_map = params?["body_markings"]
 	if(!islist(incoming_map))
@@ -9900,6 +9992,7 @@ var/global/custom_marking_static_source_digest_complete = TRUE
 		if(!islist(sanitized))
 			continue
 		new_payload[mark_id] = sanitized
+	prefs.persistence_settings = persistence_values
 	prefs.body_markings = new_payload
 	prefs.sanitize_body_styles()
 	return TRUE

@@ -1,3 +1,6 @@
+///////////////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star September 2026: Character Designer - Misc Settings //
+///////////////////////////////////////////////////////////////////////////////////////
 // Define a place to save in character setup
 /datum/preferences
 	var/resleeve_lock = 0	// Whether movs should have OOC reslieving protection. Default false.
@@ -8,6 +11,7 @@
 /datum/category_item/player_setup_item/vore/resleeve
 	name = "Resleeving"
 	sort_order = 4
+	show_in_character_setup = FALSE // RS Add: Character Designer - Misc Settings (Lira, September 2026)
 
 /datum/category_item/player_setup_item/vore/resleeve/load_character(var/savefile/S)
 	S["resleeve_lock"]		>> pref.resleeve_lock
@@ -37,20 +41,10 @@
 				character.resleeve_lock = character.ckey
 			character.original_player = character.ckey
 
+// RS Edit: Character Designer - Misc Settings (Lira, September 2026)
 /datum/category_item/player_setup_item/vore/resleeve/content(var/mob/user)
-	. += "<b>Start With Body Scan:</b> <a [pref.resleeve_scan ? "class='linkOn'" : ""] href='?src=\ref[src];toggle_resleeve_scan=1'><b>[pref.resleeve_scan ? "Yes" : "No"]</b></a><br>"
-	. += "<b>Prevent Body Impersonation:</b> <a [pref.resleeve_lock ? "class='linkOn'" : ""] href='?src=\ref[src];toggle_resleeve_lock=1'><b>[pref.resleeve_lock ? "Yes" : "No"]</b></a><br>"
-	. += "<b>Allow Cookie Replicas:</b> <a [pref.synth_cookie ? "class='linkOn'" : ""] href='?src=\ref[src];toggle_synth_cookie=1'><b>[pref.synth_cookie ? "Yes" : "No"]</b></a><br>"
+	return ""
 
-
+// RS Edit: Character Designer - Misc Settings (Lira, September 2026)
 /datum/category_item/player_setup_item/vore/resleeve/OnTopic(var/href, var/list/href_list, var/mob/user)
-	if(href_list["toggle_resleeve_lock"])
-		pref.resleeve_lock = pref.resleeve_lock ? 0 : 1;
-		return TOPIC_REFRESH
-	else if(href_list["toggle_resleeve_scan"])
-		pref.resleeve_scan = pref.resleeve_scan ? 0 : 1;
-		return TOPIC_REFRESH
-	else if(href_list["toggle_synth_cookie"])
-		pref.synth_cookie = pref.synth_cookie ? 0 : 1;
-		return TOPIC_REFRESH
-	return ..();
+	return ..()

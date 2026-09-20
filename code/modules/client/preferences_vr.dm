@@ -11,6 +11,15 @@
 	var/job_talon_med = 0
 	var/job_talon_low = 0
 
+// RS Add: Character Designer - Misc Settings (Lira, September 2026)
+/datum/preferences/proc/set_identity_preference(field, value)
+	if(vars[field] == value)
+		return FALSE
+	vars[field] = value
+	if(custom_marking_designer_ui && !QDELETED(custom_marking_designer_ui))
+		custom_marking_designer_ui.identity_revision++
+	return TRUE
+
 //Why weren't these in game toggles already?
 /client/verb/toggle_eating_noises()
 	set name = "Toggle Eating Noises"
@@ -102,10 +111,10 @@
 
 	if(prefs.capture_crystal)
 		to_chat(src, "You are no longer catchable.")
-		prefs.capture_crystal = 0
+		prefs.set_identity_preference("capture_crystal", 0) // RS Edit: Character Designer - Misc Settings (Lira, September 2026)
 	else
 		to_chat(src, "You are now catchable.")
-		prefs.capture_crystal = 1
+		prefs.set_identity_preference("capture_crystal", 1) // RS Edit: Character Designer - Misc Settings (Lira, September 2026)
 	if(L && istype(L))
 		L.capture_crystal = prefs.capture_crystal
 	SScharacter_setup.queue_preferences_save(prefs)

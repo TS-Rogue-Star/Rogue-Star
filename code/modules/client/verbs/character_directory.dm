@@ -215,25 +215,25 @@ GLOBAL_DATUM(character_directory, /datum/character_directory)
 	switch(action)
 		if ("setTag")
 			if (can_set_prefs)
-				user.client.prefs.directory_tag = new_value
+				user.client.prefs.set_identity_preference("directory_tag", new_value) // RS Edit: Character Designer - Misc Settings (Lira, September 2026)
 			if (can_set_mind)
 				user.mind.directory_tag = new_value
 			return TRUE
 		if ("setErpTag")
 			if (can_set_prefs)
-				user.client.prefs.directory_erptag = new_value
+				user.client.prefs.set_identity_preference("directory_erptag", new_value) // RS Edit: Character Designer - Misc Settings (Lira, September 2026)
 			if (can_set_mind)
 				user.mind.directory_erptag = new_value
 			return TRUE
 		if ("setVisible")
 			if (can_set_prefs)
-				user.client.prefs.show_in_directory = new_value
+				user.client.prefs.set_identity_preference("show_in_directory", new_value) // RS Edit: Character Designer - Misc Settings (Lira, September 2026)
 			if (can_set_mind)
 				user.mind.show_in_directory = new_value
 			return TRUE
 		if ("editAd")
 			if (can_set_prefs)
-				user.client.prefs.directory_ad = new_value
+				user.client.prefs.set_identity_preference("directory_ad", new_value) // RS Edit: Character Designer - Misc Settings (Lira, September 2026)
 			if (can_set_mind)
 				user.mind.directory_ad = new_value
 			return TRUE

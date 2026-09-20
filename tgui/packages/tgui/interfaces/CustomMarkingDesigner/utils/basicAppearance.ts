@@ -6,6 +6,7 @@
 
 import { buildSizeWeightState } from './sizeWeight';
 import { buildExpressionState } from './expression';
+import { buildAppearancePersistenceState } from './persistence';
 import { normalizeHex } from '../../../utils/color';
 import type {
   IconAssetRegistry,
@@ -488,6 +489,7 @@ export const buildBasicStateFromPayload = (
   return {
     ...buildSizeWeightState(payload),
     ...buildExpressionState(payload),
+    ...buildAppearancePersistenceState(payload),
     custom_speech_bubble: payload?.custom_speech_bubble || 'default',
     biological_gender:
       typeof payload?.biological_gender === 'string' &&
