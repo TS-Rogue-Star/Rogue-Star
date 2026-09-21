@@ -434,6 +434,12 @@ steam.start() -- spawns the effect
 	attach(atom)
 	oldposition = get_turf(atom)
 
+// RS Add: Mob Deletion Optimization (Lira, September 2026)
+/datum/effect/effect/system/ion_trail_follow/Destroy()
+	stop()
+	oldposition = null
+	return ..()
+
 /datum/effect/effect/system/ion_trail_follow/start()
 	if(!src.on)
 		src.on = 1

@@ -1,3 +1,7 @@
+//////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star September 2026: Mob Deletion Optimization //
+//////////////////////////////////////////////////////////////////////////////
+
 GLOBAL_LIST_EMPTY(global_listen_count)
 GLOBAL_LIST_EMPTY(event_sources_count)
 GLOBAL_LIST_EMPTY(event_listen_count)
@@ -16,51 +20,60 @@ GLOBAL_LIST_EMPTY(event_listen_count)
 		cleanup_event_listener(source, GLOB.event_listen_count[source])
 
 
+// RS Edit: Mob Deletion Optimization (Lira, September 2026)
 /decl/observ/register(var/datum/event_source, var/datum/listener, var/proc_call)
+	var/was_listening = is_listening(event_source, listener)
 	. = ..()
-	if(.)
+	if(. && !was_listening)
 		GLOB.event_sources_count[event_source] += 1
 		GLOB.event_listen_count[listener] += 1
 
+// RS Edit: Mob Deletion Optimization (Lira, September 2026)
 /decl/observ/unregister(var/datum/event_source, var/datum/listener, var/proc_call)
 	. = ..()
-	if(.)
-		GLOB.event_sources_count[event_source] -= 1
-		GLOB.event_listen_count[listener] -= 1
+	if(. && !is_listening(event_source, listener))
+		if(--GLOB.event_sources_count[event_source] <= 0)
+			GLOB.event_sources_count -= event_source
+		if(--GLOB.event_listen_count[listener] <= 0)
+			GLOB.event_listen_count -= listener
 
+// RS Edit: Mob Deletion Optimization (Lira, September 2026)
 /decl/observ/register_global(var/datum/listener, var/proc_call)
+	var/was_listening = (listener in global_listeners)
 	. = ..()
-	if(.)
+	if(. && !was_listening)
 		GLOB.global_listen_count[listener] += 1
 
+// RS Edit: Mob Deletion Optimization (Lira, September 2026)
 /decl/observ/unregister_global(var/datum/listener, var/proc_call)
 	. = ..()
-	if(.)
-		GLOB.global_listen_count[listener] -= 1
+	if(. && !(listener in global_listeners))
+		if(--GLOB.global_listen_count[listener] <= 0)
+			GLOB.global_listen_count -= listener
 
+// RS Edit: Mob Deletion Optimization (Lira, September 2026)
 /decl/observ/destroyed/proc/cleanup_global_listener(listener, listen_count)
-	GLOB.global_listen_count -= listener
 	for(var/decl/observ/event as anything in GLOB.all_observable_events.events)
 		if(event.unregister_global(listener))
 		//	log_debug("[event] - [listener] was deleted while still registered to global events.") // TODO: Apply axe, reimplement with datum component listeners
 			if(!(--listen_count))
 				return
 
+// RS Edit: Mob Deletion Optimization (Lira, September 2026)
 /decl/observ/destroyed/proc/cleanup_source_listeners(event_source, source_listener_count)
-	GLOB.event_sources_count -= event_source
 	for(var/decl/observ/event as anything in GLOB.all_observable_events.events)
-		var/proc_owners = event.event_sources[event_source]
+		var/list/proc_owners = event.event_sources[event_source]
 		if(proc_owners)
-			for(var/proc_owner in proc_owners)
+			for(var/proc_owner in proc_owners.Copy())
 				if(event.unregister(event_source, proc_owner))
 				//	log_debug("[event] - [event_source] was deleted while still being listened to by [proc_owner].") // TODO: Apply axe, reimplement with datum component listeners
 					if(!(--source_listener_count))
 						return
 
+// RS Edit: Mob Deletion Optimization (Lira, September 2026)
 /decl/observ/destroyed/proc/cleanup_event_listener(listener, listener_count)
-	GLOB.event_listen_count -= listener
 	for(var/decl/observ/event as anything in GLOB.all_observable_events.events)
-		for(var/event_source in event.event_sources)
+		for(var/event_source in event.event_sources.Copy())
 			if(event.unregister(event_source, listener))
 			//	log_debug("[event] - [listener] was deleted while still listening to [event_source].") // TODO: Apply axe, reimplement with datum component listeners
 				if(!(--listener_count))
