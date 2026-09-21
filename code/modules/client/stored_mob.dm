@@ -1,9 +1,8 @@
 //Let's go wild let's go stupid
 //My code is an atrocity, may it stand as a testement for all who gaze my way, look and be afraid
 /obj/machinery/mob_bank
-	name = "PET System"
+	name = "\improper PET System"
 	desc = "It's the petatronic energy transport system! It's a machine that can scan and retrieve your pets!"
-	description_fluff = "You can use this machine to take a scan of your pets so that they can be retrieved in future shifts. This system allows you to save one mob as a pet per character. Saving or loading mobs is only available one time per shift on an account basis. (Ckey) Saving a pet makes loading a pet unavalable for the duration of the shift. There are a number of restrictions about what pets can be stored. No crew members or other similarly complicated/intelligent creatures (monkeys/carbons/borgs), no otherwise sapient creatures (player controlled mobs), and no hostile entities. Any already registered pets will also not be able to be registered. Further, some kinds of creatures may have their own individual restrictions. One can register a pet by presenting the pet to the scanning device. (Click and drag your mob's sprite onto the sprite of the bank.) Once one has registered a pet, they can retrieve that pet in future shifts. One can not retrieve their pet on the same shift that they registered it, as the pet will still be present!"
 	icon = 'icons/rogue-star/machinex32.dmi'
 	icon_state = "mob_bank"
 	idle_power_usage = 1
@@ -14,6 +13,14 @@
 	var/busy_bank = FALSE
 	var/static/list/mob_takers = list()
 	var/static/list/mob_savers = list()
+
+/obj/machinery/mob_bank/examine(mob/user, infix, suffix)
+	. = ..()
+	. += SPAN_NOTICE("The pet system allows one to save and store pets to be retrieved on future shifts. Only one pet may be out at a time, to retrieve other pets, one must store their pet first.")
+	. += SPAN_NOTICE("To save a pet or store a pet, click and drag the pet onto \the [src]. Only your registered pets may be stored.")
+	. += SPAN_NOTICE("Only one pet may be saved per shift normally.")
+	. += SPAN_WARNING("There are some restrictions about which creatures may be saved as pets. Things like crew members or similarly complicated creatures, otherwise sapient (player controlled) creatures, and hostile entities will not be allowed to be saved. Some creatures may have special conditions before they can be saved, while others may simply be unable to be saved.")
+	. += span_green("Pet storage can be expanded with ◬. Place your ◬ into an electronic lockbox, and \the [src] will be able to withdraw it from your account.")
 
 /obj/machinery/mob_bank/attack_hand(mob/living/user)
 	. = ..()
