@@ -1,11 +1,21 @@
-////////////////////////////////////////////////////////////////////////////////////////
-//Updated by Lira for Rogue Star September 2025 as part of a VChat enhancement package//
-////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star September 2025 as part of a VChat enhancement package //
+//////////////////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star September 2026: VChat Write Batching ///////////////////
+//////////////////////////////////////////////////////////////////////////////////////////
 
 #define VCHAT_FILENAME "data/vchat.db"
 #define VCHAT_ROUND_HISTORY 10 // RS Add: Store ten rounds (Lira, September 2025)
 GLOBAL_DATUM(vchatdb, /database)
 GLOBAL_VAR_INIT(vchat_current_round_id, null) //RS Add: Round ID (Lira, September 2025)
+
+// RS Add Start: VChat Write Batching (Lira, September 2026)
+#define VCHAT_LOG_BATCH_SIZE 128
+#define VCHAT_LOG_QUEUE_LIMIT 8192
+GLOBAL_LIST_EMPTY(vchat_pending_messages)
+GLOBAL_VAR_INIT(vchat_flushing_messages, FALSE)
+GLOBAL_VAR_INIT(vchat_retry_at, 0)
+// RS Add End
 
 //Boot up db file || RS Edit: Updated for multi-round (Lira, September 2025)
 /proc/init_vchat()
@@ -29,29 +39,44 @@ GLOBAL_VAR_INIT(vchat_current_round_id, null) //RS Add: Round ID (Lira, Septembe
 		return FALSE
 
 //For INSERT/CREATE/DELETE, etc that return a RowsAffected.
-/proc/vchat_exec_update(var/query)
+// RS Edit: VChat Write Batching (Lira, September 2026)
+/proc/vchat_exec_update(var/query, var/return_success = FALSE)
 	if(!check_vchat())
 		log_world("There's no vchat database open but you tried to query it with: [query]")
 		return FALSE
 
+	if(!GLOB.vchat_flushing_messages && !vchat_flush_messages())
+		return FALSE
+
 	//Solidify our query
 	var/database/query/q = vchat_build_query(query)
+	if(!q)
+		return FALSE
 
 	//Run it
-	q.Execute(GLOB.vchatdb)
+	try
+		q.Execute(GLOB.vchatdb)
+	catch(var/exception/E)
+		log_world("VChat database update exception: [E]")
+		return FALSE
 
 	//Handle errors
 	if(q.Error())
 		log_world("Query \"[islist(query)?query[1]:query]\" ended in error [q.ErrorMsg()]")
 		return FALSE
 
-	return q.RowsAffected()
+	return return_success ? TRUE : q.RowsAffected()
 
 //For SELECT, that return results.
 /proc/vchat_exec_query(var/query)
 	if(!check_vchat())
 		log_world("There's no vchat database open but you tried to query it!")
 		return FALSE
+
+	// RS Add Start: VChat Write Batching (Lira, September 2026)
+	if(!vchat_flush_messages())
+		return FALSE
+	// RS Add End
 
 	//Solidify our query
 	var/database/query/q = vchat_build_query(query)
@@ -71,6 +96,45 @@ GLOBAL_VAR_INIT(vchat_current_round_id, null) //RS Add: Round ID (Lira, Septembe
 		results[++results.len] = q.GetRowData()
 
 	return results
+
+// RS Add: VChat Write Batching (Lira, September 2026)
+/proc/vchat_flush_messages(var/flush_all = TRUE)
+	if(GLOB.vchat_flushing_messages)
+		return FALSE
+	var/list/pending = GLOB.vchat_pending_messages
+	if(!length(pending))
+		return TRUE
+	if(!check_vchat() || (!flush_all && world.time < GLOB.vchat_retry_at))
+		return FALSE
+
+	GLOB.vchat_flushing_messages = TRUE
+	var/success = TRUE
+	var/transaction_open = FALSE
+	try
+		do
+			var/batch_size = min(pending.len, VCHAT_LOG_BATCH_SIZE)
+			if(!vchat_exec_update("BEGIN TRANSACTION", TRUE))
+				success = FALSE
+				break
+			transaction_open = TRUE
+			for(var/i = 1, i <= batch_size, i++)
+				if(!vchat_exec_update(pending[i], TRUE))
+					success = FALSE
+					break
+			if(!success || !vchat_exec_update("COMMIT", TRUE))
+				success = FALSE
+				break
+			transaction_open = FALSE
+			pending.Cut(1, batch_size + 1)
+		while(flush_all && pending.len)
+	catch(var/exception/E)
+		log_world("VChat batch exception: [E]")
+		success = FALSE
+	if(transaction_open)
+		vchat_exec_update("ROLLBACK", TRUE)
+	GLOB.vchat_flushing_messages = FALSE
+	GLOB.vchat_retry_at = success ? 0 : world.time + 1 SECOND
+	return success
 
 //Create a query from string or list with params
 /proc/vchat_build_query(var/query)
@@ -257,6 +321,8 @@ GLOBAL_VAR_INIT(vchat_current_round_id, null) //RS Add: Round ID (Lira, Septembe
 
 // Start a fresh chat round record and keep the global pointer up to date
 /proc/vchat_begin_round()
+	if(!vchat_flush_messages())
+		return FALSE
 	if(!check_vchat())
 		return
 
@@ -285,8 +351,16 @@ GLOBAL_VAR_INIT(vchat_current_round_id, null) //RS Add: Round ID (Lira, Septembe
 	if(!ckey || !message)
 		return
 
+	if(!check_vchat())
+		log_world("VChat cannot save a message without an open database.")
+		return FALSE
 	if(!GLOB.vchat_current_round_id)
 		vchat_begin_round()
+	if(!GLOB.vchat_current_round_id)
+		return FALSE
+	if(GLOB.vchat_pending_messages.len >= VCHAT_LOG_QUEUE_LIMIT && !vchat_flush_messages(FALSE))
+		log_world("VChat message queue is full; a new message could not be saved.")
+		return FALSE
 
 	var/list/messagedef = list(
 		"INSERT INTO messages (ckey,worldtime,message,round_id,logged_at) VALUES (?, ?, ?, ?, ?)",
@@ -296,7 +370,8 @@ GLOBAL_VAR_INIT(vchat_current_round_id, null) //RS Add: Round ID (Lira, Septembe
 		GLOB.vchat_current_round_id,
 		vchat_current_realtime())
 
-	return vchat_exec_update(messagedef)
+	GLOB.vchat_pending_messages[++GLOB.vchat_pending_messages.len] = messagedef
+	return TRUE
 
 //Get a player's message history.  If limit is supplied, messages will be in reverse order. || RS Edit: Adjusted for multi-round db (Lira, September 2025)
 /proc/vchat_get_messages(var/ckey, var/limit, var/round_id)
@@ -406,3 +481,8 @@ GLOBAL_VAR_INIT(vchat_current_round_id, null) //RS Add: Round ID (Lira, Septembe
 
 #undef VCHAT_FILENAME
 #undef VCHAT_ROUND_HISTORY // RS Add: undefine round history (Lira, September 2025)
+
+// RS Add Start: VChat Write Batching (Lira, September 2026)
+#undef VCHAT_LOG_BATCH_SIZE
+#undef VCHAT_LOG_QUEUE_LIMIT
+// RS Add End
