@@ -28,6 +28,7 @@
 	reagent_list = null
 	if(my_atom && my_atom.reagents == src)
 		my_atom.reagents = null
+	my_atom = null // RS Add: Mob Deletion Optimization (Lira, September 2026)
 	return ..()
 
 /* Internal procs */

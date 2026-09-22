@@ -17,15 +17,17 @@
 	if(germ_level < GERM_LEVEL_AMBIENT && prob(30))	//if you're just standing there, you shouldn't get more germs beyond an ambient level
 		germ_level++
 
+// RS Edit: Mob Deletion Optimization (Lira, September 2026)
 /mob/living/carbon/Destroy()
-	qdel(ingested)
-	qdel(touching)
+	QDEL_NULL(ingested)
+	QDEL_NULL(touching)
 	// We don't qdel(bloodstr) because it's the same as qdel(reagents)
 	for(var/guts in internal_organs)
 		qdel(guts)
 	for(var/food in stomach_contents)
 		qdel(food)
-	return ..()
+	. = ..()
+	bloodstr = null
 
 /mob/living/carbon/rejuvenate()
 	bloodstr.clear_reagents()

@@ -1,3 +1,7 @@
+//////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star September 2026: Mob Deletion Optimization //
+//////////////////////////////////////////////////////////////////////////////
+
 /mob/Destroy()//This makes sure that mobs withGLOB.clients/keys are not just deleted from the game.
 	mob_list -= src
 	dead_mob_list -= src
@@ -13,6 +17,10 @@
 	if(mind && mind.current == src)
 		spellremove(src)
 	ghostize()
+	// RS Edit Start: Mob Deletion Optimization (Lira, September 2026)
+	QDEL_NULL(ability_master)
+	set_focus(null)
+	// RS Edit End
 	QDEL_NULL(plane_holder)
 	..()
 	return QDEL_HINT_HARDDEL_NOW

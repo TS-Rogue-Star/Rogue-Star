@@ -1,3 +1,7 @@
+//////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star September 2026: Mob Deletion Optimization //
+//////////////////////////////////////////////////////////////////////////////
+
 /*
 This file is for jamming single-line procs into Polaris procs.
 It will prevent runtimes and allow their code to run if VOREStation's fails.
@@ -42,7 +46,10 @@ if(hook_vr(proc,args)) return
 
 The hooks you're calling should return nonzero values on success.
 */
+
+// RS Edit: Mob Deletion Optimization (Lira, September 2026)
 /proc/hook_vr(hook, list/args=null)
+	var/list/callback_arguments
 	try
 		var/hook_path = text2path("/hook/[hook]")
 		if(!hook_path)
@@ -52,12 +59,16 @@ The hooks you're calling should return nonzero values on success.
 		var/hook_caller = new hook_path
 		var/status = 1
 		for(var/P in typesof("[hook_path]/proc"))
-			if(!call(hook_caller, P)(arglist(args)))
+			callback_arguments = args ? args.Copy() : list()
+			var/result = call(hook_caller, P)(arglist(callback_arguments))
+			callback_arguments.Cut()
+			if(!result)
 				error("hook_vr: Hook '[P]' failed or runtimed.")
 				status = 0
 
 		return status
 
 	catch(var/exception/e)
+		callback_arguments?.Cut()
 		error("hook_vr itself failed or runtimed. Exception below.")
 		error("hook_vr catch: [e] on [e.file]:[e.line]")
