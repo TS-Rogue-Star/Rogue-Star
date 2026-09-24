@@ -1,3 +1,7 @@
+//////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star September 2026: Mob Deletion Optimization //
+//////////////////////////////////////////////////////////////////////////////
+
 //This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
 
 /*
@@ -1228,6 +1232,7 @@ var/mob/dview/dview_mob = new
 
 	. = view(range, dview_mob)
 	dview_mob.loc = null
+	view(0, dview_mob).Cut() // RS Add: Mob Deletion Optimization (Lira, September 2026)
 
 /mob/dview
 	invisibility = 101
@@ -1530,9 +1535,17 @@ GLOBAL_REAL_VAR(list/stack_trace_storage)
 	. += new /obj/screen/plane_master{plane = PLANE_CH_VANTAG}				//Vore Antags
 	. += new /obj/screen/plane_master{plane = PLANE_AUGMENTED}				//Augmented reality
 	//VOREStation Add End
+
+// RS Edit: Mob Deletion Optimization (Lira, September 2026)
 /proc/CallAsync(datum/source, proctype, list/arguments)
 	set waitfor = FALSE
-	return call(source, proctype)(arglist(arguments))
+	var/list/callback_arguments = arguments ? arguments.Copy() : list()
+	try
+		. = call(source, proctype)(arglist(callback_arguments))
+	catch(var/exception/E)
+		callback_arguments.Cut()
+		throw E
+	callback_arguments.Cut()
 
 /proc/describeThis(var/datum/D)
 	if(istype(D))

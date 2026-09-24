@@ -1,3 +1,7 @@
+//////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star September 2026: Mob Deletion Optimization //
+//////////////////////////////////////////////////////////////////////////////
+
 /mob/living/New()
 	..()
 
@@ -18,6 +22,7 @@
 
 	selected_image = image(icon = buildmode_hud, loc = src, icon_state = "ai_sel")
 
+// RS Edit: Mob Deletion Optimization (Lira, September 2026)
 /mob/living/Destroy()
 	if(dsoverlay)
 		dsoverlay.loc = null //I'll take my coat with me
@@ -55,7 +60,12 @@
 		tf_mob_holder = null
 	//VOREStation Addition End
 
-	qdel(selected_image)
+	if(selected_image)
+		selected_image.loc = null
+	QDEL_NULL(selected_image)
+	for(var/image/hud_image in hud_list)
+		hud_image.loc = null
+	hud_list = null
 	QDEL_NULL(vorePanel) //VOREStation Add
 	QDEL_LIST_NULL(vore_organs) //VOREStation Add
 	temp_language_sources = null //VOREStation Add
@@ -75,7 +85,8 @@
 			internal_organs -= OR
 			qdel(OR)
 
-	return ..()
+	..()
+	return QDEL_HINT_QUEUE
 
 //mob verbs are faster than object verbs. See mob/verb/examine.
 /mob/living/verb/pulled(atom/movable/AM as mob|obj in oview(1))

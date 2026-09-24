@@ -1,3 +1,7 @@
+/////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star September 2026: VChat Write Batching //
+/////////////////////////////////////////////////////////////////////////
+
 SUBSYSTEM_DEF(chat)
 	name = "Chat"
 	flags = SS_TICKER
@@ -12,6 +16,7 @@ SUBSYSTEM_DEF(chat)
 	..()
 
 /datum/controller/subsystem/chat/fire()
+	vchat_flush_messages(FALSE) // RS Add: VChat Write Batching (Lira, September 2026)
 	var/list/msg_queue = src.msg_queue // Local variable for sanic speed.
 	for(var/client/C as anything in msg_queue)
 		var/list/messages = msg_queue[C]
@@ -21,6 +26,11 @@ SUBSYSTEM_DEF(chat)
 
 		if(MC_TICK_CHECK)
 			return
+
+// RS Add: VChat Write Batching (Lira, September 2026)
+/datum/controller/subsystem/chat/Shutdown()
+	vchat_flush_messages()
+	return ..()
 
 /datum/controller/subsystem/chat/stat_entry()
 	..("C:[msg_queue.len]")

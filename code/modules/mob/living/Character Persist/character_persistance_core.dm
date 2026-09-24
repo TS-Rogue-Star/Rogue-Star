@@ -26,7 +26,9 @@
 		character_memory.save(TRUE)
 	if(etching && istype(etching, /datum/etching))
 		etching.save(TRUE)
-	..()
+	. = ..()
+	QDEL_NULL(etching)
+	QDEL_NULL(character_memory)
 
 /mob/living/Life()
 	. = ..()

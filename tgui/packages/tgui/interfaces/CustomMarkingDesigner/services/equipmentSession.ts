@@ -18,6 +18,7 @@ export class EquipmentSession {
   saved: EquipmentDraftState | null = null;
   catalog: EquipmentCatalog | null = null;
   catalogSignature = '';
+  sensorOptions: string[] = [];
   gearOptions: EquipmentGearOptions | null = null;
   loading = false;
   saving = false;
@@ -185,6 +186,7 @@ export class EquipmentSession {
       if (payload.values && (payload.catalog || this.catalog)) {
         this.catalog = payload.catalog || this.catalog;
         this.catalogSignature = payload.catalog_signature || '';
+        this.sensorOptions = payload.sensor_options || [];
         this.saved = cloneEquipmentDraft(payload.values);
         if (this.replaceDraft) {
           this.draft = cloneEquipmentDraft(payload.values);

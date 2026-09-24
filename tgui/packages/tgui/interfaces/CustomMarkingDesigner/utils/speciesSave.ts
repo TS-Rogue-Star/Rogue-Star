@@ -176,6 +176,7 @@ export const syncSpeciesSaveResultState = (
     allowed_definition_ids: result.body_allowed_definition_ids,
     body_marking_definitions: result.body_marking_definitions,
     body_markings: deepCopyMarkings(nextMarkings),
+    persist_markings: result.persist_markings ?? bodyPayload?.persist_markings,
     order: [...resolvedOrder],
     digitigrade:
       result.basic_appearance?.digitigrade ?? bodyPayload?.digitigrade,
@@ -266,6 +267,7 @@ export const syncSpeciesSaveResultState = (
     bodyMarkingsOrder: resolvedOrder,
     bodyMarkingsSelected: nextSelectedId,
     bodyMarkingsSavedState: {
+      persist_markings: nextBodyPayload.persist_markings ?? true,
       order: [...resolvedOrder],
       markings: deepCopyMarkings(nextMarkings),
       selectedId: nextSelectedId,

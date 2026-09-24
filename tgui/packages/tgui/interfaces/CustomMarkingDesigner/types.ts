@@ -19,8 +19,11 @@
 // /////////////////////////////////////////////////////////////////////////////////////////////
 // Updated by Lira for Rogue Star September 2026: Character Designer - Expression //////////////
 // /////////////////////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star September 2026: Character Designer - Misc Settings ///////////
+// /////////////////////////////////////////////////////////////////////////////////////////////
 
 import type { ExpressionState, ExpressionVoice } from './utils/expression';
+import type { AppearancePersistenceState } from './utils/persistence';
 
 import type {
   SizeWeightState,
@@ -179,6 +182,7 @@ export type EquipmentDraftState = {
   pdachoice: number;
   communicator_visibility: boolean;
   shoe_hater: boolean;
+  sensorpref: number;
 };
 
 export type EquipmentDirectionalRecipes = Record<
@@ -214,6 +218,7 @@ export type EquipmentCatalog = Record<
 export type EquipmentPayload = {
   request_id: string;
   values?: EquipmentDraftState;
+  sensor_options?: string[];
   catalog_signature?: string;
   catalog?: EquipmentCatalog;
   gear_options?: EquipmentGearOptions | null;
@@ -290,6 +295,7 @@ export type BodyMarkingDefinition = {
 export type BodyMarkingDefinitionData = BodyMarkingDefinition[];
 
 export type BodyMarkingsPayload = {
+  persist_markings?: boolean;
   species_id?: string | null;
   custom_base?: string | null;
   definition_revision?: string | null;
@@ -311,6 +317,7 @@ export type BodyMarkingsPayload = {
 };
 
 export type BodyMarkingsSavedState = {
+  persist_markings?: boolean;
   order: string[];
   markings: Record<string, BodyMarkingEntry>;
   selectedId: string | null;
@@ -420,7 +427,7 @@ export type SpeechBubbleStyle = {
 };
 
 export type BasicAppearancePayload = Partial<
-  SizeWeightState & ExpressionState
+  SizeWeightState & ExpressionState & AppearancePersistenceState
 > & {
   expression_voices?: ExpressionVoice[];
   custom_speech_bubble?: string;
@@ -490,7 +497,8 @@ export type BasicAppearancePayload = Partial<
   default_canvas_background?: string;
 };
 
-export type BasicAppearanceState = SizeWeightState &
+export type BasicAppearanceState = Partial<AppearancePersistenceState> &
+  SizeWeightState &
   ExpressionState & {
     custom_speech_bubble: string;
     biological_gender: string;
@@ -527,6 +535,7 @@ export type SpeciesSaveBasicAppearance = Pick<
   BasicAppearancePayload,
   | keyof SizeWeightState
   | keyof ExpressionState
+  | keyof AppearancePersistenceState
   | 'custom_speech_bubble'
   | 'size_weight_limits'
   | 'preview_transform'
@@ -578,6 +587,7 @@ export type SpeciesSaveResult = {
   species_id: string;
   custom_base?: string | null;
   custom_species?: string | null;
+  persist_markings?: boolean;
   body_definition_revision?: string | null;
   body_definition_data?: BodyMarkingDefinitionData;
   body_allowed_definition_ids?: string[];
@@ -808,6 +818,15 @@ export type IdentityValues = {
   metadata_likes: string;
   metadata_dislikes: string;
   custom_link: string;
+  resleeve_scan: boolean;
+  resleeve_lock: boolean;
+  synth_cookie: boolean;
+  capture_crystal: boolean;
+  auto_backup_implant: boolean;
+  show_in_directory: boolean;
+  directory_tag: string;
+  directory_erptag: string;
+  directory_ad: string;
   flavor_text_general: string;
   flavor_text_head: string;
   flavor_text_face: string;
@@ -866,10 +885,26 @@ export type IdentityLocationGroup = {
 
 export type IdentityPayload = Omit<
   IdentityValues,
-  'be_random_name' | 'bday_announce'
+  | 'be_random_name'
+  | 'bday_announce'
+  | 'show_in_directory'
+  | 'resleeve_scan'
+  | 'resleeve_lock'
+  | 'synth_cookie'
+  | 'capture_crystal'
+  | 'auto_backup_implant'
 > & {
   be_random_name: BooleanLike;
   bday_announce: BooleanLike;
+  show_in_directory: BooleanLike;
+  resleeve_scan: BooleanLike;
+  resleeve_lock: BooleanLike;
+  synth_cookie: BooleanLike;
+  capture_crystal: BooleanLike;
+  auto_backup_implant: BooleanLike;
+  directory_tag_options: string[];
+  directory_erptag_options: string[];
+  max_directory_ad_length: number;
   revision: number;
   pronoun_options: string[];
   economic_status_options: string[];

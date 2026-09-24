@@ -85,6 +85,10 @@
 		// RS Add: Hide skills and antagonism (Lira, March 2026)
 		if(istype(PS, /datum/category_group/player_setup_category/occupation_preferences) || istype(PS, /datum/category_group/player_setup_category/loadout_preferences) || istype(PS, /datum/category_group/player_setup_category/skill_preferences) || istype(PS, /datum/category_group/player_setup_category/appearance_preferences))
 			continue
+		// RS Add Start: Character Designer - Misc Settings (Lira, September 2026)
+		if(istype(PS, /datum/category_group/player_setup_category/vore))
+			continue
+		// RS Add End
 		if(PS == selected_category)
 			dat += "[PS.name] "	// TODO: Check how to properly mark a href/button selected in a classic browser window
 		else

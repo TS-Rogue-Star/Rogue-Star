@@ -7,7 +7,10 @@
 // ///////////////////////////////////////////////////////////////////////////////////////////
 // Updated by Lira for Rogue Star September 2026: Character Designer - Expression ////////////
 // ///////////////////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star September 2026: Character Designer - Misc Settings /////////
+// ///////////////////////////////////////////////////////////////////////////////////////////
 
+import { PersistenceToggle } from './components/PersistenceToggle';
 import { Component } from 'inferno';
 import { resolveGearAssetForTail } from './utils/gearTailMask';
 import {
@@ -2811,6 +2814,9 @@ const BodyMarkingsSaveSection = ({
 
 type BodyMarkingsActiveSectionProps = Readonly<{
   order: string[];
+  persistMarkings: boolean;
+  persistenceDisabled: boolean;
+  setPersistMarkings: (enabled: boolean) => void;
   visibleOrder: string[];
   totalSelected: number;
   selectedId: string | null;
@@ -2830,6 +2836,9 @@ type BodyMarkingsActiveSectionProps = Readonly<{
 
 const BodyMarkingsActiveSection = ({
   order,
+  persistMarkings,
+  persistenceDisabled,
+  setPersistMarkings,
   visibleOrder,
   totalSelected,
   selectedId,
@@ -2848,7 +2857,16 @@ const BodyMarkingsActiveSection = ({
 }: BodyMarkingsActiveSectionProps) => (
   <Section
     title={`Active Markings (${totalSelected}/${BODY_MARKING_SELECTION_LIMIT})`}
-    fill>
+    className="RogueStar__persistenceSection"
+    fill
+    buttons={
+      <PersistenceToggle
+        subject="markings"
+        enabled={persistMarkings}
+        disabled={persistenceDisabled}
+        onChange={setPersistMarkings}
+      />
+    }>
     <Flex direction="column" gap={1}>
       {!visibleOrder.length && (
         <NoticeBox>
@@ -3506,6 +3524,7 @@ export const BodyMarkingsTab = (props: BodyMarkingsTabProps, context) => {
       { setColorTarget: false }
     );
     setSavedState({
+      persist_markings: mergedPayload.persist_markings ?? true,
       order: [...nextOrder],
       markings: deepCopyMarkings(nextMarkings),
       selectedId: nextSelectedId,
@@ -3816,6 +3835,7 @@ export const BodyMarkingsTab = (props: BodyMarkingsTabProps, context) => {
         await act('save_body_markings', {
           body_markings: outgoing,
           order: outgoingOrder,
+          persist_markings: latestPayload?.persist_markings ?? true,
           close,
         });
       } else {
@@ -3831,6 +3851,7 @@ export const BodyMarkingsTab = (props: BodyMarkingsTabProps, context) => {
             chunk_index: idx,
             chunk_total: totalChunks,
             body_markings: chunks[idx] || {},
+            persist_markings: latestPayload?.persist_markings ?? true,
           };
           if (idx === 0) {
             payload.order = outgoingOrder;
@@ -3849,6 +3870,7 @@ export const BodyMarkingsTab = (props: BodyMarkingsTabProps, context) => {
         const nextSelected = selectedId || outgoingOrder[0] || null;
         setDirty(false);
         setSavedState({
+          persist_markings: latestPayload?.persist_markings ?? true,
           order: [...outgoingOrder],
           markings: deepCopyMarkings(outgoing),
           selectedId: nextSelected,
@@ -4672,6 +4694,12 @@ export const BodyMarkingsTab = (props: BodyMarkingsTabProps, context) => {
             />
             <BodyMarkingsActiveSection
               order={order}
+              persistMarkings={bodyPayload.persist_markings ?? true}
+              persistenceDisabled={uiLocked || pendingSave}
+              setPersistMarkings={(persist_markings) => {
+                setBodyPayload({ ...bodyPayload, persist_markings });
+                setDirty(true);
+              }}
               visibleOrder={visibleOrder}
               totalSelected={totalSelected}
               selectedId={selectedId}

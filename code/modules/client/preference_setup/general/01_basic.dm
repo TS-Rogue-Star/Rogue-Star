@@ -9,6 +9,7 @@
 /datum/category_item/player_setup_item/general/basic
 	name = "Basic"
 	sort_order = 1
+	show_in_character_setup = FALSE // RS Add: Character Designer - Misc Settings (Lira, September 2026)
 
 /datum/category_item/player_setup_item/general/basic/load_character(var/savefile/S)
 	S["real_name"]				>> pref.real_name
