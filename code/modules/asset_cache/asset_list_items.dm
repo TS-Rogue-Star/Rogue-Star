@@ -297,30 +297,40 @@
 
 //VOREStation Add
 /datum/asset/spritesheet/vore
+	parent_type = /datum/asset/spritesheet/vore_persistent // RS Add: Vore Sprite Sheet Persistence (Lira, September 2026)
 	name = "vore"
 
 // RS Edit: Overlay caching and DMI improvements (Lira, June 2026)
 /datum/asset/spritesheet/vore/register()
-	for(var/vore_icon in vore_fullscreen_icon_files())
+	var/list/source_files = vore_fullscreen_icon_files()
+	if(load_vore_cache(source_files))
+		return
+	for(var/vore_icon in source_files)
 		if(!length(icon_states(vore_icon)))
 			continue
 		var/icon/downscaled = icon(vore_icon)
 		downscaled.Scale(240, 240)
 		InsertAllUnique("", downscaled)
 	..()
+	save_vore_cache()
 
 /datum/asset/spritesheet/vore_colorized //This should be getting loaded in the TGUI vore panel but the game refuses to do so, for some reason. It only loads the vore spritesheet.
+	parent_type = /datum/asset/spritesheet/vore_persistent // RS Add: Vore Sprite Sheet Persistence (Lira, September 2026)
 	name = "colorizedvore"
 
 // RS Edit: Overlay caching and DMI improvements (Lira, June 2026)
 /datum/asset/spritesheet/vore_colorized/register()
-	for(var/vore_icon in vore_fullscreen_icon_files(TRUE))
+	var/list/source_files = vore_fullscreen_icon_files(TRUE)
+	if(load_vore_cache(source_files))
+		return
+	for(var/vore_icon in source_files)
 		if(!length(icon_states(vore_icon)))
 			continue
 		var/icon/downscaledVC = icon(vore_icon)
 		downscaledVC.Scale(240, 240)
 		InsertAllUnique("", downscaledVC)
 	..()
+	save_vore_cache()
 
 
 /datum/asset/spritesheet/synthesizer
