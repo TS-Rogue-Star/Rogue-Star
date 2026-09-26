@@ -8,10 +8,12 @@
 	w_class = ITEMSIZE_TINY
 	light_color = "#E09D37"
 	var/wax = 2000
+	var/wax_randomize = TRUE
 	var/icon_type = "candle"
 
 /obj/item/weapon/flame/candle/New()
-	wax -= rand(800, 1000) // Enough for 27-33 minutes. 30 minutes on average.
+	if(wax_randomize)	//RS EDIT
+		wax -= rand(800, 1000) // Enough for 27-33 minutes. 30 minutes on average.	//RS EDIT
 	..()
 
 /obj/item/weapon/flame/candle/update_icon()
@@ -50,6 +52,7 @@
 		visible_message(flavor_text)
 		set_light(CANDLE_LUM)
 		START_PROCESSING(SSobj, src)
+		update_icon()	//RS ADD
 
 /obj/item/weapon/flame/candle/process()
 	if(!lit)

@@ -297,7 +297,7 @@
 	amount = new_amount
 
 	// Can set it to 0 without qdel if you really want
-	if(amount == 0 && !no_limits)
+	if(amount <= 0 && !no_limits)	//RS EDIT - Just to be sure
 		qdel(src)
 		return FALSE
 

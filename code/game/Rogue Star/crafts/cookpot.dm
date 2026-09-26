@@ -9,7 +9,7 @@
 	name = "cooking pot"
 	desc = "A sturdy pot made for cooking in!"
 	icon = 'icons/rogue-star/obj.dmi'
-	icon_state = "pot"
+	icon_state = "cookpot"
 	persist_storable = FALSE
 	center_of_mass = list("x" = 19,"y" = 8)
 	var/atom/cooksource
@@ -166,6 +166,10 @@
 			if(istype(A,/obj/item/fat))
 				reagents.add_reagent("triglyceride",rand(1,10))
 				qdel(A)
+			if(istype(A,/obj/item/stack/material/wax))
+				reagents.add_reagent("wax",6)
+				var/obj/item/stack/material/wax/w = A
+				w.use(1)
 
 /obj/item/cookpot/proc/dehydrate()
 	var/datum/reagent/water/W = reagents.get_reagent("water")
@@ -179,11 +183,15 @@
 	return FALSE
 
 /obj/item/cookpot/proc/burn()
-	var/fat = TRUE
+	var/found = FALSE
 	for(var/datum/reagent/thing in reagents.reagent_list)
-		if(thing.type != /datum/reagent/nutriment/triglyceride)
-			fat = FALSE
-	if(!fat || prob(1))
+		if(thing.type == /datum/reagent/nutriment/triglyceride)
+			found = TRUE
+			break
+		if(thing.type == /datum/reagent/wax)
+			found = TRUE
+			break
+	if(!found || prob(1))
 		var/datum/reagents/R = new /datum/reagents()
 		var/howmuch = 1
 		if(high_heat())
@@ -255,7 +263,7 @@
 	cook()
 
 /obj/item/cookpot/attackby(obj/item/weapon/W, mob/user)
-	if(istype(W,/obj/item/fat) || istype(W,/obj/item/weapon/reagent_containers/food/snacks) || istype(W,/obj/item/weapon/bone) || istype(W,/obj/item/weapon/digestion_remains/organic))
+	if(istype(W,/obj/item/fat) || istype(W,/obj/item/weapon/reagent_containers/food/snacks) || istype(W,/obj/item/weapon/bone) || istype(W,/obj/item/weapon/digestion_remains/organic) || istype(W,/obj/item/stack/material/wax))
 		if(contents.len >= 6)
 			to_chat(user,SPAN_DANGER("It's too full just now, wait for whatever is inside to cook down, or remove things from it first."))
 			return
@@ -346,3 +354,16 @@
 		holder.remove_reagent(R.id,5)
 		break
 	holder.remove_reagent(src.id,rand(0,1))
+
+/datum/reagent/wax
+	name = "wax"
+	id = "wax"
+	taste_description = "hot wax"
+	description = "Liquid wax!"
+	reagent_state = LIQUID
+	color = "#ffed9d77"
+
+	glass_name = "wax"
+	glass_desc = "It's hot wax!"
+	cup_name = "wax"
+	cup_desc = "A cup of hot wax!"
