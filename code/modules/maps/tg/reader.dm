@@ -2,6 +2,10 @@
 //SS13 Optimized Map loader
 //////////////////////////////////////////////////////////////
 
+//////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star September 2026: Map Dimension Caching //
+//////////////////////////////////////////////////////////////////////////
+
 //global datum that will preload variables on atoms instanciation
 GLOBAL_VAR_INIT(use_preloader, FALSE)
 GLOBAL_DATUM_INIT(_preloader, /dmm_suite/preloader, new)
@@ -16,10 +20,33 @@ var/const/DMM_LOADER_REGEX = {""(\[a-zA-Z]+)" = \\(((?:.|\n)*?)\\)\n(?!\t)|\\((\
 		// /^[\s\n]+|[\s\n]+$/
 	var/static/regex/trimRegex = new/regex("^\[\\s\n]+|\[\\s\n]+$", "g")
 	var/static/list/modelCache = list()
+	var/list/map_bounds_cache = list() // RS Add: Map Dimension Caching (Lira, September 2026)
 	var/static/space_key
 	#ifdef TESTING
 	var/static/turfsSkipped
 	#endif
+
+// RS Add: Map Dimension Caching (Lira, September 2026)
+/dmm_suite/proc/get_map_bounds(path, orientation = 0)
+	var/map_file = fcopy_rsc(file(path))
+	if(!map_file)
+		return null
+	if(!(orientation in list(0, 90, 180, 270)))
+		orientation = 0
+	var/cache_key = "[path]"
+	var/list/cache_entry = map_bounds_cache[cache_key]
+	if(!cache_entry || cache_entry["source_file"] != map_file)
+		cache_entry = list("source_file" = map_file, "bounds" = list())
+		map_bounds_cache[cache_key] = cache_entry
+	var/list/orientation_bounds = cache_entry["bounds"]
+	var/orientation_key = "[orientation]"
+	var/list/bounds = orientation_bounds[orientation_key]
+	if(bounds)
+		return bounds.Copy()
+	bounds = load_map(map_file, 1, 1, 1, cropMap = FALSE, measureOnly = TRUE, orientation = orientation)
+	if(bounds)
+		orientation_bounds[orientation_key] = bounds.Copy()
+	return bounds
 
 /**
  * Construct the model map and control the loading process
@@ -144,6 +171,15 @@ var/const/DMM_LOADER_REGEX = {""(\[a-zA-Z]+)" = \\(((?:.|\n)*?)\\)\n(?!\t)|\\((\
 				bounds[MAP_MAXY] = max(bounds[MAP_MAXY], min(ycrd, world.maxy))
 
 			var/maxx = xcrdStart
+
+			// RS Add Start: Map Dimension Caching (Lira, September 2026)
+			if(measureOnly && !cropMap && !orientation)
+				for(var/line in gridLines)
+					maxx = max(maxx, round(length(line) / key_len))
+				bounds[MAP_MAXX] = max(bounds[MAP_MAXX], maxx)
+				CHECK_TICK
+				continue
+			// RS Add End
 
 			// Assemble the grid of keys
 			var/list/list/key_list = list()
