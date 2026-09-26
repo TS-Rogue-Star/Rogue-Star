@@ -26,7 +26,7 @@
 		name = rename
 
 /datum/map_template/proc/preload_size(path, orientation = 0)
-	var/bounds = SSmapping.maploader.load_map(file(path), 1, 1, 1, cropMap=FALSE, measureOnly=TRUE, orientation=orientation)
+	var/bounds = SSmapping.maploader.get_map_bounds(path, orientation) // RS Edit: Map Dimension Caching (Lira, September 2026)
 	if(bounds)
 		if(orientation & (90 | 270))
 			width = bounds[MAP_MAXY]
