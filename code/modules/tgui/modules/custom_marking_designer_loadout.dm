@@ -101,11 +101,22 @@
 		return null
 	return spec
 
-/proc/loadout_option_valid(value, list/options)
+/proc/resolve_loadout_option(value, list/options)
 	for(var/list/option in options)
 		if(value == option["value"])
-			return TRUE
-	return FALSE
+			return option
+	if(!istext(value))
+		return null
+	var/encoded_value = json_encode(value)
+	var/list/matched_option
+	for(var/list/option in options)
+		var/option_value = option["value"]
+		if(!istext(option_value) || json_encode(option_value) != encoded_value)
+			continue
+		if(matched_option && matched_option["value"] != option_value)
+			return null
+		matched_option = option
+	return matched_option
 
 /proc/validate_loadout_tweak_value(datum/gear_tweak/tweak, value, mob/user, list/errors)
 	var/list/spec = build_loadout_tweak_spec(tweak, user)
@@ -136,18 +147,21 @@
 		if(!islist(value) || length(value) != fields.len)
 			errors += "Choose every item component."
 			return null
+		var/list/resolved_values = list()
 		for(var/i = 1 to fields.len)
 			var/list/field = fields[i]
-			if(!loadout_option_valid(value[i], field["options"]))
+			var/list/option = resolve_loadout_option(value[i], field["options"])
+			if(!option)
 				errors += "Invalid item component."
 				return null
-		var/list/copied_value = value
-		return copied_value.Copy()
+			resolved_values += list(option["value"])
+		return resolved_values
 	if(spec["options"])
-		if(!loadout_option_valid(value, spec["options"]))
+		var/list/option = resolve_loadout_option(value, spec["options"])
+		if(!option)
 			errors += "Invalid [spec["label"]] choice."
 			return null
-		return value
+		return option["value"]
 	if(!istext(value))
 		errors += "Invalid [spec["label"]] value."
 		return null
