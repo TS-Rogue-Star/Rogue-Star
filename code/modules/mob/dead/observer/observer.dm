@@ -223,14 +223,19 @@ Works together with spawning an observer, noted above.
 		forceMove(O.loc)
 //RS ADD END
 
-/mob/proc/ghostize(var/can_reenter_corpse = 1)
+/mob/proc/ghostize(var/can_reenter_corpse = 1, var/observer = FALSE)	//RS EDIT
 	if(key)
 		if(ishuman(src))
 			var/mob/living/carbon/human/H = src
 			if(H.vr_holder && !can_reenter_corpse)
 				H.exit_vr()
 				return 0
-		var/mob/observer/dead/ghost = new(src)	//Transfer safety to observer spawning proc.
+		var/mob/observer/dead/ghost	//RS EDIT START
+
+		if(observer)
+			ghost = new/mob/observer/dead/observer(src)
+		else
+			ghost = new/mob/observer/dead(src)	//Transfer safety to observer spawning proc.	//RS EDIT END
 		ghost.can_reenter_corpse = can_reenter_corpse
 		ghost.timeofdeath = src.timeofdeath //BS12 EDIT
 		ghost.key = key
@@ -277,7 +282,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 			log_and_message_admins("has ghosted outside cryo[special_role ? " as [special_role]" : ""]. (<A HREF='?_src_=holder;[HrefToken()];adminplayerobservecoodjump=1;X=[location.x];Y=[location.y];Z=[location.z]'>JMP</a>)",usr)
 		else if(special_role)
 			log_and_message_admins("has ghosted in cryo as [special_role]. (<A HREF='?_src_=holder;[HrefToken()];adminplayerobservecoodjump=1;X=[location.x];Y=[location.y];Z=[location.z]'>JMP</a>)",usr)
-		var/mob/observer/dead/ghost = ghostize(0)	// 0 parameter is so we can never re-enter our body, "Charlie, you can never come baaaack~" :3
+		var/mob/observer/dead/ghost = ghostize(0, TRUE)	// 0 parameter is so we can never re-enter our body, "Charlie, you can never come baaaack~" :3	//RS EDIT
 		if(ghost)
 			ghost.timeofdeath = world.time 	// Because the living mob won't have a time of death and we want the respawn timer to work properly.
 			ghost.set_respawn_timer()

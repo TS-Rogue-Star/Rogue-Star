@@ -154,7 +154,7 @@
 			//Make a new mannequin quickly, and allow the observer to take the appearance
 			var/mob/living/carbon/human/dummy/mannequin = new()
 			client.prefs.dress_preview_mob(mannequin)
-			var/mob/observer/dead/observer = new(mannequin)
+			var/mob/observer/dead/observer/observer = new(mannequin)	//RS EDIT
 			observer.moveToNullspace() //Let's not stay in our doomed mannequin
 			qdel(mannequin)
 
