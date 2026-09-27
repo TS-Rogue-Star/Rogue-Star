@@ -1,3 +1,7 @@
+///////////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star September 2026: Atlas Transparency Persistence //
+///////////////////////////////////////////////////////////////////////////////////
+
 //DEFINITIONS FOR ASSET DATUMS START HERE.
 
 /datum/asset/simple/tgui
@@ -362,6 +366,7 @@
 #define CUSTOM_MARKING_ATLAS_MANIFEST_REVISION 4
 #define CUSTOM_MARKING_ATLAS_MAX_DIMENSION 2048
 #define CUSTOM_MARKING_ATLAS_PERSISTENT_CACHE_REVISION 2
+#define CUSTOM_MARKING_ATLAS_TRANSPARENCY_REVISION 1
 
 /datum/asset/spritesheet/custom_marking_designer
 	name = "custom_marking_designer"
@@ -399,6 +404,9 @@
 	var/persistent_cache_failure_reason = null
 	var/list/persistent_cache_file_records = null
 	var/list/persistent_cache_used_keys = null
+	var/list/transparent_icon_keys = list()
+	var/list/persistent_cache_transparent_keys = null
+	var/persistent_cache_transparency_dirty = FALSE
 
 /datum/asset/spritesheet/custom_marking_designer/register()
 	if(!finalized)
@@ -565,6 +573,55 @@
 			persistent_cache_used_keys = list()
 		persistent_cache_used_keys[canonical_key] = TRUE
 	return payload
+
+/datum/asset/spritesheet/custom_marking_designer/proc/is_known_transparent_icon(canonical_key)
+	if(!istext(canonical_key) || !length(canonical_key))
+		return FALSE
+	if(transparent_icon_keys[canonical_key])
+		return TRUE
+	if(persistent_cache_validation_pending && persistent_cache_transparent_keys?[canonical_key])
+		transparent_icon_keys[canonical_key] = TRUE
+		return TRUE
+	return FALSE
+
+/datum/asset/spritesheet/custom_marking_designer/proc/note_transparent_icon(canonical_key)
+	if(!can_accept_assets() && !persistent_cache_validation_pending)
+		return FALSE
+	if(!istext(canonical_key) || !length(canonical_key))
+		return FALSE
+	transparent_icon_keys[canonical_key] = TRUE
+	if(persistent_cache_validation_pending && !persistent_cache_transparent_keys?[canonical_key])
+		persistent_cache_transparency_dirty = TRUE
+	return TRUE
+
+/datum/asset/spritesheet/custom_marking_designer/proc/load_transparent_icon_cache(list/cache_data)
+	transparent_icon_keys = list()
+	persistent_cache_transparent_keys = null
+	persistent_cache_transparency_dirty = TRUE
+	if(!islist(cache_data) || cache_data["revision"] != CUSTOM_MARKING_ATLAS_TRANSPARENCY_REVISION)
+		return FALSE
+	var/list/keys = cache_data["keys"]
+	if(!islist(keys) || cache_data["checksum"] != md5(json_encode(keys)))
+		return FALSE
+	var/list/validated_keys = list()
+	for(var/key in keys)
+		if(!istext(key) || findtext(key, "source-v3|") != 1 || !findtext(key, "|content:") || validated_keys[key])
+			return FALSE
+		if(islist(payloads_by_canonical_key?["[key]|shift:0,0"]))
+			return FALSE
+		validated_keys[key] = TRUE
+	persistent_cache_transparent_keys = validated_keys
+	persistent_cache_transparency_dirty = FALSE
+	return TRUE
+
+/datum/asset/spritesheet/custom_marking_designer/proc/build_transparent_icon_cache()
+	var/list/keys = list()
+	for(var/key in transparent_icon_keys)
+		keys += key
+	return list("revision" = CUSTOM_MARKING_ATLAS_TRANSPARENCY_REVISION, "keys" = keys, "checksum" = md5(json_encode(keys)))
+
+/datum/asset/spritesheet/custom_marking_designer/proc/needs_persistent_cache_write()
+	return persistent_cache_enabled && (!persistent_cache_loaded || persistent_cache_transparency_dirty)
 
 /datum/asset/spritesheet/custom_marking_designer/proc/is_valid_family(family)
 	var/static/list/allowed_families = list("anatomy", "markings", "hair", "accessories", "species-gallery", "gear")
@@ -813,6 +870,7 @@
 	persistent_cache_file_records = cache_file_records
 	persistent_cache_used_keys = list()
 	persistent_cache_validation_pending = TRUE
+	load_transparent_icon_cache(cache_data["transparent_icons"])
 	return TRUE
 
 /datum/asset/spritesheet/custom_marking_designer/proc/complete_persistent_cache_validation()
@@ -847,6 +905,9 @@
 	persistent_cache_loaded = registered_assets_available()
 	if(!persistent_cache_loaded || !is_ready())
 		return set_persistent_cache_failure("registered cache did not become client-ready", TRUE)
+	if(transparent_icon_keys.len != LAZYLEN(persistent_cache_transparent_keys))
+		persistent_cache_transparency_dirty = TRUE
+	persistent_cache_transparent_keys = null
 	persistent_cache_used_keys = null
 	return TRUE
 
@@ -884,11 +945,14 @@
 	persistent_cache_write_succeeded = FALSE
 	persistent_cache_file_records = null
 	persistent_cache_used_keys = null
+	transparent_icon_keys = list()
+	persistent_cache_transparent_keys = null
+	persistent_cache_transparency_dirty = FALSE
 	return TRUE
 
 /datum/asset/spritesheet/custom_marking_designer/proc/persist_finalized_cache()
 	persistent_cache_write_succeeded = FALSE
-	if(!persistent_cache_enabled || persistent_cache_loaded)
+	if(!needs_persistent_cache_write())
 		return FALSE
 	if(!is_ready() || !registered_assets_available())
 		return set_persistent_cache_failure("only a client-ready atlas can be persisted")
@@ -936,6 +1000,7 @@
 		"manifest" = finalized_manifest,
 		"manifest_asset_name" = finalized_manifest_asset_name,
 		"canonical_asset_ids" = canonical_asset_ids,
+		"transparent_icons" = build_transparent_icon_cache(),
 		"files" = file_records
 	)
 	var/cache_json
@@ -963,6 +1028,7 @@
 	persistent_cache_file_records = file_records
 	persistent_cache_failure_reason = null
 	persistent_cache_write_succeeded = TRUE
+	persistent_cache_transparency_dirty = FALSE
 	return TRUE
 
 /datum/asset/spritesheet/custom_marking_designer/proc/add_icon_asset(icon/source, token, shift_x = 0, shift_y = 0, canonical_key = null, family = null)
@@ -1175,6 +1241,7 @@
 #undef CUSTOM_MARKING_ATLAS_MANIFEST_REVISION
 #undef CUSTOM_MARKING_ATLAS_MAX_DIMENSION
 #undef CUSTOM_MARKING_ATLAS_PERSISTENT_CACHE_REVISION
+#undef CUSTOM_MARKING_ATLAS_TRANSPARENCY_REVISION
 
 // RS Add End
 
