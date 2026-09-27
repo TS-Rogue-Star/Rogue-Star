@@ -490,6 +490,7 @@
 /obj/item/weapon/gun/energy/mouseray/pakkun
 	name = "pakkun ray"
 	tf_allow_select = TRUE
+	tf_type = /mob/living/simple_mob/vore/pakkun
 	tf_possible_types = list(
 		"blue" = /mob/living/simple_mob/vore/pakkun,
 		"red" = /mob/living/simple_mob/vore/pakkun/fire,
@@ -505,6 +506,7 @@
 /obj/item/weapon/gun/energy/mouseray/scel
 	name = "scel ray"
 	tf_allow_select = TRUE
+	tf_type = /mob/living/simple_mob/vore/scel
 	tf_possible_types = list(
 		"blue" = /mob/living/simple_mob/vore/scel/blue,
 		"green" = /mob/living/simple_mob/vore/scel/green,
