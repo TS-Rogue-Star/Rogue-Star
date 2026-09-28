@@ -28,7 +28,7 @@ var/const/DMM_LOADER_REGEX = {""(\[a-zA-Z]+)" = \\(((?:.|\n)*?)\\)\n(?!\t)|\\((\
 
 // RS Add: Map Dimension Caching (Lira, September 2026)
 /dmm_suite/proc/get_map_bounds(path, orientation = 0)
-	var/map_file = fcopy_rsc(file(path))
+	var/map_file = fcopy_rsc(isfile(path) ? path : file(path))
 	if(!map_file)
 		return null
 	if(!(orientation in list(0, 90, 180, 270)))
@@ -43,7 +43,10 @@ var/const/DMM_LOADER_REGEX = {""(\[a-zA-Z]+)" = \\(((?:.|\n)*?)\\)\n(?!\t)|\\((\
 	var/list/bounds = orientation_bounds[orientation_key]
 	if(bounds)
 		return bounds.Copy()
-	bounds = load_map(map_file, 1, 1, 1, cropMap = FALSE, measureOnly = TRUE, orientation = orientation)
+	var/source_file = file(cache_key)
+	if(fcopy_rsc(source_file) != map_file)
+		source_file = map_file
+	bounds = load_map(source_file, 1, 1, 1, cropMap = FALSE, measureOnly = TRUE, orientation = orientation)
 	if(bounds)
 		orientation_bounds[orientation_key] = bounds.Copy()
 	return bounds
