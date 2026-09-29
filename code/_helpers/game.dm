@@ -1,3 +1,7 @@
+///////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star September 2026: Radio Optimize //
+///////////////////////////////////////////////////////////////////
+
 //This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
 
 /proc/dopage(src,target)
@@ -219,36 +223,111 @@
 	return hear
 
 
+// RS Edit: Radio Optimize (Lira, September 2026)
 /proc/get_mobs_in_radio_ranges(var/list/obj/item/device/radio/radios)
-
-	set background = 1
 
 	. = list()
 	// Returns a list of mobs who can hear any of the radios given in @radios
 	var/list/speaker_coverage = list()
-	for(var/obj/item/device/radio/R as anything in radios)
-		var/turf/speaker = get_turf(R)
-		if(speaker)
-			for(var/turf/T in hear(R.canhear_range,speaker))
-				speaker_coverage[T] = R
+	var/list/listener_turfs = list()
+	var/list/listener_positions = list()
+	var/list/radio_positions = list()
+	var/list/radio_ranges = list()
+	var/list/checked_ranges = list()
+	var/list/listeners = player_list.Copy()
+	for(var/mob/living/M in listeners)
+		if(QDELETED(M))
+			continue
+		var/turf/T = get_turf(M)
+		listener_positions[M] = T
+		if(T)
+			listener_turfs[T] = TRUE
+
+	for(var/obj/item/device/radio/R in radios)
+		if(QDELETED(R))
+			continue
+		radio_positions[R] = get_turf(R)
+		radio_ranges[R] = R.canhear_range
+
+	for(var/i = length(radios); i >= 1; i--)
+		if(!length(listener_turfs))
+			break
+		CHECK_TICK
+		var/obj/item/device/radio/R = radios[i]
+		if(QDELETED(R))
+			continue
+		var/turf/speaker = radio_positions[R]
+		if(!speaker)
+			continue
+		var/hearing_range = radio_ranges[R]
+		if(hearing_range == 0 && !speaker.invisibility)
+			if(listener_turfs[speaker])
+				speaker_coverage[speaker] = R
+				listener_turfs -= speaker
+			continue
+
+		var/numeric_range = isnum(hearing_range) && hearing_range >= 0
+		if(numeric_range)
+			var/checked_range = checked_ranges[speaker]
+			if(!isnull(checked_range) && checked_range == hearing_range)
+				continue
+			checked_ranges[speaker] = hearing_range
+
+		var/list/heard_turfs
+		for(var/listener_index = length(listener_turfs); listener_index >= 1; listener_index--)
+			var/turf/listener = listener_turfs[listener_index]
+			if(numeric_range && (listener.z != speaker.z || get_dist(listener, speaker) > hearing_range))
+				continue
+			if(isnull(heard_turfs))
+				heard_turfs = hear(hearing_range, speaker)
+			if(listener in heard_turfs)
+				speaker_coverage[listener] = R
+				listener_turfs.Cut(listener_index, listener_index + 1)
 
 
 	// Try to find all the players who can hear the message
-	for(var/i = 1; i <= player_list.len; i++)
-		var/mob/M = player_list[i]
-		if(M.can_hear_radio(speaker_coverage))
+	for(var/mob/M as anything in listeners)
+		CHECK_TICK
+		if(QDELETED(M) || !(M in player_list))
+			continue
+		var/turf/T = listener_positions[M]
+		var/list/coverage = speaker_coverage
+		var/obj/item/device/radio/receiving_radio = coverage[T]
+		if(isliving(M) && (T in coverage) && QDELETED(receiving_radio))
+			coverage = list()
+			for(var/radio_index = length(radios); radio_index >= 1; radio_index--)
+				CHECK_TICK
+				if(QDELETED(M) || !(M in player_list))
+					break
+				var/obj/item/device/radio/R = radios[radio_index]
+				if(QDELETED(R))
+					continue
+				var/turf/speaker = radio_positions[R]
+				if(!speaker)
+					continue
+				var/hearing_range = radio_ranges[R]
+				if(isnum(hearing_range) && hearing_range >= 0 && (T.z != speaker.z || get_dist(T, speaker) > hearing_range))
+					continue
+				if((hearing_range == 0 && !speaker.invisibility) || (T in hear(hearing_range, speaker)))
+					coverage[T] = R
+					break
+			if(QDELETED(M) || !(M in player_list))
+				continue
+		if(M.can_hear_radio(coverage, T))
 			. += M
 	return .
 
-/mob/proc/can_hear_radio(var/list/hearturfs)
+// RS Edit: Radio Optimize (Lira, September 2026)
+/mob/proc/can_hear_radio(var/list/hearturfs, turf/listener_turf = get_turf(src))
 	return FALSE
 
-/mob/living/can_hear_radio(var/list/hearturfs)
-	return get_turf(src) in hearturfs
+// RS Edit: Radio Optimize (Lira, September 2026)
+/mob/living/can_hear_radio(var/list/hearturfs, turf/listener_turf = get_turf(src))
+	return listener_turf in hearturfs
 
-/mob/living/silicon/robot/can_hear_radio(var/list/hearturfs)
-	var/turf/T = get_turf(src)
-	var/obj/item/device/radio/borg/R = hearturfs[T] // this should be an assoc list of turf-to-radio
+// RS Edit: Radio Optimize (Lira, September 2026)
+/mob/living/silicon/robot/can_hear_radio(var/list/hearturfs, turf/listener_turf = get_turf(src))
+	var/obj/item/device/radio/borg/R = hearturfs[listener_turf] // this should be an assoc list of turf-to-radio
 
 	// We heard it on our own radio? We use power for that.
 	if(istype(R) && R.myborg == src)
@@ -258,7 +337,8 @@
 
 	return R // radio, true, false, what's the difference
 
-/mob/observer/dead/can_hear_radio(var/list/hearturfs)
+// RS Edit: Radio Optimize (Lira, September 2026)
+/mob/observer/dead/can_hear_radio(var/list/hearturfs, turf/listener_turf = get_turf(src))
 	return is_preference_enabled(/datum/client_preference/ghost_radio)
 
 
