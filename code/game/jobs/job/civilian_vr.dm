@@ -229,7 +229,7 @@
 	minimal_access = list(access_eva, access_maint_tunnels, access_external_airlocks, access_pilot)
 	outfit_type = /decl/hierarchy/outfit/job/pilot
 	job_description = "A Pilot flies the various shuttles in the Virgo-Erigone System."
-	alt_titles = list("Co-Pilot" = /datum/alt_title/co_pilot, "Navigator" = /datum/alt_title/navigator, "Helmsman" = /datum/alt_title/helmsman, "Astrogator" = /datum/alt_title/astrogator)
+	alt_titles = list("Co-Pilot" = /datum/alt_title/co_pilot, "Navigator" = /datum/alt_title/navigator, "Helmsman" = /datum/alt_title/helmsman, "Astrogator" = /datum/alt_title/astrogator)	//RS EDIT
 
 /datum/alt_title/co_pilot
 	title = "Co-Pilot"
@@ -241,9 +241,10 @@
 /datum/alt_title/helmsman
 	title = "Helmsman"
 
+//RS ADD START
 /datum/alt_title/astrogator
 	title = "Astrogator"
-
+//RS ADD END
 //////////////////////////////////
 //			Entertainer
 //////////////////////////////////
