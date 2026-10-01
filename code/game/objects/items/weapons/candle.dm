@@ -10,7 +10,8 @@
 	var/wax = 2000
 	var/wax_randomize = TRUE
 	var/icon_type = "candle"
-	var/stage = 1	//RS ADD
+	var/stage = 1			//RS ADD
+	var/everburn = FALSE	//RS ADD
 
 /obj/item/weapon/flame/candle/New()
 	if(wax_randomize)	//RS EDIT
@@ -60,14 +61,15 @@
 /obj/item/weapon/flame/candle/process()
 	if(!lit)
 		return
-	wax--
-	if(!wax)
-		burn_out()	//RS EDIT START
-		return
-	var/oldstage = stage
-	calc_stage()
-	if(stage != oldstage)
-		update_icon()	//RS EDIT END
+	if(!everburn)	//RS EDIT START
+		wax--
+		if(wax <= 0)
+			burn_out()
+			return
+		var/oldstage = stage
+		calc_stage()
+		if(stage != oldstage)
+			update_icon()	//RS EDIT END
 	if(istype(loc, /turf)) //start a fire if possible
 		var/turf/T = loc
 		T.hotspot_expose(700, 5)
@@ -125,14 +127,14 @@
 		icon_state = "candelabra[lit ? "_lit" : ""]"
 
 /obj/item/weapon/flame/candle/everburn
-	wax = 99999
+	everburn = TRUE
 
 /obj/item/weapon/flame/candle/everburn/Initialize()
 	. = ..()
 	light("<span class='notice'>\The [src] mysteriously lights itself!.</span>")
 
 /obj/item/weapon/flame/candle/candelabra/everburn
-	wax = 99999
+	everburn = TRUE
 
 /obj/item/weapon/flame/candle/candelabra/everburn/Initialize()
 	. = ..()

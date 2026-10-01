@@ -141,6 +141,7 @@
 
 	var/our_candle
 	howmuch *= 25
+	howmuch = round(howmuch, 1)
 
 	switch(howmuch)
 		if(5000 to INFINITY)
