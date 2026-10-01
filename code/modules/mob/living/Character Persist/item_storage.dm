@@ -11,6 +11,7 @@ var/global/list/permanent_unlockables = list(
 	/obj/item/clothing/under/hyperfiber/skirt,
 	/obj/item/clothing/under/hyperfiber/bluespace,
 	/obj/item/clothing/under/hyperfiber/bluespace/skirt,
+	/obj/item/clothing/accessory/collar/shock/bluespace,
 	/obj/item/selectable_item/chemistrykit/size,
 	//TF RAYS
 	/obj/item/weapon/gun/energy/mouseray,
