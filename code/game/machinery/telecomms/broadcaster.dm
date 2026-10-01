@@ -1,3 +1,7 @@
+///////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star September 2026: Radio Optimize //
+///////////////////////////////////////////////////////////////////
+
 //This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
 
 /*
@@ -335,7 +339,16 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 
 **/
 
+// RS Edit: Radio Optimize (Lira, September 2026)
 /proc/Broadcast_Message(var/datum/radio_frequency/connection, var/mob/M,
+						var/vmask, var/list/vmessage_pieces, var/obj/item/device/radio/radio,
+						var/list/message_pieces, var/name, var/job, var/realname, var/vname,
+						var/data, var/compression, var/list/level, var/freq, var/verbage = "says",
+						var/list/forced_radios)
+	return GLOB.radio_broadcast_queue.enqueue(GLOBAL_PROC_REF(deliver_radio_message), args)
+
+// RS Edit: Radio Optimize (Lira, September 2026)
+/proc/deliver_radio_message(var/datum/radio_frequency/connection, var/mob/M,
 						var/vmask, var/list/vmessage_pieces, var/obj/item/device/radio/radio,
 						var/list/message_pieces, var/name, var/job, var/realname, var/vname,
 						var/data, var/compression, var/list/level, var/freq, var/verbage = "says",
@@ -344,10 +357,14 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
   /* ###### Prepare the radio connection ###### */
 
 	var/display_freq = freq
+	var/list/connection_radios = QDELETED(connection) ? list() : connection.devices["[RADIO_CHAT]"]?.Copy()
 
 	var/list/obj/item/device/radio/radios = list()
 
 	for(var/obj/item/device/radio/R in forced_radios)
+		CHECK_TICK
+		if(QDELETED(R))
+			continue
 		//Cursory check to ensure they are 'on' and stuff
 		if(R.receive_range(display_freq, list(0)) > -1)
 			radios |= R
@@ -356,7 +373,10 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 
 	if(data == DATA_INTERCOM)
 
-		for (var/obj/item/device/radio/intercom/R in connection.devices["[RADIO_CHAT]"])
+		for (var/obj/item/device/radio/intercom/R in connection_radios)
+			CHECK_TICK
+			if(QDELETED(R))
+				continue
 			if(R.receive_range(display_freq, level) > -1)
 				radios |= R
 
@@ -364,7 +384,10 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 
 	else if(data == DATA_LOCAL)
 
-		for (var/obj/item/device/radio/R in connection.devices["[RADIO_CHAT]"])
+		for (var/obj/item/device/radio/R in connection_radios)
+			CHECK_TICK
+			if(QDELETED(R))
+				continue
 
 			if(istype(R, /obj/item/device/radio/headset) && !R.adhoc_fallback)
 				continue
@@ -377,7 +400,11 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 	else if(data == DATA_ANTAG)
 		for(var/antag_freq in ANTAG_FREQS)
 			var/datum/radio_frequency/antag_connection = radio_controller.return_frequency(antag_freq)
-			for (var/obj/item/device/radio/R in antag_connection.devices["[RADIO_CHAT]"])
+			var/list/antag_radios = antag_connection.devices["[RADIO_CHAT]"]?.Copy()
+			for (var/obj/item/device/radio/R in antag_radios)
+				CHECK_TICK
+				if(QDELETED(R))
+					continue
 				if(R.receive_range(antag_freq, level) > -1)
 					radios |= R
 
@@ -385,7 +412,10 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 
 	else
 
-		for (var/obj/item/device/radio/R in connection.devices["[RADIO_CHAT]"])
+		for (var/obj/item/device/radio/R in connection_radios)
+			CHECK_TICK
+			if(QDELETED(R))
+				continue
 			if(R.receive_range(display_freq, level) > -1)
 				radios |= R
 
@@ -404,6 +434,9 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 	var/list/heard_gibberish= list() // completely screwed over message (ie "F%! (O*# *#!<>&**%!")
 
 	for (var/mob/R in receive)
+		CHECK_TICK
+		if(QDELETED(R) || !(R in player_list))
+			continue
 
 	  /* --- Loop through the receivers and categorize them --- */
 		// RS EDIT
@@ -513,6 +546,9 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 	  	/* --- Process all the mobs that heard a masked voice (understood) --- */
 		if(length(heard_masked))
 			for (var/mob/R in heard_masked)
+				CHECK_TICK
+				if(QDELETED(R) || !(R in player_list))
+					continue
 				R.hear_radio(message_pieces, verbage, part_a, part_b, part_c, part_d, part_e, M, 0, name, display_freq) // RS EDIT
 				if(R.is_preference_enabled(/datum/client_preference/radio_sounds))
 					R << 'sound/effects/radio_common_quieter.ogg'
@@ -520,6 +556,9 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 		/* --- Process all the mobs that heard the voice normally (understood) --- */
 		if(length(heard_normal))
 			for (var/mob/R in heard_normal)
+				CHECK_TICK
+				if(QDELETED(R) || !(R in player_list))
+					continue
 				R.hear_radio(message_pieces, verbage, part_a, part_b, part_c, part_d, part_e, M, 0, realname, display_freq) // RS EDIT
 				if(R.is_preference_enabled(/datum/client_preference/radio_sounds))
 					R << 'sound/effects/radio_common_quieter.ogg'
@@ -527,6 +566,9 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 		/* --- Process all the mobs that heard the voice normally (did not understand) --- */
 		if(length(heard_voice))
 			for (var/mob/R in heard_voice)
+				CHECK_TICK
+				if(QDELETED(R) || !(R in player_list))
+					continue
 				R.hear_radio(message_pieces, verbage, part_a, part_b, part_c, part_d, part_e, M,0, vname, display_freq) // RS EDIT
 				if(R.is_preference_enabled(/datum/client_preference/radio_sounds))
 					R << 'sound/effects/radio_common_quieter.ogg'
@@ -535,6 +577,9 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 			// Displays garbled message (ie "f*c* **u, **i*er!")
 		if(length(heard_garbled))
 			for (var/mob/R in heard_garbled)
+				CHECK_TICK
+				if(QDELETED(R) || !(R in player_list))
+					continue
 				R.hear_radio(message_pieces, verbage, part_a, part_b, part_c, part_d, part_e, M, 1, vname, display_freq) // RS EDIT
 				if(R.is_preference_enabled(/datum/client_preference/radio_sounds))
 					R << 'sound/effects/radio_common_quieter.ogg'
@@ -542,13 +587,21 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 		/* --- Complete gibberish. Usually happens when there's a compressed message --- */
 		if(length(heard_gibberish))
 			for (var/mob/R in heard_gibberish)
+				CHECK_TICK
+				if(QDELETED(R) || !(R in player_list))
+					continue
 				R.hear_radio(message_pieces, verbage, part_a, part_b, part_c, part_d, part_e, M, 1, "", display_freq) // RS EDIT
 				if(R.is_preference_enabled(/datum/client_preference/radio_sounds))
 					R << 'sound/effects/radio_common_quieter.ogg'
 
 	return 1
 
+// RS Edit: Radio Optimize (Lira, September 2026)
 /proc/Broadcast_SimpleMessage(var/source, var/frequency, list/message_pieces, var/data, var/mob/M, var/compression, var/level, var/list/forced_radios)
+	GLOB.radio_broadcast_queue.enqueue(GLOBAL_PROC_REF(deliver_simple_radio_message), args)
+
+// RS Edit: Radio Optimize (Lira, September 2026)
+/proc/deliver_simple_radio_message(var/source, var/frequency, list/message_pieces, var/data, var/mob/M, var/compression, var/level, var/list/forced_radios)
 	var/text = multilingual_to_message(message_pieces)
   /* ###### Prepare the radio connection ###### */
 
@@ -559,16 +612,23 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 	var/datum/radio_frequency/connection = radio_controller.return_frequency(frequency)
 
 	var/display_freq = connection.frequency
+	var/list/connection_radios = connection.devices["[RADIO_CHAT]"]?.Copy()
 
 	var/list/receive = list()
 
 	for(var/obj/item/device/radio/R in forced_radios)
+		CHECK_TICK
+		if(QDELETED(R))
+			continue
 		receive |= R.send_hear(display_freq)
 
 	// --- Broadcast only to intercom devices ---
 
 	if(data == DATA_INTERCOM)
-		for (var/obj/item/device/radio/intercom/R in connection.devices["[RADIO_CHAT]"])
+		for (var/obj/item/device/radio/intercom/R in connection_radios)
+			CHECK_TICK
+			if(QDELETED(R))
+				continue
 			var/turf/position = get_turf(R)
 			if(position && position.z == level)
 				receive |= R.send_hear(display_freq, level)
@@ -577,7 +637,10 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 	// --- Broadcast only to intercoms and station-bounced radios ---
 
 	else if(data == DATA_LOCAL)
-		for (var/obj/item/device/radio/R in connection.devices["[RADIO_CHAT]"])
+		for (var/obj/item/device/radio/R in connection_radios)
+			CHECK_TICK
+			if(QDELETED(R))
+				continue
 
 			if(istype(R, /obj/item/device/radio/headset))
 				continue
@@ -591,7 +654,11 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 	else if(data == DATA_ANTAG)
 		for(var/freq in ANTAG_FREQS)
 			var/datum/radio_frequency/antag_connection = radio_controller.return_frequency(freq)
-			for (var/obj/item/device/radio/R in antag_connection.devices["[RADIO_CHAT]"])
+			var/list/antag_radios = antag_connection.devices["[RADIO_CHAT]"]?.Copy()
+			for (var/obj/item/device/radio/R in antag_radios)
+				CHECK_TICK
+				if(QDELETED(R))
+					continue
 				var/turf/position = get_turf(R)
 				if(position && position.z == level)
 					receive |= R.send_hear(freq)
@@ -600,7 +667,10 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 	// --- Broadcast to ALL radio devices ---
 
 	else
-		for (var/obj/item/device/radio/R in connection.devices["[RADIO_CHAT]"])
+		for (var/obj/item/device/radio/R in connection_radios)
+			CHECK_TICK
+			if(QDELETED(R))
+				continue
 			var/turf/position = get_turf(R)
 			if(position && position.z == level)
 				receive |= R.send_hear(display_freq)
@@ -616,6 +686,9 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 	var/list/heard_gibberish= list() // completely screwed over message (ie "F%! (O*# *#!<>&**%!")
 
 	for (var/mob/R in receive)
+		CHECK_TICK
+		if(QDELETED(R))
+			continue
 
 	  /* --- Loop through the receivers and categorize them --- */
 
@@ -704,6 +777,9 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 			var/rendered = "[part_a][source][part_b]\"[text]\"[part_c]"
 
 			for (var/mob/R in heard_normal)
+				CHECK_TICK
+				if(QDELETED(R))
+					continue
 				R.show_message(rendered, 2)
 
 		/* --- Process all the mobs that heard a garbled voice (did not understand) --- */
@@ -714,6 +790,9 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 			var/rendered = "[part_a][source][part_b][quotedmsg][part_c]"
 
 			for (var/mob/R in heard_garbled)
+				CHECK_TICK
+				if(QDELETED(R))
+					continue
 				R.show_message(rendered, 2)
 
 
@@ -724,6 +803,9 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 			var/rendered = "[part_a][Gibberish(source, compression + 50)][part_b][quotedmsg][part_c]"
 
 			for (var/mob/R in heard_gibberish)
+				CHECK_TICK
+				if(QDELETED(R))
+					continue
 				R.show_message(rendered, 2)
 
 //Use this to test if an obj can communicate with a Telecommunications Network

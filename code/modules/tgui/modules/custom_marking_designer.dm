@@ -9636,11 +9636,17 @@ var/global/custom_marking_static_source_digest_complete = TRUE
 	var/list/cached_payload = find_static_icon_asset(canonical_key, family)
 	if(islist(cached_payload))
 		return cached_payload
+	var/resolved_visibility_key = istext(visibility_key) && length(visibility_key) ? visibility_key : canonical_key
+	var/datum/asset/spritesheet/custom_marking_designer/atlas = use_shared_atlas ? get_asset_datum(/datum/asset/spritesheet/custom_marking_designer) : null
+	if(atlas?.is_known_transparent_icon(canonical_key))
+		LAZYINITLIST(custom_marking_visible_pixel_cache)
+		custom_marking_visible_pixel_cache[resolved_visibility_key] = FALSE
+		return null
 	var/icon/source = icon(icon_source, icon_state, dir, 1, 0)
 	if(!isicon(source))
 		return null
-	var/resolved_visibility_key = istext(visibility_key) && length(visibility_key) ? visibility_key : canonical_key
 	if(!icon_has_visible_pixels(source, resolved_visibility_key))
+		atlas?.note_transparent_icon(canonical_key)
 		return null
 	return build_icon_asset(source, canonical_key, family)
 

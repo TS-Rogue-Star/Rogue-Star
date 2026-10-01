@@ -42,6 +42,10 @@ SUBSYSTEM_DEF(mapping)
 	for(var/datum/map_template/template as anything in subtypesof(/datum/map_template))
 		if(!(initial(template.mappath))) // If it's missing the actual path its probably a base type or being used for inheritence.
 			continue
+		// RS Add Start: Minitest Template Restriction (Lira, September 2026)
+		if(istype(using_map, /datum/map/virgo_minitest) && !(initial(template.name) in using_map.station_z_levels))
+			continue
+		// RS Add End
 		template = new template()
 		map_templates[template.name] = template
 	return TRUE

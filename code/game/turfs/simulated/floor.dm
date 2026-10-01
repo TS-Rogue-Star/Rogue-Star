@@ -50,9 +50,13 @@
 			dirt += rand(50,100)
 			update_dirt() //5% chance to start with dirt on a floor tile- give the janitor something to do
 
+// RS Edit: Terrain Appearance Batching (Lira, September 2026)
 /turf/simulated/floor/LateInitialize()
 	. = ..()
-	update_icon(1)
+	if(SSatoms.queue_terrain_icon_update(src, TRUE))
+		update_base_icon()
+	else
+		update_icon(1)
 
 /turf/simulated/floor/proc/swap_decals()
 	var/current_decals = decals

@@ -95,7 +95,7 @@ GLOBAL_VAR_INIT(custom_marking_static_atlas_building, FALSE)
 		custom_marking_speech_bubble_style_cache = null
 	if(finalized)
 		log_debug("CustomMarkings: Canonical atlas finalized [atlas.get_frame_count()] unique frames from [atlas.get_requested_frame_count()] requests ([atlas.get_reused_frame_count()] reused) across [atlas.get_sheet_count()] family shards. [atlas.get_sheet_diagnostic_summary()]")
-		if(!atlas.was_loaded_from_persistent_cache())
+		if(atlas.needs_persistent_cache_write())
 			try
 				if(atlas.persist_finalized_cache())
 					log_debug("CustomMarkings: Canonical atlas persistent cache stored ([atlas.get_frame_count()] frames, [atlas.get_sheet_count()] shards).")
