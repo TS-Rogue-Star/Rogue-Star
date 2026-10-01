@@ -5,6 +5,8 @@
 //////////////////////////////////////////////////////////////////////////
 // Updated by Lira for Rogue Star September 2026: Map Dimension Caching //
 //////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star September 2026: Fast Map Source Reads //
+//////////////////////////////////////////////////////////////////////////
 
 //global datum that will preload variables on atoms instanciation
 GLOBAL_VAR_INIT(use_preloader, FALSE)
@@ -21,6 +23,7 @@ var/const/DMM_LOADER_REGEX = {""(\[a-zA-Z]+)" = \\(((?:.|\n)*?)\\)\n(?!\t)|\\((\
 	var/static/regex/trimRegex = new/regex("^\[\\s\n]+|\[\\s\n]+$", "g")
 	var/static/list/modelCache = list()
 	var/list/map_bounds_cache = list() // RS Add: Map Dimension Caching (Lira, September 2026)
+	var/list/map_source_paths // RS Add: Fast Map Source Reads (Lira, September 2026)
 	var/static/space_key
 	#ifdef TESTING
 	var/static/turfsSkipped
@@ -28,7 +31,8 @@ var/const/DMM_LOADER_REGEX = {""(\[a-zA-Z]+)" = \\(((?:.|\n)*?)\\)\n(?!\t)|\\((\
 
 // RS Add: Map Dimension Caching (Lira, September 2026)
 /dmm_suite/proc/get_map_bounds(path, orientation = 0)
-	var/map_file = fcopy_rsc(isfile(path) ? path : file(path))
+	var/source_file = isfile(path) ? path : file(path)
+	var/map_file = fcopy_rsc(source_file)
 	if(!map_file)
 		return null
 	if(!(orientation in list(0, 90, 180, 270)))
@@ -43,13 +47,50 @@ var/const/DMM_LOADER_REGEX = {""(\[a-zA-Z]+)" = \\(((?:.|\n)*?)\\)\n(?!\t)|\\((\
 	var/list/bounds = orientation_bounds[orientation_key]
 	if(bounds)
 		return bounds.Copy()
-	var/source_file = file(cache_key)
-	if(fcopy_rsc(source_file) != map_file)
-		source_file = map_file
 	bounds = load_map(source_file, 1, 1, 1, cropMap = FALSE, measureOnly = TRUE, orientation = orientation)
 	if(bounds)
 		orientation_bounds[orientation_key] = bounds.Copy()
 	return bounds
+
+// RS Add: Fast Map Source Reads (Lira, September 2026)
+/dmm_suite/proc/get_map_source(dmm_file)
+	var/map_file = fcopy_rsc(dmm_file)
+	if(!map_file)
+		return dmm_file
+	var/source_path = "[dmm_file]"
+	var/source_file = file(source_path)
+	if(fcopy_rsc(source_file) == map_file)
+		return source_file
+	if(lowertext(copytext(source_path, -4)) != ".dmm")
+		return map_file
+	if(isnull(map_source_paths))
+		index_map_sources()
+	var/normalized_path = replacetext(source_path, "\\", "/")
+	var/filename = copytext(normalized_path, findlasttext(normalized_path, "/") + 1)
+	var/list/candidates = map_source_paths[lowertext(filename)]
+	for(var/candidate in candidates)
+		source_file = file(candidate)
+		if(fcopy_rsc(source_file) == map_file)
+			return source_file
+	return map_file
+
+// RS Add: Fast Map Source Reads (Lira, September 2026)
+/dmm_suite/proc/index_map_sources()
+	var/list/paths = list()
+	var/list/directories = list("maps/")
+	for(var/i = 1; i <= directories.len; i++)
+		var/directory = directories[i]
+		for(var/entry in flist(directory))
+			if(copytext(entry, -1) == "/")
+				directories += "[directory][entry]"
+			else if(lowertext(copytext(entry, -4)) == ".dmm")
+				var/key = lowertext(entry)
+				var/list/candidates = paths[key]
+				if(!candidates)
+					candidates = list()
+					paths[key] = candidates
+				candidates += "[directory][entry]"
+	map_source_paths = paths
 
 /**
  * Construct the model map and control the loading process
@@ -62,7 +103,7 @@ var/const/DMM_LOADER_REGEX = {""(\[a-zA-Z]+)" = \\(((?:.|\n)*?)\\)\n(?!\t)|\\((\
  *
  */
 /dmm_suite/load_map(dmm_file as file, x_offset as num, y_offset as num, z_offset as num, cropMap as num, measureOnly as num, no_changeturf as num, orientation as num)
-	
+
 	modelCache = list()
 
 	//How I wish for RAII
@@ -83,7 +124,7 @@ var/const/DMM_LOADER_REGEX = {""(\[a-zA-Z]+)" = \\(((?:.|\n)*?)\\)\n(?!\t)|\\((\
 /dmm_suite/proc/load_map_impl(dmm_file, x_offset, y_offset, z_offset, cropMap, measureOnly, no_changeturf, orientation)
 	var/tfile = dmm_file//the map file we're creating
 	if(isfile(tfile))
-		tfile = file2text(tfile)
+		tfile = file2text(get_map_source(tfile)) // RS Edit: Fast Map Source Reads (Lira, September 2026)
 
 	// RS Edit: Move from shared dmmRegex to a seperate regex inside each map load (Lira, October 2025)
 	var/regex/dmmRegex = new/regex(DMM_LOADER_REGEX, "g")
