@@ -142,7 +142,11 @@
 	lifespan = 2
 
 /obj/particle_emitter/smelly/white
+	particles = new/particles/smelly/white
+
+/particles/smelly/white
 	color = "#FFFFFF"
+
 
 /obj/particle_emitter/smelly/indefinite
 	lifespan = -1

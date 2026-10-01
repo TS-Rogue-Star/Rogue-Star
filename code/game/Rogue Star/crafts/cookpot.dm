@@ -145,7 +145,7 @@
 
 /obj/item/cookpot/proc/cook()
 	if(dehydrate())
-		new /obj/particle_emitter/smelly(src.loc)
+		new /obj/particle_emitter/smelly/white(src.loc)
 		process_reagents()
 	else
 		burn()
@@ -158,7 +158,7 @@
 				A.reagents.trans_to_obj(src,temp_based_reagent_calc())
 				if(A.reagents.total_volume == 0)
 					qdel(A)
-					new /obj/particle_emitter/smelly(src.loc)
+					new /obj/particle_emitter/smelly/white(src.loc)
 
 			if(istype(A,/obj/item/weapon/bone) || istype(A,/obj/item/weapon/digestion_remains/organic))
 				broth(A)
@@ -166,10 +166,12 @@
 			if(istype(A,/obj/item/fat))
 				reagents.add_reagent("triglyceride",rand(1,10))
 				qdel(A)
+				new /obj/particle_emitter/smelly/white(src.loc)
 			if(istype(A,/obj/item/stack/material/wax))
 				reagents.add_reagent("wax",6)
 				var/obj/item/stack/material/wax/w = A
 				w.use(1)
+				new /obj/particle_emitter/smelly/white(src.loc)
 
 /obj/item/cookpot/proc/dehydrate()
 	var/datum/reagent/water/W = reagents.get_reagent("water")
@@ -233,7 +235,7 @@
 		R.cookpot_interact()
 
 /obj/item/cookpot/proc/high_heat()
-	#warn REPLACE THE high_heat PROC
+	//Maybe eventually how quickly things burn might be affected by how hot things are.
 	return top_heat
 
 /obj/item/cookpot/proc/register_cooksource(var/atom/oursource)
@@ -249,7 +251,7 @@
 		cooksource = null
 
 /obj/item/cookpot/proc/temp_based_reagent_calc()
-	#warn REPLACE THE temp_based_reagent_calc PROC BEFORE YOU PR THIS DUMBASS
+//	Maybe eventually how much gets processed can change based on temperatures? But grills and bonfires don't do that yet! So maybe later!
 	return 50
 
 /obj/item/cookpot/Destroy()
@@ -263,7 +265,7 @@
 	cook()
 
 /obj/item/cookpot/attackby(obj/item/weapon/W, mob/user)
-	if(istype(W,/obj/item/fat) || istype(W,/obj/item/weapon/reagent_containers/food/snacks) || istype(W,/obj/item/weapon/bone) || istype(W,/obj/item/weapon/digestion_remains/organic) || istype(W,/obj/item/stack/material/wax))
+	if(istype(W,/obj/item/fat) || istype(W,/obj/item/weapon/reagent_containers/food/snacks) || istype(W,/obj/item/weapon/bone) || istype(W,/obj/item/stack/material/wax))	//	istype(W,/obj/item/weapon/digestion_remains/organic) //Maybe we can have this later when we have some cool prefs for it. The code already works for when we do.
 		if(contents.len >= 6)
 			to_chat(user,SPAN_DANGER("It's too full just now, wait for whatever is inside to cook down, or remove things from it first."))
 			return
@@ -278,14 +280,15 @@
 			if(reagents.total_volume == 0)
 				to_chat(user,SPAN_DANGER("\The [src] is empty..."))
 				return
+			var/transfer_amount = R.amount_per_transfer_from_this
 			if(user.skill_check(SKILL_COOKING))
-				if(reagents.total_volume < R.reagents.maximum_volume)
+				if(reagents.total_volume < transfer_amount)
 					howmuch = reagents.total_volume
 				else
-					howmuch = R.reagents.maximum_volume
+					howmuch = transfer_amount
 				howmuch = "[howmuch] units"
 			user.visible_message(SPAN_NOTICE("\The [user] fills \the [R] from \the [src]."),SPAN_NOTICE("You fill your [R] with [howmuch] of \the [src]'s contents."),runemessage = "gloop")
-			reagents.trans_to_obj(R,R.reagents.maximum_volume)
+			reagents.trans_to_obj(R,transfer_amount)
 			return
 		//If the container is not empty, then we will pour its contents into the pot!!! Don't poison my stew please...
 		if(reagents.total_volume >= reagents.maximum_volume)
@@ -300,9 +303,12 @@
 		R.reagents.trans_to_obj(src,R.amount_per_transfer_from_this)
 		user.visible_message(SPAN_NOTICE("\The [user] pours something from \the [R] into \the [src]."),SPAN_NOTICE("You pour [howmuch] from \the [R] into \the [src]."),runemessage = "gloop")
 
-	if(istype(W,/obj/item/weapon/holder/micro))
+/*	if(istype(W,/obj/item/weapon/holder/micro))	//Maybe eventually we can do some interesting things with putting micros into the pot, but not now.
 		var/obj/item/weapon/holder/micro/M = W
-		#warn FIGURE OUT WHAT TO DO WITH MICRO HOLDERS
+*/
+
+/obj/item/cookpot/begin_open_cooking(var/cooker)
+	register_cooksource(cooker)
 
 /obj/item/cookpot/resolve_attackby(atom/A, mob/user, attack_modifier, click_parameters)
 	. = ..()
@@ -367,3 +373,6 @@
 	glass_desc = "It's hot wax!"
 	cup_name = "wax"
 	cup_desc = "A cup of hot wax!"
+
+/atom/proc/begin_open_cooking(var/cooker)
+	return

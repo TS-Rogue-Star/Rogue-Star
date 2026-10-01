@@ -10,6 +10,7 @@
 	var/wax = 2000
 	var/wax_randomize = TRUE
 	var/icon_type = "candle"
+	var/stage = 1	//RS ADD
 
 /obj/item/weapon/flame/candle/New()
 	if(wax_randomize)	//RS EDIT
@@ -17,14 +18,16 @@
 	..()
 
 /obj/item/weapon/flame/candle/update_icon()
-	var/i
-	if(wax > 1500)
-		i = 1
-	else if(wax > 800)
-		i = 2
-	else i = 3
-	icon_state = "[icon_type][i][lit ? "_lit" : ""]"
+	icon_state = "[icon_type][stage][lit ? "_lit" : ""]"	//RS EDIT START
 
+/obj/item/weapon/flame/candle/proc/calc_stage()
+	if(wax > 1500)
+		stage = 1
+	else if(wax > 800)
+		stage = 2
+	else stage = 3
+	return stage
+	//RS EDIT END
 
 /obj/item/weapon/flame/candle/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	..()
@@ -59,14 +62,23 @@
 		return
 	wax--
 	if(!wax)
-		new/obj/item/trash/candle(src.loc)
-		if(istype(src.loc, /mob))
-			src.dropped()
-		qdel(src)
-	update_icon()
+		burn_out()	//RS EDIT START
+		return
+	var/oldstage = stage
+	calc_stage()
+	if(stage != oldstage)
+		update_icon()	//RS EDIT END
 	if(istype(loc, /turf)) //start a fire if possible
 		var/turf/T = loc
 		T.hotspot_expose(700, 5)
+
+//RS EDIT START
+/obj/item/weapon/flame/candle/proc/burn_out()
+	new/obj/item/trash/candle(src.loc)
+	if(istype(src.loc, /mob))
+		src.dropped()
+	qdel(src)
+//RS EDIT END
 
 /obj/item/weapon/flame/candle/attack_self(mob/user as mob)
 	if(lit)

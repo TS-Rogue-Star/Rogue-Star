@@ -165,8 +165,9 @@
 /obj/item/weapon/flame/candle/handmade
 	name = "candle"
 	desc = "A home made candle! How rustic!"
-	icon = 'icons/rogue-star/obj.dmi'
+	icon = 'icons/rogue-star/candle.dmi'
 	icon_state = "candle1"
+	icon_type = "candle"
 	wax_randomize = FALSE
 	wax = 1500
 	var/starting_wax = 1500
@@ -241,28 +242,41 @@
 	icon_type = "candle_Doglin"
 	carving_choices = null
 
-/obj/item/weapon/flame/candle/handmade/update_icon()
-	to_world("update_icon happen wahoo")
-	cut_overlays()
-	var/i
+/obj/item/weapon/flame/candle/handmade/calc_stage()
 	var/third = starting_wax / 3
 	if(wax > starting_wax - third)
-		i = 1
+		stage = 1
 	else if(wax > starting_wax - (third * 2))
-		i = 2
-	else i = 3
-	icon_state = "[icon_type][i]"
+		stage = 2
+	else stage = 3
+
+/obj/item/weapon/flame/candle/handmade/update_icon()
+	cut_overlays()
+	icon_state = "[icon_type][stage]"
 
 	if(!lit)
 		return
-	var/combine_key = "flame[i]"
+	var/f_height = flame_height(stage)
+	var/combine_key = "flame-[f_height]"
 	var/image/flame_image = overlays_cache[combine_key]
 	if(!flame_image)
-		flame_image = image(icon,null,combine_key)
+		flame_image = image(icon,null,"flame")
 		flame_image.appearance_flags = RESET_COLOR|KEEP_APART|PIXEL_SCALE
 		flame_image.plane = PLANE_LIGHTING_ABOVE
+		flame_image.pixel_y = f_height
 		overlays_cache[combine_key] = flame_image
 	add_overlay(flame_image)
+
+/obj/item/weapon/flame/candle/handmade/burn_out()
+	var/obj/item/trash/candle/ourtrash = new(src.loc)
+	ourtrash.icon = icon
+	ourtrash.icon_state = "[icon_type]4"
+	ourtrash.color = color
+	ourtrash.pixel_x = pixel_x
+	ourtrash.pixel_y = pixel_y
+	if(istype(src.loc, /mob))
+		src.dropped()
+	qdel(src)
 
 /obj/item/weapon/flame/candle/handmade/proc/carve(var/mob/user)
 	if(!user)
@@ -275,3 +289,88 @@
 	if(choice)
 		icon_type = "candle_[choice]"
 		update_icon()
+
+/obj/item/weapon/flame/candle/handmade/proc/flame_height(var/our_state)
+	. = 0
+	switch(icon_type)
+		if("candle_tiny")
+			switch(our_state)
+				if(1)
+					. = 5
+				if(2)
+					. = 3
+				if(3)
+					. = 1
+		if("candle")
+			switch(our_state)
+				if(1)
+					. = 5
+				if(2)
+					. = 2
+				if(3)
+					. = 0
+		if("candle_large")
+			switch(our_state)
+				if(1)
+					. = 5
+				if(2)
+					. = 2
+				if(3)
+					. = 0
+		if("candle_jumbo")
+			switch(our_state)
+				if(1)
+					. = 5
+				if(2)
+					. = 2
+				if(3)
+					. = -1
+		if("candle_Star")
+			switch(our_state)
+				if(1)
+					. = 6
+				if(2)
+					. = 2
+				if(3)
+					. = -1
+		if("candle_Skull")
+			switch(our_state)
+				if(1)
+					. = 5
+				if(2)
+					. = 3
+				if(3)
+					. = 0
+		if("candle_Tree")
+			switch(our_state)
+				if(1)
+					. = 5
+				if(2)
+					. = 2
+				if(3)
+					. = -1
+		if("candle_Pumpkin")
+			switch(our_state)
+				if(1)
+					. = 5
+				if(2)
+					. = 3
+				if(3)
+					. = 0
+		if("candle_Mouse")
+			switch(our_state)
+				if(1)
+					. = 5
+				if(2)
+					. = 3
+				if(3)
+					. = -2
+		if("candle_Doglin")
+			switch(our_state)
+				if(1)
+					. = 9
+				if(2)
+					. = 8
+				if(3)
+					. = 1
+	return .
