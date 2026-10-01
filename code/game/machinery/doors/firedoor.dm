@@ -156,9 +156,9 @@
 	"\The [src]", list("Yes, [density ? "open" : "close"]", "No"))
 	if(answer == "No")
 		return
-	toggle_for(user)
+	toggle_for(user) // RS ADD
 
-// RS ADD
+// RS ADD Start
 /obj/machinery/door/firedoor/proc/toggle_for(mob/user)
 	if(operating)
 		return
@@ -169,6 +169,7 @@
 	for(var/area/A in areas_added)
 		if(A.firedoors_closed)
 			alarmed = 1
+// RS ADD End
 	if(user.incapacitated() || (get_dist(src, user) > 1 && !issilicon(user)))
 		to_chat(user, "Sorry, you must remain able bodied and close to \the [src] in order to use it.")
 		return

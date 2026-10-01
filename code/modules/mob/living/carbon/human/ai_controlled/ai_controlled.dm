@@ -104,7 +104,7 @@
 			W.access = list()
 		if(to_wear_id_job)
 			W.assignment = to_wear_id_job
-		set_id_info(W)
+		set_id_info(W) // RS EDIT
 		equip_to_slot_or_del(W, slot_wear_id)
 
 	if(generate_dead)
