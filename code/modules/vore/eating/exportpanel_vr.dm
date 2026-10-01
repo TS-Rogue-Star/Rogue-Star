@@ -212,4 +212,6 @@
 			belly_data["autotransfer_min_amount"] = B.autotransfer_min_amount
 			belly_data["autotransfer_max_amount"] = B.autotransfer_max_amount
 
+			belly_data["private_struggle"] = B.private_struggle //RS Edit || Ports CHOMPStation PR7443
+
 	return data

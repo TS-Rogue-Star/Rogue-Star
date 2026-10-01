@@ -67,6 +67,7 @@
 	var/override_min_prey_size = FALSE	//If true, exceeding override prey number will override minimum size requirements
 	var/override_min_prey_num	= 1		//We check belly contents against this to override min size
 	var/belly_overall_mult = 1	//Multiplier applied ontop of any other specific multipliers //RS Edit. Added from VS.
+	var/private_struggle = FALSE //RS Edit: Adds private struggling CHOMPStation PR7443
 	//RS Edit: Ports Slow Body Digestion, CHOMPStation PR 5161
 	var/slow_digestion = FALSE
 	var/slow_brutal = FALSE
@@ -397,7 +398,7 @@
 	"fullness3_messages",
 	"fullness4_messages",
 	"fullness5_messages",	// End reagent bellies
-	"autotransferchance",  //RS Add Start || Port Chop 2821, 2979, 6155
+	"autotransferchance",  //RS Add Start || Port Chomp 2821, 2979, 6155
 	"autotransferwait",
 	"autotransferlocation",
 	"autotransfer_enabled",
@@ -406,7 +407,8 @@
 	"autotransfer_min_amount",
 	"autotransfer_max_amount",
 	"belly_healthbar_overlay_theme",
-	"belly_healthbar_overlay_color"		//RS ADD END
+	"belly_healthbar_overlay_color", //RS ADD END
+	"private struggle"		//RS add || CHOMPStation PR7443
 	)
 
 	if (save_digest_mode == 1)
@@ -1503,8 +1505,13 @@
 	struggle_outer_message = "<span class='alert'>[struggle_outer_message]</span>"
 	struggle_user_message = "<span class='alert'>[struggle_user_message]</span>"
 
-	for(var/mob/M in hearers(4, owner))
-		M.show_message(struggle_outer_message, 2) // hearable
+	//RS Edit start || Ports CHOMPStation PR7443
+	if(private_struggle)
+		to_chat(owner, struggle_outer_message)
+	else
+		for(var/mob/M in hearers(4, owner))
+			M.show_message(struggle_outer_message, 2) // hearable
+	//RS Edit end
 	//to_chat(R, struggle_user_message)  RS remove - moved to bottom of proc
 
 	var/sound/struggle_snuggle
@@ -1517,14 +1524,17 @@
 			howner.vs_animate(belly_sprite_to_affect)
 	// End RS edit
 
-	if(is_wet)
-		if(!fancy_vore)
-			struggle_snuggle = sound(get_sfx("classic_struggle_sounds"))
-		else
-			struggle_snuggle = sound(get_sfx("fancy_prey_struggle"))
-		playsound(src, struggle_snuggle, vary = 1, vol = 75, falloff = VORE_SOUND_FALLOFF, preference = /datum/client_preference/digestion_noises, volume_channel = VOLUME_CHANNEL_VORE)
+	//RS Edit start || Ports CHOMPStation PR7443
+	if(!private_struggle)
+		if(is_wet)
+			if(!fancy_vore)
+				struggle_snuggle = sound(get_sfx("classic_struggle_sounds"))
+			else
+				struggle_snuggle = sound(get_sfx("fancy_prey_struggle"))
+			playsound(src, struggle_snuggle, vary = 1, vol = 75, falloff = VORE_SOUND_FALLOFF, preference = /datum/client_preference/digestion_noises, volume_channel = VOLUME_CHANNEL_VORE)
 	else
 		playsound(src, struggle_rustle, vary = 1, vol = 75, falloff = VORE_SOUND_FALLOFF, preference = /datum/client_preference/digestion_noises, volume_channel = VOLUME_CHANNEL_VORE)
+	//RS Edit end
 
 	if(escapable) //If the stomach has escapable enabled.
 		if(prob(escapechance)) //Let's have it check to see if the prey escapes first.
@@ -1567,7 +1577,11 @@
 					to_chat(R, escape_item_prey_message) //RS edit
 					to_chat(owner, escape_item_owner_message) //RS edit
 					for(var/mob/M in hearers(4, owner))
-						M.show_message(escape_item_outside_message, 2) //RS edit
+					//RS Edit begin || CHOMPStation PR7443
+					if(!private_struggle)
+						for(var/mob/M in hearers(4, owner))
+							M.show_message(escape_item_outside_message, 2)
+					//RS Edit end
 					return
 				if(escapable && (R.loc == src) && !R.absorbed) //Does the owner still have escapable enabled?
 					//RS edit start - VS 15559
@@ -1600,8 +1614,11 @@
 					release_specific_contents(R)
 					to_chat(R, escape_prey_message) //RS edit
 					to_chat(owner, escape_owner_message) //RS edit
-					for(var/mob/M in hearers(4, owner))
-						M.show_message(escape_outside_message, 2) // RS edit
+					//RS Edit begin || CHOMPStation PR7443
+					if(!private_struggle)
+						for(var/mob/M in hearers(4, owner))
+							M.show_message(escape_outside_message, 2)
+					//RS Edit end
 					return
 				else if(!(R.loc == src)) //Aren't even in the belly. Quietly fail.
 					return
@@ -1803,20 +1820,29 @@
 	struggle_user_message = "<span class='alert'>[struggle_user_message]</span>"
 
 	for(var/mob/M in hearers(4, owner))
-		M.show_message(struggle_outer_message, 2) // hearable
+	//RS Edit || CHOMPStation PR7443
+	if(private_struggle)
+		to_chat(owner, struggle_outer_message)
+	else
+		for(var/mob/M in hearers(4, owner))
+			M.show_message(struggle_outer_message, 2) // hearable
+	//RS Edit end
 	//to_chat(R, struggle_user_message) RS remove - moved to bottom of proc
 
 	var/sound/struggle_snuggle
 	var/sound/struggle_rustle = sound(get_sfx("rustle"))
 
-	if(is_wet)
-		if(!fancy_vore)
-			struggle_snuggle = sound(get_sfx("classic_struggle_sounds"))
+	//RS Edit start || CHOMPStation PR7443
+	if(!private_struggle)
+		if(is_wet)
+			if(!fancy_vore)
+				struggle_snuggle = sound(get_sfx("classic_struggle_sounds"))
+			else
+				struggle_snuggle = sound(get_sfx("fancy_prey_struggle"))
+			playsound(src, struggle_snuggle, vary = 1, vol = 75, falloff = VORE_SOUND_FALLOFF, preference = /datum/client_preference/digestion_noises, volume_channel = VOLUME_CHANNEL_VORE)
 		else
-			struggle_snuggle = sound(get_sfx("fancy_prey_struggle"))
-		playsound(src, struggle_snuggle, vary = 1, vol = 75, falloff = VORE_SOUND_FALLOFF, preference = /datum/client_preference/digestion_noises, volume_channel = VOLUME_CHANNEL_VORE)
-	else
-		playsound(src, struggle_rustle, vary = 1, vol = 75, falloff = VORE_SOUND_FALLOFF, preference = /datum/client_preference/digestion_noises, volume_channel = VOLUME_CHANNEL_VORE)
+			playsound(src, struggle_rustle, vary = 1, vol = 75, falloff = VORE_SOUND_FALLOFF, preference = /datum/client_preference/digestion_noises, volume_channel = VOLUME_CHANNEL_VORE)
+	//RS Edit end
 
 	//RS Edit Start - virgo port
 	//absorb resists
@@ -1880,8 +1906,11 @@
 					release_specific_contents(R)
 					to_chat(R, escape_absorbed_prey_message) //RS edit
 					to_chat(owner, escape_absorbed_owner_message) //RS edit
-					for(var/mob/M in hearers(4, owner))
-						M.show_message(escape_absorbed_outside_message, 2)//RS edit
+					//RS Edit begin || CHOMPStation PR7443
+					if(!private_struggle)
+						for(var/mob/M in hearers(4, owner))
+							M.show_message(escape_absorbed_outside_message, 2)
+					//RS Edit end
 					return
 				else if(!(R.loc == src)) //Aren't even in the belly. Quietly fail.
 					return
