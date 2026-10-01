@@ -1,3 +1,7 @@
+////////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star September 2026: Terrain Appearance Batching //
+////////////////////////////////////////////////////////////////////////////////
+
 var/list/mining_overlay_cache = list()
 
 /**********************Mineral deposits**************************/
@@ -212,20 +216,17 @@ var/list/mining_overlay_cache = list()
 	if(density && mineral)
 		MineralSpread()
 
+// RS Edit: Terrain Appearance Batching (Lira, September 2026)
 /turf/simulated/mineral/update_icon(var/update_neighbors)
+
+	update_base_icon()
+	if(SSatoms.terrain_initializing && SSatoms.queue_terrain_icon_update(src, update_neighbors && !density))
+		return
 
 	cut_overlays()
 
 	//We are a wall (why does this system work like this??)
 	if(density)
-		if(mineral)
-			name = "[mineral.display_name] deposit"
-		else
-			name = "rock"
-
-		icon = rock_icon_path
-		icon_state = rock_icon_state
-
 		//Apply overlays if we should have borders
 		for(var/direction in cardinal)
 			var/turf/T = get_step(src,direction)
@@ -240,10 +241,6 @@ var/list/mining_overlay_cache = list()
 
 	//We are a sand floor
 	else
-		name = floor_name
-		icon = sand_icon_path
-		icon_state = sand_icon_state
-
 		if(sand_dug)
 			add_overlay("dug_overlay")
 
@@ -269,6 +266,21 @@ var/list/mining_overlay_cache = list()
 				if(istype(get_step(src, direction), /turf/simulated/wall/solidrock))
 					var/turf/simulated/wall/solidrock/M = get_step(src, direction)
 					M.update_icon()
+
+// RS Edit: Terrain Appearance Batching (Lira, September 2026)
+/turf/simulated/mineral/proc/update_base_icon()
+	if(density)
+		if(mineral)
+			name = "[mineral.display_name] deposit"
+		else
+			name = "rock"
+
+		icon = rock_icon_path
+		icon_state = rock_icon_state
+	else
+		name = floor_name
+		icon = sand_icon_path
+		icon_state = sand_icon_state
 
 /turf/simulated/mineral/ex_act(severity)
 

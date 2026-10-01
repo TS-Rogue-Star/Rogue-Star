@@ -1,3 +1,7 @@
+////////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star September 2026: Terrain Appearance Batching //
+////////////////////////////////////////////////////////////////////////////////
+
 var/list/flooring_cache = list()
 
 var/image/no_ceiling_image = null
@@ -10,36 +14,13 @@ var/image/no_ceiling_image = null
 	no_ceiling_image = image(icon = 'icons/turf/open_space.dmi', icon_state = "no_ceiling")
 	no_ceiling_image.plane = PLANE_MESONS
 
+// RS Edit: Terrain Appearance Batching (Lira, September 2026)
 /turf/simulated/floor/update_icon(var/update_neighbors)
 	cut_overlays()
 
+	update_base_icon()
+
 	if(flooring)
-		// Set initial icon and strings.
-		name = flooring.name
-		desc = flooring.desc
-		icon = flooring.icon
-
-		if(flooring_override)
-			icon_state = flooring_override
-		else
-			icon_state = flooring.icon_base
-									//VOREStation Addition Start
-			if(flooring.check_season)
-				var/ourseason = world_time_season
-
-				if(flooring.preset_season)
-					if(flooring.preset_season == "spring" || "summer" || "autumn" || "winter")
-						ourseason = flooring.preset_season
-				else if(flooring.skipseason && flooring.replacement_season)
-					if(ourseason == flooring.skipseason)
-						if(flooring.replacement_season == "spring" || "summer" || "autumn" || "winter")
-							ourseason = flooring.replacement_season
-
-				icon_state = "[icon_state]-[ourseason]"	//VOREStation Addition End
-			if(flooring.has_base_range)
-				icon_state = "[icon_state][rand(0,flooring.has_base_range)]"
-				flooring_override = icon_state
-
 		// Apply edges, corners, and inner corners.
 		var/has_border = 0
 		if(flooring.flags & TURF_HAS_EDGES)
@@ -109,6 +90,35 @@ var/image/no_ceiling_image = null
 	// Update our 'them-to-us' edges, aka edges from external turfs we feel should spill onto us
 	if(edge_blending_priority && !forbid_turf_edge())
 		update_icon_edge()
+
+// RS Edit: Terrain Appearance Batching (Lira, September 2026)
+/turf/simulated/floor/proc/update_base_icon()
+	if(flooring)
+		// Set initial icon and strings.
+		name = flooring.name
+		desc = flooring.desc
+		icon = flooring.icon
+
+		if(flooring_override)
+			icon_state = flooring_override
+		else
+			icon_state = flooring.icon_base
+									//VOREStation Addition Start
+			if(flooring.check_season)
+				var/ourseason = world_time_season
+
+				if(flooring.preset_season)
+					if(flooring.preset_season == "spring" || "summer" || "autumn" || "winter")
+						ourseason = flooring.preset_season
+				else if(flooring.skipseason && flooring.replacement_season)
+					if(ourseason == flooring.skipseason)
+						if(flooring.replacement_season == "spring" || "summer" || "autumn" || "winter")
+							ourseason = flooring.replacement_season
+
+				icon_state = "[icon_state]-[ourseason]"	//VOREStation Addition End
+			if(flooring.has_base_range)
+				icon_state = "[icon_state][rand(0,flooring.has_base_range)]"
+				flooring_override = icon_state
 
 // This updates an edge from an adjacent turf onto us, not our own 'internal' edges.
 // For e.g. we might be outdoor metal plating, and we want to find sand next to us to have it 'spill onto' our turf with an overlay.
