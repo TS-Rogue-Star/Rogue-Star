@@ -185,7 +185,7 @@
 
 	var/datum/surgery_step/selected_surgery
 	if(available_surgeries.len > 1) //More than one possible? Ask them which one.
-		selected_surgery = tgui_input_list(user, "Select which surgery step you wish to perform", "Surgery Select", available_surgeries) //Shows the name in the list.
+		selected_surgery = user.choose_surgery_step(available_surgeries) //Shows the name in the list. //RS EDIT
 	else
 		selected_surgery = pick(available_surgeries)
 
@@ -226,6 +226,10 @@
 		var/mob/living/carbon/human/H = M
 		H.update_surgery()
 	return	1	  												//don't want to do weapony things after surgery
+
+// RS ADD
+/mob/proc/choose_surgery_step(list/available_surgeries)
+	return tgui_input_list(src, "Select which surgery step you wish to perform", "Surgery Select", available_surgeries)
 
 /proc/sort_surgeries()
 	var/gap = surgery_steps.len

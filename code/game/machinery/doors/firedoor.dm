@@ -156,6 +156,19 @@
 	"\The [src]", list("Yes, [density ? "open" : "close"]", "No"))
 	if(answer == "No")
 		return
+	toggle_for(user)
+
+// RS ADD
+/obj/machinery/door/firedoor/proc/toggle_for(mob/user)
+	if(operating)
+		return
+	if(blocked)
+		to_chat(user, "<span class='warning'>\The [src] is welded solid!</span>")
+		return
+	var/alarmed = lockdown
+	for(var/area/A in areas_added)
+		if(A.firedoors_closed)
+			alarmed = 1
 	if(user.incapacitated() || (get_dist(src, user) > 1 && !issilicon(user)))
 		to_chat(user, "Sorry, you must remain able bodied and close to \the [src] in order to use it.")
 		return
