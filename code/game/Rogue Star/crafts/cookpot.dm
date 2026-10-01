@@ -72,9 +72,8 @@
 			iteration ++
 			if(thing.reagent_state == LIQUID)
 				liquid_percent += thing.volume
-			//RE-ENABLE THIS BEFORE YOU PR
-//			if(!(istype(thing,/datum/reagent/drink) || istype(thing,/datum/reagent/nutriment)))
-//				continue
+			if(!(istype(thing,/datum/reagent/drink) || istype(thing,/datum/reagent/nutriment)))
+				continue
 			hits ++
 			var/round_num = round(thing.volume,1)
 			if(iteration == reagents.reagent_list.len)
