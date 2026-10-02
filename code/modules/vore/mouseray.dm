@@ -459,6 +459,78 @@
 	name = "teppi ray"
 	tf_type = /mob/living/simple_mob/vore/alienanimals/teppi
 
+/obj/item/weapon/gun/energy/mouseray/ant
+	name = "ant ray"
+	tf_type = /mob/living/simple_mob/vore/ant
+
+/obj/item/weapon/gun/energy/mouseray/doglin
+	name = "doglin ray"
+	tf_type = /mob/living/simple_mob/vore/doglin
+
+/obj/item/weapon/gun/energy/mouseray/jelly
+	name = "jelly ray"
+	tf_type = /mob/living/simple_mob/vore/jelly
+
+/obj/item/weapon/gun/energy/mouseray/deer
+	name = "deer ray"
+	tf_type = /mob/living/simple_mob/vore/deer
+
+/obj/item/weapon/gun/energy/mouseray/dust_stalker
+	name = "dust stalker ray"
+	tf_type = /mob/living/simple_mob/vore/dust_stalker
+
+/obj/item/weapon/gun/energy/mouseray/stellagan
+	name = "stellagan ray"
+	tf_type = /mob/living/simple_mob/vore/stellagan
+
+/obj/item/weapon/gun/energy/mouseray/prancer
+	name = "prancer ray"
+	tf_type = /mob/living/simple_mob/vore/prancer
+
+/obj/item/weapon/gun/energy/mouseray/pakkun
+	name = "pakkun ray"
+	tf_allow_select = TRUE
+	tf_type = /mob/living/simple_mob/vore/pakkun
+	tf_possible_types = list(
+		"blue" = /mob/living/simple_mob/vore/pakkun,
+		"red" = /mob/living/simple_mob/vore/pakkun/fire,
+		"purple" = /mob/living/simple_mob/vore/pakkun/purple,
+		"yellow" = /mob/living/simple_mob/vore/pakkun/sand,
+		"green" = /mob/living/simple_mob/vore/pakkun/snapdragon
+	)
+
+/obj/item/weapon/gun/energy/mouseray/raptor
+	name = "raptor ray"
+	tf_type = /mob/living/simple_mob/vore/raptor
+
+/obj/item/weapon/gun/energy/mouseray/scel
+	name = "scel ray"
+	tf_allow_select = TRUE
+	tf_type = /mob/living/simple_mob/vore/scel
+	tf_possible_types = list(
+		"blue" = /mob/living/simple_mob/vore/scel/blue,
+		"green" = /mob/living/simple_mob/vore/scel/green,
+		"orange" = /mob/living/simple_mob/vore/scel/orange,
+		"purple" = /mob/living/simple_mob/vore/scel/purple,
+		"red" = /mob/living/simple_mob/vore/scel/red
+	)
+
+/obj/item/weapon/gun/energy/mouseray/seagull
+	name = "seagull ray"
+	tf_type = /mob/living/simple_mob/vore/seagull
+
+/obj/item/weapon/gun/energy/mouseray/sheep
+	name = "sheep ray"
+	tf_type = /mob/living/simple_mob/vore/sheep
+
+/obj/item/weapon/gun/energy/mouseray/squirrel
+	name = "squirrel ray"
+	tf_type = /mob/living/simple_mob/vore/squirrel
+
+/obj/item/weapon/gun/energy/mouseray/cow
+	name = "cow ray"
+	tf_type = /mob/living/simple_mob/animal/passive/cow
+
 
 /////RANDOM SPAWNER/////
 
@@ -484,6 +556,20 @@
 				prob(5);/obj/item/weapon/gun/energy/mouseray/giantrat,
 				prob(50);/obj/item/weapon/gun/energy/mouseray/redpanda,
 				prob(5);/obj/item/weapon/gun/energy/mouseray/catslug,
+				prob(5);/obj/item/weapon/gun/energy/mouseray/ant,
+				prob(5);/obj/item/weapon/gun/energy/mouseray/doglin,
+				prob(5);/obj/item/weapon/gun/energy/mouseray/jelly,
+				prob(50);/obj/item/weapon/gun/energy/mouseray/deer,
+				prob(5);/obj/item/weapon/gun/energy/mouseray/dust_stalker,
+				prob(5);/obj/item/weapon/gun/energy/mouseray/stellagan,
+				prob(5);/obj/item/weapon/gun/energy/mouseray/prancer,
+				prob(5);/obj/item/weapon/gun/energy/mouseray/pakkun,
+				prob(5);/obj/item/weapon/gun/energy/mouseray/raptor,
+				prob(5);/obj/item/weapon/gun/energy/mouseray/scel,
+				prob(50);/obj/item/weapon/gun/energy/mouseray/seagull,
+				prob(50);/obj/item/weapon/gun/energy/mouseray/sheep,
+				prob(50);/obj/item/weapon/gun/energy/mouseray/squirrel,
+				prob(50);/obj/item/weapon/gun/energy/mouseray/cow,
 				prob(1);/obj/item/weapon/gun/energy/mouseray/metamorphosis,
 				prob(1);/obj/item/weapon/gun/energy/mouseray/metamorphosis/advanced/random
 				)

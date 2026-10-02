@@ -181,6 +181,8 @@
 	prey.Weaken(10)
 
 /mob/living/simple_mob/vore/ant/proc/queen_me()
+	if(tf_mob_holder)
+		return
 	var/turf/T = get_turf(src)
 	var/mob/living/simple_mob/vore/ant/queen/Q = new(T,src,eye_color)
 	Q.dir = dir
@@ -383,6 +385,9 @@
 	if(user.a_intent != I_HELP)
 		return ..()
 	if(istype(O,/obj/item/clothing/head/crown))
+		if(tf_mob_holder && queen < 1)
+			to_chat(user, SPAN_NOTICE("This transformed ant cannot become a queen."))
+			return
 		user.drop_from_inventory(O)
 		qdel(O)
 		var/turf/T = get_turf(src)
