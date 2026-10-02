@@ -59,6 +59,13 @@
 			if(isatom(thing))
 				thing.begin_open_cooking(src)
 
+/obj/machinery/appliance/cooker/grill/power_change()
+	. = ..()
+	if(. && !stat)
+		var/turf/T = get_turf(src)
+		for(var/obj/item/cookpot/pot in T)
+			pot.begin_open_cooking(src)
+
 /obj/machinery/appliance/cooker/grill/can_insert(obj/item/I, mob/user)
 	if(istype(I, /obj/item/cookpot))	//Just deny it don't complain about it
 		return 0

@@ -155,6 +155,7 @@
 
 	var/obj/item/weapon/flame/candle/handmade/c = new our_candle(get_turf(src))
 	c.wax = howmuch
+	c.starting_wax = howmuch
 	if(final_color)
 		c.color = final_color
 	for(var/datum/reagent/R in reagents.reagent_list)

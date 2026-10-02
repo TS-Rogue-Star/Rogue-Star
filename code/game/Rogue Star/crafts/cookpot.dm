@@ -163,14 +163,17 @@
 				broth(A)
 
 			if(istype(A,/obj/item/fat))
-				reagents.add_reagent("triglyceride",rand(1,10))
-				qdel(A)
-				new /obj/particle_emitter/smelly/white(src.loc)
+				var/fat_yield = rand(1,10)
+				if(reagents.get_free_space() >= fat_yield)
+					reagents.add_reagent("triglyceride",fat_yield)
+					qdel(A)
+					new /obj/particle_emitter/smelly/white(src.loc)
 			if(istype(A,/obj/item/stack/material/wax))
-				reagents.add_reagent("wax",6)
-				var/obj/item/stack/material/wax/w = A
-				w.use(1)
-				new /obj/particle_emitter/smelly/white(src.loc)
+				if(reagents.get_free_space() >= 6)
+					reagents.add_reagent("wax",6)
+					var/obj/item/stack/material/wax/w = A
+					w.use(1)
+					new /obj/particle_emitter/smelly/white(src.loc)
 
 /obj/item/cookpot/proc/dehydrate()
 	var/datum/reagent/water/W = reagents.get_reagent("water")
