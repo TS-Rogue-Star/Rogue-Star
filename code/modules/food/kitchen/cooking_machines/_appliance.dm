@@ -140,6 +140,11 @@
 
 	attempt_toggle_power(usr)
 
+/obj/machinery/appliance/AltClick(mob/user)	//RS ADD START
+	. = ..()
+	if(.)
+		attempt_toggle_power(user)	//RS ADD END
+
 /obj/machinery/appliance/proc/attempt_toggle_power(mob/user)
 	if (!isliving(user))
 		return
