@@ -152,6 +152,8 @@
 	// Make sure we don't have a chance to shoot our friends.
 	for(var/atom/A as anything in hit_things)
 		ai_log("test_projectile_safety() : Evaluating \the [A] ([A.type]).", AI_LOG_TRACE)
+		if(A == AM) // RS EDIT
+			continue
 		if(isliving(A)) // Don't shoot at our friends, even if they're behind the target, as RNG can make them get hit.
 			var/mob/living/L = A
 			if(holder.IIsAlly(L))
