@@ -1,3 +1,7 @@
+///////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star October 2026: Resize Aura Optimization //
+///////////////////////////////////////////////////////////////////////////
+
 #define TO_HEX_DIGIT(n) ascii2text((n&15) + ((n&15)<10 ? 48 : 87))
 
 /icon/proc/MakeLying()
@@ -431,22 +435,8 @@ GLOBAL_LIST_EMPTY(cached_examine_icons)
 	img.appearance_flags = APPEARANCE_UI
 	return img
 
-/**
-* Animate a 'halo' around an object.
-*
-* This proc is not exactly cheap. You'd be well advised to set up many-loops rather than call this super-often. getCompoundIcon is
-* mostly to blame for this. If Byond ever implements a way to get something's icon more 'gently' than this, do that instead.
-*
-* @param A This is the atom to put the halo on
-* @param simple_icons If set to TRUE, will just perform a very basic icon and icon_state steal. DO USE when possible.
-* @param color This is the color for the halo
-* @param anim_duration This decides how fast (or slow) the animation plays
-* @param offset Mysterious variable that determines size of the halo's gap from icon
-* @param loops How many times the animation loops
-* @param grow_to Relative to the size of the icon, how big the halo grows while fading (don't use negatives for inward halos, use < 1)
-* @param pixel_scale If you'd like the halo to use pixel scale or the default 'fuzzy' scale
-*/
-/proc/animate_aura(var/atom/A, var/simple_icons, var/color = "#00FF22", var/anim_duration = 5, var/offset = 1, var/loops = 1, var/grow_to = 2, var/pixel_scale = FALSE)
+// RS Edit: Resize Aura Optimization (Lira, October 2026)
+/proc/build_aura_image(var/atom/A, var/simple_icons, var/color = "#00FF22", var/offset = 1, var/pixel_scale = FALSE)
 	ASSERT(A)
 
 	//Take a guess at this, if they didn't set it
@@ -494,16 +484,43 @@ GLOBAL_LIST_EMPTY(cached_examine_icons)
 	//Scale it to final height
 	grower.Scale(end_width,end_height)
 
-	//Flick it onto them
-	var/image/img = image(grower,A)
+	var/image/img = image(grower)
 	if(pixel_scale)
 		img.appearance_flags |= PIXEL_SCALE
 	img.pixel_x = half_diff_width*-1
 	img.pixel_y = half_diff_height*-1
+	return img
+
+/**
+* Animate a 'halo' around an object.
+*
+* This proc is not exactly cheap. You'd be well advised to set up many-loops rather than call this super-often. getCompoundIcon is
+* mostly to blame for this. If Byond ever implements a way to get something's icon more 'gently' than this, do that instead.
+*
+* @param A This is the atom to put the halo on
+* @param simple_icons If set to TRUE, will just perform a very basic icon and icon_state steal. DO USE when possible.
+* @param color This is the color for the halo
+* @param anim_duration This decides how fast (or slow) the animation plays
+* @param offset Mysterious variable that determines size of the halo's gap from icon
+* @param loops How many times the animation loops
+* @param grow_to Relative to the size of the icon, how big the halo grows while fading (don't use negatives for inward halos, use < 1)
+* @param pixel_scale If you'd like the halo to use pixel scale or the default 'fuzzy' scale
+*/
+// RS Edit: Resize Aura Optimization (Lira, October 2026)
+/proc/animate_aura(var/atom/A, var/simple_icons, var/color = "#00FF22", var/anim_duration = 5, var/offset = 1, var/loops = 1, var/grow_to = 2, var/pixel_scale = FALSE, image/aura_template)
+	ASSERT(A)
+	if(anim_duration <= 0 || loops <= 0)
+		return
+	var/image/img = aura_template ? image(aura_template) : build_aura_image(A, simple_icons, color, offset, pixel_scale)
+	img.loc = A
+	img.dir = A.dir
+
+	//Flick it onto them
 	flick_overlay_view(img, A, anim_duration*loops, TRUE)
 
 	//Animate it growing
 	animate(img, alpha = 0, transform = matrix()*grow_to, time = anim_duration, loop = loops)
+	return img
 
 /// generates a filename for a given asset.
 /// like generate_asset_name(), except returns the rsc reference and the rsc file hash as well as the asset name (sans extension)
