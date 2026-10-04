@@ -93,7 +93,7 @@ var/list/gamemode_cache = list()
 	var/static/cult_ghostwriter_req_cultists = 10 //...so long as this many cultists are active.
 
 	var/static/character_slots = 10				// The number of available character slots
-	var/static/loadout_slots = 3					// The number of loadout slots per character
+	var/static/loadout_slots = 9					// The number of loadout slots per character // RS Edit: Nine Loadout Slots (Lira, October 2026)
 
 	var/static/max_maint_drones = 5				//This many drones can spawn,
 	var/static/allow_drone_spawn = 1				//assuming the admin allow them to.
