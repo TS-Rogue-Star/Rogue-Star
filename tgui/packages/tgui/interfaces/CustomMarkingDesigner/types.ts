@@ -71,6 +71,8 @@ export type DraftStrokePayload = {
 };
 
 export type CustomMarkingDesignerData = {
+  character_export_result?:
+    import('./utils/characterExport').CharacterExportResult | null;
   marking_id?: string;
   mark_name?: string;
   initial_tab?:
