@@ -4196,6 +4196,7 @@
 #include "code\modules\tgui\modules\crew_manifest.dm"
 #include "code\modules\tgui\modules\crew_monitor.dm"
 #include "code\modules\tgui\modules\custom_marking_designer.dm"
+#include "code\modules\tgui\modules\custom_marking_designer_export.dm"
 #include "code\modules\tgui\modules\custom_marking_designer_expression.dm"
 #include "code\modules\tgui\modules\custom_marking_designer_equipment.dm"
 #include "code\modules\tgui\modules\custom_marking_designer_loading.dm"
