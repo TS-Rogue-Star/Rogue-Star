@@ -1420,6 +1420,43 @@ $titlebar-height: 38px;
   }
 }
 
+.RogueStar__loadoutPresetPicker {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: 8px;
+}
+
+.RogueStar__loadoutPresetSlots {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(0, 1fr);
+  gap: 4px;
+}
+
+.RogueStar__chip.RogueStar__loadoutPresetButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+  height: 28px;
+  padding: 0;
+  border-radius: 7px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0;
+  box-shadow: none;
+
+  .Button__content {
+    align-self: center;
+  }
+
+  &.Button--selected {
+    border-color: $gold-accent;
+    box-shadow: 0 0 10px rgba($gold-accent, 0.2);
+  }
+}
+
 .RogueStar__markingTile--points {
   position: relative;
 }
