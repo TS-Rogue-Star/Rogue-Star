@@ -101,7 +101,7 @@
 
 // Ported from /tg/station
 // Creates a single icon from a given /atom or /image.  Only the first argument is required.
-/proc/getFlatIcon(image/A, defdir, deficon, defstate, defblend, start = TRUE, no_anim = FALSE)
+/proc/getFlatIcon(image/A, defdir, deficon, defstate, defblend, start = TRUE, no_anim = FALSE, centered = FALSE) // RS Edit: Resize Aura Alignment (Lira, October 2026)
 	//Define... defines.
 	var/static/icon/flat_template = icon('icons/effects/effects.dmi', "nothing")
 
@@ -270,6 +270,14 @@
 		if(A.alpha < 255)
 			flat.Blend(rgb(255, 255, 255, A.alpha), ICON_MULTIPLY)
 
+		// RS Add Start: Resize Aura Alignment (Lira, October 2026)
+		if(centered)
+			var/icon/base = noIcon ? BLANK : icon(curicon, curstate, base_icon_dir)
+			var/padding_x = max(0, 1 - flatX1, flatX2 - base.Width())
+			var/padding_y = max(0, 1 - flatY1, flatY2 - base.Height())
+			flat.Crop(2 - padding_x - flatX1, 2 - padding_y - flatY1, base.Width() + padding_x - flatX1 + 1, base.Height() + padding_y - flatY1 + 1)
+		// RS Add End
+
 		if(no_anim)
 			//Clean up repeated frames
 			var/icon/cleaned = new /icon()
@@ -309,11 +317,23 @@
 	return alpha_mask//And now return the mask.
 
 //getFlatIcon but generates an icon that can face ALL four directions. The only four.
-/proc/getCompoundIcon(atom/A)
-	var/icon/north = getFlatIcon(A,defdir=NORTH)
-	var/icon/south = getFlatIcon(A,defdir=SOUTH)
-	var/icon/east = getFlatIcon(A,defdir=EAST)
-	var/icon/west = getFlatIcon(A,defdir=WEST)
+// RS Edit: Resize Aura Alignment (Lira, October 2026)
+/proc/getCompoundIcon(atom/A, centered = FALSE)
+	var/icon/north = getFlatIcon(A, defdir = NORTH, centered = centered)
+	var/icon/south = getFlatIcon(A, defdir = SOUTH, centered = centered)
+	var/icon/east = getFlatIcon(A, defdir = EAST, centered = centered)
+	var/icon/west = getFlatIcon(A, defdir = WEST, centered = centered)
+
+	if(centered)
+		if(!north && !south && !east && !west)
+			return icon('icons/effects/effects.dmi', "nothing")
+		var/width = max(north?.Width(), south?.Width(), east?.Width(), west?.Width())
+		var/height = max(north?.Height(), south?.Height(), east?.Height(), west?.Height())
+		for(var/icon/directional_icon in list(north, south, east, west))
+			var/padding_x = (width - directional_icon.Width()) * 0.5
+			var/padding_y = (height - directional_icon.Height()) * 0.5
+			if(padding_x || padding_y)
+				directional_icon.Crop(1 - padding_x, 1 - padding_y, width - padding_x, height - padding_y)
 
 	//Starts with a blank icon because of byond bugs.
 	var/icon/full = icon('icons/effects/effects.dmi', "icon_state"="nothing")
@@ -452,7 +472,7 @@ GLOBAL_LIST_EMPTY(cached_examine_icons)
 	if(simple_icons)
 		hole = icon(A.icon, A.icon_state)
 	else
-		hole = getCompoundIcon(A)
+		hole = getCompoundIcon(A, centered = TRUE)
 
 	hole.MapColors(0,0,0, 0,0,0, 0,0,0, 1,1,1) //White.
 
@@ -464,6 +484,10 @@ GLOBAL_LIST_EMPTY(cached_examine_icons)
 	var/end_height = orig_height+(offset*2)
 	var/half_diff_width = (end_width-orig_width)*0.5
 	var/half_diff_height = (end_height-orig_height)*0.5
+	if(!simple_icons)
+		var/icon/base = A.icon ? icon(A.icon, A.icon_state) : null
+		half_diff_width += (orig_width - (base ? base.Width() : world.icon_size)) * 0.5
+		half_diff_height += (orig_height - (base ? base.Height() : world.icon_size)) * 0.5
 
 	//Make icon black
 	grower.SwapColor("#FFFFFF","#000000") //Black.
