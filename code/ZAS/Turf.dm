@@ -2,6 +2,7 @@
 /turf/simulated/var/open_directions
 
 /turf/var/needs_air_update = 0
+/turf/var/air_update_queue_id = 0 // RS Add: Atmos Zone Efficiency (Lira, October 2026)
 /turf/var/datum/gas_mixture/air
 
 /turf/simulated/proc/update_graphic(list/graphic_add = null, list/graphic_remove = null)
@@ -57,6 +58,10 @@
 	if(!zone) return 1
 
 	var/check_dirs = get_zone_neighbours(src)
+	// RS Add Start: Atmos Zone Efficiency (Lira, October 2026)
+	if(!(check_dirs & (check_dirs - 1)))
+		return TRUE
+	// RS Add End
 	var/unconnected_dirs = check_dirs
 
 	#ifdef MULTIZAS
@@ -106,6 +111,7 @@
 			var/zone/z = zone
 
 			if(can_safely_remove_from_zone()) //Helps normal airlocks avoid rebuilding zones all the time
+				c_copy_air() // RS Add: Atmos Zone Efficiency (Lira, October 2026)
 				z.remove(src)
 			else
 				z.rebuild()
