@@ -170,7 +170,7 @@
 		last_power_draw = power_draw
 		use_power(power_draw)
 
-	if(network)
+	if(network && (power_draw >= 0 || air_contents.temperature > PHORON_MINIMUM_BURN_TEMPERATURE)) // RS Edit: Scrubber Network Optimization (Lira, October 2026)
 		network.update = 1
 
 	return 1
