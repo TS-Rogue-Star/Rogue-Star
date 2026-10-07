@@ -222,6 +222,7 @@
 	new_mob.allow_inbelly_spawning = allow_inbelly_spawning
 	new_mob.digest_leave_remains = digest_leave_remains
 	new_mob.allowmobvore = allowmobvore
+	new_mob.allownpcvore = allownpcvore	// RS Add
 	new_mob.permit_healbelly = permit_healbelly
 	new_mob.noisy = noisy
 	new_mob.selective_preference = selective_preference

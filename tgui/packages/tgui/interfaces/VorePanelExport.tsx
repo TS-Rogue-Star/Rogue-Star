@@ -58,6 +58,7 @@ type Data = {
   db_version: string;
   db_repo: string;
   mob_name: string;
+  allownpcvore: number; // RS Add
   bellies: Belly[];
 };
 
@@ -613,7 +614,7 @@ const getCurrentTimestamp = (): string => {
 const downloadPrefs = (context, extension: string) => {
   const { act, data } = useBackend<Data>(context);
 
-  const { db_version, db_repo, mob_name, bellies } = data;
+  const { db_version, db_repo, mob_name, allownpcvore, bellies } = data; // RS Edit
 
   let datesegment = getCurrentTimestamp();
 
@@ -665,7 +666,9 @@ const downloadPrefs = (context, extension: string) => {
   }
 
   if (extension === '.vrdb') {
-    blob = new Blob([JSON.stringify(bellies)], { type: 'application/json' });
+    blob = new Blob([JSON.stringify({ bellies, allownpcvore })], {
+      type: 'application/json',
+    }); // RS Edit
   }
 
   Byond.saveBlob(blob, filename, extension); // RS Edit || Virgo Port PR16922

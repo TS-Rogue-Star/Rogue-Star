@@ -365,6 +365,9 @@
 	"reagentbellymode",
 	"count_liquid_for_sprite",
 	"liquid_multiplier",
+	"count_nutrition_for_sprite",	// RS ADD
+	"nutrition_multiplier",	// RS ADD
+	"nutrition_sloshing",	// RS ADD
 	"liquid_fullness1_messages",
 	"liquid_fullness2_messages",
 	"liquid_fullness3_messages",
@@ -447,12 +450,9 @@
 			formatted_desc = replacetext(formatted_desc, "%prey", thing) //replace with whatever mob entered into this belly
 			to_chat(thing, "<span class='notice'><B>[formatted_desc]</B></span>")
 
-	if(owner && istype(owner.loc,/turf/simulated) && !cycle_sloshed && reagents.total_volume > 0) // Begin reagent bellies || RS Add || Chomp Port
-		var/turf/simulated/T = owner.loc
-		var/S = pick(T.vorefootstep_sounds["human"])
-		if(S)
-			playsound(T, S, 50 * (reagents.total_volume / custom_max_volume), FALSE, preference = /datum/client_preference/digestion_noises)
-			cycle_sloshed = TRUE // End reagent bellies
+	if(owner && !cycle_sloshed && reagents.total_volume > 0) // Begin reagent bellies || RS Add || Chomp Port
+		playsound(owner, "vore_slosh", 50 * (reagents.total_volume / custom_max_volume), FALSE, preference = /datum/client_preference/digestion_noises)
+		cycle_sloshed = TRUE // End reagent bellies
 
 	if(OldLoc in contents)
 		return //Someone dropping something (or being stripdigested)
@@ -2062,6 +2062,9 @@
 	// Reagent bellies || RS Add || Chomp Port
 	dupe.count_liquid_for_sprite = count_liquid_for_sprite
 	dupe.liquid_multiplier = liquid_multiplier
+	dupe.count_nutrition_for_sprite = count_nutrition_for_sprite	// RS Add
+	dupe.nutrition_multiplier = nutrition_multiplier	// RS Add
+	dupe.nutrition_sloshing = nutrition_sloshing	// RS Add
 	dupe.liquid_overlay = liquid_overlay
 	dupe.max_liquid_level = max_liquid_level
 	dupe.reagent_touches = reagent_touches

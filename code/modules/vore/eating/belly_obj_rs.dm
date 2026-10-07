@@ -15,6 +15,9 @@
 	var/absorbed_multiplier = 1
 	var/count_liquid_for_sprite = FALSE
 	var/liquid_multiplier = 1
+	var/count_nutrition_for_sprite = FALSE
+	var/nutrition_multiplier = 1
+	var/nutrition_sloshing = FALSE
 	var/count_items_for_sprite = FALSE
 	var/item_multiplier = 1
 	var/health_impacts_size = TRUE
@@ -42,6 +45,8 @@
 			belly_fullness += fullness_to_add
 	if(count_liquid_for_sprite)
 		belly_fullness += (reagents.total_volume / 100) * liquid_multiplier
+	if(count_nutrition_for_sprite)
+		belly_fullness += (owner.nutrition / NUTRITION_PER_PREY) * nutrition_multiplier
 	if(count_items_for_sprite)
 		for(var/obj/item/I in src)
 			var/fullness_to_add = 0

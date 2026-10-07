@@ -522,6 +522,31 @@
 			var/new_liquid_multiplier = belly_data["liquid_multiplier"]
 			new_belly.liquid_multiplier = CLAMP(new_liquid_multiplier, 0.1, 10)
 
+		if(isnum(belly_data["count_nutrition_for_sprite"]))
+			var/new_count_nutrition_for_sprite = belly_data["count_nutrition_for_sprite"]
+			if(new_count_nutrition_for_sprite == 0)
+				new_belly.count_nutrition_for_sprite = FALSE
+			if(new_count_nutrition_for_sprite == 1)
+				new_belly.count_nutrition_for_sprite = TRUE
+
+		if(isnum(belly_data["nutrition_multiplier"]))
+			var/new_nutrition_multiplier = belly_data["nutrition_multiplier"]
+			new_belly.nutrition_multiplier = CLAMP(new_nutrition_multiplier, 0.01, 10)
+
+		if(isnum(belly_data["nutrition_sloshing"]))
+			var/new_nutrition_sloshing = belly_data["nutrition_sloshing"]
+			if(new_nutrition_sloshing == 0)
+				new_belly.nutrition_sloshing = FALSE
+			if(new_nutrition_sloshing == 1)
+				new_belly.nutrition_sloshing = TRUE
+
+		if(isnum(belly_data["vorefootsteps_sounds"]))
+			var/new_vorefootsteps_sounds = belly_data["vorefootsteps_sounds"]
+			if(new_vorefootsteps_sounds == 0)
+				new_belly.vorefootsteps_sounds = FALSE
+			if(new_vorefootsteps_sounds == 1)
+				new_belly.vorefootsteps_sounds = TRUE
+
 		// RS Edit Start: Catch for multiple spellings (Lira, November 2025)
 		var/new_reagent_touches = null
 		if(isnum(belly_data["reagent_touches"])) //Reagent bellies || RS Add || Chomp Port

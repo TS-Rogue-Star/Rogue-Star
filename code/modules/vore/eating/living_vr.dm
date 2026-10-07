@@ -243,6 +243,7 @@
 	P.resizable = src.resizable
 	P.digest_leave_remains = src.digest_leave_remains
 	P.allowmobvore = src.allowmobvore
+	P.allownpcvore = src.allownpcvore	// RS Add
 	P.vore_taste = src.vore_taste
 	P.vore_smell = src.vore_smell
 	P.permit_healbelly = src.permit_healbelly
@@ -303,6 +304,7 @@
 	resizable = P.resizable
 	digest_leave_remains = P.digest_leave_remains
 	allowmobvore = P.allowmobvore
+	allownpcvore = P.allownpcvore	// RS Add
 	vore_taste = P.vore_taste
 	vore_smell = P.vore_smell
 	permit_healbelly = P.permit_healbelly
@@ -783,6 +785,9 @@
 		to_chat(user, "<span class='notice'>They aren't able to be devoured.</span>")
 		log_and_message_admins("[key_name_admin(src)] attempted to devour [key_name_admin(prey)] against their prefs ([prey ? ADMIN_JMP(prey) : "null"])")
 		return FALSE
+	if(!npc_vore_check(pred, prey))	//RS ADD
+		to_chat(user, "<span class='notice'>They aren't able to be devoured by NPCs.</span>")	//RS ADD
+		return FALSE	//RS ADD
 	if(!prey.ssd_vore_check(user))	//RS ADD
 		return FALSE				//RS ADD
 	if(!pred.ssd_vore_check(user))	//RS ADD
@@ -1329,6 +1334,7 @@
 	dispvoreprefs += "<b>Absorption Permission:</b> [absorbable ? "<font color='green'>Allowed</font>" : "<font color='red'>Disallowed</font>"]<br>"
 	dispvoreprefs += "<b>Leaves Remains:</b> [digest_leave_remains ? "<font color='green'>Enabled</font>" : "<font color='red'>Disabled</font>"]<br>"
 	dispvoreprefs += "<b>Mob Vore:</b> [allowmobvore ? "<font color='green'>Enabled</font>" : "<font color='red'>Disabled</font>"]<br>"
+	dispvoreprefs += "<b>NPC Vore:</b> [allownpcvore ? "<font color='green'>Enabled</font>" : "<font color='red'>Disabled</font>"]<br>"	// RS Add
 	dispvoreprefs += "<b>Selective Mode Pref:</b> [src.selective_preference]<br>"
 	if(ishuman(src))	//RS ADD START
 		var/mob/living/carbon/human/H = src
