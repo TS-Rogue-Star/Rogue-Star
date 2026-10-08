@@ -190,6 +190,10 @@
 		to_chat(src, SPAN_NOTICE("[choice] trust list mode enabled."))
 	vorePanel.unsaved_changes = TRUE
 
+// RS ADD
+/proc/npc_vore_check(var/mob/living/pred, var/mob/living/prey)
+	return !(iscarbon(pred) && !isnull(pred.get_AI_stance()) && !prey.allownpcvore)
+
 /proc/spont_pref_check(var/mob/living/pred,var/mob/living/prey,var/preftype,var/allow_self_compare = FALSE)
 	if(!preftype)
 		return FALSE
@@ -232,6 +236,10 @@
 		return FALSE
 	if(isanimal(pred) && !prey.allowmobvore)
 		return FALSE
+	// RS Add Start
+	if(!npc_vore_check(pred, prey))
+		return FALSE
+	// RS Add End
 	if(!pred.can_be_drop_pred || !prey.can_be_drop_prey)	//Both of these always need to be true for any of the other spont vore checks to go through
 		return FALSE
 	if(!pred.client || !prey.client)	//One doesn't have a client, so no chance of whitelist happening.

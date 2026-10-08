@@ -950,6 +950,10 @@ const VoreSelectedBellyVisuals = (props, context) => {
     absorbed_multiplier,
     liquid_voresprite,
     liquid_multiplier,
+    // RS Add Start
+    nutrition_voresprite,
+    nutrition_multiplier,
+    // RS Add End
     item_voresprite,
     item_multiplier,
     health_voresprite,
@@ -1040,6 +1044,30 @@ const VoreSelectedBellyVisuals = (props, context) => {
                     content={liquid_multiplier}
                   />
                 </LabeledList.Item>
+                {/* RS Add Start */}
+                <LabeledList.Item label="Count nutrition for vore sprites">
+                  <Button
+                    onClick={() =>
+                      act('set_attribute', {
+                        attribute: 'b_count_nutrition_for_sprites',
+                      })
+                    }
+                    icon={nutrition_voresprite ? 'toggle-on' : 'toggle-off'}
+                    selected={nutrition_voresprite}
+                    content={nutrition_voresprite ? 'Yes' : 'No'}
+                  />
+                </LabeledList.Item>
+                <LabeledList.Item label="Nutrition Multiplier">
+                  <Button
+                    onClick={() =>
+                      act('set_attribute', {
+                        attribute: 'b_nutrition_multiplier',
+                      })
+                    }
+                    content={nutrition_multiplier}
+                  />
+                </LabeledList.Item>
+                {/* RS Add End */}
                 <LabeledList.Item label="Count items for vore sprites">
                   <Button
                     onClick={() =>
@@ -1774,6 +1802,24 @@ const VoreSelectedBellyLiquidOptions = (props, context) => {
               content={liq_interacts.liq_sloshing ? 'On' : 'Off'}
             />
           </LabeledList.Item>
+          {/* RS Add Start */}
+          <LabeledList.Item label="Nutrition Slosh Sounds">
+            <Button
+              onClick={() =>
+                act('liq_set_attribute', {
+                  liq_attribute: 'b_liq_nutrition_sloshing',
+                })
+              }
+              icon={
+                liq_interacts.liq_nutrition_sloshing
+                  ? 'toggle-on'
+                  : 'toggle-off'
+              }
+              selected={liq_interacts.liq_nutrition_sloshing}
+              content={liq_interacts.liq_nutrition_sloshing ? 'On' : 'Off'}
+            />
+          </LabeledList.Item>
+          {/* RS Add End */}
           <LabeledList.Item label="Liquid Addons">
             {(liq_interacts.liq_reagent_addons.length &&
               liq_interacts.liq_reagent_addons.join(', ')) ||
@@ -2149,6 +2195,7 @@ const VoreUserPreferences = (props, context) => {
     absorbable,
     digest_leave_remains,
     allowmobvore,
+    allownpcvore, // RS Add
     permit_healbelly,
     show_vore_fx,
     can_be_drop_prey,
@@ -2337,6 +2384,21 @@ const VoreUserPreferences = (props, context) => {
         disabled: 'No Mobs eating you',
       },
     },
+    // RS Add Start
+    npcvore: {
+      action: 'toggle_npcvore',
+      test: allownpcvore,
+      tooltip: {
+        main: "This button is for those who don't like being eaten by NPCs.",
+        enable: 'Click here to allow being eaten by NPCs.',
+        disable: 'Click here to prevent being eaten by NPCs.',
+      },
+      content: {
+        enabled: 'NPCs eating you allowed',
+        disabled: 'No NPCs eating you',
+      },
+    },
+    // RS Add End
     feed: {
       action: 'toggle_feed',
       test: feeding,
@@ -2812,6 +2874,11 @@ const VoreUserPreferences = (props, context) => {
         <Flex.Item basis="32%">
           <VoreUserPreferenceItem spec={preferences.mobvore} />
         </Flex.Item>
+        {/* RS Add Start */}
+        <Flex.Item basis="32%">
+          <VoreUserPreferenceItem spec={preferences.npcvore} />
+        </Flex.Item>
+        {/* RS Add End */}
         {/* RS Edit: Cleanup spacing (Lira, September 2025) */}
         <Flex.Item basis="32%">
           <VoreUserPreferenceItem spec={preferences.feed} />
