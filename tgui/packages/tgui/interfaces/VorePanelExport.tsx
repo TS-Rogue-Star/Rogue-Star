@@ -666,9 +666,11 @@ const downloadPrefs = (context, extension: string) => {
   }
 
   if (extension === '.vrdb') {
+    // RS Edit Start
     blob = new Blob([JSON.stringify({ bellies, allownpcvore })], {
       type: 'application/json',
-    }); // RS Edit
+    });
+    // RS Edit End
   }
 
   Byond.saveBlob(blob, filename, extension); // RS Edit || Virgo Port PR16922
