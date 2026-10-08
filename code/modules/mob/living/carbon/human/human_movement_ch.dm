@@ -1,6 +1,7 @@
 //CHOMP reagent vore belly sloshing || RS Add || Chomp Port
 
 // Handle footstep sounds
+// RS Edit
 /mob/living/carbon/human/handle_vorefootstep(var/m_intent, var/turf/T)
 	if(!config.vorefootstep_volume || !vore_footstep_volume)
 		return
@@ -23,6 +24,7 @@
 	playsound(src, "vore_slosh", volume, FALSE, preference = /datum/client_preference/digestion_noises)
 	return
 
+// RS Edit
 /mob/living/silicon/robot/handle_vorefootstep(var/m_intent, var/turf/T)
 
 	if(!config.vorefootstep_volume || !vore_footstep_volume)

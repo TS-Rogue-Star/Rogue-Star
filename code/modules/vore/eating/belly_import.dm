@@ -41,16 +41,24 @@
 	if(length(updated) > 0)
 		alert_msg += "update [length(updated)] existing bell[length(updated) == 1 ? "y" : "ies"]. Please make sure you have saved a copy of your existing bellies"
 
+	// RS Add Start
+	if(!isnull(found["allownpcvore"]))
+		alert_msg += "set NPC vore to [found["allownpcvore"] ? "enabled" : "disabled"]"
+	// RS Add End
+
 	var/confirm = tgui_alert(host, "WARNING: This will [jointext(alert_msg," and ")]. You can revert the import by using the Reload Prefs button under Preferences as long as you don't Save Prefs. Are you sure?","Import bellies?",list("Yes","Cancel"))
 	if(confirm != "Yes") return FALSE
 
-	vore_apply_belly_data(host, valid_lists, host)
+	vore_apply_belly_data(host, valid_lists, host, found["allownpcvore"]) // RS Edit
 	unsaved_changes = TRUE
 	return TRUE
 
 
 /proc/vore_belly_lists_from(mob/host, list/input_data, pickOne, mob/report_to)
 	// RS Edit Start: Updated to support both local and other server vrdb file structures (Lira, November 2025)
+	if(!islist(input_data))
+		vore_import_warn(report_to, "The supplied file was not a valid VRDB file.", "Error!")
+		return null
 	var/list/belly_entries = list()
 	if(islist(input_data["bellies"]))
 		belly_entries = input_data["bellies"]
@@ -71,6 +79,11 @@
 	if(!islist(belly_entries) || length(belly_entries) <= 0)
 		vore_import_warn(report_to, "The supplied file was not a valid VRDB file.", "Error!")
 		return null
+	// RS Add Start
+	var/npc_vore_preference = input_data["allownpcvore"]
+	if(!isnum(npc_vore_preference) || (npc_vore_preference != FALSE && npc_vore_preference != TRUE))
+		npc_vore_preference = null
+	// RS Add End
 	input_data = belly_entries
 	// RS Edit End
 
@@ -95,9 +108,9 @@
 	if(length(valid_names) <= 0)
 		vore_import_warn(report_to, "The supplied VRDB file does not contain any valid bellies.", "Error!")
 		return null
-	return list("names" = valid_names, "lists" = valid_lists, "updated" = updated)
+	return list("names" = valid_names, "lists" = valid_lists, "updated" = updated, "allownpcvore" = npc_vore_preference) // RS Edit
 
-/proc/vore_apply_belly_data(mob/host, list/valid_lists, mob/report_to)
+/proc/vore_apply_belly_data(mob/host, list/valid_lists, mob/report_to, npc_vore_preference = null) // RS Edit
 	var/list/valid_names = list()
 	for(var/list/entry in valid_lists)
 		valid_names += entry["name"]
@@ -522,6 +535,7 @@
 			var/new_liquid_multiplier = belly_data["liquid_multiplier"]
 			new_belly.liquid_multiplier = CLAMP(new_liquid_multiplier, 0.1, 10)
 
+		// RS Add Start
 		if(isnum(belly_data["count_nutrition_for_sprite"]))
 			var/new_count_nutrition_for_sprite = belly_data["count_nutrition_for_sprite"]
 			if(new_count_nutrition_for_sprite == 0)
@@ -546,6 +560,7 @@
 				new_belly.vorefootsteps_sounds = FALSE
 			if(new_vorefootsteps_sounds == 1)
 				new_belly.vorefootsteps_sounds = TRUE
+		// RS Add End
 
 		// RS Edit Start: Catch for multiple spellings (Lira, November 2025)
 		var/new_reagent_touches = null
@@ -713,6 +728,13 @@
 
 		// After import updates
 		new_belly.items_preserved.Cut()
+
+	// RS Add Start
+	if(isnum(npc_vore_preference) && (npc_vore_preference == FALSE || npc_vore_preference == TRUE))
+		host.allownpcvore = npc_vore_preference
+		if(host.client?.prefs_vr)
+			host.client.prefs_vr.allownpcvore = npc_vore_preference
+	// RS Add End
 
 	if(istype(host, /mob/living/carbon/human))
 		var/mob/living/carbon/human/hhost = host

@@ -950,8 +950,10 @@ const VoreSelectedBellyVisuals = (props, context) => {
     absorbed_multiplier,
     liquid_voresprite,
     liquid_multiplier,
+    // RS Add Start
     nutrition_voresprite,
     nutrition_multiplier,
+    // RS Add End
     item_voresprite,
     item_multiplier,
     health_voresprite,
@@ -2193,7 +2195,7 @@ const VoreUserPreferences = (props, context) => {
     absorbable,
     digest_leave_remains,
     allowmobvore,
-    allownpcvore,
+    allownpcvore, // RS Add
     permit_healbelly,
     show_vore_fx,
     can_be_drop_prey,
