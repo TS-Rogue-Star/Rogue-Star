@@ -646,8 +646,20 @@ sound/instruments/synthesis_samples/woodwind/fluid_tenor_sax,<br>
 **License:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)<br>
 <br>
 **File:** `icons/inventory/uniform/item_vr.dmi, icons/inventory/uniform/mob_vr.dmi, ‎icons/inventory/uniform/mob_vr_rolled_down.dmi‎`<br>
-**Icon-States:** talon_atmos_refreshed, talon_engineer_refreshed, talon_miner_refreshed<br>
+**Icon-States:** talon_atmos, talon_engineer, talon_miner<br>
 **Creator:** Original graphics by Youtubeboy139. Modified by Azzy.Dreemurr<br>
 **Link:** https://github.com/VOREStation/VOREStation/pull/10660<br>
+**License:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)<br>
+<br>
+**File:** `icons/inventory/uniform/mob_teshari.dmi‎`<br>
+**Icon-States:** talon_basic, talon_engineer, talon_atmos, talon_miner, talon_security, talon_pilot, talon_medical, talon_captain<br>
+**Creator:** Original graphics by Youtubeboy139. Created based on this uniform by Azzy.Dreemurr<br>
+**Link:** https://github.com/VOREStation/VOREStation/pull/10660<br>
+**License:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)<br>
+<br>
+**File:** `icons/inventory/uniform/mob_teshari.dmi`<br>
+**Icon-States:** talon_basic_refreshed, talon_engineer_refreshed, talon_atmos_refreshed, talon_miner_refreshed, talon_security_refreshed, talon_pilot_refreshed, talon_medical_refreshed, talon_captain_refreshed<br>
+**Creator:** Comissioned by axietheaxolotl, Imaginos16. Created based on this uniform by Azzy.Dreemurr<br>
+**Link:** https://github.com/TS-Rogue-Star/Rogue-Star/pull/766<br>
 **License:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)<br>
 <br>
