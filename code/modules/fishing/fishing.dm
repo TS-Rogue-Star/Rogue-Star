@@ -158,6 +158,9 @@ GLOBAL_LIST_INIT(generic_fishing_chance_list, list(FISHING_RARE = 5, FISHING_UNC
 						user.visible_message("<span class='danger'>\The [R]'s string snaps!</span>")
 					if(prob(33))	// Dead on hook. Good for food, not so much for live catch.
 						L.death()
+					if(istype(fished, /mob/living/simple_mob/animal/passive/fish))	//RS ADD START
+						var/mob/living/simple_mob/animal/passive/fish/F = fished
+						F.fished(user)	//RS ADD END
 				to_chat(user,"<span class='notice'>You fish out \the [fished] from the water with [P.name]!</span>")
 		R.cast = FALSE
 		being_fished = FALSE
