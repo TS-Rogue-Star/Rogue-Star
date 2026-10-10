@@ -8,8 +8,10 @@
 			chance_time = rand(25,100)
 		if(51 to 80)
 			chance_time = rand(50,200)
-		if(81 to 100)
+		if(81 to 99)
 			chance_time = rand(75,300)
+		if(100)
+			chance_time = rand(100,1000)
 
 	resize(chance_time * 0.01, FALSE, TRUE)
 
