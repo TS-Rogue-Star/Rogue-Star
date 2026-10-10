@@ -742,6 +742,7 @@ var/global/icon/GLOB_markings_base_preview_icon = null
 	. += "<br><a href='?src=\ref[src];toggle_preview_value=[EQUIP_PREVIEW_LOADOUT]'>[pref.equip_preview_mob & EQUIP_PREVIEW_LOADOUT ? "Hide loadout" : "Show loadout"]</a>"
 	. += "<br><a href='?src=\ref[src];toggle_animations=1'>[pref.animations_toggle ? "Stop animations" : "Show animations"]</a>"
 	. += "<br><br><a href='?src=\ref[src];marking_gallery=1' style='display:inline-block;background:#6d28d9;color:#fff;padding:2px 6px;border:1px solid #6d28d9;border-radius:3px;text-decoration:none;font-weight:bold;' onmouseover=\"this.style.background='#fff';this.style.color='#6d28d9';\" onmouseout=\"this.style.background='#6d28d9';this.style.color='#fff';\">Character Designer</a><br>" //RS Edit: Opens new gallery (Lira, August 2025)
+	. += "<small>To persist Character Designer changes, make sure to press the <b>Save slot</b> button above. Otherwise changes will not persist after round end.</small><br>"
 	. = jointext(.,null)
 
 /datum/category_item/player_setup_item/general/body/proc/has_flag(var/datum/species/mob_species, var/flag)
