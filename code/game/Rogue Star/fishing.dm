@@ -11,7 +11,7 @@
 		if(81,100)
 			chance_time = rand(75,300)
 
-	resize(chance_time * 0.01, FALSE)
+	resize(chance_time * 0.01, FALSE, TRUE)
 
 	if(!fisher)
 		return
