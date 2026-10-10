@@ -167,3 +167,10 @@
 	if(iterations == 0)
 		return FALSE
 	return report
+
+/obj/fish_score_keeper/MouseDrop_T(mob/living/M, mob/living/user)
+	. = ..()
+	if(M == user)	//Don't turn yourself in or whatever lol
+		return
+	if(istype(M, /mob/living/simple_mob/animal/passive/fish))
+		add_score(user, M)
