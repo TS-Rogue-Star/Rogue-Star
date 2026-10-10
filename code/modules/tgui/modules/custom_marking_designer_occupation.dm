@@ -129,7 +129,8 @@
 	if(job.is_species_banned(prefs.species, prefs.organ_data?["brain"]) == TRUE)
 		return "This species or brain type cannot take this role."
 	if((job.minimum_character_age || job.min_age_by_species) && prefs.age < job.get_min_age(prefs.species, prefs.organ_data?["brain"]))
-		return "Minimum character age: [job.get_min_age(prefs.species, prefs.organ_data?["brain"])]."
+		var/minimum_age = job.get_min_age(prefs.species, prefs.organ_data?["brain"])
+		return "Minimum character age: [minimum_age]."
 	return null
 
 /datum/tgui_module/custom_marking_designer/proc/build_occupation_hours(mob/user)
