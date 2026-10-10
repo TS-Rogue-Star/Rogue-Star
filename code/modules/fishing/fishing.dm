@@ -160,7 +160,7 @@ GLOBAL_LIST_INIT(generic_fishing_chance_list, list(FISHING_RARE = 5, FISHING_UNC
 						L.death()
 					if(istype(fished, /mob/living/simple_mob/animal/passive/fish))	//RS ADD START
 						var/mob/living/simple_mob/animal/passive/fish/F = fished
-						F.fished(user)	//RS ADD END
+						F.fished_init(user)	//RS ADD END
 				to_chat(user,"<span class='notice'>You fish out \the [fished] from the water with [P.name]!</span>")
 		R.cast = FALSE
 		being_fished = FALSE

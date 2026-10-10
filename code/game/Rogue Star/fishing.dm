@@ -1,7 +1,10 @@
 //RS FILE
 #define SKILL_FISHING				"Fishing"
 
-/mob/living/simple_mob/animal/passive/fish/proc/fished(var/mob/living/fisher)
+/mob/living/simple_mob/animal/passive/fish
+	var/fished = 0
+
+/mob/living/simple_mob/animal/passive/fish/proc/fished_init(var/mob/living/fisher)
 	var/chance_time = rand(1,100)
 	switch(chance_time)
 		if(1 to 50)
@@ -13,7 +16,8 @@
 		if(100)
 			chance_time = rand(100,1000)
 
-	resize(chance_time * 0.01, FALSE, TRUE)
+	fished = chance_time * 0.01
+	resize(fished, FALSE, TRUE)
 
 	if(!fisher)
 		return
@@ -52,7 +56,8 @@
 	icon = 'icons/rogue-star/misc_32x64.dmi'
 	icon_state = "scorekeeper"
 	var/list/target_fish = list()
-	var/list/scores = list()
+	var/list/cumulative_scores = list()
+	var/list/individual_scores = list()
 	var/fish_locked = FALSE
 	var/fish_exclusive = FALSE
 
@@ -88,7 +93,7 @@
 	options += "Toggle Configure"
 	options += "Toggle Exclusive"
 
-	var/choice = tgui_alert(user,"What would you like to do?","[src] configuration",options)
+	var/choice = tgui_input_list(user,"What would you like to do?","[src] configuration",options)
 	if(!choice)
 		return
 	switch(choice)
@@ -110,6 +115,9 @@
 /obj/fish_score_keeper/proc/add_score(var/mob/living/scorer, var/mob/living/simple_mob/animal/passive/fish/our_fish)
 	if(!scorer || !our_fish)
 		return FALSE
+	if(!our_fish.fished)
+		to_chat(scorer, SPAN_DANGER("This fish was not fished and so can not be turned in."))
+		return FALSE
 	if(fish_locked)
 		var/mult = 1
 		if(our_fish.type in target_fish)
@@ -117,10 +125,18 @@
 		else if(fish_exclusive)
 			to_chat(scorer, SPAN_DANGER("This fish is not one of the target fish and will not be accepted."))
 			return FALSE
-		var/our_score = scores[scorer.name]
-		var/fish_score = our_fish.size_multiplier * mult
+
+		var/indiv_score = individual_scores[scorer.real_name]
+		if(indiv_score)
+			if(indiv_score < our_fish.fished)
+				individual_scores[scorer.real_name] = our_fish.fished
+		else
+			individual_scores[scorer.real_name] = our_fish.fished
+
+		var/our_score = cumulative_scores[scorer.real_name]
+		var/fish_score = our_fish.fished * mult
 		var/new_score = our_score + fish_score
-		scores[scorer.name] = new_score
+		cumulative_scores[scorer.real_name] = new_score
 		var/list/yummy_verbs = list("accepts","devours","ingests","scarfs","scromfs","slurps","gulps","gobbles")
 		visible_message(SPAN_WARNING("\The [src] [pick(yummy_verbs)] \the [our_fish] for scoring... ([fish_score])"))
 		to_chat(scorer, SPAN_OCCULT("New score: [new_score]"))
@@ -134,7 +150,7 @@
 		if(!isnum(choice))
 			to_chat(scorer, SPAN_WARNING("Cancelled configuration input."))
 			return FALSE
-		to_chat(scorer, SPAN_OCCULT("Set [our_fish.type] score multiplier to [choice]. Any fish scored will have their size_multiplier rating multiplied by this number."))
+		to_chat(scorer, SPAN_OCCULT("Set [our_fish.type] score multiplier to [choice]. Any fish scored will have their size_multiplier rating when they are caught multiplied by this number."))
 		target_fish[our_fish.type] = choice
 	else
 		to_chat(scorer, SPAN_WARNING("\The [src] is in configuration mode right now and can not accept any fish. Tell the event organizer to flip the configuration switch."))
@@ -142,8 +158,10 @@
 
 /obj/fish_score_keeper/proc/report(var/mob/living/user)
 
-	var/scoreland = SPAN_DANGER("FISHING SCOREBOARD BEGIN:<br>")
-	scoreland = SPAN_OCCULT(report_my_list_please(scores))
+	var/scoreland = SPAN_DANGER("TOTAL FISHING POINTS SCOREBOARD:<br>")
+	scoreland += SPAN_OCCULT(report_my_list_please(cumulative_scores))
+	scoreland += SPAN_DANGER("<br><br>INDIVIDUAL FISH HIGH SCORE:<br>")
+	scoreland += SPAN_OCCULT(report_my_list_please(individual_scores))
 
 	to_chat(user, scoreland)
 
