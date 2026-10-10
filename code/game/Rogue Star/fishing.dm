@@ -70,6 +70,12 @@
 			qdel(G)
 			add_score(user, F)
 			return
+	if(istype(O, /obj/item/weapon/holder))
+		var/obj/item/weapon/holder/H = O
+		if(istype(H.held_mob, /mob/living/simple_mob/animal/passive/fish))
+			if(add_score(user, H.held_mob))
+				qdel(H)
+		return
 	if(istype(O, /obj/item/glass_jar))
 		var/mob/living/simple_mob/animal/passive/fish/F
 		for(var/thing in O.contents)
@@ -81,6 +87,10 @@
 				var/obj/item/glass_jar/our_jar = O
 				our_jar.contains = 0
 				our_jar.update_icon()
+
+/obj/fish_score_keeper/attack_ghost(mob/user)
+	. = ..()
+	attack_hand(user)
 
 /obj/fish_score_keeper/attack_hand(mob/user)
 	if(!check_rights(R_FUN,FALSE,user))
@@ -188,6 +198,8 @@
 
 /obj/fish_score_keeper/MouseDrop_T(mob/living/M, mob/living/user)
 	. = ..()
+	if(!isliving(user) || user.incapacitated(INCAPACITATION_DISABLED | INCAPACITATION_DEFAULT))
+		return
 	if(M == user)	//Don't turn yourself in or whatever lol
 		return
 	if(istype(M, /mob/living/simple_mob/animal/passive/fish))
