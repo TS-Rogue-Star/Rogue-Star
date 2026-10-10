@@ -8,7 +8,7 @@
 			chance_time = rand(25,100)
 		if(51 to 80)
 			chance_time = rand(50,200)
-		if(81,100)
+		if(81 to 100)
 			chance_time = rand(75,300)
 
 	resize(chance_time * 0.01, FALSE, TRUE)
@@ -110,12 +110,11 @@
 		return FALSE
 	if(fish_locked)
 		var/mult = 1
-		if(target_fish.len)
-			if(our_fish.type in target_fish)
-				mult = target_fish[our_fish.type]
-			else if(fish_exclusive)
-				to_chat(scorer, SPAN_DANGER("This fish is not one of the target fish and will not be accepted."))
-				return FALSE
+		if(our_fish.type in target_fish)
+			mult = target_fish[our_fish.type]
+		else if(fish_exclusive)
+			to_chat(scorer, SPAN_DANGER("This fish is not one of the target fish and will not be accepted."))
+			return FALSE
 		var/our_score = scores[scorer.name]
 		var/fish_score = our_fish.size_multiplier * mult
 		var/new_score = our_score + fish_score
@@ -136,7 +135,7 @@
 		to_chat(scorer, SPAN_OCCULT("Set [our_fish.type] score multiplier to [choice]. Any fish scored will have their size_multiplier rating multiplied by this number."))
 		target_fish[our_fish.type] = choice
 	else
-		to_chat(SPAN_WARNING("\The [src] is in configuration mode right now and can not accept any fish. Tell the event organizer to flip the configuration switch."))
+		to_chat(scorer, SPAN_WARNING("\The [src] is in configuration mode right now and can not accept any fish. Tell the event organizer to flip the configuration switch."))
 		return FALSE
 
 /obj/fish_score_keeper/proc/report(var/mob/living/user)
