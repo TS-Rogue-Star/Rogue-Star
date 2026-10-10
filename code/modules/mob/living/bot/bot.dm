@@ -439,25 +439,25 @@
 
 // Returns true if a link between A and B is blocked
 // Movement through doors allowed if ID has access
-/proc/LinkBlockedWithAccess(turf/A, turf/B, obj/item/weapon/card/id/ID)
+/proc/LinkBlockedWithAccess(turf/A, turf/B, obj/item/weapon/card/id/ID, list/ignore)	// RS EDIT
 
 	if(A == null || B == null) return 1
 	var/adir = get_dir(A,B)
 	var/rdir = get_dir(B,A)
 	if((adir & (NORTH|SOUTH)) && (adir & (EAST|WEST)))	//	diagonal
 		var/iStep = get_step(A,adir&(NORTH|SOUTH))
-		if(!LinkBlockedWithAccess(A,iStep, ID) && !LinkBlockedWithAccess(iStep,B,ID))
+		if(!LinkBlockedWithAccess(A,iStep, ID, ignore) && !LinkBlockedWithAccess(iStep,B,ID, ignore))	// RS EDIT
 			return 0
 
 		var/pStep = get_step(A,adir&(EAST|WEST))
-		if(!LinkBlockedWithAccess(A,pStep,ID) && !LinkBlockedWithAccess(pStep,B,ID))
+		if(!LinkBlockedWithAccess(A,pStep,ID, ignore) && !LinkBlockedWithAccess(pStep,B,ID, ignore))	// RS EDIT
 			return 0
 		return 1
 
-	if(DirBlockedWithAccess(A,adir, ID))
+	if(DirBlockedWithAccess(A,adir, ID, ignore))	// RS EDIT
 		return 1
 
-	if(DirBlockedWithAccess(B,rdir, ID))
+	if(DirBlockedWithAccess(B,rdir, ID, ignore))	// RS EDIT
 		return 1
 
 	for(var/obj/O in B)
@@ -468,10 +468,10 @@
 
 // Returns true if direction is blocked from loc
 // Checks doors against access with given ID
-/proc/DirBlockedWithAccess(turf/loc,var/dir,var/obj/item/weapon/card/id/ID)
+/proc/DirBlockedWithAccess(turf/loc,var/dir,var/obj/item/weapon/card/id/ID, list/ignore)	// RS EDIT
 	for(var/obj/structure/window/D in loc)
 		if(!D.density)			continue
-		if(D.dir == SOUTHWEST)	return 1
+		if(D.dir == SOUTHWEST || D.is_fulltile())	return 1	// RS EDIT
 		if(D.dir == dir)		return 1
 
 	// RS ADD
@@ -481,10 +481,15 @@
 
 	for(var/obj/machinery/door/D in loc)
 		if(!D.density)			continue
+		if(ignore && (D in ignore))	continue	// RS ADD
 
 		if(istype(D, /obj/machinery/door/airlock))
 			var/obj/machinery/door/airlock/A = D
-			if(!A.can_open())	return 1
+			if(A.operating <= 0 && !A.can_open())	return 1	// RS EDIT
+
+		if(istype(D, /obj/machinery/door/blast))	// RS EDIT
+			if(D.density)	return 1	// RS ADD
+			continue	// RS ADD
 
 		if(istype(D, /obj/machinery/door/window))
 			if( dir & D.dir )	return !D.check_access(ID)

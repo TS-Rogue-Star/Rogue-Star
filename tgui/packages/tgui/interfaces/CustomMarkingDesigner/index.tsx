@@ -29,8 +29,15 @@
 // /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Updated by Lira for Rogue Star September 2026: Character Designer - Misc Settings ///////////////////////////////////
 // /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star October 2026: Character Designer - JSON Export ///////////////////////////////////////
+// /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 import { Component } from 'inferno';
+import { CharacterExportButton } from './components/CharacterExportButton';
+import {
+  buildCharacterAppearanceDraft,
+  type CharacterExportDrafts,
+} from './utils/characterExport';
 import { buildSizeWeightSaveParams } from './utils/sizeWeight';
 import { buildAppearancePersistenceState } from './utils/persistence';
 import {
@@ -2275,6 +2282,7 @@ type DesignerTitleTabsProps = Readonly<{
   setZoomPercent: (value: number) => void;
   setEnableCustomPromptOpen: (value: boolean) => void;
   onTabChange: (tab: DesignerTabId) => void;
+  exportButton: import('inferno').InfernoNode;
 }>;
 
 const DesignerTitleTabs = ({
@@ -2285,6 +2293,7 @@ const DesignerTitleTabs = ({
   setZoomPercent,
   setEnableCustomPromptOpen,
   onTabChange,
+  exportButton,
 }: DesignerTitleTabsProps) => (
   <>
     <Tabs className="RogueStar__titleTabs">
@@ -2403,44 +2412,46 @@ const DesignerTitleTabs = ({
         Custom Markings
       </Tabs.Tab>
     </Tabs>
-    <Box
-      className="RogueStar__zoomControl"
-      role="group"
-      aria-label={`Designer zoom, currently ${zoomPercent}%`}
-      ml="auto">
-      <Box className="RogueStar__zoomControlLabel">
-        <Icon name="search" />
-        Zoom
-      </Box>
-      <Box className="RogueStar__zoomTrack">
-        <Box
-          className="RogueStar__zoomTrackFill"
-          style={{
-            transform: `scaleX(${
-              (zoomPercent - DESIGNER_ZOOM_MIN_PERCENT) /
-              (DESIGNER_ZOOM_MAX_PERCENT - DESIGNER_ZOOM_MIN_PERCENT)
-            })`,
-          }}
-        />
-        {DESIGNER_ZOOM_LEVELS.map((percent) => (
-          <Button
-            key={percent}
-            className={`RogueStar__zoomStop${
-              percent < zoomPercent ? ' RogueStar__zoomStop--filled' : ''
-            }`}
-            selected={zoomPercent === percent}
-            aria-label={`Set designer zoom to ${percent}%`}
-            tooltip={
-              zoomPercent === percent
-                ? `Current zoom: ${percent}%`
-                : `Set zoom to ${percent}%`
-            }
-            tooltipPosition="bottom"
-            onClick={() => setZoomPercent(percent)}
+    <Box className="RogueStar__titleActions">
+      {exportButton}
+      <Box
+        className="RogueStar__zoomControl"
+        role="group"
+        aria-label={`Designer zoom, currently ${zoomPercent}%`}>
+        <Box className="RogueStar__zoomControlLabel">
+          <Icon name="search" />
+          Zoom
+        </Box>
+        <Box className="RogueStar__zoomTrack">
+          <Box
+            className="RogueStar__zoomTrackFill"
+            style={{
+              transform: `scaleX(${
+                (zoomPercent - DESIGNER_ZOOM_MIN_PERCENT) /
+                (DESIGNER_ZOOM_MAX_PERCENT - DESIGNER_ZOOM_MIN_PERCENT)
+              })`,
+            }}
           />
-        ))}
+          {DESIGNER_ZOOM_LEVELS.map((percent) => (
+            <Button
+              key={percent}
+              className={`RogueStar__zoomStop${
+                percent < zoomPercent ? ' RogueStar__zoomStop--filled' : ''
+              }`}
+              selected={zoomPercent === percent}
+              aria-label={`Set designer zoom to ${percent}%`}
+              tooltip={
+                zoomPercent === percent
+                  ? `Current zoom: ${percent}%`
+                  : `Set zoom to ${percent}%`
+              }
+              tooltipPosition="bottom"
+              onClick={() => setZoomPercent(percent)}
+            />
+          ))}
+        </Box>
+        <Box className="RogueStar__zoomValue">{zoomPercent}%</Box>
       </Box>
-      <Box className="RogueStar__zoomValue">{zoomPercent}%</Box>
     </Box>
   </>
 );
@@ -5848,6 +5859,68 @@ const CustomMarkingDesignerContent = (_props, context) => {
     }
   };
 
+  const collectCharacterExportDrafts = (): CharacterExportDrafts => {
+    const shared = selectBackend(context.store.getState()).shared || {};
+    const changedFlags = (key: string, fallback: BooleanMapState) => {
+      const state =
+        (shared[`${key}-${stateToken}`] as BooleanMapState) || fallback;
+      return state.dirty ? state.map : undefined;
+    };
+    const traits = resolveLatestTraitsDraft();
+    return {
+      species: detectSpeciesUnsaved()
+        ? {
+            species: resolveLatestSpeciesSelection(),
+            icon_base: resolveLatestSpeciesIconBaseSelection(),
+            custom_species: resolveLatestSpeciesCustomName(),
+          }
+        : undefined,
+      identity: detectIdentityUnsaved()
+        ? resolveLatestIdentityDraft()
+        : undefined,
+      appearance: detectBasicUnsaved()
+        ? buildCharacterAppearanceDraft(
+            resolveLatestBasicState().latestState,
+            resolveLatestBasicPayload()
+          )
+        : undefined,
+      body_markings: detectBodyUnsaved()
+        ? {
+            body_markings:
+              (shared.bodyMarkingsState as typeof bodyMarkingsState) ||
+              bodyMarkingsState,
+            order: (shared.bodyMarkingsOrder as string[]) || bodyMarkingsOrder,
+            persist_markings:
+              resolveLatestBodyPayload()?.persist_markings ?? true,
+          }
+        : undefined,
+      traits:
+        detectTraitsUnsaved() && traits
+          ? buildTraitsSavePayload(traits)
+          : undefined,
+      equipment: equipmentSession.dirty ? equipmentSession.draft : undefined,
+      loadout: loadoutSession.dirty ? loadoutSession.draft : undefined,
+      occupation: occupationSession.dirty ? occupationSession.draft : undefined,
+      custom_markings: {
+        width: canvasWidth,
+        height: canvasHeight,
+        strokes: getStoredStrokeDrafts(),
+        part_replacements: changedFlags(
+          'partReplacements',
+          resolvedReplacementState
+        ),
+        part_render_priority: changedFlags(
+          'partRenderPriority',
+          resolvedPriorityState
+        ),
+        part_canvas_size: changedFlags(
+          'partCanvasSize',
+          resolvedCanvasSizeState
+        ),
+      },
+    };
+  };
+
   const titleTabs = (
     <DesignerTitleTabs
       resolvedActiveTab={resolvedActiveTab}
@@ -5857,12 +5930,22 @@ const CustomMarkingDesignerContent = (_props, context) => {
       setZoomPercent={setZoomPercent}
       setEnableCustomPromptOpen={setEnableCustomPromptOpen}
       onTabChange={handleTabChange}
+      exportButton={
+        <CharacterExportButton
+          disabled={tabsLocked || uiLocked}
+          stateToken={stateToken}
+          characterName={resolveLatestIdentityDraft()?.real_name}
+          result={data.character_export_result}
+          collectDrafts={collectCharacterExportDrafts}
+          act={act}
+        />
+      }
     />
   );
 
   return (
     <Window
-      theme="nanotrasen rogue-star-window"
+      theme="nanotrasen rogue-star-window rogue-star-character-designer"
       width={1720}
       height={950}
       scale={zoomPercent / 100}

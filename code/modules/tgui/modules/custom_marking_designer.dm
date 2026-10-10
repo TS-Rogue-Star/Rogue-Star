@@ -6712,6 +6712,9 @@ var/global/custom_marking_static_source_digest_complete = TRUE
 	if(..())
 		return TRUE
 	var/handled = TRUE
+	if(action == "export_character_json")
+		send_character_export(usr, params?["request_id"])
+		return FALSE
 	if(handle_occupation_action(action, params, usr))
 		return TRUE
 	if(handle_loadout_action(action, params, usr))

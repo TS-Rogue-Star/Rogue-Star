@@ -110,11 +110,11 @@ Proc for attack log creation, because really why not
 6 is additional information, anything that needs to be added
 */
 
-/proc/add_attack_logs(mob/user, mob/target, what_done, var/admin_notify = TRUE)
+/proc/add_attack_logs(mob/user, mob/target, what_done, var/admin_notify = TRUE, atom/weapon = null)	// RS EDIT
 	if(islist(target)) //Multi-victim adding
 		var/list/targets = target
 		for(var/mob/M in targets)
-			add_attack_logs(user,M,what_done,admin_notify)
+			add_attack_logs(user,M,what_done,admin_notify,weapon)	// RS EDIT
 		return
 
 	var/user_str = key_name(user)
@@ -128,6 +128,7 @@ Proc for attack log creation, because really why not
 	if(admin_notify)
 		msg_admin_attack("[key_name_admin(user)] vs [target_str]: [what_done]")
 	record_character_memory_attack_log(user, target, what_done) // RS Add: Persistent memory system (Lira, May 2026)
+	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_ATTACK_LOGGED, user, target, what_done, weapon)	// RS ADD
 
 //checks whether this item is a module of the robot it is located in.
 /proc/is_robot_module(var/obj/item/thing)

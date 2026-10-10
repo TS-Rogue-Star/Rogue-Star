@@ -1,6 +1,8 @@
-///////////////////////////////////////////////////////////////////////////////////
-// Updated by Lira for Rogue Star September 2026: Atlas Transparency Persistence //
-///////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star September 2026: Atlas Transparency Persistence ///
+////////////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star October 2026: Character Designer Cache Recovery //
+////////////////////////////////////////////////////////////////////////////////////
 
 //DEFINITIONS FOR ASSET DATUMS START HERE.
 
@@ -365,7 +367,7 @@
 #define CUSTOM_MARKING_ATLAS_SIZE_STRIPPED 3
 #define CUSTOM_MARKING_ATLAS_MANIFEST_REVISION 4
 #define CUSTOM_MARKING_ATLAS_MAX_DIMENSION 2048
-#define CUSTOM_MARKING_ATLAS_PERSISTENT_CACHE_REVISION 2
+#define CUSTOM_MARKING_ATLAS_PERSISTENT_CACHE_REVISION 3
 #define CUSTOM_MARKING_ATLAS_TRANSPARENCY_REVISION 1
 
 /datum/asset/spritesheet/custom_marking_designer
@@ -453,18 +455,17 @@
 		if(length(error))
 			fdel(sheet_path)
 			return fail_finalization("could not strip sheet '[size_id]': [error]")
+		var/list/dimensions = get_png_dimensions(sheet_path)
+		if(!islist(dimensions))
+			fdel(sheet_path)
+			return fail_finalization("could not read PNG dimensions for sheet '[size_id]'")
+		var/sheet_digest = rustg_hash_file(RUSTG_HASH_MD5, sheet_path)
 		var/sheet_resource = fcopy_rsc(sheet_path)
 		fdel(sheet_path)
-		if(!isfile(sheet_resource) || !md5(sheet_resource))
-			return fail_finalization("could not retain PNG resource for sheet '[size_id]'")
-		var/width
-		var/height
-		try
-			var/icon/sheet_icon = icon(sheet_resource)
-			width = sheet_icon.Width()
-			height = sheet_icon.Height()
-		catch(var/exception/e)
-			return fail_finalization("could not decode retained PNG for sheet '[size_id]': [e]")
+		if(!isfile(sheet_resource) || !istext(sheet_digest) || length(sheet_digest) != 32 || md5(sheet_resource) != sheet_digest)
+			return fail_finalization("could not retain matching PNG resource for sheet '[size_id]'")
+		var/width = dimensions["width"]
+		var/height = dimensions["height"]
 		if(!isnum(width) || !isnum(height) || width <= 0 || height <= 0 || width % source.Width() || height % source.Height())
 			return fail_finalization("sheet '[size_id]' has invalid PNG dimensions")
 		if((width / source.Width()) * (height / source.Height()) < size[CUSTOM_MARKING_ATLAS_SIZE_COUNT])
@@ -473,6 +474,33 @@
 		sheet_asset_names_by_size_id[size_id] = "[name]_[size_id]_[md5(sheet_resource)].png"
 		sheet_dimensions_by_size_id[size_id] = list("width" = width, "height" = height)
 	return TRUE
+
+/datum/asset/spritesheet/custom_marking_designer/proc/get_png_dimensions(png_path)
+	var/png_base64 = rustg_hash_file(RUSTG_HASH_BASE64, png_path)
+	if(!istext(png_base64) || length(png_base64) < 44)
+		return null
+	var/base64_alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"
+	var/list/header_bytes = list()
+	for(var/offset = 1 to 29 step 4)
+		var/value = 0
+		for(var/index = offset to offset + 3)
+			var/symbol = findtextEx(base64_alphabet, copytext(png_base64, index, index + 1)) - 1
+			if(symbol < 0)
+				return null
+			value = (value << 6) | symbol
+		header_bytes += list((value >> 16) & 255, (value >> 8) & 255, value & 255)
+	var/list/png_signature = list(137, 80, 78, 71, 13, 10, 26, 10, 0, 0, 0, 13, 73, 72, 68, 82)
+	for(var/index = 1 to png_signature.len)
+		if(header_bytes[index] != png_signature[index])
+			return null
+	var/width = 0
+	var/height = 0
+	for(var/index = 17 to 20)
+		width = width * 256 + header_bytes[index]
+		height = height * 256 + header_bytes[index + 4]
+	if(width <= 0 || height <= 0)
+		return null
+	return list("width" = width, "height" = height)
 
 /datum/asset/spritesheet/custom_marking_designer/proc/get_construction_path(asset_name)
 	return "data/spritesheets/[world.realtime]_[rand(100000, 999999)]_[asset_name]"
@@ -972,7 +1000,8 @@
 		var/datum/asset_cache_item/cached_asset = SSassets.cache[asset_name]
 		if(!istype(cached_asset) || !cached_asset.resource || !istext(cached_asset.md5) || length(cached_asset.md5) != 32)
 			return set_persistent_cache_failure("registered resource '[asset_name]' was unavailable for persistence")
-		var/cache_path = "data/spritesheets/[name]_persistent_v[CUSTOM_MARKING_ATLAS_PERSISTENT_CACHE_REVISION]_[cached_asset.md5].cache"
+		var/extension = copytext(asset_name, findlasttext(asset_name, "."))
+		var/cache_path = "data/spritesheets/[name]_persistent_v[CUSTOM_MARKING_ATLAS_PERSISTENT_CACHE_REVISION]_[cached_asset.md5][extension]"
 		var/cache_is_current = fexists(cache_path) && lowertext(rustg_hash_file(RUSTG_HASH_MD5, cache_path)) == lowertext(cached_asset.md5)
 		if(!cache_is_current)
 			if(fexists(cache_path))

@@ -144,7 +144,7 @@ NOTE: It checks usr by default. Supply the "user" argument if you wish to check 
 	if(!forceGlobal && usr)
 		var/client/C = usr.client
 		if(!C)
-			CRASH("No client for HrefToken()!")
+			return tok	//RS EDIT
 		var/datum/admins/holder = C.holder
 		if(holder)
 			tok = holder.href_token

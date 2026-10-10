@@ -30,6 +30,10 @@
 
 		if(B.vorefootsteps_sounds == TRUE && highest_vol < total_volume)
 			highest_vol = total_volume
+		// RS Add Start
+		if(B.nutrition_sloshing)
+			highest_vol = max(highest_vol, (nutrition / NUTRITION_PER_PREY) * 100 * B.nutrition_multiplier)
+		// RS Add End
 
 	if(highest_vol < 20)	//For now the volume will be off if less than 20 units of reagent are in vorebellies
 		vore_footstep_volume = 0

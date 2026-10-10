@@ -141,6 +141,13 @@
 	particles = new/particles/smelly
 	lifespan = 2
 
+/obj/particle_emitter/smelly/white
+	particles = new/particles/smelly/white
+
+/particles/smelly/white
+	color = "#FFFFFF"
+
+
 /obj/particle_emitter/smelly/indefinite
 	lifespan = -1
 
@@ -314,3 +321,15 @@
 	particles = new/particles/steam/huff/e
 /obj/particle_emitter/steam/huff/w
 	particles = new/particles/steam/huff/w
+
+/particles/candle
+	icon = 'icons/rogue-star/obj.dmi'
+	icon_state = "flame"
+	width = 64
+	height = 64
+	count = 5
+	spawning = 1
+	lifespan = 2
+	position = list(0,8)
+	velocity = generator("vector",list(0,-0.1),list(0.1,0.1))
+	grow = generator("num",0,0.01)
