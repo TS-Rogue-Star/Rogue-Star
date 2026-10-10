@@ -147,6 +147,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 /area/shuttle/prison/
 	name = "\improper Prison Shuttle"
+	music = "sound/ambience/security/prison_1.ogg"
 
 /area/shuttle/prison/station
 	icon_state = "shuttle"
@@ -532,20 +533,24 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/prison/solitary
 	name = "Solitary Confinement"
 	icon_state = "brig"
+	music = "sound/ambience/security/prison_1.ogg"
 
 /area/prison/cell_block/A
 	name = "Prison Cell Block A"
 	icon_state = "brig"
+	music = "sound/ambience/security/prison_1.ogg"
 	block_phase_shift = TRUE	//RS ADD
 
 /area/prison/cell_block/B
 	name = "Prison Cell Block B"
 	icon_state = "brig"
+	music = "sound/ambience/security/prison_1.ogg"
 	block_phase_shift = TRUE	//RS ADD
 
 /area/prison/cell_block/C
 	name = "Prison Cell Block C"
 	icon_state = "brig"
+	music = "sound/ambience/security/prison_1.ogg"
 	block_phase_shift = TRUE	//RS ADD
 
 ////////////////////
@@ -949,7 +954,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/bridge
 	name = "\improper Bridge"
 	icon_state = "bridge"
-	music = "signal"
+	ambience = AMBIENCE_BRIDGE
 
 /area/bridge_hallway
 	name = "\improper Bridge Hallway"
@@ -958,7 +963,6 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/bridge/meeting_room
 	name = "\improper Heads of Staff Meeting Room"
 	icon_state = "bridge"
-	music = null
 	sound_env = MEDIUM_SOFTFLOOR
 
 /area/crew_quarters/captain
@@ -1577,43 +1581,40 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/medical/medbay
 	name = "\improper Medbay Hallway - Port"
 	icon_state = "medbay"
-	music = 'sound/ambience/signal.ogg'
+	ambience = AMBIENCE_MEDBAY
 
 //Medbay is a large area, these additional areas help level out APC load.
 /area/medical/medbay2
 	name = "\improper Medbay Hallway - Starboard"
 	icon_state = "medbay2"
-	music = 'sound/ambience/signal.ogg'
+	ambience = AMBIENCE_MEDBAY
 
 /area/medical/medbay3
 	name = "\improper Medbay Hallway - Fore"
 	icon_state = "medbay3"
-	music = 'sound/ambience/signal.ogg'
+	ambience = AMBIENCE_MEDBAY
 
 /area/medical/medbay4
 	name = "\improper Medbay Hallway - Aft"
 	icon_state = "medbay4"
-	music = 'sound/ambience/signal.ogg'
+	ambience = AMBIENCE_MEDBAY
 
 /area/medical/biostorage
 	name = "\improper Secondary Storage"
 	icon_state = "medbay2"
-	music = 'sound/ambience/signal.ogg'
 
 /area/medical/reception
 	name = "\improper Medbay Reception"
 	icon_state = "medbay"
-	music = 'sound/ambience/signal.ogg'
 
 /area/medical/medbay_emt_bay
 	name = "\improper Medical EMT Bay"
 	icon_state = "medbay_emt_bay"
-	music = 'sound/ambience/signal.ogg'
+	ambience = AMBIENCE_MEDBAY
 
 /area/medical/medbay_primary_storage
 	name = "\improper Medbay Primary Storage"
 	icon_state = "medbay_primary_storage"
-	music = 'sound/ambience/signal.ogg'
 
 /area/medical/psych
 	name = "\improper Psych Room"
@@ -1670,6 +1671,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/medical/robotics
 	name = "\improper Robotics"
 	icon_state = "medresearch"
+	ambience = AMBIENCE_ROBOTICS
 
 /area/medical/virology
 	name = "\improper Virology"
@@ -1686,28 +1688,34 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/medical/chemistry
 	name = "\improper Chemistry"
 	icon_state = "chem"
+	ambience = AMBIENCE_CHEMISTRY
 
 /area/medical/surgery
 	name = "\improper Operating Theatre 1"
 	icon_state = "surgery"
 	flags = AREA_FLAG_IS_NOT_PERSISTENT //This WOULD become a filth pit
+	ambience = AMBIENCE_SURGERY
 
 /area/medical/surgery2
 	name = "\improper Operating Theatre 2"
 	icon_state = "surgery"
 	flags = AREA_FLAG_IS_NOT_PERSISTENT
+	ambience = AMBIENCE_SURGERY
 
 /area/medical/surgeryobs
 	name = "\improper Operation Observation Room"
 	icon_state = "surgery"
+	ambience = AMBIENCE_SURGERY
 
 /area/medical/surgeryprep
 	name = "\improper Pre-Op Prep Room"
 	icon_state = "surgery"
+	ambience = AMBIENCE_SURGERY
 
 /area/medical/surgery_hallway
 	name = "\improper Surgery Hallway"
 	icon_state = "surgery_hallway"
+	ambience = AMBIENCE_SURGERY
 
 /area/medical/surgery_storage
 	name = "\improper Surgery Storage"
@@ -1716,6 +1724,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/medical/cryo
 	name = "\improper Cryogenics"
 	icon_state = "cryo"
+	ambience = AMBIENCE_MEDBAY
 
 /area/medical/exam_room
 	name = "\improper Exam Room"
@@ -1733,14 +1742,17 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "\improper Emergency Treatment Centre"
 	icon_state = "exam_room"
 	flags = AREA_FLAG_IS_NOT_PERSISTENT //Trust me.
+	ambience = AMBIENCE_MEDBAY
 
 /area/medical/first_aid_station_starboard
 	name = "\improper Starboard First-Aid Station"
 	icon_state = "medbay2"
+	ambience = AMBIENCE_MEDBAY
 
 /area/medical/first_aid_station
 	name = "\improper Port First-Aid Station"
 	icon_state = "medbay2"
+	ambience = AMBIENCE_MEDBAY
 
 
 
@@ -1769,6 +1781,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/security/prison
 	name = "\improper Security - Prison Wing"
 	icon_state = "sec_prison"
+	music = "sound/ambience/security/prison_1.ogg"
 
 /area/security/prison/prison_break()
 	for(var/obj/structure/closet/secure_closet/brig/temp_closet in src)
@@ -1786,7 +1799,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/security/armoury
 	name = "\improper Security - Armory"
 	icon_state = "armory"
-	ambience = AMBIENCE_HIGHSEC
+	forced_ambience = list('sound/ambience/security/loop_armory.ogg')
 	block_phase_shift = TRUE	//RS ADD
 
 /area/security/briefing_room
@@ -1804,6 +1817,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/security/interrogation
 	name = "\improper Security - Interrogation"
 	icon_state = "interrogation"
+	forced_ambience = list('sound/ambience/security/loop_interrogation.ogg')
 
 /area/security/riot_control
 	name = "\improper Security - Riot Control"
@@ -1813,6 +1827,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "\improper Security - Forensic Office"
 	icon_state = "detective"
 	sound_env = MEDIUM_SOFTFLOOR
+	ambience = AMBIENCE_DETECTIVE
 
 /area/security/range
 	name = "\improper Security - Firing Range"
@@ -1967,14 +1982,17 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/rnd/research
 	name = "\improper Research and Development"
 	icon_state = "research"
+	ambience = AMBIENCE_RND
 
 /area/rnd/research_foyer
 	name = "\improper Research Foyer"
 	icon_state = "research_foyer"
+	ambience = AMBIENCE_RND
 
 /area/rnd/research_foyer_auxiliary
 	name = "\improper Research Foyer Auxiliary"
 	icon_state = "research_foyer_aux"
+	ambience = AMBIENCE_RND
 
 /area/rnd/research_restroom
 	name = "\improper Research Restroom"
@@ -1992,6 +2010,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/rnd/lab
 	name = "\improper Research Lab"
 	icon_state = "toxlab"
+	ambience = AMBIENCE_RND
 
 /area/rnd/rdoffice
 	name = "\improper Research Director's Office"
