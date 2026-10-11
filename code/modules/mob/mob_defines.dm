@@ -91,7 +91,6 @@
 	var/is_shifted = FALSE // VoreStation Edit; pixel shifting + tilting
 	var/how_tilted = 0
 	var/maximum_tilt = 45
-	var/canmove = 1
 	var/allowtilttime = 0 //This is the waiting timer for getting up after falling, lying, buckling, or otherwise being animated.
 	var/canmove = 1
 	//Allows mobs to move through dense areas without restriction. For instance, in space or out of holder objects.
