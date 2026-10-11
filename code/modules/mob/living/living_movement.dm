@@ -282,6 +282,8 @@ default behaviour is:
 		pixel_y = default_pixel_y
 		layer = MOB_LAYER
 		plane = MOB_PLANE
+		how_tilted = 0
+		update_transform()
 	// End VOREstation edit
 
 	if(pulling) // we were pulling a thing and didn't lose it during our move.

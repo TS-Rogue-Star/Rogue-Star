@@ -799,6 +799,8 @@
 
 	resting = !resting
 	to_chat(src, "<span class='notice'>You are now [resting ? "resting" : "getting up"].</span>")
+	allowtilttime = world.time + TILT_INCAPACITATED_WAITTIME
+	how_tilted = 0
 	update_canmove()
 
 //called when the mob receives a bright flash
@@ -1026,6 +1028,8 @@
 					unbuckle_mob(L)
 				L.Stun(5)
 		//VOREStation Add End
+	if(!canmove)
+		allowtilttime = world.time + TILT_INCAPACITATED_WAITTIME
 
 	return canmove
 
