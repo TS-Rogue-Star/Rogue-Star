@@ -9,11 +9,16 @@ GLOBAL_LIST_INIT(npc_commands, npc_make_commands())
 
 /datum/npc_command
 	var/say
+	var/clean_say
 	var/radio = FALSE
 	var/repeat = 10 SECONDS
 	var/friendly = FALSE
 	var/obedience
 	var/list/trusted = list()
+
+/datum/npc_command/New()
+	..()
+	clean_say = npc_clean_line(say)
 
 /datum/npc_command/proc/heard(datum/ai_holder/complex_npc/ai_mind, mob/living/speaker, rest, via)
 	if(via && !radio)
@@ -48,12 +53,12 @@ GLOBAL_LIST_INIT(npc_commands, npc_make_commands())
 		return FALSE
 	var/datum/npc_command/best
 	for(var/datum/npc_command/C as anything in GLOB.npc_commands)
-		if(length(C.say) > length(best?.say) && npc_starts_with(rest, C.say))
+		if(length(C.say) > length(best?.say) && npc_starts_with_clean(rest, C.clean_say))
 			best = C
 	if(!best)
 		NPC_TRACE(src, NPC_TRACE_TALK, "[speaker] spoke in command format, but I don't understand \"[rest]\"")
 		return FALSE
-	best.heard(src, speaker, npc_words_after(rest, best.say), via)
+	best.heard(src, speaker, npc_words_after_clean(rest, best.clean_say), via)
 	return TRUE
 
 /datum/ai_holder/complex_npc/proc/will_obey(mob/living/M, datum/npc_command/C, via)

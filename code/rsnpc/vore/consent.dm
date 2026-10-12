@@ -1,3 +1,10 @@
+GLOBAL_LIST_INIT(npc_consent_phrases, list(
+	npc_clean_line("can i eat you"),
+	npc_clean_line("can i digest you"),
+	npc_clean_line("eat me"),
+	npc_clean_line("digest me"),
+))
+
 /datum/ai_holder/complex_npc/proc/has_personality(word)
 	return word in personality
 
@@ -15,24 +22,32 @@
 /datum/ai_holder/complex_npc/proc/note_vore_question(mob/living/asked, mob/living/asker, digest)
 	note("vore_question:[npc_person_key(asked)]:[npc_person_key(asker)]", digest ? "digest" : "eat", 45 SECONDS)
 
-/datum/ai_holder/complex_npc/proc/hear_consent(mob/living/speaker, line, via)
+/datum/ai_holder/complex_npc/proc/hear_consent(mob/living/speaker, line, via, list/name_matches)
 	if(via)
 		return
-	var/list/people = look() + holder
-	for(var/mob/living/M in people)
-		if(M == speaker || !npc_is_person(M))
-			continue
-		var/rest = npc_after_name(line, M)
-		if(isnull(rest))
-			continue
-		if(npc_starts_with(rest, "can i eat you"))
-			note_vore_question(M, speaker, FALSE)
-		else if(npc_starts_with(rest, "can i digest you"))
-			note_vore_question(M, speaker, TRUE)
-		else if(npc_starts_with(rest, "eat me"))
-			note_consent(npc_person_key(speaker), npc_person_key(M), FALSE)
-		else if(npc_starts_with(rest, "digest me"))
-			note_consent(npc_person_key(speaker), npc_person_key(M), TRUE)
+	var/list/phrases = GLOB.npc_consent_phrases
+	var/has_request = FALSE
+	for(var/phrase in phrases)
+		if(npc_has_words_clean(line, phrase))
+			has_request = TRUE
+			break
+	var/list/people
+	if(has_request)
+		people = look_people() + holder
+		for(var/mob/living/M in people)
+			if(M == speaker || !npc_is_person(M))
+				continue
+			var/rest = npc_after_name(line, M, name_matches)
+			if(isnull(rest))
+				continue
+			if(npc_starts_with_clean(rest, phrases[1]))
+				note_vore_question(M, speaker, FALSE)
+			else if(npc_starts_with_clean(rest, phrases[2]))
+				note_vore_question(M, speaker, TRUE)
+			else if(npc_starts_with_clean(rest, phrases[3]))
+				note_consent(npc_person_key(speaker), npc_person_key(M), FALSE)
+			else if(npc_starts_with_clean(rest, phrases[4]))
+				note_consent(npc_person_key(speaker), npc_person_key(M), TRUE)
 	var/prefix = "vore_question:[npc_person_key(speaker)]:"
 	for(var/key in notes.Copy())
 		if(findtext(key, prefix) != 1)
@@ -42,9 +57,13 @@
 			continue
 		var/asker_key = copytext(key, length(prefix) + 1)
 		var/rest = line
+		if(isnull(people))
+			people = look_people() + holder
 		for(var/mob/living/A in people)
-			if(npc_person_key(A) == asker_key && !isnull(npc_after_name(line, A)))
-				rest = npc_after_name(line, A)
+			if(npc_person_key(A) == asker_key)
+				var/after_name = npc_after_name(line, A, name_matches)
+				if(!isnull(after_name))
+					rest = after_name
 		if(npc_starts_with(rest, NPC_ANSWER_YES))
 			notes -= key
 			note_consent(npc_person_key(speaker), asker_key, kind == "digest")
