@@ -380,6 +380,8 @@
 	return FALSE
 
 /datum/ai_holder/complex_npc/proc/open_door(obj/machinery/door/D)
+	if(!can_act() || holder.restrained() || !holder.can_use_hands())
+		return FALSE
 	if(D.operating)
 		return TRUE
 	if(istype(D, /obj/machinery/door/firedoor))
@@ -391,7 +393,7 @@
 	return TRUE
 
 /datum/ai_holder/complex_npc/proc/use_hand(atom/A)
-	if(!A.Adjacent(holder) || !holder.checkClickCooldown())
+	if(!can_act() || holder.restrained() || !holder.can_use_hands() || !A.Adjacent(holder) || !holder.checkClickCooldown())
 		return FALSE
 	var/old_usr = usr
 	usr = holder

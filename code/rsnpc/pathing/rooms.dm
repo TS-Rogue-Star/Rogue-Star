@@ -78,6 +78,8 @@ GLOBAL_DATUM_INIT(npc_rooms, /datum/npc_room_map, new)
 			if(T.npc_room)
 				T.npc_room = null
 			CHECK_TICK
+	for(var/datum/npc_room/R as anything in rooms)
+		R.links.Cut()
 	rooms = list()
 	area_rooms = list()
 	for(var/z in using_map.station_levels)
