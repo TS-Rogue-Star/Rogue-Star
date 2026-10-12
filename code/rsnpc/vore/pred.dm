@@ -173,6 +173,7 @@
 	name = "swallow"
 	var/mob/living/prey
 	var/swallowing_until = 0
+	var/old_intent
 
 /datum/npc_action/swallow/variants(datum/ai_holder/complex_npc/ai_mind, fact)
 	if(findtext(fact, "eaten:") != 1)
@@ -202,6 +203,13 @@
 	if(!prey.Adjacent(H))
 		if(ai_mind.destination != prey)
 			ai_mind.go_to(prey)
+		return NPC_RUNNING
+	if(isnull(old_intent))
+		old_intent = H.a_intent
+	if(isrobot(prey))
+		H.a_intent = I_HELP
+		swallowing_until = world.time + 15 SECONDS
+		INVOKE_ASYNC(prey, TYPE_PROC_REF(/mob/living, feed_grabbed_to_self), H, prey)
 		return NPC_RUNNING
 	if(!G)
 		if(A.had_grab)
@@ -235,3 +243,12 @@
 	NPC_TRACE(ai_mind, NPC_TRACE_TASK, "swallowing [prey]")
 	INVOKE_ASYNC(H, TYPE_PROC_REF(/atom, attackby), G, H)
 	return NPC_RUNNING
+
+/datum/npc_action/swallow/clean_up(datum/ai_holder/complex_npc/ai_mind)
+	var/mob/living/H = ai_mind.holder
+	for(var/obj/item/weapon/grab/G in list(H.l_hand, H.r_hand))
+		if(G.affecting == prey)
+			qdel(G)
+	if(!isnull(old_intent))
+		H.a_intent = old_intent
+		old_intent = null
