@@ -1,7 +1,41 @@
+/datum/ai_holder/complex_npc
+	var/list/people_in_sight = list()
+	var/people_looked_at = 0
+
+/datum/ai_holder/complex_npc/proc/look_people()
+	if(looked_at && world.time < looked_at + 1 SECOND)
+		var/list/people = list()
+		for(var/mob/living/M in in_sight)
+			people += M
+		return people
+	if(people_looked_at && world.time < people_looked_at + 1 SECOND)
+		return people_in_sight
+	people_looked_at = world.time
+	people_in_sight = list()
+	var/turf/here = get_turf(holder)
+	if(!here || holder.is_blind())
+		return people_in_sight
+	var/list/nearby = hear(7, here)
+	var/list/visible_turfs = list()
+	visible_turfs[here] = TRUE
+	for(var/mob/living/M in nearby)
+		if(M == holder || !isturf(M.loc))
+			continue
+		var/turf/T = M.loc
+		var/visible = visible_turfs[T]
+		if(isnull(visible))
+			visible = (T in nearby) && (get_dist(here, T) <= holder.see_in_dark || T.get_lumcount() > LIGHTING_SOFT_THRESHOLD)
+			visible_turfs[T] = visible
+		if(visible)
+			people_in_sight += M
+	return people_in_sight
+
 /datum/ai_holder/complex_npc/proc/look()
 	if(looked_at && world.time < looked_at + 1 SECOND)
 		return in_sight
 	looked_at = world.time
+	people_in_sight = null
+	people_looked_at = 0
 	in_sight = list()
 	turfs_in_sight = list()
 	var/turf/here = get_turf(holder)
@@ -23,9 +57,10 @@
 		if(turfs_in_sight[A.loc])
 			in_sight += A
 	remember_sights()
+	var/list/checked_air = list()
 	for(var/turf/T as anything in turfs_in_sight)
 		danger_seen -= T
-		var/bad = npc_air_bad(T, holder)
+		var/bad = npc_air_bad(T, holder, checked_air)
 		if(bad != npc_built_air_bad(T, holder))
 			air_seen[T] = bad
 		else

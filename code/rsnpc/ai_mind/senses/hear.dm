@@ -35,5 +35,6 @@
 	hear_report(speaker, line, via)
 	hear_talk(speaker, line, via)
 	hear_from_inside(speaker, line, via)
-	hear_consent(speaker, line, via)
-	hear_hold_still(speaker, line, via)
+	var/list/name_matches = via ? null : list()
+	hear_consent(speaker, line, via, name_matches)
+	hear_hold_still(speaker, line, via, name_matches)

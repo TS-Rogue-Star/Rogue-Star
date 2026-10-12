@@ -1,3 +1,8 @@
+GLOBAL_LIST_INIT(npc_hold_still_phrases, list(
+	npc_clean_line("stop holding still"),
+	npc_clean_line("hold still"),
+))
+
 /datum/npc_command/hold_still
 	say = "hold still"
 	obedience = 15
@@ -47,18 +52,21 @@
 	var/datum/npc_assignment/hold_still/A = assignment(/datum/npc_assignment/hold_still)
 	return A && A.asker_key == key
 
-/datum/ai_holder/complex_npc/proc/hear_hold_still(mob/living/speaker, line, via)
+/datum/ai_holder/complex_npc/proc/hear_hold_still(mob/living/speaker, line, via, list/name_matches)
 	if(via)
 		return
-	for(var/mob/living/M in look())
+	var/list/phrases = GLOB.npc_hold_still_phrases
+	if(!npc_has_words_clean(line, phrases[1]) && !npc_has_words_clean(line, phrases[2]))
+		return
+	for(var/mob/living/M in look_people())
 		if(M == speaker || !npc_is_person(M))
 			continue
-		var/rest = npc_after_name(line, M)
+		var/rest = npc_after_name(line, M, name_matches)
 		if(isnull(rest))
 			continue
 		var/key = "told_hold_still:[npc_person_key(M)]:[npc_person_key(speaker)]"
-		if(npc_starts_with(rest, "stop holding still"))
+		if(npc_starts_with_clean(rest, phrases[1]))
 			notes -= key
-		else if(npc_starts_with(rest, "hold still"))
+		else if(npc_starts_with_clean(rest, phrases[2]))
 			note(key, speaker.name, npc_psetting("hold_still_minutes") MINUTES)
 		return

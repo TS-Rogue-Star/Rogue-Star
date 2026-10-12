@@ -91,7 +91,7 @@
 	var/poison = H.species.poison_type ? T.vars[H.species.poison_type] : 0
 	return poison / total * pressure > 0.2
 
-/proc/npc_air_bad(turf/T, mob/living/carbon/human/H)
+/proc/npc_air_bad(turf/T, mob/living/carbon/human/H, list/checked_air)
 	if(!istype(H))
 		return FALSE
 	if(isspace(T))
@@ -99,12 +99,13 @@
 	var/datum/gas_mixture/G = T.return_air()
 	if(!G)
 		return FALSE
+	if(checked_air && (G in checked_air))
+		return checked_air[G]
 	var/pressure = G.return_pressure()
-	if(pressure < H.species.hazard_low_pressure || pressure >= H.species.hazard_high_pressure)
-		return TRUE
-	if(G.temperature < H.species.cold_level_1 || G.temperature > H.species.heat_level_1)
-		return TRUE
-	return !npc_air_breathable(T, H)
+	var/bad = pressure < H.species.hazard_low_pressure || pressure >= H.species.hazard_high_pressure || G.temperature < H.species.cold_level_1 || G.temperature > H.species.heat_level_1 || !npc_gas_breathable(G, H, pressure)
+	if(checked_air)
+		checked_air[G] = bad
+	return bad
 
 /proc/npc_grip_at(turf/T, mob/living/who)
 	if(!who || T.has_gravity())
@@ -173,7 +174,7 @@
 		return FALSE
 	if(G.temperature > H.species.heat_level_1 && H.get_heat_protection(G.temperature) < 0.99)
 		return FALSE
-	return H.internal || npc_air_breathable(T, H)
+	return H.internal || npc_gas_breathable(G, H, pressure)
 
 /proc/npc_air_breathable(turf/T, mob/living/carbon/human/H)
 	if(!istype(H) || !H.species.breath_type)
@@ -181,9 +182,15 @@
 	var/datum/gas_mixture/G = T.return_air()
 	if(!G)
 		return TRUE
+	return npc_gas_breathable(G, H)
+
+/proc/npc_gas_breathable(datum/gas_mixture/G, mob/living/carbon/human/H, pressure)
+	if(!H.species.breath_type)
+		return TRUE
 	if(!G.total_moles)
 		return FALSE
-	var/pressure = G.return_pressure()
+	if(isnull(pressure))
+		pressure = G.return_pressure()
 	if(G.gas[H.species.breath_type] / G.total_moles * pressure < H.species.minimum_breath_pressure)
 		return FALSE
 	if(H.species.poison_type && G.gas[H.species.poison_type] / G.total_moles * pressure > 0.2)

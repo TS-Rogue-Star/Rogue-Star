@@ -1,3 +1,8 @@
+/mob/living
+	var/tmp/npc_cached_name
+	var/tmp/npc_cached_job
+	var/tmp/list/npc_cached_name_forms
+
 /proc/npc_clean_line(text)
 	text = lowertext(strip_html_properly(html_decode("[text]")))
 	var/list/words = list()
@@ -24,7 +29,9 @@
 	return trim(.)
 
 /proc/npc_words_after(line, phrase)
-	phrase = npc_clean_line(phrase)
+	return npc_words_after_clean(line, npc_clean_line(phrase))
+
+/proc/npc_words_after_clean(line, phrase)
 	if(line == phrase)
 		return ""
 	if(findtext(line, "[phrase] ") == 1)
@@ -32,13 +39,24 @@
 	return null
 
 /proc/npc_starts_with(line, phrase)
-	return !isnull(npc_words_after(line, phrase))
+	return npc_starts_with_clean(line, npc_clean_line(phrase))
+
+/proc/npc_starts_with_clean(line, phrase)
+	return line == phrase || findtext(line, "[phrase] ") == 1
 
 /proc/npc_has_words(line, phrase)
-	return findtext(" [line] ", " [npc_clean_line(phrase)] ")
+	return npc_has_words_clean(line, npc_clean_line(phrase))
+
+/proc/npc_has_words_clean(line, phrase)
+	return findtext(" [line] ", " [phrase] ")
 
 /proc/npc_name_forms(mob/living/M)
-	. = list()
+	if(!isnull(M.npc_cached_name_forms) && M.npc_cached_name == M.name && M.npc_cached_job == M.job)
+		return M.npc_cached_name_forms
+	M.npc_cached_name = M.name
+	M.npc_cached_job = M.job
+	M.npc_cached_name_forms = list()
+	. = M.npc_cached_name_forms
 	var/full = npc_clean_line(M.name)
 	var/list/words = splittext(full, " ")
 	if(!full)
@@ -50,17 +68,19 @@
 		. |= npc_clean_line(M.job)
 	. -= ""
 
-/proc/npc_after_name(line, mob/living/M)
+/proc/npc_after_name(line, mob/living/M, list/name_matches)
+	if(name_matches && (M in name_matches))
+		return name_matches[M]
 	var/best
 	for(var/form in npc_name_forms(M))
-		if(length(form) > length(best) && npc_starts_with(line, form))
+		if(length(form) > length(best) && npc_starts_with_clean(line, form))
 			best = form
-	if(!best)
-		return null
-	return npc_words_after(line, best)
+	. = best ? npc_words_after_clean(line, best) : null
+	if(name_matches)
+		name_matches[M] = .
 
 /proc/npc_named_in(line, mob/living/M)
 	for(var/form in npc_name_forms(M))
-		if(npc_has_words(line, form))
+		if(npc_has_words_clean(line, form))
 			return TRUE
 	return FALSE
