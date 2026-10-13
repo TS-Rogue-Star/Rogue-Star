@@ -288,7 +288,7 @@
 		return FALSE
 	if(!canface() || incapacitated(INCAPACITATION_ALL))
 		return FALSE
-	if(how_tilted >= -maximum_tilt)
+	if(how_tilted > -maximum_tilt)
 		transform = turn(transform, -5)
 		how_tilted = how_tilted - 5
 		is_shifted = TRUE
@@ -299,7 +299,7 @@
 		return FALSE
 	if(!canface() || incapacitated(INCAPACITATION_ALL))
 		return FALSE
-	if(how_tilted <= maximum_tilt)
+	if(how_tilted < maximum_tilt)
 		transform = turn(transform, 5)
 		how_tilted = how_tilted + 5
 		is_shifted = TRUE
