@@ -122,6 +122,7 @@
 			special_y = S.icon_scale_y
 		resize.Scale(new_size * icon_scale_x * special_x, new_size * icon_scale_y * special_y) //Change the size of the matrix
 		resize.Translate(0, (vis_height/2) * (new_size - 1)) //Move the player up in the tile so their feet align with the bottom
+		resize.Turn(src.how_tilted) // RS Add
 		animate(src, transform = resize, time = duration) //Animate the player resizing
 
 		if(aura_animation)
