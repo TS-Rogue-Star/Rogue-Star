@@ -282,6 +282,7 @@
 	face_atom(A)
 	return 1
 
+// RS Add
 /mob/verb/tiltcounterclock()
 	set hidden = TRUE
 	if(world.time <= allowtilttime) //This is a sloppy "wait" fix to work around tilting durring the get-up animation
@@ -293,6 +294,7 @@
 		how_tilted = how_tilted - 5
 		is_shifted = TRUE
 
+// RS Add
 /mob/verb/tiltclock()
 	set hidden = TRUE
 	if(world.time <= allowtilttime) //This is a sloppy "wait" fix to work around tilting durring the get-up animation
