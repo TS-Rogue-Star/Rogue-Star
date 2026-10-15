@@ -1,3 +1,7 @@
+///////////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star October 2026: Tesla Target Search Optimization //
+///////////////////////////////////////////////////////////////////////////////////
+
 #define TESLA_DEFAULT_POWER 1738260
 #define TESLA_MINI_POWER 869130
 
@@ -164,6 +168,7 @@
 	// L.dust() - Changing to do fatal elecrocution instead
 	L.electrocute_act(500, src, def_zone = BP_TORSO)
 
+// RS Edit: Tesla Target Search Optimization (Lira, October 2026)
 /proc/tesla_zap(atom/source, zap_range = 3, power, explosive = FALSE, stun_mobs = TRUE)
 	if(!source) // Some mobs and maybe some objects delete themselves when they die.
 		return
@@ -179,29 +184,13 @@
 	var/obj/machinery/closest_machine
 	var/obj/structure/closest_structure
 	var/obj/structure/blob/closest_blob
-	var/static/things_to_shock = typecacheof(list(/obj/machinery, /mob/living, /obj/structure))
-	var/static/blacklisted_tesla_types = typecacheof(list(
-										/obj/machinery/atmospherics,
-										/obj/machinery/power/emitter,
-										/obj/machinery/field_generator,
-										/obj/machinery/door/blast,
-										/obj/machinery/particle_accelerator/control_box,
-										/obj/structure/particle_accelerator/fuel_chamber,
-										/obj/structure/particle_accelerator/particle_emitter/center,
-										/obj/structure/particle_accelerator/particle_emitter/left,
-										/obj/structure/particle_accelerator/particle_emitter/right,
-										/obj/structure/particle_accelerator/power_box,
-										/obj/structure/particle_accelerator/end_cap,
-										/obj/machinery/containment_field,
-										/obj/structure/disposalpipe,
-										/obj/structure/sign,
-										/obj/machinery/gateway,
-										/obj/structure/lattice,
-										/obj/structure/grille,
-										/obj/machinery/the_singularitygen/tesla))
+	var/static/list/target_types = build_tesla_target_types()
 
-	for(var/A in typecache_filter_multi_list_exclusion(oview(source, zap_range+2), things_to_shock, blacklisted_tesla_types))
-		if(istype(A, /obj/machinery/power/tesla_coil))
+	for(var/atom/movable/A in oview(source, zap_range+2))
+		var/target_type = target_types[A.type]
+		if(!target_type)
+			continue
+		if(target_type == /obj/machinery/power/tesla_coil)
 			var/dist = get_dist(source, A)
 			var/obj/machinery/power/tesla_coil/C = A
 			if(dist <= zap_range && (dist < closest_dist || !closest_tesla_coil) && !C.being_shocked)
@@ -216,7 +205,7 @@
 		else if(closest_tesla_coil)
 			continue //no need checking these other things
 
-		else if(istype(A, /obj/machinery/power/grounding_rod))
+		else if(target_type == /obj/machinery/power/grounding_rod)
 			var/obj/machinery/power/grounding_rod/G = A
 			var/dist = get_dist(source, A) - (G.anchored ? 2 : 0)
 			if(dist <= zap_range && (dist < closest_dist || !closest_grounding_rod))
@@ -227,7 +216,7 @@
 		else if(closest_grounding_rod)
 			continue
 
-		else if(isliving(A))
+		else if(target_type == /mob/living)
 			var/dist = get_dist(source, A)
 			var/mob/living/L = A
 			if(L.is_incorporeal())	//RS ADD - Don't shock phased shadekin
@@ -240,7 +229,7 @@
 		else if(closest_mob)
 			continue
 
-		else if(istype(A, /obj/machinery))
+		else if(target_type == /obj/machinery)
 			var/obj/machinery/M = A
 			var/dist = get_dist(source, A)
 			if(dist <= zap_range && (dist < closest_dist || !closest_machine) && !M.being_shocked)
@@ -251,7 +240,7 @@
 		else if(closest_machine)
 			continue
 
-		else if(istype(A, /obj/structure/blob))
+		else if(target_type == /obj/structure/blob)
 			var/obj/structure/blob/B = A
 			var/dist = get_dist(source, A)
 			if(dist <= zap_range && (dist < closest_dist || !closest_tesla_coil) && !B.being_shocked)
@@ -262,7 +251,7 @@
 		else if(closest_blob)
 			continue
 
-		else if(istype(A, /obj/structure))
+		else if(target_type == /obj/structure)
 			var/obj/structure/S = A
 			var/dist = get_dist(source, A)
 			if(dist <= zap_range && (dist < closest_dist || !closest_tesla_coil) && !S.being_shocked)
@@ -319,3 +308,31 @@
 		if (EB.energy > 0)
 			EB.energy -= min(EB.energy, max(10, round(EB.energy * 0.05)))
 	// VOREStation Edit End
+
+// RS Edit: Tesla Target Search Optimization (Lira, October 2026)
+/proc/build_tesla_target_types()
+	var/list/target_types = list()
+	for(var/target_type in list(/obj/structure, /obj/structure/blob, /obj/machinery, /mob/living, /obj/machinery/power/grounding_rod, /obj/machinery/power/tesla_coil))
+		for(var/subtype in typesof(target_type))
+			target_types[subtype] = target_type
+	var/list/blacklisted_tesla_types = typecacheof(list(
+		/obj/machinery/atmospherics,
+		/obj/machinery/power/emitter,
+		/obj/machinery/field_generator,
+		/obj/machinery/door/blast,
+		/obj/machinery/particle_accelerator/control_box,
+		/obj/structure/particle_accelerator/fuel_chamber,
+		/obj/structure/particle_accelerator/particle_emitter/center,
+		/obj/structure/particle_accelerator/particle_emitter/left,
+		/obj/structure/particle_accelerator/particle_emitter/right,
+		/obj/structure/particle_accelerator/power_box,
+		/obj/structure/particle_accelerator/end_cap,
+		/obj/machinery/containment_field,
+		/obj/structure/disposalpipe,
+		/obj/structure/sign,
+		/obj/machinery/gateway,
+		/obj/structure/lattice,
+		/obj/structure/grille,
+		/obj/machinery/the_singularitygen/tesla))
+	target_types -= blacklisted_tesla_types
+	return target_types
