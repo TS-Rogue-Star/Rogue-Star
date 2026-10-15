@@ -308,4 +308,4 @@
 /mob/living/carbon/human/set_dir(var/new_dir)
 	. = ..()
 	if(. && (species.tail || tail_style))
-		update_tail_showing()
+		update_tail_layer() // RS Edit: Tail Turn Optimization (Lira, October 2026)

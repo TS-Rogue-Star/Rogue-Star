@@ -48,7 +48,7 @@
 	if(count_liquid_for_sprite)
 		belly_fullness += (reagents.total_volume / 100) * liquid_multiplier
 	// RS Add Start
-	if(count_nutrition_for_sprite)
+	if(count_nutrition_for_sprite && isliving(owner))
 		belly_fullness += (owner.nutrition / NUTRITION_PER_PREY) * nutrition_multiplier
 	// RS Add End
 	if(count_items_for_sprite)
