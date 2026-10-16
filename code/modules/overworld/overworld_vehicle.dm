@@ -18,6 +18,7 @@
 	var/speed = 1							//We're basing our movement around 1 pixel!
 	var/mob/living/driver					//The mob who's input we care about.
 	var/list/passengers = list()			//All the player mobs we care about
+	var/seats = 4							//How many players are allowed to ride
 	var/list/mounts = list()				//All the mobs and vehicles that might be affecting our ability to get around
 	var/list/cargo = list()					//All the cargo that we decided to bring
 	var/list/turfpos = list(0,0)
@@ -38,6 +39,7 @@
 	var/max_space_momentum = 10				//How many pixels per process we are allowed to move in space
 
 	var/movement_mode = OWV_WALK			//Our current movement mode, determines how our inputs are interpretted and how our momentum is processed
+	var/remote_controlled = FALSE			//If true our driver won't be in passengers
 
 /obj/overworld_vehicle/Initialize(mapload)
 	. = ..()
@@ -51,6 +53,8 @@
 	else
 		icon_state = idle_state
 
+//	match_client_pix()
+
 /obj/overworld_vehicle/process()
 	switch(movement_mode)
 		if(OWV_WALK)
@@ -62,9 +66,13 @@
 
 	if(isstopped())
 		STOP_PROCESSING(SSprocessing,src)
+		update_icon()
 		return
 
 /obj/overworld_vehicle/attack_hand(mob/living/user)
+	if(passengers.len >= seats)
+		to_chat(SPAN_DANGER("\The [src] is full."))
+		return
 	user.loc = src
 	passengers += user
 	if(!driver)
@@ -75,9 +83,10 @@
 		qdel(src)
 		return
 
-/obj/overworld_vehicle/proc/register_driver(var/mob/living/driver)
-	if(!driver)
+/obj/overworld_vehicle/proc/register_driver(var/mob/living/new_driver)
+	if(!new_driver || driver)
 		return
+	driver = new_driver
 
 /obj/overworld_vehicle/relaymove(mob/user, direction)
 	if(user != driver)
@@ -316,6 +325,9 @@
 		anim_time = 0.25 SECONDS
 
 	animate(src, pixel_x = pixx, pixel_y = pixy, time = anim_time, flags = ANIMATION_END_NOW)
+	if(remote_controlled)
+		if(driver?.client)
+			animate(driver.client, pixel_x = pixx, pixel_y = pixy, time = anim_time, flags = ANIMATION_END_NOW)
 	for(var/mob/living/passenger in passengers)
 		if(passenger.client)
 			animate(passenger.client, pixel_x = pixx, pixel_y = pixy, time = anim_time, flags = ANIMATION_END_NOW)
@@ -349,10 +361,12 @@
 
 	pixel_x = CLAMP(pixel_x, -16,16)
 	pixel_y = CLAMP(pixel_y, -16,16)
-	match_client_pix()
 
 /obj/overworld_vehicle/proc/match_client_pix()
-
+	if(remote_controlled)
+		if(driver?.client)
+			driver.client.pixel_x = pixel_x
+			driver.client.pixel_y = pixel_y
 	for(var/mob/living/passenger in passengers)
 		if(passenger.client)
 			passenger.client.pixel_x = pixel_x
@@ -423,16 +437,37 @@
 
 
 
+/obj/overworld_vehicle/drone
+	name = "drone"
+	desc = "No thoughts"
+	icon = 'icons/rogue-star/overworld.dmi'
+	icon_state = "drone"
+	idle_state = "drone"
+	move_state = "drone"
+	remote_controlled = TRUE
+	speed = 10
+	var/locked = FALSE
+	var/health = 100
+	var/energy = 100
+
+/obj/overworld_vehicle/drone/relaymove(mob/user, direction)
+	if(locked)
+		return
+
+	. = ..()
 
 
+/obj/overworld_vehicle/proc/adjust_health(var/amount)
+	if(!amount)
+		return
+	health += amount
+	SEND_SIGNAL(src,COMSIG_OWV_HEALTH)
 
-
-
-
-
-
-
-
+/obj/overworld_vehicle/proc/adjust_energy(var/amount)
+	if(!amount)
+		return
+	energy += amount
+	SEND_SIGNAL(src,COMSIG_OWV_ENERGY)
 
 
 

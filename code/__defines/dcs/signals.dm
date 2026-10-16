@@ -795,4 +795,11 @@
 #define COMSIG_DUNGEON_TRIGGER "dungeon_trigger"
 #define COMSIG_DUNGEON_UNTRIGGER "dungeon_untrigger"
 #define COMSIG_RESOLVE_ATTACKBY "resolve_attackby"
+
+#define COMSIG_OWV_HEALTH "overworld_vehicle_health_adjusted"
+#define COMSIG_OWV_ENERGY "overworld_vehicle_energy_adjusted"
+
+#define COMSIG_HEALTH_RELAY "health_relay"
+#define COMSIG_ENERGY_RELAY "energy_relay"
+
 //RS ADD END
