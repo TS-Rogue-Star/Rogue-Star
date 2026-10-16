@@ -1,7 +1,7 @@
-/datum/ai_holder/complex_npc/proc/note(key, value, time)
+/datum/ai_holder/rsnpc/proc/note(key, value, time)
 	notes[key] = list(value, world.time + time)
 
-/datum/ai_holder/complex_npc/proc/noted(key)
+/datum/ai_holder/rsnpc/proc/noted(key)
 	var/list/entry = notes[key]
 	if(!entry)
 		return null
@@ -10,16 +10,16 @@
 		return null
 	return entry[1]
 
-/datum/ai_holder/complex_npc/proc/cross_off(key, time, why)
+/datum/ai_holder/rsnpc/proc/cross_off(key, time, why)
 	if(noted("off:[key]"))
 		return
 	note("off:[key]", why, time)
 	NPC_TRACE(src, NPC_TRACE_KNOW, "crossed off [key] for [time / 10]s: [why]")
 
-/datum/ai_holder/complex_npc/proc/crossed_off(key)
+/datum/ai_holder/rsnpc/proc/crossed_off(key)
 	return noted("off:[key]")
 
-/datum/ai_holder/complex_npc/proc/clean_notes()
+/datum/ai_holder/rsnpc/proc/clean_notes()
 	if(world.time < notes_cleaned + 1 MINUTE)
 		return
 	notes_cleaned = world.time

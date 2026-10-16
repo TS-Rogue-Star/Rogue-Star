@@ -15,7 +15,7 @@ GLOBAL_LIST_INIT(npc_wellbeing_lines, list(
 	radio = TRUE
 	repeat = 5 SECONDS
 
-/datum/npc_command/where_are_you/run_command(datum/ai_holder/complex_npc/ai_mind, mob/living/speaker, rest, via)
+/datum/npc_command/where_are_you/run_command(datum/ai_holder/rsnpc/ai_mind, mob/living/speaker, rest, via)
 	var/list/blanks = list("name" = speaker.name, "place" = "[get_area(ai_mind.holder)]")
 	if(!ai_mind.task)
 		ai_mind.say_line("say_whereabouts_idle", blanks, via)
@@ -29,7 +29,7 @@ GLOBAL_LIST_INIT(npc_wellbeing_lines, list(
 	repeat = 8 SECONDS
 	friendly = TRUE
 
-/datum/npc_command/what_are_you_doing/run_command(datum/ai_holder/complex_npc/ai_mind, mob/living/speaker, rest, via)
+/datum/npc_command/what_are_you_doing/run_command(datum/ai_holder/rsnpc/ai_mind, mob/living/speaker, rest, via)
 	if(!ai_mind.task)
 		ai_mind.say_line("say_doing_idle", list("name" = speaker.name), via)
 		return
@@ -41,7 +41,7 @@ GLOBAL_LIST_INIT(npc_wellbeing_lines, list(
 	repeat = 8 SECONDS
 	friendly = TRUE
 
-/datum/npc_command/how_are_you/run_command(datum/ai_holder/complex_npc/ai_mind, mob/living/speaker, rest, via)
+/datum/npc_command/how_are_you/run_command(datum/ai_holder/rsnpc/ai_mind, mob/living/speaker, rest, via)
 	var/group = "say_wellbeing_fine"
 	var/worst = 0.35
 	for(var/need in GLOB.npc_wellbeing_lines)
@@ -57,17 +57,26 @@ GLOBAL_LIST_INIT(npc_wellbeing_lines, list(
 	repeat = 8 SECONDS
 	friendly = TRUE
 
-/datum/npc_command/what_do_you_think_of/run_command(datum/ai_holder/complex_npc/ai_mind, mob/living/speaker, rest, via)
+/datum/npc_command/what_do_you_think_of/run_command(datum/ai_holder/rsnpc/ai_mind, mob/living/speaker, rest, via)
 	for(var/key in ai_mind.opinions)
 		if(npc_clean_line(key) != rest)
 			continue
 		var/datum/npc_person/P = ai_mind.opinions[key]
 		var/group = "say_opinion_neutral"
-		if(P.opinion >= ai_mind.npc_psetting("opinion_liked_at"))
+		if(P.opinion >= ai_mind.npc_psetting("opinion_loved_at"))
+			group = "say_opinion_loved"
+		else if(P.opinion >= ai_mind.npc_psetting("opinion_liked_at"))
 			group = "say_opinion_liked"
+		else if(P.opinion <= ai_mind.npc_psetting("opinion_hated_at"))
+			group = "say_opinion_hated"
 		else if(P.opinion <= ai_mind.npc_psetting("opinion_disliked_at"))
 			group = "say_opinion_disliked"
 		ai_mind.say_line(group, list("name" = P.key), via)
+		var/danger = P.danger_now()
+		if(danger >= NPC_DANGEROUS)
+			ai_mind.say_line("say_opinion_dangerous", list("name" = P.key), via)
+		else if(danger >= NPC_WARY)
+			ai_mind.say_line("say_opinion_wary", list("name" = P.key), via)
 		return
 	for(var/datum/data/record/R in data_core.general)
 		if(npc_clean_line(R.fields["name"]) == rest)
@@ -80,14 +89,14 @@ GLOBAL_LIST_INIT(npc_wellbeing_lines, list(
 	repeat = 8 SECONDS
 	friendly = TRUE
 
-/datum/npc_command/did_you_see_anything/run_command(datum/ai_holder/complex_npc/ai_mind, mob/living/speaker, rest, via)
+/datum/npc_command/did_you_see_anything/run_command(datum/ai_holder/rsnpc/ai_mind, mob/living/speaker, rest, via)
 	var/datum/npc_event/E = ai_mind.memory_for(speaker)
 	if(!E)
 		ai_mind.say_line("say_witness_nothing", list("name" = speaker.name), via)
 		return
 	ai_mind.tell_memory(E, speaker, via)
 
-/datum/ai_holder/complex_npc/proc/memory_for(mob/living/M)
+/datum/ai_holder/rsnpc/proc/memory_for(mob/living/M)
 	var/key = npc_person_key(M)
 	var/datum/npc_event/best
 	for(var/datum/npc_event/E as anything in witnessed)
@@ -97,7 +106,7 @@ GLOBAL_LIST_INIT(npc_wellbeing_lines, list(
 			best = E
 	return best
 
-/datum/ai_holder/complex_npc/proc/tell_memory(datum/npc_event/E, mob/living/M, via)
+/datum/ai_holder/rsnpc/proc/tell_memory(datum/npc_event/E, mob/living/M, via)
 	E.told++
 	E.told_to += npc_person_key(M)
 	say_line(GLOB.npc_recall_lines[E.kind], list("name" = E.name, "other" = E.other), via)
@@ -107,7 +116,7 @@ GLOBAL_LIST_INIT(npc_wellbeing_lines, list(
 	radio = TRUE
 	repeat = 8 SECONDS
 
-/datum/npc_command/what_do_you_need/run_command(datum/ai_holder/complex_npc/ai_mind, mob/living/speaker, rest, via)
+/datum/npc_command/what_do_you_need/run_command(datum/ai_holder/rsnpc/ai_mind, mob/living/speaker, rest, via)
 	var/list/blanks = list("name" = speaker.name)
 	var/list/missing = ai_mind.plan_missing()
 	if(length(missing))

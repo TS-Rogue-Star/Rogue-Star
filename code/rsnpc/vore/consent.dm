@@ -5,7 +5,7 @@ GLOBAL_LIST_INIT(npc_consent_phrases, list(
 	npc_clean_line("digest me"),
 ))
 
-/datum/ai_holder/complex_npc/proc/has_personality(word)
+/datum/ai_holder/rsnpc/proc/has_personality(word)
 	return word in personality
 
 /proc/npc_vore_allowed(mob/living/pred, mob/living/prey, digest)
@@ -13,16 +13,16 @@ GLOBAL_LIST_INIT(npc_consent_phrases, list(
 		return FALSE
 	return prey.client || prey.ssd_vore || !prey.player_login_key_log
 
-/datum/ai_holder/complex_npc/proc/note_consent(prey_key, pred_key, digest)
+/datum/ai_holder/rsnpc/proc/note_consent(prey_key, pred_key, digest)
 	note("agreed_eat:[prey_key]:[pred_key]", pred_key, 5 MINUTES)
 	if(digest)
 		note("agreed_digest:[prey_key]:[pred_key]", pred_key, 5 MINUTES)
 	NPC_TRACE(src, NPC_TRACE_WITNESS, "[prey_key] agreed to be [digest ? "digested" : "eaten"] by [pred_key]")
 
-/datum/ai_holder/complex_npc/proc/note_vore_question(mob/living/asked, mob/living/asker, digest)
+/datum/ai_holder/rsnpc/proc/note_vore_question(mob/living/asked, mob/living/asker, digest)
 	note("vore_question:[npc_person_key(asked)]:[npc_person_key(asker)]", digest ? "digest" : "eat", 45 SECONDS)
 
-/datum/ai_holder/complex_npc/proc/hear_consent(mob/living/speaker, line, via, list/name_matches)
+/datum/ai_holder/rsnpc/proc/hear_consent(mob/living/speaker, line, via, list/name_matches)
 	if(via)
 		return
 	var/list/phrases = GLOB.npc_consent_phrases
@@ -37,7 +37,7 @@ GLOBAL_LIST_INIT(npc_consent_phrases, list(
 		for(var/mob/living/M in people)
 			if(M == speaker || !npc_is_person(M))
 				continue
-			var/rest = npc_after_name(line, M, name_matches)
+			var/rest = npc_after_name(line, M, name_matches, M == holder)
 			if(isnull(rest))
 				continue
 			if(npc_starts_with_clean(rest, phrases[1]))
@@ -70,20 +70,20 @@ GLOBAL_LIST_INIT(npc_consent_phrases, list(
 		else if(npc_starts_with(rest, NPC_ANSWER_NO))
 			notes -= key
 
-/datum/ai_holder/complex_npc/proc/agreed(mob/living/prey, mob/living/pred, digest)
+/datum/ai_holder/rsnpc/proc/agreed(mob/living/prey, mob/living/pred, digest)
 	return noted("agreed_[digest ? "digest" : "eat"]:[npc_person_key(prey)]:[npc_person_key(pred)]")
 
-/datum/ai_holder/complex_npc/proc/wait_to_be_eaten(mob/living/M)
+/datum/ai_holder/rsnpc/proc/wait_to_be_eaten(mob/living/M)
 	if(isturf(holder.loc) && !holds_still_for(npc_person_key(M)))
 		start_assignment(new /datum/npc_assignment/hold_still(M, null, npc_psetting("hold_still_minutes") MINUTES))
 
-/datum/ai_holder/complex_npc/proc/eat_willingness(mob/living/M)
-	. = 1.5 * opinion_of(M) / 100 - min(1, danger_of(M) / 40) + npc_psetting("prey_desire")
+/datum/ai_holder/rsnpc/proc/eat_willingness(mob/living/M)
+	. = 1.5 * opinion_of(M) / 100 - min(1, danger_of(M) / NPC_DANGEROUS) + npc_psetting("prey_desire")
 
 /datum/npc_command/can_i_eat_you
 	say = "can i eat you"
 
-/datum/npc_command/can_i_eat_you/run_command(datum/ai_holder/complex_npc/ai_mind, mob/living/speaker, rest, via)
+/datum/npc_command/can_i_eat_you/run_command(datum/ai_holder/rsnpc/ai_mind, mob/living/speaker, rest, via)
 	var/mob/living/me = ai_mind.holder
 	var/list/blanks = list("name" = speaker.name)
 	if(!isturf(me.loc))
@@ -100,7 +100,7 @@ GLOBAL_LIST_INIT(npc_consent_phrases, list(
 /datum/npc_command/can_i_digest_you
 	say = "can i digest you"
 
-/datum/npc_command/can_i_digest_you/run_command(datum/ai_holder/complex_npc/ai_mind, mob/living/speaker, rest, via)
+/datum/npc_command/can_i_digest_you/run_command(datum/ai_holder/rsnpc/ai_mind, mob/living/speaker, rest, via)
 	var/mob/living/me = ai_mind.holder
 	var/list/blanks = list("name" = speaker.name)
 	var/obj/belly/B = me.loc
@@ -119,16 +119,16 @@ GLOBAL_LIST_INIT(npc_consent_phrases, list(
 /datum/npc_command/eat_me
 	say = "eat me"
 
-/datum/npc_command/eat_me/run_command(datum/ai_holder/complex_npc/ai_mind, mob/living/speaker, rest, via)
+/datum/npc_command/eat_me/run_command(datum/ai_holder/rsnpc/ai_mind, mob/living/speaker, rest, via)
 	ai_mind.answer_invite(speaker, FALSE)
 
 /datum/npc_command/digest_me
 	say = "digest me"
 
-/datum/npc_command/digest_me/run_command(datum/ai_holder/complex_npc/ai_mind, mob/living/speaker, rest, via)
+/datum/npc_command/digest_me/run_command(datum/ai_holder/rsnpc/ai_mind, mob/living/speaker, rest, via)
 	ai_mind.answer_invite(speaker, TRUE)
 
-/datum/ai_holder/complex_npc/proc/answer_invite(mob/living/M, digest)
+/datum/ai_holder/rsnpc/proc/answer_invite(mob/living/M, digest)
 	var/list/blanks = list("name" = M.name)
 	if(!isturf(M.loc))
 		NPC_TRACE(src, NPC_TRACE_TALK, "ignored invite from [M]; they're inside someone")
@@ -143,6 +143,8 @@ GLOBAL_LIST_INIT(npc_consent_phrases, list(
 		group = "pred_invite_full"
 	else if(opinion_of(M) <= npc_psetting("opinion_disliked_at") || danger_of(M) >= NPC_WARY)
 		why = "I don't trust them"
+	else if(!digest && ask_score(M) < npc_psetting("pred_accept_line"))
+		why = "I don't want to eat them"
 	else if(digest && (pred_hunger() < 0.1 || pred_hunger() * npc_psetting("pred_hunger_motive") - opinion_of(M) / 100 * npc_psetting("pred_feelings_motive") + 1 < digest_line()))
 		why = "I don't want to digest them"
 	if(why)

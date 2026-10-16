@@ -1,4 +1,4 @@
-/datum/ai_holder/complex_npc/proc/bad_touch(mob/living/M)
+/datum/ai_holder/rsnpc/proc/bad_touch(mob/living/M)
 	if(!sees(M))
 		return
 	var/datum/npc_person/P = person(M)
@@ -35,7 +35,7 @@
 		return
 	say_line("protest_mild", blanks)
 
-/datum/ai_holder/complex_npc/proc/stripped_by(mob/living/M, what_done)
+/datum/ai_holder/rsnpc/proc/stripped_by(mob/living/M, what_done)
 	var/mob/living/carbon/human/H = holder
 	if(istype(H))
 		for(var/obj/item/I in list(H.handcuffed, H.legcuffed, H.glasses, H.wear_mask))
@@ -44,15 +44,15 @@
 				return
 	bad_touch(M)
 
-/datum/ai_holder/complex_npc/proc/radio_attacked(mob/living/M)
-	if(world.time < called_security_at + npc_psetting("attack_call_interlude") SECONDS)
+/datum/ai_holder/rsnpc/proc/radio_attacked(mob/living/M)
+	if(!in_the_room() || world.time < called_security_at + npc_psetting("attack_call_interlude") SECONDS)
 		return
 	called_security_at = world.time
 	called_help_at = world.time
 	say_line("help_attacked", list("name" = M.name, "place" = "[get_area(holder)]"), radiochannels["Security"])
 
-/datum/ai_holder/complex_npc/proc/call_for_help()
-	if(holder.client || holder.stat != CONSCIOUS)
+/datum/ai_holder/rsnpc/proc/call_for_help()
+	if(holder.client || holder.stat != CONSCIOUS || !in_the_room())
 		down_since = 0
 		return
 	if(!holder.restrained() && !holder.incapacitated(INCAPACITATION_STUNNED) && (!holder.lying || holder.buckled))

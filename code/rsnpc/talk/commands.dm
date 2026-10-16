@@ -20,7 +20,7 @@ GLOBAL_LIST_INIT(npc_commands, npc_make_commands())
 	..()
 	clean_say = npc_clean_line(say)
 
-/datum/npc_command/proc/heard(datum/ai_holder/complex_npc/ai_mind, mob/living/speaker, rest, via)
+/datum/npc_command/proc/heard(datum/ai_holder/rsnpc/ai_mind, mob/living/speaker, rest, via)
 	if(via && !radio)
 		NPC_TRACE(ai_mind, NPC_TRACE_TALK, "ignored \"[say]\" from [speaker]; heard over radio, and command can't be made over radio")
 		return
@@ -41,14 +41,14 @@ GLOBAL_LIST_INIT(npc_commands, npc_make_commands())
 	NPC_TRACE(ai_mind, NPC_TRACE_TALK, "heard \"[say]\" from [speaker][via ? " over radio" : ""]")
 	run_command(ai_mind, speaker, rest, via)
 
-/datum/npc_command/proc/applies(datum/ai_holder/complex_npc/ai_mind)
+/datum/npc_command/proc/applies(datum/ai_holder/rsnpc/ai_mind)
 	return TRUE
 
-/datum/npc_command/proc/run_command(datum/ai_holder/complex_npc/ai_mind, mob/living/speaker, rest, via)
+/datum/npc_command/proc/run_command(datum/ai_holder/rsnpc/ai_mind, mob/living/speaker, rest, via)
 	return
 
-/datum/ai_holder/complex_npc/proc/hear_command(mob/living/speaker, line, via)
-	var/rest = npc_after_name(line, holder)
+/datum/ai_holder/rsnpc/proc/hear_command(mob/living/speaker, line, via)
+	var/rest = npc_after_name(line, holder, null, TRUE)
 	if(isnull(rest))
 		return FALSE
 	var/datum/npc_command/best
@@ -61,10 +61,10 @@ GLOBAL_LIST_INIT(npc_commands, npc_make_commands())
 	best.heard(src, speaker, npc_words_after_clean(rest, best.clean_say), via)
 	return TRUE
 
-/datum/ai_holder/complex_npc/proc/will_obey(mob/living/M, datum/npc_command/C, via)
+/datum/ai_holder/rsnpc/proc/will_obey(mob/living/M, datum/npc_command/C, via)
 	var/group = "refuse_threat"
 	var/why = "they're dangerous"
-	if(danger_of(M) < NPC_WARY)
+	if(danger_of(M) < NPC_DANGEROUS)
 		var/total = obedience_total(M, C)
 		if(total >= C.obedience)
 			return TRUE
@@ -74,13 +74,13 @@ GLOBAL_LIST_INIT(npc_commands, npc_make_commands())
 	say_line(group, list("name" = M.name), via)
 	return FALSE
 
-/datum/ai_holder/complex_npc/proc/obedience_total(mob/living/M, datum/npc_command/C)
+/datum/ai_holder/rsnpc/proc/obedience_total(mob/living/M, datum/npc_command/C)
 	. = round(npc_psetting("obedience_base") + opinion_of(M) * npc_psetting("obedience_opinion_weight") + rank_bonus(M))
-	if(npc_job_of(M) in C.trusted)
+	if(npc_manifest_job(M) in C.trusted)
 		. += npc_psetting("obedience_trusted_job")
 
-/datum/ai_holder/complex_npc/proc/rank_bonus(mob/living/M)
-	var/title = npc_job_of(M)
+/datum/ai_holder/rsnpc/proc/rank_bonus(mob/living/M)
+	var/title = npc_manifest_job(M)
 	var/datum/job/their_job = title ? SSjob.get_job(title) : null
 	if(!their_job || !length(their_job.departments_managed))
 		return 0

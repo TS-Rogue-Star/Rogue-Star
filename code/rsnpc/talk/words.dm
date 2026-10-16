@@ -50,14 +50,15 @@
 /proc/npc_has_words_clean(line, phrase)
 	return findtext(" [line] ", " [phrase] ")
 
-/proc/npc_name_forms(mob/living/M)
-	if(!isnull(M.npc_cached_name_forms) && M.npc_cached_name == M.name && M.npc_cached_job == M.job)
+/proc/npc_name_forms(mob/living/M, own)
+	var/name = own ? M.real_name : M.name
+	if(!isnull(M.npc_cached_name_forms) && M.npc_cached_name == name && M.npc_cached_job == M.job)
 		return M.npc_cached_name_forms
-	M.npc_cached_name = M.name
+	M.npc_cached_name = name
 	M.npc_cached_job = M.job
 	M.npc_cached_name_forms = list()
 	. = M.npc_cached_name_forms
-	var/full = npc_clean_line(M.name)
+	var/full = npc_clean_line(name)
 	var/list/words = splittext(full, " ")
 	if(!full)
 		return
@@ -68,19 +69,19 @@
 		. |= npc_clean_line(M.job)
 	. -= ""
 
-/proc/npc_after_name(line, mob/living/M, list/name_matches)
+/proc/npc_after_name(line, mob/living/M, list/name_matches, own)
 	if(name_matches && (M in name_matches))
 		return name_matches[M]
 	var/best
-	for(var/form in npc_name_forms(M))
+	for(var/form in npc_name_forms(M, own))
 		if(length(form) > length(best) && npc_starts_with_clean(line, form))
 			best = form
 	. = best ? npc_words_after_clean(line, best) : null
 	if(name_matches)
 		name_matches[M] = .
 
-/proc/npc_named_in(line, mob/living/M)
-	for(var/form in npc_name_forms(M))
+/proc/npc_named_in(line, mob/living/M, own)
+	for(var/form in npc_name_forms(M, own))
 		if(npc_has_words_clean(line, form))
 			return TRUE
 	return FALSE

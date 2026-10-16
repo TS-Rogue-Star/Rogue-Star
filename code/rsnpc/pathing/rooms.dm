@@ -1,4 +1,25 @@
 GLOBAL_DATUM_INIT(npc_rooms, /datum/npc_room_map, new)
+GLOBAL_LIST(npc_levels)
+
+/proc/npc_levels()
+	if(GLOB.npc_levels)
+		return GLOB.npc_levels
+	var/list/levels = using_map.station_levels.Copy()
+	var/list/joins = list()
+	for(var/obj/effect/map_effect/portal/P in world)
+		var/turf/from = get_turf(P)
+		var/turf/into = P.counterpart?.get_focused_turf()
+		if(from && into && from.z != into.z)
+			joins += list(list(from.z, into.z))
+	var/grew = TRUE
+	while(grew)
+		grew = FALSE
+		for(var/list/join in joins)
+			if((join[1] in levels) && !(join[2] in levels))
+				levels += join[2]
+				grew = TRUE
+	GLOB.npc_levels = levels
+	return levels
 
 /hook/roundstart/proc/build_npc_rooms()
 	spawn(0)
@@ -24,8 +45,13 @@ GLOBAL_DATUM_INIT(npc_rooms, /datum/npc_room_map, new)
 	var/list/buttons
 	var/obj/structure/ladder/ladder
 	var/obj/structure/ladder/other
+	var/obj/effect/map_effect/portal/portal
 
 /datum/npc_link/proc/navigable_by(list/access, anyone = FALSE)
+	if(!anyone && (kind == NPC_LINK_OPEN || kind == NPC_LINK_DOOR))
+		for(var/turf/T as anything in tiles)
+			if(npc_tape_blocks(T, access))
+				return FALSE
 	switch(kind)
 		if(NPC_LINK_OPEN)
 			return TRUE
@@ -33,6 +59,8 @@ GLOBAL_DATUM_INIT(npc_rooms, /datum/npc_room_map, new)
 			return !!npc_stairs_other_end(tiles[1])
 		if(NPC_LINK_LADDER)
 			return !QDELETED(ladder) && !QDELETED(other)
+		if(NPC_LINK_PORTAL)
+			return !QDELETED(portal) && portal.counterpart
 	for(var/turf/T as anything in tiles)
 		for(var/obj/machinery/door/D in T)
 			if(npc_door_passable(D, access, anyone) || button_for(D, access, anyone))
@@ -59,6 +87,7 @@ GLOBAL_DATUM_INIT(npc_rooms, /datum/npc_room_map, new)
 	var/list/area_rooms = list()
 	var/list/button_doors = list()
 	var/list/button_rooms = list()
+	var/list/cycling_doors = list()
 	var/ready = FALSE
 	var/building = FALSE
 	var/dirty = FALSE
@@ -73,7 +102,7 @@ GLOBAL_DATUM_INIT(npc_rooms, /datum/npc_room_map, new)
 	ready = FALSE
 	dirty = FALSE
 	last_build = world.time
-	for(var/z in using_map.station_levels)
+	for(var/z in npc_levels())
 		for(var/turf/T as anything in block(locate(1, 1, z), locate(world.maxx, world.maxy, z)))
 			if(T.npc_room)
 				T.npc_room = null
@@ -82,7 +111,7 @@ GLOBAL_DATUM_INIT(npc_rooms, /datum/npc_room_map, new)
 		R.links.Cut()
 	rooms = list()
 	area_rooms = list()
-	for(var/z in using_map.station_levels)
+	for(var/z in npc_levels())
 		for(var/turf/T as anything in block(locate(1, 1, z), locate(world.maxx, world.maxy, z)))
 			if(!T.npc_room && npc_room_tile(T))
 				var/datum/npc_room/R = fill_room(T)
@@ -92,15 +121,16 @@ GLOBAL_DATUM_INIT(npc_rooms, /datum/npc_room_map, new)
 				area_rooms[R.area] += R
 			CHECK_TICK
 	find_buttons()
-	for(var/z in using_map.station_levels)
+	for(var/z in npc_levels())
 		link_doors(z)
 		link_touching(z)
 	link_stairs()
 	link_ladders()
+	link_portals()
 	changes++
 	building = FALSE
 	ready = TRUE
-	log_world("NPC ROOMS: [length(rooms)] rooms on [length(using_map.station_levels)] decks in [(world.time - last_build) / 10]s.")
+	log_world("NPC ROOMS: [length(rooms)] rooms on [length(npc_levels())] decks in [(world.time - last_build) / 10]s.")
 	if(dirty)
 		dirty = FALSE
 		changed()
@@ -150,6 +180,7 @@ GLOBAL_DATUM_INIT(npc_rooms, /datum/npc_room_map, new)
 /datum/npc_room_map/proc/find_buttons()
 	button_doors = list()
 	button_rooms = list()
+	cycling_doors = list()
 	var/list/doors = list()
 	var/list/controls = list()
 	var/list/commands = list()
@@ -177,6 +208,9 @@ GLOBAL_DATUM_INIT(npc_rooms, /datum/npc_room_map, new)
 			continue
 		var/list/inner = doors[P.tag_interior_door] || list()
 		var/list/outer = doors[P.tag_exterior_door] || list()
+		for(var/obj/machinery/door/D as anything in inner + outer)
+			cycling_doors[D] = TRUE
+		LAZYADD(controls[C.id_tag], C)
 		for(var/obj/machinery/M as anything in controls[C.id_tag])
 			switch(commands[M])
 				if("cycle_interior")
@@ -252,7 +286,7 @@ GLOBAL_DATUM_INIT(npc_rooms, /datum/npc_room_map, new)
 
 /datum/npc_room_map/proc/link_stairs()
 	for(var/obj/structure/stairs/bottom/B in world)
-		if(!(B.z in using_map.station_levels) || !B.top || !B.check_integrity())
+		if(!(B.z in npc_levels()) || !B.top || !B.check_integrity())
 			continue
 		var/turf/low = get_turf(B)
 		var/turf/high = get_turf(B.top)
@@ -266,7 +300,7 @@ GLOBAL_DATUM_INIT(npc_rooms, /datum/npc_room_map, new)
 
 /datum/npc_room_map/proc/link_ladders()
 	for(var/obj/structure/ladder/L in world)
-		if(!L.target_up || !(L.z in using_map.station_levels))
+		if(!L.target_up || !(L.z in npc_levels()))
 			continue
 		var/turf/low = get_turf(L)
 		var/turf/high = get_turf(L.target_up)
@@ -278,6 +312,22 @@ GLOBAL_DATUM_INIT(npc_rooms, /datum/npc_room_map, new)
 		var/datum/npc_link/down = add_link(high.npc_room, low.npc_room, NPC_LINK_LADDER, list(high), low)
 		down.ladder = L.target_up
 		down.other = L
+		CHECK_TICK
+
+/datum/npc_room_map/proc/link_portals()
+	var/list/done = list()
+	for(var/obj/effect/map_effect/portal/P in world)
+		var/turf/T = get_turf(P)
+		var/turf/far = P.counterpart?.get_focused_turf()
+		if(!T || !far?.npc_room || !(T.z in npc_levels()))
+			continue
+		for(var/datum/npc_room/A as anything in rooms_beside(T))
+			var/key = "\ref[A]>\ref[far.npc_room]"
+			if(done[key])
+				continue
+			done[key] = TRUE
+			var/datum/npc_link/L = add_link(A, far.npc_room, NPC_LINK_PORTAL, list(T), far)
+			L.portal = P
 		CHECK_TICK
 
 /datum/npc_room_map/proc/add_link(datum/npc_room/A, datum/npc_room/B, kind, list/tiles, turf/far)
@@ -305,7 +355,7 @@ GLOBAL_DATUM_INIT(npc_rooms, /datum/npc_room_map, new)
 		if(N && N != skip && N.npc_room && (npc_can_step(T, N, null) || npc_can_step(N, T, null)))
 			. |= N.npc_room
 
-/datum/npc_room_map/proc/route(datum/npc_room/from, list/target_rooms, turf/start, list/access, anyone = FALSE, datum/ai_holder/complex_npc/ai_mind)
+/datum/npc_room_map/proc/route(datum/npc_room/from, list/target_rooms, turf/start, list/access, anyone = FALSE, datum/ai_holder/rsnpc/ai_mind)
 	if(!ready || !from)
 		return null
 	if(from in target_rooms)
@@ -344,21 +394,33 @@ GLOBAL_DATUM_INIT(npc_rooms, /datum/npc_room_map, new)
 			H.add(L.into, c, 0)
 	return null
 
-/datum/npc_room_map/proc/route_length(turf/start, turf/end, list/access, datum/ai_holder/complex_npc/ai_mind)
-	var/datum/npc_room/from = npc_room_of(start)
-	var/list/ends = npc_rooms_of(end)
-	if(!from || !length(ends))
-		return null
-	var/list/links = route(from, ends, start, access, FALSE, ai_mind)
-	if(!links)
-		return null
-	. = 0
-	var/turf/here = start
-	for(var/datum/npc_link/L as anything in links)
-		var/turf/door = L.tiles[1]
-		. += abs(here.x - door.x) + abs(here.y - door.y) + 1
-		here = L.far || door
-	. += abs(here.x - end.x) + abs(here.y - end.y)
+/datum/npc_room_map/proc/reach(datum/npc_room/from, turf/start, list/access, datum/ai_holder/rsnpc/ai_mind)
+	var/list/best = list()
+	var/list/at = list()
+	if(!ready || !from)
+		return list(best, at)
+	var/datum/npc_heap/H = new
+	var/list/done = list()
+	best[from] = 0
+	at[from] = start || from.middle
+	H.add(from, 0, 0)
+	while(!H.is_empty())
+		var/datum/npc_room/R = H.take()
+		if(done[R])
+			continue
+		done[R] = TRUE
+		for(var/datum/npc_link/L as anything in R.links)
+			if(done[L.into] || ai_mind?.noted("closed:\ref[L]") || !L.navigable_by(access))
+				continue
+			var/turf/door = L.tiles[1]
+			var/turf/here = at[R]
+			var/c = best[R] + abs(here.x - door.x) + abs(here.y - door.y) + 1
+			if(!isnull(best[L.into]) && best[L.into] <= c)
+				continue
+			best[L.into] = c
+			at[L.into] = L.far || door
+			H.add(L.into, c, 0)
+	return list(best, at)
 
 /datum/npc_room_map/proc/can_reach(datum/npc_room/from, list/target_rooms, list/access)
 	return !isnull(route(from, target_rooms, null, access))
@@ -366,8 +428,19 @@ GLOBAL_DATUM_INIT(npc_rooms, /datum/npc_room_map, new)
 /datum/npc_room_map/proc/could_reach_with(datum/npc_room/from, list/target_rooms, list/access, list/extra)
 	return !isnull(route(from, target_rooms, null, (access || list()) | extra))
 
-/datum/npc_room_map/proc/anyone_can_reach(datum/npc_room/from, list/target_rooms)
-	return !isnull(route(from, target_rooms, null, null, TRUE))
+/proc/npc_route_shuttered(list/links)
+	for(var/datum/npc_link/L as anything in links)
+		for(var/turf/T as anything in L.tiles)
+			for(var/obj/machinery/door/firedoor/F in T)
+				if(F.density && npc_firedoor_alarmed(F))
+					return TRUE
+	return FALSE
+
+/proc/npc_cycling_airlock_at(turf/T)
+	for(var/obj/machinery/door/airlock/D in T)
+		if(GLOB.npc_rooms.cycling_doors[D])
+			return D
+	return null
 
 /proc/npc_room_tile(turf/T)
 	if(T.density || isopenspace(T))
@@ -375,7 +448,7 @@ GLOBAL_DATUM_INIT(npc_rooms, /datum/npc_room_map, new)
 	for(var/obj/O in T)
 		if(istype(O, /obj/machinery/door) && !(O.flags & ON_BORDER))
 			return FALSE
-		if(istype(O, /obj/structure/stairs))
+		if(istype(O, /obj/structure/stairs) || istype(O, /obj/effect/map_effect/portal) || npc_walls_off(O))
 			return FALSE
 		if(istype(O, /obj/structure/window))
 			var/obj/structure/window/W = O
@@ -429,7 +502,7 @@ GLOBAL_DATUM_INIT(npc_rooms, /datum/npc_room_map, new)
 
 /proc/npc_turf_changed(turf/T)
 	var/datum/npc_room_map/M = GLOB.npc_rooms
-	if(!(M.ready || M.building) || !(T.z in using_map.station_levels))
+	if(!(M.ready || M.building) || !(T.z in npc_levels()))
 		return
 	var/datum/npc_room/R
 	for(var/dir in GLOB.cardinal)

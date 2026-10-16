@@ -24,18 +24,18 @@ GLOBAL_LIST_INIT(npc_test_crew, list(
 ))
 
 /proc/spawn_npc_worker(turf/T, job_title, species_name, gender_choice, name_choice, manifest, datum/npc_character/character)
-	var/mob/living/carbon/human/ai_controlled/station/W = new(T, job_title, species_name, gender_choice, name_choice, character)
+	var/mob/living/carbon/human/ai_controlled/rsnpc/station/W = new(T, job_title, species_name, gender_choice, name_choice, character)
 	if(QDELETED(W))
 		return null
 	if(manifest)
 		data_core.manifest_inject(W)
-		var/datum/ai_holder/complex_npc/ai_mind = npc_ai_mind(W)
+		var/datum/ai_holder/rsnpc/ai_mind = npc_ai_mind(W)
 		for(var/datum/data/record/R in data_core.general)
 			if(ai_mind && R.fields["name"] == W.real_name)
 				ai_mind.record_id = R.fields["id"]
 	return W
 
-/datum/ai_holder/complex_npc/proc/leave_records()
+/datum/ai_holder/rsnpc/proc/leave_records()
 	if(!record_id)
 		return
 	var/name

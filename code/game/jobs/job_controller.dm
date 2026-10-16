@@ -364,6 +364,7 @@ var/global/datum/controller/occupations/job_master
 
 	var/datum/job/job = GetJob(rank)
 	var/list/spawn_in_storage = list()
+	var/datum/preferences/loadout_prefs = H.loadout_prefs()	// RS ADD
 
 	if(!joined_late)
 		var/obj/S = null
@@ -397,8 +398,8 @@ var/global/datum/controller/occupations/job_master
 		//Equip custom gear loadout.
 		var/list/custom_equip_slots = list()
 		var/list/custom_equip_leftovers = list()
-		if(H.client && H.client.prefs && H.client.prefs.gear && H.client.prefs.gear.len && !(job.mob_type & JOB_SILICON))
-			for(var/thing in H.client.prefs.gear)
+		if(loadout_prefs && loadout_prefs.gear && loadout_prefs.gear.len && !(job.mob_type & JOB_SILICON))	// RS EDIT
+			for(var/thing in loadout_prefs.gear)	// RS EDIT
 				var/datum/gear/G = gear_datums[thing]
 				if(!G) //Not a real gear datum (maybe removed, as this is loaded from their savefile)
 					continue
@@ -423,18 +424,18 @@ var/global/datum/controller/occupations/job_master
 
 				// Implants get special treatment
 				if(G.slot == "implant")
-					var/obj/item/weapon/implant/I = G.spawn_item(H, H.client.prefs.gear[G.display_name])
+					var/obj/item/weapon/implant/I = G.spawn_item(H, loadout_prefs.gear[G.display_name])	// RS EDIT
 					I.invisibility = 100
 					I.implant_loadout(H)
 					continue
 
 				// Try desperately (and sorta poorly) to equip the item. Now with increased desperation!
 				if(G.slot && !(G.slot in custom_equip_slots))
-					var/metadata = H.client.prefs.gear[G.display_name]
+					var/metadata = loadout_prefs.gear[G.display_name]	// RS EDIT
 					//if(G.slot == slot_wear_mask || G.slot == slot_wear_suit || G.slot == slot_head)
 					//	custom_equip_leftovers += thing
 					//else
-					if(G.slot == slot_shoes && H.client?.prefs?.shoe_hater)	//RS ADD
+					if(G.slot == slot_shoes && loadout_prefs.shoe_hater)	//RS ADD
 						continue
 					if(H.equip_to_slot_or_del(G.spawn_item(H, metadata), G.slot))
 						to_chat(H, "<span class='notice'>Equipping you with \the [thing]!</span>")
@@ -461,12 +462,12 @@ var/global/datum/controller/occupations/job_master
 		// If some custom items could not be equipped before, try again now.
 		for(var/thing in custom_equip_leftovers)
 			var/datum/gear/G = gear_datums[thing]
-			if(G.slot == slot_shoes && H.client?.prefs?.shoe_hater)	//RS ADD
+			if(G.slot == slot_shoes && loadout_prefs.shoe_hater)	//RS ADD
 				continue
 			if(G.slot in custom_equip_slots)
 				spawn_in_storage += thing
 			else
-				var/metadata = H.client.prefs.gear[G.display_name]
+				var/metadata = loadout_prefs.gear[G.display_name]	// RS EDIT
 				if(H.equip_to_slot_or_del(G.spawn_item(H, metadata), G.slot))
 					to_chat(H, "<span class='notice'>Equipping you with \the [thing]!</span>")
 					custom_equip_slots.Add(G.slot)
@@ -518,7 +519,7 @@ var/global/datum/controller/occupations/job_master
 				for(var/thing in spawn_in_storage)
 					to_chat(H, "<span class='notice'>Placing \the [thing] in your [B.name]!</span>")
 					var/datum/gear/G = gear_datums[thing]
-					var/metadata = H.client.prefs.gear[G.display_name]
+					var/metadata = loadout_prefs.gear[G.display_name]	// RS EDIT
 					G.spawn_item(B, metadata)
 			else
 				to_chat(H, "<span class='danger'>Failed to locate a storage object on your mob, either you spawned with no arms and no backpack or this is a bug.</span>")

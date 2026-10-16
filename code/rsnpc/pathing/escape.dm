@@ -27,7 +27,7 @@
 /proc/npc_safe_tile(mob/living/who, turf/T)
 	return !npc_step_danger(T, who)
 
-/datum/ai_holder/complex_npc/proc/reflex_in_control()
+/datum/ai_holder/rsnpc/proc/reflex_in_control()
 	var/obj/belly/B = holder.loc
 	if(istype(B))
 		return "inside [B.owner]"
@@ -43,7 +43,7 @@
 		return "climbing out of [holder.loc]"
 	return null
 
-/datum/ai_holder/complex_npc/proc/fire_tick()
+/datum/ai_holder/rsnpc/proc/fire_tick()
 	if(!holder.on_fire || escaping || npc_fixed_danger(get_turf(holder)))
 		return FALSE
 	if(world.time > self_extinguished_at + 4 SECONDS)
@@ -53,7 +53,7 @@
 		INVOKE_ASYNC(src, PROC_REF(start_resist))
 	return TRUE
 
-/datum/ai_holder/complex_npc/proc/locker_tick()
+/datum/ai_holder/rsnpc/proc/locker_tick()
 	if(!istype(holder.loc, /obj/structure/closet))
 		return FALSE
 	var/obj/structure/closet/secure_closet/S = holder.loc
@@ -64,10 +64,10 @@
 		INVOKE_ASYNC(src, PROC_REF(start_resist))
 	return TRUE
 
-/datum/ai_holder/complex_npc/proc/start_resist()
+/datum/ai_holder/rsnpc/proc/start_resist()
 	holder.resist()
 
-/datum/ai_holder/complex_npc/proc/reflex()
+/datum/ai_holder/rsnpc/proc/reflex()
 	if(escaping || !isturf(holder.loc) || world.time < escape_retry)
 		return FALSE
 	var/turf/T = get_turf(holder)

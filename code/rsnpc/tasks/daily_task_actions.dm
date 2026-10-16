@@ -1,17 +1,23 @@
+/proc/npc_public_area(area/A)
+	if(istype(A, /area/maintenance) || istype(A, /area/space) || istype(A, /area/shuttle))
+		return FALSE
+	return !findtext(lowertext(A.name), "maint")
+
 /datum/npc_action/stand_at_workplace
 	name = "stand at workplace"
 
-/datum/npc_action/stand_at_workplace/variants(datum/ai_holder/complex_npc/ai_mind, fact)
-	if(fact != NPC_FACT_WORKED || !ai_mind.workplace)
+/datum/npc_action/stand_at_workplace/variants(datum/ai_holder/rsnpc/ai_mind, fact)
+	var/area/spot = ai_mind.work_spot()
+	if(fact != NPC_FACT_WORKED || !spot)
 		return list()
-	var/datum/npc_action/A = copy(ai_mind.workplace, 1, null, list(NPC_FACT_WORKED))
+	var/datum/npc_action/A = copy(spot, 1, null, list(NPC_FACT_WORKED))
 	A.stay = 3 MINUTES
 	return list(A)
 
 /datum/npc_action/stroll
 	name = "stroll"
 
-/datum/npc_action/stroll/variants(datum/ai_holder/complex_npc/ai_mind, fact)
+/datum/npc_action/stroll/variants(datum/ai_holder/rsnpc/ai_mind, fact)
 	if(fact != NPC_FACT_STROLLED)
 		return list()
 	var/datum/npc_room/here = npc_room_of(ai_mind.holder)
@@ -41,7 +47,7 @@
 	A.stay = 20 SECONDS
 	return list(A)
 
-/datum/npc_action/stroll/arrive(datum/ai_holder/complex_npc/ai_mind)
+/datum/npc_action/stroll/arrive(datum/ai_holder/rsnpc/ai_mind)
 	ai_mind.note("stroll:\ref[target]", "[target]", 5 MINUTES)
 	return TRUE
 
@@ -50,7 +56,7 @@
 	var/obj/structure/bed/chair/seat
 	var/seated_at = 0
 
-/datum/npc_action/sit_down/variants(datum/ai_holder/complex_npc/ai_mind, fact)
+/datum/npc_action/sit_down/variants(datum/ai_holder/rsnpc/ai_mind, fact)
 	if(fact != NPC_FACT_RESTED)
 		return list()
 	var/datum/npc_source/S = ai_mind.npc_search(/obj/structure/bed/chair, CALLBACK(src, PROC_REF(good_seat), ai_mind))
@@ -60,16 +66,19 @@
 	A.stay = ai_mind.npc_psetting("break_seconds") SECONDS
 	return list(A)
 
-/datum/npc_action/sit_down/proc/good_seat(datum/ai_holder/complex_npc/ai_mind, kind, turf/place, atom/movable/thing)
+/datum/npc_action/sit_down/proc/good_seat(datum/ai_holder/rsnpc/ai_mind, kind, turf/place, atom/movable/thing)
 	if(ispath(kind, /obj/structure/bed/chair/wheelchair) || ispath(kind, /obj/structure/bed/chair/janicart))
 		return FALSE
-	if(ai_mind.noted("break:\ref[get_area(place)]"))
+	var/area/A = get_area(place)
+	if(!A || !npc_public_area(A))
+		return FALSE
+	var/area/called = ai_mind.called_to()
+	if(called && A != called)
 		return FALSE
 	return !thing || !thing.has_buckled_mobs()
 
-/datum/npc_action/sit_down/arrive(datum/ai_holder/complex_npc/ai_mind)
+/datum/npc_action/sit_down/arrive(datum/ai_holder/rsnpc/ai_mind)
 	var/turf/T = target
-	ai_mind.note("break:\ref[get_area(T)]", "[get_area(T)]", ai_mind.npc_psetting("break_revisit_minutes") MINUTES)
 	for(var/obj/structure/bed/chair/C in T)
 		if(!C.has_buckled_mobs())
 			seat = C
@@ -86,7 +95,7 @@
 	NPC_TRACE(ai_mind, NPC_TRACE_TASK, "sitting down in [get_area(T)]")
 	return TRUE
 
-/datum/npc_action/sit_down/clean_up(datum/ai_holder/complex_npc/ai_mind)
+/datum/npc_action/sit_down/clean_up(datum/ai_holder/rsnpc/ai_mind)
 	if(seated_at)
 		var/datum/npc_need/N = ai_mind.needs[NPC_NEED_REST]
 		N?.add((world.time - seated_at) / (1 MINUTE) * ai_mind.npc_psetting("rest_gain_per_minute"))

@@ -1,58 +1,61 @@
 /datum/ai_holder/proc/prey_struggled(mob/living/L)
 	return
 
-/datum/ai_holder/complex_npc/prey_struggled(mob/living/L)
+/datum/ai_holder/rsnpc/prey_struggled(mob/living/L)
 	if(agreed(L, holder, FALSE) || agreed(L, holder, TRUE))
 		change_opinion(L, -1, "struggled after agreeing")
 	if(!noted("struggle_answer"))
 		note("struggle_answer", L.name, 30 SECONDS)
 		say_line("pred_answer_struggle", list("name" = L.name))
 
-/datum/ai_holder/complex_npc/proc/prey_weight(mob/living/L, datum/npc_prey/record)
+/datum/ai_holder/rsnpc/proc/prey_weight(mob/living/L, datum/npc_prey/record)
 	. = -opinion_of(L) / 100 * npc_psetting("pred_feelings_motive")
 	if(agreed(L, holder, TRUE))
 		. += 1
 	if(record.forced)
 		. += 0.5
 
-/datum/ai_holder/complex_npc/proc/weight_alone(mob/living/L, datum/npc_prey/record)
+/datum/ai_holder/rsnpc/proc/weight_alone(mob/living/L, datum/npc_prey/record)
 	. = record.hunger * npc_psetting("pred_hunger_motive") - opinion_of(L) / 100 * npc_psetting("pred_feelings_motive") + record.order
 	if(record.forced)
 		. += 0.5
 	if(agreed(L, holder, FALSE) && !agreed(L, holder, TRUE))
 		. -= 0.5
 
-/datum/ai_holder/complex_npc/proc/belly_hunger(obj/belly/B, mob/living/except)
+/datum/ai_holder/rsnpc/proc/keep_wish(mob/living/L, datum/npc_prey/record)
+	return weight_alone(L, record) - npc_psetting("pred_release_margin") - digest_line()
+
+/datum/ai_holder/rsnpc/proc/belly_hunger(obj/belly/B, mob/living/except)
 	. = 0
 	for(var/mob/living/L in B)
 		var/datum/npc_prey/record = prey_inside[npc_person_key(L)]
 		if(record && L != except)
 			. = max(., record.hunger)
 
-/datum/ai_holder/complex_npc/proc/belly_sum(obj/belly/B)
+/datum/ai_holder/rsnpc/proc/belly_sum(obj/belly/B)
 	. = belly_hunger(B) * npc_psetting("pred_hunger_motive")
 	for(var/mob/living/L in B)
 		var/datum/npc_prey/record = prey_inside[npc_person_key(L)]
 		if(record)
 			. += prey_weight(L, record)
 
-/datum/ai_holder/complex_npc/proc/check_bellies()
+/datum/ai_holder/rsnpc/proc/prey_digested(mob/living/L)
+	NPC_TRACE(src, NPC_TRACE_TASK, "digested [L]")
+	note("digested:[npc_person_key(L)]", "[L.name], in [get_area(holder)], [round(world.time / (1 MINUTE))] minutes into the shift", 8 HOURS)
+	say_line("pred_digested", list("name" = L.name))
+
+/datum/ai_holder/rsnpc/proc/check_bellies()
 	var/list/inside = people_inside()
 	var/list/keys = list()
 	for(var/mob/living/L as anything in inside)
 		keys += npc_person_key(L)
 		if(!prey_inside[npc_person_key(L)])
 			prey_arrived(L)
-		var/datum/npc_prey/record = prey_inside[npc_person_key(L)]
-		if(record && !record.died && L.stat == DEAD)
-			record.died = TRUE
-			NPC_TRACE(src, NPC_TRACE_TASK, "[L] died inside me")
-			say_line("pred_digested", list("name" = L.name))
 	for(var/key in prey_inside.Copy())
 		if(!(key in keys))
 			prey_inside -= key
 
-/datum/ai_holder/complex_npc/proc/prey_arrived(mob/living/L)
+/datum/ai_holder/rsnpc/proc/prey_arrived(mob/living/L)
 	var/datum/npc_prey/record = new
 	record.key = npc_person_key(L)
 	record.name = L.name
@@ -65,7 +68,6 @@
 	prey_inside[record.key] = record
 	NPC_TRACE(src, NPC_TRACE_TASK, "[L] is inside me")
 	if(L.stat == DEAD)
-		record.died = TRUE
 		return
 	var/datum/weakref/fed = noted("fed_by")
 	var/mob/living/feeder = fed?.resolve()
@@ -84,7 +86,7 @@
 		record.order_at = world.time
 		NPC_TRACE(src, NPC_TRACE_TASK, "will digest [L]; they asked for it")
 
-/datum/ai_holder/complex_npc/proc/decide_belly(obj/belly/B)
+/datum/ai_holder/rsnpc/proc/decide_belly(obj/belly/B)
 	if(!(B.digest_mode in list(DM_HOLD, DM_DIGEST)))
 		return
 	var/list/living = list()
@@ -130,7 +132,7 @@
 		var/mob/living/L = living[1]
 		say_line("pred_to_hold", list("name" = L.name))
 
-/datum/ai_holder/complex_npc/proc/would_digest_others(obj/belly/B, mob/living/L)
+/datum/ai_holder/rsnpc/proc/would_digest_others(obj/belly/B, mob/living/L)
 	var/others = FALSE
 	var/sum = belly_hunger(B, L) * npc_psetting("pred_hunger_motive")
 	for(var/mob/living/O in B)
@@ -141,7 +143,7 @@
 		sum += prey_weight(O, record)
 	return others && sum >= digest_line()
 
-/datum/ai_holder/complex_npc/proc/ready_to_digest(obj/belly/B, list/living)
+/datum/ai_holder/rsnpc/proc/ready_to_digest(obj/belly/B, list/living)
 	. = TRUE
 	var/offer_line = npc_psetting("pred_offer_line")
 	for(var/mob/living/L as anything in living)
@@ -165,6 +167,8 @@
 				. = FALSE
 			else
 				refused_digestion(L, record)
+				if(record.refused_digest)
+					. = FALSE
 			continue
 		var/own = record.hunger * npc_psetting("pred_hunger_motive") - opinion_of(L) / 100 * npc_psetting("pred_feelings_motive") + (record.forced ? 0.5 : 0)
 		if(!record.warned_at && own <= offer_line)
@@ -174,7 +178,7 @@
 		else if(record.warned_at && world.time < record.warned_at + 20 SECONDS)
 			. = FALSE
 
-/datum/ai_holder/complex_npc/proc/refused_digestion(mob/living/L, datum/npc_prey/record)
+/datum/ai_holder/rsnpc/proc/refused_digestion(mob/living/L, datum/npc_prey/record)
 	record.digest_answered = TRUE
 	var/obj/belly/B = L.loc
 	if(!istype(B) || !would_digest_others(B, L))
@@ -187,7 +191,7 @@
 		return
 	NPC_TRACE(src, NPC_TRACE_TASK, "digesting [L] anyway; they said no")
 
-/datum/ai_holder/complex_npc/proc/digest_answer(mob/living/speaker, yes)
+/datum/ai_holder/rsnpc/proc/digest_answer(mob/living/speaker, yes)
 	var/datum/npc_prey/record = prey_inside[npc_person_key(speaker)]
 	if(!record || !record.asked_digest_at || record.digest_answered)
 		return FALSE
@@ -198,7 +202,7 @@
 		stomach_request("no", speaker, speaker)
 	return TRUE
 
-/datum/ai_holder/complex_npc/proc/release_prey(mob/living/L, group, why)
+/datum/ai_holder/rsnpc/proc/release_prey(mob/living/L, group, why)
 	var/obj/belly/B = L.loc
 	if(!istype(B) || B.owner != holder)
 		return
@@ -208,7 +212,7 @@
 	if(group)
 		say_line(group, list("name" = L.name))
 
-/datum/ai_holder/complex_npc/proc/hear_from_inside(mob/living/speaker, line, via)
+/datum/ai_holder/rsnpc/proc/hear_from_inside(mob/living/speaker, line, via)
 	var/obj/belly/B = speaker.loc
 	if(via || !istype(B) || B.owner != holder)
 		return FALSE
@@ -226,7 +230,7 @@
 	stomach_request("out", speaker, speaker)
 	return TRUE
 
-/datum/ai_holder/complex_npc/proc/belly_wants_digest(obj/belly/B)
+/datum/ai_holder/rsnpc/proc/belly_wants_digest(obj/belly/B)
 	if(!(B.digest_mode in list(DM_HOLD, DM_DIGEST)))
 		return null
 	var/living = FALSE
@@ -243,11 +247,9 @@
 			order_at = record.order_at
 	if(!living)
 		return null
-	if(order)
-		return order > 0
-	return belly_sum(B) >= (B.digest_mode == DM_DIGEST ? digest_line() - 0.2 : digest_line())
+	return belly_sum(B) + order >= (B.digest_mode == DM_DIGEST ? digest_line() - 0.2 : digest_line())
 
-/datum/ai_holder/complex_npc/proc/belly_due(obj/belly/B)
+/datum/ai_holder/rsnpc/proc/belly_due(obj/belly/B)
 	var/wants = belly_wants_digest(B)
 	if(isnull(wants) || wants == (B.digest_mode == DM_DIGEST))
 		return FALSE
@@ -265,7 +267,7 @@
 			return FALSE
 	return TRUE
 
-/datum/ai_holder/complex_npc/proc/bellies_due()
+/datum/ai_holder/rsnpc/proc/bellies_due()
 	for(var/obj/belly/B as anything in holder.vore_organs)
 		if(belly_due(B))
 			return TRUE
@@ -275,43 +277,44 @@
 	name = "handle my stomach"
 	tier = NPC_TIER_FULFILLMENT
 
-/datum/npc_task/handle_stomach/can_start(datum/ai_holder/complex_npc/ai_mind)
+/datum/npc_task/handle_stomach/can_start(datum/ai_holder/rsnpc/ai_mind)
 	return ai_mind.bellies_due()
 
-/datum/npc_task/handle_stomach/value(datum/ai_holder/complex_npc/ai_mind)
+/datum/npc_task/handle_stomach/value(datum/ai_holder/rsnpc/ai_mind)
 	return 60
 
-/datum/npc_task/handle_stomach/goal(datum/ai_holder/complex_npc/ai_mind)
+/datum/npc_task/handle_stomach/goal(datum/ai_holder/rsnpc/ai_mind)
 	return list(NPC_FACT_STOMACH_HANDLED)
 
 /datum/npc_action/handle_stomach
 	name = "handle my stomach"
 
-/datum/npc_action/handle_stomach/variants(datum/ai_holder/complex_npc/ai_mind, fact)
+/datum/npc_action/handle_stomach/variants(datum/ai_holder/rsnpc/ai_mind, fact)
 	if(fact != NPC_FACT_STOMACH_HANDLED)
 		return list()
 	return list(copy(null, 1, null, list(fact)))
 
-/datum/npc_action/handle_stomach/run_action(datum/ai_holder/complex_npc/ai_mind)
+/datum/npc_action/handle_stomach/run_action(datum/ai_holder/rsnpc/ai_mind)
 	for(var/obj/belly/B as anything in ai_mind.holder.vore_organs)
 		if(ai_mind.belly_due(B))
 			ai_mind.decide_belly(B)
 	return NPC_DONE
 
 /datum/npc_assignment/respond_stomach
+	weight = 30
 	name = "respond to my stomach"
 	var/list/requests = list()
 
-/datum/npc_assignment/respond_stomach/goal(datum/ai_holder/complex_npc/ai_mind)
+/datum/npc_assignment/respond_stomach/goal(datum/ai_holder/rsnpc/ai_mind)
 	return list(NPC_FACT_RESPONDED(src))
 
-/datum/npc_assignment/respond_stomach/check(datum/ai_holder/complex_npc/ai_mind)
+/datum/npc_assignment/respond_stomach/check(datum/ai_holder/rsnpc/ai_mind)
 	if(!length(requests))
 		ai_mind.end_assignment(src, "responded")
 		return
 	..()
 
-/datum/ai_holder/complex_npc/proc/stomach_request(kind, mob/living/prey, mob/living/speaker, datum/npc_command/command)
+/datum/ai_holder/rsnpc/proc/stomach_request(kind, mob/living/prey, mob/living/speaker, datum/npc_command/command)
 	var/datum/npc_assignment/respond_stomach/A = assignment(/datum/npc_assignment/respond_stomach)
 	if(!A)
 		A = new(speaker, null, 1 MINUTE)
@@ -321,21 +324,21 @@
 
 /datum/npc_task/respond_stomach
 	name = "respond to my stomach"
-	tier = NPC_TIER_SOCIAL
+	tier = NPC_TIER_NEEDS
 	assignment_type = /datum/npc_assignment/respond_stomach
 
-/datum/npc_task/respond_stomach/value(datum/ai_holder/complex_npc/ai_mind)
+/datum/npc_task/respond_stomach/value(datum/ai_holder/rsnpc/ai_mind)
 	return 150
 
 /datum/npc_action/respond_stomach
 	name = "respond to my stomach"
 
-/datum/npc_action/respond_stomach/variants(datum/ai_holder/complex_npc/ai_mind, fact)
+/datum/npc_action/respond_stomach/variants(datum/ai_holder/rsnpc/ai_mind, fact)
 	if(findtext(fact, "responded:") != 1)
 		return list()
 	return list(copy(null, 1, null, list(fact)))
 
-/datum/npc_action/respond_stomach/run_action(datum/ai_holder/complex_npc/ai_mind)
+/datum/npc_action/respond_stomach/run_action(datum/ai_holder/rsnpc/ai_mind)
 	var/datum/npc_assignment/respond_stomach/A = ai_mind.assignment(/datum/npc_assignment/respond_stomach)
 	if(!A)
 		return NPC_DONE
@@ -347,7 +350,7 @@
 		ai_mind.respond_stomach(R[1], prey?.resolve(), speaker?.resolve(), R[4])
 	return NPC_DONE
 
-/datum/ai_holder/complex_npc/proc/respond_stomach(kind, mob/living/L, mob/living/speaker, datum/npc_command/C)
+/datum/ai_holder/rsnpc/proc/respond_stomach(kind, mob/living/L, mob/living/speaker, datum/npc_command/C)
 	var/datum/npc_prey/record = L && prey_inside[npc_person_key(L)]
 	var/obj/belly/B = L?.loc
 	if(!record || !istype(B) || B.owner != holder)
@@ -362,7 +365,7 @@
 					return
 			if(noted("refused_out:[record.key]"))
 				return
-			if(weight_alone(L, record) - 0.3 < digest_line())
+			if(keep_wish(L, record) < 0)
 				release_prey(L, "pred_release_asked", "they asked")
 				return
 			note("refused_out:[record.key]", L.name, 20 SECONDS)
@@ -371,7 +374,9 @@
 			if(record.asked_digest_at && !record.digest_answered)
 				refused_digestion(L, record)
 		if("release")
-			if(!obeys_order(speaker, C, weight_alone(L, record) - digest_line()))
+			if(keep_wish(L, record) - order_weight(speaker) >= 0)
+				NPC_TRACE(src, NPC_TRACE_TALK, "refused \"[C.say]\" from [speaker]; I want to keep [L]")
+				say_line("pred_order_no", list("name" = speaker.name))
 				return
 			say_line("pred_release_yes", list("name" = speaker.name, "other" = L.name))
 			release_prey(L, L.stat == DEAD ? null : "pred_release_asked", "[speaker] told me to")
@@ -380,10 +385,12 @@
 			if(order > 0 && !npc_vore_allowed(holder, L, TRUE))
 				say_line("pred_invite_cant", list("name" = speaker.name))
 				return
-			var/sum = belly_sum(B)
-			if(!obeys_order(speaker, C, order > 0 ? digest_line() - sum : sum - digest_line()))
+			var/weight = order * order_weight(speaker)
+			if((belly_sum(B) + weight >= digest_line()) != (order > 0))
+				NPC_TRACE(src, NPC_TRACE_TALK, "refused \"[C.say]\" from [speaker]; not pushed enough")
+				say_line("pred_order_no", list("name" = speaker.name))
 				return
-			record.order = order
+			record.order = weight
 			record.order_at = world.time
 			say_line(order > 0 ? "pred_digest_yes" : "pred_hold_yes", list("name" = speaker.name, "other" = L.name))
 			decide_belly(B)

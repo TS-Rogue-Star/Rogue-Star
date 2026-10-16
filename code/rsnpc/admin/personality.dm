@@ -78,7 +78,7 @@
 /datum/npc_personality/pred
 	name = "pred"
 	opposite = "prey"
-	sets = list("pred_digest_line" = 0.9, "pred_offer_line" = -0.3, "prey_desire" = -0.3, "heal_belly_opinion_per_minute" = 0)
+	sets = list("pred_hunger_motive" = 1, "pred_accept_line" = -0.5, "pred_release_margin" = 0.3, "pred_digest_line" = 0.9, "pred_offer_line" = -0.3, "prey_desire" = -0.3, "heal_belly_opinion_per_minute" = 0)
 
 /datum/npc_personality/prey
 	name = "prey"
@@ -102,7 +102,7 @@ GLOBAL_LIST_INIT(npc_personalities, npc_make_personalities())
 		words -= list(word, P.opposite)
 		. += word
 
-/datum/ai_holder/complex_npc/proc/npc_psetting(key)
+/datum/ai_holder/rsnpc/proc/npc_psetting(key)
 	if(character && (key in character.numbers))
 		return character.numbers[key]
 	for(var/word in personality)
@@ -115,7 +115,7 @@ GLOBAL_LIST_INIT(npc_personalities, npc_make_personalities())
 		if(key in P.times)
 			. *= P.times[key]
 
-/datum/ai_holder/complex_npc/proc/task_weight(datum/npc_task/T)
+/datum/ai_holder/rsnpc/proc/task_weight(datum/npc_task/T)
 	if(T.type in task_weights)
 		return task_weights[T.type]
 	. = 1

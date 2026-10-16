@@ -1,3 +1,7 @@
+GLOBAL_LIST_INIT(npc_public_rest_places, list("bar", "cafe", "cafeteria"))
+GLOBAL_LIST_EMPTY(npc_known_places)
+GLOBAL_VAR_INIT(npc_known_places_ready, FALSE)
+
 /datum/npc_seen
 	var/kind
 	var/turf/place
@@ -6,7 +10,7 @@
 	var/list/holds
 	var/kept = FALSE
 
-/datum/ai_holder/complex_npc/proc/remember_sights()
+/datum/ai_holder/rsnpc/proc/remember_sights()
 	var/list/found = list()
 	var/list/counts = list()
 	for(var/atom/movable/A as anything in in_sight)
@@ -32,12 +36,13 @@
 		S.amount = counts[key]
 		S.seen_at = world.time
 		var/close = A.Adjacent(holder)
-		if(close || isnull(S.holds))
+		var/obj/structure/closet/C = A
+		if(isnull(S.holds) || close && (!istype(C) || C.opened))
 			S.holds = npc_supplies_of(A, close)
 	while(length(seen) > 500)
 		forget_one()
 
-/datum/ai_holder/complex_npc/proc/forget_one()
+/datum/ai_holder/rsnpc/proc/forget_one()
 	var/list/by_kind = list()
 	for(var/key in seen)
 		var/datum/npc_seen/S = seen[key]
@@ -58,7 +63,7 @@
 		oldest = seen[1]
 	seen -= oldest
 
-/datum/ai_holder/complex_npc/proc/forget_place(turf/T, kind)
+/datum/ai_holder/rsnpc/proc/forget_place(turf/T, kind)
 	var/list/gone = list()
 	for(var/key in seen)
 		var/datum/npc_seen/S = seen[key]
@@ -66,7 +71,7 @@
 			gone += key
 	seen -= gone
 
-/datum/ai_holder/complex_npc/proc/learn_workplace()
+/datum/ai_holder/rsnpc/proc/learn_workplace()
 	if(!workplace)
 		return
 	for(var/obj/structure/closet/C in workplace)
@@ -77,3 +82,41 @@
 		S.kept = TRUE
 		S.seen_at = world.time
 		seen[npc_thing_key(C.type, S.place)] = S
+		place_kinds |= C.type
+
+/proc/npc_in_public_rest_place(obj/O)
+	var/area/A = get_area(O)
+	var/name = lowertext("[A?.name]")
+	for(var/word in GLOB.npc_public_rest_places)
+		if(findtext(name, word))
+			return TRUE
+	return FALSE
+
+/hook/roundstart/proc/map_npc_known_places()
+	spawn(0)
+		var/datum/npc_role/R = new
+		for(var/kind in R.known_kinds)
+			GLOB.npc_known_places[kind] = list()
+		for(var/obj/O in world)
+			if(isturf(O.loc) && (O.z in npc_levels()))
+				for(var/kind in R.known_kinds)
+					if(istype(O, kind) && (!istype(O, /obj/structure/bed/chair) || npc_in_public_rest_place(O)))
+						GLOB.npc_known_places[kind] += list(list(O.type, O.loc, istype(O, /obj/item/weapon/storage) ? npc_contents_kinds(O) : npc_supplies_of(O)))
+			CHECK_TICK
+		GLOB.npc_known_places_ready = TRUE
+	return TRUE
+
+/datum/ai_holder/rsnpc/proc/learn_known_places()
+	if(known_places_learned || !GLOB.npc_known_places_ready)
+		return
+	known_places_learned = TRUE
+	for(var/kind in role.known_kinds)
+		place_kinds |= kind
+		for(var/list/entry as anything in GLOB.npc_known_places[kind])
+			var/datum/npc_seen/S = new
+			S.kind = entry[1]
+			S.place = entry[2]
+			S.holds = entry[3]
+			S.kept = TRUE
+			S.seen_at = world.time
+			seen[npc_thing_key(S.kind, S.place)] = S

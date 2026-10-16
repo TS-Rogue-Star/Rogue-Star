@@ -23,6 +23,15 @@ GLOBAL_LIST_INIT(npc_department_channels, list(
 /proc/npc_job_of(mob/M)
 	return M?.mind?.assigned_role
 
+/proc/npc_manifest_job(mob/M)
+	return M ? npc_manifest_job_named(M.name) : null
+
+/proc/npc_manifest_job_named(name)
+	for(var/datum/data/record/R in data_core.general)
+		if(R.fields["name"] == name)
+			return R.fields["real_rank"]
+	return null
+
 /proc/npc_kind_is(kind, of)
 	return kind == of || (ispath(kind) && ispath(of) && ispath(kind, of))
 
@@ -30,7 +39,9 @@ GLOBAL_LIST_INIT(npc_department_channels, list(
 	if(!ispath(kind))
 		return "[kind]"
 	var/atom/K = kind
-	return initial(K.name)
+	while(K && !trim(initial(K.name)))
+		K = type2parent(K)
+	return K ? trim(initial(K.name)) : "something"
 
 /proc/npc_can_supply(job_title, kind)
 	var/datum/job/J = job_title && SSjob.get_job(job_title)
@@ -48,16 +59,16 @@ GLOBAL_LIST_INIT(npc_department_channels, list(
 		if(npc_can_supply(title, kind))
 			. |= title
 
-/datum/ai_holder/complex_npc/proc/person_to_ask(kind)
+/datum/ai_holder/rsnpc/proc/person_to_ask(kind)
 	var/mob/living/best
 	for(var/mob/living/M in look())
-		if(!can_notice(M) || crossed_off("ask:\ref[M]") || !npc_can_supply(npc_job_of(M), kind))
+		if(!can_notice(M) || crossed_off("ask:\ref[M]") || !npc_can_supply(npc_manifest_job(M), kind))
 			continue
 		if(!best || get_dist(holder, M) < get_dist(holder, best))
 			best = M
 	return best
 
-/datum/ai_holder/complex_npc/proc/ask_for(kind, mob/living/person, title, channel)
+/datum/ai_holder/rsnpc/proc/ask_for(kind, mob/living/person, title, channel)
 	var/time = say_line(GLOB.npc_ask_lines[kind], list("name" = person ? person.name : title, "place" = "[get_area(holder)]"), channel ? radiochannels[channel] : null)
 	if(!time)
 		return null
@@ -80,8 +91,9 @@ GLOBAL_LIST_INIT(npc_department_channels, list(
 	var/channel
 	var/datum/npc_promise/promise
 	var/walked = FALSE
+	var/area/walked_to
 
-/datum/npc_action/ask/variants(datum/ai_holder/complex_npc/ai_mind, fact)
+/datum/npc_action/ask/variants(datum/ai_holder/rsnpc/ai_mind, fact)
 	var/kind
 	if(fact == NPC_FACT_TREATED)
 		kind = "treatment"
@@ -102,7 +114,7 @@ GLOBAL_LIST_INIT(npc_department_channels, list(
 		A.name = "ask [A.person]"
 		A.key = "[A.key]:\ref[A.person]"
 		return list(A)
-	if(!ai_mind.radio_key(PUB_FREQ) || ai_mind.crossed_off("ask:radio:[kind]"))
+	if(!ai_mind.in_the_room() || !ai_mind.radio_key(PUB_FREQ) || ai_mind.crossed_off("ask:radio:[kind]"))
 		return list()
 	var/list/titles = npc_supplying_jobs(kind)
 	if(!length(titles))
@@ -114,7 +126,7 @@ GLOBAL_LIST_INIT(npc_department_channels, list(
 	A.key = "[A.key]:radio"
 	return list(A)
 
-/datum/npc_action/ask/run_action(datum/ai_holder/complex_npc/ai_mind)
+/datum/npc_action/ask/run_action(datum/ai_holder/rsnpc/ai_mind)
 	if(ai_mind.fact_true(gives[1]))
 		return NPC_DONE
 	if(!promise)
@@ -128,7 +140,11 @@ GLOBAL_LIST_INIT(npc_department_channels, list(
 		return NPC_CANT_DO
 	if(promise.state == NPC_PROMISE_AGREED && !walked)
 		walked = TRUE
-		var/area/A = find_npc_workplace(npc_job_of(promise.who?.resolve()))
+		var/area/A = find_npc_workplace(npc_manifest_job(promise.who?.resolve()))
 		if(promise.channel && A && get_area(ai_mind.holder) != A)
-			ai_mind.go_to(A)
+			walked_to = A
+	if(walked_to && !npc_arrived(ai_mind.holder, walked_to) && head_to(ai_mind, walked_to) != NPC_RUNNING)
+		why = "couldn't get to [walked_to]: [why]"
+		return NPC_CANT_DO
+	idle = !ai_mind.destination
 	return NPC_RUNNING

@@ -13,15 +13,16 @@
 		return FALSE
 	return TRUE
 
-/datum/ai_holder/complex_npc/proc/go_to(atom/target, turf/place)
+/datum/ai_holder/rsnpc/proc/go_to(atom/target, turf/place)
 	stop_walk()
 	destination = target
 	destination_turf = place || get_turf(target)
 	walk_outcome_why = null
 	walk_lost_target = FALSE
+	walk_needs_suit = FALSE
 	NPC_TRACE(src, NPC_TRACE_WALK, "walking to [target] from [get_area(holder)]")
 
-/datum/ai_holder/complex_npc/proc/stop_walk()
+/datum/ai_holder/rsnpc/proc/stop_walk()
 	destination = null
 	destination_turf = null
 	still_at = null
@@ -32,8 +33,10 @@
 	button_wait_until = 0
 	failed_steps = 0
 	blocked_since = 0
+	door_tried = null
+	ladder_tried_at = 0
 
-/datum/ai_holder/complex_npc/proc/end_walk(why)
+/datum/ai_holder/rsnpc/proc/end_walk(why)
 	walk_outcome_why = why
 	if(!why)
 		NPC_TRACE(src, NPC_TRACE_WALK, "arrived at [destination]")
@@ -41,17 +44,19 @@
 		NPC_TRACE(src, NPC_TRACE_WALK, "can't get to [destination]: [why]")
 	stop_walk()
 
-/datum/ai_holder/complex_npc/proc/walk_aim()
+/datum/ai_holder/rsnpc/proc/walk_aim()
 	if(isarea(destination) || isturf(destination))
 		return destination
 	if(destination in look())
 		destination_turf = get_turf(destination)
 	return destination_turf
 
-/datum/ai_holder/complex_npc/proc/next_link()
+/datum/ai_holder/rsnpc/proc/next_link()
 	return length(route) ? route[1] : null
 
-/datum/ai_holder/complex_npc/proc/walk_tick()
+/datum/ai_holder/rsnpc/proc/walk_tick()
+	if(!escaping && !threat && busy_talking())
+		return
 	if(escaping)
 		follow_path()
 		if(!length(path))
@@ -59,9 +64,6 @@
 			route = null
 		return
 	if(isturf(holder.loc) && (!destination || button_wait_until || world.time < walk_wait))
-		if(!length(path) && step_off_doorway())
-			follow_path()
-			return
 		if(!destination && length(path))
 			follow_path()
 			return
@@ -88,9 +90,6 @@
 		return
 	var/obj/machinery/door/between = npc_door_between(holder.loc, get_turf(aim))
 	if(between && !(isturf(destination) && npc_can_stand(destination)))
-		if(++failed_steps > 3)
-			end_walk("the door won't open")
-			return
 		open_door(between)
 		return
 	if(!GLOB.npc_rooms.ready)
@@ -106,18 +105,7 @@
 		return
 	next_hop()
 
-/datum/ai_holder/complex_npc/proc/step_off_doorway()
-	var/turf/here = get_turf(holder)
-	if(here.npc_room || holder.pulledby || !(locate(/obj/machinery/door/airlock) in here))
-		return FALSE
-	for(var/dir in GLOB.cardinal)
-		var/turf/N = get_step(here, dir)
-		if(N?.npc_room && !(locate(/mob/living) in N) && npc_can_step(here, N, holder.GetAccess(), holder))
-			path = list(N)
-			return TRUE
-	return FALSE
-
-/datum/ai_holder/complex_npc/proc/next_hop()
+/datum/ai_holder/rsnpc/proc/next_hop()
 	var/datum/npc_room/here = npc_room_of(holder)
 	var/list/target_rooms = npc_rooms_of(walk_aim())
 	if(!here || !length(target_rooms))
@@ -141,7 +129,8 @@
 			if(GLOB.npc_rooms.can_reach(here, target_rooms, holder.GetAccess()))
 				end_walk("the way is shut for now")
 			else
-				end_walk(GLOB.npc_rooms.anyone_can_reach(here, target_rooms) ? "I don't have access" : "nobody can get there")
+				var/list/way = GLOB.npc_rooms.route(here, target_rooms, null, null, TRUE)
+				end_walk(!way ? "nobody can get there" : (npc_route_shuttered(way) ? "the fire shutters are down" : "I don't have access"))
 			return
 		L = route[1]
 	switch(L.kind)
@@ -149,9 +138,11 @@
 			var/obj/machinery/C = button_needed(L)
 			if(!C)
 				start_search(null, L.into, L.tiles[1])
+			else if(!air_past_safe(L))
+				walk_needs_suit = TRUE
+				end_walk("there's no air past the airlock")
 			else if(C.Adjacent(holder))
-				use_hand(C)
-				button_pressed_at = world.time
+				press_button(C, L)
 				button_wait_until = world.time + 60 SECONDS
 			else
 				start_search(npc_tiles_by(C, here), null, get_turf(C))
@@ -171,11 +162,24 @@
 			if(get_turf(holder) == T)
 				climb(L)
 				return
+			ladder_tried_at = 0
 			var/list/targets = list()
 			targets[T] = TRUE
 			start_search(targets, null, T)
+		if(NPC_LINK_PORTAL)
+			var/turf/T = L.tiles[1]
+			if(get_dist(holder, T) == 1 && npc_room_of(holder) == here)
+				enter_portal(L)
+				return
+			ladder_tried_at = 0
+			var/list/targets = list()
+			for(var/dir in GLOB.cardinal)
+				var/turf/N = get_step(T, dir)
+				if(N?.npc_room == here)
+					targets[N] = TRUE
+			start_search(targets, null, T)
 
-/datum/ai_holder/complex_npc/proc/final_targets()
+/datum/ai_holder/rsnpc/proc/final_targets()
 	var/turf/T = get_turf(walk_aim())
 	var/atom/near = (destination in in_sight) ? destination : T
 	. = list()
@@ -189,6 +193,13 @@
 		var/obj/machinery/door/D = npc_door_between(N, T)
 		if(near.Adjacent(N) || D && npc_door_passable(D, access))
 			.[N] = TRUE
+
+/proc/npc_step_back(turf/here, turf/next, mob/living/who)
+	for(var/dir in GLOB.cardinal)
+		var/turf/N = get_step(here, dir)
+		if(N && N != next && N.npc_room && N.npc_room != next.npc_room && !(locate(/mob/living) in N) && npc_can_step(here, N, who.GetAccess(), who))
+			return N
+	return null
 
 /proc/npc_door_between(turf/A, turf/B)
 	if(!A || !B || get_dist(A, B) != 1 || A.z != B.z)
@@ -210,7 +221,7 @@
 		if(T.npc_room == R && npc_can_stand(T) && A.Adjacent(T))
 			.[T] = TRUE
 
-/datum/ai_holder/complex_npc/proc/button_needed(datum/npc_link/L)
+/datum/ai_holder/rsnpc/proc/button_needed(datum/npc_link/L)
 	var/list/access = holder.GetAccess()
 	for(var/turf/T as anything in L.tiles)
 		for(var/obj/machinery/door/D in T)
@@ -218,7 +229,17 @@
 				return L.button_for(D, access)
 	return null
 
-/datum/ai_holder/complex_npc/proc/start_search(list/targets, datum/npc_room/target_room, turf/aim)
+/datum/ai_holder/rsnpc/proc/air_past_safe(datum/npc_link/L)
+	if(suited())
+		return TRUE
+	for(var/turf/T as anything in L.tiles)
+		for(var/dir in GLOB.cardinal)
+			var/turf/N = get_step(T, dir)
+			if(N?.npc_room == L.into && !npc_air_known_safe(N, holder))
+				return FALSE
+	return TRUE
+
+/datum/ai_holder/rsnpc/proc/start_search(list/targets, datum/npc_room/target_room, turf/aim)
 	var/list/rooms = list()
 	var/turf/start = get_turf(holder)
 	var/list/sides = list(npc_room_of(holder), target_room)
@@ -237,7 +258,7 @@
 	obstacles = list()
 	search_tick()
 
-/datum/ai_holder/complex_npc/proc/search_tick()
+/datum/ai_holder/rsnpc/proc/search_tick()
 	switch(path_search.advance(400))
 		if(NPC_PATH_FOUND)
 			path = path_search.tiles
@@ -267,29 +288,31 @@
 			else
 				end_walk("I can't reach it from inside the room")
 		if(NPC_PATH_NOT_YET)
-			if(path_search.danger && next_link())
+			if(path_search.airless)
+				walk_needs_suit = TRUE
+			if(path_search.danger && !path_search.skipped && next_link())
 				path_search = null
 				close_link("danger in the way")
 				return
-			var/why = path_search.danger ? "danger in the way" : (path_search.skipped ? "someone in the way" : "too far to work out")
+			var/why = path_search.skipped ? "someone in the way" : (path_search.danger ? "danger in the way" : "too far to work out")
 			path_search = null
 			walk_wait = world.time + 5 SECONDS
 			if(why != walk_outcome_why)
 				walk_outcome_why = why
 				NPC_TRACE(src, NPC_TRACE_WALK, "not yet: [why]")
 
-/datum/ai_holder/complex_npc/proc/close_link(why)
+/datum/ai_holder/rsnpc/proc/close_link(why)
 	var/datum/npc_link/L = next_link()
 	note("closed:\ref[L]", "[L.from.area] to [L.into.area]: [why]", 2 MINUTES)
 	NPC_TRACE(src, NPC_TRACE_WALK, "way from [L.from.area] to [L.into.area] closed for 2 minutes: [why]")
 	route = null
 	button_wait_until = 0
 
-/datum/ai_holder/complex_npc/proc/link_crossed()
+/datum/ai_holder/rsnpc/proc/link_crossed()
 	if(length(route))
 		route.Cut(1, 2)
 
-/datum/ai_holder/complex_npc/proc/path_done()
+/datum/ai_holder/rsnpc/proc/path_done()
 	path = list()
 	var/datum/npc_link/L = next_link()
 	if(!L)
@@ -298,11 +321,11 @@
 		if(NPC_LINK_DOOR, NPC_LINK_OPEN)
 			if(npc_room_of(holder) == L.into)
 				link_crossed()
-		if(NPC_LINK_STAIRS)
+		if(NPC_LINK_STAIRS, NPC_LINK_PORTAL)
 			if(get_turf(holder) == L.far || npc_room_of(holder) == L.into)
 				link_crossed()
 
-/datum/ai_holder/complex_npc/proc/follow_path()
+/datum/ai_holder/rsnpc/proc/follow_path()
 	var/turf/here = get_turf(holder)
 	if(!length(path))
 		path_done()
@@ -321,12 +344,10 @@
 		path = list()
 		return
 	if(open_by_hand(here, next))
-		if(++failed_steps > 8)
-			end_walk("the door won't open")
 		return
 	for(var/mob/living/M in next)
 		var/walking = world.time < M.l_move_time + 1 SECOND
-		if(walking ? M.dir != get_dir(next, here) : !here.npc_room && (locate(/obj/machinery/door/airlock) in here))
+		if(walking ? M.dir != get_dir(next, here) : !here.npc_room && npc_cycling_airlock_at(here))
 			if(!blocked_since)
 				blocked_since = world.time
 			else if(world.time - blocked_since > 2 SECONDS)
@@ -334,6 +355,11 @@
 				obstacles = list()
 				obstacles[next] = TRUE
 				path = list()
+				var/turf/back = !here.npc_room && npc_cycling_airlock_at(here) && npc_step_back(here, next, holder)
+				if(back)
+					holder.IMove(back, FALSE)
+					walk_wait = world.time + 10 SECONDS
+					NPC_TRACE(src, NPC_TRACE_WALK, "[M] is in the way; stepping out of the airlock door so it can cycle")
 			return
 	var/turf/simulated/S = next
 	holder.m_intent = (istype(S) && S.wet) ? "walk" : "run"
@@ -342,6 +368,7 @@
 	if(now == next)
 		path.Cut(1, 2)
 		blocked_since = 0
+		door_tried = null
 		failed_steps = 0
 		if(!length(path))
 			path_done()
@@ -349,7 +376,7 @@
 	if(now != here)
 		path = list()
 		var/datum/npc_link/L = next_link()
-		if(L?.kind == NPC_LINK_STAIRS && now == L.far)
+		if((L?.kind == NPC_LINK_STAIRS || L?.kind == NPC_LINK_PORTAL) && now == L.far)
 			link_crossed()
 		return
 	if(locate(/mob/living) in next)
@@ -361,11 +388,21 @@
 			obstacles[next] = TRUE
 			path = list()
 		return
+	var/obj/machinery/door/airlock/AL = locate() in next
+	if(AL?.density && !AL.operating)
+		if(door_tried != AL)
+			door_tried = AL
+			door_tried_at = world.time
+			NPC_TRACE(src, NPC_TRACE_WALK, "walking into [AL] to open it")
+		else if(world.time > door_tried_at + 2 SECONDS)
+			door_tried = null
+			end_walk("[AL] won't open")
+		return
 	if(++failed_steps > 12)
 		failed_steps = 0
 		path = list()
 
-/datum/ai_holder/complex_npc/proc/open_by_hand(turf/here, turf/next)
+/datum/ai_holder/rsnpc/proc/open_by_hand(turf/here, turf/next)
 	var/dir = get_dir(here, next)
 	for(var/obj/machinery/door/D in here)
 		if(D.density && (D.flags & ON_BORDER) && D.dir == dir)
@@ -379,11 +416,19 @@
 			return open_door(D)
 	return FALSE
 
-/datum/ai_holder/complex_npc/proc/open_door(obj/machinery/door/D)
+/datum/ai_holder/rsnpc/proc/open_door(obj/machinery/door/D)
 	if(!can_act() || holder.restrained() || !holder.can_use_hands())
 		return FALSE
 	if(D.operating)
 		return TRUE
+	if(door_tried == D && world.time > door_tried_at + 2 SECONDS)
+		door_tried = null
+		end_walk("[D] won't open")
+		return TRUE
+	if(door_tried != D)
+		door_tried = D
+		door_tried_at = world.time
+		NPC_TRACE(src, NPC_TRACE_WALK, "opening [D]")
 	if(istype(D, /obj/machinery/door/firedoor))
 		var/obj/machinery/door/firedoor/F = D
 		F.toggle_for(holder)
@@ -392,7 +437,7 @@
 	walk_wait = world.time + 1 SECOND
 	return TRUE
 
-/datum/ai_holder/complex_npc/proc/use_hand(atom/A)
+/datum/ai_holder/rsnpc/proc/use_hand(atom/A)
 	if(!can_act() || holder.restrained() || !holder.can_use_hands() || !A.Adjacent(holder) || !holder.checkClickCooldown())
 		return FALSE
 	var/old_usr = usr
@@ -402,7 +447,7 @@
 	holder.setClickCooldown(DEFAULT_QUICK_COOLDOWN)
 	return TRUE
 
-/datum/ai_holder/complex_npc/proc/press_tick()
+/datum/ai_holder/rsnpc/proc/press_tick()
 	var/datum/npc_link/L = next_link()
 	if(!L || !button_needed(L))
 		button_wait_until = 0
@@ -410,19 +455,55 @@
 			start_search(null, L.into, L.tiles[1])
 		return
 	if(world.time > button_wait_until)
-		close_link("the door did not open")
+		close_link("the airlock didn't cycle after a minute of pressing [button_needed(L)]")
 		return
 	var/obj/machinery/C = button_needed(L)
 	if(!C.Adjacent(holder))
 		button_wait_until = 0
 		return
 	if(world.time > button_pressed_at + 15 SECONDS)
-		use_hand(C)
-		button_pressed_at = world.time
+		press_button(C, L)
 
-/datum/ai_holder/complex_npc/proc/climb(datum/npc_link/L)
-	if(++failed_steps > 2 || !holder.may_climb_ladders(L.ladder))
-		close_link("can't climb the ladder")
+/datum/ai_holder/rsnpc/proc/press_button(obj/machinery/C, datum/npc_link/L)
+	var/obj/machinery/embedded_controller/radio/airlock/E = C
+	if(istype(E))
+		var/datum/embedded_program/airlock/P = E.program
+		var/inside = FALSE
+		for(var/turf/T as anything in L.tiles)
+			for(var/obj/machinery/door/airlock/A in T)
+				if(A.id_tag && A.id_tag == P?.tag_interior_door)
+					inside = TRUE
+		var/action = inside ? "cycle_int" : "cycle_ext"
+		if(!(action in E.valid_actions))
+			action = "[action]_door"
+		if(!press(E, action))
+			return
+	else if(!use_hand(C))
 		return
+	button_pressed_at = world.time
+	NPC_TRACE(src, NPC_TRACE_WALK, "pressed [C] to cycle into [L.into.area]")
+
+/datum/ai_holder/rsnpc/proc/climb(datum/npc_link/L)
+	if(!holder.may_climb_ladders(L.ladder))
+		close_link("I can't climb ladders")
+		return
+	if(ladder_tried_at)
+		ladder_tried_at = 0
+		close_link("I couldn't climb [L.ladder]")
+		return
+	ladder_tried_at = world.time
+	NPC_TRACE(src, NPC_TRACE_WALK, "climbing [L.ladder]")
 	walk_wait = world.time + 3 SECONDS
 	INVOKE_ASYNC(L.ladder, TYPE_PROC_REF(/obj/structure/ladder, climbLadder), holder, L.other)
+
+/datum/ai_holder/rsnpc/proc/enter_portal(datum/npc_link/L)
+	if(!holder.checkMoveCooldown())
+		return
+	if(ladder_tried_at)
+		ladder_tried_at = 0
+		close_link("I couldn't get through [L.portal]")
+		return
+	ladder_tried_at = world.time
+	NPC_TRACE(src, NPC_TRACE_WALK, "going through [L.portal] to [L.into.area]")
+	walk_wait = world.time + 2 SECONDS
+	holder.IMove(L.tiles[1], FALSE)

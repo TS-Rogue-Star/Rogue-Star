@@ -19,9 +19,13 @@ GLOBAL_LIST_INIT(npc_say_lines, list(
 	"say_brush_off" = list("Not now."),
 	"opinion_liked" = list("I like you, %name%."),
 	"opinion_disliked" = list("I dislike you, %name%."),
+	"say_opinion_loved" = list("%name%? I love them."),
 	"say_opinion_liked" = list("%name%? I like them."),
 	"say_opinion_neutral" = list("%name%? I'm neutral towards them."),
 	"say_opinion_disliked" = list("%name%? I don't like them."),
+	"say_opinion_hated" = list("%name%? I hate them."),
+	"say_opinion_wary" = list("I'm wary of them though.'"),
+	"say_opinion_dangerous" = list("They're dangerous though."),
 	"say_opinion_unknown" = list("%name%? Literally who?"),
 	"say_opinion_nobody" = list("Who?"),
 	"say_recall_violence" = list("I saw %name% attack %other%."),
@@ -39,7 +43,6 @@ GLOBAL_LIST_INIT(npc_say_lines, list(
 	"protest_mild" = list("Hey!"),
 	"protest_grabbed" = list("Let go of me!"),
 	"protest_escalating" = list("Back off, %name%."),
-	"alarm_sighting" = list("%name% is dangerous! They're in %place%."),
 	"threat_confront" = list("%name%! Stay where you are!"),
 	"threat_avoid" = list("Staying away from %name%."),
 	"narrate_retreat" = list("Get away from me!"),
@@ -69,7 +72,6 @@ GLOBAL_LIST_INIT(npc_say_lines, list(
 	"stop_work_never_stopped" = list("I never stopped, %name%."),
 	"stop_work_released" = list("Back to work by your direction, %name%."),
 	"summons_where" = list("Where are you summoning me, %name%?"),
-	"summons_no_way" = list("I can't find a way to %place%, %name%."),
 	"summons_no_post" = list("I don't have a post, %name%."),
 	"summons_already_at_post" = list("I'm already at my post, %name%."),
 	"summons_agreed_room" = list("On my way to %place%, %name%."),
@@ -86,7 +88,7 @@ GLOBAL_LIST_INIT(npc_say_lines, list(
 	"talk_hello_back" = list("Hello, %name%."),
 	"talk_busy" = list("Too busy to talk %name%."),
 	"talk_busy_talking" = list("Can't talk, %name%, I'm talking to %other%."),
-	"talk_small_talk" = list("Working hard, or hardly working?.", "Quiet today.", "Sounds like a case of the Mondays.", "Another day in paradise."),
+	"talk_small_talk" = list("Working hard, or hardly working?", "Quiet today.", "Sounds like a case of the Mondays.", "Another day in paradise."),
 	"talk_prompt" = list("You still there %name%?"),
 	"talk_signoff" = list("Bye, %name%. Good talk."),
 	"talk_cut_short" = list("Bye, %name%. Seems you're busy."),
@@ -150,6 +152,9 @@ GLOBAL_LIST_INIT(npc_say_lines, list(
 	"pred_digest_yes" = list("Fine %name%, I'll digest %other%."),
 	"pred_eat_yes" = list("Fine %name%, I'll eat %other%."),
 	"pred_eat_nobody" = list("I don't see them %name%."),
+	"assignment_queued" = list("I'll do that later, %name%."),
+	"assignment_queue_full" = list("I have too much of a backlog %name%."),
+	"assignment_dropped" = list("Can't do %task% for you after all %name%, I'm too busy."),
 ))
 
 GLOBAL_LIST_INIT(npc_line_shapes, list(
@@ -185,7 +190,7 @@ GLOBAL_LIST_INIT(npc_line_shapes, list(
 	for(var/i in 1 to length(parts))
 		whole += (i % 2) ? parts[i] : " x "
 	whole = npc_clean_line(whole)
-	if(!(group in list("alarm_witness", "alarm_sighting", "help_attacked")))
+	if(!(group in list("alarm_witness", "help_attacked")))
 		for(var/word in GLOB.npc_alarm_words)
 			if(npc_has_words(whole, "x is [word]"))
 				return "would be heard as an attack report"

@@ -2,7 +2,7 @@
 	say = "stop work"
 	obedience = 21
 
-/datum/npc_command/stop_work/run_command(datum/ai_holder/complex_npc/ai_mind, mob/living/speaker, rest, via)
+/datum/npc_command/stop_work/run_command(datum/ai_holder/rsnpc/ai_mind, mob/living/speaker, rest, via)
 	if(ai_mind.assignment(/datum/npc_assignment/stop_work))
 		ai_mind.say_line("already_stopped_work", list("name" = speaker.name))
 		return
@@ -13,7 +13,7 @@
 /datum/npc_command/back_to_work
 	say = "back to work"
 
-/datum/npc_command/back_to_work/run_command(datum/ai_holder/complex_npc/ai_mind, mob/living/speaker, rest, via)
+/datum/npc_command/back_to_work/run_command(datum/ai_holder/rsnpc/ai_mind, mob/living/speaker, rest, via)
 	var/datum/npc_assignment/stop_work/A = ai_mind.assignment(/datum/npc_assignment/stop_work)
 	if(!A)
 		ai_mind.say_line("stop_work_never_stopped", list("name" = speaker.name))
@@ -21,5 +21,6 @@
 	ai_mind.end_assignment(A, "[speaker] released me to work again", "stop_work_released", speaker)
 
 /datum/npc_assignment/stop_work
+	state = TRUE
 	name = "stop work"
 	time_up_line = "stop_work_done"

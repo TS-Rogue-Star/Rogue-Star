@@ -1,8 +1,8 @@
-/datum/ai_holder/complex_npc
+/datum/ai_holder/rsnpc
 	var/list/people_in_sight = list()
 	var/people_looked_at = 0
 
-/datum/ai_holder/complex_npc/proc/look_people()
+/datum/ai_holder/rsnpc/proc/look_people()
 	if(looked_at && world.time < looked_at + 1 SECOND)
 		var/list/people = list()
 		for(var/mob/living/M in in_sight)
@@ -24,13 +24,16 @@
 		var/turf/T = M.loc
 		var/visible = visible_turfs[T]
 		if(isnull(visible))
-			visible = (T in nearby) && (get_dist(here, T) <= holder.see_in_dark || T.get_lumcount() > LIGHTING_SOFT_THRESHOLD)
+			visible = (T in nearby) && can_see_tile(here, T)
 			visible_turfs[T] = visible
 		if(visible)
 			people_in_sight += M
 	return people_in_sight
 
-/datum/ai_holder/complex_npc/proc/look()
+/datum/ai_holder/rsnpc/proc/can_see_tile(turf/here, turf/T)
+	return get_dist(here, T) <= holder.see_in_dark || T.get_lumcount() > LIGHTING_SOFT_THRESHOLD
+
+/datum/ai_holder/rsnpc/proc/look()
 	if(looked_at && world.time < looked_at + 1 SECOND)
 		return in_sight
 	looked_at = world.time
@@ -49,7 +52,7 @@
 	for(var/atom/A in hear(7, here))
 		var/turf/T = A
 		if(istype(T))
-			if(get_dist(here, T) <= holder.see_in_dark || T.get_lumcount() > LIGHTING_SOFT_THRESHOLD)
+			if(can_see_tile(here, T))
 				turfs_in_sight[T] = TRUE
 		else if(A != holder)
 			things += A
@@ -71,7 +74,7 @@
 	form_opinions()
 	return in_sight
 
-/datum/ai_holder/complex_npc/proc/sees(atom/movable/A)
+/datum/ai_holder/rsnpc/proc/sees(atom/movable/A)
 	if(A in look())
 		return TRUE
 	looked_at = 0

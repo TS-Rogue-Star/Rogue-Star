@@ -1,10 +1,10 @@
 /datum/tgui_module/npc_panel
 	name = "NPC Panel"
 	tgui_id = "NpcPanel"
-	var/datum/ai_holder/complex_npc/ai_mind
+	var/datum/ai_holder/rsnpc/ai_mind
 	var/seen_filter = ""
 
-/datum/tgui_module/npc_panel/New(datum/ai_holder/complex_npc/ai_mind)
+/datum/tgui_module/npc_panel/New(datum/ai_holder/rsnpc/ai_mind)
 	..()
 	src.ai_mind = ai_mind
 
@@ -64,7 +64,7 @@
 		tasks += list(list(
 			"index" = i,
 			"name" = K.name,
-			"tier" = K.tier,
+			"tier" = K.level(ai_mind),
 			"score" = round(K.score(ai_mind), 0.01),
 			"bored" = round(ai_mind.bored_amount(K.type), 0.01),
 			"weight" = round(ai_mind.task_weight(K), 0.01),
@@ -223,19 +223,19 @@
 		message_admins("[key_name_admin(usr)] [what] on NPC [ai_mind.holder.real_name].")
 	return TRUE
 
-/datum/ai_holder/complex_npc/proc/open_panel(mob/user)
+/datum/ai_holder/rsnpc/proc/open_panel(mob/user)
 	if(!panel)
 		panel = new(src)
 	panel.tgui_interact(user)
 
-/mob/living/carbon/human/ai_controlled/station/vv_get_dropdown()
+/mob/living/carbon/human/ai_controlled/rsnpc/station/vv_get_dropdown()
 	. = ..()
 	VV_DROPDOWN_OPTION("npc_panel", "NPC Panel")
 
-/mob/living/carbon/human/ai_controlled/station/vv_do_topic(list/href_list)
+/mob/living/carbon/human/ai_controlled/rsnpc/station/vv_do_topic(list/href_list)
 	. = ..()
 	IF_VV_OPTION("npc_panel")
 		if(!check_rights(R_ADMIN|R_EVENT))
 			return
-		var/datum/ai_holder/complex_npc/ai_mind = npc_ai_mind(src)
+		var/datum/ai_holder/rsnpc/ai_mind = npc_ai_mind(src)
 		ai_mind?.open_panel(usr)

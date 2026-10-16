@@ -174,7 +174,7 @@ GLOBAL_VAR_INIT(npc_character_problems, 0)
 		log_npc_config(path, "belly file [bellies] could not be read; no bellies.")
 	return data
 
-/mob/living/carbon/human/ai_controlled/station/proc/npc_vore_from(datum/npc_character/C)
+/mob/living/carbon/human/ai_controlled/rsnpc/station/proc/npc_vore_from(datum/npc_character/C)
 	for(var/key in C.vore)
 		if(!(key in vars))
 			log_npc_config(C.path, "vore \"[key]\" does not apply to a body; ignored.")
@@ -191,7 +191,7 @@ GLOBAL_VAR_INIT(npc_character_problems, 0)
 		vore_selected = vore_organs[1]
 		bellies_loaded = TRUE
 
-/mob/living/carbon/human/ai_controlled/station/proc/npc_body_from(datum/npc_character/C)
+/mob/living/carbon/human/ai_controlled/rsnpc/station/proc/npc_body_from(datum/npc_character/C)
 	var/list/body = C.body
 	var/datum/preferences/P = new
 	var/datum/tgui_module/custom_marking_designer/D = new(P, null, "body", TRUE)
@@ -222,7 +222,8 @@ GLOBAL_VAR_INIT(npc_character_problems, 0)
 	var/list/markings = body["body_markings"]
 	if(islist(markings) && !D.apply_body_marking_payload(markings))
 		log_npc_config(C.path, "body markings were refused; left out.")
-	var/marked = islist(body["custom_markings"]) && npc_drawn_marking(P, body["custom_markings"])
+	if(islist(body["custom_markings"]))
+		npc_drawn_marking(P, body["custom_markings"])
 	var/list/traits = body["traits"]
 	if(islist(traits))
 		if(islist(traits["selected_traits"]))
@@ -245,6 +246,16 @@ GLOBAL_VAR_INIT(npc_character_problems, 0)
 	var/list/equipment = body["equipment"]
 	if(islist(equipment))
 		D.apply_equipment_values(equipment)
+	var/list/loadout = body["loadout"]
+	var/list/slots = islist(loadout) && loadout["slots"]
+	if(islist(slots))
+		P.gear = list()
+		var/list/items = slots["[loadout["active"]]"]
+		for(var/list/item in items)
+			if(!gear_datums[item["id"]])
+				log_npc_config(C.path, "loadout item \"[item["id"]]\" is not an item; left out.")
+				continue
+			P.gear[item["id"]] = islist(item["tweaks"]) ? item["tweaks"] : list()
 	P.be_random_name = FALSE
 	P.resleeve_scan = FALSE
 	P.reconcile_languages_for_species()
@@ -266,10 +277,9 @@ GLOBAL_VAR_INIT(npc_character_problems, 0)
 	force_update_limbs()
 	update_icons_body()
 	update_transform()
-	if(!marked)
-		qdel(P)
+	npc_prefs = P
 
-/mob/living/carbon/human/ai_controlled/station/proc/npc_limbs_from(datum/npc_character/C, datum/preferences/P, list/limbs)
+/mob/living/carbon/human/ai_controlled/rsnpc/station/proc/npc_limbs_from(datum/npc_character/C, datum/preferences/P, list/limbs)
 	if(!islist(limbs))
 		return
 	var/list/external = limbs["external"]

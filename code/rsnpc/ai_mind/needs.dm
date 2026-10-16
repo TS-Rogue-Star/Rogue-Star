@@ -5,14 +5,14 @@ GLOBAL_LIST_INIT(npc_needs, list(
 ))
 
 /datum/npc_need
-	var/datum/ai_holder/complex_npc/ai_mind
+	var/datum/ai_holder/rsnpc/ai_mind
 	var/level = 100
 	var/at = 0
 	var/start_key
 	var/setpoint_key
 	var/loss_key
 
-/datum/npc_need/New(datum/ai_holder/complex_npc/ai_mind)
+/datum/npc_need/New(datum/ai_holder/rsnpc/ai_mind)
 	src.ai_mind = ai_mind
 	level = ai_mind.npc_psetting(start_key)
 	at = world.time
@@ -54,6 +54,6 @@ GLOBAL_LIST_INIT(npc_needs, list(
 /datum/npc_need/health/pressure()
 	return 1 - ai_mind.health_share()
 
-/datum/ai_holder/complex_npc/proc/need_pressure(name)
+/datum/ai_holder/rsnpc/proc/need_pressure(name)
 	var/datum/npc_need/N = needs[name]
 	return N ? N.pressure() : 0

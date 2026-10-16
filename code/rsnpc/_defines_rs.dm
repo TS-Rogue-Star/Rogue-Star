@@ -1,5 +1,5 @@
 #define NPC_CONFIG_DIR "config/rsnpc/"
-#define NPC_CHARACTER_DIR "config/npcs/"
+#define NPC_CHARACTER_DIR "config/rsnpc/npcs/"
 
 #define NPC_TRACE_LIFE "LIFE"
 #define NPC_TRACE_WALK "WALK"
@@ -26,6 +26,7 @@
 #define NPC_LINK_STAIRS 2
 #define NPC_LINK_LADDER 3
 #define NPC_LINK_OPEN 4
+#define NPC_LINK_PORTAL 5
 
 #define NPC_TIER_IDLE 1
 #define NPC_TIER_FULFILLMENT 2
@@ -54,17 +55,25 @@
 #define NPC_FACT_IN(A) "in:\ref[A]"
 #define NPC_FACT_GREETED(M) "greeted:\ref[M]"
 #define NPC_FACT_INTERNALS "internals"
+#define NPC_FACT_INTERNALS_OFF "internals_off"
+#define NPC_FACT_UNCUFFED "uncuffed"
 #define NPC_FACT_MASKED "masked"
 #define NPC_FACT_SAFE "safe"
 #define NPC_FACT_BANDAGED "bandaged"
 #define NPC_FACT_SALVED "salved"
 #define NPC_FACT_TREATED "treated"
 #define NPC_FACT_DRANK "drank"
+#define NPC_FACT_MOUTH_FREE "mouth_free"
 #define NPC_FACT_SHUTTERS_UP "shutters_up"
 #define NPC_FACT_GEAR(G) "gear:\ref[G]"
 #define NPC_FACT_EATEN(M) "eaten:\ref[M]"
+#define NPC_FACT_AGREED_PREY(M) "agreed_prey:\ref[M]"
 #define NPC_FACT_STOMACH_HANDLED "stomach_handled"
 #define NPC_FACT_RESPONDED(A) "responded:\ref[A]"
+#define NPC_FACT_GIVEN(A) "given:\ref[A]"
+#define NPC_FACT_HAND_FREE "hand_free"
+#define NPC_FACT_OUT_OF_AIRLOCK "out_of_airlock"
+#define NPC_FACT_RECEIVED(A) "received:\ref[A]"
 
 #define NPC_NEED_REST "rest"
 #define NPC_NEED_HUNGER "hunger"
@@ -89,8 +98,8 @@
 #define NPC_ANSWER_BYE "bye"
 #define NPC_ANSWER_GOODBYE "goodbye"
 
-#define NPC_WARY 15
-#define NPC_DANGEROUS 40
+#define NPC_WARY 10
+#define NPC_DANGEROUS 25
 
 #define NPC_EVENT_JUSTIFIED_FIGHT 1
 #define NPC_EVENT_FIGHT 2

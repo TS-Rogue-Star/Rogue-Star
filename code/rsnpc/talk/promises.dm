@@ -9,13 +9,13 @@
 	var/until
 	var/why
 
-/datum/ai_holder/complex_npc/proc/open_promises(kind)
+/datum/ai_holder/rsnpc/proc/open_promises(kind)
 	. = list()
 	for(var/datum/npc_promise/P as anything in promises)
 		if(!kind || npc_kind_is(kind, P.kind))
 			. += P
 
-/datum/ai_holder/complex_npc/proc/end_promise(datum/npc_promise/P, state, why)
+/datum/ai_holder/rsnpc/proc/end_promise(datum/npc_promise/P, state, why)
 	P.state = state
 	P.why = why
 	promises -= P
@@ -28,7 +28,7 @@
 		var/mob/living/M = P.who?.resolve() || P.asked?.resolve()
 		cross_off(P.channel ? "ask:radio:[P.kind]" : "ask:\ref[M]", 5 MINUTES, why)
 
-/datum/ai_holder/complex_npc/proc/check_promises()
+/datum/ai_holder/rsnpc/proc/check_promises()
 	for(var/datum/npc_promise/P as anything in open_promises())
 		if(P.kind == "treatment" && fact_true(NPC_FACT_TREATED))
 			end_promise(P, P.who ? NPC_PROMISE_KEPT : NPC_PROMISE_DROPPED, P.who ? "[P.who_name] treated me" : "got better")
@@ -40,8 +40,8 @@
 			else
 				end_promise(P, NPC_PROMISE_BROKEN, "[P.who_name] never came")
 
-/datum/ai_holder/complex_npc/proc/hear_answer(mob/living/speaker, line, via)
-	var/rest = npc_after_name(line, holder)
+/datum/ai_holder/rsnpc/proc/hear_answer(mob/living/speaker, line, via)
+	var/rest = npc_after_name(line, holder, null, TRUE)
 	if(isnull(rest))
 		rest = line
 	var/yes = npc_starts_with(rest, NPC_ANSWER_YES)
@@ -61,13 +61,13 @@
 		return TRUE
 	return eat_prey_answer(speaker, yes) || digest_answer(speaker, yes)
 
-/datum/ai_holder/complex_npc/proc/may_answer(datum/npc_promise/P, mob/living/speaker)
+/datum/ai_holder/rsnpc/proc/may_answer(datum/npc_promise/P, mob/living/speaker)
 	var/mob/living/M = P.asked?.resolve()
 	if(M)
 		return speaker == M
-	return npc_can_supply(npc_job_of(speaker), P.kind)
+	return npc_can_supply(npc_manifest_job(speaker), P.kind)
 
-/datum/ai_holder/complex_npc/proc/received(mob/living/giver, obj/item/I)
+/datum/ai_holder/rsnpc/proc/received(mob/living/giver, obj/item/I)
 	for(var/datum/npc_promise/P as anything in open_promises())
 		if(!ispath(P.kind) || !istype(I, P.kind))
 			continue

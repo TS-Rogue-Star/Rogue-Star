@@ -27,11 +27,11 @@ GLOBAL_LIST_INIT(npc_held_moods, list(
 	var/struggled_at = 0
 	var/betrayed = FALSE
 
-/datum/ai_holder/complex_npc/handle_eaten()
+/datum/ai_holder/rsnpc/handle_eaten()
 	clear_task()
 	held_tick()
 
-/datum/ai_holder/complex_npc/proc/held_by()
+/datum/ai_holder/rsnpc/proc/held_by()
 	var/obj/belly/B = holder.loc
 	if(istype(B))
 		return B.owner
@@ -40,7 +40,7 @@ GLOBAL_LIST_INIT(npc_held_moods, list(
 			return G.assailant
 	return null
 
-/datum/ai_holder/complex_npc/proc/held_tick()
+/datum/ai_holder/rsnpc/proc/held_tick()
 	var/mob/living/M = held_by()
 	if(held && held.by?.resolve() != M)
 		end_held()
@@ -69,12 +69,12 @@ GLOBAL_LIST_INIT(npc_held_moods, list(
 		if(asks)
 			held.asked_at = world.time
 		say_line("held_[held.in_belly ? "belly" : "grab"]_[mood]", list("name" = M.name))
-	if(entry["struggle"] && world.time > held.struggled_at + entry["struggle"] SECONDS)
+	if(entry["struggle"] && world.time > held.struggled_at + (held.in_belly ? entry["struggle"] SECONDS : RESIST_COOLDOWN))
 		held.struggled_at = world.time
 		held.tired += 0.04
 		INVOKE_ASYNC(src, PROC_REF(start_resist))
 
-/datum/ai_holder/complex_npc/proc/start_held(mob/living/M)
+/datum/ai_holder/rsnpc/proc/start_held(mob/living/M)
 	held = new
 	held.by = WEAKREF(M)
 	held.by_name = M.name
@@ -93,7 +93,7 @@ GLOBAL_LIST_INIT(npc_held_moods, list(
 		held.start_mood = -0.4
 	NPC_TRACE(src, NPC_TRACE_WITNESS, "held by [M] ([held.in_belly ? "inside them" : "in a firm grab"])")
 
-/datum/ai_holder/complex_npc/proc/end_held()
+/datum/ai_holder/rsnpc/proc/end_held()
 	var/mob/living/M = held.by?.resolve()
 	if(M && holder.stat == CONSCIOUS && world.time > held.since + 5 SECONDS)
 		var/mood = held_mood(M)
@@ -101,7 +101,7 @@ GLOBAL_LIST_INIT(npc_held_moods, list(
 	NPC_TRACE(src, NPC_TRACE_WITNESS, "no longer held by [held.by_name]")
 	held = null
 
-/datum/ai_holder/complex_npc/proc/held_effects(mob/living/M)
+/datum/ai_holder/rsnpc/proc/held_effects(mob/living/M)
 	if(world.time < held.effects_at + 10 SECONDS)
 		return
 	var/minutes = (world.time - held.effects_at) / (1 MINUTE)
@@ -119,13 +119,13 @@ GLOBAL_LIST_INIT(npc_held_moods, list(
 		held.betrayed = TRUE
 		say_line("held_betrayed", list("name" = M.name))
 		change_opinion(M, -npc_psetting("held_betrayed_opinion"), "betrayed me")
-		add_danger(M, NPC_DANGEROUS, "betrayed me")
+		add_danger(M, 10, "betrayed me")
 		return
 	change_opinion(M, -8 * minutes, "harming me inside them")
 	add_danger(M, 10 * minutes, "harming me inside them")
 
-/datum/ai_holder/complex_npc/proc/held_mood(mob/living/M)
-	var/happy = held.start_mood + 1.5 * opinion_of(M) / 100 - min(1, danger_of(M) / 40) - 0.2 * held.asks_ignored + npc_psetting("prey_desire")
+/datum/ai_holder/rsnpc/proc/held_mood(mob/living/M)
+	var/happy = held.start_mood + 1.5 * opinion_of(M) / 100 - min(1, danger_of(M) / NPC_DANGEROUS) - 0.2 * held.asks_ignored + npc_psetting("prey_desire")
 	var/obj/belly/B = holder.loc
 	if(istype(B) && B.digest_mode == DM_HEAL)
 		happy += 0.3

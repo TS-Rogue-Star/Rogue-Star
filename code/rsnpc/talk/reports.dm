@@ -1,6 +1,6 @@
 GLOBAL_LIST_INIT(npc_alarm_words, list("attacking", "killing", "stabbing", "shooting", "murdering", "beating", "dangerous", "hostile", "armed"))
 
-/datum/ai_holder/complex_npc/proc/known_names()
+/datum/ai_holder/rsnpc/proc/known_names()
 	. = list()
 	for(var/key in opinions)
 		. |= key
@@ -26,7 +26,7 @@ GLOBAL_LIST_INIT(npc_alarm_words, list("attacking", "killing", "stabbing", "shoo
 				return name
 	return null
 
-/datum/ai_holder/complex_npc/proc/hear_report(mob/living/speaker, line, via)
+/datum/ai_holder/rsnpc/proc/hear_report(mob/living/speaker, line, via)
 	if(!via)
 		return FALSE
 	var/list/names = known_names()
@@ -38,11 +38,15 @@ GLOBAL_LIST_INIT(npc_alarm_words, list("attacking", "killing", "stabbing", "shoo
 	if(victim && danger_of(victim) >= NPC_DANGEROUS)
 		NPC_TRACE(src, NPC_TRACE_WITNESS, "heard [speaker] report [reported], but [victim] is dangerous")
 		return TRUE
+	var/liking = opinion_of(reported)
+	if(liking >= npc_setting("friend_ignores_claims_at") && opinion_of(speaker) < liking)
+		NPC_TRACE(src, NPC_TRACE_WITNESS, "didn't believe [speaker] about [reported]; they're my friend")
+		return TRUE
 	var/key = "report:\ref[speaker]:[reported]"
 	if(noted(key))
 		NPC_TRACE(src, NPC_TRACE_WITNESS, "ignored a report on [reported] from [speaker]; repeated too soon")
 		return TRUE
 	note(key, speaker.name, 2 MINUTES)
-	add_danger(reported, SSjob.is_job_in_department(npc_job_of(holder), DEPARTMENT_SECURITY) ? 40 : 20, "reported on the radio by [speaker]")
+	add_danger(reported, npc_setting("report_points") * clamp(1 - liking / 100, 0, 1), "reported on the radio by [speaker]")
 	change_opinion(reported, -10, "reported on the radio by [speaker]")
 	return TRUE

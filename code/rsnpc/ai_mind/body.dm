@@ -2,10 +2,11 @@ GLOBAL_LIST_EMPTY(npc_workers)
 
 GLOBAL_LIST_INIT(npc_species, list(SPECIES_HUMAN, SPECIES_VULPKANIN, SPECIES_UNATHI, SPECIES_TESHARI, SPECIES_NEVREAN, SPECIES_SERGAL))
 
-/mob/living/carbon/human/ai_controlled/station
-	ai_holder_type = /datum/ai_holder/complex_npc
+/mob/living/carbon/human/ai_controlled/rsnpc/station
+	ai_holder_type = /datum/ai_holder/rsnpc
 	a_intent = I_HELP
 	key_access_restricted = FALSE
+	var/datum/preferences/npc_prefs
 	to_wear_helmet = null
 	to_wear_glasses = null
 	to_wear_mask = null
@@ -21,7 +22,7 @@ GLOBAL_LIST_INIT(npc_species, list(SPECIES_HUMAN, SPECIES_VULPKANIN, SPECIES_UNA
 	to_wear_id_type = null
 	to_wear_r_hand = null
 
-/mob/living/carbon/human/ai_controlled/station/Initialize(mapload, job_title, species_name, gender, name, datum/npc_character/character)
+/mob/living/carbon/human/ai_controlled/rsnpc/station/Initialize(mapload, job_title, species_name, gender, name, datum/npc_character/character)
 	generate_species = (species_name in GLOB.npc_species) ? species_name : pick(GLOB.npc_species)
 	. = ..()
 	if(character)
@@ -34,15 +35,21 @@ GLOBAL_LIST_INIT(npc_species, list(SPECIES_HUMAN, SPECIES_VULPKANIN, SPECIES_UNA
 		mind.role_alt_title = character.alt_title
 	GLOB.npc_workers += src
 	job_master.EquipRank(src, pick_npc_job(character ? character.job : job_title), TRUE)
+	if(npc_prefs && !length(npc_prefs.custom_markings))
+		qdel(npc_prefs)
+	npc_prefs = null
 	allownpcvore = TRUE
 	if(character)
 		npc_vore_from(character)
-	var/datum/ai_holder/complex_npc/ai_mind = npc_ai_mind(src)
+	var/datum/ai_holder/rsnpc/ai_mind = npc_ai_mind(src)
 	if(ai_mind)
 		ai_mind.character = character
 		ai_mind.start()
 
-/mob/living/carbon/human/ai_controlled/station/Destroy()
+/mob/living/carbon/human/ai_controlled/rsnpc/station/loadout_prefs()
+	return ..() || npc_prefs
+
+/mob/living/carbon/human/ai_controlled/rsnpc/station/Destroy()
 	GLOB.npc_workers -= src
 	if(mind?.current == src)
 		mind.current = null
@@ -50,13 +57,22 @@ GLOBAL_LIST_INIT(npc_species, list(SPECIES_HUMAN, SPECIES_VULPKANIN, SPECIES_UNA
 		mind.original = null
 	return ..()
 
-/mob/living/carbon/human/ai_controlled/station/Logout()
+/mob/living/carbon/human/ai_controlled/rsnpc/station/Login()
 	. = ..()
-	var/datum/ai_holder/complex_npc/ai_mind = npc_ai_mind(src)
+	var/datum/ai_holder/rsnpc/ai_mind = npc_ai_mind(src)
+	if(ai_mind)
+		ai_mind.clear_task()
+		ai_mind.escaping = FALSE
+		ai_mind.stop_walk()
+		NPC_TRACE(ai_mind, NPC_TRACE_LIFE, "a player took over; dropped my task and walk")
+
+/mob/living/carbon/human/ai_controlled/rsnpc/station/Logout()
+	. = ..()
+	var/datum/ai_holder/rsnpc/ai_mind = npc_ai_mind(src)
 	if(ai_mind && stat != DEAD)
 		ai_mind.start_fast_processing()
 
-/mob/living/carbon/human/ai_controlled/station/proc/npc_random_generate(species, gender, name)
+/mob/living/carbon/human/ai_controlled/rsnpc/station/proc/npc_random_generate(species, gender, name)
 	var/datum/preferences/P = new
 	P.species = species
 	P.randomize_appearance_and_body_for()

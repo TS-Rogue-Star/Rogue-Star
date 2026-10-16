@@ -9,11 +9,11 @@ GLOBAL_LIST_INIT(npc_emotes, list(
 				return emote
 	return null
 
-/datum/ai_holder/complex_npc/on_hear_emote(mob/living/speaker, message)
+/datum/ai_holder/rsnpc/on_hear_emote(mob/living/speaker, message)
 	if(!findtext(message, "class='emote'") || !can_notice(speaker) || !(speaker in look()))
 		return
 	var/line = npc_clean_line(message)
-	if(!npc_named_in(line, holder))
+	if(!npc_named_in(line, holder, TRUE))
 		return
 	var/emote = npc_emote_in(line)
 	if(!emote)

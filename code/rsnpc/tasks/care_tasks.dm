@@ -1,4 +1,4 @@
-/datum/ai_holder/complex_npc/proc/wound_to_dress(kind)
+/datum/ai_holder/rsnpc/proc/wound_to_dress(kind)
 	var/mob/living/carbon/human/H = holder
 	if(!istype(H))
 		return null
@@ -19,26 +19,26 @@
 	tier = NPC_TIER_NEEDS
 	uses = list(/obj/structure/closet)
 
-/datum/npc_task/treat_wounds/can_start(datum/ai_holder/complex_npc/ai_mind)
+/datum/npc_task/treat_wounds/can_start(datum/ai_holder/rsnpc/ai_mind)
 	return !ai_mind.fact_true(NPC_FACT_BANDAGED) || !ai_mind.fact_true(NPC_FACT_SALVED)
 
-/datum/npc_task/treat_wounds/value(datum/ai_holder/complex_npc/ai_mind)
+/datum/npc_task/treat_wounds/value(datum/ai_holder/rsnpc/ai_mind)
 	return 100
 
-/datum/npc_task/treat_wounds/goal(datum/ai_holder/complex_npc/ai_mind)
+/datum/npc_task/treat_wounds/goal(datum/ai_holder/rsnpc/ai_mind)
 	return list(NPC_FACT_BANDAGED, NPC_FACT_SALVED)
 
 /datum/npc_task/get_treated
 	name = "get treated"
 	tier = NPC_TIER_NEEDS
 
-/datum/npc_task/get_treated/can_start(datum/ai_holder/complex_npc/ai_mind)
+/datum/npc_task/get_treated/can_start(datum/ai_holder/rsnpc/ai_mind)
 	return !ai_mind.fact_true(NPC_FACT_TREATED)
 
-/datum/npc_task/get_treated/value(datum/ai_holder/complex_npc/ai_mind)
+/datum/npc_task/get_treated/value(datum/ai_holder/rsnpc/ai_mind)
 	return 50
 
-/datum/npc_task/get_treated/goal(datum/ai_holder/complex_npc/ai_mind)
+/datum/npc_task/get_treated/goal(datum/ai_holder/rsnpc/ai_mind)
 	return list(NPC_FACT_TREATED)
 
 /datum/npc_action/dress_wounds
@@ -49,12 +49,12 @@
 	var/tries = 0
 	var/wait_until = 0
 
-/datum/npc_action/dress_wounds/variants(datum/ai_holder/complex_npc/ai_mind, fact)
+/datum/npc_action/dress_wounds/variants(datum/ai_holder/rsnpc/ai_mind, fact)
 	if(fact != src.fact)
 		return list()
 	return list(copy(null, 1, list(NPC_FACT_HAVE(kind)), list(fact)))
 
-/datum/npc_action/dress_wounds/run_action(datum/ai_holder/complex_npc/ai_mind)
+/datum/npc_action/dress_wounds/run_action(datum/ai_holder/rsnpc/ai_mind)
 	var/mob/living/carbon/human/H = ai_mind.holder
 	if(world.time < wait_until)
 		return NPC_RUNNING

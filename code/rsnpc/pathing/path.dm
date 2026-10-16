@@ -20,6 +20,7 @@
 	var/list/tiles
 	var/skipped = FALSE
 	var/danger = FALSE
+	var/airless = FALSE
 
 /datum/npc_path/New(mob/living/who, turf/start, list/targets, datum/npc_room/target_room, turf/aim, list/access, list/skip, list/rooms)
 	src.who = who
@@ -32,7 +33,7 @@
 	src.rooms = rooms
 	avoid_danger = who && !npc_step_danger(start, who)
 	person_cost = npc_setting("path_person_cost")
-	var/datum/ai_holder/complex_npc/ai_mind = who && npc_ai_mind(who)
+	var/datum/ai_holder/rsnpc/ai_mind = who && npc_ai_mind(who)
 	for(var/mob/living/L in ai_mind?.in_sight)
 		if(L != who && get_dist(L, start) <= npc_setting("path_person_range"))
 			people[get_turf(L)] = TRUE
@@ -80,6 +81,8 @@
 				continue
 			if(avoid_danger && npc_step_danger(N, who))
 				danger = TRUE
+				if(!npc_air_known_safe(N, who))
+					airless = TRUE
 				continue
 			var/c = cost[T] + 1 + (people[N] ? person_cost : 0)
 			if(!isnull(cost[N]) && cost[N] <= c)

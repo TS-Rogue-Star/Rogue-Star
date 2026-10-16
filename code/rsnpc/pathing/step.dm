@@ -1,15 +1,18 @@
+/proc/npc_walls_off(obj/O)
+	return istype(O, /obj/structure/inflatable)
+
 /proc/npc_can_stand(turf/T)
-	if(!istype(T) || T.density || isopenspace(T))
+	if(!istype(T) || T.density || isopenspace(T) && !(locate(/obj/structure/stairs/top) in T))
 		return FALSE
 	for(var/obj/O in T)
-		if(istype(O, /obj/effect/portal))
+		if(istype(O, /obj/effect/portal) || istype(O, /obj/effect/map_effect/portal) || npc_walls_off(O))
 			return FALSE
 		if(O.density && !istype(O, /obj/machinery/door) && !(O.flags & ON_BORDER))
 			return FALSE
 	return TRUE
 
 /proc/npc_can_step(turf/here, turf/next, list/access, mob/living/who)
-	if(!npc_can_stand(next))
+	if(!npc_can_stand(next) || npc_tape_blocks(next, access))
 		return FALSE
 	var/list/doors
 	for(var/obj/machinery/door/D in here)
@@ -44,11 +47,27 @@
 		var/obj/machinery/door/firedoor/F = D
 		if(!F.density)
 			return TRUE
+		if(!anyone && npc_firedoor_alarmed(F))
+			return FALSE
 		return !F.blocked && !(F.stat & (BROKEN|NOPOWER)) && !(F.lockdown && !anyone && !F.check_access_list(access))
 	var/key = anyone || !D.requiresID() || D.check_access_list(access)
 	if(!D.density || D.operating)
 		return key
 	return key && D.can_open()
+
+/proc/npc_tape_blocks(turf/T, list/access)
+	for(var/obj/item/tape/P in T)
+		if(!P.lifted && !P.check_access_list(access))
+			return TRUE
+	return FALSE
+
+/proc/npc_firedoor_alarmed(obj/machinery/door/firedoor/F)
+	if(F.lockdown || F.pdiff_alert)
+		return TRUE
+	for(var/area/A in F.areas_added)
+		if(A.firedoors_closed)
+			return TRUE
+	return FALSE
 
 /proc/npc_stairs_other_end(turf/T)
 	var/obj/structure/stairs/bottom/B = locate() in T
@@ -60,11 +79,11 @@
 	return null
 
 /proc/npc_step_danger(turf/T, mob/living/who)
-	var/datum/ai_holder/complex_npc/ai_mind = who && npc_ai_mind(who)
+	var/datum/ai_holder/rsnpc/ai_mind = who && npc_ai_mind(who)
 	return npc_fixed_danger(T) || ai_mind?.danger_seen[T] || !npc_air_known_safe(T, who) || !npc_grip_at(T, who)
 
 /proc/npc_air_known_safe(turf/T, mob/living/who)
-	var/datum/ai_holder/complex_npc/ai_mind = who && npc_ai_mind(who)
+	var/datum/ai_holder/rsnpc/ai_mind = who && npc_ai_mind(who)
 	if(!ai_mind || T == get_turf(who) || ai_mind.turfs_in_sight[T])
 		return npc_air_safe_for(T, who)
 	var/bad = ai_mind.air_seen[T]
@@ -101,11 +120,24 @@
 		return FALSE
 	if(checked_air && (G in checked_air))
 		return checked_air[G]
-	var/pressure = G.return_pressure()
-	var/bad = pressure < H.species.hazard_low_pressure || pressure >= H.species.hazard_high_pressure || G.temperature < H.species.cold_level_1 || G.temperature > H.species.heat_level_1 || !npc_gas_breathable(G, H, pressure)
+	var/bad = npc_gas_bad(G, H, FALSE)
 	if(checked_air)
 		checked_air[G] = bad
 	return bad
+
+/proc/npc_gas_bad(datum/gas_mixture/G, mob/living/carbon/human/H, protected)
+	var/pressure = G.return_pressure()
+	var/felt = protected ? H.calculate_affecting_pressure(pressure) : pressure
+	if(felt < H.species.hazard_low_pressure || felt >= H.species.hazard_high_pressure)
+		return TRUE
+	if(G.temperature < H.species.cold_level_1 && (!protected || H.get_cold_protection(G.temperature) < 0.99))
+		return TRUE
+	if(G.temperature > H.species.heat_level_1 && (!protected || H.get_heat_protection(G.temperature) < 0.99))
+		return TRUE
+	return !(protected && npc_on_air(H)) && !npc_gas_breathable(G, H, pressure)
+
+/proc/npc_on_air(mob/living/carbon/human/H)
+	return istype(H) && H.internal
 
 /proc/npc_grip_at(turf/T, mob/living/who)
 	if(!who || T.has_gravity())
@@ -166,15 +198,7 @@
 	var/datum/gas_mixture/G = T.return_air()
 	if(!G)
 		return TRUE
-	var/pressure = G.return_pressure()
-	var/felt = H.calculate_affecting_pressure(pressure)
-	if(felt < H.species.hazard_low_pressure || felt >= H.species.hazard_high_pressure)
-		return FALSE
-	if(G.temperature < H.species.cold_level_1 && H.get_cold_protection(G.temperature) < 0.99)
-		return FALSE
-	if(G.temperature > H.species.heat_level_1 && H.get_heat_protection(G.temperature) < 0.99)
-		return FALSE
-	return H.internal || npc_gas_breathable(G, H, pressure)
+	return !npc_gas_bad(G, H, TRUE)
 
 /proc/npc_air_breathable(turf/T, mob/living/carbon/human/H)
 	if(!istype(H) || !H.species.breath_type)

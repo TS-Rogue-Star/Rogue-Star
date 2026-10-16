@@ -9,7 +9,7 @@
 	src.cost = cost
 
 /datum/npc_plan_search
-	var/datum/ai_holder/complex_npc/ai_mind
+	var/datum/ai_holder/rsnpc/ai_mind
 	var/datum/npc_heap/open = new
 	var/list/offers = list()
 	var/list/best = list()
@@ -20,7 +20,7 @@
 	var/why
 	var/missing
 
-/datum/npc_plan_search/New(datum/ai_holder/complex_npc/ai_mind, list/goal, asking)
+/datum/npc_plan_search/New(datum/ai_holder/rsnpc/ai_mind, list/goal, asking)
 	src.ai_mind = ai_mind
 	src.asking = asking
 	var/list/unmet = list()

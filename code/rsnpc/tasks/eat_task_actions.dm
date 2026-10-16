@@ -8,7 +8,7 @@
 	var/opened_it = FALSE
 	var/vend_until = 0
 
-/datum/npc_action/fetch/variants(datum/ai_holder/complex_npc/ai_mind, fact)
+/datum/npc_action/fetch/variants(datum/ai_holder/rsnpc/ai_mind, fact)
 	if(findtext(fact, "have:") != 1)
 		return list()
 	var/kind = text2path(copytext(fact, 6))
@@ -29,10 +29,10 @@
 	A.key = "[A.key]:[kind]"
 	return list(A)
 
-/datum/npc_action/fetch/proc/not_crossed_off(datum/ai_holder/complex_npc/ai_mind, want, kind, turf/place, atom/thing)
+/datum/npc_action/fetch/proc/not_crossed_off(datum/ai_holder/rsnpc/ai_mind, want, kind, turf/place, atom/thing)
 	return npc_worth_taking(want, kind, thing) && !ai_mind.crossed_off("act:[type]@\ref[place]:[want]")
 
-/datum/npc_action/fetch/arrive(datum/ai_holder/complex_npc/ai_mind)
+/datum/npc_action/fetch/arrive(datum/ai_holder/rsnpc/ai_mind)
 	if(from != NPC_SOURCE_KEPT)
 		return TRUE
 	var/turf/T = target
@@ -43,7 +43,7 @@
 	why = "the cupboard is gone"
 	return FALSE
 
-/datum/npc_action/fetch/run_action(datum/ai_holder/complex_npc/ai_mind)
+/datum/npc_action/fetch/run_action(datum/ai_holder/rsnpc/ai_mind)
 	if(ai_mind.held_item(want))
 		return NPC_DONE
 	if(!ai_mind.holder.checkClickCooldown())
@@ -58,12 +58,18 @@
 	if(!I)
 		why = "it's not there any more"
 		return NPC_NOT_THERE
+	if(from == NPC_SOURCE_HELD && !ai_mind.in_reach(I) && isitem(I.loc) && ai_mind.in_reach(I.loc))
+		var/obj/item/box = I.loc
+		if(!ai_mind.holder.item_is_in_hands(box) && !ai_mind.take(box))
+			why = "couldn't get [box] out"
+			return NPC_NOT_YET
+		return NPC_RUNNING
 	if(!ai_mind.take(I))
-		why = "my hands are full"
+		why = "couldn't take [I]"
 		return NPC_NOT_YET
 	return NPC_DONE
 
-/datum/npc_action/fetch/proc/from_closet(datum/ai_holder/complex_npc/ai_mind)
+/datum/npc_action/fetch/proc/from_closet(datum/ai_holder/rsnpc/ai_mind)
 	var/obj/structure/closet/C = place
 	var/obj/structure/closet/secure_closet/S = C
 	switch(phase)
@@ -91,11 +97,11 @@
 		ai_mind.look()
 		return NPC_NOT_THERE
 	if(!ai_mind.take(I))
-		why = "my hands are full"
+		why = "couldn't take [I]"
 		return NPC_NOT_YET
 	return NPC_DONE
 
-/datum/npc_action/fetch/proc/from_vendor(datum/ai_holder/complex_npc/ai_mind)
+/datum/npc_action/fetch/proc/from_vendor(datum/ai_holder/rsnpc/ai_mind)
 	var/obj/machinery/vending/V = place
 	if(vend_until)
 		var/obj/item/I = locate(want) in get_turf(V)
@@ -121,7 +127,7 @@
 	why = "none in [V]"
 	return NPC_NOT_THERE
 
-/datum/npc_action/fetch/clean_up(datum/ai_holder/complex_npc/ai_mind)
+/datum/npc_action/fetch/clean_up(datum/ai_holder/rsnpc/ai_mind)
 	var/obj/structure/closet/C = place
 	if(!istype(C) || !opened_it || !C.opened || !C.Adjacent(ai_mind.holder) || get_turf(C) == get_turf(ai_mind.holder))
 		return
@@ -135,12 +141,12 @@
 	name = "eat"
 	var/bites = 0
 
-/datum/npc_action/eat/variants(datum/ai_holder/complex_npc/ai_mind, fact)
+/datum/npc_action/eat/variants(datum/ai_holder/rsnpc/ai_mind, fact)
 	if(fact != NPC_FACT_FED)
 		return list()
-	return list(copy(null, 1, list(NPC_FACT_HAVE(/obj/item/weapon/reagent_containers/food/snacks)), list(NPC_FACT_FED)))
+	return list(copy(null, 1, list(NPC_FACT_HAVE(/obj/item/weapon/reagent_containers/food/snacks), NPC_FACT_MOUTH_FREE), list(NPC_FACT_FED)))
 
-/datum/npc_action/eat/run_action(datum/ai_holder/complex_npc/ai_mind)
+/datum/npc_action/eat/run_action(datum/ai_holder/rsnpc/ai_mind)
 	var/mob/living/carbon/human/H = ai_mind.holder
 	if(ai_mind.need_pressure(NPC_NEED_HUNGER) <= 0)
 		return NPC_DONE
@@ -165,16 +171,44 @@
 	usr = old_usr
 	return NPC_RUNNING
 
+/datum/npc_action/uncover_mouth
+	name = "uncover my mouth"
+
+/datum/npc_action/uncover_mouth/variants(datum/ai_holder/rsnpc/ai_mind, fact)
+	var/mob/living/carbon/human/H = ai_mind.holder
+	var/turf/T = get_turf(H)
+	if(fact != NPC_FACT_MOUTH_FREE || !istype(H) || !T || npc_air_bad(T, H))
+		return list()
+	return list(copy(null, 1, null, list(fact)))
+
+/datum/npc_action/uncover_mouth/run_action(datum/ai_holder/rsnpc/ai_mind)
+	var/mob/living/carbon/human/H = ai_mind.holder
+	var/obj/item/I = H.check_mouth_coverage()
+	if(!I)
+		return NPC_DONE
+	var/turf/T = get_turf(H)
+	if(!T || npc_air_bad(T, H))
+		why = "the air here is bad"
+		return NPC_CANT_DO
+	if(!H.checkClickCooldown())
+		return NPC_RUNNING
+	if(!H.item_is_in_hands(I) && !ai_mind.take_off(I))
+		why = "couldn't take off [I]"
+		return NPC_NOT_YET
+	NPC_TRACE(ai_mind, NPC_TRACE_HANDS, "took off [I]")
+	ai_mind.put_away(I)
+	return NPC_RUNNING
+
 /datum/npc_action/drink
 	name = "drink"
 	var/sips = 0
 
-/datum/npc_action/drink/variants(datum/ai_holder/complex_npc/ai_mind, fact)
+/datum/npc_action/drink/variants(datum/ai_holder/rsnpc/ai_mind, fact)
 	if(fact != NPC_FACT_DRANK)
 		return list()
-	return list(copy(null, 1, list(NPC_FACT_HAVE(/obj/item/weapon/reagent_containers/food/drinks)), list(NPC_FACT_DRANK)))
+	return list(copy(null, 1, list(NPC_FACT_HAVE(/obj/item/weapon/reagent_containers/food/drinks), NPC_FACT_MOUTH_FREE), list(NPC_FACT_DRANK)))
 
-/datum/npc_action/drink/run_action(datum/ai_holder/complex_npc/ai_mind)
+/datum/npc_action/drink/run_action(datum/ai_holder/rsnpc/ai_mind)
 	var/mob/living/carbon/human/H = ai_mind.holder
 	var/obj/item/weapon/reagent_containers/food/drinks/D = ai_mind.held_item(/obj/item/weapon/reagent_containers/food/drinks)
 	if(sips >= 3 || (sips && (!D || !D.reagents?.total_volume)))

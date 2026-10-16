@@ -8,7 +8,7 @@ SUBSYSTEM_DEF(npc_steps)
 
 /datum/controller/subsystem/npc_steps/fire(resumed = 0)
 	for(var/mob/living/W as anything in GLOB.npc_workers)
-		var/datum/ai_holder/complex_npc/A = npc_ai_mind(W)
+		var/datum/ai_holder/rsnpc/A = npc_ai_mind(W)
 		if(A && !A.busy && length(A.path) && isturf(W.loc) && W.checkMoveCooldown() && A.can_act())
 			A.walk_tick()
 		if(MC_TICK_CHECK)

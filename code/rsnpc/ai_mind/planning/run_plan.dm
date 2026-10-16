@@ -1,11 +1,16 @@
-/datum/ai_holder/complex_npc/proc/fact_true(fact)
+/datum/ai_holder/rsnpc/proc/fact_true(fact)
 	if(findtext(fact, "have:") == 1)
 		return !!held_item(text2path(copytext(fact, 6)))
 	switch(fact)
 		if(NPC_FACT_FED)
 			return need_pressure(NPC_NEED_HUNGER) <= 0
 		if(NPC_FACT_INTERNALS)
-			return !!holder.internal
+			return npc_on_air(holder)
+		if(NPC_FACT_INTERNALS_OFF)
+			return !holder.internal
+		if(NPC_FACT_UNCUFFED)
+			var/mob/living/carbon/C = holder
+			return !istype(C) || !C.handcuffed && !C.legcuffed
 		if(NPC_FACT_MASKED)
 			var/mob/living/carbon/human/H = holder
 			return (H.wear_mask && (H.wear_mask.item_flags & AIRTIGHT)) || (H.head && (H.head.item_flags & AIRTIGHT))
@@ -19,15 +24,32 @@
 			return !!noted("drank")
 		if(NPC_FACT_STOMACH_HANDLED)
 			return !bellies_due()
+		if(NPC_FACT_MOUTH_FREE)
+			var/mob/living/carbon/human/H = holder
+			return !istype(H) || !H.check_mouth_coverage()
 		if(NPC_FACT_SHUTTERS_UP)
-			return !shutter_button()
+			return !length(shutters_down())
 		if(NPC_FACT_SAFE)
 			var/turf/T = get_turf(holder)
 			return T && npc_safe_spot(holder, dangers_in_sight(), T)
+	if(findtext(fact, "agreed_prey:") == 1)
+		var/mob/living/P = locate(copytext(fact, 13))
+		var/datum/npc_assignment/eat_prey/O = assignment(/datum/npc_assignment/eat_prey)
+		return istype(P) && (O?.asker?.resolve() == P && O.mode == "agreed" || agreed(P, holder, FALSE))
 	if(findtext(fact, "eaten:") == 1)
 		var/mob/living/E = locate(copytext(fact, 7))
 		var/obj/belly/B = E?.loc
 		return istype(B) && B.owner == holder
+	if(fact == NPC_FACT_OUT_OF_AIRLOCK)
+		return !npc_cycling_airlock_at(get_turf(holder))
+	if(fact == NPC_FACT_HAND_FREE)
+		return !holder.hands_are_full()
+	if(findtext(fact, "received:") == 1)
+		var/datum/npc_assignment/receive/R = locate(copytext(fact, 10))
+		return !istype(R) || R.received
+	if(findtext(fact, "given:") == 1)
+		var/datum/npc_assignment/give/G = locate(copytext(fact, 7))
+		return !istype(G) || G.given
 	if(findtext(fact, "gear:") == 1)
 		var/datum/npc_gear/G = locate(copytext(fact, 6))
 		return !istype(G) || G.in_place(holder)
@@ -43,9 +65,9 @@
 	if(findtext(fact, "in:") == 1)
 		var/area/A = locate(copytext(fact, 4))
 		return istype(A) && npc_arrived(holder, A)
-	return FALSE
+	return task ? !!task.fact_true(src, fact) : FALSE
 
-/datum/ai_holder/complex_npc/proc/plan_tick()
+/datum/ai_holder/rsnpc/proc/plan_tick()
 	if(!task || world.time < step_wait_until)
 		return
 	if(!plan)
@@ -53,7 +75,7 @@
 		return
 	do_step()
 
-/datum/ai_holder/complex_npc/proc/make_plan()
+/datum/ai_holder/rsnpc/proc/make_plan()
 	if(!plan_search)
 		plan_search = new(src, task.goal(src))
 	switch(plan_search.advance(300))
@@ -83,7 +105,7 @@
 			return
 	plan_search = null
 
-/datum/ai_holder/complex_npc/proc/do_step()
+/datum/ai_holder/rsnpc/proc/do_step()
 	var/datum/npc_action/A = plan[plan_step]
 	var/result = A.tick(src)
 	switch(result)
@@ -105,7 +127,7 @@
 		else
 			step_failed(A, result)
 
-/datum/ai_holder/complex_npc/proc/step_failed(datum/npc_action/A, result)
+/datum/ai_holder/rsnpc/proc/step_failed(datum/npc_action/A, result)
 	var/turf/T = A.target_place
 	switch(result)
 		if(NPC_NOT_THERE)
@@ -124,7 +146,7 @@
 	clear_plan()
 	plan_failed(A.why)
 
-/datum/ai_holder/complex_npc/proc/clear_plan()
+/datum/ai_holder/rsnpc/proc/clear_plan()
 	if(plan && plan_step <= length(plan))
 		var/datum/npc_action/A = plan[plan_step]
 		A.clean_up(src)

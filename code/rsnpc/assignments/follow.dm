@@ -3,7 +3,7 @@
 	repeat = 15 SECONDS
 	obedience = 21
 
-/datum/npc_command/follow_me/run_command(datum/ai_holder/complex_npc/ai_mind, mob/living/speaker, rest, via)
+/datum/npc_command/follow_me/run_command(datum/ai_holder/rsnpc/ai_mind, mob/living/speaker, rest, via)
 	ai_mind.start_follow(speaker, "follow_agreed_follow")
 
 /datum/npc_command/guard_me
@@ -11,20 +11,20 @@
 	repeat = 15 SECONDS
 	obedience = 40
 
-/datum/npc_command/guard_me/run_command(datum/ai_holder/complex_npc/ai_mind, mob/living/speaker, rest, via)
+/datum/npc_command/guard_me/run_command(datum/ai_holder/rsnpc/ai_mind, mob/living/speaker, rest, via)
 	ai_mind.start_follow(speaker, npc_armed(ai_mind.holder, TRUE) ? "follow_agreed_guard" : "follow_agreed_but_unarmed")
 
 /datum/npc_command/stop_following
 	say = "stop following"
 	repeat = 15 SECONDS
 
-/datum/npc_command/stop_following/applies(datum/ai_holder/complex_npc/ai_mind)
+/datum/npc_command/stop_following/applies(datum/ai_holder/rsnpc/ai_mind)
 	return !!ai_mind.assignment(/datum/npc_assignment/follow)
 
-/datum/npc_command/stop_following/run_command(datum/ai_holder/complex_npc/ai_mind, mob/living/speaker, rest, via)
+/datum/npc_command/stop_following/run_command(datum/ai_holder/rsnpc/ai_mind, mob/living/speaker, rest, via)
 	ai_mind.end_assignment(ai_mind.assignment(/datum/npc_assignment/follow), "[speaker] told me to stop", "follow_dismissed", speaker)
 
-/datum/ai_holder/complex_npc/proc/start_follow(mob/living/M, group)
+/datum/ai_holder/rsnpc/proc/start_follow(mob/living/M, group)
 	var/datum/npc_assignment/follow/F = assignment(/datum/npc_assignment/follow)
 	if(F?.asker?.resolve() == M)
 		NPC_TRACE(src, NPC_TRACE_TALK, "already following [M]")
@@ -36,6 +36,7 @@
 	start_assignment(new /datum/npc_assignment/follow(M, null, npc_psetting("follow_minutes") MINUTES), group)
 
 /datum/npc_assignment/follow
+	weight = -5
 	name = "follow"
 	uses_legs = TRUE
 	time_up_line = "follow_done"
@@ -47,12 +48,26 @@
 	..()
 	seen_at = world.time
 
-/datum/npc_assignment/follow/goal(datum/ai_holder/complex_npc/ai_mind)
+/datum/npc_assignment/follow/proc/far(datum/ai_holder/rsnpc/ai_mind)
+	var/mob/living/M = asker?.resolve()
+	return !M || get_dist(M, ai_mind.holder) > 4 || !(M in ai_mind.look())
+
+/datum/npc_assignment/follow/needs_legs(datum/ai_holder/rsnpc/ai_mind)
+	return far(ai_mind)
+
+/datum/npc_assignment/follow/wants_turn(datum/ai_holder/rsnpc/ai_mind)
+	return far(ai_mind)
+
+/datum/npc_assignment/follow/goal(datum/ai_holder/rsnpc/ai_mind)
 	var/mob/living/M = asker?.resolve()
 	return M ? list(NPC_FACT_NEAR(M)) : list()
 
-/datum/npc_assignment/follow/check(datum/ai_holder/complex_npc/ai_mind)
+/datum/npc_assignment/follow/check(datum/ai_holder/rsnpc/ai_mind)
 	var/mob/living/M = asker?.resolve()
+	if(ai_mind.active_request() != src)
+		seen_at = world.time
+		warned = FALSE
+		return ..()
 	var/sees = M && ai_mind.holder.stat == CONSCIOUS && (M in ai_mind.look())
 	via = sees ? null : PUB_FREQ
 	if(sees && M.stat == DEAD)
@@ -74,8 +89,12 @@
 
 /datum/npc_task/follow
 	name = "follow"
-	tier = NPC_TIER_SOCIAL
+	tier = NPC_TIER_NEEDS
 	assignment_type = /datum/npc_assignment/follow
 
-/datum/npc_task/follow/value(datum/ai_holder/complex_npc/ai_mind)
+/datum/npc_task/follow/can_start(datum/ai_holder/rsnpc/ai_mind)
+	var/datum/npc_assignment/follow/F = ai_mind.assignment(/datum/npc_assignment/follow)
+	return ..() && F.far(ai_mind)
+
+/datum/npc_task/follow/value(datum/ai_holder/rsnpc/ai_mind)
 	return 100

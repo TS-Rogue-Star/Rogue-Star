@@ -23,7 +23,7 @@ GLOBAL_LIST_INIT(npc_never_take, list(
 /proc/npc_supplies_of(atom/A, close = FALSE)
 	if(istype(A, /obj/structure/closet))
 		var/obj/structure/closet/C = A
-		return close && C.opened ? npc_contents_kinds(C) : GLOB.npc_kind_supplies[A.type]
+		return close && C.opened ? npc_contents_kinds(get_turf(C)) : GLOB.npc_kind_supplies[A.type]
 	if(istype(A, /obj/machinery/vending))
 		var/obj/machinery/vending/V = A
 		. = list()
