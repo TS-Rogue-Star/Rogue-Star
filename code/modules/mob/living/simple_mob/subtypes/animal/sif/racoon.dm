@@ -246,7 +246,7 @@
 
 	. -= holder.contents
 
-/datum/ai_holder/simple_mob/intentional/sakimm/find_target(var/list/possible_targets, var/has_targets_list = FALSE)
+/datum/ai_holder/simple_mob/intentional/sakimm/find_target_internal(var/list/possible_targets, var/has_targets_list = FALSE) // RS Edit: PvE Targeting Optimization (Lira, October 2026)
 	var/can_pick_mobs = TRUE
 
 	if(!hostile)

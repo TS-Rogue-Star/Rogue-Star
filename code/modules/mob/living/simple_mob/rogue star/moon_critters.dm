@@ -1129,7 +1129,7 @@
 	retaliate = TRUE
 	wander = FALSE
 
-/datum/ai_holder/simple_mob/detector/find_target()
+/datum/ai_holder/simple_mob/detector/find_target_internal() // RS Edit: PvE Targeting Optimization (Lira, October 2026)
 
 	list_targets()
 

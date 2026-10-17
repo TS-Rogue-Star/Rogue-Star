@@ -1,3 +1,7 @@
+/////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star October 2026: PvE Targeting Optimization //
+/////////////////////////////////////////////////////////////////////////////
+
 // Used for assigning a target for attacking.
 
 /datum/ai_holder
@@ -15,6 +19,11 @@
 	var/atom/movable/target = null			// The thing (mob or object) we're trying to kill.
 	var/atom/movable/preferred_target = null// If set, and if given the chance, we will always prefer to target this over other options.
 	var/turf/target_last_seen_turf = null 	// Where the mob last observed the target being, used if the target disappears but the mob wants to keep fighting.
+
+	// RS Add Start: PvE Targeting Optimization (Lira, October 2026)
+	var/tmp/datum/ai_target_view/target_view
+	var/tmp/active_target_searches = 0
+	// RS Add End
 
 	var/vision_range = 7					// How far the targeting system will look for things to kill. Note that values higher than 7 are 'offscreen' and might be unsporting.
 	var/respect_alpha = TRUE				// If true, mobs with a sufficently low alpha will be treated as invisible.
@@ -65,8 +74,20 @@
 						. += O
 	//RS ADD END
 
-// Step 2, filter down possible targets to things we actually care about.
+// RS Edit: PvE Targeting Optimization (Lira, October 2026)
 /datum/ai_holder/proc/find_target(var/list/possible_targets, var/has_targets_list = FALSE)
+	active_target_searches++
+	target_view = null
+	try
+		. = find_target_internal(possible_targets, has_targets_list)
+	catch(var/exception/error)
+		finish_target_search()
+		throw error
+	finish_target_search()
+
+// Step 2, filter down possible targets to things we actually care about.
+// RS Edit: PvE Targeting Optimization (Lira, October 2026)
+/datum/ai_holder/proc/find_target_internal(var/list/possible_targets, var/has_targets_list = FALSE)
 	ai_log("find_target() : Entered.", AI_LOG_TRACE)
 	if(!hostile && !holder.hunter) // So retaliating mobs only attack the thing that hit it. //RS EDIT
 		return null
@@ -87,6 +108,25 @@
 				return null						//RS ADD END
 	give_target(new_target)
 	return new_target
+
+// RS Add: PvE Targeting Optimization (Lira, October 2026)
+/datum/ai_holder/proc/finish_target_search()
+	target_view = null
+	active_target_searches--
+
+// RS Add: PvE Targeting Optimization (Lira, October 2026)
+/datum/ai_holder/proc/can_reuse_target_view()
+	return isturf(holder.loc) && !holder.resting && !path_display && !last_turf_display && !stance_coloring
+
+// RS Add: PvE Targeting Optimization (Lira, October 2026)
+/datum/ai_holder/proc/get_target_view(view_range)
+	if(active_target_searches != 1)
+		return view(view_range, holder)
+	if(!target_view)
+		target_view = new(holder)
+	if(!can_reuse_target_view())
+		target_view.reusable = FALSE
+	return target_view.get_view(holder, view_range)
 
 // Step 3, pick among the possible, attackable targets.
 /datum/ai_holder/proc/pick_target(list/targets)
@@ -292,7 +332,7 @@
 		ai_log("can_see_target() : Target ([the_target]) failed can_see(). Exiting.", AI_LOG_TRACE)
 		return FALSE
 	*/	//RS REMOVE END
-	if(the_target in view(view_range,holder))	//RS EDIT START - Check to see if we can  literally see them
+	if(the_target in get_target_view(view_range))	//RS EDIT START - Check to see if we can  literally see them
 		last_target_sighting = world.time
 		if(stance == STANCE_IDLE)
 			give_target(target)
@@ -534,3 +574,35 @@
 		blood_time = ourblood.blood_time
 		give_destination(ourblood,1)
 		return
+
+// RS Add: PvE Targeting Optimization (Lira, October 2026)
+/datum/ai_target_view
+	var/mob/living/viewer
+	var/atom/origin
+	var/created_at
+	var/sight
+	var/see_invisible
+	var/see_in_dark
+	var/view_range
+	var/list/visible_atoms
+	var/reusable = TRUE
+
+// RS Add: PvE Targeting Optimization (Lira, October 2026)
+/datum/ai_target_view/New(mob/living/holder)
+	viewer = holder
+	origin = holder.loc
+	created_at = world.time
+	sight = holder.sight
+	see_invisible = holder.see_invisible
+	see_in_dark = holder.see_in_dark
+
+// RS Add: PvE Targeting Optimization (Lira, October 2026)
+/datum/ai_target_view/proc/get_view(mob/living/holder, requested_range)
+	if(holder != viewer || holder.loc != origin || world.time != created_at || holder.sight != sight || holder.see_invisible != see_invisible || holder.see_in_dark != see_in_dark)
+		reusable = FALSE
+	if(!reusable)
+		return view(requested_range, holder)
+	if(isnull(visible_atoms) || view_range != requested_range)
+		view_range = requested_range
+		visible_atoms = view(requested_range, holder)
+	return visible_atoms

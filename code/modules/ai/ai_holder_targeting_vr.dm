@@ -21,7 +21,8 @@
 /datum/ai_holder/simple_mob/vore/hostile
 	hostile = TRUE
 
-/datum/ai_holder/simple_mob/vore/find_target(list/possible_targets, has_targets_list)
+// RS Edit: PvE Targeting Optimization (Lira, October 2026)
+/datum/ai_holder/simple_mob/vore/find_target_internal(list/possible_targets, has_targets_list)
 	if(!vore_hostile)
 		return ..()
 	if(!isanimal(holder))	//Only simplemobs have the vars we need
@@ -49,7 +50,7 @@
 	var/new_target
 	if(valid_mobs.len)
 		new_target = pick(valid_mobs)
-	else if(hostile)
+	else if(hostile && length(.))
 		new_target = pick(.)
 	if(!new_target)
 		return null
