@@ -462,7 +462,7 @@
 /turf/simulated/floor/tiled/dark,
 /area/groundbase/security/lobby)
 "ati" = (
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/groundbase/level2/nw)
 "atj" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
@@ -2403,7 +2403,7 @@
 /turf/simulated/floor/tiled,
 /area/groundbase/engineering/workshop)
 "bMg" = (
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/groundbase/command/hop)
 "bMh" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -7584,7 +7584,7 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/turf/simulated/floor/outdoors/newdirt_nograss{
+/turf/simulated/floor/outdoors/dirt/soft_nograss{
 	outdoors = 0
 	},
 /area/groundbase/medical/lhallway)
@@ -10968,7 +10968,7 @@
 /turf/simulated/floor/lino,
 /area/groundbase/civilian/chapel/office)
 "hpn" = (
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/groundbase/civilian/hydroponics)
 "hpr" = (
 /obj/machinery/light{
@@ -12820,7 +12820,7 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/turf/simulated/floor/outdoors/newdirt_nograss{
+/turf/simulated/floor/outdoors/dirt/soft_nograss{
 	outdoors = 0
 	},
 /area/groundbase/civilian/clown)
@@ -16920,7 +16920,7 @@
 /turf/simulated/floor/tiled,
 /area/groundbase/cargo/office)
 "kXJ" = (
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/groundbase/level2/sw)
 "kYs" = (
 /turf/simulated/floor/outdoors/grass/seasonal/notrees_nomobs_lowsnow,
@@ -17659,7 +17659,7 @@
 	},
 /area/groundbase/science/xenobot)
 "lxs" = (
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/groundbase/science/xenobot)
 "lxE" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -18279,7 +18279,7 @@
 /turf/simulated/floor/tiled/dark,
 /area/groundbase/security/lobby)
 "lQu" = (
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/groundbase/science/rnd)
 "lRK" = (
 /obj/structure/bed/chair/comfy/black{
@@ -18591,7 +18591,7 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/groundbase/command/hop)
 "lZQ" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
@@ -20382,7 +20382,7 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/groundbase/cargo/mining)
 "noF" = (
 /obj/structure/cable/yellow{
@@ -21919,7 +21919,7 @@
 /turf/simulated/open,
 /area/groundbase/cargo/office)
 "omq" = (
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/groundbase/science/circuits)
 "oms" = (
 /obj/machinery/camera/network/civilian{
@@ -21945,7 +21945,7 @@
 /turf/simulated/floor/wood,
 /area/groundbase/dorms/room6)
 "omV" = (
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/groundbase/science/robotics)
 "omZ" = (
 /obj/structure/table/glass,
@@ -27627,7 +27627,7 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/groundbase/civilian/mime)
 "scu" = (
 /obj/structure/cable/yellow{
@@ -27800,7 +27800,7 @@
 /turf/simulated/floor/outdoors/grass/seasonal/dark/lowsnow,
 /area/groundbase/level2/ne)
 "sfu" = (
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/groundbase/civilian/mime)
 "sfx" = (
 /obj/machinery/camera/network/research{
@@ -29794,7 +29794,7 @@
 /turf/simulated/floor/tiled/white,
 /area/groundbase/medical/or2)
 "twS" = (
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/space)
 "txz" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -30601,7 +30601,7 @@
 /turf/simulated/floor/tiled,
 /area/groundbase/engineering/workshop)
 "tXC" = (
-/turf/simulated/floor/outdoors/newdirt{
+/turf/simulated/floor/outdoors/dirt/soft{
 	outdoors = 0
 	},
 /area/groundbase/security/lobby)
@@ -31814,7 +31814,7 @@
 /turf/simulated/floor/outdoors/grass/seasonal/notrees_nomobs_lowsnow,
 /area/groundbase/science/picnic)
 "uHI" = (
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/groundbase/science/picnic)
 "uIG" = (
 /obj/structure/table/marble,
@@ -32668,7 +32668,7 @@
 /area/groundbase/science/rd)
 "vnl" = (
 /obj/structure/table/bench/standard,
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/groundbase/science/picnic)
 "vnm" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -32696,7 +32696,7 @@
 "voC" = (
 /obj/structure/table/bench/standard,
 /obj/effect/landmark/start/rd,
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/groundbase/science/picnic)
 "voF" = (
 /obj/structure/sign/painting/library_private{
@@ -32850,7 +32850,7 @@
 /area/groundbase/science/rd)
 "vtB" = (
 /obj/machinery/light/bigfloorlamp,
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/groundbase/science/picnic)
 "vtF" = (
 /obj/structure/bed/chair/sofa/pew/left{
@@ -32871,7 +32871,7 @@
 /area/groundbase/dorms)
 "vut" = (
 /obj/structure/table/borosilicate,
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/groundbase/science/picnic)
 "vuv" = (
 /obj/item/weapon/stool/baystool/padded{
@@ -36230,7 +36230,7 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/groundbase/civilian/arrivals)
 "xOi" = (
-/turf/simulated/floor/outdoors/newdirt_nograss{
+/turf/simulated/floor/outdoors/dirt/soft_nograss{
 	outdoors = 0
 	},
 /area/groundbase/civilian/clown)

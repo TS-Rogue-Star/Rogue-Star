@@ -53,7 +53,7 @@
 /obj/structure/reagent_dispensers/watertank,
 /obj/item/weapon/reagent_containers/glass/bucket,
 /obj/item/weapon/reagent_containers/glass/bucket,
-/turf/simulated/floor/outdoors/newdirt{
+/turf/simulated/floor/outdoors/dirt/soft{
 	outdoors = 0
 	},
 /area/moonbase/fixedpoi/homestead)
@@ -229,7 +229,7 @@
 /obj/item/weapon/tank/oxygen,
 /obj/item/weapon/tank/oxygen,
 /obj/item/weapon/tank/oxygen,
-/turf/simulated/floor/outdoors/newdirt{
+/turf/simulated/floor/outdoors/dirt/soft{
 	outdoors = 0
 	},
 /area/moonbase/fixedpoi/homestead)
@@ -658,7 +658,7 @@
 /area/outpost/research/power)
 "fm" = (
 /obj/machinery/portable_atmospherics/hydroponics/soil,
-/turf/simulated/floor/outdoors/newdirt{
+/turf/simulated/floor/outdoors/dirt/soft{
 	outdoors = 0
 	},
 /area/moonbase/fixedpoi/homestead)
@@ -1140,7 +1140,7 @@
 	dir = 4;
 	pixel_x = 27
 	},
-/turf/simulated/floor/outdoors/newdirt{
+/turf/simulated/floor/outdoors/dirt/soft{
 	outdoors = 0
 	},
 /area/moonbase/fixedpoi/homestead)
@@ -1706,7 +1706,7 @@
 /turf/simulated/floor/tiled/dark,
 /area/outpost/research/anomaly_storage)
 "qA" = (
-/turf/simulated/floor/outdoors/newdirt{
+/turf/simulated/floor/outdoors/dirt/soft{
 	outdoors = 0
 	},
 /area/moonbase/fixedpoi/homestead)
@@ -2048,7 +2048,7 @@
 /area/outpost/research/hallway)
 "tN" = (
 /obj/machinery/biogenerator,
-/turf/simulated/floor/outdoors/newdirt{
+/turf/simulated/floor/outdoors/dirt/soft{
 	outdoors = 0
 	},
 /area/moonbase/fixedpoi/homestead)
@@ -2260,7 +2260,7 @@
 /area/outpost/research/toxins_misc_lab)
 "wB" = (
 /obj/effect/map_effect/perma_light/brighter,
-/turf/simulated/floor/outdoors/newdirt{
+/turf/simulated/floor/outdoors/dirt/soft{
 	outdoors = 0
 	},
 /area/moonbase/fixedpoi/homestead)
@@ -3155,7 +3155,7 @@
 	pixel_y = 32
 	},
 /obj/effect/map_helper/airlock/sensor/int_sensor,
-/turf/simulated/floor/outdoors/newdirt{
+/turf/simulated/floor/outdoors/dirt/soft{
 	outdoors = 0
 	},
 /area/moonbase/fixedpoi/homestead)
@@ -3239,7 +3239,7 @@
 	dir = 8;
 	pixel_x = -11
 	},
-/turf/simulated/floor/outdoors/newdirt{
+/turf/simulated/floor/outdoors/dirt/soft{
 	outdoors = 0
 	},
 /area/moonbase/fixedpoi/homestead)
@@ -3359,7 +3359,7 @@
 /area/outpost/research/hallway)
 "Iq" = (
 /obj/machinery/portable_atmospherics/canister/air,
-/turf/simulated/floor/outdoors/newdirt{
+/turf/simulated/floor/outdoors/dirt/soft{
 	outdoors = 0
 	},
 /area/moonbase/fixedpoi/homestead)
@@ -3526,7 +3526,7 @@
 /obj/machinery/atmospherics/pipe/tank/air{
 	dir = 4
 	},
-/turf/simulated/floor/outdoors/newdirt{
+/turf/simulated/floor/outdoors/dirt/soft{
 	outdoors = 0
 	},
 /area/moonbase/fixedpoi/homestead)
@@ -3618,7 +3618,7 @@
 /obj/machinery/alarm{
 	dir = 4
 	},
-/turf/simulated/floor/outdoors/newdirt{
+/turf/simulated/floor/outdoors/dirt/soft{
 	outdoors = 0
 	},
 /area/moonbase/fixedpoi/homestead)
@@ -3878,7 +3878,7 @@
 /area/outpost/research/mixing)
 "OH" = (
 /obj/machinery/seed_storage/garden,
-/turf/simulated/floor/outdoors/newdirt{
+/turf/simulated/floor/outdoors/dirt/soft{
 	outdoors = 0
 	},
 /area/moonbase/fixedpoi/homestead)
@@ -3894,7 +3894,7 @@
 /obj/structure/table/steel,
 /obj/item/weapon/storage/belt/hydro,
 /obj/item/weapon/storage/belt/hydro,
-/turf/simulated/floor/outdoors/newdirt{
+/turf/simulated/floor/outdoors/dirt/soft{
 	outdoors = 0
 	},
 /area/moonbase/fixedpoi/homestead)
@@ -4592,7 +4592,7 @@
 "XY" = (
 /obj/structure/table/steel,
 /obj/item/weapon/storage/toolbox/hydro,
-/turf/simulated/floor/outdoors/newdirt{
+/turf/simulated/floor/outdoors/dirt/soft{
 	outdoors = 0
 	},
 /area/moonbase/fixedpoi/homestead)
@@ -4681,7 +4681,7 @@
 /area/moonbase/fixedpoi/homestead)
 "YI" = (
 /obj/machinery/vending/hydronutrients,
-/turf/simulated/floor/outdoors/newdirt{
+/turf/simulated/floor/outdoors/dirt/soft{
 	outdoors = 0
 	},
 /area/moonbase/fixedpoi/homestead)

@@ -215,7 +215,7 @@
 /area/redgate/structure/powered)
 "GR" = (
 /obj/structure/bonfire,
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/redgate)
 "Hm" = (
 /obj/random/mob/semirandom_mob_spawner/pet/forest,
@@ -265,7 +265,7 @@
 /turf/simulated/floor/outdoors/grass/forest,
 /area/redgate)
 "Md" = (
-/turf/simulated/floor/outdoors/newdirt_nograss{
+/turf/simulated/floor/outdoors/dirt/soft_nograss{
 	outdoors = 0
 	},
 /area/redgate)
@@ -302,7 +302,7 @@
 /area/redgate/structure/powered)
 "NN" = (
 /obj/fiftyspawner/log,
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/redgate)
 "OO" = (
 /turf/simulated/floor/water/deep,
@@ -391,7 +391,7 @@
 	},
 /area/redgate)
 "Yz" = (
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/redgate)
 "YQ" = (
 /obj/structure/frame/computer,

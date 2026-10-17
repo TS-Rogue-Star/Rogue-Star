@@ -12,11 +12,11 @@
 "n" = (
 /obj/structure/table/rack/steel,
 /obj/fiftyspawner/log,
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/om_adventure/poi/camp)
 "x" = (
 /obj/tether_away_spawner/spookyland,
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/om_adventure/poi/camp)
 "y" = (
 /obj/structure/flora/tree/bigtree,
@@ -25,14 +25,14 @@
 "z" = (
 /obj/structure/table/rack/steel,
 /obj/random/awayloot/looseloot,
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/om_adventure/poi/camp)
 "A" = (
 /obj/structure/bonfire,
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/om_adventure/poi/camp)
 "H" = (
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/om_adventure/poi/camp)
 "M" = (
 /turf/simulated/wall/log,
@@ -40,14 +40,14 @@
 "U" = (
 /obj/structure/table/rack/steel,
 /obj/item/weapon/storage/box/matches,
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/om_adventure/poi/camp)
 "Y" = (
 /obj/move_trader_landmark{
 	dir = 8;
 	trader_type = /obj/trader/general
 	},
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/om_adventure/poi/camp)
 
 (1,1,1) = {"

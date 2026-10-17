@@ -25,7 +25,7 @@
 /obj/structure/bed/chair/sofa/bench/left{
 	dir = 8
 	},
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/redgate/wilds)
 "cj" = (
 /obj/structure/table/standard,
@@ -48,7 +48,7 @@
 /area/redgate/wilds)
 "fJ" = (
 /obj/structure/fence/door,
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/redgate/wilds)
 "fN" = (
 /turf/simulated/wall/wood,
@@ -141,7 +141,7 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/turf/simulated/floor/outdoors/newdirt{
+/turf/simulated/floor/outdoors/dirt/soft{
 	outdoors = 0
 	},
 /area/redgate/structure/powered/teppi_ranch/barn)
@@ -149,19 +149,19 @@
 /obj/structure/bed/chair/sofa/bench/right{
 	dir = 8
 	},
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/redgate/wilds)
 "ld" = (
 /turf/simulated/floor/tiled,
 /area/redgate/structure/powered/teppi_ranch)
 "lk" = (
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/redgate/structure/powered/teppi_ranch)
 "lw" = (
 /obj/structure/bed/chair/sofa/bench/right{
 	dir = 4
 	},
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/redgate/wilds)
 "lN" = (
 /turf/unsimulated/floor/dark,
@@ -174,7 +174,7 @@
 /turf/simulated/floor/tiled/steel_ridged,
 /area/redgate/structure/powered/teppi_ranch)
 "mn" = (
-/turf/simulated/floor/outdoors/newdirt{
+/turf/simulated/floor/outdoors/dirt/soft{
 	outdoors = 0
 	},
 /area/redgate/wilds)
@@ -254,11 +254,11 @@
 /obj/structure/fence/door{
 	dir = 4
 	},
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/redgate/wilds)
 "tl" = (
 /obj/machinery/light/small,
-/turf/simulated/floor/outdoors/newdirt{
+/turf/simulated/floor/outdoors/dirt/soft{
 	outdoors = 0
 	},
 /area/redgate/structure/powered/teppi_ranch/barn)
@@ -320,7 +320,7 @@
 /area/redgate/wilds)
 "xN" = (
 /mob/living/simple_mob/animal/passive/cow,
-/turf/simulated/floor/outdoors/newdirt{
+/turf/simulated/floor/outdoors/dirt/soft{
 	outdoors = 0
 	},
 /area/redgate/structure/powered/teppi_ranch/barn)
@@ -408,7 +408,7 @@
 /area/redgate/wilds)
 "Ei" = (
 /obj/structure/fence/door,
-/turf/simulated/floor/outdoors/newdirt{
+/turf/simulated/floor/outdoors/dirt/soft{
 	outdoors = 0
 	},
 /area/redgate/structure/powered/teppi_ranch/barn)
@@ -438,7 +438,7 @@
 /turf/simulated/floor/wood,
 /area/redgate/structure/powered/teppi_ranch)
 "Gq" = (
-/turf/simulated/floor/outdoors/newdirt{
+/turf/simulated/floor/outdoors/dirt/soft{
 	outdoors = 0
 	},
 /area/redgate/structure/powered/teppi_ranch/barn)
@@ -465,7 +465,7 @@
 /area/redgate/structure/powered/teppi_ranch)
 "Hd" = (
 /mob/living/simple_mob/vore/horse/big,
-/turf/simulated/floor/outdoors/newdirt{
+/turf/simulated/floor/outdoors/dirt/soft{
 	outdoors = 0
 	},
 /area/redgate/structure/powered/teppi_ranch/barn)
@@ -515,7 +515,7 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/turf/simulated/floor/outdoors/newdirt{
+/turf/simulated/floor/outdoors/dirt/soft{
 	outdoors = 0
 	},
 /area/redgate/structure/powered/teppi_ranch/barn)
@@ -584,7 +584,7 @@
 /obj/structure/fence/door{
 	dir = 4
 	},
-/turf/simulated/floor/outdoors/newdirt{
+/turf/simulated/floor/outdoors/dirt/soft{
 	outdoors = 0
 	},
 /area/redgate/structure/powered/teppi_ranch/barn)
@@ -597,7 +597,7 @@
 /area/redgate/structure/powered/teppi_ranch)
 "Nv" = (
 /mob/living/simple_mob/animal/passive/chicken,
-/turf/simulated/floor/outdoors/newdirt{
+/turf/simulated/floor/outdoors/dirt/soft{
 	outdoors = 0
 	},
 /area/redgate/structure/powered/teppi_ranch/barn)
@@ -692,7 +692,7 @@
 /obj/structure/bed/chair/sofa/bench/left{
 	dir = 4
 	},
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/redgate/wilds)
 "To" = (
 /turf/simulated/floor/outdoors/grass/seasonal/dark{
@@ -707,7 +707,7 @@
 /turf/simulated/floor/water/deep,
 /area/redgate/wilds)
 "VS" = (
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/redgate/wilds)
 "Wa" = (
 /obj/structure/table/standard,
@@ -742,7 +742,7 @@
 /turf/simulated/floor/carpet,
 /area/redgate/structure/powered/teppi_ranch)
 "Wy" = (
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/redgate/structure/powered/teppi_ranch/barn)
 "WL" = (
 /obj/structure/table/standard,
@@ -765,7 +765,7 @@
 /area/redgate/structure/powered/teppi_ranch/barn)
 "Xd" = (
 /obj/structure/simple_door/wood,
-/turf/simulated/floor/outdoors/newdirt{
+/turf/simulated/floor/outdoors/dirt/soft{
 	outdoors = 0
 	},
 /area/redgate/structure/powered/teppi_ranch/barn)

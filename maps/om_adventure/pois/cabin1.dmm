@@ -68,7 +68,7 @@
 /area/om_adventure/poi/cabin1)
 "w" = (
 /obj/tether_away_spawner/spookyland,
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/om_adventure/poi/cabin1)
 "x" = (
 /obj/structure/table/reinforced,
@@ -80,7 +80,7 @@
 /turf/simulated/floor/bmarble,
 /area/om_adventure/poi/cabin1)
 "B" = (
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/om_adventure/poi/cabin1)
 "C" = (
 /obj/structure/bed/chair/sofa/corner/brown,
