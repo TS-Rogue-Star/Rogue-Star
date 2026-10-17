@@ -208,7 +208,9 @@ var/list/admin_verbs_spawn = list(
 	/client/proc/map_template_load,
 	/client/proc/map_template_upload,
 	/client/proc/map_template_load_on_new_z,
-	/client/proc/eventkit_open_mob_spawner //VOREStation Add
+	/client/proc/eventkit_open_mob_spawner, //VOREStation Add
+	/client/proc/npc_spawn_crewman,	// RS ADD
+	// /client/proc/npc_spawn_test_crew	// RS ADD
 	)
 
 var/list/admin_verbs_server = list(
