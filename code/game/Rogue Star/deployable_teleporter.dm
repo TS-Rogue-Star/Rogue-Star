@@ -195,6 +195,12 @@
 	dude_wheres_my_teleporter.visible_message(SPAN_NOTICE("\The [src] beeps and deactivates as it packs away neatly."),runemessage = "beep")
 	qdel(src)
 
+/obj/deployable_teleporter/drone
+	icon = 'icons/rogue-star/misc_32x64.dmi'
+	icon_state = "deployable"
+	deployable_item = FALSE
+	overlay_state = "deployable_l"
+
 /obj/item/teleporter_deployer
 	name = "packed teleportation device"
 	desc = "A complicated looking device that is all folded up! Press the button to deploy a linked teleporter!"
