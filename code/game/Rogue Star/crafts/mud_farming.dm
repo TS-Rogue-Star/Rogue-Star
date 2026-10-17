@@ -7,6 +7,7 @@
 	var/water_saturation = 0
 	var/mushroom_capacity = 0
 	var/shrooming = 0
+	var/shroom_hospitality = 0
 
 /turf/simulated/floor/outdoors/reagent_interact(reagent_id, amount)
 	if(!reagent_id || !amount)
@@ -27,7 +28,11 @@
 	if(water_saturation <= 0)
 		return
 	water += amount
+	if(islist(sources))
+		if(sources.len >= 25)
+			return
 	water_communism(sources)
+	begin_shrooming()
 
 /turf/simulated/floor/outdoors/proc/water_communism(var/list/sources)
 	if(water <= water_saturation * 2)
@@ -46,13 +51,10 @@
 	if(assess_neighbor(search))
 		viable_neighbors += search
 	if(!islist(sources))
-		to_world("yip - [sources]")
 		for(var/thing in sources)
-			to_world("thing - [thing]")
 		sources = list(src)
 	else
-		to_world(span_green("communism was given list, adding self to list wahoo [x],[y]"))
-		sources += src
+		sources |= src
 	for(var/thing in viable_neighbors)
 		if(thing in sources)
 			viable_neighbors -= thing
@@ -66,9 +68,12 @@
 	var/average_water = total_water / (viable_neighbors.len + 1)
 	if(total_water == average_water)
 		return
-	water(average_water - water, sources)
 	for(var/turf/simulated/floor/outdoors/thing in viable_neighbors)
-		thing.water(average_water - thing.water, sources)
+		if(thing in sources)
+			continue
+		var/transfer = min(water, average_water - thing.water)
+		water -= transfer
+		thing.water(transfer, sources)
 
 /turf/simulated/floor/outdoors/proc/assess_neighbor(var/turf/simulated/floor/outdoors/neighbor)
 	if(!istype(neighbor, /turf/simulated/floor/outdoors))
@@ -79,7 +84,7 @@
 	return neighbor
 
 /turf/simulated/floor/outdoors/proc/begin_shrooming()
-	if(mushroom_capacity <= 0)
+	if(mushroom_capacity <= 0 || shroom_hospitality <= 0)
 		return
 	START_PROCESSING(SSturfs, src)
 
@@ -115,6 +120,7 @@
 /turf/simulated/floor/outdoors/grass
 	water_saturation = 200
 	mushroom_capacity = 1
+	shroom_hospitality = 0.25
 
 /turf/simulated/floor/outdoors/dirt
 	water_saturation = 200
@@ -125,14 +131,16 @@
 		mudify()
 
 /turf/simulated/floor/outdoors/dirt/proc/mudify()
+	var/stored_water = water
 	var/turf/simulated/floor/outdoors/mud/M = ChangeTurf(/turf/simulated/floor/outdoors/mud, preserve_outdoors = TRUE)
-	M.water = water
+	M.water = stored_water
 	M.begin_shrooming()
 
 /turf/simulated/floor/outdoors/mud
 	water = 200
 	water_saturation = 200
 	mushroom_capacity = 6
+	shroom_hospitality = 1
 
 /turf/simulated/floor/outdoors/mud/process()
 	if(water <= 0)
@@ -152,9 +160,9 @@
 					continue
 				START_PROCESSING(SSobj, src)
 
-/////////////////////////
+//////🍄🍄🍄🍄🍄//////
 ///🍄 MUSHROOMS!!! 🍄///
-/////////////////////////
+//////🍄🍄🍄🍄🍄//////
 
 /obj/structure/flora/mushroom/grower
 	name = "mushroom"
@@ -171,13 +179,21 @@
 	START_PROCESSING(SSobj, src)
 
 /obj/structure/flora/mushroom/grower/process()
-	if(!istype(loc, /turf/simulated/floor/outdoors/mud))
+	var/turf/simulated/floor/outdoors/T = get_turf(src)
+	if(!istype(T, /turf/simulated/floor/outdoors))
+		STOP_PROCESSING(SSobj, src)
+		return
+	if(T.shroom_hospitality <= 0)
 		STOP_PROCESSING(SSobj, src)
 		return
 	grow()
 
 /obj/structure/flora/mushroom/grower/proc/grow()
 	var/turf/T = get_turf(src)
+	var/hospitality = 0
+	if(istype(T, /turf/simulated/floor/outdoors))
+		var/turf/simulated/floor/outdoors/mush_zone = T
+		hospitality = mush_zone.shroom_hospitality
 	var/howbright = T.get_lumcount()
 	if(howbright > 0.3)
 		return
@@ -188,7 +204,7 @@
 		grow_rate = 1
 	else if(howbright < 0.1)
 		grow_rate = 2
-	grown += grow_rate
+	grown += grow_rate * hospitality
 	switch(grown)
 		if(0 to 10)
 			stage = 1
