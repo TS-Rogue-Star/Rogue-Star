@@ -50,13 +50,17 @@
 // Any merc can use this, just set special_attack_charges to a positive value
 
 // Check if we should bother with the grenade
+// RS Edit: PvE Targeting Optimization (Lira, October 2026)
 /mob/living/simple_mob/humanoid/merc/should_special_attack(atom/A)
 	var/mob_count = 0				// Are there enough mobs to consider grenading?
 	var/turf/T = get_turf(A)
+	var/list/visible_targets
 	for(var/mob/M in range(T, 2))
 		if(M.faction == faction) 	// Don't grenade our friends
 			return FALSE
-		if(M in oview(src, special_attack_max_range))	// And lets check if we can actually see at least two people before we throw a grenade
+		if(isnull(visible_targets))
+			visible_targets = oview(src, special_attack_max_range)
+		if(M in visible_targets)	// And lets check if we can actually see at least two people before we throw a grenade
 			if(!M.stat)			// Dead things don't warrant a grenade
 				mob_count ++
 	if(mob_count < 2)
