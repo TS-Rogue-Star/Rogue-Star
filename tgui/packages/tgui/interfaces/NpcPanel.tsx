@@ -103,7 +103,9 @@ type Data = {
 
 const TIERS = ['', 'idle', 'fulfillment', 'social', 'needs', 'survival'];
 
-const ChangeButtons = (props: { readonly onChange: (by: number | null) => void }) => (
+const ChangeButtons = (props: {
+  readonly onChange: (by: number | null) => void;
+}) => (
   <>
     <Button content="-10" onClick={() => props.onChange(-10)} />
     <Button content="+10" onClick={() => props.onChange(10)} />
@@ -216,19 +218,19 @@ export const NpcPanel = (props, context) => {
               {plan.length === 0
                 ? 'none'
                 : plan.map((step, i) => (
-                  <Box
-                    key={i}
-                    bold={i + 1 === data.plan_step}
-                    color={
-                      i + 1 === data.plan_step
-                        ? 'good'
-                        : i + 1 < data.plan_step
-                          ? 'grey'
-                          : undefined
-                    }>
-                    {i + 1}. {step}
-                  </Box>
-                ))}
+                    <Box
+                      key={i}
+                      bold={i + 1 === data.plan_step}
+                      color={
+                        i + 1 === data.plan_step
+                          ? 'good'
+                          : i + 1 < data.plan_step
+                            ? 'grey'
+                            : undefined
+                      }>
+                      {i + 1}. {step}
+                    </Box>
+                  ))}
             </LabeledList.Item>
             <LabeledList.Item label="Walking to">
               {data.escaping
