@@ -516,6 +516,8 @@ GLOBAL_LIST_EMPTY(vending_products)
 /obj/machinery/vending/proc/purchase(datum/stored_item/vending_product/R, mob/user)
 	if(stat & (BROKEN|NOPOWER))
 		return FALSE
+	if(user.stat || user.restrained())
+		return FALSE
 	if(!vend_ready)
 		to_chat(user, "<span class='warning'>[src] is busy!</span>")
 		return

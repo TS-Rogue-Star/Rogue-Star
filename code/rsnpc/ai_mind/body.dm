@@ -36,8 +36,7 @@ GLOBAL_LIST_INIT(npc_species, list(SPECIES_HUMAN, SPECIES_VULPKANIN, SPECIES_UNA
 	GLOB.npc_workers += src
 	job_master.EquipRank(src, pick_npc_job(character ? character.job : job_title), TRUE)
 	if(npc_prefs && !length(npc_prefs.custom_markings))
-		qdel(npc_prefs)
-	npc_prefs = null
+		QDEL_NULL(npc_prefs)
 	allownpcvore = TRUE
 	if(character)
 		npc_vore_from(character)
@@ -51,6 +50,7 @@ GLOBAL_LIST_INIT(npc_species, list(SPECIES_HUMAN, SPECIES_VULPKANIN, SPECIES_UNA
 
 /mob/living/carbon/human/ai_controlled/rsnpc/station/Destroy()
 	GLOB.npc_workers -= src
+	QDEL_NULL(npc_prefs)
 	if(mind?.current == src)
 		mind.current = null
 	if(mind?.original == src)
