@@ -174,7 +174,10 @@
 		squelch()
 		return
 	speak_tick()
-	if(isbelly(holder.loc) || fire_tick() || locker_tick())
+	if(isbelly(holder.loc))
+		idle_talk()
+		return
+	if(fire_tick() || locker_tick())
 		return
 	if(!can_act())
 		return

@@ -144,7 +144,7 @@ GLOBAL_LIST_INIT(npc_droppable_lines, list(
 
 /datum/ai_holder/rsnpc/proc/idle_talk()
 	var/datum/npc_action/A = plan && plan_step <= length(plan) ? plan[plan_step] : null
-	if(!(A?.idle || task?.idle) || busy_talking())
+	if(!(isbelly(holder.loc) || A?.idle || task?.idle) || busy_talking())
 		return
 	var/list/R = next_reply()
 	if(!R)
