@@ -203,3 +203,69 @@
 	has_custom_open_sprites = TRUE
 	has_vore_belly_sprites = FALSE
 	rest_sprite_options = list("Default", "Bellyup")
+
+// dullahan sprite stuff (tall cont.)
+
+/datum/robot_sprite/dogborg/tall/dullahanminermodule
+	module_type = "Miner"
+	sprite_icon = 'icons/mob/dullahanborg/dullahan_mine.dmi'
+
+
+/datum/robot_sprite/dogborg/tall/dullahanminermodule/do_equipment_glamour(var/obj/item/weapon/robot_module/module)
+	if(!has_custom_equipment_sprites)
+		return
+
+	..()
+
+	var/obj/item/device/dogborg/sleeper/compactor/supply/DCS = locate() in module.modules
+	if(DCS)
+		DCS.icon_state = "sleeperc"
+
+
+/datum/robot_sprite/dogborg/tall/dullahanminermodule/dullahanminer
+	name = "Dullahan Miner"
+	sprite_icon_state = "dullahanmine"
+	has_eye_light_sprites = TRUE
+	has_custom_open_sprites = TRUE
+	has_vore_belly_sprites = TRUE
+	rest_sprite_options = list("Default", "Sit")
+
+/datum/robot_sprite/dogborg/tall/dullahanminermodule/dullahanmineralt
+	name = "Dullahan Miner v2"
+	sprite_icon_state = "dullahanmine_alt"
+	has_eye_light_sprites = TRUE
+	has_custom_open_sprites = TRUE
+	has_vore_belly_sprites = TRUE
+	rest_sprite_options = list("Default", "Sit")
+
+
+/datum/robot_sprite/dogborg/tall/dullahancargomodule
+	module_type = "Miner"
+	sprite_icon = 'icons/mob/dullahanborg/dullahan_cargo.dmi'
+
+/datum/robot_sprite/dogborg/tall/dullahancargomodule/do_equipment_glamour(var/obj/item/weapon/robot_module/module)
+	if(!has_custom_equipment_sprites)
+		return
+
+	..()
+
+	var/obj/item/device/dogborg/sleeper/compactor/supply/DCS = locate() in module.modules
+	if(DCS)
+		DCS.icon_state = "sleeperc"
+
+
+/datum/robot_sprite/dogborg/tall/dullahancargomodule/dullahancargo
+	name = "Dullahan cargo"
+	sprite_icon_state = "dullahancargo"
+	has_eye_light_sprites = TRUE
+	has_custom_open_sprites = TRUE
+	has_vore_belly_sprites = TRUE
+	rest_sprite_options = list("Default", "Sit")
+
+/datum/robot_sprite/dogborg/tall/dullahancargomodule/dullahancargoalt
+	name = "Dullahan cargo v2"
+	sprite_icon_state = "dullahancargo_alt"
+	has_eye_light_sprites = TRUE
+	has_custom_open_sprites = TRUE
+	has_vore_belly_sprites = TRUE
+	rest_sprite_options = list("Default", "Sit")
