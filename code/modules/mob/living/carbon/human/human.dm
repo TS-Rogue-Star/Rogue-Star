@@ -194,6 +194,11 @@
 				update |= temp.take_damage(b_loss * 0.05, f_loss * 0.05, used_weapon = weapon_message)
 	if(update)	UpdateDamageIcon()
 
+// RS ADD START
+/mob/living/carbon/human/proc/loadout_prefs()
+	return client?.prefs
+// RS ADD END
+
 /mob/living/carbon/human/proc/implant_loyalty(override = FALSE) // Won't override by default.
 	if(!config.use_loyalty_implants && !override) return // Nuh-uh.
 

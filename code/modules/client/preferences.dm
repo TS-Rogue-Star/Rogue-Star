@@ -230,6 +230,7 @@ var/list/preferences_datums = list()
 /datum/preferences/Destroy()
 	. = ..()
 	QDEL_LIST_ASSOC_VAL(char_render_holders)
+	QDEL_NULL(player_setup) // RS ADD
 	// RS Add Start: Clear cached custom marking references when preferences are deleted (Lira, September 2025)
 	if(islist(custom_markings))
 		for(var/id in custom_markings.Copy())
