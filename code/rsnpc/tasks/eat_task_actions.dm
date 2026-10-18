@@ -2,6 +2,7 @@
 	name = "fetch"
 	var/from
 	var/obj/item/thing
+	var/exact_item = FALSE
 	var/obj/place
 	var/phase = 0
 	var/was_locked = FALSE
@@ -9,6 +10,18 @@
 	var/vend_until = 0
 
 /datum/npc_action/fetch/variants(datum/ai_holder/rsnpc/ai_mind, fact)
+	if(findtext(fact, "holding:") == 1)
+		var/obj/item/I = locate(copytext(fact, 9))
+		if(!istype(I) || QDELETED(I) || !(I in ai_mind.holder.get_contents()))
+			return list()
+		var/datum/npc_action/fetch/A = copy(null, 2, null, list(fact))
+		A.want = I.type
+		A.from = NPC_SOURCE_HELD
+		A.thing = I
+		A.exact_item = TRUE
+		A.name = "fetch [I]"
+		A.key = "[A.key]:\ref[I]"
+		return list(A)
 	if(findtext(fact, "have:") != 1)
 		return list()
 	var/kind = text2path(copytext(fact, 6))
@@ -44,7 +57,10 @@
 	return FALSE
 
 /datum/npc_action/fetch/run_action(datum/ai_holder/rsnpc/ai_mind)
-	if(ai_mind.held_item(want))
+	if(exact_item && (QDELETED(thing) || !(thing in ai_mind.holder.get_contents())))
+		why = "it's not there any more"
+		return NPC_NOT_THERE
+	if(exact_item ? ai_mind.holder.item_is_in_hands(thing) : ai_mind.held_item(want))
 		return NPC_DONE
 	if(!ai_mind.holder.checkClickCooldown())
 		return NPC_RUNNING

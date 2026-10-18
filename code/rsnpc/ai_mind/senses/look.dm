@@ -19,7 +19,7 @@
 	var/list/visible_turfs = list()
 	visible_turfs[here] = TRUE
 	for(var/mob/living/M in nearby)
-		if(M == holder || !isturf(M.loc))
+		if(M == holder || !isturf(M.loc) || M.invisibility > holder.see_invisible)
 			continue
 		var/turf/T = M.loc
 		var/visible = visible_turfs[T]
@@ -57,7 +57,7 @@
 		else if(A != holder)
 			things += A
 	for(var/atom/movable/A as anything in things)
-		if(turfs_in_sight[A.loc])
+		if(turfs_in_sight[A.loc] && A.invisibility <= holder.see_invisible)
 			in_sight += A
 	remember_sights()
 	var/list/checked_air = list()

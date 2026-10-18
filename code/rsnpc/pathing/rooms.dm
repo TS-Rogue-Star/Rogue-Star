@@ -507,7 +507,10 @@ GLOBAL_LIST(npc_levels)
 	var/datum/npc_room/R
 	for(var/dir in GLOB.cardinal)
 		var/turf/N = get_step(T, dir)
-		if(!N?.npc_room || N.npc_room.area != T.loc)
+		if(!N?.npc_room)
+			continue
+		if(N.npc_room.area != T.loc)
+			M.changed()
 			continue
 		if(R && R != N.npc_room)
 			M.changed()

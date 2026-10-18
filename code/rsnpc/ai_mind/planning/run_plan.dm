@@ -1,4 +1,7 @@
 /datum/ai_holder/rsnpc/proc/fact_true(fact)
+	if(findtext(fact, "holding:") == 1)
+		var/obj/item/I = locate(copytext(fact, 9))
+		return istype(I) && !QDELETED(I) && holder.item_is_in_hands(I)
 	if(findtext(fact, "have:") == 1)
 		return !!held_item(text2path(copytext(fact, 6)))
 	switch(fact)

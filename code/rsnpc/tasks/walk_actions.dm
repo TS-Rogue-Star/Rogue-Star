@@ -24,7 +24,7 @@
 	if(!(M in ai_mind.look()) && npc_arrived(ai_mind.holder, T))
 		why = "they're not where I last saw them"
 		return NPC_NOT_THERE
-	if(heading && get_z(T) == get_z(heading) && get_dist(T, heading) <= 3)
+	if(heading && !npc_arrived(ai_mind.holder, heading) && get_z(T) == get_z(heading) && get_dist(T, heading) <= 3)
 		T = heading
 	return head_to(ai_mind, T)
 

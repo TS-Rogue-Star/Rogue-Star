@@ -30,7 +30,9 @@ GLOBAL_LIST_INIT(npc_test_crew, list(
 	if(manifest)
 		data_core.manifest_inject(W)
 		var/datum/ai_holder/rsnpc/ai_mind = npc_ai_mind(W)
-		for(var/datum/data/record/R in data_core.general)
+		var/datum/job/J = SSjob.get_job(W.mind?.assigned_role)
+		var/list/records = J?.offmap_spawn ? data_core.hidden_general : data_core.general
+		for(var/datum/data/record/R in records)
 			if(ai_mind && R.fields["name"] == W.real_name)
 				ai_mind.record_id = R.fields["id"]
 	return W
