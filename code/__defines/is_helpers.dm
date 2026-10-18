@@ -66,3 +66,6 @@
 
 #define istaurtail(A)	istype(A, /datum/sprite_accessory/tail/taur)
 #define islongtail(A)	istype(A, /datum/sprite_accessory/tail/longtail)
+
+//RS ADD
+#define isoverworld(A)	istype(A, /turf/unsimulated/map)
