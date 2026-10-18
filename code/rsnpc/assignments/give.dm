@@ -64,7 +64,7 @@
 	var/mob/living/M = G?.asker?.resolve()
 	if(!istype(G) || !I || !M)
 		return list()
-	var/datum/npc_action/give/A = copy(null, 1, list(NPC_FACT_HAVE(I.type), NPC_FACT_NEAR(M)), list(fact))
+	var/datum/npc_action/give/A = copy(null, 1, list(NPC_FACT_HOLDING(I), NPC_FACT_NEAR(M)), list(fact))
 	A.order = G
 	A.name = "give [G.thing_name] to [M]"
 	A.key = "[A.key]:\ref[G]"
@@ -72,10 +72,9 @@
 
 /datum/npc_action/give/run_action(datum/ai_holder/rsnpc/ai_mind)
 	if(!offered)
-		var/atom/wanted = order.thing?.resolve()
-		var/obj/item/I = ai_mind.held_item(wanted?.type)
+		var/obj/item/I = order.thing?.resolve()
 		var/mob/living/M = order.asker?.resolve()
-		if(!I)
+		if(QDELETED(I) || !ai_mind.holder.item_is_in_hands(I))
 			why = "it's not in my hands"
 			return NPC_NOT_THERE
 		if(!M || !(M in ai_mind.look()))

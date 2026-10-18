@@ -47,6 +47,7 @@
 #define NPC_PLAN_ALREADY_DONE 3
 
 #define NPC_FACT_HAVE(kind) "have:[kind]"
+#define NPC_FACT_HOLDING(I) "holding:\ref[I]"
 #define NPC_FACT_FED "fed"
 #define NPC_FACT_WORKED "worked"
 #define NPC_FACT_STROLLED "strolled"
