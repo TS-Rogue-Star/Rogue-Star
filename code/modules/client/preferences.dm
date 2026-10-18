@@ -955,8 +955,15 @@ var/list/preferences_datums = list()
 		return 1
 
 	if(href_list["save"])
-		save_preferences()
-		save_character()
+		// RS Edit Start: Character slot save feedback (Lira, October 2026)
+		var/preferences_saved = save_preferences()
+		var/character_saved = save_character()
+		log_debug("[key_name(usr)] pressed Save slot in Character Setup for [real_name] in slot [default_slot] (preferences_saved=[preferences_saved], character_saved=[character_saved]).")
+		if(preferences_saved && character_saved)
+			to_chat(usr, "<span class='notice'>Character settings for [html_encode(real_name)] saved to slot [default_slot].</span>")
+		else
+			to_chat(usr, "<span class='warning'>Unable to fully save character settings for [html_encode(real_name)] to slot [default_slot]. Please try again.</span>")
+		// RS Edit End
 	else if(href_list["reload"])
 		// RS Add Start: Prevent reload spam (Lira, November 2025)
 		if(world.time < next_charsetup_reload)
