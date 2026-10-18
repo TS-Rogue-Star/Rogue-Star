@@ -498,82 +498,90 @@ GLOBAL_LIST_EMPTY(vending_products)
 			coin = null
 			categories &= ~CAT_COIN
 			return TRUE
-		if("vend")
-			if(!vend_ready)
-				to_chat(usr, "<span class='warning'>[src] is busy!</span>")
-				return
-			if(!allowed(usr) && !emagged && scan_id)
-				to_chat(usr, "<span class='warning'>Access denied.</span>")	//Unless emagged of course
-				flick("[icon_state]-deny",src)
-				playsound(src, 'sound/machines/deniedbeep.ogg', 50, 0)
-				return
-			if(panel_open)
-				to_chat(usr, "<span class='warning'>[src] cannot dispense products while its service panel is open!</span>")
-				return
-
+		if("vend")	// RS EDIT START
 			var/key = text2num(params["vend"])
 			var/datum/stored_item/vending_product/R = product_records[key]
 
 			// This should not happen unless the request from NanoUI was bad
 			if(!(R.category & categories))
 				return
-
-			if(!can_buy(R, usr))
-				return
-
-			if(R.price <= 0)
-				vend(R, usr)
-				add_fingerprint(usr)
-				return TRUE
-
-			if(issilicon(usr)) //If the item is not free, provide feedback if a synth is trying to buy something.
-				to_chat(usr, "<span class='danger'>Lawed unit recognized.  Lawed units cannot complete this transaction.  Purchase canceled.</span>")
-				return
-			if(!ishuman(usr))
-				return
-
-			vend_ready = FALSE // From this point onwards, vendor is locked to performing this transaction only, until it is resolved.
-
-			var/mob/living/carbon/human/H = usr
-			var/obj/item/weapon/card/id/C = H.GetIdCard()
-
-			if(!vendor_account || vendor_account.suspended)
-				to_chat(usr, "<span class='filter_notice'>Vendor account offline. Unable to process transaction.</span>")
-				flick("[icon_state]-deny",src)
-				vend_ready = TRUE
-				return
-
-			currently_vending = R
-
-			var/paid = FALSE
-
-			if(istype(usr.get_active_hand(), /obj/item/weapon/spacecash))
-				var/obj/item/weapon/spacecash/cash = usr.get_active_hand()
-				paid = pay_with_cash(cash, usr)
-			else if(istype(usr.get_active_hand(), /obj/item/weapon/spacecash/ewallet))
-				var/obj/item/weapon/spacecash/ewallet/wallet = usr.get_active_hand()
-				paid = pay_with_ewallet(wallet)
-			else if(istype(C, /obj/item/weapon/card))
-				paid = pay_with_card(C, usr)
-			/*else if(usr.can_advanced_admin_interact())
-				to_chat(usr, "<span class='notice'>Vending object due to admin interaction.</span>")
-				paid = TRUE*/
-			else
-				to_chat(usr, "<span class='warning'>Payment failure: you have no ID or other method of payment.</span>")
-				vend_ready = TRUE
-				flick("[icon_state]-deny",src)
-				return TRUE // we set this because they shouldn't even be able to get this far, and we want the UI to update.
-			if(paid)
-				vend(currently_vending, usr) // vend will handle vend_ready
-				. = TRUE
-			else
-				to_chat(usr, "<span class='warning'>Payment failure: unable to process payment.</span>")
-				vend_ready = TRUE
+			purchase(R, usr)	// RS EDIT END
 
 		if("togglevoice")
 			if(!panel_open)
 				return FALSE
 			shut_up = !shut_up
+
+// RS ADD START
+/obj/machinery/vending/proc/purchase(datum/stored_item/vending_product/R, mob/user)
+	if(stat & (BROKEN|NOPOWER))
+		return FALSE
+	if(user.stat || user.restrained())
+		return FALSE
+	if(!vend_ready)
+		to_chat(user, "<span class='warning'>[src] is busy!</span>")
+		return
+	if(!allowed(user) && !emagged && scan_id)
+		to_chat(user, "<span class='warning'>Access denied.</span>")	//Unless emagged of course
+		flick("[icon_state]-deny",src)
+		playsound(src, 'sound/machines/deniedbeep.ogg', 50, 0)
+		return
+	if(panel_open)
+		to_chat(user, "<span class='warning'>[src] cannot dispense products while its service panel is open!</span>")
+		return
+
+	if(!can_buy(R, user))
+		return
+
+	if(R.price <= 0)
+		vend(R, user)
+		add_fingerprint(user)
+		return TRUE
+
+	if(issilicon(user)) //If the item is not free, provide feedback if a synth is trying to buy something.
+		to_chat(user, "<span class='danger'>Lawed unit recognized.  Lawed units cannot complete this transaction.  Purchase canceled.</span>")
+		return
+	if(!ishuman(user))
+		return
+
+	vend_ready = FALSE // From this point onwards, vendor is locked to performing this transaction only, until it is resolved.
+
+	var/mob/living/carbon/human/H = user
+	var/obj/item/weapon/card/id/C = H.GetIdCard()
+
+	if(!vendor_account || vendor_account.suspended)
+		to_chat(user, "<span class='filter_notice'>Vendor account offline. Unable to process transaction.</span>")
+		flick("[icon_state]-deny",src)
+		vend_ready = TRUE
+		return
+
+	currently_vending = R
+
+	var/paid = FALSE
+
+	if(istype(user.get_active_hand(), /obj/item/weapon/spacecash))
+		var/obj/item/weapon/spacecash/cash = user.get_active_hand()
+		paid = pay_with_cash(cash, user)
+	else if(istype(user.get_active_hand(), /obj/item/weapon/spacecash/ewallet))
+		var/obj/item/weapon/spacecash/ewallet/wallet = user.get_active_hand()
+		paid = pay_with_ewallet(wallet)
+	else if(istype(C, /obj/item/weapon/card))
+		paid = pay_with_card(C, user)
+	/*else if(user.can_advanced_admin_interact())
+		to_chat(user, "<span class='notice'>Vending object due to admin interaction.</span>")
+		paid = TRUE*/
+	else
+		to_chat(user, "<span class='warning'>Payment failure: you have no ID or other method of payment.</span>")
+		vend_ready = TRUE
+		flick("[icon_state]-deny",src)
+		return
+	if(paid)
+		vend(currently_vending, user) // vend will handle vend_ready
+		return TRUE
+	else
+		to_chat(user, "<span class='warning'>Payment failure: unable to process payment.</span>")
+		vend_ready = TRUE
+// RS ADD END
 
 /obj/machinery/vending/proc/can_buy(datum/stored_item/vending_product/R, mob/user)
 	if(!allowed(user) && !emagged && scan_id)

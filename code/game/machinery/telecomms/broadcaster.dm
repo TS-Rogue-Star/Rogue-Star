@@ -435,7 +435,7 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 
 	for (var/mob/R in receive)
 		CHECK_TICK
-		if(QDELETED(R) || !(R in player_list))
+		if(QDELETED(R) || !((R in player_list) || (R in GLOB.npc_workers)))	// RS EDIT
 			continue
 
 	  /* --- Loop through the receivers and categorize them --- */
@@ -547,7 +547,7 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 		if(length(heard_masked))
 			for (var/mob/R in heard_masked)
 				CHECK_TICK
-				if(QDELETED(R) || !(R in player_list))
+				if(QDELETED(R) || !((R in player_list) || (R in GLOB.npc_workers)))	// RS EDIT
 					continue
 				R.hear_radio(message_pieces, verbage, part_a, part_b, part_c, part_d, part_e, M, 0, name, display_freq) // RS EDIT
 				if(R.is_preference_enabled(/datum/client_preference/radio_sounds))
@@ -557,7 +557,7 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 		if(length(heard_normal))
 			for (var/mob/R in heard_normal)
 				CHECK_TICK
-				if(QDELETED(R) || !(R in player_list))
+				if(QDELETED(R) || !((R in player_list) || (R in GLOB.npc_workers)))	// RS EDIT
 					continue
 				R.hear_radio(message_pieces, verbage, part_a, part_b, part_c, part_d, part_e, M, 0, realname, display_freq) // RS EDIT
 				if(R.is_preference_enabled(/datum/client_preference/radio_sounds))
@@ -567,7 +567,7 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 		if(length(heard_voice))
 			for (var/mob/R in heard_voice)
 				CHECK_TICK
-				if(QDELETED(R) || !(R in player_list))
+				if(QDELETED(R) || !((R in player_list) || (R in GLOB.npc_workers)))	// RS EDIT
 					continue
 				R.hear_radio(message_pieces, verbage, part_a, part_b, part_c, part_d, part_e, M,0, vname, display_freq) // RS EDIT
 				if(R.is_preference_enabled(/datum/client_preference/radio_sounds))
@@ -578,7 +578,7 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 		if(length(heard_garbled))
 			for (var/mob/R in heard_garbled)
 				CHECK_TICK
-				if(QDELETED(R) || !(R in player_list))
+				if(QDELETED(R) || !((R in player_list) || (R in GLOB.npc_workers)))	// RS EDIT
 					continue
 				R.hear_radio(message_pieces, verbage, part_a, part_b, part_c, part_d, part_e, M, 1, vname, display_freq) // RS EDIT
 				if(R.is_preference_enabled(/datum/client_preference/radio_sounds))
@@ -588,7 +588,7 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 		if(length(heard_gibberish))
 			for (var/mob/R in heard_gibberish)
 				CHECK_TICK
-				if(QDELETED(R) || !(R in player_list))
+				if(QDELETED(R) || !((R in player_list) || (R in GLOB.npc_workers)))	// RS EDIT
 					continue
 				R.hear_radio(message_pieces, verbage, part_a, part_b, part_c, part_d, part_e, M, 1, "", display_freq) // RS EDIT
 				if(R.is_preference_enabled(/datum/client_preference/radio_sounds))

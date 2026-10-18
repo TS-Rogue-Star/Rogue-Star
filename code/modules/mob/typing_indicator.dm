@@ -25,7 +25,7 @@
 	if(!state)
 		input_typing_indicator_active = FALSE
 
-	if(!is_preference_enabled(/datum/client_preference/show_typing_indicator))
+	if(client && !is_preference_enabled(/datum/client_preference/show_typing_indicator))	// RS EDIT
 		if(typing_indicator)
 			cut_overlay(typing_indicator, TRUE)
 		// RS Add Start: Support for typing indicator enhancement (Lira, October 2025)
