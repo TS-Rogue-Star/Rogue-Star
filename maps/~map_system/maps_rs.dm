@@ -74,17 +74,11 @@ var/global/list/possible_station_maps = list(
 	else
 		error("initialise_map_list() failed to create a map object. No maps will load.")
 
-	for(var/type in subtypesof(/datum/map))
-		var/datum/map/M
-		if(type == using_map.type)
-			M = using_map
-			M.setup_map()
-		else
-			M = new type
-		if(!M.path)
-			log_debug("Map '[M]' does not have a defined path, not adding to map list!")
-		else
-			all_maps[M.path] = M
+	using_map.setup_map()
+	if(!using_map.path)
+		log_debug("Map '[using_map]' does not have a defined path, not adding to map list!")
+	else
+		all_maps[using_map.path] = using_map
 	return 1
 
 /proc/auto_map_swap(var/map_input,var/last_auto)
