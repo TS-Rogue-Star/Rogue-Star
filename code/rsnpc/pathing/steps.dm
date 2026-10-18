@@ -3,7 +3,7 @@ SUBSYSTEM_DEF(npc_steps)
 	init_order = INIT_ORDER_AI_FAST
 	priority = FIRE_PRIORITY_AI
 	wait = 1
-	flags = SS_NO_INIT
+	flags = SS_NO_INIT | SS_TICKER
 	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
 	var/list/currentrun = list()
 
