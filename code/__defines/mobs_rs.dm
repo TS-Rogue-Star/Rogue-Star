@@ -11,3 +11,5 @@
 #define FP_PLANT 1
 #define FP_SLIME 2
 #define FP_FOOD 3 //If you're made of food you will be wrecked
+
+#define AI_BUSY_WATCHDOG (5 MINUTES)

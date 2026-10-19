@@ -5,6 +5,8 @@
 // //////////////////////////////////////////////////////////////////////////////////////////////
 // Updated by Lira for Rogue Star December 2025: Updated to support new body marking selector ///
 // //////////////////////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star August 2026: Character Designer - Species and Prosthetics /////
+// //////////////////////////////////////////////////////////////////////////////////////////////
 
 export { DirectionPreviewCanvas } from './DirectionPreviewCanvas';
 export type { DirectionPreviewCanvasProps } from './DirectionPreviewCanvas';
@@ -39,3 +41,7 @@ export type { CanvasToolbarProps } from './CanvasToolbar';
 export { CanvasSection } from './CanvasSection';
 export type { CanvasHandlers, CanvasSectionProps } from './CanvasSection';
 export { PreviewColumn } from './PreviewColumn';
+export { LivePreviewCard } from './LivePreviewCard';
+export type { LivePreviewCardProps } from './LivePreviewCard';
+export { ProstheticMannequin } from './ProstheticMannequin';
+export type { ProstheticMannequinProps } from './ProstheticMannequin';

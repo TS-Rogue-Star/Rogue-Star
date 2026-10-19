@@ -4,6 +4,7 @@
 		set_stat(CONSCIOUS)
 		return
 	health = getMaxHealth() - (getBruteLoss() + getFireLoss())
+	handle_ether_damage()	//RS ADD
 	return
 
 /mob/living/silicon/robot/getBruteLoss()

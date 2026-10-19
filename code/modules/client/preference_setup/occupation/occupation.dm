@@ -1,6 +1,11 @@
+////////////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star September 2026: Character Designer - Occupation //
+////////////////////////////////////////////////////////////////////////////////////
+
 /datum/category_item/player_setup_item/occupation
 	name = "Occupation"
 	sort_order = 1
+	show_in_character_setup = FALSE // RS Add: Character Designer - Occupation (Lira, September 2026)
 
 /datum/category_item/player_setup_item/occupation/load_character(var/savefile/S)
 	S["alternate_option"]	>> pref.alternate_option
@@ -220,70 +225,10 @@
 	. += "</tt>"
 	. = jointext(.,null)
 
+// RS Edit: Character Designer - Occupation (Lira, September 2026)
 /datum/category_item/player_setup_item/occupation/OnTopic(href, href_list, user)
-	if(href_list["reset_jobs"])
-		ResetJobs()
-		return TOPIC_REFRESH
-
-	else if(href_list["job_alternative"])
-		if(pref.alternate_option == GET_RANDOM_JOB || pref.alternate_option == BE_ASSISTANT)
-			pref.alternate_option += 1
-		else if(pref.alternate_option == RETURN_TO_LOBBY)
-			pref.alternate_option = 0
-		return TOPIC_REFRESH
-
-	else if(href_list["select_alt_title"])
-		var/datum/job/job = locate(href_list["select_alt_title"])
-		if (job)
-			var/choices = list(job.title) + job.alt_titles
-			var/choice = tgui_input_list(usr, "Choose a title for [job.title].", "Choose Title", choices, pref.GetPlayerAltTitle(job))
-			if(choice && CanUseTopic(user))
-				SetPlayerAltTitle(job, choice)
-				return (pref.equip_preview_mob ? TOPIC_REFRESH_UPDATE_PREVIEW : TOPIC_REFRESH)
-
-	else if(href_list["set_job"])
-		if(SetJob(user, href_list["set_job"], text2num(href_list["level"])))
-			return (pref.equip_preview_mob ? TOPIC_REFRESH_UPDATE_PREVIEW : TOPIC_REFRESH)
-
-	else if(href_list["job_info"])
-		var/rank = href_list["job_info"]
-		var/datum/job/job = job_master.GetJob(rank)
-		var/dat = list()
-
-		dat += "<p style='background-color: [job.selection_color]'><br><br><p>"
-		if(job.alt_titles)
-			dat += "<i><b>Alternate titles:</b> [english_list(job.alt_titles)].</i>"
-		send_rsc(user, job.get_job_icon(), "job[ckey(rank)].png")
-		dat += "<img src=job[ckey(rank)].png width=96 height=96 style='float:left;'>"
-		if(job.departments)
-			dat += "<b>Departments:</b> [english_list(job.departments)]."
-			if(LAZYLEN(job.departments_managed))
-				dat += "You manage these departments: [english_list(job.departments_managed)]"
-
-		dat += "You answer to <b>[job.supervisors]</b> normally."
-
-		dat += "<hr style='clear:left;'>"
-		if(config.wikiurl)
-			dat += "<a href='?src=\ref[src];job_wiki=[rank]'>Open wiki page in browser</a>"
-
-		var/alt_title = pref.GetPlayerAltTitle(job)
-		var/list/description = job.get_description_blurb(alt_title)
-		if(LAZYLEN(description))
-			dat += html_encode(description[1])
-			if(description.len > 1)
-				if(!isnull(description[2]))
-					dat += "<br>"
-					dat += html_encode(description[2])
-
-		var/datum/browser/popup = new(user, "Job Info", "[capitalize(rank)]", 430, 520, src)
-		popup.set_content(jointext(dat,"<br>"))
-		popup.open()
-
-	else if(href_list["job_wiki"])
-		var/rank = href_list["job_wiki"]
-		open_link(user,"[config.wikiurl][rank]")
-
-	return ..()
+	pref.open_body_markings_designer(user, "occupation")
+	return TOPIC_HANDLED
 
 /datum/category_item/player_setup_item/occupation/proc/SetPlayerAltTitle(datum/job/job, new_title)
 	// remove existing entry

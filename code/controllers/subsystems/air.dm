@@ -32,6 +32,7 @@ SUBSYSTEM_DEF(air)
 
 /datum/controller/subsystem/air/PreInit()
 	air_master = src
+	tile_queue_id = ++global.air_tile_queue_id // RS Add: Atmos Zone Efficiency (Lira, October 2026)
 
 /datum/controller/subsystem/air/Initialize(timeofday)
 	report_progress("Processing Geometry...")
@@ -131,6 +132,7 @@ Total Unsimulated Turfs: [world.maxx*world.maxy*world.maxz - simulated_turf_coun
 		// We still use a separate list tho, to ensure we don't process a turf twice during a single cycle!
 		src.currentrun = tiles_to_update
 		tiles_to_update = list()
+		tile_queue_id = ++global.air_tile_queue_id // RS Add: Atmos Zone Efficiency (Lira, October 2026)
 
 		//defer updating of self-zone-blocked turfs until after all other turfs have been updated.
 		//this hopefully ensures that non-self-zone-blocked turfs adjacent to self-zone-blocked ones
@@ -294,6 +296,7 @@ Total Unsimulated Turfs: [world.maxx*world.maxy*world.maxz - simulated_turf_coun
 	zones.Cut()
 	edges.Cut()
 	tiles_to_update.Cut()
+	tile_queue_id = ++global.air_tile_queue_id // RS Add: Atmos Zone Efficiency (Lira, October 2026)
 	zones_to_update.Cut()
 	active_fire_zones.Cut()
 	active_hotspots.Cut()

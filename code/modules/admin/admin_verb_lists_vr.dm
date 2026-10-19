@@ -208,7 +208,9 @@ var/list/admin_verbs_spawn = list(
 	/client/proc/map_template_load,
 	/client/proc/map_template_upload,
 	/client/proc/map_template_load_on_new_z,
-	/client/proc/eventkit_open_mob_spawner //VOREStation Add
+	/client/proc/eventkit_open_mob_spawner, //VOREStation Add
+	/client/proc/npc_spawn_crewman,	// RS ADD
+	// /client/proc/npc_spawn_test_crew	// RS ADD
 	)
 
 var/list/admin_verbs_server = list(
@@ -296,7 +298,9 @@ var/list/admin_verbs_debug = list(
 	/datum/admins/proc/change_time,
 	/client/proc/admin_give_modifier,
 	/client/proc/simple_DPS,
-	/datum/admins/proc/view_feedback
+	/datum/admins/proc/view_feedback,
+	/client/proc/rebuild_custom_marking_atlas, // RS Add: Character Designer Cache Enhancements (Lira, September 2026)
+	/client/proc/reload_custom_marking_atlas // RS Add: Character Designer Cache Enhancements (Lira, September 2026)
 	)
 
 var/list/admin_verbs_paranoid_debug = list(

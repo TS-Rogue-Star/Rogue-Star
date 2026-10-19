@@ -242,19 +242,40 @@
 	else
 		STOP_AIFASTPROCESSING(src)
 
+// RS Edit: Healer tweaks (Lira, June 2026)
+/datum/ai_holder/proc/start_fast_processing()
+	manage_processing(AI_PROCESSING|AI_FASTPROCESSING)
+
+// RS Edit: Healer tweaks (Lira, June 2026)
+/datum/ai_holder/proc/sync_processing_to_stance()
+	if(stance in fastprocess_stances)
+		manage_processing(AI_PROCESSING|AI_FASTPROCESSING)
+	else if(stance in noprocess_stances)
+		manage_processing(AI_NO_PROCESS)
+	else
+		manage_processing(AI_PROCESSING)
+
 /datum/ai_holder/proc/holder_stat_change(var/mob, old_stat, new_stat)
 	if(old_stat >= DEAD && new_stat <= DEAD) //Revived
 		manage_processing(AI_PROCESSING)
 	else if(old_stat <= DEAD && new_stat >= DEAD) //Killed
 		manage_processing(AI_NO_PROCESS)
 
+// RS Edit: HUD Optimization (Lira, September 2026)
 /datum/ai_holder/proc/update_stance_hud()
-	var/image/stanceimage = holder.grab_hud(LIFE_HUD)
+	var/image/stanceimage = holder?.hud_list?[LIFE_HUD]
+	if(stanceimage?.plane != PLANE_BUILDMODE)
+		return
+	holder.grab_hud(LIFE_HUD)
 	stanceimage.icon_state = "ais_[stance]"
 	holder.apply_hud(LIFE_HUD, stanceimage)
 
+// RS Edit: HUD Optimization (Lira, September 2026)
 /datum/ai_holder/proc/update_paused_hud()
-	var/image/sleepingimage = holder.grab_hud(STATUS_HUD)
+	var/image/sleepingimage = holder?.hud_list?[STATUS_HUD]
+	if(sleepingimage?.plane != PLANE_BUILDMODE)
+		return
+	holder.grab_hud(STATUS_HUD)
 	var/asleep = 0
 	if(busy)
 		asleep = 2
@@ -264,9 +285,24 @@
 	holder.apply_hud(STATUS_HUD, sleepingimage)
 
 // Now for the actual AI stuff.
+// RS ADD
+/datum/ai_holder
+	var/busy_since = 0
+
+
+// RS EDIT
 /datum/ai_holder/proc/set_busy(var/value = 0)
+	if(value && !busy)
+		busy_since = world.time
+	else if(!value)
+		busy_since = 0
 	busy = value
 	update_paused_hud()
+
+// RS ADD
+/datum/ai_holder/proc/clear_stranded_busy()
+	log_world("AI: [holder || "null"] hit the [AI_BUSY_WATCHDOG / 10]s busy watchdog after [(world.time - busy_since) / 10]s - clearing stranded busy.")
+	set_busy(FALSE)
 
 // Makes this ai holder not get processed.
 // Called automatically when the host mob is killed.
@@ -340,12 +376,8 @@
 		stance_color()
 	update_stance_hud()
 
-	if(new_stance in fastprocess_stances) //Becoming fast
-		manage_processing(AI_PROCESSING|AI_FASTPROCESSING)
-	else if(new_stance in noprocess_stances)
-		manage_processing(AI_NO_PROCESS) //Becoming off
-	else
-		manage_processing(AI_PROCESSING) //Becoming slow
+	// RS Edit: Healer tweaks (Lira, June 2026)
+	sync_processing_to_stance()
 
 // This is called every half a second.
 /datum/ai_holder/proc/handle_stance_tactical()

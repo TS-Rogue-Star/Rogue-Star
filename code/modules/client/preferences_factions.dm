@@ -28,6 +28,12 @@ var/global/list/citizenship_choices = list(
 	"Kosaky Fleets"
 	)
 
+// RS Add: Character Designer - Identity Tab (Lira, September 2026)
+var/global/list/citizenship_choice_lore_names = list(
+	"Altevian Hegemony" = "The Altevian Hegemony",
+	"Elysian Colonies" = "The Elysian Colonies"
+	)
+
 var/global/list/home_system_choices = list(
 	"Virgo-Erigone",
 	"Sol",
@@ -97,6 +103,14 @@ var/global/list/faction_choices = list(
 	"HIVE Security",
 	"Stealth Assault Enterprises"
 	)
+
+// RS Add: Character Designer - Identity Tab (Lira, September 2026)
+var/global/list/faction_choice_lore_names = list(
+	"Ward-Takahashi GMC" = "Ward-Takahashi GMB",
+	"Aether Atmospherics" = "Aether Atmospherics & Recycling",
+	"Local System Defense Force" = "System Defense Force"
+	)
+
 // VOREStation Edits Stop
 
 var/global/list/antag_faction_choices = list()	//Should be populated after brainstorming. Leaving as blank in case brainstorming does not occur.

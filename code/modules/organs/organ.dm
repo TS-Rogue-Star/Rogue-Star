@@ -16,6 +16,7 @@ var/list/organ_cache = list()
 	var/vital							// Lose a vital limb, die immediately.
 	var/damage = 0						// Current damage to the organ
 	var/robotic = 0
+	var/chargen_prosthetic_flags = 0	// RS Add: Character Designer - Species and Prosthetics (Lira, August 2026)
 	var/stapled_nerves = FALSE
 
 	// Reference data.
@@ -91,13 +92,18 @@ var/list/organ_cache = list()
 		max_damage = min_broken_damage * 2
 	if(iscarbon(holder))
 		var/mob/living/carbon/C = holder
+		var/mob/living/carbon/human/H = C // RS Edit: Character Designer - Species and Prosthetics (Lira, August 2026)
 		species = GLOB.all_species[SPECIES_HUMAN]
 		if(holder.dna)
 			dna = C.dna.Clone()
 			species = C.species //VOREStation Edit - For custom species
+		// RS Edit Start: Character Designer - Species and Prosthetics (Lira, August 2026)
 		else
-			log_debug("[src] at [loc] spawned without a proper DNA.")
-		var/mob/living/carbon/human/H = C
+			if(istype(H) && H.appearance_only)
+				species = C.species
+			else
+				log_debug("[src] at [loc] spawned without a proper DNA.")
+		// RS Edit End
 		if(istype(H))
 			if(internal)
 				var/obj/item/organ/external/E = H.get_organ(parent_organ)

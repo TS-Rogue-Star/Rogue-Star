@@ -123,11 +123,13 @@ length to avoid portals or something i guess?? Not that they're counted right no
 /proc/PathWeightCompare(PathNode/a, PathNode/b)
 	return a.estimated_cost - b.estimated_cost
 
-/proc/AStar(var/start, var/end, var/adjacent, var/dist, var/max_nodes, var/max_node_depth = 30, var/min_target_dist = 0, var/min_node_dist, var/id, var/datum/exclude)
+// RS EDIT
+/proc/AStar(var/start, var/end, var/adjacent, var/dist, var/max_nodes, var/max_node_depth = 30, var/min_target_dist = 0, var/min_node_dist, var/id, var/datum/exclude, var/max_expansions = 0)
 	var/PriorityQueue/open = new /PriorityQueue(/proc/PathWeightCompare)
 	var/list/closed = list()
 	var/list/path
 	var/list/path_node_by_position = list()
+	var/expansions = 0
 	start = get_turf(start)
 	if(!start)
 		return 0
@@ -135,6 +137,9 @@ length to avoid portals or something i guess?? Not that they're counted right no
 	open.Enqueue(new /PathNode(start, null, 0, call(start, dist)(end), 0))
 
 	while(!open.IsEmpty() && !path)
+		expansions++
+		if(max_expansions && expansions > max_expansions)
+			break
 		var/PathNode/current = open.Dequeue()
 		closed.Add(current.position)
 
@@ -177,5 +182,6 @@ length to avoid portals or something i guess?? Not that they're counted right no
 
 			if(max_nodes && open.Length() > max_nodes)
 				open.Remove(open.Length())
+
 
 	return path

@@ -56,7 +56,13 @@
 	var/list/blacklisted_types = list()
 	// look if theres a better way to do this im all ears
 	blacklisted_types += subtypesof(/obj/item/toy/plushie/therapy)
-	blacklisted_types += subtypesof(/obj/item/toy/plushie/fluff)
+	// RS Edit Start: Character Designer - Expression (Lira, September 2026)
+	blacklisted_types += typesof(/obj/item/toy/plushie/fluff,
+		/obj/item/toy/plushie/mouse/fluff,
+		/obj/item/toy/plushie/snakeplushie/fluff,
+		/obj/item/toy/plushie/portal
+	)
+	// RS Edit End
 	blacklisted_types += /obj/item/toy/plushie/borgplushie/drake //VOREStation addition
 	for(var/obj/item/toy/plushie/plushie_type as anything in subtypesof(/obj/item/toy/plushie) - blacklisted_types)
 		plushies[initial(plushie_type.name)] = plushie_type

@@ -62,12 +62,21 @@
 	else
 		mob_overlay = image("icon" = INV_ACCESSORIES_DEF_ICON, "icon_state" = "[tmp_icon_state]")
 	if(addblends)
-		var/icon/base = new/icon("icon" = mob_overlay.icon, "icon_state" = mob_overlay.icon_state)
-		var/addblend_icon = new/icon("icon" = mob_overlay.icon, "icon_state" = src.addblends)
-		if(color)
-			base.Blend(src.color, ICON_MULTIPLY)
-		base.Blend(addblend_icon, ICON_ADD)
-		mob_overlay = image(base)
+		// RS Edit Start: Character Designer - Species and Prosthetics (Lira, August 2026)
+		if(istype(wearer, /mob/living/carbon/human/dummy/mannequin/custom_marking_gear))
+			mob_overlay.color = src.color
+			var/image/addblend_overlay = image(icon = mob_overlay.icon, icon_state = src.addblends)
+			addblend_overlay.blend_mode = BLEND_ADD
+			addblend_overlay.appearance_flags = RESET_COLOR
+			mob_overlay.add_overlay(addblend_overlay)
+		else
+			var/icon/base = new/icon("icon" = mob_overlay.icon, "icon_state" = mob_overlay.icon_state)
+			var/addblend_icon = new/icon("icon" = mob_overlay.icon, "icon_state" = src.addblends)
+			if(color)
+				base.Blend(src.color, ICON_MULTIPLY)
+			base.Blend(addblend_icon, ICON_ADD)
+			mob_overlay = image(base)
+		// RS Edit End
 	else
 		mob_overlay.color = src.color
 

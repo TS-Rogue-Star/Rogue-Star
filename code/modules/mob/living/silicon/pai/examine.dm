@@ -9,7 +9,12 @@
 
 	// VOREStation Edit: Start
 	. += attempt_vr(src,"examine_bellies",args) //VOREStation Edit
-	if(print_flavor_text()) . += "\n[print_flavor_text()]\n"
+	// RS Edit Start: Examine Mode Fix (Lira, July 2026)
+	if(user.client?.prefs.examine_text_mode != EXAMINE_MODE_INCLUDE_USAGE)
+		var/flavor_text = print_flavor_text()
+		if(flavor_text)
+			. += "\n[flavor_text]\n"
+	// RS Edit End
 	// VOREStation Edit: End
 	. += "*---------*"
 	if (pose)

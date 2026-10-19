@@ -1,6 +1,8 @@
 // //////////////////////////////////////////////////////////////////////////////////////////////////////
 // Created by Lira for Rogue Star December 2025: Reference opacity helpers for custom marking designer //
 // //////////////////////////////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star August 2026: Character Designer - Species and Prosthetics /////////////
+// //////////////////////////////////////////////////////////////////////////////////////////////////////
 
 import { GENERIC_PART_KEY } from '../../../utils/character-preview';
 import {
@@ -26,6 +28,7 @@ export const createReferenceOpacityControls = ({
   setReferenceOpacityByPart,
   referenceParts,
   bodyParts,
+  showEquipment,
   showJobGear,
   showLoadoutGear,
   activePartKey,
@@ -34,6 +37,7 @@ export const createReferenceOpacityControls = ({
   setReferenceOpacityByPart: (map: Record<string, number>) => void;
   referenceParts: any;
   bodyParts: CustomMarkingDesignerData['body_parts'];
+  showEquipment: boolean;
   showJobGear: boolean;
   showLoadoutGear: boolean;
   activePartKey: string;
@@ -77,6 +81,11 @@ export const createReferenceOpacityControls = ({
   };
   if (referenceParts?.markings) {
     resolvedReferenceOpacityMap.markings = genericReferenceOpacity;
+  }
+  if (referenceParts?.gear_equipment) {
+    resolvedReferenceOpacityMap.gear_equipment = showEquipment
+      ? genericReferenceOpacity
+      : 0;
   }
   if (referenceParts?.gear_job) {
     resolvedReferenceOpacityMap.gear_job = showJobGear

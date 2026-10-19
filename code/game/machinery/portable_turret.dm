@@ -1,3 +1,6 @@
+//////////////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star September 2026: Turret Target Search Optimization //
+//////////////////////////////////////////////////////////////////////////////////////
 /*		Portable Turrets:
 		Constructed from metal, a gun of choice, and a prox sensor.
 		This code is slightly more documented than normal, as requested by XSI on IRC.
@@ -243,6 +246,10 @@
 	turret_type = "blue"
 	installation = /obj/item/weapon/gun/energy/lasertag/blue
 	check_synth = TRUE // Used to target red players
+
+// RS Add: Turret Target Search Optimization (Lira, September 2026)
+/obj/machinery/porta_turret/lasertag/has_targeting_checks()
+	return check_synth || check_weapons || check_all
 
 /obj/machinery/porta_turret/lasertag/assess_living(var/mob/living/L)
 	if(!ishuman(L))
@@ -662,6 +669,11 @@
 	spark_system.start()	//creates some sparks because they look cool
 	update_icon()
 
+// RS Add: Turret Target Search Optimization (Lira, September 2026)
+/obj/machinery/porta_turret/proc/has_targeting_checks()
+	return check_access || check_all
+
+// RS Edit: Turret Target Search Optimization (Lira, September 2026)
 /obj/machinery/porta_turret/process()
 	//the main machinery process
 
@@ -678,27 +690,37 @@
 	var/list/targets = list()			//list of primary targets
 	var/list/secondarytargets = list()	//targets that are least important
 
-	var/list/seenturfs = list()
-	for(var/turf/T in oview(world.view, src))
-		seenturfs += T
+	if(has_targeting_checks())
+		var/list/seenturfs
+		for(var/mob/M as anything in living_mob_list)
+			if(M.z != z || get_dist(src, M) > 7)
+				continue
+			if(isnull(seenturfs))
+				seenturfs = list()
+				for(var/turf/T in oview(world.view, src))
+					seenturfs += T
+			if(!(get_turf(M) in seenturfs)) // Skip
+				continue
+			switch(assess_living(M))
+				if(TURRET_PRIORITY_TARGET)
+					targets += M
+				if(TURRET_SECONDARY_TARGET)
+					secondarytargets += M
 
-	for(var/mob/M as anything in living_mob_list)
-		if(M.z != z || !(get_turf(M) in seenturfs)) // Skip
-			continue
-		switch(assess_living(M))
-			if(TURRET_PRIORITY_TARGET)
-				targets += M
-			if(TURRET_SECONDARY_TARGET)
-				secondarytargets += M
-
-	for(var/obj/mecha/M as anything in mechas_list)
-		if(M.z != z || !(get_turf(M) in seenturfs)) // Skip
-			continue
-		switch(assess_mecha(M))
-			if(TURRET_PRIORITY_TARGET)
-				targets += M
-			if(TURRET_SECONDARY_TARGET)
-				secondarytargets += M
+		for(var/obj/mecha/M as anything in mechas_list)
+			if(M.z != z || (!M.occupant && !check_all))
+				continue
+			if(isnull(seenturfs))
+				seenturfs = list()
+				for(var/turf/T in oview(world.view, src))
+					seenturfs += T
+			if(!(get_turf(M) in seenturfs)) // Skip
+				continue
+			switch(assess_mecha(M))
+				if(TURRET_PRIORITY_TARGET)
+					targets += M
+				if(TURRET_SECONDARY_TARGET)
+					secondarytargets += M
 
 	if(!tryToShootAt(targets) && !tryToShootAt(secondarytargets) && --timeout <= 0)
 		popDown() // no valid targets, close the cover

@@ -460,7 +460,7 @@ digi-inner-thighs
 **License:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)<br>
 <br>
 **File:** `icons/inventory/head/item_rs.dmi, icons/inventory/head/mob_rs.dmi, icons/inventory/uniform/item_rs.dmi, icons/inventory/uniform/mob_rs.dmi, icons/inventory/suit/item_rs.dmi, icons/inventory/suit/mob_rs.dmi`<br>
-**Icon-States:** talon_basic_refreshed, talon_security_refreshed, talon_jumpsuit_refreshed, talon_pilot_refreshed, talon_captain_refreshed, talon_capcoat, talon_pilotjacket, talon_labcoat, taloncoat, talon_caphat, talon_pilothat, talonnewsoft, talon_beret, talon_officer_beret, winterhood_talon<br>
+**Icon-States:** talon_basic_refreshed, talon_security_refreshed, talon_medical_refreshed, talon_pilot_refreshed, talon_captain_refreshed, talon_capcoat, talon_pilotjacket, talon_labcoat, taloncoat, talon_caphat, talon_pilothat, talonnewsoft, talon_beret, talon_officer_beret, winterhood_talon<br>
 **Creator:** Comissioned by axietheaxolotl, Imaginos16<br>
 **Link:** https://github.com/tgstation/tgstation/pull/70226, https://github.com/tgstation/tgstation/pull/67286, https://github.com/tgstation/tgstation/pull/69842, https://github.com/tgstation/tgstation/pull/66355, https://github.com/tgstation/tgstation/pull/73795, https://github.com/tgstation/tgstation/pull/71479<br>
 <br>
@@ -603,12 +603,28 @@ Link: https://github.com/TS-Rogue-Star/Rogue-Star/pull/987<br>
 **Link**:https://github.com/TS-Rogue-Star/Rogue-Star/pull/1264<br>
 **License**: CC BY-SA 3.0<br>
 <br>
+**File:** `icons/inventory/head/item_vr_altevian.dmi, icons/inventory/head/mob_vr_altevian.dmi, icons/inventory/suit/item_vr_altevian.dmi, icons/inventory/suit/mob_vr_altevian.dmi`<br>
+**Icon-States:** rig0-vintagecrew, rig-vintagecrew, rig0-vintageengi, rig-vintageengi, rig0-vintagemedic, rig0-vintagepilot, rig-vintagemedic, rig0-vintagemarine, rig-vintagemarine, rig0-vintageofficer, rig-vintageofficer, rig0-vintagepilotalt, rig-vintagepilot, rig0-vintagescientist, rig-vintagescientist, rig0-vintageminer, rig-vintageminer, rig0-vintagemerc, rig-vintagemerc<br>
+**Creator:** Original graphics by KillianKirilenko. Modified by Azzy.Dreemurr<br>
+**Link:** https://github.com/VOREStation/VOREStation/pull/7978
+**License:** CC BY-SA 3.0<br>
+<br>
+**File:** `html/images/talonlogo.png`<br>
+**Creator:** Unknown. Modified by Azzy.Dreemurr<br>
+**License:** CC BY-SA 3.0<br>
+<br>
+**File:** `icons/obj/bureaucracy.dmi`<br>
+**Icon-States:** stamp-tal, paper_stamp-tal, paper_stamp-square, paperplane_stamp-tal<br>
+**Creator:** Unknown. Modified by Azzy.Dreemurr<br>
+**License:** CC BY-SA 3.0<br>
+<br>
 **Folders**: sound/instruments/synthesis_samples/banjo,<br>
 sound/instruments/synthesis_samples/chromatic/fluid_xylophone,<br>
 sound/instruments/synthesis_samples/guitar/fluid_distortion,<br>
 sound/instruments/synthesis_samples/guitar/fluid_harmonics,<br>
 sound/instruments/synthesis_samples/guitar/fluid_jazz,<br>
 sound/instruments/synthesis_samples/guitar/fluid_overdrive,<br>
+sound/instruments/synthesis_samples/percussion/fluid_standard,<br>
 sound/instruments/synthesis_samples/strings/fluid_violin,<br>
 sound/instruments/synthesis_samples/woodwind/fluid_alto_sax,<br>
 sound/instruments/synthesis_samples/woodwind/fluid_baritone_sax,<br>
@@ -618,9 +634,32 @@ sound/instruments/synthesis_samples/woodwind/fluid_tenor_sax,<br>
 **Link**:https://github.com/TS-Rogue-Star/Rogue-Star/pull/1327<br>
 **License**: MIT (licence included in folders with corresponding assets)<br>
 <br>
-<br>
 **File**: code/game/Rogue Star/icons/clothing/storage/RigAcc.dmi<br>
 **Creator**: crossexonar/sari, Toriate <br>
 **Link**: https://github.com/TS-Rogue-Star/Rogue-Star/pull/1354<br>
 **License**: CC BY-SA 3.0<br>
+<br>
+**File:** `icons/inventory/uniform/item_rs.dmi, icons/inventory/uniform/mob_rs.dmi`<br>
+**Icon-States:** talon_atmos_refreshed, talon_engineer_refreshed, talon_miner_refreshed<br>
+**Creator:** Comissioned by axietheaxolotl, Imaginos16. Modified by Azzy.Dreemurr<br>
+**Link:** https://github.com/TS-Rogue-Star/Rogue-Star/pull/766<br>
+**License:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)<br>
+<br>
+**File:** `icons/inventory/uniform/item_vr.dmi, icons/inventory/uniform/mob_vr.dmi, ‎icons/inventory/uniform/mob_vr_rolled_down.dmi‎`<br>
+**Icon-States:** talon_atmos, talon_engineer, talon_miner<br>
+**Creator:** Original graphics by Youtubeboy139. Modified by Azzy.Dreemurr<br>
+**Link:** https://github.com/VOREStation/VOREStation/pull/10660<br>
+**License:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)<br>
+<br>
+**File:** `icons/inventory/uniform/mob_teshari.dmi‎`<br>
+**Icon-States:** talon_basic, talon_engineer, talon_atmos, talon_miner, talon_security, talon_pilot, talon_medical, talon_captain<br>
+**Creator:** Original graphics by Youtubeboy139. Created based on this uniform by Azzy.Dreemurr<br>
+**Link:** https://github.com/VOREStation/VOREStation/pull/10660<br>
+**License:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)<br>
+<br>
+**File:** `icons/inventory/uniform/mob_teshari.dmi`<br>
+**Icon-States:** talon_basic_refreshed, talon_engineer_refreshed, talon_atmos_refreshed, talon_miner_refreshed, talon_security_refreshed, talon_pilot_refreshed, talon_medical_refreshed, talon_captain_refreshed<br>
+**Creator:** Comissioned by axietheaxolotl, Imaginos16. Created based on this uniform by Azzy.Dreemurr<br>
+**Link:** https://github.com/TS-Rogue-Star/Rogue-Star/pull/766<br>
+**License:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)<br>
 <br>

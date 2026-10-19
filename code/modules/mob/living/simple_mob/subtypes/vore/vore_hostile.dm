@@ -102,7 +102,7 @@
 	cooperative = FALSE
 
  // RS Add: Vore hostile fix (Lira, May 2026)
-/datum/ai_holder/simple_mob/say_aggro/find_target(list/possible_targets, has_targets_list)
+/datum/ai_holder/simple_mob/say_aggro/find_target_internal(list/possible_targets, has_targets_list)
 	return null
 
 /datum/ai_holder/simple_mob/say_aggro/on_hear_say(mob/living/speaker, message)

@@ -100,9 +100,9 @@
 				if(!breakthrough(A) && failed_breakthroughs++ >= 5) // We failed to move, time to smash things.
 					give_up_movement()
 					failed_breakthroughs = 0
-			return
+			// RS EDIT
 
-		if(move_once() == FALSE) // Start walking the path.
+		else if(move_once() == FALSE) // RS EDIT
 			ai_log("walk_path() : Failed to step.", AI_LOG_TRACE)
 			++failed_steps
 			if(failed_steps > 3) // We're probably stuck.
@@ -142,13 +142,22 @@
 
 //	step_towards(holder, src.path[1])
 	if(holder.IMove(get_step_towards(holder, src.path[1])) != MOVEMENT_ON_COOLDOWN)
-		if(holder.loc != src.path[1])
-			ai_log("move_once() : Failed step. Exiting.", AI_LOG_TRACE)
-			return MOVEMENT_FAILED
-		else
+		if(holder.loc == src.path[1]) // RS EDIT
 			path -= src.path[1]
 			ai_log("move_once() : Successful step. Exiting.", AI_LOG_TRACE)
 			return MOVEMENT_SUCCESSFUL
+		// RS ADD
+		var/skip_to = path.Find(holder.loc)
+		if(skip_to)
+			if(path_display)
+				for(var/i = 2 to skip_to)
+					var/turf/skipped_turf = path[i]
+					skipped_turf.cut_overlay(path_overlay)
+			path.Cut(1, skip_to + 1)
+			ai_log("move_once() : Successful step (automatic transition). Exiting.", AI_LOG_TRACE)
+			return MOVEMENT_SUCCESSFUL
+		ai_log("move_once() : Failed step. Exiting.", AI_LOG_TRACE)
+		return MOVEMENT_FAILED
 	ai_log("move_once() : Mob movement on cooldown. Exiting.", AI_LOG_TRACE)
 	return MOVEMENT_ON_COOLDOWN
 

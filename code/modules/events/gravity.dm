@@ -14,7 +14,11 @@
 			generators += GG
 
 	if(generators.len)
-		endWhen = rand(5 MINUTES, 20 MINUTES)
+		// RS Edit Start: Gravity Event Fix (Lira, July 2026)
+		var/minimum_duration = round((5 MINUTES) / SSevents.wait)
+		var/maximum_duration = round((20 MINUTES) / SSevents.wait)
+		endWhen = rand(minimum_duration, maximum_duration)
+		// RS Edit End
 	else
 		endWhen = rand(15, 60)
 
@@ -47,7 +51,7 @@
 		var/did_anything = FALSE
 		if(generators.len)
 			for(var/obj/machinery/gravity_generator/main/GG in generators)
-				if(!GG.on)
+				if(!GG.on || !GG.breaker) // RS Edit: Gravity Event Fix (Lira, July 2026)
 					GG.breaker = TRUE
 					GG.set_power()
 					GG.charge_count = 90

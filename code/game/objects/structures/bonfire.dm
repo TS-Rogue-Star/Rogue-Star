@@ -168,6 +168,10 @@
 		update_icon()
 		START_PROCESSING(SSobj, src)
 		visible_message("<span class='warning'>\The [src] starts burning!</span>")
+		var/turf/T = get_turf(src)	//RS ADD START
+		for(var/atom/thing in T.contents)
+			if(isatom(thing))
+				thing.begin_open_cooking(src)	//RS EDIT END
 
 /obj/structure/bonfire/proc/burn()
 	var/turf/current_location = get_turf(src)

@@ -1,3 +1,7 @@
+//////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star September 2026: Mob Deletion Optimization //
+//////////////////////////////////////////////////////////////////////////////
+
 /*
 	Alternate Appearances! By RemieRichards
 	A framework for replacing an atom (and it's overlays) with an override = 1 image, that's less shit!
@@ -36,10 +40,12 @@
 	Hides the alternate_appearance
 	hideFrom - optional list of MOBS to hide it from the list's mobs specifically
 */
+
+// RS Edit: Mob Deletion Optimization (Lira, September 2026)
 /datum/alternate_appearance/proc/hide(list/hideFrom)
-	var/list/hiding = viewers
+	var/list/hiding = viewers.Copy()
 	if(hideFrom)
-		hiding = hideFrom
+		hiding = hideFrom.Copy()
 
 	for(var/mob/M as anything in hiding)
 		if(M.client)
@@ -57,9 +63,23 @@
 	if(owner && owner.alternate_appearances)
 		owner.alternate_appearances -= key
 
-
+// RS Edit: Mob Deletion Optimization (Lira, September 2026)
 /datum/alternate_appearance/Destroy()
 	remove()
+	owner = null
+	img = null
+	viewers = null
+	return ..()
+
+// RS Add: Mob Deletion Optimization (Lira, September 2026)
+/atom/Destroy()
+	var/list/owned_appearances = alternate_appearances
+	alternate_appearances = null
+	QDEL_LIST_ASSOC_VAL(owned_appearances)
+	var/list/viewed_appearances = viewing_alternate_appearances
+	viewing_alternate_appearances = null
+	for(var/datum/alternate_appearance/appearance as anything in viewed_appearances)
+		appearance.hide(list(src))
 	return ..()
 
 
@@ -145,5 +165,3 @@
 	if(!AA)
 		return
 	AA.hide(hideFrom)
-
-

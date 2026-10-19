@@ -9,8 +9,12 @@
  * * buttons - The options that can be chosen by the user, each string is assigned a button on the UI.
  * * timeout - The timeout of the alert, after which the modal will close and qdel itself. Set to zero for no timeout.
  * * autofocus - The bool that controls if this alert should grab window focus.
+ * * RS Add: minimum_width - Optional minimum width for unusually wide TGUI alerts. (Lira, September 2026)
+ * * RS Add: minimum_height - Optional minimum height for unusually tall TGUI alerts. (Lira, September 2026)
  */
-/proc/tgui_alert(mob/user, message = "", title, list/buttons = list("Ok"), timeout = 0, autofocus = TRUE, strict_byond = FALSE)
+
+// RS Edit: Alert Sizing (Lira, September 2026)
+/proc/tgui_alert(mob/user, message = "", title, list/buttons = list("Ok"), timeout = 0, autofocus = TRUE, strict_byond = FALSE, minimum_width = 0, minimum_height = 0)
 	if (istext(buttons))
 		stack_trace("tgui_alert() received text for buttons instead of list")
 		return
@@ -37,7 +41,7 @@
 		if(length(buttons) == 3)
 			return alert(user, message, title, buttons[1], buttons[2], buttons[3])
 
-	var/datum/tgui_alert/alert = new(user, message, title, buttons, timeout, autofocus)
+	var/datum/tgui_alert/alert = new(user, message, title, buttons, timeout, autofocus, minimum_width, minimum_height)
 	alert.tgui_interact(user)
 	alert.wait()
 	if (alert)
@@ -65,13 +69,20 @@
 	var/timeout
 	/// The bool that controls if this modal should grab window focus
 	var/autofocus
+	/// RS Add: Optional minimum width for alert content that does not fit the automatic size. (Lira, September 2026)
+	var/minimum_width
+	/// RS Add: Optional minimum height for alert content that does not fit the automatic size. (Lira, September 2026)
+	var/minimum_height
 	/// Boolean field describing if the tgui_modal was closed by the user.
 	var/closed
 
-/datum/tgui_alert/New(mob/user, message, title, list/buttons, timeout, autofocus)
+// RS Edit: Alert Sizing (Lira, September 2026)
+/datum/tgui_alert/New(mob/user, message, title, list/buttons, timeout, autofocus, minimum_width = 0, minimum_height = 0)
 	src.autofocus = autofocus
 	src.buttons = buttons.Copy()
 	src.message = message
+	src.minimum_width = minimum_width
+	src.minimum_height = minimum_height
 	src.title = title
 	if (timeout)
 		src.timeout = timeout
@@ -110,6 +121,8 @@
 	data["buttons"] = buttons
 	data["message"] = message
 	data["large_buttons"] = user.client.prefs.tgui_large_buttons
+	data["minimum_height"] = minimum_height // RS Add: Alert Sizing (Lira, September 2026)
+	data["minimum_width"] = minimum_width // RS Add: Alert Sizing (Lira, September 2026)
 	data["swapped_buttons"] = !user.client.prefs.tgui_swapped_buttons
 	data["title"] = title
 	return data

@@ -199,7 +199,7 @@ var/list/preferences_datums = list()
 	var/lastnews // Hash of last seen lobby news content.
 	var/lastlorenews //ID of last seen lore news article.
 
-	var/examine_text_mode = 0 // Just examine text, include usage (description_info), switch to examine panel.
+	var/examine_text_mode = 0 // Just examine text, include extended information, switch to examine panel. || RS Edit: Examine Mode Fix (Lira, July 2026)
 	var/multilingual_mode = 0 // Default behaviour, delimiter-key-space, delimiter-key-delimiter, off
 
 	var/list/volume_channels = list()
@@ -230,6 +230,7 @@ var/list/preferences_datums = list()
 /datum/preferences/Destroy()
 	. = ..()
 	QDEL_LIST_ASSOC_VAL(char_render_holders)
+	QDEL_NULL(player_setup) // RS ADD
 	// RS Add Start: Clear cached custom marking references when preferences are deleted (Lira, September 2025)
 	if(islist(custom_markings))
 		for(var/id in custom_markings.Copy())
@@ -280,9 +281,17 @@ var/list/preferences_datums = list()
 	custom_markings[mark.id] = mark
 	return mark
 
+/datum/preferences/proc/can_open_custom_marking_designer(mob/user)
+	if(!user)
+		return FALSE
+	if(!Master?.current_runlevel)
+		to_chat_immediate(user, world.time, SPAN_WARNING("The server is still initializing. Please wait until initialization is complete before opening the Character Designer."))
+		return FALSE
+	return TRUE
+
 // Open loading window for the custom marking designer (Lira, December 2025)
 /datum/preferences/proc/open_custom_marking_designer_loading(mob/user)
-	if(!user)
+	if(!can_open_custom_marking_designer(user))
 		return
 	if(custom_marking_designer_loading_ui && QDELETED(custom_marking_designer_loading_ui))
 		custom_marking_designer_loading_ui = null
@@ -396,6 +405,7 @@ var/list/preferences_datums = list()
 		return
 	del_mannequin(cache_ckey)
 	del_mannequin("[cache_ckey]-markref")
+	del_mannequin("[cache_ckey]-markref-species-preview")
 
 // Remove body marking assignments the current player shouldn't be able to use
 /datum/preferences/proc/prune_disallowed_body_markings()
@@ -462,7 +472,7 @@ var/list/preferences_datums = list()
 
 // Open the editor UI targeting the specified marking id
 /datum/preferences/proc/open_custom_marking_designer(mob/user, id)
-	if(!user)
+	if(!can_open_custom_marking_designer(user))
 		return
 	open_custom_marking_designer_loading(user)
 	var/datum/custom_marking/mark = null
@@ -485,12 +495,14 @@ var/list/preferences_datums = list()
 	if(!module)
 		module = new(src, mark)
 		custom_marking_designer_ui = module
+	open_custom_marking_designer_loading(user)
 	module.tgui_interact(user)
 
 // RS Add: Open the body markings gallery tab (Lira, December 2025)
-/datum/preferences/proc/open_body_markings_designer(mob/user)
-	if(!user)
+/datum/preferences/proc/open_body_markings_designer(mob/user, designer_tab = "species")
+	if(!can_open_custom_marking_designer(user))
 		return
+	open_custom_marking_designer_loading(user)
 	var/datum/custom_marking/mark = get_primary_custom_marking()
 	var/datum/tgui_module/custom_marking_designer/module = custom_marking_designer_ui
 	if(module)
@@ -502,13 +514,13 @@ var/list/preferences_datums = list()
 			custom_marking_designer_ui = null
 			module = null
 	if(!module)
-		module = new(src, mark, "basic", TRUE)
+		module = new(src, mark, designer_tab, TRUE)
 		custom_marking_designer_ui = module
 	else
-		module.initial_tab = "basic"
-		module.active_tab = "basic"
+		module.initial_tab = designer_tab
 		module.allow_custom_tab = !!mark
 		SStgui.update_uis(module)
+	open_custom_marking_designer_loading(user)
 	module.tgui_interact(user)
 
 // Provide a user-friendly label for a stored body marking key
@@ -944,8 +956,15 @@ var/list/preferences_datums = list()
 		return 1
 
 	if(href_list["save"])
-		save_preferences()
-		save_character()
+		// RS Edit Start: Character slot save feedback (Lira, October 2026)
+		var/preferences_saved = save_preferences()
+		var/character_saved = save_character()
+		log_debug("[key_name(usr)] pressed Save slot in Character Setup for [real_name] in slot [default_slot] (preferences_saved=[preferences_saved], character_saved=[character_saved]).")
+		if(preferences_saved && character_saved)
+			to_chat(usr, "<span class='notice'>Character settings for [html_encode(real_name)] saved to slot [default_slot].</span>")
+		else
+			to_chat(usr, "<span class='warning'>Unable to fully save character settings for [html_encode(real_name)] to slot [default_slot]. Please try again.</span>")
+		// RS Edit End
 	else if(href_list["reload"])
 		// RS Add Start: Prevent reload spam (Lira, November 2025)
 		if(world.time < next_charsetup_reload)
@@ -1026,7 +1045,7 @@ var/list/preferences_datums = list()
 			character.species.create_organs(character)
 	if(needs_species_update)
 	// RS Add End
-		character.set_species(species, null, TRUE, null, fast_preview) // RS Edit: Custom markings support (Lira, September 2025)
+		character.set_species(species, null, icon_updates, null, fast_preview) // RS Edit: Custom markings support (Lira, September 2025)
 	// Special Case: This references variables owned by two different datums, so do it here.
 	if(be_random_name)
 		real_name = random_name(identifying_gender,species)

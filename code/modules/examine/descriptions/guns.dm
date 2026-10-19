@@ -101,14 +101,16 @@
 		if(51 to 100)
 			return "an extremely long delay"
 
+// RS Edit: Examine Mode Fix (Lira, July 2026)
 /obj/item/weapon/gun/get_description_info()
 	var/is_loaded
 	var/non_lethal
 	var/non_lethal_list = list(/obj/item/weapon/gun/energy/medigun,/obj/item/weapon/gun/energy/mouseray,/obj/item/weapon/gun/energy/temperature,/obj/item/weapon/gun/energy/sizegun,/obj/item/weapon/gun/projectile/shotgun/pump/toy,/obj/item/weapon/gun/projectile/revolver/toy,/obj/item/weapon/gun/projectile/pistol/toy,/obj/item/weapon/gun/projectile/automatic/toy)
 	var/less_lethal
 	var/less_lethal_list = list(/obj/item/weapon/gun/energy/taser,/obj/item/weapon/gun/energy/stunrevolver,/obj/item/weapon/gun/energy/plasmastun,/obj/item/weapon/gun/energy/bfgtaser)
-	var/weapon_stats = description_info + "\
-	<br>"
+	var/list/weapon_stats = list()
+	if(description_info)
+		weapon_stats += description_info
 	if(istype(src, /obj/item/weapon/gun/energy))
 		is_loaded = LAZYLEN(src.contents)
 	if(istype(src, /obj/item/weapon/gun/projectile/shotgun/pump))
@@ -135,18 +137,18 @@
 			non_lethal = TRUE
 
 	if(is_loaded)
-		weapon_stats += "\nIf fired, it would deal [describe_firepower()] damage, [describe_proj_penetration()], and has [describe_firerate()] between shots."
+		weapon_stats += "If fired, it would deal [describe_firepower()] damage, [describe_proj_penetration()], and has [describe_firerate()] between shots."
 	else if(less_lethal)
-		weapon_stats += "\nIf fired, it would deal stunning damage to incapacitate targets, and has [describe_firerate()] between shots."
+		weapon_stats += "If fired, it would deal stunning damage to incapacitate targets, and has [describe_firerate()] between shots."
 	else if(non_lethal)
-		weapon_stats += "\nThis is an entirely non-lethal weapon, such as a mouseray, toy, or sizegun! Its effects cannot easily be quantified."
+		weapon_stats += "This is an entirely non-lethal weapon, such as a mouseray, toy, or sizegun! Its effects cannot easily be quantified."
 	else
-		weapon_stats += "\nIt isn't loaded!"
+		weapon_stats += "It isn't loaded!"
 	if(force)
-		weapon_stats += "\nIf used in melee, it deals [describe_power()] [sharp ? "sharp" : "blunt"] damage, [describe_penetration()], and has [describe_speed()]."
+		weapon_stats += "If used in melee, it deals [describe_power()] [sharp ? "sharp" : "blunt"] damage, [describe_penetration()], and has [describe_speed()]."
 	if(can_cleave)
-		weapon_stats += "\nIt is capable of hitting multiple targets with a single swing."
+		weapon_stats += "It is capable of hitting multiple targets with a single swing."
 	if(reach > 1)
-		weapon_stats += "\nIt can attack targets up to [reach] tiles away, and can attack over certain objects."
+		weapon_stats += "It can attack targets up to [reach] tiles away, and can attack over certain objects."
 
-	return weapon_stats
+	return weapon_stats.Join("\n")

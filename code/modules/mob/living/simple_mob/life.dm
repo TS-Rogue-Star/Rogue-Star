@@ -22,6 +22,7 @@
 //Should we be dead?
 /mob/living/simple_mob/updatehealth()
 	health = getMaxHealth() - getFireLoss() - getBruteLoss() - getToxLoss() - getOxyLoss() - getCloneLoss()
+	handle_ether_damage()	//RS ADD
 
 	//Alive, becoming dead
 	if((stat < DEAD) && (health <= 0))

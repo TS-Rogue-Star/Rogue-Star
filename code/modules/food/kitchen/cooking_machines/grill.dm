@@ -47,3 +47,27 @@
 		icon_state = off_icon
 		if(grill_loop)
 			grill_loop.stop(src)
+
+//RS ADD START
+/obj/machinery/appliance/cooker/grill/attempt_toggle_power(mob/user)
+	. = ..()
+	if(use_power)
+		var/turf/T = get_turf(src)
+		for(var/atom/thing in T.contents)
+			if(thing == src)
+				continue
+			if(isatom(thing))
+				thing.begin_open_cooking(src)
+
+/obj/machinery/appliance/cooker/grill/power_change()
+	. = ..()
+	if(. && !stat)
+		var/turf/T = get_turf(src)
+		for(var/obj/item/cookpot/pot in T)
+			pot.begin_open_cooking(src)
+
+/obj/machinery/appliance/cooker/grill/can_insert(obj/item/I, mob/user)
+	if(istype(I, /obj/item/cookpot))	//Just deny it don't complain about it
+		return 0
+	return ..()
+//RS ADD END

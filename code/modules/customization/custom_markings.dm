@@ -62,6 +62,8 @@ GLOBAL_LIST_INIT(custom_marking_replacement_children, list(
 
 // Throttle custom marking work so large redraws can span multiple ticks via SScustom_marking
 /proc/custom_marking_force_yield()
+	if(GLOB.custom_marking_static_atlas_building)
+		return
 	var/delay = world.tick_lag
 	if(delay <= 0)
 		delay = 1
@@ -70,7 +72,7 @@ GLOBAL_LIST_INIT(custom_marking_replacement_children, list(
 
 // Track yield budget and force pauses when painting work exceeds thresholds
 /proc/custom_marking_yield_heartbeat(force = FALSE)
-	if(!GLOB.custom_marking_allow_yield)
+	if(GLOB.custom_marking_static_atlas_building || !GLOB.custom_marking_allow_yield)
 		return
 	if(force)
 		GLOB.custom_marking_yield_budget = 0
@@ -87,7 +89,7 @@ GLOBAL_LIST_INIT(custom_marking_replacement_children, list(
 		"allow" = GLOB.custom_marking_allow_yield,
 		"budget" = GLOB.custom_marking_yield_budget
 	)
-	GLOB.custom_marking_allow_yield = TRUE
+	GLOB.custom_marking_allow_yield = !GLOB.custom_marking_static_atlas_building
 	GLOB.custom_marking_yield_budget = 0
 	return context
 

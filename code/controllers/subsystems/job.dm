@@ -26,6 +26,8 @@ SUBSYSTEM_DEF(job)
 	return ..()
 
 /datum/controller/subsystem/job/proc/setup_occupations(faction = "Station")
+	if(!department_datums.len)	// RS ADD
+		setup_departments()	// RS ADD
 	occupations = list()
 	var/list/all_jobs = subtypesof(/datum/job)
 	if(!all_jobs.len)

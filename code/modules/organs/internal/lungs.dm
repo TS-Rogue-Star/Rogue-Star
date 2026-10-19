@@ -3,6 +3,7 @@
 	icon_state = "lungs"
 	gender = PLURAL
 	organ_tag = O_LUNGS
+	chargen_prosthetic_flags = ORGAN_CHARGEN_STANDARD // RS Add: Character Designer - Species and Prosthetics (Lira, August 2026)
 	parent_organ = BP_TORSO
 
 /obj/item/organ/internal/lungs/process()

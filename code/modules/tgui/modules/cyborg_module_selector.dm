@@ -78,6 +78,7 @@
 
 				robot_host.icon_selection_tries = 0
 				robot_host.icon_selected = TRUE
+				robot_host.apply_sprite_equipment_glamour() // RS Add: Robot Glamour fix (Lira, June 2026)
 				var/datum/robot_sprite/current_sprite = robot_host.sprite_datum
 				if(current_sprite && !istype(robot_host, /mob/living/silicon/robot/drone))
 					robot_host.sprite_type = current_sprite.name

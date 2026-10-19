@@ -293,6 +293,42 @@
 	for(var/u_type in unarmed_types)
 		unarmed_attacks += new u_type()
 
+// RS Add: Character Designer - Species and Prosthetics (Lira, August 2026)
+/datum/species/proc/get_chargen_internal_organ_path(var/organ_tag)
+	var/organ_path = has_organ?[organ_tag]
+	if(!ispath(organ_path, /obj/item/organ/internal))
+		return null
+	return organ_path
+
+// RS Add: Character Designer - Species and Prosthetics (Lira, August 2026)
+/datum/species/proc/get_chargen_internal_organ_states(var/organ_tag)
+	var/obj/item/organ/internal/organ_template = get_chargen_internal_organ_path(organ_tag)
+	if(!organ_template)
+		return list()
+	var/supported_flags = initial(organ_template.chargen_prosthetic_flags)
+	var/list/supported_states = list()
+	if(supported_flags & ORGAN_CHARGEN_NORMAL)
+		supported_states += "normal"
+	if(supported_flags & ORGAN_CHARGEN_ASSISTED)
+		supported_states += "assisted"
+	if(supported_flags & ORGAN_CHARGEN_MECHANICAL)
+		supported_states += "mechanical"
+	if(supported_flags & ORGAN_CHARGEN_DIGITAL)
+		supported_states += "digital"
+	return supported_states
+
+// RS Add: Character Designer - Species and Prosthetics (Lira, August 2026)
+/datum/species/proc/get_chargen_internal_organ_locked_state(var/organ_tag)
+	var/obj/item/organ/internal/organ_template = get_chargen_internal_organ_path(organ_tag)
+	if(!organ_template)
+		return null
+	var/native_robotic = initial(organ_template.robotic)
+	if(native_robotic >= ORGAN_ROBOT)
+		return "mechanical"
+	if(native_robotic >= ORGAN_ASSISTED)
+		return "assisted"
+	return "native"
+
 /datum/species/New()
 	if(hud_type)
 		hud = new hud_type()
@@ -473,6 +509,10 @@
 // Only used for alien plasma weeds atm, but could be used for Dionaea later.
 /datum/species/proc/handle_environment_special(var/mob/living/carbon/human/H)
 	return
+
+// RS Add: Character Designer - Species and Prosthetics (Lira, August 2026)
+/datum/species/proc/get_species_detail_notes(var/mob/user)
+	return list()
 
 // Used to update alien icons for aliens.
 /datum/species/proc/handle_login_special(var/mob/living/carbon/human/H)

@@ -143,13 +143,29 @@ Class Procs:
 		T.needs_air_update = 0 //Reset the marker so that it will be added to the list.
 		air_master.mark_for_update(T)
 
+// RS Edit: Atmos Zone Efficiency (Lira, October 2026)
 /zone/proc/add_tile_air(datum/gas_mixture/tile_air)
 	//air.volume += CELL_VOLUME
 	air.group_multiplier = 1
-	air.multiply(contents.len)
+	var/list/gases = air.gas
+	var/tile_count = contents.len
+	for(var/g in gases)
+		var/moles = gases[g] * tile_count
+		if(moles > 0)
+			gases[g] = moles
+		else
+			gases -= g
 	air.merge(tile_air)
-	air.divide(contents.len+1)
-	air.group_multiplier = contents.len+1
+	var/new_size = tile_count + 1
+	air.total_moles = 0
+	for(var/g in gases)
+		var/moles = gases[g] / new_size
+		if(moles > 0)
+			gases[g] = moles
+			air.total_moles += moles
+		else
+			gases -= g
+	air.group_multiplier = new_size
 
 /zone/proc/tick()
 	if(air.temperature >= PHORON_FLASHPOINT && !(src in air_master.active_fire_zones) && air.check_combustability() && contents.len)

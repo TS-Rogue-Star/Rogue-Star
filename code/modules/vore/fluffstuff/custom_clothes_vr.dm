@@ -974,13 +974,22 @@
 /obj/item/clothing/under/fluff/earthenbreath
 	name = "Earth Swimsuit"
 	desc = "The suit of Subject 688,509,403. Made of an enviromentally safe elastic. Dry-clean not required."
+	// RS Add Start: Character Designer - Loadout (Lira, September 2026)
+	icon = 'icons/vore/custom_clothes_vr.dmi'
+	icon_override = 'icons/vore/custom_clothes_vr.dmi'
+	// RS Add End
 	icon_state = "fluffearthenbreath"
 	item_state = "fluffearthenbreath_mob"
+	worn_state = "fluffearthenbreath_mob" // RS Add: Character Designer - Loadout (Lira, September 2026)
 
 //jacobdragon:Earthen Breath
 /obj/item/clothing/head/fluff/hairflowerpin
 	name = "Hair Flower Pin"
 	desc = "It's a flower fashioned into a hair pin. It's very nice."
+	// RS Add Start: Character Designer - Loadout (Lira, September 2026)
+	icon = 'icons/vore/custom_clothes_vr.dmi'
+	icon_override = 'icons/vore/custom_clothes_vr.dmi'
+	// RS Add End
 	icon_state = "hairflowerpin"
 	item_state = "hairflowerpin_mob"
 	body_parts_covered = 0
@@ -2165,8 +2174,10 @@ Departamental Swimsuits, for general use
 		return
 	..()
 
-/obj/item/clothing/head/fluff/nikki/get_description_interaction()
-	. = ..()
+// RS Edit Start: Examine Mode Fix (Lira, July 2026)
+/obj/item/clothing/head/fluff/nikki/get_description_interaction(var/for_chat = FALSE)
+	. = ..(for_chat)
+// RS Edit End
 	if (translocator)
 		. += "It has \a [translocator] inside of it. Alt-click while holding it on your inactive hand to remove it."
 		. += "Otherwise, this hat functions exactly as the translocator it has inside while still being a sweet head accessory."

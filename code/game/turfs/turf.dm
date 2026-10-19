@@ -30,7 +30,6 @@
 	var/movement_cost = 0       // How much the turf slows down movement, if any.
 
 	var/list/footstep_sounds = null
-	var/list/vorefootstep_sounds = null		// Reagent bellies || RS Add || Chomp Port
 
 	var/block_tele = FALSE      // If true, most forms of teleporting to or from this turf tile will fail.
 	var/can_build_into_floor = FALSE // Used for things like RCDs (and maybe lattices/floor tiles in the future), to see if a floor should replace it.
@@ -260,6 +259,11 @@
 			. += T
 
 /turf/proc/Distance(turf/t)
+	// RS EDIT
+	if(!t)
+		return -1
+	if(z != t.z)
+		return 2
 	if(get_dist(src,t) == 1)
 		var/cost = (src.x - t.x) * (src.x - t.x) + (src.y - t.y) * (src.y - t.y)
 		cost *= (pathweight+t.pathweight)/2

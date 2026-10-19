@@ -67,6 +67,7 @@
 	icon_state = "sac_slime"
 	dead_icon = null
 	standard_pulse_level = PULSE_NONE
+	chargen_prosthetic_flags = 0 // RS Add: Character Designer - Species and Prosthetics (Lira, August 2026)
 
 /obj/item/organ/internal/heart/grey/colormatch/slime/process()
 	..()

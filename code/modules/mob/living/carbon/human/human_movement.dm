@@ -20,6 +20,7 @@
 			. += M.slowdown
 
 	var/health_deficiency = (getMaxHealth() - health)
+	health_deficiency += ether_damage * species.ether_slow	//RS ADD
 	if(istype(src, /mob/living/carbon/human)) //VOREStation Edit Start
 		var/mob/living/carbon/human/H = src
 		health_deficiency *= H.species.trauma_mod //Species pain sensitivity does not apply to painkillers, so we apply it before
@@ -259,6 +260,9 @@
 		return
 	if(is_incorporeal())
 		return
+	var/soundless_step = (m_intent == "walk" && step_count++ % 20 != 0) || (m_intent == "run" && step_count++ % 2 != 0)	// RS Edit
+	if(soundless_step)	// RS Edit
+		check_vorefootstep(m_intent, T)	// RS Edit
 	if(!config.footstep_volume || !T.footstep_sounds || !T.footstep_sounds.len)
 		return
 	// Future Upgrades - Multi species support
@@ -275,13 +279,8 @@
 			return
 
 	// Play every 20 steps while walking, for the sneak
-	if(m_intent == "walk" && step_count++ % 20 != 0)
-		check_vorefootstep(m_intent, T) // Reagent bellies || RS Add || Chomp Port
-		return
-
 	// Play every other step while running
-	if(m_intent == "run" && step_count++ % 2 != 0)
-		check_vorefootstep(m_intent, T) // Reagent bellies || RS Add || Chomp Port
+	if(soundless_step)	// RS Edit
 		return
 
 	var/volume = config.footstep_volume
@@ -309,4 +308,4 @@
 /mob/living/carbon/human/set_dir(var/new_dir)
 	. = ..()
 	if(. && (species.tail || tail_style))
-		update_tail_showing()
+		update_tail_layer() // RS Edit: Tail Turn Optimization (Lira, October 2026)

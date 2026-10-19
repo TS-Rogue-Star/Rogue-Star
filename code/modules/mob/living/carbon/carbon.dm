@@ -17,15 +17,17 @@
 	if(germ_level < GERM_LEVEL_AMBIENT && prob(30))	//if you're just standing there, you shouldn't get more germs beyond an ambient level
 		germ_level++
 
+// RS Edit: Mob Deletion Optimization (Lira, September 2026)
 /mob/living/carbon/Destroy()
-	qdel(ingested)
-	qdel(touching)
+	QDEL_NULL(ingested)
+	QDEL_NULL(touching)
 	// We don't qdel(bloodstr) because it's the same as qdel(reagents)
 	for(var/guts in internal_organs)
 		qdel(guts)
 	for(var/food in stomach_contents)
 		qdel(food)
-	return ..()
+	. = ..()
+	bloodstr = null
 
 /mob/living/carbon/rejuvenate()
 	bloodstr.clear_reagents()
@@ -85,6 +87,8 @@
 
 /mob/living/carbon/attack_hand(mob/M as mob)
 	SEND_SIGNAL(src, COMSIG_ATOM_ATTACK_HAND, M)	//RS ADD
+	if(ai_holder && M.a_intent != I_HELP)	// RS ADD
+		ai_holder.react_to_attack(M)	// RS ADD
 	if(!istype(M, /mob/living/carbon)) return
 	if (ishuman(M))
 		var/mob/living/carbon/human/H = M
@@ -283,7 +287,7 @@
 			var/show_ssd
 			var/mob/living/carbon/human/H = src
 			var/datum/gender/T = gender_datums[H.get_visible_gender()] // make sure to cast to human before using get_gender() or get_visible_gender()!
-			if(istype(H)) show_ssd = H.species.show_ssd
+			if(istype(H)) show_ssd = H.species.get_ssd(H)	// RS EDIT
 			if(show_ssd && !client && !teleop)
 				M.visible_message("<span class='notice'>[M] shakes [src] trying to wake [T.him] up!</span>", \
 				"<span class='notice'>You shake [src], but [T.he] [T.does] not respond... Maybe [T.he] [T.has] S.S.D?</span>")
@@ -309,9 +313,11 @@
 						M.resting = 0 //Hoist yourself up up off the ground. No para/stunned/weakened removal.
 				else if(istype(hugger))
 					hugger.species.hug(hugger,src)
+					resolve_stimuli(hugger, STIM_HELP)	//RS ADD
 				else
 					M.visible_message("<span class='notice'>[M] hugs [src] to make [T.him] feel better!</span>", \
 								"<span class='notice'>You hug [src] to make [T.him] feel better!</span>")
+					resolve_stimuli(hugger, STIM_HELP)	//RS ADD
 				if(M.fire_stacks >= (src.fire_stacks + 3))
 					src.adjust_fire_stacks(1)
 					M.adjust_fire_stacks(-1)

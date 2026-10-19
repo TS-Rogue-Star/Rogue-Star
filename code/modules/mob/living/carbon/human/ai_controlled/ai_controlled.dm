@@ -92,7 +92,6 @@
 
 	if(to_wear_id_type)
 		var/obj/item/weapon/card/id/W = new to_wear_id_type(src)
-		W.name = "[real_name]'s ID Card"
 		var/datum/job/jobdatum
 		for(var/jobtype in typesof(/datum/job))
 			var/datum/job/J = new jobtype
@@ -105,7 +104,7 @@
 			W.access = list()
 		if(to_wear_id_job)
 			W.assignment = to_wear_id_job
-		W.registered_name = real_name
+		set_id_info(W) // RS EDIT
 		equip_to_slot_or_del(W, slot_wear_id)
 
 	if(generate_dead)

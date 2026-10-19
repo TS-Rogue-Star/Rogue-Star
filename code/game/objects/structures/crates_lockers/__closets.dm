@@ -49,6 +49,7 @@
 	. = ..()
 	if(starts_with)
 		create_objects_in_loc(src, starts_with)
+		npc_note_kind_supplies(src)	// RS ADD
 		starts_with = null
 
 	if(!opened)		// if closed, any item at the crate's loc is put in the contents
@@ -63,6 +64,7 @@
 			content_size += CEILING(I.w_class/2, 1)
 		if(content_size > storage_capacity-5)
 			storage_capacity = content_size + 5
+	npc_note_start_supplies(src)	// RS ADD
 
 	if(ispath(closet_appearance))
 		closet_appearance = GLOB.closet_appearances[closet_appearance]

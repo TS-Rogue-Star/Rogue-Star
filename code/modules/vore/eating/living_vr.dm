@@ -56,7 +56,7 @@
 /hook/living_new/proc/vore_setup(mob/living/M)
 	//Tries to load prefs if a client is present otherwise gives freebie stomach
 	spawn(2 SECONDS)
-		if(M)
+		if(!QDELETED(M)) // RS Edit: Mob Deletion Optimization (Lira, September 2026)
 			M.init_vore()
 
 	//return TRUE to hook-caller
@@ -243,6 +243,7 @@
 	P.resizable = src.resizable
 	P.digest_leave_remains = src.digest_leave_remains
 	P.allowmobvore = src.allowmobvore
+	P.allownpcvore = src.allownpcvore	// RS Add
 	P.vore_taste = src.vore_taste
 	P.vore_smell = src.vore_smell
 	P.permit_healbelly = src.permit_healbelly
@@ -303,6 +304,7 @@
 	resizable = P.resizable
 	digest_leave_remains = P.digest_leave_remains
 	allowmobvore = P.allowmobvore
+	allownpcvore = P.allownpcvore	// RS Add
 	vore_taste = P.vore_taste
 	vore_smell = P.vore_smell
 	permit_healbelly = P.permit_healbelly
@@ -417,6 +419,21 @@
 
 	visible_message("<span class='warning'>[src] licks [tasted]!</span>","<span class='notice'>You lick [tasted]. They taste rather like [tasted.get_taste_message()].</span>","<b>Slurp!</b>")
 
+	//RS ADD START
+	for(var/datum/modifier/sense/taste/T in tasted.modifiers)
+		if(istype(T,/datum/modifier/sense/taste))
+			var/taste_report = "You can also taste "
+			var/iteration = 0
+			for(var/thing in T.flavor)
+				iteration ++
+				if(iteration == 1)
+					taste_report += "[thing]"
+				else if(iteration != T.flavor.len)
+					taste_report += ", [thing]"
+				else if(iteration > 1)
+					taste_report += ", and [thing]"
+			to_chat(src,SPAN_OCCULT("[taste_report]."))
+	//RS ADD END
 
 /mob/living/proc/get_taste_message(allow_generic = 1)
 	if(!vore_taste && !allow_generic)
@@ -459,7 +476,22 @@
 	setClickCooldown(DEFAULT_ATTACK_COOLDOWN)
 	visible_message("<span class='warning'>[src] smells [smelled]!</span>","<span class='notice'>You smell [smelled]. They smell like [smelled.get_smell_message()].</span>","<b>Sniff!</b>")
 
-	if(olfaction_track)	//RS ADD START
+	//RS ADD START
+	for(var/datum/modifier/sense/smell/S in smelled.modifiers)
+		if(istype(S,/datum/modifier/sense/smell))
+			var/smell_report = "You can also smell "
+			var/iteration = 0
+			for(var/thing in S.flavor)
+				iteration ++
+				if(iteration == 1)
+					smell_report += "[thing]"
+				else if(iteration != S.flavor.len)
+					smell_report += ", [thing]"
+				else if(iteration > 1)
+					smell_report += ", and [thing]"
+			to_chat(src,SPAN_OCCULT("[smell_report]."))
+
+	if(olfaction_track)
 		SEND_SIGNAL(src,COMSIG_MOB_SMELLED)
 		add_modifier(/datum/modifier/olfaction_track, origin = smelled)	//RS ADD END
 
@@ -753,6 +785,9 @@
 		to_chat(user, "<span class='notice'>They aren't able to be devoured.</span>")
 		log_and_message_admins("[key_name_admin(src)] attempted to devour [key_name_admin(prey)] against their prefs ([prey ? ADMIN_JMP(prey) : "null"])")
 		return FALSE
+	if(!npc_vore_check(pred, prey))	//RS ADD
+		to_chat(user, "<span class='notice'>They aren't able to be devoured by NPCs.</span>")	//RS ADD
+		return FALSE	//RS ADD
 	if(!prey.ssd_vore_check(user))	//RS ADD
 		return FALSE				//RS ADD
 	if(!pred.ssd_vore_check(user))	//RS ADD
@@ -1299,6 +1334,7 @@
 	dispvoreprefs += "<b>Absorption Permission:</b> [absorbable ? "<font color='green'>Allowed</font>" : "<font color='red'>Disallowed</font>"]<br>"
 	dispvoreprefs += "<b>Leaves Remains:</b> [digest_leave_remains ? "<font color='green'>Enabled</font>" : "<font color='red'>Disabled</font>"]<br>"
 	dispvoreprefs += "<b>Mob Vore:</b> [allowmobvore ? "<font color='green'>Enabled</font>" : "<font color='red'>Disabled</font>"]<br>"
+	dispvoreprefs += "<b>NPC Vore:</b> [allownpcvore ? "<font color='green'>Enabled</font>" : "<font color='red'>Disabled</font>"]<br>"	// RS Add
 	dispvoreprefs += "<b>Selective Mode Pref:</b> [src.selective_preference]<br>"
 	if(ishuman(src))	//RS ADD START
 		var/mob/living/carbon/human/H = src

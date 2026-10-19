@@ -14,7 +14,7 @@
 /datum/gear/suit/refreshedtaloncapcoat
 	display_name = "Refreshed Talon Captain's Coat"
 	description = "An expertly manufacted coat that was specifically made for the commanding officers of ITV Talon vessels."
-	path = /obj/item/clothing/suit/talon/capcoat
+	path = /obj/item/clothing/suit/storage/talonbomberjacket/captain
 	allowed_roles = list("Talon Captain")
 
 /datum/gear/suit/refreshedtalonpilotcoat

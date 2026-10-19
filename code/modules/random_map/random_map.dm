@@ -64,10 +64,13 @@ var/global/list/map_count = list()
 		rand_seed(seed)
 		priority_process = 1
 
-	var/failed = FALSE
+	// RS Edit Start: Procedural Generation Retry Fix (Lira, September 2026)
+	var/failed = TRUE
 	for(var/i = 0;i<max_attempts;i++)
-		if(!generate())
-			failed = TRUE
+		if(generate())
+			failed = FALSE
+			break
+	// RS Edit End
 
 	if(!do_not_announce)
 		if(!failed)

@@ -175,7 +175,19 @@ var/list/runechat_image_cache = list()
 
 	// Approximate text height
 	var/complete_text = "<span class='center maptext [extra_classes != null ? extra_classes.Join(" ") : ""]' style='color: [tgt_color];'>[text]</span>"
-	var/mheight = WXH_TO_HEIGHT(owned_by.MeasureText(complete_text, null, msgwidth))
+	// RS ADD
+	if(!owned_by)
+		qdel(src)
+		return
+	// RS Edit Start: Runechat Cleanup (Lira, September 2026)
+	var/text_size = owned_by.MeasureText(complete_text, null, msgwidth)
+	if(QDELETED(src))
+		return
+	if(!owned_by || QDELETED(target) || QDELETED(owner) || owner.client != owned_by)
+		qdel(src)
+		return
+	var/mheight = WXH_TO_HEIGHT(text_size)
+	// RS Edit End
 	approx_lines = max(1, mheight / CHAT_MESSAGE_APPROX_LHEIGHT)
 
 	// Translate any existing messages upwards, apply exponential decay factors to timers

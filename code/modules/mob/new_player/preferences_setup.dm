@@ -197,16 +197,47 @@
 	if(!mannequin.dna) // Special handling for preview icons before SSAtoms has initailized.
 		mannequin.dna = new /datum/dna(null)
 	copy_to(mannequin, TRUE, fast_preview) // RS Edit: Custom markings support (Lira, September 2025)
+	equip_prepared_preview_mob(mannequin, equip_mask_override) // RS Add: Character Designer - Species and Prosthetics (Lira, August 2026)
+
+// RS Add: Character Designer - Species and Prosthetics (Lira, August 2026)
+/datum/preferences/proc/get_generic_preview_backbag_path(backbag_override = null)
+	switch(isnull(backbag_override) ? backbag : backbag_override)
+		if(2)
+			return /obj/item/weapon/storage/backpack
+		if(3)
+			return /obj/item/weapon/storage/backpack/satchel/norm
+		if(4)
+			return /obj/item/weapon/storage/backpack/satchel
+		if(5)
+			return /obj/item/weapon/storage/backpack/messenger
+		if(6)
+			return /obj/item/weapon/storage/backpack/sport
+		if(7)
+			return /obj/item/weapon/storage/backpack/satchel/strapless
+		if(8)
+			return /obj/item/weapon/storage/rig
+	return null
+
+// RS Add: Character Designer - Species and Prosthetics (Lira, August 2026)
+/datum/preferences/proc/equip_prepared_preview_mob(var/mob/living/carbon/human/mannequin, equip_mask_override = null, list/occupation_override = null)
+	if(!mannequin)
+		return
 
 	// RS Edit Start: Custom markings support(Lira, December 2025)
 	var/equip_mask = isnum(equip_mask_override) ? equip_mask_override : equip_preview_mob
+	if(!(equip_mask & EQUIP_PREVIEW_EQUIPMENT))
+		mannequin.remove_layer(6)
 	if(!equip_mask)
 		return
 	// RS Edit End
 
 	var/datum/job/previewJob
 	// Determine what job is marked as 'High' priority, and dress them up as such.
-	if(job_civilian_low & ASSISTANT)
+	// RS Edit Start: Character Designer - Occupation (Lira, September 2026)
+	if(islist(occupation_override))
+		previewJob = occupation_override["job"]
+	else if(job_civilian_low & ASSISTANT)
+	// RS Edit End
 		previewJob = job_master.GetJob(USELESS_JOB)
 	else if(ispAI(client.mob))	//VOREStation Edit! - pAIs shouldn't wear job gear~!
 		//Don't do anything!
@@ -220,6 +251,10 @@
 					job_flag = job_medsci_high
 				if(ENGSEC)
 					job_flag = job_engsec_high
+				// RS Add Start: Character Designer - Occupation (Lira, September 2026)
+				if(TALON)
+					job_flag = job_talon_high
+				// RS Add End
 			if(job.flag == job_flag)
 				previewJob = job
 				break
@@ -246,6 +281,9 @@
 					continue
 
 				if(G.slot && !(G.slot in equipped_slots))
+					// RS Add: Character Designer - Species and Prosthetics (Lira, August 2026)
+					if(shoe_hater && G.slot == slot_shoes)
+						continue
 					var/metadata = gear[G.display_name]
 					if(mannequin.equip_to_slot_or_del(G.spawn_item(mannequin, metadata), G.slot))
 						if(G.slot != slot_tie)
@@ -253,7 +291,20 @@
 
 	if((equip_mask & EQUIP_PREVIEW_JOB) && previewJob) // RS Edit: Custom markings support(Lira, December 2025)
 		mannequin.job = previewJob.title
-		previewJob.equip_preview(mannequin, player_alt_titles[previewJob.title])
+		previewJob.equip_preview(mannequin, islist(occupation_override) ? occupation_override["title"] : player_alt_titles[previewJob.title]) // RS Edit: Character Designer - Occupation (Lira, September 2026)
+
+	// RS Add Start: Character Designer - Species and Prosthetics (Lira, August 2026)
+	if(shoe_hater && mannequin.shoes)
+		var/obj/item/preview_shoes = mannequin.shoes
+		mannequin.drop_from_inventory(preview_shoes)
+		qdel(preview_shoes)
+
+	var/is_silicon_job_preview = previewJob && (equip_mask & EQUIP_PREVIEW_JOB) && (previewJob.type == /datum/job/ai || previewJob.type == /datum/job/cyborg)
+	if((equip_mask & EQUIP_PREVIEW_EQUIPMENT) && !mannequin.back && !is_silicon_job_preview)
+		var/generic_backbag_path = get_generic_preview_backbag_path()
+		if(ispath(generic_backbag_path, /obj/item))
+			mannequin.equip_to_slot_or_del(new generic_backbag_path(mannequin), slot_back)
+	// RS Add End
 
 /datum/preferences/proc/update_preview_icon(fast_preview = TRUE) // RS Edit: Custom markings support (Lira, September 2025)
 	custom_markings_preview_ready = TRUE // RS Add: Custom markings support (Lira, Novemember 2025)
@@ -299,7 +350,7 @@
 	var/datum/job/highJob
 	// Determine what job is marked as 'High' priority, and dress them up as such.
 	if(job_civilian_low & ASSISTANT)
-		highJob = job_master.GetJob("Assistant")
+		highJob = job_master.GetJob(USELESS_JOB) // RS Edit: Character Designer - Occupation (Lira, September 2026)
 	else
 		for(var/datum/job/job in job_master.occupations)
 			var/job_flag
@@ -310,6 +361,10 @@
 					job_flag = job_medsci_high
 				if(ENGSEC)
 					job_flag = job_engsec_high
+				// RS Add Start: Character Designer - Occupation (Lira, September 2026)
+				if(TALON)
+					job_flag = job_talon_high
+				// RS Add End
 			if(job.flag == job_flag)
 				highJob = job
 				break

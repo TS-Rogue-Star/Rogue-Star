@@ -24,6 +24,7 @@ SUBSYSTEM_DEF(mobs)
 
 /datum/controller/subsystem/mobs/fire(resumed = 0)
 	if (!resumed)
+		data_core?.refresh_hud_record_flags() // RS Add: HUD Optimization (Lira, September 2026)
 		src.currentrun = mob_list.Copy()
 		process_z.len = GLOB.living_players_by_zlevel.len
 		slept_mobs = 0

@@ -710,22 +710,19 @@
 	value = CATALOGUER_REWARD_EASY
 
 /mob/living/simple_mob/vore/isopod/mob_bank_save(mob/living/user)
+	. = ..()
+	.["body_color"] = body_color
+	.["under_color"] = under_color
+	.["antennae_color"] = antennae_color
+	.["antennae_end_color"] = antennae_end_color
+	.["eye_color"] = eye_color
 
-	var/list/to_save = list(
-		"ckey" = user.ckey,
-		"type" = type,
-		"name" = name,
-		"body_color" = body_color,
-		"under_color" = under_color,
-		"antennae_color" = antennae_color,
-		"antennae_end_color" = antennae_end_color,
-		"eye_color" = eye_color
-		)
-
-	return to_save
+	return .
 
 /mob/living/simple_mob/vore/isopod/mob_bank_load(mob/living/user, list/load)
 	. = ..()
+	if(user?.etching?.pet_data?[name])
+		load = user.etching.pet_data[name]
 
 	body_color = load["body_color"]
 	under_color = load["under_color"]

@@ -181,6 +181,8 @@
 	prey.Weaken(10)
 
 /mob/living/simple_mob/vore/ant/proc/queen_me()
+	if(tf_mob_holder)
+		return
 	var/turf/T = get_turf(src)
 	var/mob/living/simple_mob/vore/ant/queen/Q = new(T,src,eye_color)
 	Q.dir = dir
@@ -383,6 +385,9 @@
 	if(user.a_intent != I_HELP)
 		return ..()
 	if(istype(O,/obj/item/clothing/head/crown))
+		if(tf_mob_holder && queen < 1)
+			to_chat(user, SPAN_NOTICE("This transformed ant cannot become a queen."))
+			return
 		user.drop_from_inventory(O)
 		qdel(O)
 		var/turf/T = get_turf(src)
@@ -455,24 +460,16 @@
 	return TRUE
 
 /mob/living/simple_mob/vore/ant/mob_bank_save(mob/living/user)
+	. = ..()
+	.["team_color"] = team_color
+	.["eye_color"] = eye_color
 
-	var/list/to_save = list(
-		"ckey" = user.ckey,
-		"type" = /mob/living/simple_mob/vore/ant,
-		"name" = name,
-		"team_color" = team_color,
-		"eye_color" = eye_color
-		)
-
-	return to_save
+	return .
 
 /mob/living/simple_mob/vore/ant/mob_bank_load(mob/living/user, var/list/load)
-	if(user)
-		load_owner = user.ckey
-	else
-		load_owner = "STATION"
-	name = load["name"]
-	real_name = name
+	. = ..()
+	if(user?.etching?.pet_data?[name])
+		load = user.etching.pet_data[name]
 	team_color = load["team_color"]
 	color = team_color
 	eye_color = load["eye_color"]

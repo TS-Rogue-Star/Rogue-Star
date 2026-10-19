@@ -83,8 +83,12 @@
 	var/dat = ""
 	for(var/datum/category_group/player_setup_category/PS in categories)
 		// RS Add: Hide skills and antagonism (Lira, March 2026)
-		if(istype(PS, /datum/category_group/player_setup_category/skill_preferences) || istype(PS, /datum/category_group/player_setup_category/appearance_preferences))
+		if(istype(PS, /datum/category_group/player_setup_category/occupation_preferences) || istype(PS, /datum/category_group/player_setup_category/loadout_preferences) || istype(PS, /datum/category_group/player_setup_category/skill_preferences) || istype(PS, /datum/category_group/player_setup_category/appearance_preferences))
 			continue
+		// RS Add Start: Character Designer - Misc Settings (Lira, September 2026)
+		if(istype(PS, /datum/category_group/player_setup_category/vore))
+			continue
+		// RS Add End
 		if(PS == selected_category)
 			dat += "[PS.name] "	// TODO: Check how to properly mark a href/button selected in a classic browser window
 		else
@@ -105,6 +109,21 @@
 	if(href_list["category"])
 		var/category = locate(href_list["category"])
 		if(category && (category in categories))
+			// RS Add Start: Sound preferences panel (Lira, June 2026)
+			if(istype(category, /datum/category_group/player_setup_category/volume_sliders))
+				user.client.open_sound_settings_panel()
+				return 1
+			// RS Add End
+			// RS Add Start: Character Designer - Loadout (Lira, September 2026)
+			if(istype(category, /datum/category_group/player_setup_category/loadout_preferences))
+				user.client.prefs.open_body_markings_designer(user, "loadout")
+				return 1
+			// RS Add End
+			// RS Add Start: Character Designer - Occupation (Lira, September 2026)
+			if(istype(category, /datum/category_group/player_setup_category/occupation_preferences))
+				user.client.prefs.open_body_markings_designer(user, "occupation")
+				return 1
+			// RS Add End
 			selected_category = category
 		. = 1
 
@@ -154,20 +173,27 @@
 	for(var/datum/category_item/player_setup_item/PI in items)
 		PI.copy_to_mob(C)
 
+// RS Edit: Character Designer - Identity Tab (Lira, September 2026)
 /datum/category_group/player_setup_category/proc/content(var/mob/user)
 	. = "<table style='width:100%'><tr style='vertical-align:top'><td style='width:50%'>"
-	var/current = 0
-	var/halfway = items.len / 2
+	var/list/visible_items = list()
 	for(var/datum/category_item/player_setup_item/PI in items)
+		if(PI.show_in_character_setup)
+			visible_items += PI
+	var/current = 0
+	var/halfway = visible_items.len / 2
+	for(var/datum/category_item/player_setup_item/PI in visible_items)
 		if(halfway && current++ >= halfway)
 			halfway = 0
 			. += "</td><td></td><td style='width:50%'>"
 		. += "[PI.content(user)]<br>"
 	. += "</td></tr></table>"
 
+// RS Edit: Character Designer - Occupation (Lira, September 2026)
 /datum/category_group/player_setup_category/occupation_preferences/content(var/mob/user)
 	for(var/datum/category_item/player_setup_item/PI in items)
-		. += "[PI.content(user)]<br>"
+		if(PI.show_in_character_setup)
+			. += "[PI.content(user)]<br>"
 
 /**********************
 * Category Item Setup *
@@ -175,6 +201,7 @@
 /datum/category_item/player_setup_item
 	var/sort_order = 0
 	var/datum/preferences/pref
+	var/show_in_character_setup = TRUE // RS Add: Character Designer - Identity Tab (Lira, September 2026)
 
 /datum/category_item/player_setup_item/New()
 	..()

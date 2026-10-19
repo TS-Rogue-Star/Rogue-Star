@@ -1078,7 +1078,7 @@
 		"trait_injection_selected" = list(TRAIT_PREF_TYPE_LIST, "Reagent",TRAIT_VAREDIT_TARGET_MOB,"microcillin"),
 		"trait_injection_amount" = list(TRAIT_PREF_TYPE_INT, "Amount",TRAIT_VAREDIT_TARGET_MOB,1)
 		)
-	var/list/inject_chems = list(
+	list_options = list(
 		"microcillin",
 		"macrocillin",
 		"normalcillin",

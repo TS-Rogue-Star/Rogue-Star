@@ -8,6 +8,7 @@
 	w_class = ITEMSIZE_SMALL
 	force = 0
 	volume = 80
+	description_info = "When feeding other people, your intent matters!"	//RS ADD
 
 	var/bitesize = 1
 	var/bitecount = 0
@@ -112,131 +113,233 @@
 		to_chat(M, "<span class='warning'>How do you expect to eat this without opening it?</span>")
 		return FALSE
 
-	if(istype(M, /mob/living/carbon))
+	//RS EDIT START
+	if(istype(M, /mob/living/carbon/human))
+		var/mob/living/carbon/human/feedee = M
 		//TODO: replace with standard_feed_mob() call.
-		var/swallow_whole = FALSE
-		var/obj/belly/belly_target				// These are surprise tools that will help us later
 
-		var/fullness = M.nutrition + (M.reagents.get_reagent_amount("nutriment") * 25)
-		if(M == user)								//If you're eating it yourself
-			if(istype(M,/mob/living/carbon/human))
-				var/mob/living/carbon/human/H = M
-				if(!H.check_has_mouth())
-					to_chat(user, "Where do you intend to put \the [src]? You don't have a mouth!")
-					return
-				var/obj/item/blocked = null
-				if(survivalfood)
-					blocked = H.check_mouth_coverage_survival()
-				else
-					blocked = H.check_mouth_coverage()
-				if(blocked)
-					to_chat(user, "<span class='warning'>\The [blocked] is in the way!</span>")
-					return
-
-			user.setClickCooldown(user.get_attack_speed(src)) //puts a limit on how fast people can eat/drink things
-			if (fullness <= 50)
-				to_chat(M, "<span class='danger'>You hungrily chew out a piece of [src] and gobble it!</span>")
-			if (fullness > 50 && fullness <= 150)
-				to_chat(M, "<span class='notice'>You hungrily begin to eat [src].</span>")
-			if (fullness > 150 && fullness <= 2905)
-				to_chat(M, "<span class='notice'>You take a bite of [src].</span>")
-			if (fullness > 2905 && fullness <= 4565)
-				to_chat(M, "<span class='notice'>You unwillingly chew a bit of [src].</span>")
-			if (fullness > 4565 && fullness <= 5395)
-				to_chat(M, "<span class='notice'>You swallow some more of the [src], causing your belly to swell out a little.</span>")
-			if (fullness > 5395 && fullness <= 8300)
-				to_chat(M, "<span class='notice'>You stuff yourself with the [src]. Your stomach feels very heavy.</span>")
-			if (fullness > 8300 && fullness <= 24900)
-				to_chat(M, "<span class='notice'>You gluttonously swallow down the hunk of [src]. You're so gorged, it's hard to stand.</span>")
-			if (fullness > 24900 && fullness <= 45650)
-				to_chat(M, "<span class='danger'>You force the piece of [src] down your throat. You can feel your stomach getting firm as it reaches its limits.</span>")
-			if (fullness > 45650 && fullness <= 50000)
-				to_chat(M, "<span class='danger'>You barely glug down the bite of [src], causing undigested food to force into your intestines. You can't take much more of this!</span>")
-			if (fullness > 50000) // There has to be a limit eventually.
-				to_chat(M, "<span class='danger'>Your stomach blorts and aches, prompting you to stop. You literally cannot force any more of [src] to go down your throat.</span>")
-				return 0
-
-		else if(user.a_intent == I_HURT)
-			return ..()
-
-		else
-			if(istype(M,/mob/living/carbon/human))
-				var/mob/living/carbon/human/H = M
-				if(!H.check_has_mouth())
-					to_chat(user, "Where do you intend to put \the [src]? \The [H] doesn't have a mouth!")
-					return
-				var/obj/item/blocked = null
-				var/unconcious = FALSE
-				blocked = H.check_mouth_coverage()
-				if(survivalfood)
-					blocked = H.check_mouth_coverage_survival()
-					if(H.stat && H.check_mouth_coverage())
-						unconcious = TRUE
-						blocked = H.check_mouth_coverage()
-
-				if(isliving(user))	// We definitely are, but never hurts to check
-					var/mob/living/L = user
-					swallow_whole = L.stuffing_feeder
-				if(swallow_whole)
-					belly_target = M.vore_selected
-
-				if(unconcious)
-					to_chat(user, "<span class='warning'>You can't feed [H] through \the [blocked] while they are unconcious!</span>")
-					return
-
-				if(blocked)
-					to_chat(user, "<span class='warning'>\The [blocked] is in the way!</span>")
-					return
-
-				if(swallow_whole)
-					if(!(M.feeding))
-						to_chat(user, "<span class='warning'>You can't feed [H] a whole [src] as they refuse to be fed whole things!</span>")
-						return
-					if(!belly_target)
-						to_chat(user, "<span class='warning'>You can't feed [H] a whole [src] as they don't appear to have a belly to fit it!</span>")
-						return
-
-				if(swallow_whole)
-					user.visible_message("<span class='danger'>[user] attempts to make [M] consume [src] whole into their [belly_target].</span>")
-				else
-					user.visible_message("<span class='danger'>[user] attempts to feed [M] [src].</span>")
-
-				var/feed_duration = 3 SECONDS
-				if(swallow_whole)
-					feed_duration = 5 SECONDS
-
-				user.setClickCooldown(user.get_attack_speed(src))
-				if(!do_mob(user, M, feed_duration)) return
-
-				if(swallow_whole && !belly_target) return			// Just in case we lost belly mid-feed
-
-				if(swallow_whole)
-					add_attack_logs(user,M,"Whole-fed with [src.name] containing [reagentlist(src)] into [belly_target]", admin_notify = FALSE)
-					user.visible_message("<span class='danger'>[user] successfully forces [src] into [M]'s [belly_target].</span>")
-				else
-					add_attack_logs(user,M,"Fed with [src.name] containing [reagentlist(src)]", admin_notify = FALSE)
-					user.visible_message("<span class='danger'>[user] feeds [M] [src].</span>")
-
+		user.setClickCooldown(user.get_attack_speed(src)) //puts a limit on how fast people can eat/drink things
+		var/fullness = feedee.nutrition + (feedee.reagents.get_reagent_amount("nutriment") * 25)
+		var/mouth = feedee.check_has_mouth()
+		if(!mouth)
+			if(user == feedee)
+				to_chat(user, SPAN_WARNING("Where do you intend to put \the [src]? You don't have a mouth!"))
 			else
-				to_chat(user, "This creature does not seem to have a mouth!")
+				to_chat(user, SPAN_WARNING("Where do you intend to put \the [src]? \The [feedee] doesn't have a mouth!"))
+			return
+		var/obj/item/blocked
+		if(survivalfood && !feedee.stat)
+			blocked = feedee.check_mouth_coverage_survival()
+		else
+			blocked = feedee.check_mouth_coverage()
+		if(blocked)
+			if(user == feedee)
+				to_chat(user, SPAN_WARNING("\The [blocked] is in the way!"))
+				return
+			else if(user.a_intent != I_GRAB)
+				to_chat(user, SPAN_WARNING("\The [blocked] is in the way!"))
 				return
 
-		if(swallow_whole)
-			user.drop_item()
-			forceMove(belly_target)
-			return 1
-		else if(reagents)								//Handle ingestion of the reagent.
-			playsound(M, eating_sound, rand(10,50), 1, preference = /datum/client_preference/food_eating_noises)	//RS EDIT - Preference
-			if(reagents.total_volume)
-				if(reagents.total_volume > bitesize)
-					reagents.trans_to_mob(M, bitesize, CHEM_INGEST)
-				else
-					reagents.trans_to_mob(M, reagents.total_volume, CHEM_INGEST)
-				bitecount++
-				On_Consume(M)
-			return 1
+		//Check to see if we can above, feeding/eating below
+		if(user == feedee)
+			go_on_take_a_bite(feedee)
+			var/list/hungry_adverbs = list("hungrily","ravenously","energetically","impatiently","vigorously","zealously","voraciously","eagerly","greedily")
+			var/list/swallow_verbs = list("swallow","gulp","devour","eat","consume","ingest")
+			if (fullness <= 50)
+				to_chat(feedee, SPAN_DANGER("You [pick(hungry_adverbs)] chew out a piece of [src] and gobble it!"))
+			if (fullness > 50 && fullness <= 150)
+				to_chat(feedee, SPAN_NOTICE("You [pick(hungry_adverbs)] begin to eat [src]."))
+			if (fullness > 150 && fullness <= 2905)
+				to_chat(feedee, SPAN_NOTICE("You take a bite of [src]."))
+			if (fullness > 2905 && fullness <= 4565)
+				to_chat(feedee, SPAN_NOTICE("You slowly nibble a bit of [src]."))
+			if (fullness > 4565 && fullness <= 5395)
+				to_chat(feedee, SPAN_NOTICE("You [pick(swallow_verbs)] some more of the [src], causing your belly to swell out a little."))
+			if (fullness > 5395 && fullness <= 8300)
+				to_chat(feedee, SPAN_NOTICE("You stuff yourself with the [src]. Your stomach feels very heavy."))
+			if (fullness > 8300 && fullness <= 24900)
+				to_chat(feedee, SPAN_NOTICE("You gluttonously [pick(swallow_verbs)] down the hunk of [src]. You're so gorged, it's hard to stand."))
+			if (fullness > 24900 && fullness <= 45650)
+				to_chat(feedee, SPAN_DANGER("You force the piece of [src] down your throat. You can feel your stomach getting firm as it reaches its limits."))
+			if (fullness > 45650 && fullness <= 50000)
+				to_chat(feedee, SPAN_DANGER("You barely glug down the bite of [src]. You can't take much more of this!"))
+			if (fullness > 50000) // There has to be a limit eventually.
+				to_chat(feedee, SPAN_DANGER("Your stomach blorts and aches, prompting you to stop. You literally cannot force any more of [src] to go down your throat."))
+				return FALSE
+			return TRUE	//We don't really need to run through anything else so let's just stop here yahoo!
 
-	return 0
+		var/mob/living/feeder = user
+		var/stuffing = FALSE
+		var/obj/belly/belly_target
+		if(feedee.feeding)
+			if(feeder.stuffing_feeder)
+				stuffing = TRUE
+		if(stuffing)
+			belly_target = feedee.vore_selected
+			if(!belly_target)
+				belly_target = feedee.get_spontaneous_belly(FOOD_VORE)
+			if(!belly_target)
+				stuffing = FALSE
+
+		var/logmsg = "FEEDING ATTEMPT: [feeder] fed [feedee] - Mode: [feeder.a_intent] - [src.name] containing [reagentlist(src)]"
+		if(stuffing)
+			logmsg += " - Stuffing enabled targetting [belly_target]"
+
+		add_attack_logs(feeder,feedee,logmsg, admin_notify = FALSE)
+
+		var/feed_duration = 3 SECONDS
+		var/feed_mode = feeder.a_intent
+		if(feeder.a_intent == I_HURT && !feedee.feeding)	//Harm mode is mostly the same as feeding mode so let's just do help if they don't like it
+			feed_mode = I_HELP
+		var/feed_verb
+		reagents.update_total()
+		var/reagent_transfer = 0
+		if(in_use)
+			to_chat(feeder,SPAN_DANGER("\The [src] is already being fed to someone!"))
+			return
+		in_use = TRUE
+		switch(feed_mode)
+			if(I_HELP)
+				if(stuffing)
+					feed_duration = 5 SECONDS
+					var/list/feedlist = list(
+						"feed",
+						"serve",
+						"supply",
+						"push",
+						"cram",
+						"fuel",
+						"stuff"
+					)
+					feed_verb = pick(feedlist)
+					feeder.visible_message(SPAN_NOTICE("\The [feeder] attempts to [feed_verb] the whole [src] into \the [feedee]!"),runemessage = ". . .")
+				else
+					//normal feeding
+					var/list/feedlist = list(
+						"feed",
+						"serve",
+						"supply"
+					)
+					feed_verb = pick(feedlist)
+					feeder.visible_message(SPAN_NOTICE("\The [feeder] attempts to [feed_verb] \the [src] to \the [feedee]!"),runemessage = ". . .")
+			if(I_DISARM)
+				//slap someone with food knocking them down and feeding them a bite and destroying the food
+				if(reagents.total_volume >= 35)
+					to_chat(feeder,SPAN_DANGER("\The [src] is too powerful to simply slap someone with..."))
+					in_use = FALSE
+					return
+				feedee.add_modifier(/datum/modifier/sense/smell,origin = src)
+				feedee.add_modifier(/datum/modifier/sense/taste,origin = src)
+				var/list/smacklist = list(
+					"smacks",
+					"slaps",
+					"whaps",
+					"wollops"
+				)
+				feed_verb = pick(smacklist)
+				feeder.visible_message(SPAN_DANGER("\The [feeder] [feed_verb] \the [feedee] with \the [src]!"),runemessage = "! ! !")
+				playsound(feedee, 'sound/rogue-star/plap.ogg', rand(75,100), 1)
+				feedee.Weaken(2)
+				feed_duration = 2
+			if(I_GRAB)
+				if(feedee.attempt_to_scoop_into_object(feeder, feedee, src))
+					if(!food_inserted_micros)
+						food_inserted_micros = list()
+					food_inserted_micros += feedee
+					in_use = FALSE
+					return TRUE
+				to_chat(feeder,SPAN_WARNING("\The [feedee] is too powerful to be shoved into \the [src]..."))
+				in_use = FALSE
+				return
+			if(I_HURT)
+				//shove food inside giving nutrition but destroying the food and maybe falling in yourself
+				var/datum/modifier/forcefeeding/F = feedee.get_modifier_of_type(/datum/modifier/forcefeeding)
+				if(F)
+					to_chat(feeder,SPAN_WARNING("\The [feedee] is already being forcefed, you will have to wait..."))
+					in_use = FALSE
+					return
+				var/list/feedlist = list(
+					"shove",
+					"cram",
+					"force",
+					"jam",
+					"ram"
+				)
+				feed_verb = pick(feedlist)
+				feeder.visible_message(SPAN_DANGER("\The [feeder] [feed_verb]s \the [src] into \the [feedee]!"),runemessage = "! ! !")
+				reagent_transfer = clamp(reagents.total_volume,0,500)
+				feed_duration = reagent_transfer * 2
+				feedee.add_modifier(/datum/modifier/forcefeeding)
+
+		if(!do_mob(feeder, feedee, feed_duration, exclusive = TASK_USER_EXCLUSIVE))
+			to_chat(feeder,SPAN_WARNING("You were interrupted."))
+			var/datum/modifier/forcefeeding/F = feedee.get_modifier_of_type(/datum/modifier/forcefeeding)
+			in_use = FALSE
+			if(F)
+				F.expire()
+			return
+
+		in_use = FALSE	//Since everything after do_mob() happens instantly we don't need to care about this anymore
+		switch(feed_mode)
+			if(I_HELP)
+				//normal feeding
+				if(stuffing)
+					feeder.drop_item()
+					forceMove(belly_target)
+					feedee.visible_message(SPAN_NOTICE("\The [feeder] manages to [feed_verb] the whole [src] to \the [feedee]!!!"),runemessage = "N O M")
+					return TRUE
+				go_on_take_a_bite(feedee)
+				feedee.visible_message(SPAN_NOTICE("\The [feeder] manages to [feed_verb] \the [src] to \the [feedee]!!!"),runemessage = "nom")
+			if(I_DISARM)
+				//slap someone with food knocking them down and feeding them a bite and destroying the food
+				var/food_name = name
+				go_on_take_a_bite(feedee)
+				feedee.visible_message(SPAN_DANGER("\The [food_name] splatters all over \the [feedee]!!!"))
+				feedee.smelly = TRUE
+				if(!QDELETED(src))
+					feeder.drop_from_inventory(src)
+					qdel(src)
+				return TRUE
+			if(I_GRAB)
+				return
+			if(I_HURT)
+				//shove food inside giving nutrition but destroying the food
+				go_on_take_a_bite(feedee,TRUE)
+				if(QDELETED(src))
+					feedee.visible_message(SPAN_DANGER("\The [feeder] manages to [feed_verb] the whole [src] into \the [feedee]!!!"),runemessage = "U L P")
+				else
+					feedee.visible_message(SPAN_DANGER("\The [feeder] manages to [feed_verb] as much of [src] into \the [feedee] as will fit!!!"),runemessage = "U L P")
+
+				var/datum/modifier/forcefeeding/F = feedee.get_modifier_of_type(/datum/modifier/forcefeeding)
+				if(F)
+					F.expire()
+		return TRUE
+	return FALSE
+
+/obj/item/weapon/reagent_containers/food/snacks/proc/go_on_take_a_bite(var/mob/living/L,var/max = FALSE)
+	if(!reagents || !reagents.total_volume)	//Handle ingestion of the reagent.
+		return FALSE
+	playsound(L, eating_sound, rand(10,50), 1, preference = /datum/client_preference/food_eating_noises)
+	if(max)
+		reagents.trans_to_mob(L, reagents.total_volume, CHEM_INGEST)
+	else if(reagents.total_volume > bitesize)
+		reagents.trans_to_mob(L, bitesize, CHEM_INGEST)
+	else
+		reagents.trans_to_mob(L, reagents.total_volume, CHEM_INGEST)
+	bitecount++
+	On_Consume(L)
+	return TRUE
+
+/datum/modifier/forcefeeding
+	name = "force feeding"
+	desc = "Ouch!"
+	var/tick_count = 0
+
+/datum/modifier/forcefeeding/tick()
+	if(tick_count > 0)
+		holder.adjustHalLoss(25)
+	tick_count ++
+	//RS EDIT END
 
 /obj/item/weapon/reagent_containers/food/snacks/examine(mob/user)
 	. = ..()

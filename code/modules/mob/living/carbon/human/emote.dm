@@ -183,7 +183,8 @@ var/list/_human_default_emotes = list(
 	/decl/emote/audible/multisound/poyo,
 	/decl/emote/audible/multisound/a,
 	/decl/emote/audible/multisound/wawa,
-	/decl/emote/audible/caw
+	/decl/emote/audible/caw,
+	/decl/emote/audible/multisound/huff
 	//RS ADD END
 )
 
@@ -334,7 +335,8 @@ var/list/_simple_mob_default_emotes = list(
 	/decl/emote/audible/glub,
 	/decl/emote/audible/multisound/poyo,
 	/decl/emote/audible/multisound/a,
-	/decl/emote/audible/multisound/wawa
+	/decl/emote/audible/multisound/wawa,
+	/decl/emote/audible/multisound/huff
 	//RS ADD END
 	)
 

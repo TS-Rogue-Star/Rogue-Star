@@ -167,6 +167,7 @@
 /client/proc/colorooc()
 	set category = "Fun"
 	set name = "OOC Text Color"
+	set hidden = TRUE // RS Add: Preference settings panel (Lira, July 2026)
 	if(!holder)	return
 	var/response = tgui_alert(src, "Please choose a distinct color that is easy to read and doesn't mix with all the other chat and radio frequency colors.", "Change own OOC color", list("Pick new color", "Reset to default", "Cancel"))
 	if(response == "Pick new color")

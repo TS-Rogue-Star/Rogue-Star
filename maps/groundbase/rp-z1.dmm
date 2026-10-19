@@ -13731,6 +13731,7 @@
 /obj/random/instrument,
 /obj/random/instrument,
 /obj/item/instrument/guitar,
+/obj/item/instrument/drumkit,
 /obj/structure/closet/walllocker_double/misc_civ{
 	dir = 1;
 	pixel_y = -28

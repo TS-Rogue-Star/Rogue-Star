@@ -9,6 +9,7 @@
 	icon_state = "larynx"
 	parent_organ = BP_TORSO		// We don't have a neck area
 	organ_tag = O_VOICE
+	chargen_prosthetic_flags = ORGAN_CHARGEN_STANDARD // RS Add: Character Designer - Species and Prosthetics (Lira, August 2026)
 	will_assist_languages = list(LANGUAGE_GALCOM)
 	var/mute = FALSE
 

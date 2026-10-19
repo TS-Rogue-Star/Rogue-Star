@@ -13,3 +13,4 @@
 		set_stat(CONSCIOUS)
 	else
 		health = 100 - getOxyLoss() - getToxLoss() - getFireLoss() - getBruteLoss()
+		handle_ether_damage()	//RS ADD

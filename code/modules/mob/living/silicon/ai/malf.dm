@@ -29,9 +29,10 @@
 	if(hacked_apcs)
 		for(var/obj/machinery/power/apc/A in hacked_apcs)
 			A.hacker = null
+			A.queue_icon_update() // RS Add: APC and Cell Appearance Optimization (Lira, October 2026)
 	hacked_apcs = null
 	// Reset our verbs
-	src.verbs = null
+	src.verbs -= typesof(/datum/game_mode/malfunction/verb) // RS Edit: APC and Cell Appearance Optimization (Lira, October 2026)
 	add_ai_verbs()
 	// Let them know.
 	to_chat(user, "You are no longer malfunctioning. Your abilities have been removed.")

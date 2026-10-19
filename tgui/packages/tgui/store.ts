@@ -13,6 +13,7 @@ import {
   createStore,
 } from 'common/redux';
 import { backendMiddleware, backendReducer } from './backend';
+import { customMarkingDesignerAssetMiddleware } from './customMarkingDesignerAssets'; // RS Add: Character Designer - Species and Prosthetics (Lira, August 2026)
 import { debugMiddleware, debugReducer, relayMiddleware } from './debug';
 
 import { Component } from 'inferno';
@@ -53,6 +54,7 @@ export const configureStore = (options: ConfigureStoreOptions = {}): Store => {
     : [
         ...(middleware?.pre || []),
         assetMiddleware,
+        customMarkingDesignerAssetMiddleware, // RS Add: Character Designer - Species and Prosthetics (Lira, August 2026)
         backendMiddleware,
         ...(middleware?.post || []),
       ];

@@ -8,21 +8,27 @@
 	w_class = ITEMSIZE_TINY
 	light_color = "#E09D37"
 	var/wax = 2000
+	var/wax_randomize = TRUE
 	var/icon_type = "candle"
+	var/stage = 1			//RS ADD
+	var/everburn = FALSE	//RS ADD
 
 /obj/item/weapon/flame/candle/New()
-	wax -= rand(800, 1000) // Enough for 27-33 minutes. 30 minutes on average.
+	if(wax_randomize)	//RS EDIT
+		wax -= rand(800, 1000) // Enough for 27-33 minutes. 30 minutes on average.	//RS EDIT
 	..()
 
 /obj/item/weapon/flame/candle/update_icon()
-	var/i
-	if(wax > 1500)
-		i = 1
-	else if(wax > 800)
-		i = 2
-	else i = 3
-	icon_state = "[icon_type][i][lit ? "_lit" : ""]"
+	icon_state = "[icon_type][stage][lit ? "_lit" : ""]"	//RS EDIT START
 
+/obj/item/weapon/flame/candle/proc/calc_stage()
+	if(wax > 1500)
+		stage = 1
+	else if(wax > 800)
+		stage = 2
+	else stage = 3
+	return stage
+	//RS EDIT END
 
 /obj/item/weapon/flame/candle/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	..()
@@ -50,20 +56,31 @@
 		visible_message(flavor_text)
 		set_light(CANDLE_LUM)
 		START_PROCESSING(SSobj, src)
+		update_icon()	//RS ADD
 
 /obj/item/weapon/flame/candle/process()
 	if(!lit)
 		return
-	wax--
-	if(!wax)
-		new/obj/item/trash/candle(src.loc)
-		if(istype(src.loc, /mob))
-			src.dropped()
-		qdel(src)
-	update_icon()
+	if(!everburn)	//RS EDIT START
+		wax--
+		if(wax <= 0)
+			burn_out()
+			return
+		var/oldstage = stage
+		calc_stage()
+		if(stage != oldstage)
+			update_icon()	//RS EDIT END
 	if(istype(loc, /turf)) //start a fire if possible
 		var/turf/T = loc
 		T.hotspot_expose(700, 5)
+
+//RS EDIT START
+/obj/item/weapon/flame/candle/proc/burn_out()
+	new/obj/item/trash/candle(src.loc)
+	if(istype(src.loc, /mob))
+		src.dropped()
+	qdel(src)
+//RS EDIT END
 
 /obj/item/weapon/flame/candle/attack_self(mob/user as mob)
 	if(lit)
@@ -110,14 +127,14 @@
 		icon_state = "candelabra[lit ? "_lit" : ""]"
 
 /obj/item/weapon/flame/candle/everburn
-	wax = 99999
+	everburn = TRUE
 
 /obj/item/weapon/flame/candle/everburn/Initialize()
 	. = ..()
 	light("<span class='notice'>\The [src] mysteriously lights itself!.</span>")
 
 /obj/item/weapon/flame/candle/candelabra/everburn
-	wax = 99999
+	everburn = TRUE
 
 /obj/item/weapon/flame/candle/candelabra/everburn/Initialize()
 	. = ..()

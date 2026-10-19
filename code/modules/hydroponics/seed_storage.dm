@@ -220,23 +220,28 @@
 	user.set_machine(src)
 	tgui_interact(user)
 
+// RS EDIT
+/obj/machinery/seed_storage/proc/initialize_seeds()
+	if(seeds_initialized)
+		return
+	seeds_initialized = 1
+	for(var/typepath in starting_seeds)
+		var/amount = starting_seeds[typepath]
+		if(isnull(amount)) amount = 1
+
+		for(var/i = 1 to amount)
+			var/O = new typepath
+			add(O)
+	for(var/typepath in contraband_seeds)
+		var/amount = contraband_seeds[typepath]
+		if(isnull(amount)) amount = 1
+
+		for (var/i = 1 to amount)
+			var/O = new typepath
+			add(O, 1)
+
 /obj/machinery/seed_storage/tgui_interact(mob/user, datum/tgui/ui)
-	if(!seeds_initialized)
-		for(var/typepath in starting_seeds)
-			var/amount = starting_seeds[typepath]
-			if(isnull(amount)) amount = 1
-
-			for(var/i = 1 to amount)
-				var/O = new typepath
-				add(O)
-		for(var/typepath in contraband_seeds)
-			var/amount = contraband_seeds[typepath]
-			if(isnull(amount)) amount = 1
-
-			for (var/i = 1 to amount)
-				var/O = new typepath
-				add(O, 1)
-		seeds_initialized = 1
+	initialize_seeds() // RS EDIT
 
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
@@ -245,7 +250,7 @@
 
 /obj/machinery/seed_storage/tgui_data(mob/user, datum/tgui/ui, datum/tgui_state/state)
 	var/list/data = ..()
-	
+
 	if(smart)
 		scanner = list("stats", "produce", "soil", "temperature", "light", "pressure")
 	else
@@ -354,29 +359,49 @@
 
 	return data
 
+// RS EDIT
+/obj/machinery/seed_storage/proc/available_piles()
+	if(hacked || emagged)
+		return piles + piles_contra
+	return piles
+
+// RS EDIT
+/obj/machinery/seed_storage/proc/pile_by_id(ID)
+	for(var/datum/seed_pile/N in available_piles())
+		if(N.ID == ID)
+			return N
+	return null
+
+// RS EDIT
+/obj/machinery/seed_storage/proc/vend_pile(datum/seed_pile/N)
+	if(!istype(N))
+		return null
+	var/obj/O = length(N.seeds) ? pick(N.seeds) : null
+	if(O)
+		--N.amount
+		N.seeds -= O
+		if(N.amount <= 0 || N.seeds.len <= 0)
+			piles -= N
+			piles_contra -= N
+			qdel(N)
+		O.loc = src.loc
+		return O
+	piles -= N
+	piles_contra -= N
+	qdel(N)
+	return null
+
 /obj/machinery/seed_storage/tgui_act(action, list/params, datum/tgui/ui, datum/tgui_state/state)
 	if(..())
 		return TRUE
 	var/ID = text2num(params["id"])
 
-	var/list/piles_to_check = piles
-	if(hacked || emagged)
-		piles_to_check = piles + piles_contra
+	var/list/piles_to_check = available_piles() // RS EDIT
 
 	for(var/datum/seed_pile/N in piles_to_check)
 		if(N.ID == ID)
 			if(action == "vend")
-				var/obj/O = pick(N.seeds)
-				if(O)
-					--N.amount
-					N.seeds -= O
-					if(N.amount <= 0 || N.seeds.len <= 0)
-						piles -= N
-						qdel(N)
-					O.loc = src.loc
-				else
-					piles -= N
-					qdel(N)
+				vend_pile(N)  // RS EDIT
 				return TRUE
 			else if(action == "purge")
 				for(var/obj/O in N.seeds)

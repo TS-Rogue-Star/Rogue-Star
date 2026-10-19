@@ -1,4 +1,4 @@
-/obj/item/clothing/suit/talon/capcoat
+/obj/item/clothing/suit/storage/talonbomberjacket/captain
 	name = "Talon captain's coat"
 	desc = "A heavy coat worn by the ITV Talon's commanding officer, it has a nametag and ITV Talon logo on the breasts, it's incredibly snug to wear. The collar consists of genuine fur."
 	icon = 'icons/inventory/suit/item_rs.dmi'

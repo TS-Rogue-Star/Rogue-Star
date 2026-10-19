@@ -8,10 +8,11 @@ SUBSYSTEM_DEF(aifast)
 
 	var/list/processing = list()
 	var/list/currentrun = list()
+	var/deferred_fires = 0	// RS ADD
 
 /datum/controller/subsystem/aifast/stat_entry(msg_prefix)
 	var/list/msg = list(msg_prefix)
-	msg += "P:[processing.len]"
+	msg += "P:[processing.len] D:[deferred_fires]" // RS EDIT
 	..(msg.Join())
 
 /datum/controller/subsystem/aifast/fire(resumed = 0)
@@ -29,4 +30,6 @@ SUBSYSTEM_DEF(aifast)
 		A.handle_tactics()
 
 		if(MC_TICK_CHECK)
+			if(currentrun.len)	// RS ADD
+				deferred_fires++
 			return

@@ -29,12 +29,23 @@
 	return
 
 // This one is slightly different, in that it must return a list.
-/atom/proc/get_description_interaction()
+/atom/proc/get_description_interaction(var/for_chat = FALSE) // RS Edit: Examine Mode Fix (Lira, July 2026)
 	return list()
 
 // Quickly adds the boilerplate code to add an image and padding for the image.
-/proc/desc_panel_image(var/icon_state)
-	return "\icon[description_icons[icon_state]][EXAMINE_PANEL_PADDING]"
+// RS Edit: Examine Mode Fix (Lira, July 2026)
+/proc/desc_panel_image(var/icon_state, var/for_chat = FALSE)
+	var/image/description_icon = description_icons[icon_state]
+	if(!description_icon)
+		return EXAMINE_PANEL_PADDING
+	if(!for_chat)
+		return "\icon[description_icon][EXAMINE_PANEL_PADDING]"
+
+	var/static/list/chat_icons = list()
+	if(!chat_icons[icon_state])
+		chat_icons[icon_state] = bicon(icon(description_icon.icon, description_icon.icon_state))
+	var/chat_icon = chat_icons[icon_state]
+	return "\icon[description_icon][chat_icon][EXAMINE_PANEL_PADDING]"
 
 /mob/living/get_description_fluff()
 	if(flavor_text) //Get flavor text for the green text.

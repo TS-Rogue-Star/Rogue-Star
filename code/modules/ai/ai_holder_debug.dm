@@ -41,6 +41,10 @@
 		if(AI_LOG_TRACE)
 			span_type = "debug_trace"
 	if(ver <= debug_ai)
+		// RS EDIT
+		if(!holder)
+			log_debug("<span class='[span_type]'>AI: (no holder)(@[world.time]): [msg] </span>")
+			return
 		log_debug("<span class='[span_type]'>AI: ([holder]:\ref[holder] | [holder.x],[holder.y],[holder.z])(@[world.time]): [msg] </span>")
 
 // Colors the mob based on stance, to visually tell what stance it is for debugging.

@@ -625,7 +625,7 @@
 	drop_sound = 'sound/items/drop/shoes.ogg'
 	pickup_sound = 'sound/items/pickup/shoes.ogg'
 
-	update_icon_define_digi = "icons/inventory/feet/mob_digi.dmi"
+	update_icon_define_digi = 'icons/inventory/feet/mob_digi.dmi' // RS Edit: Character Designer - Loadout (Lira, September 2026)
 
 /obj/item/clothing/shoes/proc/draw_knife()
 	set name = "Draw Boot Knife"
@@ -752,7 +752,7 @@
 	valid_accessory_slots = (ACCESSORY_SLOT_OVER | ACCESSORY_SLOT_ARMBAND)
 	restricted_accessory_slots = (ACCESSORY_SLOT_ARMBAND)
 
-	update_icon_define_digi = "icons/inventory/suit/mob_digi.dmi"
+	update_icon_define_digi = 'icons/inventory/suit/mob_digi.dmi' // RS Edit: Character Designer - Loadout (Lira, September 2026)
 
 /obj/item/clothing/suit/update_clothing_icon()
 	if (ismob(src.loc))
@@ -864,7 +864,7 @@
 	var/icon/rolled_down_icon = 'icons/inventory/uniform/mob_rolled_down.dmi'
 	var/icon/rolled_down_sleeves_icon = 'icons/inventory/uniform/mob_sleeves_rolled.dmi'
 
-	update_icon_define_digi = "icons/inventory/uniform/mob_digi.dmi"
+	update_icon_define_digi = 'icons/inventory/uniform/mob_digi.dmi' // RS Edit: Character Designer - Loadout (Lira, September 2026)
 
 /obj/item/clothing/under/attack_hand(var/mob/user)
 	if(LAZYLEN(accessories))

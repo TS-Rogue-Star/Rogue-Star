@@ -3,6 +3,8 @@
 // /////////////////////////////////////////////////////////////////////////////////////////////
 // Updated by Lira for Rogue Star December 2025: Updated to support loaout and job gear ////////
 // /////////////////////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star August 2026: Character Designer - Species and Prosthetics ////
+// /////////////////////////////////////////////////////////////////////////////////////////////
 
 import {
   applyDraftDiffsToLayerMap,
@@ -16,7 +18,6 @@ import {
   convertCompositeGridToUi,
   updatePreviewEntryCustomLayer,
   resolveDirectionCanvasSources,
-  syncPreviewStateIfNeeded,
   updatePreviewStateFromPayload,
 } from '../utils';
 import {
@@ -39,7 +40,6 @@ export type RenderedPreviewCache = {
 type Params = Readonly<{
   data: CustomMarkingDesignerData;
   previewState: PreviewState;
-  setPreviewState: (state: PreviewState) => void;
   strokeDraftState: StrokeDraftState;
   currentDirectionKey: number;
   activePartKey: string;
@@ -52,6 +52,7 @@ type Params = Readonly<{
   resolvedPartPriorityMap: Record<string, boolean>;
   resolvedPartReplacementMap: Record<string, boolean>;
   sessionToken: string | null;
+  showEquipment: boolean;
   showJobGear: boolean;
   showLoadoutGear: boolean;
   referencePartMarkingGridsByDir?: Record<
@@ -81,6 +82,7 @@ type RenderedPreviewOptions = {
   partRenderPriorityMap?: Record<string, boolean>;
   partReplacementMap?: Record<string, boolean>;
   partPaintPresenceMap?: Record<string, boolean>;
+  showEquipment?: boolean;
   showJobGear?: boolean;
   showLoadoutGear?: boolean;
   signalAssetUpdate?: () => void;
@@ -130,6 +132,7 @@ const resolveCachedRenderedPreview = (
     partRenderPriorityMap,
     partReplacementMap,
     partPaintPresenceMap,
+    showEquipment,
     showJobGear,
     showLoadoutGear,
     signalAssetUpdate,
@@ -157,6 +160,7 @@ const resolveCachedRenderedPreview = (
       partPaintPresenceMap,
       showJobGear,
       showLoadoutGear,
+      showEquipment,
       signalAssetUpdate
     );
     if (cache && nextSignature) {
@@ -208,7 +212,6 @@ const resolveCachedRenderedPreview = (
 export const useDesignerPreview = ({
   data,
   previewState,
-  setPreviewState,
   strokeDraftState,
   currentDirectionKey,
   activePartKey,
@@ -221,6 +224,7 @@ export const useDesignerPreview = ({
   resolvedPartPriorityMap,
   resolvedPartReplacementMap,
   sessionToken,
+  showEquipment,
   showJobGear,
   showLoadoutGear,
   referencePartMarkingGridsByDir,
@@ -279,8 +283,6 @@ export const useDesignerPreview = ({
     canvasHeight,
     canvasGrid: serverCanvasGrid,
   });
-
-  syncPreviewStateIfNeeded(derivedPreviewState, previewState, setPreviewState);
 
   const draftDiffIndex = buildDraftDiffIndex(strokeDraftState);
   const pendingActiveDirDiffs =
@@ -352,6 +354,7 @@ export const useDesignerPreview = ({
     diffSeq: data.diff_seq,
     stroke: data.stroke,
     signalAssetUpdate: notifyAssetReady,
+    showEquipment,
     showJobGear,
     showLoadoutGear,
     partPaintPresenceMap,
@@ -375,6 +378,7 @@ export const useDesignerPreview = ({
     partRenderPriorityMap: resolvedPartPriorityMap,
     partReplacementMap: resolvedPartReplacementMap,
     partPaintPresenceMap,
+    showEquipment,
     showJobGear,
     showLoadoutGear,
     signalAssetUpdate: notifyAssetReady,

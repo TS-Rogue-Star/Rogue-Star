@@ -2,6 +2,7 @@
 	name = "intestine"
 	icon_state = "intestine"
 	organ_tag = O_INTESTINE
+	chargen_prosthetic_flags = ORGAN_CHARGEN_STANDARD // RS Add: Character Designer - Species and Prosthetics (Lira, August 2026)
 	parent_organ = BP_GROIN
 
 /obj/item/organ/internal/intestine/handle_germ_effects()

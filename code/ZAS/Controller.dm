@@ -1,4 +1,5 @@
 var/datum/controller/subsystem/air/air_master
+var/air_tile_queue_id = 0 // RS Add: Atmos Zone Efficiency (Lira, October 2026)
 
 var/tick_multiplier = 2
 
@@ -75,6 +76,7 @@ Class Procs:
 	var/list/edges = list()
 	//Geometry updates lists
 	var/list/tiles_to_update = list()
+	var/tile_queue_id = 0 // RS Add: Atmos Zone Efficiency (Lira, October 2026)
 	var/list/zones_to_update = list()
 	var/list/active_fire_zones = list()
 	var/list/active_hotspots = list()
@@ -163,12 +165,18 @@ Class Procs:
 
 	if(direct) c.mark_direct()
 
+// RS Edit: Atmos Zone Efficiency (Lira, October 2026)
 /datum/controller/subsystem/air/proc/mark_for_update(turf/T)
 	#ifdef ZASDBG
 	ASSERT(isturf(T))
 	#endif
 	if(T.needs_air_update) return
-	tiles_to_update |= T
+	if(T.air_update_queue_id != tile_queue_id)
+		if(T.air_update_queue_id)
+			tiles_to_update.Add(T)
+		else
+			tiles_to_update |= T
+		T.air_update_queue_id = tile_queue_id
 	#ifdef ZASDBG
 	T.add_overlay(mark)
 	#endif

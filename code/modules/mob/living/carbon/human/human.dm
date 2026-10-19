@@ -22,6 +22,7 @@
 	var/tmp/preview_trait_signature	// Cached custom trait signature for preview short-circuiting.
 	var/tmp/preview_slot_id				// Tracks which preference slot last populated this mob.
 	var/tmp/ignore_sprite_accessory_body_hide = FALSE // When TRUE, always render organs even if sprite accessories request hiding them (Lira, December 2025)
+	var/tmp/appearance_only = FALSE // RS Add: Character Designer - Species and Prosthetics (Lira, August 2026)
 	// RS Add End
 
 	var/can_defib = 1					//Horrible damage (like beheadings) will prevent defibbing organics.
@@ -29,7 +30,7 @@
 	var/active_regen_delay = 300
 
 /mob/living/carbon/human/Initialize(mapload, var/new_species = null)
-	if(!dna)
+	if(!dna && !appearance_only) // RS Edit: Character Designer - Species and Prosthetics (Lira, August 2026)
 		dna = new /datum/dna(null)
 		// Species name is handled by set_species()
 
@@ -63,13 +64,15 @@
 	//verbs |= /mob/living/proc/toggle_selfsurgery //VOREStation Removal
 	AddComponent(/datum/component/personal_crafting)
 
+// RS Edit: Mob Deletion Optimization (Lira, September 2026)
 /mob/living/carbon/human/Destroy()
 	human_mob_list -= src
 	for(var/organ in organs)
 		qdel(organ)
 	QDEL_NULL(nif)	//VOREStation Add
 	worn_clothing.Cut()
-	return ..()
+	. = ..()
+	QDEL_NULL(vessel)
 
 /mob/living/carbon/human/Stat()
 	..()
@@ -190,6 +193,11 @@
 			else
 				update |= temp.take_damage(b_loss * 0.05, f_loss * 0.05, used_weapon = weapon_message)
 	if(update)	UpdateDamageIcon()
+
+// RS ADD START
+/mob/living/carbon/human/proc/loadout_prefs()
+	return client?.prefs
+// RS ADD END
 
 /mob/living/carbon/human/proc/implant_loyalty(override = FALSE) // Won't override by default.
 	if(!config.use_loyalty_implants && !override) return // Nuh-uh.
@@ -1272,7 +1280,7 @@
 
 	spawn(0)
 		if(regen_icons) regenerate_icons()
-	if(!fast_preview) // RS Add: Custom markings support (Lira, September 2025)
+	if(!fast_preview && !appearance_only) // RS Add: Custom markings support (Lira, September 2025)
 		make_blood()
 		if(vessel.total_volume < species.blood_volume)
 			vessel.maximum_volume = species.blood_volume
@@ -1424,12 +1432,14 @@
 		if(C.body_parts_covered & FEET)
 			feet_exposed = 0
 
-	flavor_text = ""
+	// RS Edit Start: Examine Mode Fix (Lira, July 2026)
+	var/list/visible_flavor_texts = list()
 	for (var/T in flavor_texts)
 		if(flavor_texts[T] && flavor_texts[T] != "")
 			if((T == "general") || (T == "head" && head_exposed) || (T == "face" && face_exposed) || (T == "eyes" && eyes_exposed) || (T == "torso" && torso_exposed) || (T == "arms" && arms_exposed) || (T == "hands" && hands_exposed) || (T == "legs" && legs_exposed) || (T == "feet" && feet_exposed))
-				flavor_text += flavor_texts[T]
-				flavor_text += "\n\n"
+				visible_flavor_texts += flavor_texts[T]
+	flavor_text = visible_flavor_texts.Join("\n\n")
+	// RS Edit End
 	if(!shrink)
 		return flavor_text
 	else

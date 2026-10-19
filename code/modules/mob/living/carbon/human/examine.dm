@@ -304,6 +304,10 @@
 	if(on_fire)
 		msg += "<span class='warning'>[T.He] [T.is] on fire!.</span>"
 
+	// RS EDIT
+	if(ai_holder && stat == UNCONSCIOUS)
+		msg += "<span class='deadsay'>[T.He] [T.is] [sleeping ? "fast asleep" : "out cold"].</span>"
+
 	var/ssd_msg = species.get_ssd(src)
 	if(ssd_msg && (!should_have_organ("brain") || has_brain()) && stat != DEAD)
 		if(!key && !teleop)	//RS EDIT
@@ -427,9 +431,17 @@
 		msg += "<span class='deptradio'>Employment records:</span> <a href='?src=\ref[src];emprecord=`'>\[View\]</a> <a href='?src=\ref[src];emprecordadd=`'>\[Add comment\]</a>"
 
 
-	var/flavor_text = print_flavor_text()
-	if(flavor_text)
-		msg += "[flavor_text]"
+	// RS Edit Start: Examine Mode Fix (Lira, July 2026)
+	var/flavor_text
+	if(user.client?.prefs.examine_text_mode == EXAMINE_MODE_INCLUDE_USAGE)
+		flavor_text = get_description_fluff()
+		if(flavor_text)
+			msg += span_green("<b>[flavor_text]</b>")
+	else
+		flavor_text = print_flavor_text()
+		if(flavor_text)
+			msg += "[flavor_text]"
+	// RS Edit End
 
 	// VOREStation Start
 	if(custom_link)

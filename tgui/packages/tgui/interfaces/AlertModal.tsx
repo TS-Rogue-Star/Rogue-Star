@@ -16,6 +16,8 @@ type AlertModalData = {
   buttons: string[];
   large_buttons: boolean;
   message: string;
+  minimum_height?: number; // RS Add: Alert Sizing (Lira, September 2026)
+  minimum_width?: number; // RS Add: Alert Sizing (Lira, September 2026)
   swapped_buttons: boolean;
   timeout: number;
   title: string;
@@ -24,6 +26,7 @@ type AlertModalData = {
 const KEY_DECREMENT = -1;
 const KEY_INCREMENT = 1;
 
+// RS Edit: Alert Sizing (Lira, September 2026)
 export const AlertModal = (props, context) => {
   const { act, data } = useBackend<AlertModalData>(context);
   const {
@@ -31,16 +34,20 @@ export const AlertModal = (props, context) => {
     buttons = [],
     large_buttons,
     message = '',
+    minimum_height = 0,
+    minimum_width = 0,
     timeout,
     title,
   } = data;
   const [selected, setSelected] = useLocalState<number>(context, 'selected', 0);
   // Dynamically sets window dimensions
-  const windowHeight =
+  const automaticWindowHeight =
     115 +
     (message.length > 30 ? Math.ceil(message.length / 4) : 0) +
     (message.length && large_buttons ? 5 : 0);
-  const windowWidth = 325 + (buttons.length > 2 ? 55 : 0);
+  const automaticWindowWidth = 325 + (buttons.length > 2 ? 55 : 0);
+  const windowHeight = Math.max(automaticWindowHeight, minimum_height);
+  const windowWidth = Math.max(automaticWindowWidth, minimum_width);
   const onKey = (direction: number) => {
     if (selected === 0 && direction === KEY_DECREMENT) {
       setSelected(buttons.length - 1);

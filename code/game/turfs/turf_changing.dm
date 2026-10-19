@@ -83,6 +83,7 @@
 	W.levelupdate()
 	W.update_icon(1)
 	W.post_change()
+	npc_turf_changed(W)	// RS ADD
 	. =  W
 
 	dangerous_objects = old_dangerous_objects

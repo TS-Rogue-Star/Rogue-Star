@@ -11,10 +11,20 @@
 	var/job_talon_med = 0
 	var/job_talon_low = 0
 
+// RS Add: Character Designer - Misc Settings (Lira, September 2026)
+/datum/preferences/proc/set_identity_preference(field, value)
+	if(vars[field] == value)
+		return FALSE
+	vars[field] = value
+	if(custom_marking_designer_ui && !QDELETED(custom_marking_designer_ui))
+		custom_marking_designer_ui.identity_revision++
+	return TRUE
+
 //Why weren't these in game toggles already?
 /client/verb/toggle_eating_noises()
 	set name = "Toggle Eating Noises"
 	set category = "Preferences"
+	set hidden = TRUE // RS Add: Sound preferences panel (Lira, June 2026)
 	set desc = "Toggles hearing Vore Eating noises."
 
 	var/pref_path = /datum/client_preference/eating_noises
@@ -31,6 +41,7 @@
 /client/verb/toggle_digestion_noises()
 	set name = "Toggle Digestion Noises"
 	set category = "Preferences"
+	set hidden = TRUE // RS Add: Sound preferences panel (Lira, June 2026)
 	set desc = "Toggles hearing Vore Digestion noises."
 
 	var/pref_path = /datum/client_preference/digestion_noises
@@ -46,6 +57,7 @@
 /client/verb/toggle_belch_noises()
 	set name = "Toggle Audible Belching"
 	set category = "Preferences"
+	set hidden = TRUE // RS Add: Sound preferences panel (Lira, June 2026)
 	set desc = "Toggles hearing audible belches."
 
 	var/pref_path = /datum/client_preference/belch_noises
@@ -61,6 +73,7 @@
 /client/verb/toggle_emote_noises()
 	set name = "Toggle Emote Noises"
 	set category = "Preferences"
+	set hidden = TRUE // RS Add: Sound preferences panel (Lira, June 2026)
 	set desc = "Toggles hearing emote noises."
 
 	var/pref_path = /datum/client_preference/emote_noises
@@ -76,6 +89,7 @@
 /client/verb/toggle_ghost_quiets()
 	set name = "Toggle Ghost Privacy"
 	set category = "Preferences"
+	set hidden = TRUE // RS Add: Preference settings panel (Lira, July 2026)
 	set desc = "Toggles ghosts being able to see your subtles/whispers."
 
 	var/pref_path = /datum/client_preference/whisubtle_vis
@@ -97,10 +111,10 @@
 
 	if(prefs.capture_crystal)
 		to_chat(src, "You are no longer catchable.")
-		prefs.capture_crystal = 0
+		prefs.set_identity_preference("capture_crystal", 0) // RS Edit: Character Designer - Misc Settings (Lira, September 2026)
 	else
 		to_chat(src, "You are now catchable.")
-		prefs.capture_crystal = 1
+		prefs.set_identity_preference("capture_crystal", 1) // RS Edit: Character Designer - Misc Settings (Lira, September 2026)
 	if(L && istype(L))
 		L.capture_crystal = prefs.capture_crystal
 	SScharacter_setup.queue_preferences_save(prefs)
@@ -110,6 +124,7 @@
 /client/verb/toggle_mentorhelp_ping()
 	set name = "Toggle Mentorhelp Ping"
 	set category = "Preferences"
+	set hidden = TRUE // RS Add: Sound preferences panel (Lira, June 2026)
 	set desc = "Toggles the mentorhelp ping"
 
 	var/pref_path = /datum/client_preference/play_mentorhelp_ping
@@ -140,6 +155,7 @@
 /client/verb/toggle_pain_frequency()
 	set name = "Toggle Pain Frequency"
 	set category = "Preferences"
+	set hidden = TRUE // RS Add: Preference settings panel (Lira, July 2026)
 	set desc = "When toggled on, increases the cooldown of pain messages sent to chat for minor injuries"
 
 	var/pref_path = /datum/client_preference/pain_frequency
@@ -152,6 +168,7 @@
 /client/verb/toggle_game_participation()
 	set name = "Toggle Game Participation"
 	set category = "Preferences"
+	set hidden = TRUE // Preference settings panel (Lira, July 2026)
 	set desc = "When toggled on, you will participate in a game, and may collect or count for points!"
 
 	var/pref_path = /datum/client_preference/game_toggle

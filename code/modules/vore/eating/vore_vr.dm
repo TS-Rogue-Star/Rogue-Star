@@ -56,6 +56,7 @@ V::::::V           V::::::VO:::::::OOO:::::::ORR:::::R     R:::::REE::::::EEEEEE
 	var/allow_spontaneous_tf = FALSE
 	var/digest_leave_remains = FALSE
 	var/allowmobvore = TRUE
+	var/allownpcvore = FALSE	// RS Add
 	var/permit_healbelly = TRUE
 	var/noisy = FALSE
 	var/eating_privacy_global = FALSE //Makes eating attempt/success messages only reach for subtle range if true, overwritten by belly-specific var
@@ -124,6 +125,7 @@ V::::::V           V::::::VO:::::::OOO:::::::ORR:::::R     R:::::REE::::::EEEEEE
 	var/ssd_vore = FALSE	//RS ADD
 	var/list/vore_whitelist_toggles = list()	//RS ADD - A list of the prefs that are dictated by whitelist
 	var/belch_color = "#129606"	//RS ADD
+	var/huff_color = "#ffffff"	//RS ADD
 
 /datum/vore_preferences/New(client/C)
 	if(istype(C))
@@ -190,6 +192,7 @@ V::::::V           V::::::VO:::::::OOO:::::::ORR:::::R     R:::::REE::::::EEEEEE
 	absorbable = json_from_file["absorbable"]
 	digest_leave_remains = json_from_file["digest_leave_remains"]
 	allowmobvore = json_from_file["allowmobvore"]
+	allownpcvore = json_from_file["allownpcvore"]	// RS Add
 	vore_taste = json_from_file["vore_taste"]
 	vore_smell = json_from_file["vore_smell"]
 	permit_healbelly = json_from_file["permit_healbelly"]
@@ -224,6 +227,7 @@ V::::::V           V::::::VO:::::::OOO:::::::ORR:::::R     R:::::REE::::::EEEEEE
 	vore_whitelist_toggles = json_from_file["vore_whitelist_toggles"]	//RS ADD
 	autotransferable = json_from_file["autotransferable"] //RS Add || Chomp Port 3200
 	belch_color = json_from_file["belch_color"]	//RS ADD
+	huff_color = json_from_file["huff_color"]	//RS ADD
 
 	//Quick sanitize
 	if(isnull(digestable))
@@ -240,6 +244,8 @@ V::::::V           V::::::VO:::::::OOO:::::::ORR:::::R     R:::::REE::::::EEEEEE
 		digest_leave_remains = FALSE
 	if(isnull(allowmobvore))
 		allowmobvore = TRUE
+	if(isnull(allownpcvore))	// RS Add
+		allownpcvore = FALSE	// RS Add
 	if(isnull(permit_healbelly))
 		permit_healbelly = TRUE
 	if(isnull(selective_preference))
@@ -334,6 +340,8 @@ V::::::V           V::::::VO:::::::OOO:::::::ORR:::::R     R:::::REE::::::EEEEEE
 		vore_whitelist_toggles = list()	//RS ADD
 	if(isnull(belch_color))	//RS ADD
 		belch_color = "#129606"	//RS ADD
+	if(isnull(huff_color))	//RS ADD
+		huff_color = "#ffffff"	//RS ADD
 	return TRUE
 
 /datum/vore_preferences/proc/save_vore()
@@ -350,6 +358,7 @@ V::::::V           V::::::VO:::::::OOO:::::::ORR:::::R     R:::::REE::::::EEEEEE
 			"feeding"				= feeding,
 			"digest_leave_remains"	= digest_leave_remains,
 			"allowmobvore"			= allowmobvore,
+			"allownpcvore"			= allownpcvore,	// RS Add
 			"vore_taste"			= vore_taste,
 			"vore_smell"			= vore_smell,
 			"permit_healbelly"		= permit_healbelly,
@@ -384,6 +393,7 @@ V::::::V           V::::::VO:::::::OOO:::::::ORR:::::R     R:::::REE::::::EEEEEE
 			"vore_whitelist_toggles" = vore_whitelist_toggles, //RS ADD
 			"autotransferable"		= autotransferable, //RS Add || Port Chomp 3200
 			"belch_color"			= belch_color, //RS ADD
+			"huff_color"			= huff_color, //RS ADD
 		)
 
 	//List to JSON

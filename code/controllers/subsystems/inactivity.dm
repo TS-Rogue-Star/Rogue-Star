@@ -61,4 +61,8 @@ SUBSYSTEM_DEF(inactivity)
 
 /datum/controller/subsystem/inactivity/proc/can_kick(var/client/C)
 	if(C.holder) return FALSE //VOREStation Add - Don't kick admins.
+	//RS ADD START
+	if(!istype(C.mob, /mob/observer/dead/observer))	//Don't kick non observers
+		return FALSE
+	//RS ADD END
 	return TRUE

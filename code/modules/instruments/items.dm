@@ -63,6 +63,18 @@
 	icon_state = "xylophone"
 	allowed_instrument_ids = list("xylophone", "r3xylo") // RS Edit: New instruments (Lira, April 2026)
 
+// RS Add: Drumkit (Lira, June 2026)
+/obj/item/instrument/drumkit
+	name = "drum kit"
+	desc = "A compact percussion kit with enough drums and cymbals to keep the beat. An inscription at the base reads: Dedicated to Astel Medison and Lucy Gettler of The Lighteners Hang."
+	icon = 'icons/rogue-star/musician.dmi'
+	icon_state = "drumkit"
+	item_icons = list(
+		slot_l_hand_str = 'icons/rogue-star/lefthand_instruments.dmi',
+		slot_r_hand_str = 'icons/rogue-star/righthand_instruments.dmi',
+	)
+	allowed_instrument_ids = "r3drums"
+
 /obj/item/instrument/piano_synth
 	name = "synthesizer"
 	desc = "An advanced electronic synthesizer that can be used as various instruments."

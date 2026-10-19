@@ -10,6 +10,7 @@
 	href_logfile = start_log("[log_path]-hrefs.htm")
 	error_log = start_log("[log_path]-error.log")
 	debug_log = start_log("[log_path]-debug.log")
+	npc_trace_log = start_log("[log_path]-npc.log")	// RS ADD
 	//VOREStation Edit End
 
 	changelog_hash = md5('html/changelog.html')					//used for telling if the changelog has changed recently
@@ -421,6 +422,12 @@ var/world_topic_spam_protect_time = world.timeofday
 			return "Database connection failed or not set up"
 
 
+// RS Add: VChat Write Batching (Lira, September 2026)
+/world/Del()
+	if(GLOB)
+		vchat_flush_messages()
+	return ..()
+
 /world/Reboot(reason = 0, fast_track = FALSE)
 	/*spawn(0)
 		world << sound(pick('sound/AI/newroundsexy.ogg','sound/misc/apcdestroyed.ogg','sound/misc/bangindonk.ogg')) // random end sounds!! - LastyBatsy
@@ -440,6 +447,7 @@ var/world_topic_spam_protect_time = world.timeofday
 			if(config.server)	//if you set a server location in config.txt, it sends you there instead of trying to reconnect to the same world address. -- NeoFite
 				C << link("byond://[config.server]")
 
+	vchat_flush_messages() // RS Add: VChat Write Batching (Lira, September 2026)
 	TgsReboot()
 	log_world("World rebooted at [time_stamp()]")
 	..()

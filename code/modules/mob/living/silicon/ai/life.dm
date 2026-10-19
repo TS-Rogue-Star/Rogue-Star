@@ -149,6 +149,7 @@
 									theAPC.operating = 1
 									theAPC.equipment = 3
 									theAPC.update()
+									theAPC.update_icon() // RS Add: APC and Cell Appearance Optimization (Lira, October 2026)
 									aiRestorePowerRoutine = 3
 									to_chat(src, "Here are your current laws:")
 									show_laws()
@@ -174,8 +175,8 @@
 		setOxyLoss(0)
 	else
 		health = 100 - getFireLoss() - getBruteLoss() // Oxyloss is not part of health as it represents AIs backup power. AI is immune against ToxLoss as it is machine.
+		handle_ether_damage()	//RS ADD
 
 /mob/living/silicon/ai/rejuvenate()
 	..()
 	add_ai_verbs(src)
-

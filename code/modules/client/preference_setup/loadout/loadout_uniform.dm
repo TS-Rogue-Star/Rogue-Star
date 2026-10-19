@@ -108,12 +108,12 @@
 
 /datum/gear/uniform/suit/lawyer
 	display_name = "suit, one-piece selection"
-	path = /obj/item/clothing/under/lawyer
+	path = /obj/item/clothing/under/lawyer/black // RS Edit: Character Designer - Loadout (Lira, September 2026)
 
 /datum/gear/uniform/suit/lawyer/New()
 	..()
 	var/list/lsuits = list()
-	for(var/obj/item/clothing/suit/lsuit_type as anything in typesof(/obj/item/clothing/under/lawyer))
+	for(var/obj/item/clothing/under/lsuit_type as anything in subtypesof(/obj/item/clothing/under/lawyer)) // RS Edit: Character Designer - Loadout (Lira, September 2026)
 		lsuits[initial(lsuit_type.name)] = lsuit_type
 	gear_tweaks += new/datum/gear_tweak/path(sortAssoc(lsuits))
 

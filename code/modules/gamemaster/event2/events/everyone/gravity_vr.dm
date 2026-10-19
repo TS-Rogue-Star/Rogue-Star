@@ -35,7 +35,7 @@
 	
 	var/did_anything = FALSE
 	for(var/obj/machinery/gravity_generator/main/GG in generators)
-		if(!GG.on)
+		if(!GG.on || !GG.breaker) // RS Edit: Gravity Event Fix (Lira, July 2026)
 			GG.breaker = TRUE
 			GG.set_power()
 			GG.charge_count = 90

@@ -270,10 +270,29 @@
 		else
 			f_name += "oil-stained [name][infix]."
 
-	var/list/output = list("\icon[src.examine_icon()][bicon(src)] That's [f_name] [suffix]", get_examine_desc())
+	// RS Edit Start: Examine Mode Fix (Lira, July 2026)
+	var/examine_description = get_examine_desc()
+	var/list/output = list("\icon[src.examine_icon()][bicon(src)] That's [f_name] [suffix]", examine_description)
 
 	if(user.client?.prefs.examine_text_mode == EXAMINE_MODE_INCLUDE_USAGE)
-		output += description_info
+		var/extra_description_info = get_description_info()
+		if(extra_description_info)
+			output += span_info("<b>[extra_description_info]</b>")
+
+		var/list/description_interactions = get_description_interaction(TRUE)
+		if(description_interactions)
+			for(var/description_interaction in description_interactions)
+				output += span_info("<b>[description_interaction]</b>")
+
+		var/extra_description_fluff = get_description_fluff()
+		if(extra_description_fluff && extra_description_fluff != examine_description)
+			output += span_green("<b>[extra_description_fluff]</b>")
+
+		if(((user.mind && user.mind.special_role) || isobserver(user)))
+			var/extra_description_antag = get_description_antag()
+			if(extra_description_antag)
+				output += span_danger("<b>[extra_description_antag]</b>")
+	// RS Edit End
 
 	if(user.client?.prefs.examine_text_mode == EXAMINE_MODE_SWITCH_TO_PANEL)
 		user.client.statpanel = "Examine" // Switch to stat panel
