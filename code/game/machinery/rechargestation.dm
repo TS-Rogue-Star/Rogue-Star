@@ -1,4 +1,12 @@
+//////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star October 2026: Charging Station Processing //
+//////////////////////////////////////////////////////////////////////////////
+
 /obj/machinery/recharge_station
+	// RS Add Start: Charging Station Processing (Lira, October 2026)
+	processing_on_demand = TRUE
+	var/obj/item/weapon/cell/watched_cell
+	// RS Add End
 	name = "cyborg recharging station"
 	desc = "A heavy duty rapid charging system, designed to quickly recharge cyborg power reserves."
 	icon = 'icons/obj/objects.dmi'
@@ -33,16 +41,22 @@
 	return cell && cell.percent() > 0
 
 /obj/machinery/recharge_station/process()
+	// RS Add Start: Charging Station Processing (Lira, October 2026)
+	if(!occupant && cell?.fully_charged() && !cell.rigged && !(stat & (NOPOWER|BROKEN)))
+		icon_update_tick = 0
+		update_icon()
+		return PROCESS_KILL
+	// RS Add End
 	if(stat & (BROKEN))
-		return
+		return occupant ? 0 : PROCESS_KILL // RS Edit: Charging Station Processing (Lira, October 2026)
 	if(!cell) // Shouldn't be possible, but sanity check
-		return
+		return occupant ? 0 : PROCESS_KILL // RS Edit: Charging Station Processing (Lira, October 2026)
 
 	if((stat & NOPOWER) && !has_cell_power()) // No power and cell is dead.
 		if(icon_update_tick)
 			icon_update_tick = 0 //just rebuild the overlay once more only
 			update_icon()
-		return
+		return occupant ? 0 : PROCESS_KILL // RS Edit: Charging Station Processing (Lira, October 2026)
 
 	//First, draw from the internal power cell to recharge/repair/etc the occupant
 	if(occupant)
@@ -54,11 +68,11 @@
 		// Calculating amount of power to draw
 		recharge_amount = (occupant ? restore_power_active : restore_power_passive) * CELLRATE
 
-		recharge_amount = cell.give(recharge_amount)
+		recharge_amount = cell?.give(recharge_amount) // RS Edit: Charging Station Processing (Lira, October 2026)
 		use_power(recharge_amount / CELLRATE)
 	else
 		// Since external power is offline, draw operating current from the internal cell
-		cell.use(get_power_usage() * CELLRATE)
+		cell?.use(get_power_usage() * CELLRATE) // RS Edit: Charging Station Processing (Lira, October 2026)
 
 	if(icon_update_tick >= 10)
 		icon_update_tick = 0
@@ -76,13 +90,13 @@
 			R.module.respawn_consumable(R, charging_power * CELLRATE / 250) //consumables are magical, apparently
 		if(R.cell && !R.cell.fully_charged())
 			var/diff = min(R.cell.maxcharge - R.cell.charge, charging_power * CELLRATE) // Capped by charging_power / tick
-			var/charge_used = cell.use(diff)
+			var/charge_used = cell?.use(diff) // RS Edit: Charging Station Processing (Lira, October 2026)
 			R.cell.give(charge_used)
 
 		//Lastly, attempt to repair the cyborg if enabled
-		if(weld_rate && R.getBruteLoss() && cell.checked_use(weld_power_use * weld_rate * CELLRATE))
+		if(weld_rate && R.getBruteLoss() && cell?.checked_use(weld_power_use * weld_rate * CELLRATE)) // RS Edit: Charging Station Processing (Lira, October 2026)
 			R.adjustBruteLoss(-weld_rate)
-		if(wire_rate && R.getFireLoss() && cell.checked_use(wire_power_use * wire_rate * CELLRATE))
+		if(wire_rate && R.getFireLoss() && cell?.checked_use(wire_power_use * wire_rate * CELLRATE)) // RS Edit: Charging Station Processing (Lira, October 2026)
 			R.adjustFireLoss(-wire_rate)
 
 	//VOREStation Add Start
@@ -91,7 +105,7 @@
 
 		if(P.nutrition < 400)
 			P.nutrition = min(P.nutrition+10, 400)
-			cell.use(7000/450*10)
+			cell?.use(7000/450*10) // RS Edit: Charging Station Processing (Lira, October 2026)
 	//VOREStation Add End
 
 	else if(ishuman(occupant))
@@ -111,7 +125,7 @@
 			// Also recharge their internal battery.
 			if(H.isSynthetic() && H.nutrition < 500) //VOREStation Edit
 				H.nutrition = min(H.nutrition+(10*(1-min(H.species.synthetic_food_coeff, 0.9))), 500) //VOREStation Edit
-				cell.use(7000/450*10)
+				cell?.use(7000/450*10) // RS Edit: Charging Station Processing (Lira, October 2026)
 
 			// And clear up radiation
 			if(H.radiation > 0 || H.accumulated_rads > 0)
@@ -122,19 +136,19 @@
 			var/obj/item/weapon/rig/wornrig = H.get_rig()
 			if(wornrig) // just to make sure
 				for(var/obj/item/rig_module/storedmod in wornrig.installed_modules)
-					if(weld_rate && storedmod.damage && cell.checked_use(weld_power_use * weld_rate * CELLRATE))
+					if(weld_rate && storedmod.damage && cell?.checked_use(weld_power_use * weld_rate * CELLRATE)) // RS Edit: Charging Station Processing (Lira, October 2026)
 						to_chat(H, "<span class='notice'>[storedmod] is repaired!</span>")
 						storedmod.damage = 0
 				if(wornrig.chest)
 					var/obj/item/clothing/suit/space/rig/rigchest = wornrig.chest
-					if(weld_rate && rigchest.damage && cell.checked_use(weld_power_use * weld_rate * CELLRATE))
+					if(weld_rate && rigchest.damage && cell?.checked_use(weld_power_use * weld_rate * CELLRATE)) // RS Edit: Charging Station Processing (Lira, October 2026)
 						rigchest.breaches = list()
 						rigchest.calc_breach_damage()
 						to_chat(H, "<span class='notice'>[rigchest] is repaired!</span>")
 				if(wornrig.cell)
 					var/obj/item/weapon/cell/rigcell = wornrig.cell
 					var/diff = min(rigcell.maxcharge - rigcell.charge, charging_power * CELLRATE) // Capped by charging_power / tick
-					var/charge_used = cell.use(diff)
+					var/charge_used = cell?.use(diff) // RS Edit: Charging Station Processing (Lira, October 2026)
 					rigcell.give(charge_used)
 
 /obj/machinery/recharge_station/examine(mob/user)
@@ -194,6 +208,7 @@
 		if(istype(P, /obj/item/weapon/stock_parts/manipulator))
 			man_rating += P.rating
 	cell = locate(/obj/item/weapon/cell) in component_parts
+	watch_cell() // RS Add: Charging Station Processing (Lira, October 2026)
 
 	charging_power = 40000 + 40000 * cap_rating
 	restore_power_active = 10000 + 15000 * cap_rating
@@ -266,6 +281,7 @@
 		R.reset_view(src)
 		R.forceMove(src)
 		occupant = R
+		wake_processing() // RS Add: Charging Station Processing (Lira, October 2026)
 		update_icon()
 		return 1
 
@@ -280,6 +296,7 @@
 		P.reset_view(src)
 		P.forceMove(src)
 		occupant = P
+		wake_processing() // RS Add: Charging Station Processing (Lira, October 2026)
 		update_icon()
 		return 1
 	//VOREStation Add End
@@ -291,6 +308,7 @@
 			H.reset_view(src)
 			H.forceMove(src)
 			occupant = H
+			wake_processing() // RS Add: Charging Station Processing (Lira, October 2026)
 			update_icon()
 			return 1
 	else
@@ -350,3 +368,40 @@
 
 	if(icon_update_tick == 0)
 		build_overlays()
+
+// RS Add: Charging Station Processing (Lira, October 2026)
+/obj/machinery/recharge_station/proc/watch_cell()
+	if(watched_cell != cell)
+		if(watched_cell)
+			UnregisterSignal(watched_cell, list(COMSIG_CELL_CHARGE_CHANGED, COMSIG_PARENT_QDELETING))
+		watched_cell = cell
+		if(watched_cell)
+			RegisterSignal(watched_cell, COMSIG_CELL_CHARGE_CHANGED, PROC_REF(wake_processing))
+			RegisterSignal(watched_cell, COMSIG_PARENT_QDELETING, PROC_REF(on_cell_deleted))
+	wake_processing()
+
+// RS Add: Charging Station Processing (Lira, October 2026)
+/obj/machinery/recharge_station/proc/on_cell_deleted(datum/source)
+	SIGNAL_HANDLER
+	if(source != cell)
+		return
+	component_parts -= source
+	cell = null
+	watch_cell()
+
+// RS Add: Charging Station Processing (Lira, October 2026)
+/obj/machinery/recharge_station/Destroy()
+	if(watched_cell)
+		UnregisterSignal(watched_cell, list(COMSIG_CELL_CHARGE_CHANGED, COMSIG_PARENT_QDELETING))
+	watched_cell = null
+	cell = null
+	occupant = null
+	return ..()
+
+// RS Add: Charging Station Processing (Lira, October 2026)
+/obj/machinery/recharge_station/vv_edit_var(var_name, var_value)
+	if(var_name == NAMEOF(src, watched_cell))
+		return FALSE
+	. = ..()
+	if(. && var_name == NAMEOF(src, cell))
+		watch_cell()
