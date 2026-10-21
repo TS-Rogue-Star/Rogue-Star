@@ -33,6 +33,7 @@
 			return
 	water_communism(sources)
 	begin_shrooming()
+	visible_message(runemessage = "[water]")
 
 /turf/simulated/floor/outdoors/proc/water_communism(var/list/sources)
 	if(water <= water_saturation * 2)
@@ -51,7 +52,6 @@
 	if(assess_neighbor(search))
 		viable_neighbors += search
 	if(!islist(sources))
-		for(var/thing in sources)
 		sources = list(src)
 	else
 		sources |= src
@@ -65,21 +65,22 @@
 	for(var/turf/simulated/floor/outdoors/thing in viable_neighbors)
 		total_water += thing.water
 
-	var/average_water = total_water / (viable_neighbors.len + 1)
-	if(total_water == average_water)
+	var/average_water = total_water / (viable_neighbors.len)
+	if(water == average_water)
 		return
+
+	water = average_water
 	for(var/turf/simulated/floor/outdoors/thing in viable_neighbors)
 		if(thing in sources)
 			continue
-		var/transfer = min(water, average_water - thing.water)
-		water -= transfer
-		thing.water(transfer, sources)
+		thing.water(average_water - thing.water, sources)
 
 /turf/simulated/floor/outdoors/proc/assess_neighbor(var/turf/simulated/floor/outdoors/neighbor)
 	if(!istype(neighbor, /turf/simulated/floor/outdoors))
 		return FALSE
 	if(neighbor.water_saturation <= 0)
-
+		return FALSE
+	if(neighbor.water > water)
 		return FALSE
 	return neighbor
 
@@ -114,7 +115,7 @@
 
 	M.pixel_x = rand(-14,14)
 	M.pixel_y = rand(-14,14)
-	M.visible_message(span_green("\The [M] appears from \the [src]..."))
+	M.visible_message(span_green("\The [M] appears from \the [src]..."),runemessage = "🍄")
 
 
 /turf/simulated/floor/outdoors/grass
@@ -232,3 +233,14 @@
 			icon_state = "[shroom_state]-[rand(1,3)]"
 		if(5)
 			icon_state = "[shroom_state]_prime"
+
+/mob/living/verb/water()
+	set category = "WATER"
+	set name = "WATER"
+
+	var/turf/simulated/floor/outdoors/T = get_turf(src)
+	if(!istype(T, /turf/simulated/floor/outdoors))
+		return
+
+	playsound(T, 'sound/effects/sink.ogg', 75, 1)
+	T.water(100)
