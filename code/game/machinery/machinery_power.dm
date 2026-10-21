@@ -42,6 +42,10 @@
 		stat &= ~NOPOWER
 	else
 		stat |= NOPOWER
+	// RS Add Start: Charging Station Processing (Lira, October 2026)
+	if(processing_on_demand)
+		wake_processing()
+	// RS Add End
 	return (stat != oldstat)
 
 // Get the amount of power this machine will consume each cycle.  Override by experts only!
@@ -106,6 +110,10 @@
 		return
 	var/power = POWER_CONSUMPTION
 	if(!power)
+		// RS Add Start: Charging Station Processing (Lira, October 2026)
+		if(processing_on_demand)
+			power_change()
+		// RS Add End
 		return // This is the most likely case anyway.
 
 	if(old_area)

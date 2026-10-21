@@ -795,4 +795,5 @@
 #define COMSIG_DUNGEON_TRIGGER "dungeon_trigger"
 #define COMSIG_DUNGEON_UNTRIGGER "dungeon_untrigger"
 #define COMSIG_RESOLVE_ATTACKBY "resolve_attackby"
+#define COMSIG_CELL_CHARGE_CHANGED "cell_charge_changed" // Charging Station Processing (Lira, October 2026)
 //RS ADD END
