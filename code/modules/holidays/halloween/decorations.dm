@@ -1,3 +1,55 @@
+/obj/item/decoration
+	name = "decoration"
+	desc = "A festive decoration."
+	icon = 'icons/holidays/halloween/decorations.dmi'
+	w_class = ITEMSIZE_SMALL
+	var/random = FALSE
+	var/variations = 1
+	var/glow_icon_state
+
+/obj/item/decoration/Initialize(mapload)
+	. = ..()
+	if(random && variations > 1)
+		icon_state = "[rand(1, variations)]"
+	update_icon()
+
+/obj/item/decoration/garland
+	name = "garland"
+	anchored = TRUE
+	var/icon_state_off = "garland"
+	var/list/light_colors
+	var/current_color
+
+/obj/item/decoration/garland/Initialize(mapload)
+	. = ..()
+	if(random)
+		var/v_num = rand(1, variations)
+		icon_state_off = "garland_[v_num]"
+		glow_icon_state = "garland_[v_num]_lights"
+
+	icon_state = icon_state_off
+
+	if(LAZYLEN(light_colors))
+		current_color = pick(light_colors)
+		set_light(2, 1, current_color)
+
+	update_icon()
+
+/obj/item/decoration/garland/update_icon()
+	cut_overlays()
+	icon_state = icon_state_off
+
+	if(glow_icon_state)
+		var/mutable_appearance/glow = mutable_appearance(icon, glow_icon_state)
+		glow.plane = PLANE_LIGHTING_ABOVE
+		if(current_color)
+			glow.color = current_color
+		add_overlay(glow)
+
+/obj/item/decoration/tinsel
+	name = "tinsel"
+	anchored = TRUE
+
 /obj/item/decoration/halloween
 	desc = "Everybody scream!"
 	icon = 'icons/holidays/halloween/decorations.dmi'
@@ -5,56 +57,50 @@
 
 /obj/item/weapon/carved_pumpkin
 	name = "carved pumpkin"
-	desc = "Everybody hail to the pumkin song!"
+	desc = "Everybody hail to the pumpkin song!"
 	icon = 'icons/holidays/halloween/decorations.dmi'
 	icon_state = "pumpkin"
 	var/icon_state_off = "pumpkin"
-	var/glow_icon_state = ""
-	var/obj/item/candle/candle
+	var/glow_icon_state
+	var/obj/item/weapon/flame/candle/candle
 	var/candled = FALSE
 
 /obj/item/weapon/carved_pumpkin/candled
 	candled = TRUE
 
-/obj/item/weapon/carved_pumpkin/atom_init()
+/obj/item/weapon/carved_pumpkin/Initialize(mapload)
 	. = ..()
 	icon_state_off = "pumpkin_[rand(1, 8)]"
 	glow_icon_state = "[icon_state_off]_light"
 	icon_state = icon_state_off
 
 	if(candled)
-		candle = new(src)
-		if(hasproc(candle, "light"))
-			candle.light()
+		candle = new /obj/item/weapon/flame/candle(src)
+		candle.light()
 		update_icon()
 
+/obj/item/weapon/carved_pumpkin/Destroy()
+	QDEL_NULL(candle)
+	return ..()
+
 /obj/item/weapon/carved_pumpkin/update_icon()
-	overlays.Cut()
+	cut_overlays()
 
 	if(candle)
 		icon_state = "[icon_state_off]_on"
+		set_light(3, 1, candle.light_color ? candle.light_color : "#FF8800")
 
-		// Настройка динамического освещения (света вокруг)
-		if(candle.light_color)
-			set_light(3, 1, candle.light_color)
-		else
-			set_light(3, 1, "#FF8800") // Дефолтный оранжевый свет, если у свечи нет цвета
-
-		// РЕНДЕР СВЕЧЕНИЯ ТЫКВЫ В ТЕМНОТЕ ДЛЯ ROGUE STAR
 		if(glow_icon_state)
-			var/mutable_appearance/glow = mutable_appearance(icon, glow_state = "[icon_state_off]_on") // Используем стейт включенной тыквы как основу, либо glow_icon_state если там маска глазами
-			// Если в Tau Ceti стейт свечения содержал только глаза, используем его:
-			glow = mutable_appearance(icon, glow_icon_state)
+			var/mutable_appearance/glow = mutable_appearance(icon, glow_icon_state)
 			glow.plane = PLANE_LIGHTING_ABOVE
-			overlays += glow
+			add_overlay(glow)
 	else
 		icon_state = icon_state_off
 		set_light(0)
 
-
-/obj/item/weapon/carved_pumpkin/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/candle) && !candle)
-		var/obj/item/candle/new_candle = I
+/obj/item/weapon/carved_pumpkin/attackby(obj/item/W, mob/user)
+	if(istype(W, /obj/item/weapon/flame/candle) && !candle)
+		var/obj/item/weapon/flame/candle/new_candle = W
 		if(!new_candle.lit)
 			return
 		user.drop_from_inventory(new_candle, src)
@@ -65,7 +111,7 @@
 
 /obj/item/weapon/carved_pumpkin/attack_self(mob/user)
 	. = ..()
-	if(!candle || (hasproc(user, "is_busy") && user.is_busy()))
+	if(!candle)
 		return
 
 	if(do_after(user, 5, target = src))
@@ -75,42 +121,12 @@
 
 // Garland
 /obj/item/decoration/garland/halloween
-	name = "halloween garland"
 	desc = "Beautiful lights! Shinee!"
 	icon = 'icons/holidays/halloween/decorations.dmi'
 	icon_state = "garland"
-
-	var/icon_state_off = "garland"
-	var/glow_icon_state = "garland_lights"
-	var/list/light_colors = list("#f8731e", "#ffd401", "#ef0001")
-	var/random = TRUE
-	var/variations = 7
-	var/current_color = "#FFD700"
-
-/obj/item/decoration/garland/halloween/Initialize(mapload)
-	. = ..()
-	if(random)
-		var/v_num = rand(1, variations)
-		icon_state_off = "garland_[v_num]"
-		glow_icon_state = "garland_[v_num]_lights"
-
-	icon_state = icon_state_off
-	if(light_colors && light_colors.len)
-		current_color = pick(light_colors)
-
-	set_light(2, 1, current_color)
-	update_icon()
-
-/obj/item/decoration/garland/halloween/update_icon()
-	overlays.Cut()
-	icon_state = icon_state_off
-
-	// Наложение маски свечения диодов гирлянды поверх темноты
-	if(glow_icon_state)
-		var/mutable_appearance/lights = mutable_appearance(icon, glow_icon_state)
-		lights.plane = PLANE_LIGHTING_ABOVE
-		lights.color = current_color // Красим белые лампочки в выбранный цвет гирлянды
-		overlays += lights
+	light_colors = list("#f8731e", "#ffd401", "#ef0001")
+	random = TRUE
+	variations = 7
 
 /obj/item/decoration/garland/halloween/long
 	icon_state = "garland_1"
@@ -137,11 +153,6 @@
 	icon_state = "1"
 	variations = 20
 	random = TRUE
-
-/obj/item/decoration/tinsel/halloween/Initialize(mapload)
-	. = ..()
-	if(random)
-		icon_state = "[rand(1, variations)]"
 
 /obj/item/decoration/tinsel/halloween/pumkings
 	icon_state = "1"
