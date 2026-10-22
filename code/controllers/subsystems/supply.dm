@@ -400,3 +400,9 @@ SUBSYSTEM_DEF(supply)
 	var/ordered_at							// Date and time the order was requested at
 	var/approved_at							// Date and time the order was approved at
 	var/status								// [Requested, Accepted, Denied, Shipped]
+
+// RS Add: Station Display and Media Processing (Lira, October 2026)
+/datum/controller/subsystem/supply/vv_edit_var(var_name, new_value)
+	. = ..()
+	if(. && var_name == "shuttle")
+		wake_shuttle_status_displays(TRUE)

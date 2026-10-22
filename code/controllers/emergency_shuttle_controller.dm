@@ -1,3 +1,7 @@
+///////////////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star October 2026: Station Display and Media Processing //
+///////////////////////////////////////////////////////////////////////////////////////
+
 //This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
 
 // Controls the emergency shuttle
@@ -76,6 +80,7 @@ var/global/datum/emergency_shuttle_controller/emergency_shuttle = new
 	wait_for_launch = 1
 	launch_time = world.time + seconds*10
 	START_PROCESSING(SSprocessing, src)
+	wake_shuttle_status_displays() // RS Add: Station Display and Media Processing (Lira, October 2026)
 
 /datum/emergency_shuttle_controller/proc/stop_launch_countdown()
 	STOP_PROCESSING(SSprocessing, src)
@@ -289,3 +294,18 @@ var/global/datum/emergency_shuttle_controller/emergency_shuttle = new
 		S.direction = spawndir
 		spawn()
 			S.startmove()
+
+// RS Add: Station Display and Media Processing (Lira, October 2026)
+/datum/emergency_shuttle_controller/vv_edit_var(var_name, new_value)
+	. = ..()
+	if(. && src == emergency_shuttle)
+		wake_shuttle_status_displays()
+
+// RS Add: Station Display and Media Processing (Lira, October 2026)
+/datum/emergency_shuttle_controller/Destroy()
+	STOP_PROCESSING(SSprocessing, src)
+	shuttle = null
+	if(src == emergency_shuttle)
+		emergency_shuttle = null
+		wake_shuttle_status_displays()
+	return ..()

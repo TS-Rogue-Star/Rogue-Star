@@ -1,3 +1,7 @@
+///////////////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star October 2026: Station Display and Media Processing //
+///////////////////////////////////////////////////////////////////////////////////////
+
 //
 // Media Player Jukebox
 // Rewritten by Leshana from existing Polaris code, merging in D2K5 and N3X15 work
@@ -20,6 +24,7 @@
 	use_power = USE_POWER_IDLE
 	idle_power_usage = 10
 	active_power_usage = 100
+	processing_on_demand = TRUE // RS Add: Station Display and Media Processing (Lira, October 2026)
 	circuit = /obj/item/weapon/circuitboard/jukebox
 	clicksound = 'sound/machines/buttonbeep.ogg'
 
@@ -49,13 +54,14 @@
 /obj/machinery/media/jukebox/proc/getTracksList()
 	return hacked ? SSmedia_tracks.all_tracks : SSmedia_tracks.jukebox_tracks
 
+// RS Edit: Station Display and Media Processing (Lira, October 2026)
 /obj/machinery/media/jukebox/process()
 	if(!playing)
-		return
+		return PROCESS_KILL
 	if(inoperable())
 		disconnect_media_source()
 		playing = 0
-		return
+		return PROCESS_KILL
 	// If the current track isn't finished playing, let it keep going
 	if(current_track && world.time < media_start_time + current_track.duration)
 		return
@@ -79,9 +85,12 @@
 			update_icon()
 	updateDialog()
 	start_stop_song()
+	if(!playing)
+		return PROCESS_KILL
 
 // Tells the media manager to start or stop playing based on current settings.
 /obj/machinery/media/jukebox/proc/start_stop_song()
+	wake_processing() // RS Add: Station Display and Media Processing (Lira, October 2026)
 	if(current_track && playing)
 		media_url = current_track.url
 		media_start_time = world.time
@@ -129,6 +138,7 @@
 	return ..()
 
 /obj/machinery/media/jukebox/power_change()
+	wake_processing() // RS Add: Station Display and Media Processing (Lira, October 2026)
 	if(!powered(power_channel) || !anchored)
 		stat |= NOPOWER
 	else
@@ -435,6 +445,11 @@
 	for(var/datum/track/T in custom_tracks)
 		if(T.title == track || T.url == track)
 			custom_tracks -= T
+			// RS Add Start: Station Display and Media Processing (Lira, October 2026)
+			if(current_track == T)
+				StopPlaying()
+				current_track = null
+			// RS Add End
 			qdel(T)
 			return
 
