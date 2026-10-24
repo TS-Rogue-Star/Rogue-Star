@@ -1,3 +1,7 @@
+///////////////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star October 2026: Station Display and Media Processing //
+///////////////////////////////////////////////////////////////////////////////////////
+
 // Formerly /datum/shuttle/ferry/emergency
 /datum/shuttle/autodock/ferry/emergency
 	category = /datum/shuttle/autodock/ferry/emergency
@@ -7,6 +11,7 @@
 	if(emergency_shuttle.shuttle)
 		CRASH("An emergency shuttle has already been defined.")
 	emergency_shuttle.shuttle = src
+	notify_status_displays() // RS Add: Station Display and Media Processing (Lira, October 2026)
 
 /datum/shuttle/autodock/ferry/emergency/arrived()
 	. = ..()
@@ -175,3 +180,11 @@
 /obj/machinery/computer/shuttle_control/emergency/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	read_authorization(W)
 	..()
+
+// RS Add: Station Display and Media Processing (Lira, October 2026)
+/datum/shuttle/autodock/ferry/emergency/Destroy()
+	if(emergency_shuttle?.shuttle == src)
+		emergency_shuttle.stop_launch_countdown()
+		emergency_shuttle.shuttle = null
+		wake_shuttle_status_displays()
+	return ..()

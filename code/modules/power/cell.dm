@@ -1,3 +1,7 @@
+//////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star October 2026: Charging Station Processing //
+//////////////////////////////////////////////////////////////////////////////
+
 // the power cell
 // charge from 0 to 100%
 // fits in APC to provide backup power
@@ -124,6 +128,8 @@
 		return 0
 	var/used = min(charge, amount)
 	charge -= used
+	if(used)
+		SEND_SIGNAL(src, COMSIG_CELL_CHARGE_CHANGED)
 	last_use = world.time
 	if(update_appearance)
 		update_charge_icon()
@@ -147,6 +153,8 @@
 	if(maxcharge < amount)	return 0
 	var/amount_used = min(maxcharge-charge,amount)
 	charge += amount_used
+	if(amount_used)
+		SEND_SIGNAL(src, COMSIG_CELL_CHARGE_CHANGED)
 	if(update_appearance)
 		update_charge_icon()
 		if(loc && !istype(loc, /obj/machinery/power/apc))
@@ -170,6 +178,7 @@
 		if(S.reagents.has_reagent("phoron", 5))
 
 			rigged = 1
+			SEND_SIGNAL(src, COMSIG_CELL_CHARGE_CHANGED) // RS Add: Charging Station Processing (Lira, October 2026)
 
 			log_admin("LOG: [user.name] ([user.ckey]) injected a power cell with phoron, rigging it to explode.")
 			message_admins("LOG: [user.name] ([user.ckey]) injected a power cell with phoron, rigging it to explode.")
@@ -206,6 +215,7 @@
 /obj/item/weapon/cell/proc/corrupt()
 	charge /= 2
 	maxcharge /= 2
+	SEND_SIGNAL(src, COMSIG_CELL_CHARGE_CHANGED) // RS Add: Charging Station Processing (Lira, October 2026)
 	if (prob(10))
 		rigged = 1 //broken batterys are dangerous
 
@@ -221,6 +231,7 @@
 	if (charge < 0)
 		charge = 0
 
+	SEND_SIGNAL(src, COMSIG_CELL_CHARGE_CHANGED) // RS Add: Charging Station Processing (Lira, October 2026)
 	update_icon()
 	..()
 
@@ -272,3 +283,9 @@
 			return min(rand(10,20),rand(10,20))
 		else
 			return 0
+
+// RS Add: Charging Station Processing (Lira, October 2026)
+/obj/item/weapon/cell/vv_edit_var(var_name, var_value)
+	. = ..()
+	if(. && (var_name == NAMEOF(src, charge) || var_name == NAMEOF(src, maxcharge) || var_name == NAMEOF(src, rigged)))
+		SEND_SIGNAL(src, COMSIG_CELL_CHARGE_CHANGED)

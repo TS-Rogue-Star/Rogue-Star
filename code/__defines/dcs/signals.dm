@@ -219,6 +219,7 @@
 
 ///from base of turf/ChangeTurf(): (path, list/new_baseturfs, flags, list/transferring_comps)
 #define COMSIG_TURF_CHANGE "turf_change"
+#define COMSIG_TURF_ATMOS_CHANGED "turf_atmos_changed" // RS Add: Room Atmosphere Processing (Lira, October 2026)
 ///from base of atom/has_gravity(): (atom/asker, list/forced_gravities)
 #define COMSIG_TURF_HAS_GRAVITY "turf_has_gravity"
 ///from base of turf/multiz_turf_del(): (turf/source, direction)
@@ -795,4 +796,5 @@
 #define COMSIG_DUNGEON_TRIGGER "dungeon_trigger"
 #define COMSIG_DUNGEON_UNTRIGGER "dungeon_untrigger"
 #define COMSIG_RESOLVE_ATTACKBY "resolve_attackby"
+#define COMSIG_CELL_CHARGE_CHANGED "cell_charge_changed" // Charging Station Processing (Lira, October 2026)
 //RS ADD END

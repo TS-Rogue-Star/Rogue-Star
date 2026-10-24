@@ -1,3 +1,7 @@
+///////////////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star October 2026: Station Display and Media Processing //
+///////////////////////////////////////////////////////////////////////////////////////
+
 /obj/machinery/status_display/supply_display
 	ignore_friendc = 1
 	mode = STATUS_DISPLAY_CUSTOM
@@ -37,5 +41,13 @@
 /obj/machinery/status_display/supply_display/receive_signal/(datum/signal/signal)
 	if(signal.data["command"] == "supply")
 		mode = STATUS_DISPLAY_CUSTOM
+		wake_processing() // RS Add: Station Display and Media Processing (Lira, October 2026)
 	else
 		..(signal)
+
+// RS Add: Station Display and Media Processing (Lira, October 2026)
+/obj/machinery/status_display/supply_display/needs_processing()
+	if(mode != STATUS_DISPLAY_CUSTOM)
+		return ..()
+	var/datum/shuttle/autodock/ferry/supply/shuttle = SSsupply.shuttle
+	return !(stat & NOPOWER) && shuttle && (shuttle.is_launching() || shuttle.has_arrive_time())

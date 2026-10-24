@@ -13,3 +13,9 @@ PROCESSING_SUBSYSTEM_DEF(fastprocess)
 	for(var/datum/D in old_processing)
 		if(CHECK_BITFIELD(D.datum_flags, DF_ISPROCESSING))
 			processing |= D
+
+// RS Add: Room Atmosphere Processing (Lira, October 2026)
+/datum/controller/subsystem/processing/fastprocess/fire(resumed = FALSE)
+	if(!resumed)
+		flush_room_atmos_wakes()
+	return ..()

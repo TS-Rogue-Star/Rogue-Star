@@ -1,3 +1,7 @@
+///////////////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star October 2026: Station Display and Media Processing //
+///////////////////////////////////////////////////////////////////////////////////////
+
 // Formerly /datum/shuttle/ferry/supply
 /datum/shuttle/autodock/ferry/supply
 	var/away_location = FERRY_LOCATION_OFFSITE	//the location to hide at while pretending to be in-transit
@@ -22,6 +26,7 @@
 
 	//it would be cool to play a sound here
 	moving_status = SHUTTLE_WARMUP
+	notify_status_displays() // RS Add: Station Display and Media Processing (Lira, October 2026)
 	spawn(warmup_time*10)
 
 		make_sounds(HYPERSPACE_WARMUP)

@@ -109,6 +109,7 @@
 				var/hc = pipe_air.heat_capacity()
 				var/avg_temp = (pipe_air.temperature * hc + L.bodytemperature * 3500) / (hc + 3500)
 				pipe_air.temperature = avg_temp
+				pipe_air.room_atmos_changed() // RS Add: Room Atmosphere Processing (Lira, October 2026)
 				L.bodytemperature = avg_temp
 
 				var/heat_limit = 1000

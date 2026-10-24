@@ -140,6 +140,7 @@
 	max_power_rating = initial(max_power_rating) * cap_rating / 2
 	max_temperature = max(initial(max_temperature) - T20C, 0) * ((bin_rating * 4 + cap_rating) / 5) + T20C
 	air_contents.volume = max(initial(internal_volume) - 200, 0) + 200 * bin_rating
+	air_contents.room_atmos_changed() // RS Add: Room Atmosphere Processing (Lira, October 2026)
 	set_power_level(power_setting)
 
 /obj/machinery/atmospherics/unary/heater/proc/set_power_level(var/new_power_setting)

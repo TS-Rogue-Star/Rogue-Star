@@ -1,3 +1,7 @@
+///////////////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star October 2026: Station Display and Media Processing //
+///////////////////////////////////////////////////////////////////////////////////////
+
 //
 // Wall mounted holomap of the station
 //
@@ -12,6 +16,7 @@
 	use_power = USE_POWER_IDLE
 	idle_power_usage = 10
 	active_power_usage = 500
+	processing_on_demand = TRUE // RS Add: Station Display and Media Processing (Lira, October 2026)
 	circuit = /obj/item/weapon/circuitboard/station_map
 	vis_flags = VIS_HIDE // They have an emissive that looks bad in openspace due to their wall-mounted nature
 
@@ -22,6 +27,10 @@
 	light_color = "#64C864"
 
 	var/mob/watching_mob = null
+	// RS Add Start: Station Display and Media Processing (Lira, October 2026)
+	var/client/watching_client
+	var/image/watched_map
+	// RS Add End
 	var/image/small_station_map = null
 	var/image/floor_markings = null
 	var/image/panel = null
@@ -103,6 +112,13 @@
 	// TODO - This part!! ~Leshana
 	if(isliving(user) && anchored && !(stat & (NOPOWER|BROKEN)))
 		if(user.client)
+			// RS Add Start: Station Display and Media Processing (Lira, October 2026)
+			if(watching_mob)
+				stopWatching()
+			user.set_dir(reverse_dir[dir])
+			watching_client = user.client
+			watched_map = holomap_datum.station_map
+			// RS Add End
 			holomap_datum.station_map.loc = global_hud.holomap  // Put the image on the holomap hud
 			holomap_datum.station_map.alpha = 0 // Set to transparent so we can fade in
 			animate(holomap_datum.station_map, alpha = 255, time = 5, easing = LINEAR_EASING)
@@ -112,6 +128,7 @@
 			user.client.images |= holomap_datum.station_map
 
 			watching_mob = user
+			wake_processing() // RS Add: Station Display and Media Processing (Lira, October 2026)
 			GLOB.moved_event.register(watching_mob, src, /obj/machinery/station_map/proc/checkPosition)
 			GLOB.dir_set_event.register(watching_mob, src, /obj/machinery/station_map/proc/checkPosition)
 			GLOB.destroyed_event.register(watching_mob, src, /obj/machinery/station_map/proc/stopWatching)
@@ -126,26 +143,50 @@
 	return // TODO - Implement for AI ~Leshana
 	// user.station_holomap.toggleHolomap(user, isAI(user))
 
+// RS Edit: Station Display and Media Processing (Lira, October 2026)
 /obj/machinery/station_map/process()
-	if((stat & (NOPOWER|BROKEN)) || !anchored)
-		stopWatching()
+	if(watching_mob)
+		checkPosition()
+	if(!watching_mob)
+		return PROCESS_KILL
 
+// RS Edit: Station Display and Media Processing (Lira, October 2026)
 /obj/machinery/station_map/proc/checkPosition()
-	if(!watching_mob || (watching_mob.loc != loc) || (dir != watching_mob.dir))
+	if(!watching_mob?.client || watching_mob.client != watching_client || (watching_mob.loc != loc) || (reverse_dir[dir] != watching_mob.dir) || (stat & (NOPOWER|BROKEN)) || !anchored)
 		stopWatching()
 
+// RS Edit: Station Display and Media Processing (Lira, October 2026)
 /obj/machinery/station_map/proc/stopWatching()
 	if(watching_mob)
-		if(watching_mob.client)
-			animate(holomap_datum.station_map, alpha = 0, time = 5, easing = LINEAR_EASING)
-			var/mob/M = watching_mob
-			spawn(5) //we give it time to fade out
-				M.client.images -= holomap_datum.station_map
+		var/client/viewer = watching_client
+		var/image/displayed_map = watched_map
+		if(viewer && displayed_map)
+			animate(displayed_map, alpha = 0, time = 5, easing = LINEAR_EASING)
+			if(QDELETED(src))
+				viewer.images -= displayed_map
+			else
+				spawn(5) //we give it time to fade out
+					if(viewer && (QDELETED(src) || watching_client != viewer || watched_map != displayed_map))
+						viewer.images -= displayed_map
 		GLOB.moved_event.unregister(watching_mob, src)
 		GLOB.dir_set_event.unregister(watching_mob, src)
 		GLOB.destroyed_event.unregister(watching_mob, src)
 	watching_mob = null
+	watching_client = null
+	watched_map = null
 	update_use_power(USE_POWER_IDLE)
+
+// RS Add: Station Display and Media Processing (Lira, October 2026)
+/obj/machinery/station_map/Moved(atom/old_loc, direction, forced = FALSE)
+	. = ..()
+	if(watching_mob)
+		checkPosition()
+
+// RS Add: Station Display and Media Processing (Lira, October 2026)
+/obj/machinery/station_map/set_dir(new_dir)
+	. = ..()
+	if(watching_mob)
+		checkPosition()
 
 /obj/machinery/station_map/power_change()
 	. = ..()
@@ -161,6 +202,10 @@
 	update_icon()
 
 /obj/machinery/station_map/update_icon()
+	// RS Add Start: Station Display and Media Processing (Lira, October 2026)
+	if(watching_mob && ((stat & (NOPOWER|BROKEN)) || !anchored))
+		stopWatching()
+	// RS Add End
 	if(!holomap_datum)
 		return //Not yet.
 		

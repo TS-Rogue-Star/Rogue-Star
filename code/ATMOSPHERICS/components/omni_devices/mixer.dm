@@ -75,6 +75,7 @@
 
 	if(output)
 		output.air.volume = ATMOS_DEFAULT_VOLUME_MIXER * 0.75 * inputs.len
+		output.air.room_atmos_changed() // RS Add: Room Atmosphere Processing (Lira, October 2026)
 		output.concentration = 1
 
 	rebuild_mixing_inputs()
