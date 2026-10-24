@@ -3,7 +3,7 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/submap/groundbase/poi/wildvillage)
 "j" = (
 /obj/structure/bed/chair/comfy/red,
@@ -128,7 +128,7 @@
 /turf/simulated/floor/wood,
 /area/submap/groundbase/poi/wildvillage/square/square10)
 "R" = (
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/submap/groundbase/poi/wildvillage)
 "T" = (
 /obj/structure/table/steel,

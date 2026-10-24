@@ -17,7 +17,7 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/submap/groundbase/poi/wildvillage)
 "d" = (
 /obj/structure/table/standard,
@@ -68,7 +68,7 @@
 /turf/simulated/floor/bmarble,
 /area/submap/groundbase/poi/wildvillage/square/square1)
 "s" = (
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/submap/groundbase/poi/wildvillage)
 "v" = (
 /turf/simulated/wall,

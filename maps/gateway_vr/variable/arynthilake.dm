@@ -49,7 +49,7 @@
 	requires_power = TRUE
 	dynamic_lighting = TRUE
 	flags = RAD_SHIELDED
-	base_turf = /turf/simulated/floor/outdoors/newdirt
+	base_turf = /turf/simulated/floor/outdoors/dirt/soft
 
 /area/gateway/arynthilake/dome
 	name = "Dome Power Grid"

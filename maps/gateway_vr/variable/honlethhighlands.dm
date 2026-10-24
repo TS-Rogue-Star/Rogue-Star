@@ -24,7 +24,7 @@
     new /datum/random_map/automata/cave_system/no_cracks(null, 3, 3, z, world.maxx - 4, world.maxy - 4) // Create the mining Z-level.
     new /datum/random_map/noise/ore(null, 1, 1, z, 64, 64)         // Create the mining ore distribution map.
 
-	
+
 //Areas//
 
 /area/gateway/honlethhighlands
@@ -34,7 +34,7 @@
 	requires_power = TRUE
 	dynamic_lighting = TRUE
 	flags = RAD_SHIELDED
-	base_turf = /turf/simulated/floor/outdoors/newdirt
+	base_turf = /turf/simulated/floor/outdoors/dirt/soft
 
 /area/gateway/honlethhighlands/beach
 	name = "frozen beach"

@@ -181,7 +181,7 @@
 /turf/simulated/floor/outdoors/snow,
 /area/redgate)
 "eU" = (
-/turf/simulated/floor/outdoors/newdirt_nograss{
+/turf/simulated/floor/outdoors/dirt/soft_nograss{
 	outdoors = 0
 	},
 /area/redgate/structure/powered/no_efb)
@@ -699,7 +699,7 @@
 	dir = 1;
 	pixel_y = -3
 	},
-/turf/simulated/floor/outdoors/newdirt_nograss,
+/turf/simulated/floor/outdoors/dirt/soft_nograss,
 /area/redgate)
 "oO" = (
 /obj/machinery/computer/ship/navigation/telescreen{
@@ -721,7 +721,7 @@
 "pR" = (
 /obj/structure/bonfire/permanent,
 /obj/effect/map_effect/interval/effect_emitter/steam,
-/turf/simulated/floor/outdoors/newdirt_nograss{
+/turf/simulated/floor/outdoors/dirt/soft_nograss{
 	outdoors = 0
 	},
 /area/redgate/structure/powered/no_efb)
@@ -856,7 +856,7 @@
 	dir = 1;
 	pixel_y = -5
 	},
-/turf/simulated/floor/outdoors/newdirt_nograss,
+/turf/simulated/floor/outdoors/dirt/soft_nograss,
 /area/redgate)
 "wn" = (
 /obj/structure/sign/christmas/lights{
@@ -893,7 +893,7 @@
 /area/redgate/structure/powered/no_efb)
 "wS" = (
 /obj/random/maintenance/foodstuff,
-/turf/simulated/floor/outdoors/newdirt_nograss,
+/turf/simulated/floor/outdoors/dirt/soft_nograss,
 /area/redgate)
 "wU" = (
 /obj/structure/bed/chair/sofa/corner/green{
@@ -1131,7 +1131,7 @@
 /area/redgate/structure/powered/grab_zone)
 "Hn" = (
 /obj/structure/bonfire,
-/turf/simulated/floor/outdoors/newdirt_nograss,
+/turf/simulated/floor/outdoors/dirt/soft_nograss,
 /area/redgate)
 "Hq" = (
 /turf/simulated/wall/log,
@@ -1416,7 +1416,7 @@
 /turf/simulated/floor/bmarble,
 /area/redgate/structure/powered)
 "Ry" = (
-/turf/simulated/floor/outdoors/newdirt_nograss,
+/turf/simulated/floor/outdoors/dirt/soft_nograss,
 /area/redgate)
 "Sl" = (
 /obj/structure/simple_door/iron,

@@ -13,7 +13,7 @@
 /area/submap/groundbase/poi/outdoor)
 "q" = (
 /obj/machinery/portable_atmospherics/hydroponics/soil,
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/submap/groundbase/poi/outdoor)
 "u" = (
 /obj/structure/fence/corner,

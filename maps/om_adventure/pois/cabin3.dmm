@@ -4,7 +4,7 @@
 /area/om_adventure/poi/cabin3)
 "d" = (
 /obj/structure/bonfire,
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/om_adventure/poi/cabin3)
 "i" = (
 /turf/template_noop,
@@ -14,11 +14,11 @@
 /turf/simulated/floor/wood,
 /area/om_adventure/poi/cabin3)
 "n" = (
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/om_adventure/poi/cabin3)
 "r" = (
 /obj/effect/decal/remains,
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/om_adventure/poi/cabin3)
 "z" = (
 /turf/template_noop,
@@ -36,7 +36,7 @@
 /area/om_adventure/poi/cabin3)
 "V" = (
 /obj/tether_away_spawner/spookyland,
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/om_adventure/poi/cabin3)
 
 (1,1,1) = {"

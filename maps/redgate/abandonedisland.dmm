@@ -105,7 +105,7 @@
 /area/redgate/wilds)
 "bm" = (
 /obj/random/contraband,
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/redgate/wilds)
 "bn" = (
 /obj/fiftyspawner/wood,
@@ -120,24 +120,24 @@
 /area/redgate/wilds)
 "bq" = (
 /obj/random/medical,
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/redgate/wilds)
 "br" = (
 /obj/fiftyspawner/wood,
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/redgate/wilds)
 "bs" = (
 /obj/fiftyspawner/phoron,
 /obj/structure/closet/crate,
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/redgate/wilds)
 "bt" = (
 /obj/random/coin,
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/redgate/wilds)
 "bv" = (
 /obj/fiftyspawner/glass,
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/redgate/wilds)
 "bw" = (
 /obj/fiftyspawner/wood,
@@ -154,7 +154,7 @@
 /area/redgate/wilds)
 "bz" = (
 /obj/random/firstaid,
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/redgate/wilds)
 "bA" = (
 /obj/random/tool,
@@ -237,7 +237,7 @@
 /area/redgate/wilds)
 "bS" = (
 /obj/structure/bonfire/permanent,
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/redgate/wilds)
 "bT" = (
 /obj/structure/flora/sif/subterranean,
@@ -264,7 +264,7 @@
 /turf/simulated/floor/water/deep,
 /area/redgate/wilds)
 "xL" = (
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/redgate/wilds)
 "xM" = (
 /obj/random/mob/semirandom_mob_spawner/vore/retaliate,

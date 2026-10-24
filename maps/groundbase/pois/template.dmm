@@ -126,7 +126,7 @@
 /turf/template_noop,
 /area/template_noop)
 "fh" = (
-/turf/simulated/floor/outdoors/newdirt_nograss{
+/turf/simulated/floor/outdoors/dirt/soft_nograss{
 	outdoors = 0
 	},
 /area/template_noop)
@@ -524,7 +524,7 @@
 /area/maintenance/groundbase/poi/caves)
 "zD" = (
 /obj/structure/flora/tree/bigtree,
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/template_noop)
 "zM" = (
 /obj/structure/table/rack,
@@ -583,7 +583,7 @@
 /obj/structure/prop/rock/flat{
 	density = 0
 	},
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/template_noop)
 "DB" = (
 /obj/structure/simple_door/wood,
@@ -634,7 +634,7 @@
 /obj/random/maintenance/misc,
 /obj/random/maintenance/misc,
 /obj/random/maintenance/misc,
-/turf/simulated/floor/outdoors/newdirt_nograss{
+/turf/simulated/floor/outdoors/dirt/soft_nograss{
 	outdoors = 0
 	},
 /area/maintenance/groundbase/poi/caves)
@@ -785,7 +785,7 @@
 /area/template_noop)
 "Nh" = (
 /obj/machinery/portable_atmospherics/hydroponics/soil,
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/template_noop)
 "Nt" = (
 /obj/random/junk,
@@ -812,7 +812,7 @@
 /turf/template_noop,
 /area/template_noop)
 "OB" = (
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/template_noop)
 "OR" = (
 /turf/simulated/mineral/floor/ignore_mapgen,
@@ -967,7 +967,7 @@
 /area/submap/groundbase/poi/outdoor/cabin3)
 "Wr" = (
 /obj/structure/table/bench/sifwooden,
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/template_noop)
 "WG" = (
 /obj/structure/bed/chair/sofa/brown,
@@ -1012,7 +1012,7 @@
 /turf/template_noop,
 /area/template_noop)
 "Yz" = (
-/turf/simulated/floor/outdoors/newdirt_nograss{
+/turf/simulated/floor/outdoors/dirt/soft_nograss{
 	outdoors = 0
 	},
 /area/maintenance/groundbase/poi/caves)

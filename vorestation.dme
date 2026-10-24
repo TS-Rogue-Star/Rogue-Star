@@ -1694,6 +1694,7 @@
 #include "code\game\Rogue Star\crafts\candle.dm"
 #include "code\game\Rogue Star\crafts\cookpot.dm"
 #include "code\game\Rogue Star\clothing\storage\BarkRIG.dm"
+#include "code\game\Rogue Star\crafts\mud_farming.dm"
 #include "code\game\Rogue Star\fluff\sari-outfit-fluff.dm"
 #include "code\game\Rogue Star\mob\seething.dm"
 #include "code\game\Rogue Star\obj\food_cubes.dm"

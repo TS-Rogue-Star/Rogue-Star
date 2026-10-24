@@ -55,18 +55,18 @@
 /obj/structure/railing{
 	dir = 4
 	},
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/gateway/arynthilake)
 "aw" = (
 /obj/structure/catwalk,
 /obj/structure/railing{
 	dir = 1
 	},
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/gateway/arynthilake/caveruins)
 "ax" = (
 /obj/structure/catwalk,
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/gateway/arynthilake/caveruins)
 "az" = (
 /turf/simulated/wall/wood,
@@ -600,7 +600,7 @@
 /turf/simulated/floor/tiled/eris/white/brown_platform,
 /area/gateway/arynthilake/dome)
 "gu" = (
-/turf/simulated/floor/outdoors/newdirt{
+/turf/simulated/floor/outdoors/dirt/soft{
 	outdoors = 0
 	},
 /area/gateway/arynthilake/caves)
@@ -975,7 +975,7 @@
 /area/gateway/arynthilake/caves)
 "oO" = (
 /obj/effect/landmark/mcguffin_spawner,
-/turf/simulated/floor/outdoors/newdirt{
+/turf/simulated/floor/outdoors/dirt/soft{
 	outdoors = 0
 	},
 /area/gateway/arynthilake/caves)
@@ -1049,7 +1049,7 @@
 /area/gateway/arynthilake/engine)
 "qm" = (
 /obj/random/mob/semirandom_mob_spawner/animal/b,
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/gateway/arynthilake)
 "qo" = (
 /obj/random/mob/semirandom_mob_spawner/fish/d,
@@ -1319,7 +1319,7 @@
 /area/gateway/arynthilake/dome)
 "wd" = (
 /obj/random/mob/semirandom_mob_spawner/animal/e,
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/gateway/arynthilake)
 "wl" = (
 /obj/structure/sink{
@@ -1331,7 +1331,7 @@
 /area/gateway/arynthilake/dome)
 "wm" = (
 /obj/random/mob/semirandom_mob_spawner/monster/c,
-/turf/simulated/floor/outdoors/newdirt{
+/turf/simulated/floor/outdoors/dirt/soft{
 	outdoors = 0
 	},
 /area/gateway/arynthilake/caves)
@@ -1393,7 +1393,7 @@
 /turf/simulated/floor/tiled/eris,
 /area/gateway/arynthilake/engine)
 "ye" = (
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/gateway/arynthilake/dome)
 "yf" = (
 /turf/simulated/floor/wood{
@@ -1682,7 +1682,7 @@
 /area/gateway/arynthilake/dome)
 "Gp" = (
 /obj/structure/bonfire,
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/gateway/arynthilake)
 "Gs" = (
 /obj/structure/table/standard{
@@ -1692,7 +1692,7 @@
 /area/gateway/arynthilake/dome)
 "GG" = (
 /obj/effect/landmark/mcguffin_spawner,
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/gateway/arynthilake)
 "GJ" = (
 /turf/simulated/floor/outdoors/sidewalk/side,
@@ -1722,7 +1722,7 @@
 /area/gateway/arynthilake/dome)
 "HJ" = (
 /obj/random/mob/semirandom_mob_spawner/humanoid/retaliate,
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/gateway/arynthilake)
 "HR" = (
 /obj/structure/bed/chair/sofa/left/brown{
@@ -2460,7 +2460,7 @@
 	},
 /area/gateway/arynthilake)
 "Zr" = (
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/gateway/arynthilake)
 "Zs" = (
 /obj/machinery/light/small{

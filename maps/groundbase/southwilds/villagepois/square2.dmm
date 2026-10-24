@@ -130,7 +130,7 @@
 /turf/simulated/floor,
 /area/submap/groundbase/poi/wildvillage/square/square2)
 "D" = (
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/submap/groundbase/poi/wildvillage)
 "F" = (
 /obj/structure/grille,
@@ -217,7 +217,7 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/submap/groundbase/poi/wildvillage)
 "W" = (
 /turf/simulated/floor/wood,
