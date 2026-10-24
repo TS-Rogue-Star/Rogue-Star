@@ -17,6 +17,7 @@
 		var/datum/gas_mixture/env = holder.loc.return_air()
 		if(env)
 			env.temperature += rand(5,50)
+			env.room_atmos_changed() // RS Add: Room Atmosphere Processing (Lira, October 2026)
 
 /datum/artifact_effect/heat/DoEffectAura()
 	var/atom/holder = get_master_holder()
@@ -24,3 +25,4 @@
 		var/datum/gas_mixture/env = holder.loc.return_air()
 		if(env && env.temperature < target_temp)
 			env.temperature += pick(0, 0, 1)
+			env.room_atmos_changed() // RS Add: Room Atmosphere Processing (Lira, October 2026)

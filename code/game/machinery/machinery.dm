@@ -205,6 +205,10 @@ Class Procs:
 	return
 
 /obj/machinery/vv_edit_var(var/var_name, var/new_value)
+	// RS Add Start: Room Atmosphere Processing (Lira, October 2026)
+	if(var_name == NAMEOF(src, room_atmos_subscription))
+		return FALSE
+	// RS Add End
 	// RS Add Start: Charging Station Processing (Lira, October 2026)
 	if(processing_on_demand)
 		if(var_name == NAMEOF(src, speed_process))

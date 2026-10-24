@@ -54,7 +54,9 @@
 
 		var/new_temperature = combined_energy/combined_heat_capacity
 		air_contents.temperature = new_temperature
+		air_contents.room_atmos_changed() // RS Add: Room Atmosphere Processing (Lira, October 2026)
 		partner.air_contents.temperature = new_temperature
+		partner.air_contents.room_atmos_changed() // RS Add: Room Atmosphere Processing (Lira, October 2026)
 
 	if(network)
 		if(abs(old_temperature-air_contents.temperature) > 1)

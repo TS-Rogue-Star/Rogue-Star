@@ -42,6 +42,7 @@
 		T.air = null
 		T.vis_contents.Remove(unsorted_overlays)
 		T.zone = null
+		T.room_atmos_changed() // RS Add: Room Atmosphere Processing (Lira, October 2026)
 
 	to_chat(usr, "\[4/5\] - All turfs reset to roundstart values.")
 

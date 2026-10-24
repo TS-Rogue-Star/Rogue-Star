@@ -100,6 +100,7 @@
 	if(zone && zone.invalid)
 		c_copy_air()
 		zone = null //Easier than iterating through the list at the zone.
+		room_atmos_changed() // RS Add: Room Atmosphere Processing (Lira, October 2026)
 
 	var/s_block = c_airblock(src)
 	if(s_block & AIR_BLOCKED)
@@ -303,8 +304,10 @@
 	air.adjust_multi("oxygen", oxygen, "carbon_dioxide", carbon_dioxide, "nitrogen", nitrogen, "phoron", phoron)
 	air.group_multiplier = 1
 	air.volume = CELL_VOLUME
+	room_atmos_changed() // RS Add: Room Atmosphere Processing (Lira, October 2026)
 
 /turf/simulated/proc/c_copy_air()
 	if(!air) air = new/datum/gas_mixture
 	air.copy_from(zone.air)
 	air.group_multiplier = 1
+	room_atmos_changed() // RS Add: Room Atmosphere Processing (Lira, October 2026)
