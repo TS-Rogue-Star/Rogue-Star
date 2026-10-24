@@ -151,6 +151,7 @@
 	desc = "Everybody scream! Everybody scream! In our town of Halloween!"
 	icon = 'icons/holidays/halloween/tinsel.dmi'
 	icon_state = "1"
+	layer = 3.3
 	variations = 20
 	random = TRUE
 
