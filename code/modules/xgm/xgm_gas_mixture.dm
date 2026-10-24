@@ -1,3 +1,7 @@
+/////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star October 2026: Room Atmosphere Processing //
+/////////////////////////////////////////////////////////////////////////////
+
 /datum/gas_mixture
 	//Associative list of gas moles.
 	//Gases with 0 moles are not tracked and are pruned by update_values()
@@ -143,6 +147,7 @@
 		var/thermal_energy_limit = -(temperature - TCMB)*heat_capacity	//ensure temperature does not go below TCMB
 		thermal_energy = max( thermal_energy, thermal_energy_limit )	//thermal_energy and thermal_energy_limit are negative here.
 	temperature += thermal_energy/heat_capacity
+	room_atmos_changed() // RS Add: Room Atmosphere Processing (Lira, October 2026)
 	return thermal_energy
 
 //Returns the thermal energy change required to get to a new temperature
@@ -191,13 +196,16 @@
 
 
 //Updates the total_moles count and trims any empty gases.
-/datum/gas_mixture/proc/update_values()
+// RS Edit: Room Atmosphere Processing (Lira, October 2026)
+/datum/gas_mixture/proc/update_values(notify = TRUE)
 	total_moles = 0
 	for(var/g in gas)
 		if(gas[g] <= 0)
 			gas -= g
 		else
 			total_moles += gas[g]
+	if(notify)
+		room_atmos_changed()
 
 
 //Returns the pressure of the gas mix.  Only accurate if there have been no gas modifications since update_values() has been called.
@@ -376,11 +384,12 @@
 
 
 //Multiply all gas amounts by a factor.
-/datum/gas_mixture/proc/multiply(factor)
+// RS Edit: Room Atmosphere Processing (Lira, October 2026)
+/datum/gas_mixture/proc/multiply(factor, notify = TRUE)
 	for(var/g in gas)
 		gas[g] *= factor
 
-	update_values()
+	update_values(notify)
 	return 1
 
 
@@ -448,6 +457,7 @@
 
 
 //Equalizes a list of gas mixtures.  Used for pipe networks.
+// RS Edit: Room Atmosphere Processing (Lira, October 2026)
 /proc/equalize_gases(list/datum/gas_mixture/gases)
 	//Calculate totals from individual components
 	var/total_volume = 0
@@ -481,9 +491,18 @@
 
 		//Update individual gas_mixtures
 		for(var/datum/gas_mixture/gasmix in gases)
+			var/changed = gasmix.temperature != combined.temperature || gasmix.gas.len != combined.gas.len
+			if(!changed)
+				for(var/g in gasmix.gas)
+					if(gasmix.gas[g] != combined.gas[g] * gasmix.volume)
+						changed = TRUE
+						break
+			var/old_total_moles = gasmix.total_moles
 			gasmix.gas = combined.gas.Copy()
 			gasmix.temperature = combined.temperature
-			gasmix.multiply(gasmix.volume)
+			gasmix.multiply(gasmix.volume, changed)
+			if(!changed && gasmix.total_moles != old_total_moles)
+				gasmix.room_atmos_changed()
 
 	return 1
 

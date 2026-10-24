@@ -33,6 +33,7 @@
 		if(WIRE_MAIN_POWER1)
 			A.shock(usr, 50)
 			A.shorted = !mend
+			A.wake_processing() // RS Add: Room Atmosphere Processing (Lira, October 2026)
 			A.update_icon()
 
 		if(WIRE_AI_CONTROL)
@@ -58,11 +59,13 @@
 		if(WIRE_MAIN_POWER1)
 			if(!A.shorted)
 				A.shorted = TRUE
+				A.wake_processing() // RS Add: Room Atmosphere Processing (Lira, October 2026)
 				A.update_icon()
 
 			spawn(12000)
 				if(A.shorted)
 					A.shorted = FALSE
+					A.wake_processing() // RS Add: Room Atmosphere Processing (Lira, October 2026)
 					A.update_icon()
 
 		if(WIRE_AI_CONTROL)

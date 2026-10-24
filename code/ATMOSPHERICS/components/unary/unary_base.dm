@@ -29,6 +29,7 @@
 /obj/machinery/atmospherics/unary/network_expand(datum/pipe_network/new_network, obj/machinery/atmospherics/pipe/reference)
 	if(reference == node)
 		network = new_network
+		room_atmos_subscription?.invalidate() // RS Add: Room Atmosphere Processing (Lira, October 2026)
 
 	if(new_network.normal_members.Find(src))
 		return 0
@@ -47,6 +48,7 @@
 	node = null
 
 /obj/machinery/atmospherics/unary/atmos_init()
+	room_atmos_subscription?.invalidate() // RS Add: Room Atmosphere Processing (Lira, October 2026)
 	if(node)
 		return
 
@@ -78,6 +80,7 @@
 /obj/machinery/atmospherics/unary/reassign_network(datum/pipe_network/old_network, datum/pipe_network/new_network)
 	if(network == old_network)
 		network = new_network
+		room_atmos_subscription?.invalidate() // RS Add: Room Atmosphere Processing (Lira, October 2026)
 
 	return 1
 
@@ -93,6 +96,7 @@
 	if(reference==node)
 		qdel(network)
 		node = null
+		room_atmos_subscription?.invalidate() // RS Add: Room Atmosphere Processing (Lira, October 2026)
 
 	update_icon()
 	update_underlays()

@@ -115,6 +115,7 @@
 			// RS Add Start: Station Display and Media Processing (Lira, October 2026)
 			if(watching_mob)
 				stopWatching()
+			user.set_dir(reverse_dir[dir])
 			watching_client = user.client
 			watched_map = holomap_datum.station_map
 			// RS Add End
