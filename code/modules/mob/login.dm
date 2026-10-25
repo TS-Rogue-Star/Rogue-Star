@@ -45,6 +45,7 @@
 	sight |= SEE_SELF
 	..()
 	SEND_SIGNAL(src, COMSIG_MOB_LOGIN)
+	cloning_state_changed() // RS Add: Computer and Related Machinery Idle Processing (Lira, October 2026)
 
 	if(loc && !isturf(loc))
 		client.eye = loc

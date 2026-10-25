@@ -1,4 +1,5 @@
 /obj/machinery/computer
+	processing_enabled = FALSE // RS Add: Computer and Related Machinery Idle Processing (Lira, October 2026)
 	name = "computer"
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "computer"
@@ -110,6 +111,10 @@
 /obj/machinery/computer/proc/set_broken()
 	stat |= BROKEN
 	update_icon()
+	// RS Add Start: Computer and Related Machinery Idle Processing (Lira, October 2026)
+	if(processing_on_demand)
+		wake_processing()
+	// RS Add End
 
 /obj/machinery/computer/proc/decode(text)
 	// Adds line breaks

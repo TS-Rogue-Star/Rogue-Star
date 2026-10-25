@@ -1,6 +1,8 @@
-//////////////////////////////////////////////////////////////////////////////
-// Updated by Lira for Rogue Star October 2026: Charging Station Processing //
-//////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star October 2026: Charging Station Processing /////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star October 2026: Computer and Related Machinery Idle Processing //
+/////////////////////////////////////////////////////////////////////////////////////////////////
 
 /*
 Overview:
@@ -121,6 +123,7 @@ Class Procs:
 	// If this is 0.5 then a 50 damage bullet will break this structure 25% of the time
 	var/bullet_vulnerability = 0.25
 
+	var/processing_enabled = TRUE // RS Add: Computer and Related Machinery Idle Processing (Lira, October 2026)
 	var/processing_on_demand = FALSE // RS Add: Charging Station Processing (Lira, October 2026)
 	var/speed_process = FALSE			//If false, SSmachines. If true, SSfastprocess.
 
@@ -138,10 +141,13 @@ Class Procs:
 	global.machines += src
 	if(ispath(circuit))
 		circuit = new circuit(src)
-	if(!speed_process)
-		START_MACHINE_PROCESSING(src)
-	else
-		START_PROCESSING(SSfastprocess, src)
+	// RS Edit Start: Computer and Related Machinery Idle Processing (Lira, October 2026)
+	if(processing_enabled)
+		if(!speed_process)
+			START_MACHINE_PROCESSING(src)
+		else
+			START_PROCESSING(SSfastprocess, src)
+	// RS Edit End
 	if(!mapload)
 		power_change()
 
@@ -590,7 +596,7 @@ Class Procs:
 // RS Add: Charging Station Processing (Lira, October 2026)
 /obj/machinery/proc/wake_processing()
 	SIGNAL_HANDLER
-	if(QDELETED(src))
+	if(QDELETED(src) || !processing_enabled)
 		return
 	if(speed_process)
 		START_PROCESSING(SSfastprocess, src)

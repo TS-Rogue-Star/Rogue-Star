@@ -41,3 +41,4 @@
 				if(M)
 					M.active_genes -= gene.type
 					M.update_icon = 1
+	M?.cloning_state_changed() // RS Add: Computer and Related Machinery Idle Processing (Lira, October 2026)

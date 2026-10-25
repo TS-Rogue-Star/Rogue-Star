@@ -152,4 +152,4 @@
 			update_locked = 0
 
 /obj/machinery/power/breakerbox/process()
-	return 1
+	return PROCESS_KILL // RS Edit: Computer and Related Machinery Idle Processing (Lira, October 2026)
