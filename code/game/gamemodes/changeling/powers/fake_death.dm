@@ -32,6 +32,7 @@
 
 	if(C.suiciding)
 		C.suiciding = 0
+		C.cloning_state_changed() // RS Add: Computer and Related Machinery Idle Processing (Lira, October 2026)
 
 	if(C.does_not_breathe)
 		C.does_not_breathe = 0	//This means they don't autoheal the oxy damage from the next step

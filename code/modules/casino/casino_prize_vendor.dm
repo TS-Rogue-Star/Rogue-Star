@@ -347,6 +347,6 @@
 		O.show_message("<span class='game say'><span class='name'>\The [src]</span> beeps, \"[message]\"</span>",2)
 	return
 
+// RS Edit: Computer and Related Machinery Idle Processing (Lira, October 2026)
 /obj/machinery/casino_prize_dispenser/process() //Might not need this, but just to be safe for now
-	if(stat & (BROKEN|NOPOWER))
-		return
+	return PROCESS_KILL

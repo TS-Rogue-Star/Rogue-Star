@@ -442,6 +442,7 @@ var/list/organ_cache = list()
 	target.internal_organs |= src
 	affected.internal_organs |= src
 	target.internal_organs_by_name[organ_tag] = src
+	target.cloning_state_changed() // RS Add: Computer and Related Machinery Idle Processing (Lira, October 2026)
 
 	handle_organ_mod_special()
 

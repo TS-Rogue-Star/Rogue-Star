@@ -1,6 +1,12 @@
+/////////////////////////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star October 2026: Computer and Related Machinery Idle Processing //
+/////////////////////////////////////////////////////////////////////////////////////////////////
+
 #define OP_COMPUTER_COOLDOWN 60
 
 /obj/machinery/computer/operating
+	processing_enabled = TRUE // RS Add: Computer and Related Machinery Idle Processing (Lira, October 2026)
+	processing_on_demand = TRUE // RS Add: Computer and Related Machinery Idle Processing (Lira, October 2026)
 	name = "patient monitoring console"
 	desc = "Used to monitor the vitals of a patient."
 	density = TRUE
@@ -25,7 +31,7 @@
 	for(var/direction in list(NORTH,EAST,SOUTH,WEST))
 		table = locate(/obj/machinery/optable, get_step(src, direction))
 		if(table)
-			table.computer = src
+			set_table(table) // RS Edit: Computer and Related Machinery Idle Processing (Lira, October 2026)
 			break
 
 /obj/machinery/computer/operating/Destroy()
@@ -134,6 +140,7 @@
 		usr.set_machine(src)
 
 	. = TRUE
+	wake_processing() // RS Add: Computer and Related Machinery Idle Processing (Lira, October 2026)
 	switch(action)
 		if("verboseOn")
 			verbose = TRUE
@@ -162,13 +169,14 @@
 		else
 			return FALSE
 
+// RS Edit: Computer and Related Machinery Idle Processing (Lira, October 2026)
 /obj/machinery/computer/operating/process()
-	if(table && table.check_victim())
+	if(!QDELETED(table) && table.check_victim())
+		victim = table.victim
 		if(verbose)
 			if(patientName!=table.victim.name)
 				patientName=table.victim.name
 				atom_say("New patient detected, loading stats")
-				victim = table.victim
 				atom_say("[victim.real_name], [victim.dna.b_type] blood, [victim.stat ? "Non-Responsive" : "Awake"]")
 				SStgui.update_uis(src)
 			if(nextTick < world.time)
@@ -179,6 +187,12 @@
 					playsound(src.loc, 'sound/machines/defib_safetyOff.ogg', 50, 0)
 				if(healthAnnounce && ((victim.health / victim.maxHealth) * 100) <= healthAlarm)
 					atom_say("[round(((victim.health / victim.maxHealth) * 100))]% health.")
+		else
+			return PROCESS_KILL
+	else
+		victim = null
+		patientName = null
+		return PROCESS_KILL
 
 // Surgery Helpers
 /obj/machinery/computer/operating/proc/build_surgery_list(mob/user)
@@ -310,3 +324,34 @@
 			// Please for the love of all that is holy, someone make surgery steps
 			// have names so I don't have to do this stupid pretty_type shit.
 			. += "[pretty_type(S)]: [english_list(allowed_tools_by_name)]"
+
+// RS Add: Computer and Related Machinery Idle Processing (Lira, October 2026)
+/obj/machinery/computer/operating/proc/set_table(obj/machinery/optable/new_table)
+	if(table?.computer == src)
+		table.computer = null
+	table = QDELETED(new_table) ? null : new_table
+	if(table)
+		if(table.computer && table.computer != src)
+			table.computer.set_table(null)
+		table.computer = src
+	wake_processing()
+
+// RS Add: Computer and Related Machinery Idle Processing (Lira, October 2026)
+/obj/machinery/computer/operating/Moved(atom/old_loc, direction, forced = FALSE)
+	. = ..()
+	set_table(null)
+	for(var/link_direction in list(NORTH, EAST, SOUTH, WEST))
+		var/obj/machinery/optable/new_table = locate(/obj/machinery/optable, get_step(src, link_direction))
+		if(new_table)
+			set_table(new_table)
+			break
+
+// RS Add: Computer and Related Machinery Idle Processing (Lira, October 2026)
+/obj/machinery/computer/operating/vv_edit_var(var_name, new_value)
+	if(var_name == NAMEOF(src, table))
+		if(new_value && !istype(new_value, /obj/machinery/optable))
+			return FALSE
+		set_table(new_value)
+		datum_flags |= DF_VAR_EDITED
+		return TRUE
+	return ..()

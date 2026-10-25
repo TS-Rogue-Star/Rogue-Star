@@ -1,4 +1,10 @@
+/////////////////////////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star October 2026: Computer and Related Machinery Idle Processing //
+/////////////////////////////////////////////////////////////////////////////////////////////////
+
 /obj/machinery/computer/curer
+	processing_enabled = TRUE // RS Add: Computer and Related Machinery Idle Processing (Lira, October 2026)
+	processing_on_demand = TRUE // RS Add: Computer and Related Machinery Idle Processing (Lira, October 2026)
 	name = "cure research machine"
 	icon_keyboard = "med_key"
 	icon_screen = "dna"
@@ -64,19 +70,44 @@
 	onclose(user, "computer")
 	return
 
+// RS Edit: Computer and Related Machinery Idle Processing (Lira, October 2026)
 /obj/machinery/computer/curer/process()
 	..()
-
-	if(stat & (NOPOWER|BROKEN))
-		return
-	use_power(500)
+	update_cure_power()
+	if(stat & (NOPOWER|BROKEN) || !curing)
+		return PROCESS_KILL
 
 	if(curing)
 		curing -= 1
 		if(curing == 0)
 			if(container)
 				createcure(container)
+	if(!curing)
+		return PROCESS_KILL
 	return
+
+// RS Add: Computer and Related Machinery Idle Processing (Lira, October 2026)
+/obj/machinery/computer/curer/proc/update_cure_power()
+	var/extra_power = 500
+	if(speed_process)
+		extra_power *= SSmachines.wait / SSfastprocess.wait
+	update_active_power_usage(idle_power_usage + extra_power)
+	update_use_power(stat & (NOPOWER|BROKEN) ? USE_POWER_IDLE : USE_POWER_ACTIVE)
+
+// RS Add: Computer and Related Machinery Idle Processing (Lira, October 2026)
+/obj/machinery/computer/curer/power_change()
+	. = ..()
+	update_cure_power()
+
+// RS Add: Computer and Related Machinery Idle Processing (Lira, October 2026)
+/obj/machinery/computer/curer/set_broken()
+	. = ..()
+	update_cure_power()
+
+// RS Add: Computer and Related Machinery Idle Processing (Lira, October 2026)
+/obj/machinery/computer/curer/set_processing_speed(new_speed)
+	. = ..()
+	update_cure_power()
 
 /obj/machinery/computer/curer/Topic(href, href_list)
 	if(..())
@@ -85,6 +116,7 @@
 
 	if (href_list["antibody"])
 		curing = 10
+		wake_processing() // RS Add: Computer and Related Machinery Idle Processing (Lira, October 2026)
 	else if(href_list["eject"])
 		container.loc = src.loc
 		container = null

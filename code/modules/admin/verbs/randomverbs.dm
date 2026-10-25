@@ -298,6 +298,7 @@ Ccomp's first proc.
 			if(isobserver(C.mob))
 				var/mob/observer/dead/G = C.mob
 				G.can_reenter_corpse = 1
+				G.cloning_state_changed() // RS Add: Computer and Related Machinery Idle Processing (Lira, October 2026)
 				to_chat(C, "<span class='notice'><B>You can also re-enter your corpse, if you still have one!</B></span>")
 			break
 

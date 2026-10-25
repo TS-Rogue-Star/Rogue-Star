@@ -1,4 +1,12 @@
+/////////////////////////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star October 2026: Computer and Related Machinery Idle Processing //
+/////////////////////////////////////////////////////////////////////////////////////////////////
+
 /obj/machinery/optable
+	// RS Add Start: Computer and Related Machinery Idle Processing (Lira, October 2026)
+	processing_on_demand = TRUE
+	var/turf/patient_turf
+	// RS Add End
 	name = "Operating Table"
 	desc = "Used for advanced medical procedures."
 	icon = 'icons/obj/surgery_vr.dmi'
@@ -22,13 +30,17 @@
     if(ispath(circuit))
         circuit = new circuit(src)
     default_apply_parts()
+    // RS Add Start: Computer and Related Machinery Idle Processing (Lira, October 2026)
+    RegisterSignal(src, COMSIG_ATOM_ENTERING, PROC_REF(watch_patient_turf))
+    watch_patient_turf()
+    // RS Add End
 //RS add End (make optable buildable)
 /obj/machinery/optable/New()
 	..()
 	for(var/direction in list(NORTH,EAST,SOUTH,WEST))
 		computer = locate(/obj/machinery/computer/operating, get_step(src, direction))
 		if(computer)
-			computer.table = src
+			computer.set_table(src) // RS Edit: Computer and Related Machinery Idle Processing (Lira, October 2026)
 			break
 //	spawn(100) //Wont the MC just call this process() before and at the 10 second mark anyway?
 //		process()
@@ -62,7 +74,9 @@
 		return TRUE
 	return FALSE
 
+// RS Edit: Computer and Related Machinery Idle Processing (Lira, October 2026)
 /obj/machinery/optable/proc/check_victim()
+	var/mob/old_victim = victim
 	if(locate(/mob/living/carbon/human, src.loc))
 		var/mob/living/carbon/human/M = locate(/mob/living/carbon/human, src.loc)
 		if(M.lying)
@@ -74,13 +88,19 @@
 					icon_state = "table2-active"
 			else
 				icon_state = "table2-dead"
+			if(victim != old_victim)
+				computer?.wake_processing()
 			return 1
 	victim = null
 	icon_state = "table2-idle"
+	if(victim != old_victim)
+		computer?.wake_processing()
 	return 0
 
+// RS Edit: Computer and Related Machinery Idle Processing (Lira, October 2026)
 /obj/machinery/optable/process()
-	check_victim()
+	if(!check_victim())
+		return PROCESS_KILL
 
 /obj/machinery/optable/proc/take_victim(mob/living/carbon/C, mob/living/carbon/user as mob)
 	if(C == user)
@@ -92,6 +112,7 @@
 		C.client.eye = src
 	C.resting = 1
 	C.loc = src.loc
+	wake_patient_monitor() // RS Add: Computer and Related Machinery Idle Processing (Lira, October 2026)
 	/*	RS Edit, commenting this out as it breaks buildable tables.
 		For the life of me, I cannot think of a reason why this loop was run.
 	for(var/obj/O in src)
@@ -153,3 +174,37 @@
 		to_chat(user, "<span class='notice'>Unbuckle \the [patient] first!</span>")
 		return 0
 	return 1
+
+// RS Add: Computer and Related Machinery Idle Processing (Lira, October 2026)
+/obj/machinery/optable/proc/wake_patient_monitor(datum/source, atom/movable/patient)
+	SIGNAL_HANDLER
+	if(patient && !ishuman(patient))
+		return
+	wake_processing()
+	computer?.wake_processing()
+
+// RS Add: Computer and Related Machinery Idle Processing (Lira, October 2026)
+/obj/machinery/optable/proc/watch_patient_turf()
+	SIGNAL_HANDLER
+	if(patient_turf)
+		UnregisterSignal(patient_turf, list(COMSIG_ATOM_ENTERED, COMSIG_ATOM_EXITED, COMSIG_TURF_PATIENT_POSTURE_CHANGED))
+	patient_turf = get_turf(src)
+	if(patient_turf)
+		RegisterSignal(patient_turf, list(COMSIG_ATOM_ENTERED, COMSIG_ATOM_EXITED, COMSIG_TURF_PATIENT_POSTURE_CHANGED), PROC_REF(wake_patient_monitor))
+	if(computer && get_dist(src, computer) != 1)
+		computer.set_table(null)
+	if(!computer)
+		for(var/direction in list(NORTH, EAST, SOUTH, WEST))
+			var/obj/machinery/computer/operating/monitor = locate(/obj/machinery/computer/operating, get_step(src, direction))
+			if(monitor)
+				monitor.set_table(src)
+				break
+	wake_patient_monitor()
+
+// RS Add: Computer and Related Machinery Idle Processing (Lira, October 2026)
+/obj/machinery/optable/Destroy()
+	if(patient_turf)
+		UnregisterSignal(patient_turf, list(COMSIG_ATOM_ENTERED, COMSIG_ATOM_EXITED, COMSIG_TURF_PATIENT_POSTURE_CHANGED))
+	patient_turf = null
+	computer?.set_table(null)
+	return ..()
