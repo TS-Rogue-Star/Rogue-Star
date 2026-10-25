@@ -17212,7 +17212,9 @@
 /turf/simulated/floor/reinforced,
 /area/groundbase/medical/geneticslab)
 "pjZ" = (
-/obj/machinery/door/airlock/glass_security,
+/obj/machinery/door/airlock/glass_security{
+	req_one_access = list(38,63)
+	},
 /obj/machinery/door/firedoor,
 /turf/simulated/floor/bmarble,
 /area/groundbase/security/lobby)
