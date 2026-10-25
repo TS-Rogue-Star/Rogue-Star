@@ -1,3 +1,7 @@
+////////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star October 2026: Portable Connector Processing //
+////////////////////////////////////////////////////////////////////////////////
+
 /obj/machinery/portable_atmospherics
 	name = "atmoalter"
 	use_power = USE_POWER_OFF
@@ -33,10 +37,24 @@
 		connect(port)
 		update_icon()
 
+// RS Edit: Portable Connector Processing (Lira, October 2026)
 /obj/machinery/portable_atmospherics/Destroy()
+	if(istype(loc, /obj/mecha))
+		var/obj/mecha/M = loc
+		if(M.internal_tank == src)
+			M.disconnect()
+	disconnect()
 	QDEL_NULL(air_contents)
 	QDEL_NULL(holding)
 	return ..()
+
+// RS Add: Portable Connector Processing (Lira, October 2026)
+/obj/machinery/portable_atmospherics/vv_edit_var(var_name, new_value)
+	var/datum/pipe_network/network = air_contents?.room_atmos_network
+	. = ..()
+	if(. && var_name == "air_contents")
+		network?.update_network_gases()
+		connected_port?.wake_processing()
 
 /obj/machinery/portable_atmospherics/process()
 	if(!connected_port) //only react when pipe_network will ont it do it for you
@@ -59,6 +77,7 @@
 /obj/machinery/portable_atmospherics/update_icon()
 	return null
 
+// RS Edit: Portable Connector Processing (Lira, October 2026)
 /obj/machinery/portable_atmospherics/proc/connect(obj/machinery/atmospherics/portables_connector/new_port)
 	//Make sure not already connected to something else
 	if(connected_port || !new_port || new_port.connected_device)
@@ -77,12 +96,17 @@
 
 	//Actually enforce the air sharing
 	var/datum/pipe_network/network = connected_port.return_network(src)
-	if(network && !network.gases.Find(air_contents))
-		network.gases += air_contents
+	if(network)
+		if(!network.gases.Find(air_contents))
+			network.gases += air_contents
+		air_contents.room_atmos_network = network
 		network.update = 1
+		network.room_atmos_changed()
+	connected_port.wake_processing()
 
 	return 1
 
+// RS Edit: Portable Connector Processing (Lira, October 2026)
 /obj/machinery/portable_atmospherics/proc/disconnect()
 	if(!connected_port)
 		return 0
@@ -90,10 +114,15 @@
 	var/datum/pipe_network/network = connected_port.return_network(src)
 	if(network)
 		network.gases -= air_contents
+		if(air_contents?.room_atmos_network == network)
+			air_contents.room_atmos_network = null
+		network.room_atmos_changed()
 
 	anchored = FALSE
 
 	connected_port.connected_device = null
+	connected_port.on = 0
+	connected_port.wake_processing()
 	connected_port = null
 
 	return 1

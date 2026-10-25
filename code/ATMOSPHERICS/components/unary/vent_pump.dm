@@ -1,3 +1,7 @@
+/////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star October 2026: Room Atmosphere Processing //
+/////////////////////////////////////////////////////////////////////////////
+
 #define DEFAULT_PRESSURE_DELTA 10000
 
 #define EXTERNAL_PRESSURE_BOUND ONE_ATMOSPHERE
@@ -8,6 +12,7 @@
 #define PRESSURE_CHECK_INTERNAL 2
 
 /obj/machinery/atmospherics/unary/vent_pump
+	processing_on_demand = TRUE // RS Add: Room Atmosphere Processing (Lira, October 2026)
 	icon = 'icons/atmos/vent_pump.dmi'
 	icon_state = "map_vent"
 	pipe_state = "uvent"
@@ -204,6 +209,7 @@
 		return 0
 	return 1
 
+// RS Edit: Room Atmosphere Processing (Lira, October 2026)
 /obj/machinery/atmospherics/unary/vent_pump/process()
 	..()
 
@@ -213,9 +219,10 @@
 	if (!node)
 		update_use_power(USE_POWER_OFF)
 	if(!can_pump())
-		return 0
+		return room_atmos_sleep(TRUE)
 
 	var/datum/gas_mixture/environment = return_air() // VOREStation Edit - Use our own proc
+	watch_room_atmos(room_atmos_turf(), environment, network)
 
 	var/power_draw = -1
 
@@ -238,7 +245,7 @@
 		//If we're in an area that is fucking ideal, and we don't have to do anything, chances are we won't next tick either so why redo these calculations?
 		//JESUS FUCK.  THERE ARE LITERALLY 250 OF YOU MOTHERFUCKERS ON ZLEVEL ONE AND YOU DO THIS SHIT EVERY TICK WHEN VERY OFTEN THERE IS NO REASON TO
 
-		if(pump_direction && pressure_checks == PRESSURE_CHECK_EXTERNAL && controller_iteration > 10)	//99% of all vents
+		if(!processing_on_demand && pump_direction && pressure_checks == PRESSURE_CHECK_EXTERNAL && controller_iteration > 10)	//99% of all vents
 			//Fucking hibernate because you ain't doing shit.
 			hibernate = 1
 			spawn(rand(100,200))	//hibernate for 10 or 20 seconds randomly
@@ -251,6 +258,8 @@
 		if(network)
 			network.update = 1
 
+	if(power_draw < 0)
+		return room_atmos_sleep()
 	return 1
 
 /obj/machinery/atmospherics/unary/vent_pump/proc/get_pressure_delta(datum/gas_mixture/environment)
@@ -324,6 +333,7 @@
 	if(!signal.data["tag"] || (signal.data["tag"] != id_tag) || (signal.data["sigtype"]!="command"))
 		return 0
 
+	wake_processing() // RS Add: Room Atmosphere Processing (Lira, October 2026)
 	if(signal.data["purge"] != null)
 		pressure_checks &= ~1
 		pump_direction = 0
@@ -400,10 +410,12 @@
 				if(!welded)
 					user.visible_message("<b>\The [user]</b> welds the vent shut.", "<span class='notice'>You weld the vent shut.</span>", "You hear welding.")
 					welded = 1
+					wake_processing() // RS Add: Room Atmosphere Processing (Lira, October 2026)
 					update_icon()
 				else
 					user.visible_message("<span class='notice'>[user] unwelds the vent.</span>", "<span class='notice'>You unweld the vent.</span>", "You hear welding.")
 					welded = 0
+					wake_processing() // RS Add: Room Atmosphere Processing (Lira, October 2026)
 					update_icon()
 			else
 				to_chat(user, "<span class='notice'>The welding tool needs to be on to start this task.</span>")

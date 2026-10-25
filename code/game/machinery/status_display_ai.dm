@@ -1,3 +1,7 @@
+///////////////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star October 2026: Station Display and Media Processing //
+///////////////////////////////////////////////////////////////////////////////////////
+
 /datum/ai_emotion
 	var/overlay
 	var/ckey
@@ -61,6 +65,7 @@ var/list/ai_status_emotions = list(
 				SD.friendc = 1
 			else
 				SD.friendc = 0
+			SD.wake_processing()
 // RS Edit End
 
 /obj/machinery/ai_status_display
@@ -71,6 +76,7 @@ var/list/ai_status_emotions = list(
 	anchored = TRUE
 	density = FALSE
 	circuit =  /obj/item/weapon/circuitboard/ai_status_display
+	processing_on_demand = TRUE // RS Add: Station Display and Media Processing (Lira, October 2026)
 
 	var/mode = 0	// 0 = Blank
 					// 1 = AI emoticon
@@ -94,8 +100,10 @@ var/list/ai_status_emotions = list(
 		return
 	apply_ai_status_emote(emote) // RS Add: Call new AI status proc (Lira, October 2025)
 
+// RS Edit: Station Display and Media Processing (Lira, October 2026)
 /obj/machinery/ai_status_display/process()
-	return
+	update()
+	return PROCESS_KILL
 
 // RS Add: New proc to display AI status (Lira, October 2025)
 /obj/machinery/ai_status_display/proc/apply_emote(var/emote)
@@ -110,6 +118,11 @@ var/list/ai_status_emotions = list(
 	update()
 
 /obj/machinery/ai_status_display/proc/update()
+	// RS Add Start: Station Display and Media Processing (Lira, October 2026)
+	if(stat & NOPOWER)
+		cut_overlays()
+		return
+	// RS Add End
 	if(mode==0) //Blank
 		cut_overlays()
 		return

@@ -1,3 +1,7 @@
+///////////////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star October 2026: Station Display and Media Processing //
+///////////////////////////////////////////////////////////////////////////////////////
+
 //shuttle moving state defines are in setup.dm
 
 /datum/shuttle
@@ -74,6 +78,7 @@
 		if(SSsupply.shuttle)
 			CRASH("A supply shuttle is already defined.")
 		SSsupply.shuttle = src
+		wake_shuttle_status_displays(TRUE) // RS Add: Station Display and Media Processing (Lira, October 2026)
 
 /datum/shuttle/Destroy()
 	current_location = null
@@ -82,6 +87,7 @@
 	SSshuttles.shuttle_logs -= src
 	if(SSsupply.shuttle == src)
 		SSsupply.shuttle = null
+		wake_shuttle_status_displays(TRUE) // RS Add: Station Display and Media Processing (Lira, October 2026)
 	. = ..()
 
 // This is called after all shuttles have been initialized by SSshuttles, but before sectors have been initialized.
@@ -130,6 +136,7 @@
 	var/obj/effect/shuttle_landmark/start_location = current_location
 	// TODO - Figure out exactly when to play sounds.  Before warmup_time delay? Should there be a sleep for waiting for sounds? or no?
 	moving_status = SHUTTLE_WARMUP
+	notify_status_displays() // RS Add: Station Display and Media Processing (Lira, October 2026)
 	spawn(warmup_time*10)
 
 		make_sounds(HYPERSPACE_WARMUP)
@@ -168,6 +175,7 @@
 	var/obj/effect/shuttle_landmark/start_location = current_location
 	// TODO - Figure out exactly when to play sounds.  Before warmup_time delay? Should there be a sleep for waiting for sounds? or no?
 	moving_status = SHUTTLE_WARMUP
+	notify_status_displays() // RS Add: Station Display and Media Processing (Lira, October 2026)
 	spawn(warmup_time*10)
 
 		make_sounds(HYPERSPACE_WARMUP)
@@ -439,3 +447,16 @@
 	if(moving_status == SHUTTLE_INTRANSIT)
 		return "In transit"
 	return current_location.name
+
+// RS Add: Station Display and Media Processing (Lira, October 2026)
+/datum/shuttle/proc/notify_status_displays()
+	if(emergency_shuttle?.shuttle == src)
+		wake_shuttle_status_displays()
+	if(SSsupply.shuttle == src)
+		wake_shuttle_status_displays(TRUE)
+
+// RS Add: Station Display and Media Processing (Lira, October 2026)
+/datum/shuttle/vv_edit_var(var_name, new_value)
+	. = ..()
+	if(.)
+		notify_status_displays()

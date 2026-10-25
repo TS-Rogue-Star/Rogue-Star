@@ -258,6 +258,7 @@
 			var/new_time_left = tgui_input_number(usr, "Enter new shuttle launch countdown (seconds):","Edit Shuttle Launch Time", emergency_shuttle.estimate_launch_time() )
 
 			emergency_shuttle.launch_time = world.time + new_time_left*10
+			wake_shuttle_status_displays() // RS Add: Station Display and Media Processing (Lira, October 2026)
 
 			log_admin("[key_name(usr)] edited the Emergency Shuttle's launch time to [new_time_left]")
 			message_admins("<font color='blue'>[key_name_admin(usr)] edited the Emergency Shuttle's launch time to [new_time_left*10]</font>", 1)
@@ -265,6 +266,7 @@
 
 			var/new_time_left = tgui_input_number(usr, "Enter new shuttle arrival time (seconds):","Edit Shuttle Arrival Time", emergency_shuttle.estimate_arrival_time() )
 			emergency_shuttle.shuttle.arrive_time = world.time + new_time_left*10
+			wake_shuttle_status_displays() // RS Add: Station Display and Media Processing (Lira, October 2026)
 
 			log_admin("[key_name(usr)] edited the Emergency Shuttle's arrival time to [new_time_left]")
 			message_admins("<font color='blue'>[key_name_admin(usr)] edited the Emergency Shuttle's arrival time to [new_time_left*10]</font>", 1)

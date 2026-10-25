@@ -41,6 +41,7 @@
 	..()
 	if (current_location == landmark_station) location = FERRY_LOCATION_STATION
 	if (current_location == landmark_offsite) location = FERRY_LOCATION_OFFSITE
+	notify_status_displays() // RS Add: Station Display and Media Processing (Lira, October 2026)
 
 // Once we have arrived where we are going, plot a course back!
 /datum/shuttle/autodock/ferry/process_arrived()

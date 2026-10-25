@@ -1,5 +1,10 @@
+//////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star October 2026: Charging Station Processing //
+//////////////////////////////////////////////////////////////////////////////
+
 //This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
 /obj/machinery/recharger
+	processing_on_demand = TRUE // RS Add: Charging Station Processing (Lira, October 2026)
 	name = "recharger"
 	desc = "A standard recharger for all devices that use power."
 	icon = 'icons/obj/stationobjs_vr.dmi' //VOREStation Edit
@@ -88,6 +93,7 @@
 		user.drop_item()
 		G.loc = src
 		charging = G
+		wake_processing() // RS Add: Charging Station Processing (Lira, October 2026)
 		update_icon()
 		user.visible_message("[user] inserts [charging] into [src].", "You insert [charging] into [src].")
 
@@ -96,6 +102,7 @@
 			to_chat(user, "<span class='warning'>Remove [charging] first!</span>")
 			return
 		anchored = !anchored
+		wake_processing() // RS Add: Charging Station Processing (Lira, October 2026)
 		to_chat(user, "You [anchored ? "attached" : "detached"] [src].")
 		playsound(src, G.usesound, 75, 1)
 	else if(default_deconstruction_screwdriver(user, G))
@@ -130,11 +137,12 @@
 	if(stat & (NOPOWER|BROKEN) || !anchored)
 		update_use_power(USE_POWER_OFF)
 		icon_state = icon_state_idle
-		return
+		return charging ? 0 : PROCESS_KILL // RS Edit: Charging Station Processing (Lira, October 2026)
 
 	if(!charging)
 		update_use_power(USE_POWER_IDLE)
 		icon_state = icon_state_idle
+		return PROCESS_KILL // RS Add: Charging Station Processing (Lira, October 2026)
 	//VOREStation Edit Start - pAI revival!
 	else if(istype(charging, /obj/item/device/paicard))
 		var/obj/item/device/paicard/pcard = charging
@@ -197,6 +205,7 @@
 		icon_state = icon_state_idle
 
 /obj/machinery/recharger/RefreshParts()
+	wake_processing() // RS Add: Charging Station Processing (Lira, October 2026)
 	var/E = 0
 	for(var/obj/item/weapon/stock_parts/capacitor/C in component_parts)
 		E += C.rating

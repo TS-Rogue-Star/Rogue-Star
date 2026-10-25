@@ -33,6 +33,7 @@
 			env.temperature -= 100
 		else
 			env.temperature -= 50
+		env.room_atmos_changed() // RS Add: Room Atmosphere Processing (Lira, October 2026)
 
 	sleep(10)
 	if(src)

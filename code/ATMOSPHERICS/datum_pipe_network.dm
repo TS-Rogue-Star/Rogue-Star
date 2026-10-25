@@ -1,3 +1,7 @@
+/////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star October 2026: Room Atmosphere Processing //
+/////////////////////////////////////////////////////////////////////////////
+
 var/global/list/datum/pipe_network/pipe_networks = list()	// TODO - Move into SSmachines
 
 /datum/pipe_network
@@ -13,8 +17,14 @@ var/global/list/datum/pipe_network/pipe_networks = list()	// TODO - Move into SS
 	var/update = 1
 	//var/datum/gas_mixture/air_transient = null
 
+// RS Edit: Room Atmosphere Processing (Lira, October 2026)
 /datum/pipe_network/Destroy()
 	STOP_PROCESSING_PIPENET(src)
+	room_atmos_changed_networks -= src
+	room_atmos_queued = FALSE
+	for(var/datum/gas_mixture/G as anything in gases)
+		if(G.room_atmos_network == src)
+			G.room_atmos_network = null
 	for(var/datum/pipeline/line_member in line_members)
 		line_member.network = null
 	for(var/obj/machinery/atmospherics/normal_member in normal_members)
@@ -70,9 +80,13 @@ var/global/list/datum/pipe_network/pipe_networks = list()	// TODO - Move into SS
 	update_network_gases()
 	return 1
 
+// RS Edit: Room Atmosphere Processing (Lira, October 2026)
 /datum/pipe_network/proc/update_network_gases()
 	//Go through membership roster and make sure gases is up to date
 
+	for(var/datum/gas_mixture/G as anything in gases)
+		if(G.room_atmos_network == src)
+			G.room_atmos_network = null
 	gases = list()
 	volume = 0
 
@@ -85,6 +99,8 @@ var/global/list/datum/pipe_network/pipe_networks = list()	// TODO - Move into SS
 
 	for(var/datum/gas_mixture/air in gases)
 		volume += air.volume
+		air.room_atmos_network = src
+	room_atmos_changed()
 
 /datum/pipe_network/proc/reconcile_air()
 	equalize_gases(gases)

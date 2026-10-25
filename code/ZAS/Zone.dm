@@ -71,6 +71,7 @@ Class Procs:
 	var/datum/gas_mixture/turf_air = T.return_air()
 	add_tile_air(turf_air)
 	T.zone = src
+	T.room_atmos_changed() // RS Add: Room Atmosphere Processing (Lira, October 2026)
 	contents.Add(T)
 	if(T.fire)
 		var/obj/effect/decal/cleanable/liquid_fuel/fuel = locate() in T
@@ -93,10 +94,12 @@ Class Procs:
 		var/obj/effect/decal/cleanable/liquid_fuel/fuel = locate() in T
 		fuel_objs -= fuel
 	T.zone = null
+	T.room_atmos_changed() // RS Add: Room Atmosphere Processing (Lira, October 2026)
 	if(air.graphic)
 		T.update_graphic(graphic_remove = air.graphic)
 	if(contents.len)
 		air.group_multiplier = contents.len
+		air.room_atmos_changed() // RS Add: Room Atmosphere Processing (Lira, October 2026)
 	else
 		c_invalidate()
 
@@ -127,6 +130,10 @@ Class Procs:
 /zone/proc/c_invalidate()
 	invalid = 1
 	air_master.remove_zone(src)
+	// RS Add Start: Room Atmosphere Processing (Lira, October 2026)
+	for(var/turf/T as anything in contents)
+		T.room_atmos_changed()
+	// RS Add End
 	#ifdef ZASDBG
 	for(var/turf/simulated/T in contents)
 		T.dbg(invalid_zone)
@@ -166,6 +173,7 @@ Class Procs:
 		else
 			gases -= g
 	air.group_multiplier = new_size
+	air.room_atmos_changed() // RS Add: Room Atmosphere Processing (Lira, October 2026)
 
 /zone/proc/tick()
 	if(air.temperature >= PHORON_FLASHPOINT && !(src in air_master.active_fire_zones) && air.check_combustability() && contents.len)
