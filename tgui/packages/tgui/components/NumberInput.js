@@ -4,9 +4,11 @@
  * @license MIT
  */
 
-// ///////////////////////////////////////////////////////////////////////////
-// Updated by Lira for Rogue Star September 2025 to add scroll wheel support//
-// ///////////////////////////////////////////////////////////////////////////
+// /////////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star September 2025 to add scroll wheel support ///////
+// /////////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star September 2026: Character Designer - Expression //
+// /////////////////////////////////////////////////////////////////////////////////
 
 import { clamp } from 'common/math';
 import { classes, pureComponentHooks } from 'common/react';
@@ -235,6 +237,26 @@ export class NumberInput extends Component {
     // RS Add End
   }
 
+  // RS Add: Character Designer - Expression (Lira, September 2026)
+  componentDidUpdate(prevProps) {
+    if (
+      this.props.syncWithValue &&
+      prevProps.value !== this.props.value &&
+      !this.state.dragging &&
+      !this.state.editing &&
+      this.state.value !== this.props.value
+    ) {
+      this.setState({ value: this.props.value });
+    }
+  }
+
+  // RS Add: Character Designer - Expression (Lira, September 2026)
+  clampInputValue(value) {
+    return this.props.allowZero && value === 0
+      ? 0
+      : clamp(value, this.props.minValue, this.props.maxValue);
+  }
+
   render() {
     const {
       dragging,
@@ -316,7 +338,7 @@ export class NumberInput extends Component {
             if (!editing) {
               return;
             }
-            const value = clamp(parseFloat(e.target.value), minValue, maxValue);
+            const value = this.clampInputValue(parseFloat(e.target.value)); // RS Edit: Character Designer - Expression (Lira, September 2026)
             if (Number.isNaN(value)) {
               this.setState({
                 editing: false,
@@ -338,11 +360,7 @@ export class NumberInput extends Component {
           onKeyDown={(e) => {
             if (e.keyCode === 13) {
               // prettier-ignore
-              const value = clamp(
-                parseFloat(e.target.value),
-                minValue,
-                maxValue
-              );
+              const value = this.clampInputValue(parseFloat(e.target.value)); // RS Edit: Character Designer - Expression (Lira, September 2026)
               if (Number.isNaN(value)) {
                 this.setState({
                   editing: false,

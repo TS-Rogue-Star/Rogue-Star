@@ -1,4 +1,9 @@
+/////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star October 2026: Room Atmosphere Processing //
+/////////////////////////////////////////////////////////////////////////////
+
 /obj/machinery/atmospherics/unary/vent_scrubber
+	processing_on_demand = TRUE // RS Add: Room Atmosphere Processing (Lira, October 2026)
 	icon = 'icons/atmos/vent_scrubber.dmi'
 	icon_state = "map_scrubber_off"
 	pipe_state = "scrubber"
@@ -134,6 +139,7 @@
 		set_frequency(frequency)
 		src.broadcast_status()
 
+// RS Edit: Room Atmosphere Processing (Lira, October 2026)
 /obj/machinery/atmospherics/unary/vent_scrubber/process()
 	..()
 
@@ -144,9 +150,10 @@
 		update_use_power(USE_POWER_OFF)
 	//broadcast_status()
 	if(!use_power || (stat & (NOPOWER|BROKEN)))
-		return 0
+		return room_atmos_sleep(TRUE)
 
 	var/datum/gas_mixture/environment = loc.return_air()
+	watch_room_atmos(get_turf(src), environment, network)
 
 	var/power_draw = -1
 	if(scrubbing)
@@ -160,7 +167,7 @@
 
 		power_draw = pump_gas(src, environment, air_contents, transfer_moles, power_rating)
 
-	if(scrubbing && power_draw < 0 && controller_iteration > 10)	//99% of all scrubbers
+	if(!processing_on_demand && scrubbing && power_draw < 0 && controller_iteration > 10)	//99% of all scrubbers
 		//Fucking hibernate because you ain't doing shit.
 		hibernate = 1
 		spawn(rand(100,200))	//hibernate for 10 or 20 seconds randomly
@@ -170,9 +177,11 @@
 		last_power_draw = power_draw
 		use_power(power_draw)
 
-	if(network)
+	if(network && (power_draw >= 0 || air_contents.temperature > PHORON_MINIMUM_BURN_TEMPERATURE)) // RS Edit: Scrubber Network Optimization (Lira, October 2026)
 		network.update = 1
 
+	if(power_draw < 0 && !(network && air_contents.temperature > PHORON_MINIMUM_BURN_TEMPERATURE))
+		return room_atmos_sleep()
 	return 1
 
 /obj/machinery/atmospherics/unary/vent_scrubber/hide(var/i) //to make the little pipe section invisible, the icon changes.
@@ -184,6 +193,7 @@
 		return
 	if(!signal.data["tag"] || (signal.data["tag"] != id_tag) || (signal.data["sigtype"]!="command"))
 		return 0
+	wake_processing() // RS Add: Room Atmosphere Processing (Lira, October 2026)
 
 	if(signal.data["power"] != null)
 		update_use_power(text2num(signal.data["power"]))

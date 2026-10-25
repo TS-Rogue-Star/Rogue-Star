@@ -35,6 +35,7 @@
 	allow_spontaneous_tf = client.prefs_vr.allow_spontaneous_tf
 	digest_leave_remains = client.prefs_vr.digest_leave_remains
 	allowmobvore = client.prefs_vr.allowmobvore
+	allownpcvore = client.prefs_vr.allownpcvore	// RS ADD
 	permit_healbelly = client.prefs_vr.permit_healbelly
 	noisy = client.prefs_vr.noisy
 	selective_preference = client.prefs_vr.selective_preference

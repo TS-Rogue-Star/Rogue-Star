@@ -493,7 +493,7 @@ emp_act
 		src.visible_message("<span class='filter_warning'><font color='red'>[src] has been hit in the [hit_area] by [O].</font></span>")
 
 		if(ismob(O.thrower))
-			add_attack_logs(O.thrower,src,"Hit with thrown [O.name]")
+			add_attack_logs(O.thrower,src,"Hit with thrown [O.name]", TRUE, O)	// RS EDIT
 
 		//If the armor absorbs all of the damage, skip the rest of the calculations
 		var/soaked = get_armor_soak(affecting, "melee", O.armor_penetration)

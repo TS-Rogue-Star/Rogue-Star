@@ -9,6 +9,8 @@
 // /////////////////////////////////////////////////////////////////////////////////////////////////////
 // Updated by Lira for Rogue Star August 2026: Character Designer - Traits Tab /////////////////////////
 // /////////////////////////////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star September 2026: Character Designer - Expression //////////////////////
+// /////////////////////////////////////////////////////////////////////////////////////////////////////
 
 import { Component, createRef } from 'inferno';
 import { Box } from '../../../components';
@@ -18,6 +20,12 @@ import {
   type PreviewLayerGroup,
 } from '../../../utils/character-preview';
 import { CANVAS_FIT_TARGET } from '../constants';
+import {
+  livePreviewCanvasSize,
+  livePreviewSourceColumn,
+  livePreviewTransformSignature,
+  type LivePreviewTransform,
+} from '../utils/sizeWeight';
 
 const FULL_GRID_FIT_TARGET = CANVAS_FIT_TARGET * 2;
 
@@ -233,11 +241,13 @@ export type DirectionPreviewCanvasProps = {
   readonly bodyAlpha?: number | null;
   readonly iconScaleX?: number;
   readonly iconScaleY?: number;
+  readonly characterTransform?: LivePreviewTransform;
 };
 
 export class DirectionPreviewCanvas extends Component<DirectionPreviewCanvasProps> {
   private canvasRef = createRef<HTMLCanvasElement>();
   private characterCompositeCanvas: HTMLCanvasElement | null = null;
+  private characterRasterCanvas: HTMLCanvasElement | null = null;
   private completedRenderCache: {
     key: string;
     canvas: HTMLCanvasElement;
@@ -307,7 +317,9 @@ export class DirectionPreviewCanvas extends Component<DirectionPreviewCanvasProp
       prevProps.backgroundTileHeight !== this.props.backgroundTileHeight ||
       prevProps.bodyAlpha !== this.props.bodyAlpha ||
       prevProps.iconScaleX !== this.props.iconScaleX ||
-      prevProps.iconScaleY !== this.props.iconScaleY
+      prevProps.iconScaleY !== this.props.iconScaleY ||
+      livePreviewTransformSignature(prevProps.characterTransform) !==
+        livePreviewTransformSignature(this.props.characterTransform)
     ) {
       this.draw();
     }
@@ -326,6 +338,7 @@ export class DirectionPreviewCanvas extends Component<DirectionPreviewCanvasProp
     this.layerGroupCache.clear();
     this.colorLayerGroupCache.clear();
     this.characterCompositeCanvas = null;
+    this.characterRasterCanvas = null;
   }
 
   draw() {
@@ -338,10 +351,18 @@ export class DirectionPreviewCanvas extends Component<DirectionPreviewCanvasProp
       return;
     }
     const pixelSize = Math.max(1, this.props.pixelSize || 1);
-    const targetWidth = Math.max(1, Math.floor(canvas.width / pixelSize));
-    const targetHeight = Math.max(1, Math.floor(canvas.height / pixelSize));
-    const iconScaleX = this.resolveIconScale(this.props.iconScaleX);
-    const iconScaleY = this.resolveIconScale(this.props.iconScaleY);
+    const targetWidth = this.props.characterTransform
+      ? this.props.width
+      : Math.max(1, Math.floor(canvas.width / pixelSize));
+    const targetHeight = this.props.characterTransform
+      ? this.props.height
+      : Math.max(1, Math.floor(canvas.height / pixelSize));
+    const iconScaleX =
+      this.props.characterTransform?.scaleX ??
+      this.resolveIconScale(this.props.iconScaleX);
+    const iconScaleY =
+      this.props.characterTransform?.scaleY ??
+      this.resolveIconScale(this.props.iconScaleY);
     this.completedRenderCache = null;
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.imageSmoothingEnabled = false;
@@ -358,6 +379,9 @@ export class DirectionPreviewCanvas extends Component<DirectionPreviewCanvasProp
           this.props.bodyAlpha ?? '',
           iconScaleX,
           iconScaleY,
+          livePreviewTransformSignature(this.props.characterTransform),
+          targetWidth,
+          targetHeight,
         ].join('|')
       : null;
     if (sharedRenderKey) {
@@ -395,12 +419,12 @@ export class DirectionPreviewCanvas extends Component<DirectionPreviewCanvasProp
             canvas,
             iconScaleX,
             iconScaleY,
-            (characterCtx) => {
+            (characterCtx, characterPixelSize) => {
               this.drawOrderedLayerGroups(
                 characterCtx,
                 layerGroups,
-                pixelSize,
-                canvas,
+                characterPixelSize,
+                characterCtx.canvas,
                 targetWidth,
                 targetHeight,
                 this.props.bodyAlpha
@@ -432,11 +456,11 @@ export class DirectionPreviewCanvas extends Component<DirectionPreviewCanvasProp
             canvas,
             iconScaleX,
             iconScaleY,
-            (characterCtx) => {
+            (characterCtx, characterPixelSize) => {
               this.drawLayers(
                 characterCtx,
                 layers,
-                pixelSize,
+                characterPixelSize,
                 targetWidth,
                 targetHeight,
                 this.props.bodyAlpha
@@ -463,12 +487,12 @@ export class DirectionPreviewCanvas extends Component<DirectionPreviewCanvasProp
           canvas,
           iconScaleX,
           iconScaleY,
-          (characterCtx) => {
+          (characterCtx, characterPixelSize) => {
             if (underlayLayers.length) {
               this.drawLayers(
                 characterCtx,
                 underlayLayers,
-                pixelSize,
+                characterPixelSize,
                 targetWidth,
                 targetHeight
               );
@@ -477,8 +501,8 @@ export class DirectionPreviewCanvas extends Component<DirectionPreviewCanvasProp
               this.drawBaseLayers(
                 characterCtx,
                 baseLayers,
-                pixelSize,
-                canvas,
+                characterPixelSize,
+                characterCtx.canvas,
                 targetWidth,
                 targetHeight,
                 this.props.baseSignature
@@ -488,7 +512,7 @@ export class DirectionPreviewCanvas extends Component<DirectionPreviewCanvasProp
               this.drawLayers(
                 characterCtx,
                 overlayLayers,
-                pixelSize,
+                characterPixelSize,
                 targetWidth,
                 targetHeight
               );
@@ -520,10 +544,15 @@ export class DirectionPreviewCanvas extends Component<DirectionPreviewCanvasProp
     canvas: HTMLCanvasElement,
     iconScaleX: number,
     iconScaleY: number,
-    drawLayers: (ctx: CanvasRenderingContext2D) => void
+    drawLayers: (ctx: CanvasRenderingContext2D, pixelSize: number) => void
   ) {
-    if (iconScaleX === 1 && iconScaleY === 1) {
-      drawLayers(ctx);
+    const transform = this.props.characterTransform;
+    const pixelSize = Math.max(1, this.props.pixelSize || 1);
+    const sourceWidth = transform ? this.props.width : canvas.width;
+    const sourceHeight = transform ? this.props.height : canvas.height;
+    const centerOffset = (transform?.offsetX || 0) * pixelSize;
+    if (iconScaleX === 1 && iconScaleY === 1 && !centerOffset) {
+      drawLayers(ctx, pixelSize);
       return;
     }
 
@@ -531,15 +560,15 @@ export class DirectionPreviewCanvas extends Component<DirectionPreviewCanvasProp
       this.characterCompositeCanvas || document.createElement('canvas');
     this.characterCompositeCanvas = compositeCanvas;
     if (
-      compositeCanvas.width !== canvas.width ||
-      compositeCanvas.height !== canvas.height
+      compositeCanvas.width !== sourceWidth ||
+      compositeCanvas.height !== sourceHeight
     ) {
-      compositeCanvas.width = canvas.width;
-      compositeCanvas.height = canvas.height;
+      compositeCanvas.width = sourceWidth;
+      compositeCanvas.height = sourceHeight;
     }
     const compositeCtx = compositeCanvas.getContext('2d');
     if (!compositeCtx) {
-      drawLayers(ctx);
+      drawLayers(ctx, pixelSize);
       return;
     }
     compositeCtx.setTransform(1, 0, 0, 1, 0, 0);
@@ -547,20 +576,74 @@ export class DirectionPreviewCanvas extends Component<DirectionPreviewCanvasProp
     compositeCtx.globalCompositeOperation = 'source-over';
     compositeCtx.clearRect(0, 0, compositeCanvas.width, compositeCanvas.height);
     compositeCtx.imageSmoothingEnabled = false;
-    drawLayers(compositeCtx);
+    drawLayers(compositeCtx, transform ? 1 : pixelSize);
 
+    if (transform) {
+      const raster =
+        this.characterRasterCanvas || document.createElement('canvas');
+      this.characterRasterCanvas = raster;
+      raster.width = canvas.width / pixelSize;
+      raster.height = canvas.height / pixelSize;
+      const rasterCtx = raster.getContext('2d');
+      if (rasterCtx) {
+        const scaledWidth = sourceWidth * iconScaleX;
+        const scaledHeight = sourceHeight * iconScaleY;
+        rasterCtx.imageSmoothingEnabled = transform.fuzzy;
+        if (transform.fuzzy) {
+          rasterCtx.drawImage(
+            compositeCanvas,
+            (raster.width - scaledWidth) / 2 + transform.offsetX,
+            raster.height - scaledHeight,
+            scaledWidth,
+            scaledHeight
+          );
+        } else {
+          for (let column = 0; column < raster.width; column++) {
+            const sourceColumn = livePreviewSourceColumn(
+              column,
+              sourceWidth,
+              raster.width,
+              transform
+            );
+            if (sourceColumn < 0 || sourceColumn >= sourceWidth) {
+              continue;
+            }
+            rasterCtx.drawImage(
+              compositeCanvas,
+              sourceColumn,
+              0,
+              1,
+              sourceHeight,
+              column,
+              raster.height - scaledHeight,
+              1,
+              scaledHeight
+            );
+          }
+        }
+        ctx.save();
+        ctx.imageSmoothingEnabled = false;
+        ctx.drawImage(raster, 0, 0, canvas.width, canvas.height);
+        ctx.restore();
+        return;
+      }
+    }
     const scaledWidth = Math.max(
       1,
-      Math.round(compositeCanvas.width * iconScaleX)
+      Math.round(
+        compositeCanvas.width * iconScaleX * (transform ? pixelSize : 1)
+      )
     );
     const scaledHeight = Math.max(
       1,
-      Math.round(compositeCanvas.height * iconScaleY)
+      Math.round(
+        compositeCanvas.height * iconScaleY * (transform ? pixelSize : 1)
+      )
     );
-    const offsetX = Math.round((canvas.width - scaledWidth) / 2);
+    const offsetX = Math.round((canvas.width - scaledWidth) / 2) + centerOffset;
     const offsetY = canvas.height - scaledHeight;
     ctx.save();
-    ctx.imageSmoothingEnabled = false;
+    ctx.imageSmoothingEnabled = !!transform?.fuzzy;
     ctx.drawImage(
       compositeCanvas,
       0,
@@ -1296,8 +1379,14 @@ export class DirectionPreviewCanvas extends Component<DirectionPreviewCanvasProp
         ? Math.max(fallbackHeight, ...layerHeights)
         : fallbackHeight;
     const size = Math.max(1, pixelSize);
-    const canvasWidth = gridWidth * size;
-    const canvasHeight = gridHeight * size;
+    const liveCanvasSize = livePreviewCanvasSize(
+      gridWidth,
+      gridHeight,
+      size,
+      this.props.characterTransform
+    );
+    const canvasWidth = liveCanvasSize.width;
+    const canvasHeight = liveCanvasSize.height;
     const clampedFitWidth = fitToFrame
       ? Math.min(canvasWidth, FULL_GRID_FIT_TARGET * size)
       : canvasWidth;
@@ -1345,7 +1434,9 @@ export class DirectionPreviewCanvas extends Component<DirectionPreviewCanvasProp
             width={canvasWidth}
             height={canvasHeight}
             style={{
-              'image-rendering': 'pixelated', // RS Edit: Inferno 7 to 9 (Lira, January 2026)
+              'image-rendering': this.props.characterTransform?.fuzzy
+                ? 'auto'
+                : 'pixelated', // RS Edit: Inferno 7 to 9 (Lira, January 2026)
               position: 'absolute',
               left: `${offsetLeft}px`,
               top: `${offsetTop}px`,

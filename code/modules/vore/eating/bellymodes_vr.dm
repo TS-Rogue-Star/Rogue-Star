@@ -11,6 +11,8 @@
 			return
 
 	HandleBellyReagents()	// Reagent bellies || RS Add || Chomp Port
+	if(count_nutrition_for_sprite)	// RS Add
+		owner.update_fullness()	// RS Add
 
 	// VERY early exit
 	if(!contents.len)

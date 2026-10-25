@@ -1,3 +1,7 @@
+//////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star September 2026: Mob Deletion Optimization //
+//////////////////////////////////////////////////////////////////////////////
+
 /**
  * @file hooks.dm
  * Implements hooks, a simple way to run code on pre-defined events.
@@ -23,6 +27,8 @@
  * @param hook	Identifier of the hook to call.
  * @returns		1 if all hooked code runs successfully, 0 otherwise.
  */
+
+// RS Edit: Mob Deletion Optimization (Lira, September 2026)
 /proc/callHook(hook, list/args=null)
 	var/hook_path = text2path("/hook/[hook]")
 	if(!hook_path)
@@ -32,8 +38,19 @@
 	var/hook_caller = new hook_path
 	var/status = 1
 	for(var/P in typesof("[hook_path]/proc"))
-		if(!call(hook_caller, P)(arglist(args)))
+		var/result = callHookCallback(hook_caller, P, args)
+		if(!result)
 			error("Hook '[P]' failed or runtimed.")
 			status = 0
 
 	return status
+
+// RS Edit: Mob Deletion Optimization (Lira, September 2026)
+/proc/callHookCallback(hook_caller, callback, list/arguments)
+	var/list/callback_arguments = arguments ? arguments.Copy() : list()
+	try
+		. = call(hook_caller, callback)(arglist(callback_arguments))
+	catch(var/exception/E)
+		callback_arguments.Cut()
+		throw E
+	callback_arguments.Cut()

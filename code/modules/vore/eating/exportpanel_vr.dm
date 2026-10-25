@@ -30,6 +30,7 @@
 	data["db_version"] = "0.1"
 	data["db_repo"] = "vorestation"
 	data["mob_name"] = host.real_name
+	data["allownpcvore"] = host.allownpcvore	// RS Add
 
 	for(var/belly in host.vore_organs)
 		if(isbelly(belly))
@@ -184,6 +185,21 @@
 
 			// Visuals (Vore FX)
 			belly_data["disable_hud"] = B.disable_hud
+			belly_data["affects_vore_sprites"] = B.affects_vore_sprites	// RS Add Start
+			belly_data["count_absorbed_prey_for_sprite"] = B.count_absorbed_prey_for_sprite
+			belly_data["absorbed_multiplier"] = B.absorbed_multiplier
+			belly_data["count_liquid_for_sprite"] = B.count_liquid_for_sprite
+			belly_data["liquid_multiplier"] = B.liquid_multiplier
+			belly_data["count_items_for_sprite"] = B.count_items_for_sprite
+			belly_data["item_multiplier"] = B.item_multiplier
+			belly_data["health_impacts_size"] = B.health_impacts_size
+			belly_data["resist_triggers_animation"] = B.resist_triggers_animation
+			belly_data["size_factor_for_sprite"] = B.size_factor_for_sprite
+			belly_data["belly_sprite_to_affect"] = B.belly_sprite_to_affect
+			belly_data["count_nutrition_for_sprite"] = B.count_nutrition_for_sprite
+			belly_data["nutrition_multiplier"] = B.nutrition_multiplier
+			belly_data["vorefootsteps_sounds"] = B.vorefootsteps_sounds
+			belly_data["nutrition_sloshing"] = B.nutrition_sloshing	// RS Add End
 
 			// Interactions
 			belly_data["escapable"] = B.escapable

@@ -1,4 +1,5 @@
 /obj/machinery/mech_recharger
+	processing_on_demand = TRUE // RS Add: Charging Station Processing (Lira, October 2026)
 	name = "mech recharger"
 	desc = "A mech recharger, built into the floor."
 	icon = 'icons/mecha/mech_bay.dmi'
@@ -36,6 +37,7 @@
 
 /obj/machinery/mech_recharger/RefreshParts()
 	..()
+	wake_processing() // RS Add: Charging Station Processing (Lira, October 2026)
 	charge = 0
 	repair = -5
 	for(var/obj/item/weapon/stock_parts/P in component_parts)
@@ -50,10 +52,10 @@
 /obj/machinery/mech_recharger/process()
 	..()
 	if(!charging)
-		return
+		return PROCESS_KILL // RS Edit: Charging Station Processing (Lira, October 2026)
 	if(charging.loc != src.loc) // Could be qdel or teleport or something
 		charging = null
-		return
+		return PROCESS_KILL // RS Edit: Charging Station Processing (Lira, October 2026)
 
 	var/done = FALSE
 	var/obj/mecha/mech = charging
@@ -103,4 +105,5 @@
 		else
 			to_chat(M, SPAN_NOTICE("Now charging..."))
 		charging = M
+		wake_processing() // RS Add: Charging Station Processing (Lira, October 2026)
 	return

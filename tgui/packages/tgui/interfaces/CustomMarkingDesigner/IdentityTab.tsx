@@ -1,6 +1,8 @@
-// ///////////////////////////////////////////////////////////////////////////////////
-// Created by Lira for Rogue Star September 2026: Character Designer - Identity Tab //
-// ///////////////////////////////////////////////////////////////////////////////////
+// ////////////////////////////////////////////////////////////////////////////////////
+// Created by Lira for Rogue Star September 2026: Character Designer - Identity Tab ///
+// ////////////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star September 2026: Character Designer - Misc Settings //
+// ////////////////////////////////////////////////////////////////////////////////////
 
 import { useLocalState } from '../../backend';
 import {
@@ -96,13 +98,15 @@ type IdentityTabProps = Readonly<{
 type IdentityValueKey = keyof IdentityDraftState;
 type IdentityWorkspaceTab =
   | 'notes'
+  | 'preferences'
   | 'flavor'
   | 'robot-flavor'
   | 'records'
   | 'locations'
   | 'citizenship'
   | 'factions'
-  | 'religion';
+  | 'religion'
+  | 'directory';
 type IdentityLocationTarget = 'home_system' | 'birthplace';
 type IdentityLocationView = 'map' | 'catalog';
 type IdentityOrganizationKind = 'citizenship' | 'faction' | 'religion';
@@ -114,6 +118,8 @@ const IDENTITY_WORKSPACE_TABS: ReadonlyArray<{
   { id: 'flavor', label: 'Flavor Text' },
   { id: 'robot-flavor', label: 'Robot Flavor Text' },
   { id: 'notes', label: 'OOC Notes' },
+  { id: 'preferences', label: 'Preferences' },
+  { id: 'directory', label: 'Character Directory' },
   { id: 'records', label: 'Records' },
   { id: 'locations', label: 'Home/Birthplace' },
   { id: 'citizenship', label: 'Citizenship' },
@@ -278,6 +284,142 @@ const LongTextEditor = ({
     />
   </Box>
 );
+
+const IDENTITY_PREFERENCES = [
+  {
+    key: 'resleeve_scan',
+    label: 'Start with Body Scan',
+    description: 'Create a body scan for resleeving when you spawn.',
+  },
+  {
+    key: 'resleeve_lock',
+    label: 'Prevent Body Impersonation',
+    description: 'Prevent other players from resleeving into your body.',
+  },
+  {
+    key: 'synth_cookie',
+    label: 'Allow Cookie Replicas',
+    description: 'Allow snack replicas of your body. Requires a body scan.',
+  },
+  {
+    key: 'capture_crystal',
+    label: 'Capture Crystal Preferences',
+    description: 'Allow your character to be caught in capture crystals.',
+  },
+  {
+    key: 'auto_backup_implant',
+    label: 'Start with Backup Implant',
+    description: 'Start with a backup implant when spawning.',
+  },
+] as const;
+
+const IdentityPreferencesEditor = ({
+  visible,
+  draft,
+  disabled,
+  onChange,
+}: Readonly<{
+  visible: boolean;
+  draft: IdentityDraftState;
+  disabled: boolean;
+  onChange: <K extends IdentityValueKey>(
+    key: K,
+    value: IdentityDraftState[K]
+  ) => void;
+}>) => {
+  if (!visible) {
+    return null;
+  }
+  return (
+    <Flex direction="column" mt={1}>
+      {IDENTITY_PREFERENCES.map(({ key, label, description }) => (
+        <Flex key={key} align="center" mb={1}>
+          <Flex.Item basis="19rem" shrink={0} bold>
+            {label}
+          </Flex.Item>
+          <Flex.Item shrink={0}>
+            <Button.Checkbox
+              className={CHIP_BUTTON_CLASS}
+              width="6rem"
+              checked={draft[key]}
+              disabled={disabled}
+              onClick={() => onChange(key, !draft[key])}>
+              {draft[key] ? 'Yes' : 'No'}
+            </Button.Checkbox>
+          </Flex.Item>
+          <Flex.Item grow ml={1} color="label">
+            {description}
+          </Flex.Item>
+        </Flex>
+      ))}
+    </Flex>
+  );
+};
+
+const IdentityDirectoryEditor = ({
+  visible,
+  payload,
+  draft,
+  disabled,
+  onChange,
+}: Readonly<{
+  visible: boolean;
+  payload: IdentityPayload;
+  draft: IdentityDraftState;
+  disabled: boolean;
+  onChange: <K extends IdentityValueKey>(
+    key: K,
+    value: IdentityDraftState[K]
+  ) => void;
+}>) => {
+  if (!visible) {
+    return null;
+  }
+  return (
+    <Box className="RogueStar__identityDirectoryWorkspace">
+      <Box className="RogueStar__identityDirectorySettings">
+        <IdentityField label="Appear in Character Directory">
+          <Button.Checkbox
+            className={CHIP_BUTTON_CLASS}
+            fluid
+            checked={draft.show_in_directory}
+            disabled={disabled}
+            onClick={() =>
+              onChange('show_in_directory', !draft.show_in_directory)
+            }>
+            {draft.show_in_directory ? 'Yes' : 'No'}
+          </Button.Checkbox>
+        </IdentityField>
+        <IdentityField label="Vore Tag">
+          <IdentityDropdown
+            icon="tag"
+            value={draft.directory_tag}
+            options={payload.directory_tag_options}
+            disabled={disabled}
+            onSelected={(value) => onChange('directory_tag', value)}
+          />
+        </IdentityField>
+        <IdentityField label="ERP Tag">
+          <IdentityDropdown
+            icon="tag"
+            value={draft.directory_erptag}
+            options={payload.directory_erptag_options}
+            disabled={disabled}
+            onSelected={(value) => onChange('directory_erptag', value)}
+          />
+        </IdentityField>
+      </Box>
+      <LongTextEditor
+        label="Directory Advertisement"
+        value={draft.directory_ad}
+        maxLength={payload.max_directory_ad_length}
+        disabled={disabled}
+        resetLabel="Clear Advertisement"
+        onChange={(value) => onChange('directory_ad', value)}
+      />
+    </Box>
+  );
+};
 
 const IdentityCustomLinkEditor = ({
   value,
@@ -1362,6 +1504,19 @@ export const IdentityTab = ({
                   </Box>
                 </Box>
               ) : null}
+              <IdentityPreferencesEditor
+                visible={workspaceTab === 'preferences'}
+                draft={draft}
+                disabled={controlsLocked}
+                onChange={updateDraft}
+              />
+              <IdentityDirectoryEditor
+                visible={workspaceTab === 'directory'}
+                payload={payload}
+                draft={draft}
+                disabled={controlsLocked}
+                onChange={updateDraft}
+              />
               <IdentityRobotFlavorTextEditor
                 visible={workspaceTab === 'robot-flavor'}
                 modules={payload.robot_flavor_text_modules}

@@ -1,12 +1,15 @@
-// ////////////////////////////////////////////////////////////////////////////////
-// Created by Lira for Rogue Star September 2026: Character Designer - Equipment //
-// ////////////////////////////////////////////////////////////////////////////////
+// ////////////////////////////////////////////////////////////////////////////////////
+// Created by Lira for Rogue Star September 2026: Character Designer - Equipment //////
+// ////////////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star September 2026: Character Designer - Misc Settings //
+// ////////////////////////////////////////////////////////////////////////////////////
 
 import { useLocalState } from '../../backend';
 import {
   Box,
   Button,
   ColorBox,
+  Dropdown,
   Flex,
   Input,
   LabeledList,
@@ -403,6 +406,23 @@ export const EquipmentTab = (props: EquipmentTabProps, context) => {
                     }>
                     {draft.shoe_hater ? 'No' : 'Yes'}
                   </Button>
+                </LabeledList.Item>
+                <LabeledList.Item label="Suit Sensors">
+                  <Dropdown
+                    className={`${CHIP_BUTTON_CLASS} RogueStar__identityDropdown`}
+                    controlContentClassName="Button__content RogueStar__identityDropdownContent"
+                    dropdownStyle="rogue-star"
+                    width="100%"
+                    options={session.sensorOptions}
+                    selected={session.sensorOptions[draft.sensorpref - 1]}
+                    disabled={locked}
+                    onSelected={(value) =>
+                      session.update({
+                        ...draft,
+                        sensorpref: session.sensorOptions.indexOf(value) + 1,
+                      })
+                    }
+                  />
                 </LabeledList.Item>
               </LabeledList>
             </Section>

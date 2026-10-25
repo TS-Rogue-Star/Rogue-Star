@@ -7,6 +7,7 @@ var/static/icon/ingame_hud_med_vr = icon('icons/mob/hud_med_vr.dmi')
 	hud_list[STATUS_R_HUD]    = gen_hud_image(ingame_hud_vr, src, plane = PLANE_CH_STATUS_R)
 	hud_list[BACKUP_HUD]      = gen_hud_image(ingame_hud_vr, src, plane = PLANE_CH_BACKUP)
 	hud_list[VANTAG_HUD]      = gen_hud_image(ingame_hud_vr, src, plane = PLANE_CH_VANTAG)
+	hud_last_inputs = null // RS Add: HUD Optimization (Lira, September 2026)
 
 /mob/living/carbon/human/proc/remove_marking(var/datum/sprite_accessory/marking/mark_datum)
 	if (!mark_datum)

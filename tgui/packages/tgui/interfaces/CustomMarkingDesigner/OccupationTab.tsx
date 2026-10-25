@@ -1,6 +1,8 @@
-// /////////////////////////////////////////////////////////////////////////////////
-// Created by Lira for Rogue Star September 2026: Character Designer - Occupation //
-// /////////////////////////////////////////////////////////////////////////////////
+// ////////////////////////////////////////////////////////////////////////////////////
+// Created by Lira for Rogue Star September 2026: Character Designer - Occupation /////
+// ////////////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star September 2026: Character Designer - Misc Settings //
+// ////////////////////////////////////////////////////////////////////////////////////
 
 import { Color } from 'common/color';
 import { useLocalState } from '../../backend';
@@ -12,9 +14,11 @@ import {
   Input,
   NoticeBox,
   Section,
+  Tooltip,
 } from '../../components';
 import type { PreviewDirectionEntry } from '../../utils/character-preview';
 import { LivePreviewCard } from './components';
+import { PersistenceToggle } from './components/PersistenceToggle';
 import { CHIP_BUTTON_CLASS } from './constants';
 import type { EquipmentTabProps } from './EquipmentTab';
 import { IdentitySaveSection } from './IdentityTab';
@@ -350,9 +354,43 @@ export const OccupationTab = (props: Props, context) => {
             </Flex.Item>
             <Flex.Item shrink={0}>
               <Section>
-                <Flex align="center" gap={1}>
-                  <Box>If preferences are unavailable:</Box>
-                  <Flex.Item width="16rem" shrink={0}>
+                <Box className="RogueStar__occupationOptions">
+                  <Box minWidth={0}>
+                    <Box color="label" mb={0.5}>
+                      Spawn Location
+                    </Box>
+                    <Flex align="center" gap={0.5}>
+                      <Flex.Item grow minWidth={0}>
+                        <Dropdown
+                          className={`${CHIP_BUTTON_CLASS} RogueStar__identityDropdown RogueStar__occupationDropdown`}
+                          controlContentClassName="Button__content RogueStar__identityDropdownContent"
+                          dropdownStyle="rogue-star"
+                          width="100%"
+                          options={catalog.spawnpoint_options}
+                          selected={draft.spawnpoint}
+                          aria-label="Spawn Location"
+                          disabled={locked}
+                          onSelected={(value) =>
+                            session.update({ ...draft, spawnpoint: value })
+                          }
+                        />
+                      </Flex.Item>
+                      <Flex.Item shrink={0}>
+                        <PersistenceToggle
+                          subject="spawn"
+                          enabled={draft.persist_spawn ?? true}
+                          disabled={locked}
+                          onChange={(persist_spawn) =>
+                            session.update({ ...draft, persist_spawn })
+                          }
+                        />
+                      </Flex.Item>
+                    </Flex>
+                  </Box>
+                  <Box minWidth={0}>
+                    <Box color="label" mb={0.5}>
+                      If preferences are unavailable
+                    </Box>
                     <Dropdown
                       className={`${CHIP_BUTTON_CLASS} RogueStar__identityDropdown RogueStar__occupationDropdown`}
                       controlContentClassName="Button__content RogueStar__identityDropdownContent"
@@ -360,6 +398,7 @@ export const OccupationTab = (props: Props, context) => {
                       width="100%"
                       options={fallbacks}
                       selected={fallbacks[draft.alternate_option]}
+                      aria-label="If preferences are unavailable"
                       disabled={locked}
                       onSelected={(value) =>
                         session.update({
@@ -368,17 +407,66 @@ export const OccupationTab = (props: Props, context) => {
                         })
                       }
                     />
-                  </Flex.Item>
-                  <Flex.Item grow />
+                  </Box>
+                  <Box minWidth={0}>
+                    <Box color="label" mb={0.5}>
+                      Event Participant
+                    </Box>
+                    <Button.Checkbox
+                      className={CHIP_BUTTON_CLASS}
+                      fluid
+                      checked={draft.vantag_volunteer}
+                      disabled={locked}
+                      aria-label="Event Participant"
+                      tooltip="Volunteer to play an admin-selected event character."
+                      onClick={() =>
+                        session.update({
+                          ...draft,
+                          vantag_volunteer: !draft.vantag_volunteer,
+                        })
+                      }>
+                      {draft.vantag_volunteer ? 'Yes' : 'No'}
+                    </Button.Checkbox>
+                  </Box>
+                  <Box minWidth={0}>
+                    <Box color="label" mb={0.5}>
+                      Event Preference
+                    </Box>
+                    <Tooltip content="How you want to be involved with event characters, ERP-wise. They can see this choice on their HUD. Event characters are admin-selected players who may have assigned objectives and must respect your preferences and roleplay their actions.">
+                      <Dropdown
+                        className={`${CHIP_BUTTON_CLASS} RogueStar__identityDropdown RogueStar__occupationDropdown`}
+                        controlContentClassName="Button__content RogueStar__identityDropdownContent"
+                        dropdownStyle="rogue-star"
+                        width="100%"
+                        options={catalog.event_preference_options.map(
+                          (option) => ({
+                            value: option.value,
+                            displayText: option.label,
+                          })
+                        )}
+                        selected={draft.vantag_preference}
+                        displayText={
+                          catalog.event_preference_options.find(
+                            (option) => option.value === draft.vantag_preference
+                          )?.label
+                        }
+                        aria-label="Event Preference"
+                        disabled={locked}
+                        onSelected={(vantag_preference) =>
+                          session.update({ ...draft, vantag_preference })
+                        }
+                      />
+                    </Tooltip>
+                  </Box>
                   <Button
                     className={CHIP_BUTTON_CLASS}
                     icon="rotate-left"
                     disabled={locked}
-                    tooltip="Clear every occupation preference and reset alternate titles. The fallback option is retained."
+                    tooltip="Clear every occupation preference and reset alternate titles. The fallback option, spawn location, and event settings are retained."
                     onClick={() => session.update(resetOccupationDraft(draft))}>
                     Reset
                   </Button>
-                </Flex>
+                </Box>
               </Section>
             </Flex.Item>
           </Flex>

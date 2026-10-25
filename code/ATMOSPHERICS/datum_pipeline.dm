@@ -166,6 +166,7 @@
 			air.temperature += thermal_conductivity * (modeled_location.special_temperature - air.temperature)
 			if (air.temperature < TCMB)
 				air.temperature = TCMB
+			air.room_atmos_changed() // RS Add: Room Atmosphere Processing (Lira, October 2026)
 			if (network)
 				network.update = TRUE
 
@@ -207,8 +208,10 @@
 
 			if(modeled_location.zone)
 				modeled_location.zone.air.temperature += sharer_temperature_delta/modeled_location.zone.air.group_multiplier
+				modeled_location.zone.air.room_atmos_changed() // RS Add: Room Atmosphere Processing (Lira, October 2026)
 			else
 				modeled_location.air.temperature += sharer_temperature_delta
+				modeled_location.air.room_atmos_changed() // RS Add: Room Atmosphere Processing (Lira, October 2026)
 
 
 	else
@@ -219,6 +222,7 @@
 				(partial_heat_capacity*target.heat_capacity/(partial_heat_capacity+target.heat_capacity))
 
 			air.temperature -= heat/total_heat_capacity
+	air.room_atmos_changed() // RS Add: Room Atmosphere Processing (Lira, October 2026)
 	if(network)
 		network.update = 1
 

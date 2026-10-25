@@ -261,13 +261,21 @@
 	else if(old_stat <= DEAD && new_stat >= DEAD) //Killed
 		manage_processing(AI_NO_PROCESS)
 
+// RS Edit: HUD Optimization (Lira, September 2026)
 /datum/ai_holder/proc/update_stance_hud()
-	var/image/stanceimage = holder.grab_hud(LIFE_HUD)
+	var/image/stanceimage = holder?.hud_list?[LIFE_HUD]
+	if(stanceimage?.plane != PLANE_BUILDMODE)
+		return
+	holder.grab_hud(LIFE_HUD)
 	stanceimage.icon_state = "ais_[stance]"
 	holder.apply_hud(LIFE_HUD, stanceimage)
 
+// RS Edit: HUD Optimization (Lira, September 2026)
 /datum/ai_holder/proc/update_paused_hud()
-	var/image/sleepingimage = holder.grab_hud(STATUS_HUD)
+	var/image/sleepingimage = holder?.hud_list?[STATUS_HUD]
+	if(sleepingimage?.plane != PLANE_BUILDMODE)
+		return
+	holder.grab_hud(STATUS_HUD)
 	var/asleep = 0
 	if(busy)
 		asleep = 2

@@ -29,7 +29,7 @@
 			return
 		if("JoinLateGateway")
 			latejoin_gateway += loc
-			latejoin += src				//VOREStation Addition
+			latejoin += loc				//VOREStation Addition // RS Edit: Gateway Landmark Garbage Collection (Lira, October 2026)
 			delete_me = 1
 			return
 		if("JoinLateRedgate")			//RS ADD

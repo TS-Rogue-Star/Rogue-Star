@@ -1,3 +1,7 @@
+/////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star October 2026: Room Atmosphere Processing //
+/////////////////////////////////////////////////////////////////////////////
+
 #define DECLARE_TLV_VALUES var/red_min; var/yel_min; var/yel_max; var/red_max; var/tlv_comparitor;
 #define LOAD_TLV_VALUES(x, y) red_min = x[1]; yel_min = x[2]; yel_max = x[3]; red_max = x[4]; tlv_comparitor = y;
 #define TEST_TLV_VALUES (((tlv_comparitor >= red_max && red_max > 0) || tlv_comparitor <= red_min) ? 2 : ((tlv_comparitor >= yel_max && yel_max > 0) || tlv_comparitor <= yel_min) ? 1 : 0)
@@ -29,6 +33,7 @@
 	var/list/air_scrub_info = list()
 
 /obj/machinery/alarm
+	processing_on_demand = TRUE // RS Add: Room Atmosphere Processing (Lira, October 2026)
 	name = "alarm"
 	desc = "Used to control various station atmospheric systems. The light indicates the current air status of the area."
 	icon = 'icons/obj/monitors_vr.dmi' //VOREStation Edit - Other icons
@@ -167,14 +172,16 @@
 	if(!master_is_operating())
 		elect_master()
 
+// RS Edit: Room Atmosphere Processing (Lira, October 2026)
 /obj/machinery/alarm/process()
 	if((stat & (NOPOWER|BROKEN)) || shorted)
-		return
+		return room_atmos_sleep(TRUE)
 
 	var/turf/simulated/location = src.loc
-	if(!istype(location))	return//returns if loc is not simulated
+	if(!istype(location))	return room_atmos_sleep(TRUE)//returns if loc is not simulated
 
 	var/datum/gas_mixture/environment = location.return_air()
+	watch_room_atmos(location, environment)
 
 	//Handle temperature adjustment here.
 	handle_heating_cooling(environment)
@@ -207,6 +214,8 @@
 		if(RCON_YES)
 			remote_control = 1
 
+	if(!regulating_temperature && mode != AALARM_MODE_CYCLE)
+		return room_atmos_sleep()
 	return
 
 /obj/machinery/alarm/proc/handle_heating_cooling(var/datum/gas_mixture/environment)
@@ -442,6 +451,7 @@
 	//TODO: make it so that players can choose between applying the new mode to the room they are in (related area) vs the entire alarm area
 	for(var/obj/machinery/alarm/AA in alarm_area)
 		AA.mode = mode
+		AA.wake_processing() // RS Add: Room Atmosphere Processing (Lira, October 2026)
 
 	switch(mode)
 		if(AALARM_MODE_SCRUBBING)
@@ -676,6 +686,7 @@
 				rcon_setting = RCON_AUTO
 			if(RCON_YES)
 				rcon_setting = RCON_YES
+		wake_processing() // RS Add: Room Atmosphere Processing (Lira, October 2026)
 		return TRUE
 
 	if(action == "temperature")
@@ -688,6 +699,7 @@
 				to_chat(usr, "Temperature must be between [min_temperature]C and [max_temperature]C")
 			else
 				target_temperature = input_temperature + T0C
+				wake_processing() // RS Add: Room Atmosphere Processing (Lira, October 2026)
 		return TRUE
 
 	// Account for remote users here.
@@ -762,6 +774,7 @@
 // This big ol' mess just ensures that TLV always makes sense. If you set the max value below the min value,
 // it'll automatically update all the other values to keep it sane.
 /obj/machinery/alarm/proc/clamp_tlv_values(env, changed_threshold)
+	wake_processing() // RS Add: Room Atmosphere Processing (Lira, October 2026)
 	var/list/selected = TLV[env]
 	switch(changed_threshold)
 		if(1)

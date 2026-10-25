@@ -54,25 +54,30 @@ SUBSYSTEM_DEF(machines)
 			NewPN.add_cable(PC)
 			propagate_network(PC,PC.powernet)
 
+// RS Edit: Atmos Initialization Cleanup (Lira, September 2026)
 /datum/controller/subsystem/machines/proc/setup_atmos_machinery(list/atmos_machines)
 	var/list/actual_atmos_machines = list()
 	
 	for(var/obj/machinery/atmospherics/machine in atmos_machines)
-		machine.atmos_init()
-		actual_atmos_machines += machine
+		if(!QDELETED(machine))
+			machine.atmos_init()
+			if(!QDELETED(machine))
+				actual_atmos_machines += machine
 		CHECK_TICK
 
 	for(var/obj/machinery/atmospherics/machine as anything in actual_atmos_machines)
-		machine.build_network()
+		if(!QDELETED(machine))
+			machine.build_network()
 		CHECK_TICK
 
 	for(var/obj/machinery/atmospherics/unary/U as anything in actual_atmos_machines)
-		if(istype(U, /obj/machinery/atmospherics/unary/vent_pump))
-			var/obj/machinery/atmospherics/unary/vent_pump/T = U
-			T.broadcast_status()
-		else if(istype(U, /obj/machinery/atmospherics/unary/vent_scrubber))
-			var/obj/machinery/atmospherics/unary/vent_scrubber/T = U
-			T.broadcast_status()
+		if(!QDELETED(U))
+			if(istype(U, /obj/machinery/atmospherics/unary/vent_pump))
+				var/obj/machinery/atmospherics/unary/vent_pump/T = U
+				T.broadcast_status()
+			else if(istype(U, /obj/machinery/atmospherics/unary/vent_scrubber))
+				var/obj/machinery/atmospherics/unary/vent_scrubber/T = U
+				T.broadcast_status()
 		CHECK_TICK
 
 /datum/controller/subsystem/machines/stat_entry()
@@ -109,6 +114,7 @@ SUBSYSTEM_DEF(machines)
 
 /datum/controller/subsystem/machines/proc/process_machinery(resumed = 0)
 	if (!resumed)
+		flush_room_atmos_wakes() // RS Add: Room Atmosphere Processing (Lira, October 2026)
 		src.current_run = global.processing_machines.Copy()
 
 	var/wait = src.wait

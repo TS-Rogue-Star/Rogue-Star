@@ -229,6 +229,13 @@ var/list/ai_verbs_default = list(
 
 /mob/living/silicon/ai/Destroy()
 	ai_list -= src
+	// RS Add Start: APC and Cell Appearance Optimization (Lira, October 2026)
+	if(hacked_apcs)
+		for(var/obj/machinery/power/apc/A in hacked_apcs)
+			A.hacker = null
+			A.queue_icon_update()
+	hacked_apcs = null
+	// RS Add End
 
 	QDEL_NULL(announcement)
 	QDEL_NULL(eyeobj)

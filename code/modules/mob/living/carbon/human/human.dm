@@ -64,13 +64,15 @@
 	//verbs |= /mob/living/proc/toggle_selfsurgery //VOREStation Removal
 	AddComponent(/datum/component/personal_crafting)
 
+// RS Edit: Mob Deletion Optimization (Lira, September 2026)
 /mob/living/carbon/human/Destroy()
 	human_mob_list -= src
 	for(var/organ in organs)
 		qdel(organ)
 	QDEL_NULL(nif)	//VOREStation Add
 	worn_clothing.Cut()
-	return ..()
+	. = ..()
+	QDEL_NULL(vessel)
 
 /mob/living/carbon/human/Stat()
 	..()
@@ -191,6 +193,11 @@
 			else
 				update |= temp.take_damage(b_loss * 0.05, f_loss * 0.05, used_weapon = weapon_message)
 	if(update)	UpdateDamageIcon()
+
+// RS ADD START
+/mob/living/carbon/human/proc/loadout_prefs()
+	return client?.prefs
+// RS ADD END
 
 /mob/living/carbon/human/proc/implant_loyalty(override = FALSE) // Won't override by default.
 	if(!config.use_loyalty_implants && !override) return // Nuh-uh.

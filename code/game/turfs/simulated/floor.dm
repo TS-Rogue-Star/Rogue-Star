@@ -43,16 +43,19 @@
 		set_flooring(get_flooring_data(floortype), TRUE)
 		. = INITIALIZE_HINT_LATELOAD // We'll update our icons after everyone is ready
 	else
-		vorefootstep_sounds = base_vorefootstep_sounds // Reagent bellies || RS Add || Chomp Port
 		footstep_sounds = base_footstep_sounds
 	if(can_dirty && can_start_dirty)
 		if(prob(dirty_prob))
 			dirt += rand(50,100)
 			update_dirt() //5% chance to start with dirt on a floor tile- give the janitor something to do
 
+// RS Edit: Terrain Appearance Batching (Lira, September 2026)
 /turf/simulated/floor/LateInitialize()
 	. = ..()
-	update_icon(1)
+	if(SSatoms.queue_terrain_icon_update(src, TRUE))
+		update_base_icon()
+	else
+		update_icon(1)
 
 /turf/simulated/floor/proc/swap_decals()
 	var/current_decals = decals
@@ -65,7 +68,6 @@
 		swap_decals()
 	flooring = newflooring
 	footstep_sounds = newflooring.footstep_sounds
-	vorefootstep_sounds = newflooring.vorefootstep_sounds // Reagent bellies || RS Add || Chomp Port
 	if(!initializing)
 		update_icon(1)
 	levelupdate()
@@ -83,7 +85,6 @@
 	icon = base_icon
 	icon_state = base_icon_state
 	footstep_sounds = base_footstep_sounds
-	vorefootstep_sounds = base_vorefootstep_sounds	 // Reagent bellies || RS Add || Chomp Port
 
 	if(!is_plating()) // Flooring -> Plating
 		swap_decals()

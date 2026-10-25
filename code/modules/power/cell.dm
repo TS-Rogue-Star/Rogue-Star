@@ -1,3 +1,7 @@
+//////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star October 2026: Charging Station Processing //
+//////////////////////////////////////////////////////////////////////////////
+
 // the power cell
 // charge from 0 to 100%
 // fits in APC to provide backup power
@@ -94,6 +98,14 @@
 #undef OVERLAY_PARTIAL
 #undef OVERLAY_EMPTY
 
+// RS Add: APC and Cell Appearance Optimization (Lira, October 2026)
+/obj/item/weapon/cell/proc/update_charge_icon()
+	if(standard_overlays && last_overlay_state)
+		var/ratio = clamp(round(charge / maxcharge, 0.25) * 100, 0, 100)
+		if(last_overlay_state == "[icon_state]_[ratio]")
+			return
+	update_icon()
+
 /obj/item/weapon/cell/proc/percent()		// return % charge of cell
 	return 100.0*charge/maxcharge
 
@@ -109,14 +121,18 @@
 	return max(maxcharge - charge, 0)
 
 // use power from a cell, returns the amount actually used
-/obj/item/weapon/cell/proc/use(var/amount)
+// RS Edit: APC and Cell Appearance Optimization (Lira, October 2026)
+/obj/item/weapon/cell/proc/use(var/amount, update_appearance = TRUE)
 	if(rigged && amount > 0)
 		explode()
 		return 0
 	var/used = min(charge, amount)
 	charge -= used
+	if(used)
+		SEND_SIGNAL(src, COMSIG_CELL_CHARGE_CHANGED)
 	last_use = world.time
-	update_icon()
+	if(update_appearance)
+		update_charge_icon()
 	return used
 
 // Checks if the specified amount can be provided. If it can, it removes the amount
@@ -128,7 +144,8 @@
 	return 1
 
 // recharge the cell
-/obj/item/weapon/cell/proc/give(var/amount)
+// RS Edit: APC and Cell Appearance Optimization (Lira, October 2026)
+/obj/item/weapon/cell/proc/give(var/amount, update_appearance = TRUE)
 	if(rigged && amount > 0)
 		explode()
 		return 0
@@ -136,9 +153,12 @@
 	if(maxcharge < amount)	return 0
 	var/amount_used = min(maxcharge-charge,amount)
 	charge += amount_used
-	update_icon()
-	if(loc)
-		loc.update_icon()
+	if(amount_used)
+		SEND_SIGNAL(src, COMSIG_CELL_CHARGE_CHANGED)
+	if(update_appearance)
+		update_charge_icon()
+		if(loc && !istype(loc, /obj/machinery/power/apc))
+			loc.update_icon()
 	return amount_used
 
 
@@ -158,6 +178,7 @@
 		if(S.reagents.has_reagent("phoron", 5))
 
 			rigged = 1
+			SEND_SIGNAL(src, COMSIG_CELL_CHARGE_CHANGED) // RS Add: Charging Station Processing (Lira, October 2026)
 
 			log_admin("LOG: [user.name] ([user.ckey]) injected a power cell with phoron, rigging it to explode.")
 			message_admins("LOG: [user.name] ([user.ckey]) injected a power cell with phoron, rigging it to explode.")
@@ -194,6 +215,7 @@
 /obj/item/weapon/cell/proc/corrupt()
 	charge /= 2
 	maxcharge /= 2
+	SEND_SIGNAL(src, COMSIG_CELL_CHARGE_CHANGED) // RS Add: Charging Station Processing (Lira, October 2026)
 	if (prob(10))
 		rigged = 1 //broken batterys are dangerous
 
@@ -209,6 +231,7 @@
 	if (charge < 0)
 		charge = 0
 
+	SEND_SIGNAL(src, COMSIG_CELL_CHARGE_CHANGED) // RS Add: Charging Station Processing (Lira, October 2026)
 	update_icon()
 	..()
 
@@ -260,3 +283,9 @@
 			return min(rand(10,20),rand(10,20))
 		else
 			return 0
+
+// RS Add: Charging Station Processing (Lira, October 2026)
+/obj/item/weapon/cell/vv_edit_var(var_name, var_value)
+	. = ..()
+	if(. && (var_name == NAMEOF(src, charge) || var_name == NAMEOF(src, maxcharge) || var_name == NAMEOF(src, rigged)))
+		SEND_SIGNAL(src, COMSIG_CELL_CHARGE_CHANGED)

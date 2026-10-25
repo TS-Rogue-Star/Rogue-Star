@@ -428,7 +428,10 @@ export const LoadoutTab = (props: Props, context) => {
             </Box>
           </Section>
         </Flex.Item>
-        <Flex.Item basis={APPEARANCE_SETTINGS_COLUMN_WIDTH} shrink={0}>
+        <Flex.Item
+          basis={APPEARANCE_SETTINGS_COLUMN_WIDTH}
+          shrink={0}
+          minWidth={0}>
           <LoadoutSettings
             session={session}
             uiLocked={props.uiLocked}

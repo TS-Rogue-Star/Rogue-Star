@@ -149,6 +149,7 @@
 									theAPC.operating = 1
 									theAPC.equipment = 3
 									theAPC.update()
+									theAPC.update_icon() // RS Add: APC and Cell Appearance Optimization (Lira, October 2026)
 									aiRestorePowerRoutine = 3
 									to_chat(src, "Here are your current laws:")
 									show_laws()

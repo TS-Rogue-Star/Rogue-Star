@@ -56,6 +56,7 @@ V::::::V           V::::::VO:::::::OOO:::::::ORR:::::R     R:::::REE::::::EEEEEE
 	var/allow_spontaneous_tf = FALSE
 	var/digest_leave_remains = FALSE
 	var/allowmobvore = TRUE
+	var/allownpcvore = FALSE	// RS Add
 	var/permit_healbelly = TRUE
 	var/noisy = FALSE
 	var/eating_privacy_global = FALSE //Makes eating attempt/success messages only reach for subtle range if true, overwritten by belly-specific var
@@ -191,6 +192,7 @@ V::::::V           V::::::VO:::::::OOO:::::::ORR:::::R     R:::::REE::::::EEEEEE
 	absorbable = json_from_file["absorbable"]
 	digest_leave_remains = json_from_file["digest_leave_remains"]
 	allowmobvore = json_from_file["allowmobvore"]
+	allownpcvore = json_from_file["allownpcvore"]	// RS Add
 	vore_taste = json_from_file["vore_taste"]
 	vore_smell = json_from_file["vore_smell"]
 	permit_healbelly = json_from_file["permit_healbelly"]
@@ -242,6 +244,8 @@ V::::::V           V::::::VO:::::::OOO:::::::ORR:::::R     R:::::REE::::::EEEEEE
 		digest_leave_remains = FALSE
 	if(isnull(allowmobvore))
 		allowmobvore = TRUE
+	if(isnull(allownpcvore))	// RS Add
+		allownpcvore = FALSE	// RS Add
 	if(isnull(permit_healbelly))
 		permit_healbelly = TRUE
 	if(isnull(selective_preference))
@@ -354,6 +358,7 @@ V::::::V           V::::::VO:::::::OOO:::::::ORR:::::R     R:::::REE::::::EEEEEE
 			"feeding"				= feeding,
 			"digest_leave_remains"	= digest_leave_remains,
 			"allowmobvore"			= allowmobvore,
+			"allownpcvore"			= allownpcvore,	// RS Add
 			"vore_taste"			= vore_taste,
 			"vore_smell"			= vore_smell,
 			"permit_healbelly"		= permit_healbelly,

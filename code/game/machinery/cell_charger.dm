@@ -1,4 +1,9 @@
+//////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star October 2026: Charging Station Processing //
+//////////////////////////////////////////////////////////////////////////////
+
 /obj/machinery/cell_charger
+	processing_on_demand = TRUE // RS Add: Charging Station Processing (Lira, October 2026)
 	name = "heavy-duty cell charger"
 	desc = "A much more powerful version of the standard recharger that is specially designed for charging power cells."
 	icon = 'icons/obj/power.dmi'
@@ -71,6 +76,7 @@
 			user.drop_item()
 			W.loc = src
 			charging = W
+			wake_processing() // RS Add: Charging Station Processing (Lira, October 2026)
 			user.visible_message("[user] inserts [charging] into [src].", "You insert [charging] into [src].")
 			chargelevel = -1
 		update_icon()
@@ -80,6 +86,7 @@
 			return
 
 		anchored = !anchored
+		wake_processing() // RS Add: Charging Station Processing (Lira, October 2026)
 		to_chat(user, "You [anchored ? "attach" : "detach"] [src] [anchored ? "to" : "from"] the ground")
 		playsound(src, W.usesound, 75, 1)
 		update_icon()
@@ -123,7 +130,7 @@
 	//to_world("ccpt [charging] [stat]")
 	if((stat & (BROKEN|NOPOWER)) || !anchored)
 		update_use_power(USE_POWER_OFF)
-		return
+		return charging ? 0 : PROCESS_KILL // RS Edit: Charging Station Processing (Lira, October 2026)
 
 	if(charging && !charging.fully_charged())
 		charging.give(efficiency*CELLRATE)
@@ -132,8 +139,13 @@
 		update_icon()
 	else
 		update_use_power(USE_POWER_IDLE)
+		// RS Add Start: Charging Station Processing (Lira, October 2026)
+		if(!charging)
+			return PROCESS_KILL
+		// RS Add End
 
 /obj/machinery/cell_charger/RefreshParts()
+	wake_processing() // RS Add: Charging Station Processing (Lira, October 2026)
 	var/E = 0
 	for(var/obj/item/weapon/stock_parts/capacitor/C in component_parts)
 		E += C.rating

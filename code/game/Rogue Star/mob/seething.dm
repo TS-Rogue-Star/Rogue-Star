@@ -105,14 +105,14 @@
 	ether_damage = 0.0
 
 /datum/modifier/latched_on
-	var/mob/living/our_origin
+	var/datum/weakref/our_origin
 
 /datum/modifier/latched_on/New(new_holder, new_origin)
 	. = ..()
 	if(!new_origin)
 		expire()
 		return
-	our_origin = new_origin
+	our_origin = WEAKREF(new_origin)
 	holder.say("*scream")
 	holder.Stun(2)
 	holder.Weaken(3)
@@ -123,10 +123,11 @@
 
 /datum/modifier/latched_on/tick()
 	. = ..()
-	if(!our_origin)
+	var/mob/living/origin_mob = our_origin?.resolve()
+	if(!origin_mob)
 		expire()
 		return
-	if(holder.loc != our_origin.loc)
+	if(holder.loc != origin_mob.loc)
 		expire()
 		return
 	if(holder.stat == DEAD)
@@ -143,7 +144,7 @@
 		"slashes"
 	)
 
-	our_origin.visible_message(span_cult("\The [our_origin] [pick(verbs)] \the [holder]!!!"))
+	origin_mob.visible_message(span_cult("\The [origin_mob] [pick(verbs)] \the [holder]!!!"))
 
 	var/chance = rand(1,100)
 

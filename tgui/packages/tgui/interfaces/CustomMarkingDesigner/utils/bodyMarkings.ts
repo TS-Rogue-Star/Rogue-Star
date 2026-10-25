@@ -113,12 +113,13 @@ export const buildBodyPayloadSignature = (
   const size = `${payload.preview_width || 0}x${payload.preview_height || 0}`;
   const digitigrade = payload.digitigrade ? 'd' : 'p';
   const species = `${payload.species_id || ''}:${payload.custom_base || ''}`;
-  return `${species}:${revision}:${size}:${digitigrade}:${defSignature}:${orderSignature}:${markingSignature}`;
+  return `${species}:${revision}:${size}:${digitigrade}:${defSignature}:${orderSignature}:${markingSignature}:${payload.persist_markings ?? true}`;
 };
 
 export const buildBodySavedStateFromPayload = (
   payload?: BodyMarkingsPayload | null
 ): BodyMarkingsSavedState => ({
+  persist_markings: payload?.persist_markings ?? true,
   order: (payload?.order as string[]) || [],
   markings: deepCopyMarkings(payload?.body_markings),
   selectedId: (payload?.order?.[0] as string) || null,

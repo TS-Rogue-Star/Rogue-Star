@@ -13,7 +13,6 @@ import {
   NoticeBox,
   NumberInput,
   Section,
-  Tabs,
   TextArea,
 } from '../../../components';
 import { BasicAppearanceSaveSection } from '../BasicAppearanceTab';
@@ -307,24 +306,37 @@ export class LoadoutSettings extends Component<Props, { revision: number }> {
             const gear = catalog.items.find((entry) => entry.id === item.id);
             return gear && selectedVariant(gear, item)?.preview_pending;
           }) && <NoticeBox>Loading selected item previews…</NoticeBox>}
-          <Box mb={1}>
-            <Tabs>
+          <Box
+            className="RogueStar__loadoutPresetPicker"
+            mb={1}
+            role="group"
+            aria-label="Loadout preset">
+            <Box color="label" fontSize="12px">
+              Preset
+            </Box>
+            <Box className="RogueStar__loadoutPresetSlots">
               {Array.from(
                 { length: catalog.slot_count },
                 (_, index) => index + 1
               ).map((slot) => (
-                <Tabs.Tab
+                <Button
                   key={slot}
+                  className={`${CHIP_BUTTON_CLASS} RogueStar__loadoutPresetButton`}
+                  role="button"
+                  aria-label={`Loadout preset ${slot}`}
+                  aria-pressed={draft.active === slot}
+                  tooltip={`Preset ${slot}`}
+                  disabled={locked}
                   selected={draft.active === slot}
                   onClick={() => {
                     if (!locked) {
                       session.update({ ...draft, active: slot });
                     }
                   }}>
-                  Preset {slot}
-                </Tabs.Tab>
+                  {slot}
+                </Button>
               ))}
-            </Tabs>
+            </Box>
           </Box>
           <Flex mb={1} align="center">
             <Flex.Item grow>

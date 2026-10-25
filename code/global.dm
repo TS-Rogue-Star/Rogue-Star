@@ -24,6 +24,7 @@ var/log_path			= "data/logs/" //See world.dm for the full calculated path
 var/diary				= null
 var/error_log			= null
 var/debug_log			= null
+var/npc_trace_log		= null	// RS ADD
 var/href_logfile		= null
 // var/station_name		= "Northern Star"
 // var/const/station_orig	= "Northern Star" //station_name can't be const due to event prefix/suffix

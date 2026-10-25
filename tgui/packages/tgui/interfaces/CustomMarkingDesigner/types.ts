@@ -17,6 +17,19 @@
 // /////////////////////////////////////////////////////////////////////////////////////////////
 // Updated by Lira for Rogue Star September 2026: Character Designer - Occupation //////////////
 // /////////////////////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star September 2026: Character Designer - Expression //////////////
+// /////////////////////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star September 2026: Character Designer - Misc Settings ///////////
+// /////////////////////////////////////////////////////////////////////////////////////////////
+
+import type { ExpressionState, ExpressionVoice } from './utils/expression';
+import type { AppearancePersistenceState } from './utils/persistence';
+
+import type {
+  SizeWeightState,
+  SizeWeightLimits,
+  SpeciesPreviewTransform,
+} from './utils/sizeWeight';
 
 import type { BooleanLike } from '../../../common/react';
 import type {
@@ -58,6 +71,8 @@ export type DraftStrokePayload = {
 };
 
 export type CustomMarkingDesignerData = {
+  character_export_result?:
+    import('./utils/characterExport').CharacterExportResult | null;
   marking_id?: string;
   mark_name?: string;
   initial_tab?:
@@ -141,6 +156,8 @@ export type CustomMarkingDesignerData = {
   equipment_context_signature?: string | null;
   equipment_payload?: EquipmentPayload | null;
   equipment_save_result?: EquipmentSaveResult | null;
+  size_weight?: SizeWeightState;
+  preview_transform?: SpeciesPreviewTransform;
   trait_icon_scale_x?: number;
   trait_icon_scale_y?: number;
   species_save_result?: SpeciesSaveResult | null;
@@ -167,6 +184,7 @@ export type EquipmentDraftState = {
   pdachoice: number;
   communicator_visibility: boolean;
   shoe_hater: boolean;
+  sensorpref: number;
 };
 
 export type EquipmentDirectionalRecipes = Record<
@@ -202,6 +220,7 @@ export type EquipmentCatalog = Record<
 export type EquipmentPayload = {
   request_id: string;
   values?: EquipmentDraftState;
+  sensor_options?: string[];
   catalog_signature?: string;
   catalog?: EquipmentCatalog;
   gear_options?: EquipmentGearOptions | null;
@@ -278,6 +297,7 @@ export type BodyMarkingDefinition = {
 export type BodyMarkingDefinitionData = BodyMarkingDefinition[];
 
 export type BodyMarkingsPayload = {
+  persist_markings?: boolean;
   species_id?: string | null;
   custom_base?: string | null;
   definition_revision?: string | null;
@@ -299,6 +319,7 @@ export type BodyMarkingsPayload = {
 };
 
 export type BodyMarkingsSavedState = {
+  persist_markings?: boolean;
   order: string[];
   markings: Record<string, BodyMarkingEntry>;
   selectedId: string | null;
@@ -313,6 +334,7 @@ export type BasicAppearanceAccessoryDefinition = {
   assets?: Record<number, (IconAssetReference | null)[]>;
   hide_body_parts?: string[] | null;
   lower_layer_dirs?: number[];
+  clip_mask?: IconAssetReference | null;
   multi_dir?: boolean;
   wing_offset?: number;
   back_assets?: Record<number, (IconAssetReference | null)[]>;
@@ -401,7 +423,19 @@ export type BasicProstheticContext = LimbOverrideState & {
   color_multiply?: boolean;
 };
 
-export type BasicAppearancePayload = {
+export type SpeechBubbleStyle = {
+  id: string;
+  icon?: IconAssetReference | null;
+};
+
+export type BasicAppearancePayload = Partial<
+  SizeWeightState & ExpressionState & AppearancePersistenceState
+> & {
+  expression_voices?: ExpressionVoice[];
+  custom_speech_bubble?: string;
+  speech_bubble_styles?: SpeechBubbleStyle[];
+  size_weight_limits?: SizeWeightLimits;
+  preview_transform?: SpeciesPreviewTransform;
   species_id?: string | null;
   custom_base?: string | null;
   biological_gender?: string | null;
@@ -465,39 +499,48 @@ export type BasicAppearancePayload = {
   default_canvas_background?: string;
 };
 
-export type BasicAppearanceState = {
-  biological_gender: string;
-  hair_style: string | null;
-  hair_color: string | null;
-  hair_gradient_style: string | null;
-  hair_gradient_color: string | null;
-  facial_hair_style: string | null;
-  facial_hair_color: string | null;
-  ear_style: string | null;
-  ear_colors: (string | null)[];
-  horn_style: string | null;
-  horn_colors: (string | null)[];
-  tail_style: string | null;
-  tail_colors: (string | null)[];
-  wing_style: string | null;
-  wing_colors: (string | null)[];
-  eye_color: string | null;
-  body_color: string | null;
-  digitigrade: boolean;
-  blood_type: string;
-  blood_reagent: string;
-  blood_color: string;
-  needs_glasses: boolean;
-  limbs: LimbOverrideState;
-  limb_operations: LimbOperation[];
-  organ_operations: InternalOrganOperation[];
-  synth_color_enabled: boolean;
-  synth_color: string | null;
-  synth_markings: boolean;
-};
+export type BasicAppearanceState = Partial<AppearancePersistenceState> &
+  SizeWeightState &
+  ExpressionState & {
+    custom_speech_bubble: string;
+    biological_gender: string;
+    hair_style: string | null;
+    hair_color: string | null;
+    hair_gradient_style: string | null;
+    hair_gradient_color: string | null;
+    facial_hair_style: string | null;
+    facial_hair_color: string | null;
+    ear_style: string | null;
+    ear_colors: (string | null)[];
+    horn_style: string | null;
+    horn_colors: (string | null)[];
+    tail_style: string | null;
+    tail_colors: (string | null)[];
+    wing_style: string | null;
+    wing_colors: (string | null)[];
+    eye_color: string | null;
+    body_color: string | null;
+    digitigrade: boolean;
+    blood_type: string;
+    blood_reagent: string;
+    blood_color: string;
+    needs_glasses: boolean;
+    limbs: LimbOverrideState;
+    limb_operations: LimbOperation[];
+    organ_operations: InternalOrganOperation[];
+    synth_color_enabled: boolean;
+    synth_color: string | null;
+    synth_markings: boolean;
+  };
 
 export type SpeciesSaveBasicAppearance = Pick<
   BasicAppearancePayload,
+  | keyof SizeWeightState
+  | keyof ExpressionState
+  | keyof AppearancePersistenceState
+  | 'custom_speech_bubble'
+  | 'size_weight_limits'
+  | 'preview_transform'
   | 'species_id'
   | 'custom_base'
   | 'biological_gender'
@@ -546,6 +589,7 @@ export type SpeciesSaveResult = {
   species_id: string;
   custom_base?: string | null;
   custom_species?: string | null;
+  persist_markings?: boolean;
   body_definition_revision?: string | null;
   body_definition_data?: BodyMarkingDefinitionData;
   body_allowed_definition_ids?: string[];
@@ -605,6 +649,7 @@ export type SpeciesDigitigradePreviewAssets = Record<
 >;
 
 export type SpeciesDefinition = {
+  preview_transform?: SpeciesPreviewTransform;
   id: string;
   name: string;
   blurb?: string | null;
@@ -775,6 +820,15 @@ export type IdentityValues = {
   metadata_likes: string;
   metadata_dislikes: string;
   custom_link: string;
+  resleeve_scan: boolean;
+  resleeve_lock: boolean;
+  synth_cookie: boolean;
+  capture_crystal: boolean;
+  auto_backup_implant: boolean;
+  show_in_directory: boolean;
+  directory_tag: string;
+  directory_erptag: string;
+  directory_ad: string;
   flavor_text_general: string;
   flavor_text_head: string;
   flavor_text_face: string;
@@ -833,10 +887,26 @@ export type IdentityLocationGroup = {
 
 export type IdentityPayload = Omit<
   IdentityValues,
-  'be_random_name' | 'bday_announce'
+  | 'be_random_name'
+  | 'bday_announce'
+  | 'show_in_directory'
+  | 'resleeve_scan'
+  | 'resleeve_lock'
+  | 'synth_cookie'
+  | 'capture_crystal'
+  | 'auto_backup_implant'
 > & {
   be_random_name: BooleanLike;
   bday_announce: BooleanLike;
+  show_in_directory: BooleanLike;
+  resleeve_scan: BooleanLike;
+  resleeve_lock: BooleanLike;
+  synth_cookie: BooleanLike;
+  capture_crystal: BooleanLike;
+  auto_backup_implant: BooleanLike;
+  directory_tag_options: string[];
+  directory_erptag_options: string[];
+  max_directory_ad_length: number;
   revision: number;
   pronoun_options: string[];
   economic_status_options: string[];

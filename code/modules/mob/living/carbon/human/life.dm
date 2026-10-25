@@ -1,3 +1,7 @@
+/////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star September 2026: HUD Optimization //
+/////////////////////////////////////////////////////////////////////
+
 //This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:32
 
 //NOTE: Breathing happens once per FOUR TICKS, unless the last breath fails. In which case it happens once per ONE TICK! So oxyloss healing is done once per 4 ticks while oxyloss damage is applied once per tick!
@@ -61,8 +65,10 @@
 
 	..()
 
-	if(life_tick % 30)
-		hud_updateflag = (1 << TOTAL_HUDS) - 1
+	// RS Edit Start: HUD Optimization (Lira, September 2026)
+	if(life_tick % 30 == 0)
+		hud_updateflag = (1 << (TOTAL_HUDS + 1)) - 2
+	// RS Edit End
 
 	voice = GetVoice()
 
@@ -1368,6 +1374,7 @@
 		update_skin(1)
 
 /mob/living/carbon/human/handle_regular_hud_updates()
+	refresh_hud_update_flags() // RS Add: HUD Optimization (Lira, September 2026)
 	if(hud_updateflag) // update our mob's hud overlays, AKA what others see flaoting above our head
 		handle_hud_list()
 
@@ -1983,24 +1990,25 @@
 	we only set those statuses and icons upon changes.  Then those HUD items will simply add those pre-made images.
 	This proc below is only called when those HUD elements need to change as determined by the mobs hud_updateflag.
 */
+// RS Edit: HUD Optimization (Lira, September 2026)
 /mob/living/carbon/human/proc/handle_hud_list()
 	if (BITTEST(hud_updateflag, HEALTH_HUD))
-		var/image/holder = grab_hud(HEALTH_HUD)
+		var/state
 		if(stat == DEAD)
-			holder.icon_state = "-100" 	// X_X
+			state = "-100" 	// X_X
 		else
-			holder.icon_state = RoundHealth((health-config.health_threshold_crit)/(getMaxHealth()-config.health_threshold_crit)*100)
-		apply_hud(HEALTH_HUD, holder)
+			state = RoundHealth((health-config.health_threshold_crit)/(getMaxHealth()-config.health_threshold_crit)*100)
+		set_hud_icon_state(HEALTH_HUD, state)
 
 	if (BITTEST(hud_updateflag, LIFE_HUD))
-		var/image/holder = grab_hud(LIFE_HUD)
+		var/state
 		if(isSynthetic())
-			holder.icon_state = "hudrobo"
+			state = "hudrobo"
 		else if(stat == DEAD)
-			holder.icon_state = "huddead"
+			state = "huddead"
 		else
-			holder.icon_state = "hudhealthy"
-		apply_hud(LIFE_HUD, holder)
+			state = "hudhealthy"
+		set_hud_icon_state(LIFE_HUD, state)
 
 	if (BITTEST(hud_updateflag, STATUS_HUD))
 		var/foundVirus = 0
@@ -2009,48 +2017,48 @@
 				foundVirus = 1
 				break
 
-		var/image/holder = grab_hud(STATUS_HUD)
-		var/image/holder2 = grab_hud(STATUS_HUD_OOC)
+		var/state
+		var/image/status_hud_ooc = hud_list[STATUS_HUD_OOC]
+		var/state2 = status_hud_ooc?.icon_state
 		if (isSynthetic())
-			holder.icon_state = "hudrobo"
+			state = "hudrobo"
 		else if(stat == DEAD)
-			holder.icon_state = "huddead"
-			holder2.icon_state = "huddead"
+			state = "huddead"
+			state2 = "huddead"
 		else if(foundVirus)
-			holder.icon_state = "hudill"
+			state = "hudill"
 		else if(has_brain_worms())
 			var/mob/living/simple_mob/animal/borer/B = has_brain_worms()
 			if(B.controlling)
-				holder.icon_state = "hudbrainworm"
+				state = "hudbrainworm"
 			else
-				holder.icon_state = "hudhealthy"
-			holder2.icon_state = "hudbrainworm"
+				state = "hudhealthy"
+			state2 = "hudbrainworm"
 		else
-			holder.icon_state = "hudhealthy"
+			state = "hudhealthy"
 			if(virus2.len)
-				holder2.icon_state = "hudill"
+				state2 = "hudill"
 			else
-				holder2.icon_state = "hudhealthy"
+				state2 = "hudhealthy"
 
-		apply_hud(STATUS_HUD, holder)
-		apply_hud(STATUS_HUD_OOC, holder2)
+		set_hud_icon_state(STATUS_HUD, state)
+		set_hud_icon_state(STATUS_HUD_OOC, state2)
 
 	if (BITTEST(hud_updateflag, ID_HUD))
-		var/image/holder = grab_hud(ID_HUD)
+		var/state
 		if(wear_id)
 			var/obj/item/weapon/card/id/I = wear_id.GetID()
 			if(I)
-				holder.icon_state = "hud[ckey(I.GetJobName())]"
+				state = "hud[ckey(I.GetJobName())]"
 			else
-				holder.icon_state = "hudunknown"
+				state = "hudunknown"
 		else
-			holder.icon_state = "hudunknown"
+			state = "hudunknown"
 
-		apply_hud(ID_HUD, holder)
+		set_hud_icon_state(ID_HUD, state)
 
 	if (BITTEST(hud_updateflag, WANTED_HUD))
-		var/image/holder = grab_hud(WANTED_HUD)
-		holder.icon_state = "hudblank"
+		var/state = "hudblank"
 		var/perpname = name
 		if(wear_id)
 			var/obj/item/weapon/card/id/I = wear_id.GetID()
@@ -2061,55 +2069,50 @@
 			if(E.fields["name"] == perpname)
 				for (var/datum/data/record/R in data_core.security)
 					if((R.fields["id"] == E.fields["id"]) && (R.fields["criminal"] == "*Arrest*"))
-						holder.icon_state = "hudwanted"
+						state = "hudwanted"
 						break
 					else if((R.fields["id"] == E.fields["id"]) && (R.fields["criminal"] == "Incarcerated"))
-						holder.icon_state = "hudprisoner"
+						state = "hudprisoner"
 						break
 					else if((R.fields["id"] == E.fields["id"]) && (R.fields["criminal"] == "Parolled"))
-						holder.icon_state = "hudparolled"
+						state = "hudparolled"
 						break
 					else if((R.fields["id"] == E.fields["id"]) && (R.fields["criminal"] == "Released"))
-						holder.icon_state = "hudreleased"
+						state = "hudreleased"
 						break
 
-		apply_hud(WANTED_HUD, holder)
+		set_hud_icon_state(WANTED_HUD, state)
 
 	if (  BITTEST(hud_updateflag, IMPLOYAL_HUD) \
 	   || BITTEST(hud_updateflag,  IMPCHEM_HUD) \
 	   || BITTEST(hud_updateflag, IMPTRACK_HUD))
 
-		var/image/holder1 = grab_hud(IMPTRACK_HUD)
-		var/image/holder2 = grab_hud(IMPLOYAL_HUD)
-		var/image/holder3 = grab_hud(IMPCHEM_HUD)
-
-		holder1.icon_state = "hudblank"
-		holder2.icon_state = "hudblank"
-		holder3.icon_state = "hudblank"
+		var/state1 = "hudblank"
+		var/state2 = "hudblank"
+		var/state3 = "hudblank"
 
 		for(var/obj/item/weapon/implant/I in src)
 			if(I.implanted)
 				if(!I.malfunction)
 					if(istype(I,/obj/item/weapon/implant/tracking))
-						holder1.icon_state = "hud_imp_tracking"
+						state1 = "hud_imp_tracking"
 					if(istype(I,/obj/item/weapon/implant/loyalty))
-						holder2.icon_state = "hud_imp_loyal"
+						state2 = "hud_imp_loyal"
 					if(istype(I,/obj/item/weapon/implant/chem))
-						holder3.icon_state = "hud_imp_chem"
+						state3 = "hud_imp_chem"
 
-		apply_hud(IMPTRACK_HUD, holder1)
-		apply_hud(IMPLOYAL_HUD, holder2)
-		apply_hud(IMPCHEM_HUD, holder3)
+		set_hud_icon_state(IMPTRACK_HUD, state1)
+		set_hud_icon_state(IMPLOYAL_HUD, state2)
+		set_hud_icon_state(IMPCHEM_HUD, state3)
 
 	if (BITTEST(hud_updateflag, SPECIALROLE_HUD))
-		var/image/holder = grab_hud(SPECIALROLE_HUD)
-		holder.icon_state = "hudblank"
+		var/state = "hudblank"
 		if(mind && mind.special_role)
 			if(hud_icon_reference[mind.special_role])
-				holder.icon_state = hud_icon_reference[mind.special_role]
+				state = hud_icon_reference[mind.special_role]
 			else
-				holder.icon_state = "hudsyndicate"
-		apply_hud(SPECIALROLE_HUD, holder)
+				state = "hudsyndicate"
+		set_hud_icon_state(SPECIALROLE_HUD, state)
 
 	attempt_vr(src,"handle_hud_list_vr",list()) //VOREStation Add - Custom HUDs.
 

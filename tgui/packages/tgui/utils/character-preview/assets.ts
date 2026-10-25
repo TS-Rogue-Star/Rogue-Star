@@ -104,6 +104,7 @@ export type GearOverlayAsset = GearAppearanceAsset & {
   slot?: string | null;
   layer?: number | null;
   overlays?: GearAppearanceAsset[] | null;
+  use_tail_mask?: boolean;
   mask_asset?: IconAssetPayload | null;
 };
 
@@ -111,6 +112,7 @@ export type GearOverlayAssetReference = GearAppearanceAssetReference & {
   slot?: string | null;
   layer?: number | null;
   overlays?: GearAppearanceAssetReference[] | null;
+  use_tail_mask?: boolean;
   mask_asset?: IconAssetReference | null;
 };
 

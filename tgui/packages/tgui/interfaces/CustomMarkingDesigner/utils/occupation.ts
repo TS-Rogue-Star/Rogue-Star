@@ -33,6 +33,8 @@ export const cloneOccupationDraft = (
   priorities: { ...draft.priorities },
   titles: { ...draft.titles },
   reset: !!draft.reset,
+  persist_spawn: !!(draft.persist_spawn ?? true),
+  vantag_volunteer: !!draft.vantag_volunteer,
 });
 
 const recordsEqual = (
@@ -50,6 +52,10 @@ export const occupationDraftsEqual = (
   !!right &&
   left.reset === right.reset &&
   left.alternate_option === right.alternate_option &&
+  left.spawnpoint === right.spawnpoint &&
+  (left.persist_spawn ?? true) === (right.persist_spawn ?? true) &&
+  !!left.vantag_volunteer === !!right.vantag_volunteer &&
+  left.vantag_preference === right.vantag_preference &&
   recordsEqual(left.priorities, right.priorities) &&
   recordsEqual(left.titles, right.titles);
 

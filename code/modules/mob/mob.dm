@@ -1,3 +1,7 @@
+//////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star September 2026: Mob Deletion Optimization //
+//////////////////////////////////////////////////////////////////////////////
+
 /mob/Destroy()//This makes sure that mobs withGLOB.clients/keys are not just deleted from the game.
 	mob_list -= src
 	dead_mob_list -= src
@@ -13,6 +17,10 @@
 	if(mind && mind.current == src)
 		spellremove(src)
 	ghostize()
+	// RS Edit Start: Mob Deletion Optimization (Lira, September 2026)
+	QDEL_NULL(ability_master)
+	set_focus(null)
+	// RS Edit End
 	QDEL_NULL(plane_holder)
 	..()
 	return QDEL_HINT_HARDDEL_NOW
@@ -274,6 +282,29 @@
 	face_atom(A)
 	return 1
 
+// RS Add
+/mob/verb/tiltcounterclock()
+	set hidden = TRUE
+	if(world.time <= allowtilttime) //This is a sloppy "wait" fix to work around tilting durring the get-up animation
+		return FALSE
+	if(!canface() || incapacitated(INCAPACITATION_ALL))
+		return FALSE
+	if(how_tilted > -maximum_tilt)
+		transform = turn(transform, -5)
+		how_tilted = how_tilted - 5
+		is_shifted = TRUE
+
+// RS Add
+/mob/verb/tiltclock()
+	set hidden = TRUE
+	if(world.time <= allowtilttime) //This is a sloppy "wait" fix to work around tilting durring the get-up animation
+		return FALSE
+	if(!canface() || incapacitated(INCAPACITATION_ALL))
+		return FALSE
+	if(how_tilted < maximum_tilt)
+		transform = turn(transform, 5)
+		how_tilted = how_tilted + 5
+		is_shifted = TRUE
 
 /mob/proc/ret_grab(list/L, flag)
 	return

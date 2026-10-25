@@ -1,3 +1,7 @@
+////////////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star September 2026: Character Designer - Expression //
+////////////////////////////////////////////////////////////////////////////////////
+
 #define ORGANICS	1
 #define SYNTHETICS	2
 
@@ -237,127 +241,6 @@ var/global/list/valid_bloodreagents = list("iron","copper","phoron","silver","go
 		var/english_traits = english_list(new_S.traits, and_text = ";", comma_text = ";")
 		log_game("TRAITS [pref.client_ckey]/([character]) with: [english_traits]") //Terrible 'fake' key_name()... but they aren't in the same entity yet
 
+// RS Edit: Character Designer - Expression (Lira, September 2026)
 /datum/category_item/player_setup_item/vore/traits/content(var/mob/user)
-	. += "<b>Custom Say: </b>"
-	. += "<a href='?src=\ref[src];custom_say=1'>Set Say Verb</a>"
-	. += "(<a href='?src=\ref[src];reset_say=1'>Reset</A>)"
-	. += "<br>"
-	. += "<b>Custom Whisper: </b>"
-	. += "<a href='?src=\ref[src];custom_whisper=1'>Set Whisper Verb</a>"
-	. += "(<a href='?src=\ref[src];reset_whisper=1'>Reset</A>)"
-	. += "<br>"
-	. += "<b>Custom Ask: </b>"
-	. += "<a href='?src=\ref[src];custom_ask=1'>Set Ask Verb</a>"
-	. += "(<a href='?src=\ref[src];reset_ask=1'>Reset</A>)"
-	. += "<br>"
-	. += "<b>Custom Exclaim: </b>"
-	. += "<a href='?src=\ref[src];custom_exclaim=1'>Set Exclaim Verb</a>"
-	. += "(<a href='?src=\ref[src];reset_exclaim=1'>Reset</A>)"
-	. += "<br>"
-	. += "<b>Custom Heat Discomfort: </b>"
-	. += "<a href='?src=\ref[src];custom_heat=1'>Set Heat Messages</a>"
-	. += "(<a href='?src=\ref[src];reset_heat=1'>Reset</A>)"
-	. += "<br>"
-	. += "<b>Custom Cold Discomfort: </b>"
-	. += "<a href='?src=\ref[src];custom_cold=1'>Set Cold Messages</a>"
-	. += "(<a href='?src=\ref[src];reset_cold=1'>Reset</A>)"
-
-/datum/category_item/player_setup_item/vore/traits/OnTopic(var/href,var/list/href_list, var/mob/user)
-	if(!CanUseTopic(user))
-		return TOPIC_NOACTION
-
-	else if(href_list["custom_say"])
-		var/say_choice = sanitize(tgui_input_text(usr, "This word or phrase will appear instead of 'says': [pref.real_name] says, \"Hi.\"", "Custom Say", pref.custom_say, 12), 12)
-		if(say_choice)
-			pref.custom_say = say_choice
-		return TOPIC_REFRESH
-
-	else if(href_list["custom_whisper"])
-		var/whisper_choice = sanitize(tgui_input_text(usr, "This word or phrase will appear instead of 'whispers': [pref.real_name] whispers, \"Hi...\"", "Custom Whisper", pref.custom_whisper, 12), 12)
-		if(whisper_choice)
-			pref.custom_whisper = whisper_choice
-		return TOPIC_REFRESH
-
-	else if(href_list["custom_ask"])
-		var/ask_choice = sanitize(tgui_input_text(usr, "This word or phrase will appear instead of 'asks': [pref.real_name] asks, \"Hi?\"", "Custom Ask", pref.custom_ask, 12), 12)
-		if(ask_choice)
-			pref.custom_ask = ask_choice
-		return TOPIC_REFRESH
-
-	else if(href_list["custom_exclaim"])
-		var/exclaim_choice = sanitize(tgui_input_text(usr, "This word or phrase will appear instead of 'exclaims', 'shouts' or 'yells': [pref.real_name] exclaims, \"Hi!\"", "Custom Exclaim", pref.custom_exclaim, 12), 12)
-		if(exclaim_choice)
-			pref.custom_exclaim = exclaim_choice
-		return TOPIC_REFRESH
-
-	else if(href_list["custom_heat"])
-		tgui_alert(user, "You are setting custom heat messages. These will overwrite your species' defaults. To return to defaults, click reset.")
-		var/old_message = pref.custom_heat.Join("\n\n")
-		var/new_message = sanitize(tgui_input_text(usr,"Use double enter between messages to enter a new one. Must be at least 3 characters long, 160 characters max and up to 10 messages are allowed.","Heat Discomfort messages",old_message, multiline= TRUE, prevent_enter = TRUE), MAX_MESSAGE_LEN,0,0,0)
-		if(length(new_message) > 0)
-			var/list/raw_list = splittext(new_message,"\n\n")
-			if(raw_list.len > 10)
-				raw_list.Cut(11)
-			for(var/i = 1, i <= raw_list.len, i++)
-				if(length(raw_list[i]) < 3 || length(raw_list[i]) > 160)
-					raw_list.Cut(i,i)
-				else
-					raw_list[i] = readd_quotes(raw_list[i])
-			ASSERT(raw_list.len <= 10)
-			pref.custom_heat = raw_list
-		return TOPIC_REFRESH
-
-	else if(href_list["custom_cold"])
-		tgui_alert(user, "You are setting custom cold messages. These will overwrite your species' defaults. To return to defaults, click reset.")
-		var/old_message = pref.custom_heat.Join("\n\n")
-		var/new_message = sanitize(tgui_input_text(usr,"Use double enter between messages to enter a new one. Must be at least 3 characters long, 160 characters max and up to 10 messages are allowed.","Cold Discomfort messages",old_message, multiline= TRUE, prevent_enter = TRUE), MAX_MESSAGE_LEN,0,0,0)
-		if(length(new_message) > 0)
-			var/list/raw_list = splittext(new_message,"\n\n")
-			if(raw_list.len > 10)
-				raw_list.Cut(11)
-			for(var/i = 1, i <= raw_list.len, i++)
-				if(length(raw_list[i]) < 3 || length(raw_list[i]) > 160)
-					raw_list.Cut(i,i)
-				else
-					raw_list[i] = readd_quotes(raw_list[i])
-			ASSERT(raw_list.len <= 10)
-			pref.custom_cold = raw_list
-		return TOPIC_REFRESH
-
-	else if(href_list["reset_say"])
-		var/say_choice = tgui_alert(usr, "Reset your Custom Say Verb?","Reset Verb",list("Yes","No"))
-		if(say_choice == "Yes")
-			pref.custom_say = null
-		return TOPIC_REFRESH
-
-	else if(href_list["reset_whisper"])
-		var/whisper_choice = tgui_alert(usr, "Reset your Custom Whisper Verb?","Reset Verb",list("Yes","No"))
-		if(whisper_choice == "Yes")
-			pref.custom_whisper = null
-		return TOPIC_REFRESH
-
-	else if(href_list["reset_ask"])
-		var/ask_choice = tgui_alert(usr, "Reset your Custom Ask Verb?","Reset Verb",list("Yes","No"))
-		if(ask_choice == "Yes")
-			pref.custom_ask = null
-		return TOPIC_REFRESH
-
-	else if(href_list["reset_exclaim"])
-		var/exclaim_choice = tgui_alert(usr, "Reset your Custom Exclaim Verb?","Reset Verb",list("Yes","No"))
-		if(exclaim_choice == "Yes")
-			pref.custom_exclaim = null
-		return TOPIC_REFRESH
-
-	else if(href_list["reset_cold"])
-		var/cold_choice = tgui_alert(usr, "Reset your Custom Cold Discomfort messages?", "Reset Discomfort",list("Yes","No"))
-		if(cold_choice == "Yes")
-			pref.custom_cold = list()
-		return TOPIC_REFRESH
-
-	else if(href_list["reset_heat"])
-		var/heat_choice = tgui_alert(usr, "Reset your Custom Heat Discomfort messages?", "Reset Discomfort",list("Yes","No"))
-		if(heat_choice == "Yes")
-			pref.custom_heat = list()
-		return TOPIC_REFRESH
-
-	return ..()
+	return ""

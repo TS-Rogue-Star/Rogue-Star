@@ -26,10 +26,12 @@
 	switch(wire)
 		if(WIRE_IDSCAN)
 			A.locked = FALSE
+			A.queue_icon_update() // RS Add: APC and Cell Appearance Optimization (Lira, October 2026)
 
 			spawn(300)
 				if(A)
 					A.locked = TRUE
+					A.queue_icon_update() // RS Add: APC and Cell Appearance Optimization (Lira, October 2026)
 
 		if(WIRE_MAIN_POWER1, WIRE_MAIN_POWER2)
 			if(!A.shorted)

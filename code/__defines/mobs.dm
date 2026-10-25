@@ -111,6 +111,9 @@
 #define MIN_SUPPLIED_LAW_NUMBER 15
 #define MAX_SUPPLIED_LAW_NUMBER 50
 
+// RS Add: Mob tilt cooldown after incapacitated recovery
+#define TILT_INCAPACITATED_WAITTIME (3 SECONDS)
+
 //default item on-mob icons
 #define INV_L_HAND_DEF_ICON 'icons/mob/items/lefthand.dmi'
 #define INV_R_HAND_DEF_ICON 'icons/mob/items/righthand.dmi'

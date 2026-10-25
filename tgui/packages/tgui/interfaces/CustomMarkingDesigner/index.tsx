@@ -25,8 +25,25 @@
 // /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Updated by Lira for Rogue Star September 2026: Character Designer - Occupation //////////////////////////////////////
 // /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star September 2026: Character Designer - Expression //////////////////////////////////////
+// /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star September 2026: Character Designer - Misc Settings ///////////////////////////////////
+// /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star October 2026: Character Designer - JSON Export ///////////////////////////////////////
+// /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 import { Component } from 'inferno';
+import { CharacterExportButton } from './components/CharacterExportButton';
+import {
+  buildCharacterAppearanceDraft,
+  type CharacterExportDrafts,
+} from './utils/characterExport';
+import { buildSizeWeightSaveParams } from './utils/sizeWeight';
+import { buildAppearancePersistenceState } from './utils/persistence';
+import {
+  buildExpressionState,
+  expressionValidationError,
+} from './utils/expression';
 
 import {
   backendSetSharedStates,
@@ -1783,7 +1800,10 @@ class SpeciesSaveResultSyncScheduler extends Component<SpeciesSaveResultSyncSche
       return;
     }
     this.lastRevision = speciesSaveResult.revision;
+    const shared = selectBackend(this.context.store.getState()).shared;
     syncSpeciesSaveResultState(writeStates, {
+      basicDraft: shared?.basicAppearanceState,
+      basicSaved: shared?.basicAppearanceSavedState,
       result: speciesSaveResult,
       stateToken,
       speciesPayload,
@@ -2262,6 +2282,7 @@ type DesignerTitleTabsProps = Readonly<{
   setZoomPercent: (value: number) => void;
   setEnableCustomPromptOpen: (value: boolean) => void;
   onTabChange: (tab: DesignerTabId) => void;
+  exportButton: import('inferno').InfernoNode;
 }>;
 
 const DesignerTitleTabs = ({
@@ -2272,6 +2293,7 @@ const DesignerTitleTabs = ({
   setZoomPercent,
   setEnableCustomPromptOpen,
   onTabChange,
+  exportButton,
 }: DesignerTitleTabsProps) => (
   <>
     <Tabs className="RogueStar__titleTabs">
@@ -2390,44 +2412,46 @@ const DesignerTitleTabs = ({
         Custom Markings
       </Tabs.Tab>
     </Tabs>
-    <Box
-      className="RogueStar__zoomControl"
-      role="group"
-      aria-label={`Designer zoom, currently ${zoomPercent}%`}
-      ml="auto">
-      <Box className="RogueStar__zoomControlLabel">
-        <Icon name="search" />
-        Zoom
-      </Box>
-      <Box className="RogueStar__zoomTrack">
-        <Box
-          className="RogueStar__zoomTrackFill"
-          style={{
-            transform: `scaleX(${
-              (zoomPercent - DESIGNER_ZOOM_MIN_PERCENT) /
-              (DESIGNER_ZOOM_MAX_PERCENT - DESIGNER_ZOOM_MIN_PERCENT)
-            })`,
-          }}
-        />
-        {DESIGNER_ZOOM_LEVELS.map((percent) => (
-          <Button
-            key={percent}
-            className={`RogueStar__zoomStop${
-              percent < zoomPercent ? ' RogueStar__zoomStop--filled' : ''
-            }`}
-            selected={zoomPercent === percent}
-            aria-label={`Set designer zoom to ${percent}%`}
-            tooltip={
-              zoomPercent === percent
-                ? `Current zoom: ${percent}%`
-                : `Set zoom to ${percent}%`
-            }
-            tooltipPosition="bottom"
-            onClick={() => setZoomPercent(percent)}
+    <Box className="RogueStar__titleActions">
+      {exportButton}
+      <Box
+        className="RogueStar__zoomControl"
+        role="group"
+        aria-label={`Designer zoom, currently ${zoomPercent}%`}>
+        <Box className="RogueStar__zoomControlLabel">
+          <Icon name="search" />
+          Zoom
+        </Box>
+        <Box className="RogueStar__zoomTrack">
+          <Box
+            className="RogueStar__zoomTrackFill"
+            style={{
+              transform: `scaleX(${
+                (zoomPercent - DESIGNER_ZOOM_MIN_PERCENT) /
+                (DESIGNER_ZOOM_MAX_PERCENT - DESIGNER_ZOOM_MIN_PERCENT)
+              })`,
+            }}
           />
-        ))}
+          {DESIGNER_ZOOM_LEVELS.map((percent) => (
+            <Button
+              key={percent}
+              className={`RogueStar__zoomStop${
+                percent < zoomPercent ? ' RogueStar__zoomStop--filled' : ''
+              }`}
+              selected={zoomPercent === percent}
+              aria-label={`Set designer zoom to ${percent}%`}
+              tooltip={
+                zoomPercent === percent
+                  ? `Current zoom: ${percent}%`
+                  : `Set zoom to ${percent}%`
+              }
+              tooltipPosition="bottom"
+              onClick={() => setZoomPercent(percent)}
+            />
+          ))}
+        </Box>
+        <Box className="RogueStar__zoomValue">{zoomPercent}%</Box>
       </Box>
-      <Box className="RogueStar__zoomValue">{zoomPercent}%</Box>
     </Box>
   </>
 );
@@ -3003,9 +3027,10 @@ const CustomMarkingDesignerContent = (_props, context) => {
     );
   const [basicPayload, setBasicPayload] =
     useLocalState<BasicAppearancePayload | null>(context, 'basicPayload', null);
-  const basicInitialState = buildBasicStateFromPayload(
-    data.basic_appearance_payload
-  );
+  const basicInitialState = buildBasicStateFromPayload({
+    ...data.size_weight,
+    ...data.basic_appearance_payload,
+  });
   const [basicAppearanceState, setBasicAppearanceState] =
     useLocalState<BasicAppearanceState>(
       context,
@@ -4616,6 +4641,7 @@ const CustomMarkingDesignerContent = (_props, context) => {
         await act('save_body_markings', {
           body_markings: outgoing,
           order: outgoingOrder,
+          persist_markings: bodyPayload?.persist_markings ?? true,
           close: false,
         });
       } else {
@@ -4631,6 +4657,7 @@ const CustomMarkingDesignerContent = (_props, context) => {
             chunk_index: idx,
             chunk_total: totalChunks,
             body_markings: chunks[idx] || {},
+            persist_markings: bodyPayload?.persist_markings ?? true,
           };
           if (idx === 0) {
             payload.order = outgoingOrder;
@@ -4641,6 +4668,7 @@ const CustomMarkingDesignerContent = (_props, context) => {
       const nextSelected = bodyMarkingsSelected || outgoingOrder[0] || null;
       setBodyMarkingsDirty(false);
       setBodySavedState({
+        persist_markings: bodyPayload?.persist_markings ?? true,
         order: [...outgoingOrder],
         markings: deepCopyMarkings(outgoing),
         selectedId: nextSelected,
@@ -4682,6 +4710,7 @@ const CustomMarkingDesignerContent = (_props, context) => {
         ...bodyPayload,
         body_markings: nextMarkings,
         order: nextOrder,
+        persist_markings: fallbackSaved.persist_markings ?? true,
       };
       setBodyPayload(updatedPayload);
     }
@@ -4706,6 +4735,9 @@ const CustomMarkingDesignerContent = (_props, context) => {
       return true;
     }
     const { latestState, latestSavedState } = resolveLatestBasicState();
+    if (expressionValidationError(latestState)) {
+      return false;
+    }
     const speciesPreviewStale =
       shouldInvalidateSpeciesPayloadForBiologicalGenderChange(
         latestSavedState.biological_gender,
@@ -4716,6 +4748,10 @@ const CustomMarkingDesignerContent = (_props, context) => {
     try {
       setPreviewRefreshSkips((previewRefreshSkips || 0) + 1);
       await act('save_basic_appearance', {
+        ...buildSizeWeightSaveParams(latestState),
+        ...buildAppearancePersistenceState(latestState),
+        ...buildExpressionState(latestState),
+        custom_speech_bubble: latestState.custom_speech_bubble,
         biological_gender: latestState.biological_gender,
         digitigrade: latestState.digitigrade ? 1 : 0,
         body_color: latestState.body_color,
@@ -5823,6 +5859,68 @@ const CustomMarkingDesignerContent = (_props, context) => {
     }
   };
 
+  const collectCharacterExportDrafts = (): CharacterExportDrafts => {
+    const shared = selectBackend(context.store.getState()).shared || {};
+    const changedFlags = (key: string, fallback: BooleanMapState) => {
+      const state =
+        (shared[`${key}-${stateToken}`] as BooleanMapState) || fallback;
+      return state.dirty ? state.map : undefined;
+    };
+    const traits = resolveLatestTraitsDraft();
+    return {
+      species: detectSpeciesUnsaved()
+        ? {
+            species: resolveLatestSpeciesSelection(),
+            icon_base: resolveLatestSpeciesIconBaseSelection(),
+            custom_species: resolveLatestSpeciesCustomName(),
+          }
+        : undefined,
+      identity: detectIdentityUnsaved()
+        ? resolveLatestIdentityDraft()
+        : undefined,
+      appearance: detectBasicUnsaved()
+        ? buildCharacterAppearanceDraft(
+            resolveLatestBasicState().latestState,
+            resolveLatestBasicPayload()
+          )
+        : undefined,
+      body_markings: detectBodyUnsaved()
+        ? {
+            body_markings:
+              (shared.bodyMarkingsState as typeof bodyMarkingsState) ||
+              bodyMarkingsState,
+            order: (shared.bodyMarkingsOrder as string[]) || bodyMarkingsOrder,
+            persist_markings:
+              resolveLatestBodyPayload()?.persist_markings ?? true,
+          }
+        : undefined,
+      traits:
+        detectTraitsUnsaved() && traits
+          ? buildTraitsSavePayload(traits)
+          : undefined,
+      equipment: equipmentSession.dirty ? equipmentSession.draft : undefined,
+      loadout: loadoutSession.dirty ? loadoutSession.draft : undefined,
+      occupation: occupationSession.dirty ? occupationSession.draft : undefined,
+      custom_markings: {
+        width: canvasWidth,
+        height: canvasHeight,
+        strokes: getStoredStrokeDrafts(),
+        part_replacements: changedFlags(
+          'partReplacements',
+          resolvedReplacementState
+        ),
+        part_render_priority: changedFlags(
+          'partRenderPriority',
+          resolvedPriorityState
+        ),
+        part_canvas_size: changedFlags(
+          'partCanvasSize',
+          resolvedCanvasSizeState
+        ),
+      },
+    };
+  };
+
   const titleTabs = (
     <DesignerTitleTabs
       resolvedActiveTab={resolvedActiveTab}
@@ -5832,12 +5930,22 @@ const CustomMarkingDesignerContent = (_props, context) => {
       setZoomPercent={setZoomPercent}
       setEnableCustomPromptOpen={setEnableCustomPromptOpen}
       onTabChange={handleTabChange}
+      exportButton={
+        <CharacterExportButton
+          disabled={tabsLocked || uiLocked}
+          stateToken={stateToken}
+          characterName={resolveLatestIdentityDraft()?.real_name}
+          result={data.character_export_result}
+          collectDrafts={collectCharacterExportDrafts}
+          act={act}
+        />
+      }
     />
   );
 
   return (
     <Window
-      theme="nanotrasen rogue-star-window"
+      theme="nanotrasen rogue-star-window rogue-star-character-designer"
       width={1720}
       height={950}
       scale={zoomPercent / 100}

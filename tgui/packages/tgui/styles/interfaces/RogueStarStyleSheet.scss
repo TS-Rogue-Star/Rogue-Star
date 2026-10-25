@@ -23,6 +23,8 @@
 // /////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Updated by Lira for Rogue Star September 2026: Character Designer - Occupation //////////////////////////
 // /////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star September 2026: Character Designer - Misc Settings ///////////////////////
+// /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 @use '../colors.scss';
 
@@ -209,6 +211,10 @@ $titlebar-height: 38px;
     white-space: nowrap;
   }
 
+  &.rogue-star-character-designer .TitleBar__title {
+    right: 12px;
+  }
+
   .TitleBar__buttons {
     position: relative;
     top: 0;
@@ -286,6 +292,20 @@ $titlebar-height: 38px;
     box-shadow:
       0 0 14px rgba(229, 188, 106, 0.5),
       0 0 18px rgba(129, 76, 255, 0.45);
+  }
+
+  .RogueStar__titleActions {
+    display: inline-flex;
+    align-items: center;
+    flex: 0 0 auto;
+    gap: 0.5rem;
+    margin-left: auto;
+  }
+
+  .RogueStar__characterExport {
+    flex: 0 0 auto;
+    margin: 0;
+    white-space: nowrap;
   }
 
   .RogueStar__zoomControl {
@@ -1415,6 +1435,43 @@ $titlebar-height: 38px;
   > .Section__buttons {
     position: static;
     margin: 0 0 0 auto;
+  }
+}
+
+.RogueStar__loadoutPresetPicker {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: 8px;
+}
+
+.RogueStar__loadoutPresetSlots {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(0, 1fr);
+  gap: 4px;
+}
+
+.RogueStar__chip.RogueStar__loadoutPresetButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+  height: 28px;
+  padding: 0;
+  border-radius: 7px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0;
+  box-shadow: none;
+
+  .Button__content {
+    align-self: center;
+  }
+
+  &.Button--selected {
+    border-color: $gold-accent;
+    box-shadow: 0 0 10px rgba($gold-accent, 0.2);
   }
 }
 
@@ -3472,6 +3529,18 @@ $titlebar-height: 38px;
   text-shadow: 0 0 6px rgba(229, 188, 106, 0.15);
 }
 
+.RogueStar__speechBubbleInline {
+  position: relative;
+  width: 24px;
+  height: 24px;
+
+  .RogueStar__previewCanvasFrame {
+    border: 0;
+    background: transparent !important;
+    box-shadow: none;
+  }
+}
+
 .RogueStar__sessionButtons {
   gap: 1rem;
 }
@@ -4115,6 +4184,10 @@ $titlebar-height: 38px;
     align-items: center;
     width: 100%;
     line-height: 1;
+  }
+
+  .RogueStar__physiologyDropdownContent--textOnly {
+    grid-template-columns: minmax(0, 1fr) auto;
   }
 
   .RogueStar__physiologyDropdownContent > .Icon {
@@ -5137,6 +5210,23 @@ $titlebar-height: 38px;
 
 .RogueStar__occupationDropdown .RogueStar__identityDropdownContent {
   grid-template-columns: minmax(0, 1fr) auto;
+}
+
+.RogueStar__occupationOptions {
+  display: grid;
+  grid-template-columns: 1.2fr 1.1fr 12rem 1fr auto;
+  align-items: end;
+  gap: 1rem;
+}
+
+.RogueStar__occupationOptions > :not(:first-child):not(.Button) {
+  padding-left: 1rem;
+  border-left: 1px solid rgba(214, 184, 105, 0.18);
+}
+
+.RogueStar__occupationOptions .Button {
+  min-height: 24px;
+  margin-bottom: 0;
 }
 
 .RogueStar__occupationPriorities {
@@ -6240,6 +6330,30 @@ $titlebar-height: 38px;
   min-height: 31rem;
 }
 
+.RogueStar__identityDirectoryWorkspace {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  height: 100%;
+  min-height: 20rem;
+}
+
+.RogueStar__identityDirectorySettings {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.75rem;
+}
+
+.RogueStar__identityDirectorySettings .RogueStar__identityField {
+  grid-template-columns: minmax(0, 1fr);
+  align-content: start;
+  margin-bottom: 0;
+}
+
+.RogueStar__identityDirectoryWorkspace > .RogueStar__identityLongTextEditor {
+  flex: 1 1 auto;
+}
+
 .RogueStar__identityCustomLinkEditor {
   flex: 0 0 auto;
   margin-bottom: 0.75rem;
@@ -6307,3 +6421,56 @@ $titlebar-height: 38px;
   .RogueStar__identityLocationTile.Button.Button--disabled {
   background-color: transparent !important;
 }
+
+// RS Add Start: Character Designer - Misc Settings (Lira, September 2026)
+.RogueStar__persistenceSection > .Section__title > .Section__buttons {
+  top: 50%;
+  margin-top: 0;
+  transform: translateY(-50%);
+}
+
+.RogueStar__persistenceToggle.RogueStar__chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 2.4rem;
+  height: 1.7rem;
+  padding: 0;
+  vertical-align: middle;
+  letter-spacing: 0;
+  font-size: 0.8rem;
+  line-height: 1;
+  color: #c3a2e3;
+  border-color: rgba(184, 134, 255, 0.24);
+  background: linear-gradient(
+    110deg,
+    rgba(28, 17, 44, 0.94),
+    rgba(18, 12, 29, 0.92)
+  );
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.03);
+
+  > .Button__content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &.Button--selected {
+    color: #f6d59a;
+    border-color: rgba($gold-accent, 0.48);
+    background: linear-gradient(
+      110deg,
+      rgba(70, 37, 103, 0.85),
+      rgba(44, 30, 40, 0.94)
+    );
+    box-shadow: inset 0 1px 0 rgba(255, 225, 165, 0.08);
+  }
+
+  &:hover:not(.Button--disabled),
+  &:focus:not(.Button--disabled) {
+    border-color: rgba($gold-accent, 0.78);
+    box-shadow: 0 0 12px rgba(184, 134, 255, 0.2);
+  }
+}
+// RS Add End

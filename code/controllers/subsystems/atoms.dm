@@ -1,3 +1,7 @@
+////////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star September 2026: Terrain Appearance Batching //
+////////////////////////////////////////////////////////////////////////////////
+
 #define BAD_INIT_QDEL_BEFORE 1
 #define BAD_INIT_DIDNT_INIT 2
 #define BAD_INIT_SLEPT 4
@@ -15,6 +19,11 @@ SUBSYSTEM_DEF(atoms)
 	var/list/late_loaders
 	var/list/created_atoms
 
+	// RS Add Start: Terrain Appearance Batching (Lira, September 2026)
+	var/terrain_initializing = TRUE
+	var/list/terrain_icon_updates = list()
+	// RS Add End
+
 	var/list/BadInitializeCalls = list()
 
 /datum/controller/subsystem/atoms/Initialize(timeofday)
@@ -23,6 +32,7 @@ SUBSYSTEM_DEF(atoms)
 	to_world_log("Initializing objects")
 	admin_notice("<span class='danger'>Initializing objects</span>", R_DEBUG)
 	InitializeAtoms()
+	finish_terrain_icon_updates() // RS Add: Terrain Appearance Batching (Lira, September 2026)
 	return ..()
 
 /datum/controller/subsystem/atoms/proc/InitializeAtoms(list/atoms)
@@ -110,11 +120,59 @@ SUBSYSTEM_DEF(atoms)
 	initialized = old_initialized
 
 /datum/controller/subsystem/atoms/Recover()
+	// RS Add Start: Terrain Appearance Batching (Lira, September 2026)
+	terrain_initializing = SSatoms.terrain_initializing
+	terrain_icon_updates = SSatoms.terrain_icon_updates
+	// RS Add End
 	initialized = SSatoms.initialized
 	if(initialized == INITIALIZATION_INNEW_MAPLOAD)
 		InitializeAtoms()
+	// RS Add Start: Terrain Appearance Batching (Lira, September 2026)
+	if(initialized != INITIALIZATION_INSSATOMS)
+		SSatoms.terrain_initializing = FALSE
+		finish_terrain_icon_updates()
+	// RS Add End
 	old_initialized = SSatoms.old_initialized
 	BadInitializeCalls = SSatoms.BadInitializeCalls
+
+// RS Add: Terrain Appearance Batching (Lira, September 2026)
+/datum/controller/subsystem/atoms/proc/queue_terrain_icon_update(turf/simulated/T, update_neighbors = FALSE)
+	if(!terrain_initializing)
+		return FALSE
+	if(!T.terrain_icon_update_state)
+		T.terrain_icon_update_state = 1
+		terrain_icon_updates += T
+	if(update_neighbors)
+		if(istype(T, /turf/simulated/floor))
+			for(var/turf/simulated/floor/F in range(T, 1))
+				if(!F.terrain_icon_update_state)
+					F.terrain_icon_update_state = 1
+					terrain_icon_updates += F
+		else if(istype(T, /turf/simulated/mineral))
+			for(var/direction in alldirs)
+				var/turf/simulated/N = get_step(T, direction)
+				if(istype(N, /turf/simulated/mineral) || istype(N, /turf/simulated/wall/solidrock))
+					if(!N.terrain_icon_update_state)
+						N.terrain_icon_update_state = 1
+						terrain_icon_updates += N
+	return TRUE
+
+// RS Add: Terrain Appearance Batching (Lira, September 2026)
+/datum/controller/subsystem/atoms/proc/finish_terrain_icon_updates()
+	terrain_initializing = FALSE
+	for(var/turf/simulated/floor/F in terrain_icon_updates)
+		if(!QDELETED(F))
+			F.update_base_icon()
+		CHECK_TICK
+	for(var/turf/simulated/T in terrain_icon_updates)
+		if(!QDELETED(T) && T.terrain_icon_update_state != 2)
+			T.terrain_icon_update_state = 2
+			T.update_icon()
+		CHECK_TICK
+	for(var/turf/simulated/T in terrain_icon_updates)
+		T.terrain_icon_update_state = 0
+		CHECK_TICK
+	terrain_icon_updates = null
 
 /datum/controller/subsystem/atoms/proc/InitLog()
 	. = ""

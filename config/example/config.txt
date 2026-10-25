@@ -346,7 +346,7 @@ REQ_CULT_GHOSTWRITER 6
 ## Sets the number of available character slots
 CHARACTER_SLOTS 50
 ## Sets the number of loadout slots per character
-#LOADOUT_SLOTS 3
+#LOADOUT_SLOTS 9
 
 ## Uncomment to use overmap system for zlevel travel
 #USE_OVERMAP

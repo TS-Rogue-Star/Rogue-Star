@@ -17,16 +17,16 @@
 /turf/simulated/floor/outdoors/dirt/virgo3b,
 /area/submap/drgnplateu)
 "cV" = (
-/obj/item/weapon/digestion_remains/skull/tajaran,
-/obj/item/weapon/digestion_remains{
+/obj/item/weapon/digestion_remains/organic/skull/tajaran,
+/obj/item/weapon/digestion_remains/organic{
 	pixel_x = 19;
 	pixel_y = 1
 	},
-/obj/item/weapon/digestion_remains{
+/obj/item/weapon/digestion_remains/organic{
 	pixel_x = 8;
 	pixel_y = 1
 	},
-/obj/item/weapon/digestion_remains,
+/obj/item/weapon/digestion_remains/organic,
 /obj/item/clothing/accessory/collar/holo/indigestible,
 /turf/simulated/floor/outdoors/dirt/virgo3b,
 /area/submap/drgnplateu)
@@ -50,8 +50,8 @@
 /turf/simulated/floor/outdoors/grass/sif/forest,
 /area/submap/drgnplateu)
 "ez" = (
-/obj/item/weapon/digestion_remains/ribcage,
-/obj/item/weapon/digestion_remains{
+/obj/item/weapon/digestion_remains/organic/ribcage,
+/obj/item/weapon/digestion_remains/organic{
 	pixel_x = 19;
 	pixel_y = 1
 	},
@@ -59,8 +59,8 @@
 /turf/simulated/floor/outdoors/dirt/virgo3b,
 /area/submap/drgnplateu)
 "fj" = (
-/obj/item/weapon/digestion_remains/ribcage,
-/obj/item/weapon/digestion_remains{
+/obj/item/weapon/digestion_remains/organic/ribcage,
+/obj/item/weapon/digestion_remains/organic{
 	pixel_x = 8;
 	pixel_y = 7
 	},
@@ -138,20 +138,20 @@
 /turf/simulated/floor/outdoors/grass/sif/forest,
 /area/submap/drgnplateu)
 "mX" = (
-/obj/item/weapon/digestion_remains/skull/unknown/anthro,
-/obj/item/weapon/digestion_remains{
+/obj/item/weapon/digestion_remains/organic/skull/unknown/anthro,
+/obj/item/weapon/digestion_remains/organic{
 	pixel_x = 8;
 	pixel_y = 7
 	},
-/obj/item/weapon/digestion_remains{
+/obj/item/weapon/digestion_remains/organic{
 	pixel_x = 19;
 	pixel_y = -2
 	},
-/obj/item/weapon/digestion_remains{
+/obj/item/weapon/digestion_remains/organic{
 	pixel_x = 19;
 	pixel_y = -11
 	},
-/obj/item/weapon/digestion_remains{
+/obj/item/weapon/digestion_remains/organic{
 	pixel_x = 19;
 	pixel_y = 1
 	},
@@ -164,8 +164,8 @@
 /turf/simulated/floor/outdoors/dirt/virgo3b,
 /area/submap/drgnplateu)
 "ni" = (
-/obj/item/weapon/digestion_remains/skull/unknown/anthro,
-/obj/item/weapon/digestion_remains/ribcage,
+/obj/item/weapon/digestion_remains/organic/skull/unknown/anthro,
+/obj/item/weapon/digestion_remains/organic/ribcage,
 /obj/effect/decal/cleanable/liquid_fuel,
 /turf/simulated/floor/outdoors/dirt/virgo3b,
 /area/submap/drgnplateu)
@@ -192,7 +192,7 @@
 /turf/template_noop,
 /area/template_noop)
 "xd" = (
-/obj/item/weapon/digestion_remains/skull/nevrean,
+/obj/item/weapon/digestion_remains/organic/skull/nevrean,
 /obj/effect/decal/cleanable/filth,
 /turf/simulated/floor/outdoors/dirt/virgo3b,
 /area/submap/drgnplateu)
@@ -203,12 +203,12 @@
 /turf/simulated/floor/outdoors/dirt/virgo3b,
 /area/submap/drgnplateu)
 "zl" = (
-/obj/item/weapon/digestion_remains/skull/akula,
+/obj/item/weapon/digestion_remains/organic/skull/akula,
 /obj/effect/decal/cleanable/liquid_fuel,
 /turf/simulated/floor/outdoors/dirt/virgo3b,
 /area/submap/drgnplateu)
 "zm" = (
-/obj/item/weapon/digestion_remains,
+/obj/item/weapon/digestion_remains/organic,
 /obj/effect/decal/cleanable/filth,
 /turf/simulated/floor/outdoors/dirt/virgo3b,
 /area/submap/drgnplateu)
@@ -225,14 +225,14 @@
 /turf/simulated/floor/outdoors/dirt/virgo3b,
 /area/submap/drgnplateu)
 "Cu" = (
-/obj/item/weapon/digestion_remains{
+/obj/item/weapon/digestion_remains/organic{
 	pixel_x = 8
 	},
-/obj/item/weapon/digestion_remains{
+/obj/item/weapon/digestion_remains/organic{
 	pixel_x = 8;
 	pixel_y = 7
 	},
-/obj/item/weapon/digestion_remains{
+/obj/item/weapon/digestion_remains/organic{
 	pixel_x = 19;
 	pixel_y = 1
 	},
@@ -240,8 +240,8 @@
 /turf/simulated/floor/outdoors/dirt/virgo3b,
 /area/submap/drgnplateu)
 "FT" = (
-/obj/item/weapon/digestion_remains/ribcage,
-/obj/item/weapon/digestion_remains/ribcage{
+/obj/item/weapon/digestion_remains/organic/ribcage,
+/obj/item/weapon/digestion_remains/organic/ribcage{
 	pixel_x = 9;
 	pixel_y = 14
 	},
@@ -263,7 +263,7 @@
 /turf/simulated/floor/outdoors/dirt/virgo3b,
 /area/submap/drgnplateu)
 "Jz" = (
-/obj/item/weapon/digestion_remains/skull/unknown/anthro,
+/obj/item/weapon/digestion_remains/organic/skull/unknown/anthro,
 /turf/simulated/floor/outdoors/dirt/virgo3b,
 /area/submap/drgnplateu)
 "JJ" = (
@@ -299,9 +299,9 @@
 /turf/simulated/floor/outdoors/dirt/virgo3b,
 /area/submap/drgnplateu)
 "Nj" = (
-/obj/item/weapon/digestion_remains/skull/unathi,
-/obj/item/weapon/digestion_remains,
-/obj/item/weapon/digestion_remains{
+/obj/item/weapon/digestion_remains/organic/skull/unathi,
+/obj/item/weapon/digestion_remains/organic,
+/obj/item/weapon/digestion_remains/organic{
 	pixel_x = 8;
 	pixel_y = 7
 	},
@@ -323,7 +323,7 @@
 /turf/simulated/floor/outdoors/dirt/virgo3b,
 /area/submap/drgnplateu)
 "Ra" = (
-/obj/item/weapon/digestion_remains/skull/zorren,
+/obj/item/weapon/digestion_remains/organic/skull/zorren,
 /obj/item/clothing/accessory/collar/holo/indigestible,
 /turf/simulated/floor/outdoors/dirt/virgo3b,
 /area/submap/drgnplateu)

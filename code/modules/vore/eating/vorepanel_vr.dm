@@ -461,6 +461,8 @@ var/global/list/rsui_healthbar_preview_cache = list()
 			"show_liq_fullness" = selected.show_fullness_messages,
 			"liquid_voresprite" = selected.count_liquid_for_sprite,
 			"liquid_multiplier" = selected.liquid_multiplier,
+			"nutrition_voresprite" = selected.count_nutrition_for_sprite, // RS Add
+			"nutrition_multiplier" = selected.nutrition_multiplier, // RS Add
 			"custom_reagentcolor" = selected.custom_reagentcolor,
 			"custom_reagentalpha" = selected.custom_reagentalpha,
 			"liquid_overlay" = selected.liquid_overlay,
@@ -497,6 +499,7 @@ var/global/list/rsui_healthbar_preview_cache = list()
 			liq_interacts["liq_reagent_nutri_rate"] = selected.gen_time
 			liq_interacts["liq_reagent_capacity"] = selected.custom_max_volume
 			liq_interacts["liq_sloshing"] = selected.vorefootsteps_sounds
+			liq_interacts["liq_nutrition_sloshing"] = selected.nutrition_sloshing // RS Add
 			liq_interacts["liq_reagent_addons"] = list()
 			liq_interacts["custom_reagentcolor"] = selected.custom_reagentcolor ? selected.custom_reagentcolor : selected.reagentcolor
 			liq_interacts["custom_reagentalpha"] = selected.custom_reagentalpha ? selected.custom_reagentalpha : "Default"
@@ -612,6 +615,7 @@ var/global/list/rsui_healthbar_preview_cache = list()
 		"absorbable" = host.absorbable,
 		"digest_leave_remains" = host.digest_leave_remains,
 		"allowmobvore" = host.allowmobvore,
+		"allownpcvore" = host.allownpcvore, // RS Add
 		"permit_healbelly" = host.permit_healbelly,
 		"show_vore_fx" = host.show_vore_fx,
 		"can_be_drop_prey" = host.can_be_drop_prey,
@@ -960,6 +964,12 @@ var/global/list/rsui_healthbar_preview_cache = list()
 				host.client.prefs_vr.allowmobvore = host.allowmobvore
 			unsaved_changes = TRUE
 			return TRUE
+		if("toggle_npcvore") // RS Add Start
+			host.allownpcvore = !host.allownpcvore
+			if(host.client.prefs_vr)
+				host.client.prefs_vr.allownpcvore = host.allownpcvore
+			unsaved_changes = TRUE
+			return TRUE // RS Add End
 		if("toggle_steppref")
 			host.step_mechanics_pref = !host.step_mechanics_pref
 			if(host.client.prefs_vr)
@@ -2079,6 +2089,16 @@ var/global/list/rsui_healthbar_preview_cache = list()
 				host.vore_selected.liquid_multiplier = CLAMP(liquid_multiplier_input, 0.1, 10)
 				host:update_fullness()
 			. = TRUE
+		if("b_count_nutrition_for_sprites") // RS Add Start
+			host.vore_selected.count_nutrition_for_sprite = !host.vore_selected.count_nutrition_for_sprite
+			host:update_fullness()
+			. = TRUE
+		if("b_nutrition_multiplier")
+			var/nutrition_multiplier_input = input(user, "Set the impact your nutrition will have on your vore sprite and sloshing. 1 means [NUTRITION_PER_PREY] nutrition will count as 1 normal sized prey-thing's worth, 0.5 means nutrition counts half as much, 2 means nutrition counts double. (Range from 0.01 - 10)", "Nutrition Multiplier") as num|null
+			if(!isnull(nutrition_multiplier_input))
+				host.vore_selected.nutrition_multiplier = CLAMP(nutrition_multiplier_input, 0.01, 10)
+				host:update_fullness()
+			. = TRUE // RS Add End
 		if("b_count_items_for_sprites")
 			host.vore_selected.count_items_for_sprite = !host.vore_selected.count_items_for_sprite
 			host:update_fullness()
@@ -2209,6 +2229,13 @@ var/global/list/rsui_healthbar_preview_cache = list()
 				host.vore_selected.vorefootsteps_sounds = 0
 				to_chat(usr,"<span class='warning'>Your [lowertext(host.vore_selected.name)] wont make any liquid sounds no matter how full it is.</span>")
 			. = TRUE
+		if("b_liq_nutrition_sloshing") // RS Add Start
+			host.vore_selected.nutrition_sloshing = !host.vore_selected.nutrition_sloshing
+			if(host.vore_selected.nutrition_sloshing)
+				to_chat(usr,"<span class='warning'>Your [lowertext(host.vore_selected.name)] can now make sounds when you walk around depending on how well fed you are.</span>")
+			else
+				to_chat(usr,"<span class='warning'>Your [lowertext(host.vore_selected.name)] wont make any sounds from how well fed you are.</span>")
+			. = TRUE // RS Add End
 		if("b_liq_reagent_addons")
 			var/list/menu_list = host.vore_selected.reagent_mode_flag_list.Copy()
 			var/reagent_toggle_addon = input("Toggle Addon") as null|anything in menu_list

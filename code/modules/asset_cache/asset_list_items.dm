@@ -1,3 +1,9 @@
+////////////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star September 2026: Atlas Transparency Persistence ///
+////////////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star October 2026: Character Designer Cache Recovery //
+////////////////////////////////////////////////////////////////////////////////////
+
 //DEFINITIONS FOR ASSET DATUMS START HERE.
 
 /datum/asset/simple/tgui
@@ -297,30 +303,40 @@
 
 //VOREStation Add
 /datum/asset/spritesheet/vore
+	parent_type = /datum/asset/spritesheet/vore_persistent // RS Add: Vore Sprite Sheet Persistence (Lira, September 2026)
 	name = "vore"
 
 // RS Edit: Overlay caching and DMI improvements (Lira, June 2026)
 /datum/asset/spritesheet/vore/register()
-	for(var/vore_icon in vore_fullscreen_icon_files())
+	var/list/source_files = vore_fullscreen_icon_files()
+	if(load_vore_cache(source_files))
+		return
+	for(var/vore_icon in source_files)
 		if(!length(icon_states(vore_icon)))
 			continue
 		var/icon/downscaled = icon(vore_icon)
 		downscaled.Scale(240, 240)
 		InsertAllUnique("", downscaled)
 	..()
+	save_vore_cache()
 
 /datum/asset/spritesheet/vore_colorized //This should be getting loaded in the TGUI vore panel but the game refuses to do so, for some reason. It only loads the vore spritesheet.
+	parent_type = /datum/asset/spritesheet/vore_persistent // RS Add: Vore Sprite Sheet Persistence (Lira, September 2026)
 	name = "colorizedvore"
 
 // RS Edit: Overlay caching and DMI improvements (Lira, June 2026)
 /datum/asset/spritesheet/vore_colorized/register()
-	for(var/vore_icon in vore_fullscreen_icon_files(TRUE))
+	var/list/source_files = vore_fullscreen_icon_files(TRUE)
+	if(load_vore_cache(source_files))
+		return
+	for(var/vore_icon in source_files)
 		if(!length(icon_states(vore_icon)))
 			continue
 		var/icon/downscaledVC = icon(vore_icon)
 		downscaledVC.Scale(240, 240)
 		InsertAllUnique("", downscaledVC)
 	..()
+	save_vore_cache()
 
 
 /datum/asset/spritesheet/synthesizer
@@ -351,7 +367,8 @@
 #define CUSTOM_MARKING_ATLAS_SIZE_STRIPPED 3
 #define CUSTOM_MARKING_ATLAS_MANIFEST_REVISION 4
 #define CUSTOM_MARKING_ATLAS_MAX_DIMENSION 2048
-#define CUSTOM_MARKING_ATLAS_PERSISTENT_CACHE_REVISION 2
+#define CUSTOM_MARKING_ATLAS_PERSISTENT_CACHE_REVISION 3
+#define CUSTOM_MARKING_ATLAS_TRANSPARENCY_REVISION 1
 
 /datum/asset/spritesheet/custom_marking_designer
 	name = "custom_marking_designer"
@@ -389,6 +406,9 @@
 	var/persistent_cache_failure_reason = null
 	var/list/persistent_cache_file_records = null
 	var/list/persistent_cache_used_keys = null
+	var/list/transparent_icon_keys = list()
+	var/list/persistent_cache_transparent_keys = null
+	var/persistent_cache_transparency_dirty = FALSE
 
 /datum/asset/spritesheet/custom_marking_designer/register()
 	if(!finalized)
@@ -435,18 +455,17 @@
 		if(length(error))
 			fdel(sheet_path)
 			return fail_finalization("could not strip sheet '[size_id]': [error]")
+		var/list/dimensions = get_png_dimensions(sheet_path)
+		if(!islist(dimensions))
+			fdel(sheet_path)
+			return fail_finalization("could not read PNG dimensions for sheet '[size_id]'")
+		var/sheet_digest = rustg_hash_file(RUSTG_HASH_MD5, sheet_path)
 		var/sheet_resource = fcopy_rsc(sheet_path)
 		fdel(sheet_path)
-		if(!isfile(sheet_resource) || !md5(sheet_resource))
-			return fail_finalization("could not retain PNG resource for sheet '[size_id]'")
-		var/width
-		var/height
-		try
-			var/icon/sheet_icon = icon(sheet_resource)
-			width = sheet_icon.Width()
-			height = sheet_icon.Height()
-		catch(var/exception/e)
-			return fail_finalization("could not decode retained PNG for sheet '[size_id]': [e]")
+		if(!isfile(sheet_resource) || !istext(sheet_digest) || length(sheet_digest) != 32 || md5(sheet_resource) != sheet_digest)
+			return fail_finalization("could not retain matching PNG resource for sheet '[size_id]'")
+		var/width = dimensions["width"]
+		var/height = dimensions["height"]
 		if(!isnum(width) || !isnum(height) || width <= 0 || height <= 0 || width % source.Width() || height % source.Height())
 			return fail_finalization("sheet '[size_id]' has invalid PNG dimensions")
 		if((width / source.Width()) * (height / source.Height()) < size[CUSTOM_MARKING_ATLAS_SIZE_COUNT])
@@ -455,6 +474,33 @@
 		sheet_asset_names_by_size_id[size_id] = "[name]_[size_id]_[md5(sheet_resource)].png"
 		sheet_dimensions_by_size_id[size_id] = list("width" = width, "height" = height)
 	return TRUE
+
+/datum/asset/spritesheet/custom_marking_designer/proc/get_png_dimensions(png_path)
+	var/png_base64 = rustg_hash_file(RUSTG_HASH_BASE64, png_path)
+	if(!istext(png_base64) || length(png_base64) < 44)
+		return null
+	var/base64_alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"
+	var/list/header_bytes = list()
+	for(var/offset = 1 to 29 step 4)
+		var/value = 0
+		for(var/index = offset to offset + 3)
+			var/symbol = findtextEx(base64_alphabet, copytext(png_base64, index, index + 1)) - 1
+			if(symbol < 0)
+				return null
+			value = (value << 6) | symbol
+		header_bytes += list((value >> 16) & 255, (value >> 8) & 255, value & 255)
+	var/list/png_signature = list(137, 80, 78, 71, 13, 10, 26, 10, 0, 0, 0, 13, 73, 72, 68, 82)
+	for(var/index = 1 to png_signature.len)
+		if(header_bytes[index] != png_signature[index])
+			return null
+	var/width = 0
+	var/height = 0
+	for(var/index = 17 to 20)
+		width = width * 256 + header_bytes[index]
+		height = height * 256 + header_bytes[index + 4]
+	if(width <= 0 || height <= 0)
+		return null
+	return list("width" = width, "height" = height)
 
 /datum/asset/spritesheet/custom_marking_designer/proc/get_construction_path(asset_name)
 	return "data/spritesheets/[world.realtime]_[rand(100000, 999999)]_[asset_name]"
@@ -555,6 +601,55 @@
 			persistent_cache_used_keys = list()
 		persistent_cache_used_keys[canonical_key] = TRUE
 	return payload
+
+/datum/asset/spritesheet/custom_marking_designer/proc/is_known_transparent_icon(canonical_key)
+	if(!istext(canonical_key) || !length(canonical_key))
+		return FALSE
+	if(transparent_icon_keys[canonical_key])
+		return TRUE
+	if(persistent_cache_validation_pending && persistent_cache_transparent_keys?[canonical_key])
+		transparent_icon_keys[canonical_key] = TRUE
+		return TRUE
+	return FALSE
+
+/datum/asset/spritesheet/custom_marking_designer/proc/note_transparent_icon(canonical_key)
+	if(!can_accept_assets() && !persistent_cache_validation_pending)
+		return FALSE
+	if(!istext(canonical_key) || !length(canonical_key))
+		return FALSE
+	transparent_icon_keys[canonical_key] = TRUE
+	if(persistent_cache_validation_pending && !persistent_cache_transparent_keys?[canonical_key])
+		persistent_cache_transparency_dirty = TRUE
+	return TRUE
+
+/datum/asset/spritesheet/custom_marking_designer/proc/load_transparent_icon_cache(list/cache_data)
+	transparent_icon_keys = list()
+	persistent_cache_transparent_keys = null
+	persistent_cache_transparency_dirty = TRUE
+	if(!islist(cache_data) || cache_data["revision"] != CUSTOM_MARKING_ATLAS_TRANSPARENCY_REVISION)
+		return FALSE
+	var/list/keys = cache_data["keys"]
+	if(!islist(keys) || cache_data["checksum"] != md5(json_encode(keys)))
+		return FALSE
+	var/list/validated_keys = list()
+	for(var/key in keys)
+		if(!istext(key) || findtext(key, "source-v3|") != 1 || !findtext(key, "|content:") || validated_keys[key])
+			return FALSE
+		if(islist(payloads_by_canonical_key?["[key]|shift:0,0"]))
+			return FALSE
+		validated_keys[key] = TRUE
+	persistent_cache_transparent_keys = validated_keys
+	persistent_cache_transparency_dirty = FALSE
+	return TRUE
+
+/datum/asset/spritesheet/custom_marking_designer/proc/build_transparent_icon_cache()
+	var/list/keys = list()
+	for(var/key in transparent_icon_keys)
+		keys += key
+	return list("revision" = CUSTOM_MARKING_ATLAS_TRANSPARENCY_REVISION, "keys" = keys, "checksum" = md5(json_encode(keys)))
+
+/datum/asset/spritesheet/custom_marking_designer/proc/needs_persistent_cache_write()
+	return persistent_cache_enabled && (!persistent_cache_loaded || persistent_cache_transparency_dirty)
 
 /datum/asset/spritesheet/custom_marking_designer/proc/is_valid_family(family)
 	var/static/list/allowed_families = list("anatomy", "markings", "hair", "accessories", "species-gallery", "gear")
@@ -803,6 +898,7 @@
 	persistent_cache_file_records = cache_file_records
 	persistent_cache_used_keys = list()
 	persistent_cache_validation_pending = TRUE
+	load_transparent_icon_cache(cache_data["transparent_icons"])
 	return TRUE
 
 /datum/asset/spritesheet/custom_marking_designer/proc/complete_persistent_cache_validation()
@@ -837,6 +933,9 @@
 	persistent_cache_loaded = registered_assets_available()
 	if(!persistent_cache_loaded || !is_ready())
 		return set_persistent_cache_failure("registered cache did not become client-ready", TRUE)
+	if(transparent_icon_keys.len != LAZYLEN(persistent_cache_transparent_keys))
+		persistent_cache_transparency_dirty = TRUE
+	persistent_cache_transparent_keys = null
 	persistent_cache_used_keys = null
 	return TRUE
 
@@ -874,11 +973,14 @@
 	persistent_cache_write_succeeded = FALSE
 	persistent_cache_file_records = null
 	persistent_cache_used_keys = null
+	transparent_icon_keys = list()
+	persistent_cache_transparent_keys = null
+	persistent_cache_transparency_dirty = FALSE
 	return TRUE
 
 /datum/asset/spritesheet/custom_marking_designer/proc/persist_finalized_cache()
 	persistent_cache_write_succeeded = FALSE
-	if(!persistent_cache_enabled || persistent_cache_loaded)
+	if(!needs_persistent_cache_write())
 		return FALSE
 	if(!is_ready() || !registered_assets_available())
 		return set_persistent_cache_failure("only a client-ready atlas can be persisted")
@@ -898,7 +1000,8 @@
 		var/datum/asset_cache_item/cached_asset = SSassets.cache[asset_name]
 		if(!istype(cached_asset) || !cached_asset.resource || !istext(cached_asset.md5) || length(cached_asset.md5) != 32)
 			return set_persistent_cache_failure("registered resource '[asset_name]' was unavailable for persistence")
-		var/cache_path = "data/spritesheets/[name]_persistent_v[CUSTOM_MARKING_ATLAS_PERSISTENT_CACHE_REVISION]_[cached_asset.md5].cache"
+		var/extension = copytext(asset_name, findlasttext(asset_name, "."))
+		var/cache_path = "data/spritesheets/[name]_persistent_v[CUSTOM_MARKING_ATLAS_PERSISTENT_CACHE_REVISION]_[cached_asset.md5][extension]"
 		var/cache_is_current = fexists(cache_path) && lowertext(rustg_hash_file(RUSTG_HASH_MD5, cache_path)) == lowertext(cached_asset.md5)
 		if(!cache_is_current)
 			if(fexists(cache_path))
@@ -926,6 +1029,7 @@
 		"manifest" = finalized_manifest,
 		"manifest_asset_name" = finalized_manifest_asset_name,
 		"canonical_asset_ids" = canonical_asset_ids,
+		"transparent_icons" = build_transparent_icon_cache(),
 		"files" = file_records
 	)
 	var/cache_json
@@ -953,6 +1057,7 @@
 	persistent_cache_file_records = file_records
 	persistent_cache_failure_reason = null
 	persistent_cache_write_succeeded = TRUE
+	persistent_cache_transparency_dirty = FALSE
 	return TRUE
 
 /datum/asset/spritesheet/custom_marking_designer/proc/add_icon_asset(icon/source, token, shift_x = 0, shift_y = 0, canonical_key = null, family = null)
@@ -1165,6 +1270,7 @@
 #undef CUSTOM_MARKING_ATLAS_MANIFEST_REVISION
 #undef CUSTOM_MARKING_ATLAS_MAX_DIMENSION
 #undef CUSTOM_MARKING_ATLAS_PERSISTENT_CACHE_REVISION
+#undef CUSTOM_MARKING_ATLAS_TRANSPARENCY_REVISION
 
 // RS Add End
 

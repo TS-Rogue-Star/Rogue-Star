@@ -291,6 +291,18 @@
 					'sound/items/pickup/generic3.ogg')
 			if("seething_scream")	//RS ADD
 				soundin = get_sound(pick(seething_scream))	//RS ADD
+			if("vore_slosh")	//RS ADD START
+				soundin = pick(
+					'sound/vore/walkslosh1.ogg',
+					'sound/vore/walkslosh2.ogg',
+					'sound/vore/walkslosh3.ogg',
+					'sound/vore/walkslosh4.ogg',
+					'sound/vore/walkslosh5.ogg',
+					'sound/vore/walkslosh6.ogg',
+					'sound/vore/walkslosh7.ogg',
+					'sound/vore/walkslosh8.ogg',
+					'sound/vore/walkslosh9.ogg',
+					'sound/vore/walkslosh10.ogg')	//RS ADD END
 			else
 				soundin = get_sound(soundin)
 

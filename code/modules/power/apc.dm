@@ -167,7 +167,11 @@ GLOBAL_LIST_EMPTY(apcs)
 		return 1
 
 	//This makes sure fully draining an APC cell won't break the cell charging.
-	charging = 0
+	// RS Edit Start: APC and Cell Appearance Optimization (Lira, October 2026)
+	if(charging)
+		charging = 0
+		update_icon()
+	// RS Edit End
 
 	var/drained_energy = 0
 
@@ -1054,12 +1058,12 @@ GLOBAL_LIST_EMPTY(apcs)
 	if(cell && !shorted && !grid_check)
 		// draw power from cell as before to power the area
 		var/cellused = min(cell.charge, CELLRATE * lastused_total)	// clamp deduction to a max, amount left in cell
-		cell.use(cellused)
+		cell.use(cellused, FALSE) // RS Edit: APC and Cell Appearance Optimization (Lira, October 2026)
 
 		if(excess > lastused_total)		// if power excess recharge the cell
 										// by the same amount just used
 			var/draw = draw_power(cellused/CELLRATE) // draw the power needed to charge this cell
-			cell.give(draw * CELLRATE)
+			cell.give(draw * CELLRATE, FALSE) // RS Edit: APC and Cell Appearance Optimization (Lira, October 2026)
 		else		// no excess, and not enough per-apc
 			if( (cell.charge/CELLRATE + excess) >= lastused_total)		// can we draw enough from cell+grid to cover last usage?
 				var/draw = draw_power(excess)
@@ -1086,7 +1090,7 @@ GLOBAL_LIST_EMPTY(apcs)
 				var/ch = min(excess*CELLRATE, cell.maxcharge*chargelevel)
 
 				ch = draw_power(ch/CELLRATE) // Removes the power we're taking from the grid
-				cell.give(ch*CELLRATE) // actually recharge the cell
+				cell.give(ch*CELLRATE, FALSE) // actually recharge the cell // RS Edit: APC and Cell Appearance Optimization (Lira, October 2026)
 				lastused_charging = ch
 				lastused_total += ch // Sensors need this to stop reporting APC charging as "Other" load
 			else
@@ -1123,13 +1127,20 @@ GLOBAL_LIST_EMPTY(apcs)
 		power_alarm.triggerAlarm(loc, src, hidden=alarms_hidden)
 		autoflag = 0
 
+	// RS Add Start: APC and Cell Appearance Optimization (Lira, October 2026)
+	if(cell)
+		cell.update_charge_icon()
+	// RS Add End
+
 	// update icon & area power if anything changed
+	// RS Edit Start: APC and Cell Appearance Optimization (Lira, October 2026)
 	if(last_lt != lighting || last_eq != equipment || last_en != environ || force_update)
 		force_update = 0
-		queue_icon_update()
 		update()
+		update_icon()
 	else if(last_ch != charging)
-		queue_icon_update()
+		update_icon()
+	// RS Edit End
 
 /obj/machinery/power/apc/proc/update_channels()
 	// Allow the APC to operate as normal if the cell can charge

@@ -2,6 +2,7 @@
 	name = "station"
 	var/wet = 0
 	var/image/wet_overlay = null
+	var/tmp/terrain_icon_update_state = 0 // RS Add: Terrain Appearance Batching (Lira, September 2026)
 
 	//Mining resources (for the large drills).
 	var/has_resources

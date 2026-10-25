@@ -1,6 +1,8 @@
-///////////////////////////////////////////////////////////////////////////////////
-// Created by Lira for Rogue Star September 2026: Character Designer - Equipment //
-///////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////
+// Created by Lira for Rogue Star September 2026: Character Designer - Equipment //////
+///////////////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star September 2026: Character Designer - Misc Settings //
+///////////////////////////////////////////////////////////////////////////////////////
 
 /datum/tgui_module/custom_marking_designer
 	var/equipment_revision = 1
@@ -31,7 +33,8 @@
 		"backbag" = prefs.backbag,
 		"pdachoice" = prefs.pdachoice,
 		"communicator_visibility" = !!prefs.communicator_visibility,
-		"shoe_hater" = !!prefs.shoe_hater
+		"shoe_hater" = !!prefs.shoe_hater,
+		"sensorpref" = prefs.sensorpref
 	)
 
 /datum/tgui_module/custom_marking_designer/proc/get_equipment_catalog_signature()
@@ -40,7 +43,7 @@
 /datum/tgui_module/custom_marking_designer/proc/get_equipment_context_signature()
 	if(!prefs)
 		return null
-	return md5("[get_equipment_catalog_signature()]|[get_static_gear_preview_signature()]")
+	return md5("[get_equipment_catalog_signature()]|[get_static_gear_preview_signature()]|[prefs.sensorpref]")
 
 /datum/tgui_module/custom_marking_designer/proc/build_equipment_catalog()
 	var/signature = get_equipment_catalog_signature()
@@ -125,9 +128,13 @@
 		if(!isnum(value) || value != round(value) || value < 1 || value > maximum)
 			errors += "Choose a valid [field == "backbag" ? "backpack" : "PDA"] style."
 			return null
+	var/sensorpref = values["sensorpref"]
+	if(!isnum(sensorpref) || sensorpref != round(sensorpref) || sensorpref < 1 || sensorpref > sensorpreflist.len)
+		errors += "Choose a valid suit sensors preference."
+		return null
 	for(var/field in list("communicator_visibility", "shoe_hater"))
 		if(!(field in values) || !isnum(values[field]) || !(values[field] in list(TRUE, FALSE)))
-			errors += "Equipment visibility and shoe settings must be Yes or No."
+			errors += "Equipment toggles must be Yes or No."
 			return null
 	return values
 
@@ -151,6 +158,7 @@
 	prefs.pdachoice = values["pdachoice"]
 	prefs.communicator_visibility = values["communicator_visibility"]
 	prefs.shoe_hater = values["shoe_hater"]
+	prefs.sensorpref = values["sensorpref"]
 
 /datum/tgui_module/custom_marking_designer/proc/build_equipment_gear_options()
 	if(!prefs || !custom_marking_gear_preview_cache_complete)
@@ -237,6 +245,7 @@
 			var/list/payload = list(
 				"request_id" = request_id,
 				"values" = build_equipment_values(),
+				"sensor_options" = sensorpreflist.Copy(),
 				"catalog_signature" = get_equipment_catalog_signature(),
 				"gear_options" = build_equipment_gear_options()
 			)

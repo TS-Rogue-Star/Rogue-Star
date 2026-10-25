@@ -15,6 +15,7 @@
 	for(var/obj/machinery/ai_status_display/O in machines)
 		spawn( 0 )
 		O.mode = 2
+		O.wake_processing() // RS Add: Station Display and Media Processing (Lira, October 2026)
 		if (istype(loc, /obj/item/device/aicard))
 			var/obj/item/device/aicard/card = loc
 			card.update_icon()

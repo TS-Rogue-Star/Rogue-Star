@@ -6,6 +6,7 @@
 		for(var/obj/machinery/ai_status_display/O in machines) //change status
 			O.mode = 1
 			O.emotion = "Neutral"
+			O.wake_processing() // RS Add: Station Display and Media Processing (Lira, October 2026)
 	if(multicam_on)
 		end_multicam()
 	src.view_core()

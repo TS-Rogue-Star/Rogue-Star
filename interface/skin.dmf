@@ -92,6 +92,14 @@ macro "borghotkeymode"
 	elem
 		name = "CTRL+SHIFT+EAST"
 		command = "shifteast"
+	// RS Add Start
+	elem
+		name = "SHIFT+EAST"
+		command = "tiltclock"
+	elem
+		name = "SHIFT+WEST"
+		command = "tiltcounterclock"
+	// RS Add End
 	elem
 		name = "INSERT"
 		command = "a-intent right"
@@ -370,6 +378,14 @@ macro "macro"
 	elem
 		name = "CTRL+SHIFT+EAST"
 		command = "shifteast"
+	// RS Add Start
+	elem
+		name = "SHIFT+EAST"
+		command = "tiltclock"
+	elem
+		name = "SHIFT+WEST"
+		command = "tiltcounterclock"
+	// RS Add End
 	elem
 		name = "INSERT"
 		command = "a-intent right"
@@ -606,6 +622,14 @@ macro "hotkeymode"
 	elem
 		name = "CTRL+SHIFT+EAST"
 		command = "shifteast"
+	// RS Add Start
+	elem
+		name = "SHIFT+EAST"
+		command = "tiltclock"
+	elem
+		name = "SHIFT+WEST"
+		command = "tiltcounterclock"
+	// RS Add End
 	elem
 		name = "INSERT"
 		command = "a-intent right"
@@ -899,6 +923,14 @@ macro "borgmacro"
 	elem
 		name = "CTRL+SHIFT+EAST"
 		command = "shifteast"
+	// RS Add Start
+	elem
+		name = "SHIFT+EAST"
+		command = "tiltclock"
+	elem
+		name = "SHIFT+WEST"
+		command = "tiltcounterclock"
+	// RS Add End
 	elem
 		name = "INSERT"
 		command = "a-intent right"
