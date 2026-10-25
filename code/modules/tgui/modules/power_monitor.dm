@@ -59,6 +59,11 @@
 	return FALSE
 
 /datum/tgui_module/power_monitor/proc/refresh_sensors()
+	// RS Add Start: Computer and Related Machinery Idle Processing (Lira, October 2026)
+	var/obj/machinery/computer/power_monitor/console = tgui_host()
+	if(istype(console))
+		console.wake_processing()
+	// RS Add End
 	grid_sensors = list()
 
 	// Handle ultranested programs
@@ -70,6 +75,10 @@
 	if(T)
 		levels += using_map.get_map_levels(T.z, FALSE)
 	for(var/obj/machinery/power/sensor/S in machines)
+		// RS Add Start: Computer and Related Machinery Idle Processing (Lira, October 2026)
+		if(QDELETED(S))
+			continue
+		// RS Add End
 		if(T && (S.loc.z == T.z) || (S.loc.z in levels) || (S.long_range)) // Consoles have range on their Z-Level. Sensors with long_range var will work between Z levels.
 			if(S.name_tag == "#UNKN#") // Default name. Shouldn't happen!
 				warning("Powernet sensor with unset ID Tag! [S.x]X [S.y]Y [S.z]Z")

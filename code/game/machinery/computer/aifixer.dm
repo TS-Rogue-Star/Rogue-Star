@@ -1,4 +1,6 @@
 /obj/machinery/computer/aifixer
+	processing_enabled = TRUE // RS Add: Computer and Related Machinery Idle Processing (Lira, October 2026)
+	processing_on_demand = TRUE // RS Add: Computer and Related Machinery Idle Processing (Lira, October 2026)
 	name = "\improper AI system integrity restorer"
 	desc = "Used with intelliCards containing nonfunctional AIs to restore them to working order."
 	req_one_access = list(access_robotics, access_heads)
@@ -95,6 +97,7 @@
 				to_chat(usr, "<span class='notice'>Reconstruction in progress. This will take several minutes.</span>")
 				playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 25, FALSE)
 				restoring = TRUE
+				wake_processing() // RS Add: Computer and Related Machinery Idle Processing (Lira, October 2026)
 				var/mob/observer/dead/ghost = occupier.get_ghost()
 				if(ghost)
 					ghost.notify_revive("Your core files are being restored!", source = src)
@@ -110,13 +113,18 @@
 
 	return occupier.health < 100
 
+// RS Edit: Computer and Related Machinery Idle Processing (Lira, October 2026)
 /obj/machinery/computer/aifixer/process()
-	if(..())
-		if(restoring)
-			var/oldstat = occupier.stat
-			restoring = Fix()
-			if(oldstat != occupier.stat)
-				update_icon()
+	if(QDELETED(occupier))
+		restoring = FALSE
+	if(!..() || !restoring)
+		return PROCESS_KILL
+	var/oldstat = occupier.stat
+	restoring = Fix()
+	if(oldstat != occupier.stat)
+		update_icon()
+	if(!restoring)
+		return PROCESS_KILL
 
 /obj/machinery/computer/aifixer/update_icon()
 	. = ..()

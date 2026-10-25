@@ -1,7 +1,13 @@
+/////////////////////////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star October 2026: Computer and Related Machinery Idle Processing //
+/////////////////////////////////////////////////////////////////////////////////////////////////
+
 #define MENU_MAIN 1
 #define MENU_RECORDS 2
 
 /obj/machinery/computer/cloning
+	processing_enabled = TRUE // RS Add: Computer and Related Machinery Idle Processing (Lira, October 2026)
+	processing_on_demand = TRUE // RS Add: Computer and Related Machinery Idle Processing (Lira, October 2026)
 	name = "cloning console"
 	icon = 'icons/obj/computer.dmi'
 	icon_keyboard = "med_key"
@@ -29,22 +35,28 @@
 	. = ..()
 	pods = list()
 	records = list()
+	RegisterSignal(SSdcs, COMSIG_GLOB_CLONING_ELIGIBILITY_CHANGED, PROC_REF(cloning_eligibility_changed)) // RS Add: Computer and Related Machinery Idle Processing (Lira, October 2026)
 	set_scan_temp("Scanner ready.", "good")
 	updatemodules()
 
 /obj/machinery/computer/cloning/Destroy()
 	releasecloner()
+	// RS Add Start: Computer and Related Machinery Idle Processing (Lira, October 2026)
+	set_scanner(null)
+	UnregisterSignal(SSdcs, COMSIG_GLOB_CLONING_ELIGIBILITY_CHANGED)
+	// RS Add End
 	return ..()
 
+// RS Edit: Computer and Related Machinery Idle Processing (Lira, October 2026)
 /obj/machinery/computer/cloning/process()
-	if(!scanner || !pods.len || !autoprocess || stat & NOPOWER)
-		return
+	if(QDELETED(scanner) || !pods.len || !autoprocess || stat & NOPOWER)
+		return PROCESS_KILL
 
 	if(scanner.occupant && can_autoprocess())
 		scan_mob(scanner.occupant)
 
 	if(!LAZYLEN(records))
-		return
+		return PROCESS_KILL
 
 	for(var/obj/machinery/clonepod/pod in pods)
 		if(!(pod.occupant || pod.mess) && (pod.efficiency > 5))
@@ -52,13 +64,15 @@
 				if(!(pod.occupant || pod.mess))
 					if(pod.growclone(R))
 						records.Remove(R)
+	return PROCESS_KILL
 
 /obj/machinery/computer/cloning/proc/updatemodules()
-	scanner = findscanner()
+	set_scanner(findscanner()) // RS Edit: Computer and Related Machinery Idle Processing (Lira, October 2026)
 	releasecloner()
 	findcloner()
 	if(!selected_pod && pods.len)
 		selected_pod = pods[1]
+	wake_processing() // RS Add: Computer and Related Machinery Idle Processing (Lira, October 2026)
 
 /obj/machinery/computer/cloning/proc/findscanner()
 	var/obj/machinery/dna_scannernew/scannerf = null
@@ -88,6 +102,7 @@
 		if(!P.connected)
 			pods += P
 			P.connected = src
+			wake_processing() // RS Add: Computer and Related Machinery Idle Processing (Lira, October 2026)
 			P.name = "[initial(P.name)] #[num++]"
 
 /obj/machinery/computer/cloning/attackby(obj/item/W as obj, mob/user as mob, params)
@@ -105,6 +120,7 @@
 		if(P && !(P in pods))
 			pods += P
 			P.connected = src
+			wake_processing() // RS Add: Computer and Related Machinery Idle Processing (Lira, October 2026)
 			P.name = "[initial(P.name)] #[pods.len]"
 			to_chat(user, "<span class='notice'>You connect [P] to [src].</span>")
 	else
@@ -233,6 +249,7 @@
 				SStgui.update_uis(src)
 		if("autoprocess")
 			autoprocess = text2num(params["on"]) > 0
+			wake_processing() // RS Add: Computer and Related Machinery Idle Processing (Lira, October 2026)
 		if("lock")
 			if(isnull(scanner) || !scanner.occupant) //No locking an open scanner.
 				return
@@ -370,6 +387,7 @@
 			return FALSE
 
 	add_fingerprint(usr)
+	wake_processing() // RS Add: Computer and Related Machinery Idle Processing (Lira, October 2026)
 
 /obj/machinery/computer/cloning/proc/scan_mob(mob/living/carbon/human/subject as mob, var/scan_brain = 0)
 	if(stat & NOPOWER)
@@ -450,6 +468,7 @@
 		R.mind = "\ref[subject.mind]"
 
 	records += R
+	wake_processing() // RS Add: Computer and Related Machinery Idle Processing (Lira, October 2026)
 	set_scan_temp("Subject successfully scanned.", "good")
 	SStgui.update_uis(src)
 
@@ -494,3 +513,41 @@
 
 #undef MENU_MAIN
 #undef MENU_RECORDS
+
+// RS Add: Computer and Related Machinery Idle Processing (Lira, October 2026)
+/obj/machinery/computer/cloning/proc/set_scanner(obj/machinery/dna_scannernew/new_scanner)
+	if(scanner)
+		UnregisterSignal(scanner, list(COMSIG_CLONING_MACHINE_CHANGED, COMSIG_PARENT_QDELETING))
+	scanner = QDELETED(new_scanner) ? null : new_scanner
+	if(scanner)
+		RegisterSignal(scanner, COMSIG_CLONING_MACHINE_CHANGED, PROC_REF(wake_processing))
+		RegisterSignal(scanner, COMSIG_PARENT_QDELETING, PROC_REF(scanner_deleted))
+	wake_processing()
+
+// RS Add: Computer and Related Machinery Idle Processing (Lira, October 2026)
+/obj/machinery/computer/cloning/proc/scanner_deleted()
+	SIGNAL_HANDLER
+	set_scanner(null)
+
+// RS Add: Computer and Related Machinery Idle Processing (Lira, October 2026)
+/obj/machinery/computer/cloning/proc/cloning_eligibility_changed(datum/source, mob/changed_mob, datum/mind/changed_mind)
+	SIGNAL_HANDLER
+	if(!autoprocess)
+		return
+	if(changed_mob && scanner?.occupant == changed_mob)
+		wake_processing()
+		return
+	for(var/datum/dna2/record/R in records)
+		if((changed_mind && R.mind == "\ref[changed_mind]") || (changed_mob?.ckey && R.ckey == changed_mob.ckey))
+			wake_processing()
+			return
+
+// RS Add: Computer and Related Machinery Idle Processing (Lira, October 2026)
+/obj/machinery/computer/cloning/vv_edit_var(var_name, new_value)
+	if(var_name == NAMEOF(src, scanner))
+		if(new_value && !istype(new_value, /obj/machinery/dna_scannernew))
+			return FALSE
+		set_scanner(new_value)
+		datum_flags |= DF_VAR_EDITED
+		return TRUE
+	return ..()

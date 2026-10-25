@@ -1017,6 +1017,10 @@
 			break
 
 	if(lying != lying_prev)
+		// RS Add Start: Computer and Related Machinery Idle Processing (Lira, October 2026)
+		if(isturf(loc))
+			SEND_SIGNAL(loc, COMSIG_TURF_PATIENT_POSTURE_CHANGED, src)
+		// RS Add End
 		lying_prev = lying
 		update_transform()
 		//VOREStation Add

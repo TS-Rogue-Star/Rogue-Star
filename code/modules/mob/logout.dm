@@ -1,6 +1,7 @@
 /mob/Logout()
 	SStgui.on_logout(src) // Cleanup any TGUIs the user has open
 	player_list -= src
+	cloning_state_changed() // RS Add: Computer and Related Machinery Idle Processing (Lira, October 2026)
 	disconnect_time = world.realtime	//VOREStation Addition: logging when we disappear.
 	update_client_z(null)
 	log_access_out(src)
