@@ -124,6 +124,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/structure/disposalpipe/segment,
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/floor/tiled/steel_ridged,
 /area/crew_quarters/moonbase/pilotroom)
 "ar" = (
@@ -644,6 +645,7 @@
 /obj/effect/floor_decal/fancy_shuttle{
 	fancy_shuttle_tag = "explo"
 	},
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/floor/tiled/steel,
 /area/shuttle/excursion/cockpit)
 "bN" = (
@@ -840,6 +842,10 @@
 	},
 /turf/simulated/floor/plating,
 /area/crew_quarters/moonbase/abandonedoffice)
+"cm" = (
+/obj/structure/flora/ausbushes/ppflowers,
+/turf/simulated/floor/outdoors/grass/sif/forest,
+/area/hallway/arrival/moonbase/main)
 "cn" = (
 /obj/structure/table/fancyblack,
 /turf/simulated/floor/wood,
@@ -882,6 +888,13 @@
 	},
 /turf/simulated/floor/carpet/blue2,
 /area/bridge/meeting_room)
+"cv" = (
+/obj/effect/floor_decal/steeldecal/steel_decals5{
+	dir = 4
+	},
+/obj/item/decoration/tinsel/halloween,
+/turf/simulated/floor/tiled,
+/area/hallway/arrival/moonbase/dockingbays)
 "cw" = (
 /obj/effect/floor_decal/corner/paleblue{
 	dir = 10
@@ -1637,6 +1650,7 @@
 /obj/machinery/power/apc/hyper{
 	dir = 8
 	},
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/floor/tiled,
 /area/hallway/arrival/moonbase/dockingbays)
 "eq" = (
@@ -1936,6 +1950,7 @@
 /obj/machinery/firealarm{
 	dir = 8
 	},
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/floor/tiled,
 /area/hallway/arrival/moonbase/dockingbays)
 "fj" = (
@@ -1997,6 +2012,7 @@
 /obj/effect/floor_decal/fancy_shuttle{
 	fancy_shuttle_tag = "explo"
 	},
+/obj/item/weapon/carved_pumpkin/candled,
 /turf/simulated/floor/tiled/steel,
 /area/shuttle/excursion/cargo)
 "ft" = (
@@ -2057,6 +2073,9 @@
 	},
 /obj/effect/floor_decal/fancy_shuttle{
 	fancy_shuttle_tag = "explo"
+	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 4
 	},
 /turf/simulated/floor/tiled/steel,
 /area/shuttle/excursion/cockpit)
@@ -2829,6 +2848,10 @@
 "hv" = (
 /obj/machinery/door/firedoor/glass,
 /obj/machinery/door/airlock/glass,
+/obj/item/decoration/tinsel/halloween{
+	dir = 4;
+	pixel_x = 12
+	},
 /turf/simulated/floor/tiled/steel_ridged,
 /area/hallway/moonbase/northhall)
 "hy" = (
@@ -3192,6 +3215,9 @@
 /obj/structure/cable{
 	icon_state = "4-8"
 	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 4
+	},
 /turf/simulated/floor/tiled/eris/dark/danger,
 /area/hallway/arrival/moonbase/dockingbays)
 "ii" = (
@@ -3242,6 +3268,7 @@
 /obj/machinery/door/airlock/angled_tgmc{
 	req_one_access = list(19,43,67)
 	},
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/floor/tiled/steel,
 /area/shuttle/excursion/general)
 "iq" = (
@@ -3404,6 +3431,9 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden{
+	dir = 4
+	},
+/obj/item/decoration/tinsel/halloween{
 	dir = 4
 	},
 /turf/simulated/floor/tiled/eris/dark/danger,
@@ -3916,6 +3946,7 @@
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/floor/tiled/steel_ridged,
 /area/security/checkpoint2)
 "jS" = (
@@ -3956,6 +3987,9 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden{
 	dir = 4
+	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 8
 	},
 /turf/simulated/floor/tiled/eris/dark/danger,
 /area/hallway/arrival/moonbase/dockingbays)
@@ -4038,6 +4072,7 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
+/obj/item/decoration/garland/halloween,
 /turf/simulated/floor/plating,
 /area/hallway/arrival/moonbase/dockingbays)
 "ki" = (
@@ -4516,6 +4551,9 @@
 	locked = 1;
 	name = "Docking Port Airlock"
 	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 8
+	},
 /turf/simulated/floor/tiled/eris/dark/danger,
 /area/hallway/arrival/moonbase/dockingbays)
 "lr" = (
@@ -4785,6 +4823,7 @@
 "lY" = (
 /obj/machinery/door/firedoor/glass,
 /obj/machinery/door/airlock/glass,
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/floor/tiled/steel_ridged,
 /area/hallway/arrival/moonbase/dockingbays)
 "lZ" = (
@@ -6110,6 +6149,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/floor/tiled/steel_ridged,
 /area/hallway/arrival/moonbase/main)
 "pc" = (
@@ -6246,6 +6286,7 @@
 /obj/effect/floor_decal/fancy_shuttle{
 	fancy_shuttle_tag = "explo"
 	},
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/floor/tiled/steel,
 /area/shuttle/excursion/general)
 "pr" = (
@@ -6752,6 +6793,9 @@
 /obj/effect/floor_decal/fancy_shuttle{
 	fancy_shuttle_tag = "explo"
 	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 4
+	},
 /turf/simulated/floor/tiled/steel,
 /area/shuttle/excursion/general)
 "qw" = (
@@ -6984,6 +7028,7 @@
 /obj/machinery/door/blast/shutters{
 	id = "arrivalscheckpoint"
 	},
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/floor/plating,
 /area/security/checkpoint2)
 "qU" = (
@@ -7138,6 +7183,9 @@
 /obj/effect/floor_decal/fancy_shuttle{
 	fancy_shuttle_tag = "explo"
 	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 8
+	},
 /turf/simulated/floor/tiled/steel,
 /area/shuttle/excursion/general)
 "rl" = (
@@ -7266,6 +7314,9 @@
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
+	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 8
 	},
 /turf/simulated/floor/tiled/monotile,
 /area/ai_monitored/storage/emergency/eva)
@@ -8211,6 +8262,7 @@
 	locked = 1;
 	name = "Docking Port Airlock"
 	},
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/floor/tiled/eris/dark/danger,
 /area/hallway/arrival/moonbase/main)
 "tR" = (
@@ -8337,6 +8389,9 @@
 /obj/machinery/door/blast/regular{
 	id = "exploeva"
 	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 8
+	},
 /turf/simulated/floor/tiled/monotile,
 /area/ai_monitored/storage/emergency/eva)
 "up" = (
@@ -8367,6 +8422,7 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
+/obj/item/decoration/garland/halloween,
 /turf/simulated/floor/plating,
 /area/security/checkpoint2)
 "uu" = (
@@ -8408,6 +8464,7 @@
 /obj/effect/floor_decal/emblem/siriuspoint{
 	dir = 5
 	},
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/floor/tiled,
 /area/hallway/arrival/moonbase/main)
 "uy" = (
@@ -8617,6 +8674,19 @@
 /obj/structure/disposalpipe/segment,
 /turf/simulated/floor/tiled/white,
 /area/medical/moonbase/upperlevel)
+"vh" = (
+/obj/machinery/door/firedoor/glass,
+/obj/structure/grille,
+/obj/structure/window/reinforced/full,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/item/decoration/garland/halloween,
+/turf/simulated/floor/plating,
+/area/hallway/arrival/moonbase/teleporter)
 "vi" = (
 /obj/machinery/button/remote/blast_door{
 	dir = 8;
@@ -8630,6 +8700,7 @@
 /obj/effect/floor_decal/fancy_shuttle{
 	fancy_shuttle_tag = "explo"
 	},
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/floor/tiled/steel,
 /area/shuttle/excursion/cargo)
 "vj" = (
@@ -8738,10 +8809,11 @@
 /obj/effect/floor_decal/fancy_shuttle{
 	fancy_shuttle_tag = "explo"
 	},
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/floor/tiled/steel,
 /area/shuttle/excursion/cargo)
 "vx" = (
-/obj/structure/flora/pottedplant/orientaltree,
+/obj/item/weapon/carved_pumpkin/candled,
 /turf/simulated/floor/carpet/blue2,
 /area/bridge/meeting_room)
 "vy" = (
@@ -8919,6 +8991,10 @@
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
+	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 4;
+	pixel_x = 12
 	},
 /turf/simulated/floor/tiled/steel_ridged,
 /area/hallway/moonbase/northhall)
@@ -9667,6 +9743,7 @@
 /obj/effect/floor_decal/fancy_shuttle{
 	fancy_shuttle_tag = "explo"
 	},
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/floor/tiled/steel,
 /area/shuttle/excursion/cockpit)
 "xF" = (
@@ -9805,6 +9882,9 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden{
 	dir = 4
+	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 8
 	},
 /turf/simulated/floor/tiled/eris/dark/danger,
 /area/hallway/arrival/moonbase/dockingbays)
@@ -9974,6 +10054,9 @@
 "yt" = (
 /obj/machinery/door/firedoor/glass,
 /obj/machinery/door/airlock/glass,
+/obj/item/decoration/tinsel/halloween{
+	dir = 4
+	},
 /turf/simulated/floor/tiled/steel_ridged,
 /area/hallway/arrival/moonbase/main)
 "yu" = (
@@ -10144,6 +10227,16 @@
 /obj/structure/disposalpipe/junction,
 /turf/simulated/floor/tiled/white,
 /area/medical/moonbase/upperlevel)
+"yR" = (
+/obj/effect/floor_decal/steeldecal/steel_decals5{
+	dir = 4
+	},
+/obj/machinery/firealarm{
+	dir = 4
+	},
+/obj/item/decoration/tinsel/halloween,
+/turf/simulated/floor/tiled,
+/area/hallway/arrival/moonbase/dockingbays)
 "yS" = (
 /obj/machinery/computer/ship/engines/adv,
 /obj/effect/floor_decal/fancy_shuttle{
@@ -10274,6 +10367,9 @@
 	id_tag = null;
 	locked = 1;
 	name = "Docking Port Airlock"
+	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 8
 	},
 /turf/simulated/floor/tiled/eris/dark/danger,
 /area/hallway/arrival/moonbase/dockingbays)
@@ -10804,6 +10900,7 @@
 /obj/effect/floor_decal/fancy_shuttle{
 	fancy_shuttle_tag = "explo"
 	},
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/floor/tiled/steel,
 /area/shuttle/excursion/general)
 "AF" = (
@@ -11389,6 +11486,15 @@
 "Ce" = (
 /turf/simulated/floor/tiled/old_tile,
 /area/maintenance/moonbase/level2/center)
+"Cg" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/item/decoration/tinsel/halloween,
+/turf/simulated/floor/tiled,
+/area/hallway/arrival/moonbase/dockingbays)
 "Ch" = (
 /obj/effect/floor_decal/industrial/warning/color/red,
 /obj/structure/cable/yellow{
@@ -11946,6 +12052,8 @@
 /obj/machinery/door/firedoor/glass,
 /obj/structure/grille,
 /obj/structure/window/reinforced/full,
+/obj/item/decoration/tinsel/halloween,
+/obj/item/weapon/carved_pumpkin/candled,
 /turf/simulated/floor/plating,
 /area/hallway/arrival/moonbase/teleporter)
 "DI" = (
@@ -12309,6 +12417,8 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
+/obj/item/weapon/carved_pumpkin/candled,
+/obj/item/decoration/garland/halloween/short,
 /turf/simulated/floor/plating,
 /area/hallway/arrival/moonbase/teleporter)
 "Ex" = (
@@ -12848,6 +12958,7 @@
 /obj/structure/cable/green{
 	icon_state = "1-2"
 	},
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/floor/tiled,
 /area/shuttle/spboat/aft{
 	base_turf = /turf/simulated/floor/reinforced/airless/outdoors
@@ -12971,6 +13082,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/floor/tiled,
 /area/hallway/arrival/moonbase/dockingbays)
 "Gu" = (
@@ -12982,6 +13094,7 @@
 "Gv" = (
 /obj/effect/floor_decal/steeldecal/steel_decals5,
 /obj/effect/floor_decal/emblem/siriuspoint,
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/floor/tiled,
 /area/hallway/arrival/moonbase/main)
 "Gw" = (
@@ -13055,6 +13168,7 @@
 /obj/effect/floor_decal/fancy_shuttle{
 	fancy_shuttle_tag = "explo"
 	},
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/floor/tiled/steel,
 /area/shuttle/excursion/general)
 "GG" = (
@@ -13497,6 +13611,7 @@
 	name = "Docking Port Airlock"
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden,
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/floor/tiled/eris/dark/danger,
 /area/hallway/arrival/moonbase/main)
 "HC" = (
@@ -13534,6 +13649,10 @@
 	},
 /turf/simulated/floor,
 /area/maintenance/groundbase/substation/sci)
+"HI" = (
+/obj/item/decoration/tinsel/halloween,
+/turf/simulated/floor/tiled,
+/area/hallway/arrival/moonbase/main)
 "HJ" = (
 /obj/structure/cable/green{
 	icon_state = "2-8"
@@ -13577,6 +13696,7 @@
 /obj/structure/cable/green{
 	icon_state = "4-8"
 	},
+/obj/item/weapon/carved_pumpkin/candled,
 /turf/simulated/floor/tiled,
 /area/shuttle/spboat/aft{
 	base_turf = /turf/simulated/floor/reinforced/airless/outdoors
@@ -13691,6 +13811,9 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
+	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 8
 	},
 /turf/simulated/floor/tiled/steel_ridged,
 /area/storage/emergency_storage/emergency5)
@@ -13859,6 +13982,9 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
+	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 8
 	},
 /turf/simulated/floor/tiled/monotile,
 /area/ai_monitored/storage/emergency/eva)
@@ -14191,6 +14317,7 @@
 	dir = 4;
 	id = "GatewayShutter"
 	},
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/floor/tiled/eris/white/gray_platform,
 /area/ai_monitored/storage/emergency/eva)
 "JE" = (
@@ -14421,6 +14548,7 @@
 /obj/effect/floor_decal/emblem/siriuspoint{
 	dir = 9
 	},
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/floor/tiled,
 /area/hallway/arrival/moonbase/main)
 "Kf" = (
@@ -14510,6 +14638,7 @@
 /obj/structure/cable/green{
 	icon_state = "1-2"
 	},
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/floor/tiled,
 /area/shuttle/spboat/fore{
 	base_turf = /turf/simulated/floor/reinforced/airless/outdoors
@@ -14756,6 +14885,7 @@
 /obj/machinery/door/blast/shutters{
 	id = "arrivalscheckpoint"
 	},
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/floor/tiled/dark,
 /area/security/checkpoint2)
 "KR" = (
@@ -14915,6 +15045,17 @@
 /area/shuttle/spboat/aft{
 	base_turf = /turf/simulated/floor/reinforced/airless/outdoors
 	})
+"Li" = (
+/obj/machinery/door/firedoor/glass,
+/obj/structure/grille,
+/obj/structure/window/reinforced/full,
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/item/decoration/garland/halloween,
+/turf/simulated/floor/plating,
+/area/hallway/arrival/moonbase/teleporter)
 "Lj" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/forensics/sample_kit,
@@ -14948,6 +15089,7 @@
 /obj/machinery/door/blast/shutters{
 	id = "arrivalscheckpoint"
 	},
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/floor/tiled/dark,
 /area/security/checkpoint2)
 "Ln" = (
@@ -15238,6 +15380,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 4
+	},
 /turf/simulated/floor/tiled/steel_ridged,
 /area/hallway/arrival/moonbase/main)
 "LR" = (
@@ -15391,6 +15536,8 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
+/obj/item/weapon/carved_pumpkin/candled,
+/obj/item/decoration/garland/halloween/short,
 /turf/simulated/floor/plating,
 /area/hallway/arrival/moonbase/teleporter)
 "Mj" = (
@@ -15448,6 +15595,7 @@
 	dir = 8
 	},
 /obj/structure/closet/emcloset,
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/floor/tiled,
 /area/hallway/arrival/moonbase/main)
 "Ms" = (
@@ -15699,6 +15847,15 @@
 /obj/structure/disposalpipe/trunk,
 /turf/simulated/floor/tiled,
 /area/rnd/workshop)
+"MY" = (
+/obj/machinery/door/firedoor/glass,
+/obj/structure/grille,
+/obj/structure/window/reinforced/polarized/full{
+	id = "headmeetingroom"
+	},
+/obj/item/weapon/carved_pumpkin/candled,
+/turf/simulated/floor/plating,
+/area/bridge/meeting_room)
 "MZ" = (
 /obj/effect/floor_decal/milspec/color/emerald/half{
 	dir = 4
@@ -15719,6 +15876,7 @@
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/floor/tiled,
 /area/hallway/arrival/moonbase/main)
 "Nb" = (
@@ -15780,6 +15938,18 @@
 	},
 /turf/simulated/floor/tiled,
 /area/rnd/research)
+"Ng" = (
+/obj/machinery/door/firedoor/glass,
+/obj/structure/grille,
+/obj/structure/window/reinforced/full,
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/item/decoration/garland/halloween,
+/obj/item/decoration/garland/halloween,
+/turf/simulated/floor/plating,
+/area/security/checkpoint2)
 "Nh" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 5
@@ -15870,6 +16040,7 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/floor/tiled/steel_ridged,
 /area/hallway/arrival/moonbase/teleporter)
 "Ns" = (
@@ -16155,9 +16326,8 @@
 /area/bridge_hallway)
 "Oe" = (
 /obj/structure/flora/ausbushes/genericbush,
-/turf/simulated/floor/outdoors/grass/forest{
-	outdoors = 0
-	},
+/obj/item/weapon/carved_pumpkin/candled,
+/turf/simulated/floor/outdoors/grass/sif/forest,
 /area/hallway/arrival/moonbase/main)
 "Of" = (
 /obj/machinery/light{
@@ -16293,6 +16463,9 @@
 /obj/structure/cable{
 	icon_state = "4-8"
 	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 8
+	},
 /turf/simulated/floor/tiled,
 /area/shuttle/spboat/aft{
 	base_turf = /turf/simulated/floor/reinforced/airless/outdoors
@@ -16383,6 +16556,9 @@
 	},
 /obj/structure/cable{
 	icon_state = "4-8"
+	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 8
 	},
 /turf/simulated/floor/tiled,
 /area/shuttle/spboat/aft{
@@ -16634,6 +16810,7 @@
 /obj/effect/floor_decal/fancy_shuttle{
 	fancy_shuttle_tag = "explo"
 	},
+/obj/item/weapon/carved_pumpkin/candled,
 /turf/simulated/floor/tiled/steel,
 /area/shuttle/excursion/cockpit)
 "Pp" = (
@@ -16843,6 +17020,9 @@
 	},
 /obj/structure/cable{
 	icon_state = "4-8"
+	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 4
 	},
 /turf/simulated/floor/tiled/eris/dark/danger,
 /area/hallway/arrival/moonbase/dockingbays)
@@ -17076,6 +17256,12 @@
 	},
 /turf/simulated/floor/tiled/dark,
 /area/security/checkpoint2)
+"Qm" = (
+/obj/machinery/door/firedoor/glass,
+/obj/machinery/door/airlock/glass,
+/obj/item/decoration/tinsel/halloween,
+/turf/simulated/floor/tiled/steel_ridged,
+/area/hallway/arrival/moonbase/main)
 "Qp" = (
 /obj/structure/window/reinforced{
 	dir = 1
@@ -17093,6 +17279,7 @@
 "Qr" = (
 /obj/machinery/door/firedoor/glass,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/floor/tiled/steel_ridged,
 /area/hallway/arrival/moonbase/teleporter)
 "Qs" = (
@@ -17188,9 +17375,8 @@
 /area/maintenance/groundbase/substation/sci)
 "QF" = (
 /obj/structure/flora/ausbushes/ppflowers,
-/turf/simulated/floor/outdoors/grass/forest{
-	outdoors = 0
-	},
+/obj/item/weapon/carved_pumpkin/candled,
+/turf/simulated/floor/outdoors/grass/sif/forest,
 /area/hallway/arrival/moonbase/main)
 "QG" = (
 /obj/machinery/light,
@@ -17302,6 +17488,7 @@
 /obj/structure/window/reinforced/polarized/full{
 	id = "headmeetingroom"
 	},
+/obj/item/weapon/carved_pumpkin/candled,
 /turf/simulated/floor/plating,
 /area/bridge_hallway)
 "Ra" = (
@@ -17314,6 +17501,7 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
+/obj/item/weapon/carved_pumpkin/candled,
 /turf/simulated/floor/plating,
 /area/hallway/arrival/moonbase/main)
 "Rb" = (
@@ -17518,6 +17706,9 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden{
+	dir = 4
+	},
+/obj/item/decoration/tinsel/halloween{
 	dir = 4
 	},
 /turf/simulated/floor/tiled/eris/dark/danger,
@@ -17906,6 +18097,7 @@
 	name = "Docking Port Airlock"
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden,
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/floor/tiled/eris/dark/danger,
 /area/hallway/arrival/moonbase/main)
 "Sn" = (
@@ -18141,6 +18333,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/floor/tiled/steel_ridged,
 /area/hallway/arrival/moonbase/dockingbays)
 "SW" = (
@@ -18558,6 +18751,7 @@
 /obj/machinery/alarm{
 	dir = 8
 	},
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/floor/tiled,
 /area/hallway/arrival/moonbase/dockingbays)
 "Ud" = (
@@ -18711,6 +18905,10 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
+/obj/item/weapon/carved_pumpkin/candled,
+/obj/item/decoration/tinsel/halloween{
+	dir = 4
+	},
 /turf/simulated/floor/plating,
 /area/hallway/moonbase/westhall)
 "Uu" = (
@@ -18816,6 +19014,7 @@
 	name = "Docking Port Airlock"
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden,
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/floor/tiled/eris/dark/danger,
 /area/hallway/arrival/moonbase/main)
 "UO" = (
@@ -19066,6 +19265,7 @@
 	dir = 1
 	},
 /obj/structure/window/reinforced,
+/obj/item/decoration/garland/halloween,
 /turf/simulated/floor/plating,
 /area/hallway/arrival/moonbase/main)
 "Vp" = (
@@ -19116,9 +19316,7 @@
 /area/medical/moonbase/upperlevel)
 "Vu" = (
 /obj/structure/flora/ausbushes/lavendergrass,
-/turf/simulated/floor/outdoors/grass/forest{
-	outdoors = 0
-	},
+/turf/simulated/floor/outdoors/grass/sif/forest,
 /area/hallway/arrival/moonbase/main)
 "Vv" = (
 /obj/machinery/door/firedoor/glass/hidden/shuttle,
@@ -19202,6 +19400,13 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor/tiled/dark,
 /area/security/armoury)
+"VH" = (
+/obj/effect/floor_decal/steeldecal/steel_decals5{
+	dir = 8
+	},
+/obj/item/decoration/tinsel/halloween,
+/turf/simulated/floor/tiled,
+/area/hallway/arrival/moonbase/dockingbays)
 "VI" = (
 /obj/machinery/light{
 	dir = 8
@@ -19341,6 +19546,7 @@
 	locked = 1;
 	name = "Docking Port Airlock"
 	},
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/floor/tiled/eris/dark/danger,
 /area/hallway/arrival/moonbase/main)
 "Wb" = (
@@ -19383,6 +19589,7 @@
 /area/crew_quarters/heads/chief)
 "Wg" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/universal,
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/floor/tiled,
 /area/hallway/arrival/moonbase/main)
 "Wh" = (
@@ -19820,6 +20027,7 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
+/obj/item/decoration/garland/halloween,
 /turf/simulated/floor/plating,
 /area/storage/emergency_storage/emergency5)
 "WY" = (
@@ -19984,7 +20192,7 @@
 /turf/simulated/floor/wood/alt/panel,
 /area/security/detectives_office)
 "Xv" = (
-/obj/structure/flora/pottedplant/orientaltree,
+/obj/item/weapon/carved_pumpkin/candled,
 /turf/simulated/floor/wood,
 /area/crew_quarters/captain/moonbase/office)
 "Xw" = (
@@ -20634,6 +20842,7 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
+/obj/item/decoration/garland/halloween,
 /turf/simulated/floor/plating,
 /area/security/checkpoint2)
 "Zr" = (
@@ -20653,6 +20862,7 @@
 	locked = 1;
 	name = "Docking Port Airlock"
 	},
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/floor/tiled/eris/dark/danger,
 /area/hallway/arrival/moonbase/main)
 "Zs" = (
@@ -30605,7 +30815,7 @@ QX
 QX
 QX
 QX
-Ez
+MY
 cn
 cn
 cn
@@ -30889,7 +31099,7 @@ QX
 QX
 QX
 QX
-Ez
+MY
 cn
 Fv
 cn
@@ -36426,7 +36636,7 @@ qT
 Ns
 Ql
 RC
-Zp
+Ng
 XC
 xq
 Dw
@@ -37391,7 +37601,7 @@ uC
 uC
 rG
 uC
-uC
+VH
 ss
 fi
 rG
@@ -37405,14 +37615,14 @@ uC
 uC
 rG
 uC
-uC
+VH
 ss
 eo
 rG
 uC
 dF
 uC
-yt
+Qm
 KY
 FQ
 eq
@@ -37533,9 +37743,9 @@ aw
 aw
 aw
 aw
-aw
+Cg
 ga
-aw
+Cg
 aw
 aw
 aw
@@ -37547,7 +37757,7 @@ aw
 aw
 aw
 aw
-aw
+Cg
 ga
 Gs
 aw
@@ -37560,7 +37770,7 @@ Hu
 rs
 Gv
 Oe
-QF
+cm
 Vu
 QF
 tE
@@ -37675,7 +37885,7 @@ nv
 nv
 jP
 nv
-nv
+cv
 Cs
 Uc
 jP
@@ -37689,14 +37899,14 @@ nv
 nv
 jP
 nv
-nv
+cv
 Cs
-wD
+yR
 jP
 JC
 lb
 nv
-yt
+Qm
 Ze
 gI
 Mk
@@ -37842,7 +38052,7 @@ Td
 uy
 HX
 wi
-wi
+HI
 Ax
 Ax
 Ax
@@ -38414,7 +38624,7 @@ Nr
 BH
 RJ
 GC
-Ew
+Li
 tP
 xq
 Dw
@@ -38556,7 +38766,7 @@ Qr
 Zk
 wl
 Gi
-Ew
+Li
 XC
 xq
 Dw
@@ -38838,7 +39048,7 @@ Ij
 kH
 RG
 Mi
-Mi
+vh
 Mi
 RG
 XC
