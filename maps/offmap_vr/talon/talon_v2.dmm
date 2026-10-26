@@ -34,6 +34,7 @@
 	dir = 4;
 	id = "talon_bridge_shields"
 	},
+/obj/item/decoration/garland/halloween,
 /turf/simulated/floor/plating,
 /area/talon_v2/bridge)
 "ae" = (
@@ -100,6 +101,9 @@
 	dir = 4
 	},
 /obj/item/modular_computer/laptop/preset/custom_loadout/standard/talon/pilot,
+/obj/item/decoration/garland/halloween{
+	pixel_x = -32
+	},
 /turf/simulated/floor/carpet,
 /area/talon_v2/crew_quarters/pilot_room)
 "am" = (
@@ -139,12 +143,9 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/talon_v2/bridge)
 "ap" = (
-/obj/structure/railing/grey{
-	dir = 1
-	},
-/obj/structure/flora/pottedplant/sticky,
-/turf/simulated/floor/tiled/techfloor,
-/area/talon_v2/bridge)
+/obj/item/decoration/tinsel/halloween,
+/turf/simulated/floor/tiled/techmaint,
+/area/talon_v2/central_hallway)
 "aq" = (
 /obj/structure/catwalk,
 /obj/structure/extinguisher_cabinet{
@@ -313,6 +314,7 @@
 	dir = 2;
 	id = "talon_bridge_shields"
 	},
+/obj/item/weapon/carved_pumpkin/candled,
 /turf/simulated/floor/plating,
 /area/talon_v2/bridge)
 "aG" = (
@@ -357,6 +359,9 @@
 /obj/structure/sign/directions/engineering{
 	dir = 4;
 	pixel_y = 29
+	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 4
 	},
 /turf/simulated/floor/plating,
 /area/talon_v2/engineering/atmospherics)
@@ -424,6 +429,7 @@
 /obj/machinery/door/airlock/maintenance/common,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/floor/plating,
 /area/talon_v2/maintenance/aft_port)
 "aS" = (
@@ -432,6 +438,7 @@
 	name = "Bridge";
 	req_one_access = list(302)
 	},
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/floor/tiled/techmaint,
 /area/talon_v2/bridge)
 "aT" = (
@@ -443,6 +450,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 1
 	},
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/floor/plating,
 /area/talon_v2/bridge)
 "aU" = (
@@ -454,6 +462,7 @@
 /obj/structure/cable/green{
 	icon_state = "1-2"
 	},
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/floor/tiled/techmaint,
 /area/talon_v2/bridge)
 "aV" = (
@@ -538,6 +547,9 @@
 /obj/structure/cable/green{
 	icon_state = "4-8"
 	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 4
+	},
 /turf/simulated/floor/tiled/techmaint,
 /area/talon_v2/central_hallway)
 "bd" = (
@@ -594,6 +606,7 @@
 	name = "Doctor's Cabin";
 	req_one_access = list(303)
 	},
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/floor/tiled/techmaint,
 /area/talon_v2/crew_quarters/med_room)
 "bh" = (
@@ -656,13 +669,19 @@
 /turf/simulated/floor/carpet,
 /area/talon_v2/crew_quarters/sec_room)
 "br" = (
-/obj/structure/flora/pottedplant/fern,
+/obj/item/weapon/carved_pumpkin/candled,
 /obj/machinery/holoposter{
 	dir = 1;
 	pixel_y = 32
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/talon_v2/central_hallway)
+"bs" = (
+/obj/item/decoration/garland/halloween{
+	pixel_y = 32
+	},
+/turf/simulated/floor/tiled/techmaint,
+/area/talon_v2/gen_store)
 "bt" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced/full,
@@ -679,6 +698,7 @@
 /obj/structure/cable/green{
 	icon_state = "4-8"
 	},
+/obj/item/decoration/garland/halloween,
 /turf/simulated/floor/plating,
 /area/talon_v2/crew_quarters/bar)
 "bx" = (
@@ -731,6 +751,9 @@
 	dir = 4;
 	pixel_x = 26
 	},
+/obj/item/decoration/garland/halloween{
+	pixel_x = -32
+	},
 /turf/simulated/floor/plating,
 /area/talon_v2/maintenance/aft_port)
 "bG" = (
@@ -739,6 +762,7 @@
 	},
 /obj/machinery/door/firedoor/glass/talon,
 /obj/machinery/door/airlock/maintenance/common,
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/floor/plating,
 /area/talon_v2/maintenance/aft_port)
 "bI" = (
@@ -779,6 +803,7 @@
 /obj/structure/handrail{
 	dir = 8
 	},
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/floor/tiled/techmaint,
 /area/talon_v2/maintenance/wing_starboard)
 "bM" = (
@@ -879,7 +904,7 @@
 /area/talon_v2/engineering/star_store)
 "ce" = (
 /obj/machinery/camera/network/talon,
-/obj/structure/flora/pottedplant/minitree,
+/obj/item/weapon/carved_pumpkin/candled,
 /turf/simulated/floor/tiled/techfloor,
 /area/talon_v2/central_hallway)
 "cf" = (
@@ -939,6 +964,7 @@
 	name = "Engineer's Cabin";
 	req_one_access = list(304)
 	},
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/talon_v2/engineering/star_store)
 "cl" = (
@@ -948,6 +974,9 @@
 "cn" = (
 /obj/machinery/light/small{
 	dir = 1
+	},
+/obj/item/decoration/garland/halloween{
+	pixel_y = 32
 	},
 /turf/simulated/floor/tiled/techmaint,
 /area/talon_v2/maintenance/wing_starboard)
@@ -975,6 +1004,9 @@
 "cw" = (
 /obj/machinery/door/firedoor/glass/talon,
 /obj/machinery/door/airlock/maintenance/common,
+/obj/item/decoration/tinsel/halloween{
+	dir = 4
+	},
 /turf/simulated/floor/plating,
 /area/talon_v2/maintenance/aft_port)
 "cy" = (
@@ -1007,12 +1039,16 @@
 	name = "Guard's Cabin";
 	req_one_access = list(306)
 	},
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/floor/tiled/techfloor,
 /area/talon_v2/crew_quarters/sec_room)
 "cH" = (
 /obj/machinery/fitness/punching_bag,
 /obj/structure/sign/painting/public{
 	pixel_x = 30
+	},
+/obj/item/decoration/garland/halloween{
+	pixel_y = 32
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/talon_v2/workroom)
@@ -1029,6 +1065,7 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
+/obj/item/decoration/garland/halloween,
 /turf/simulated/floor/plating,
 /area/shuttle/talonboat)
 "cL" = (
@@ -1040,11 +1077,18 @@
 	},
 /turf/simulated/floor/plating,
 /area/talon_v2/engineering/port_store)
+"cM" = (
+/obj/item/decoration/tinsel/halloween,
+/turf/simulated/floor/tiled/techmaint,
+/area/talon_v2/maintenance/wing_port)
 "cN" = (
 /obj/machinery/door/firedoor/glass/talon,
 /obj/machinery/door/airlock/maintenance/sec{
 	id_tag = "talon_secdoor";
 	req_one_access = list(306)
+	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 4
 	},
 /turf/simulated/floor/plating,
 /area/talon_v2/crew_quarters/sec_room)
@@ -1127,6 +1171,7 @@
 /obj/machinery/door/airlock{
 	name = "Observation Room"
 	},
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/floor/tiled/techmaint,
 /area/talon_v2/crew_quarters/meditation)
 "db" = (
@@ -1137,6 +1182,9 @@
 	pixel_x = 32
 	},
 /obj/structure/handrail,
+/obj/item/decoration/garland/halloween{
+	pixel_y = 32
+	},
 /turf/simulated/floor/tiled/techmaint,
 /area/talon_v2/maintenance/wing_starboard)
 "de" = (
@@ -1173,6 +1221,9 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 4
+	},
 /turf/simulated/floor/tiled/techfloor,
 /area/talon_v2/crew_quarters/cap_room)
 "dl" = (
@@ -1197,8 +1248,21 @@
 	dir = 4;
 	id = "talon_bridge_shields"
 	},
+/obj/item/weapon/carved_pumpkin/candled,
 /turf/simulated/floor/plating,
 /area/talon_v2/bridge)
+"do" = (
+/obj/machinery/door/airlock/multi_tile/glass{
+	dir = 1;
+	name = "Hangar Bay";
+	req_one_access = list(301)
+	},
+/obj/machinery/door/firedoor/glass/talon,
+/obj/item/decoration/tinsel/halloween{
+	dir = 4
+	},
+/turf/simulated/floor/tiled/techfloor,
+/area/talon_v2/hangar)
 "dp" = (
 /obj/structure/railing/grey{
 	dir = 1
@@ -1240,6 +1304,7 @@
 	dir = 2;
 	id = "talon_bridge_shields"
 	},
+/obj/item/decoration/garland/halloween,
 /turf/simulated/floor/plating,
 /area/talon_v2/bridge)
 "dv" = (
@@ -1323,6 +1388,9 @@
 /obj/machinery/door/airlock/glass{
 	name = "Cantina"
 	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 8
+	},
 /turf/simulated/floor/tiled/techmaint,
 /area/talon_v2/crew_quarters/bar)
 "dL" = (
@@ -1331,6 +1399,19 @@
 	},
 /turf/simulated/floor/plating,
 /area/talon_v2/engineering/atmospherics)
+"dM" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 5
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 5
+	},
+/obj/structure/catwalk,
+/obj/item/decoration/garland/halloween{
+	pixel_x = -32
+	},
+/turf/simulated/floor/plating,
+/area/talon_v2/maintenance/aft_port)
 "dN" = (
 /obj/structure/table/steel,
 /obj/item/clothing/accessory/talon,
@@ -1364,6 +1445,9 @@
 "dT" = (
 /obj/machinery/light{
 	dir = 8
+	},
+/obj/item/decoration/garland/halloween{
+	pixel_x = -32
 	},
 /turf/simulated/floor/wood,
 /area/talon_v2/crew_quarters/cap_room)
@@ -1436,7 +1520,7 @@
 /turf/simulated/floor/tiled/white,
 /area/talon_v2/crew_quarters/bar)
 "eh" = (
-/obj/structure/flora/pottedplant/shoot,
+/obj/item/weapon/carved_pumpkin/candled,
 /turf/simulated/floor/wood,
 /area/talon_v2/crew_quarters/cap_room)
 "ei" = (
@@ -1527,6 +1611,9 @@
 /obj/structure/cable/green{
 	icon_state = "1-2"
 	},
+/obj/item/decoration/garland/halloween{
+	pixel_x = 32
+	},
 /turf/simulated/floor/carpet/blucarpet,
 /area/talon_v2/crew_quarters/cap_room)
 "ex" = (
@@ -1570,6 +1657,9 @@
 "eC" = (
 /obj/structure/closet/walllocker_double/hydrant/west,
 /obj/machinery/light/small,
+/obj/item/decoration/garland/halloween{
+	pixel_y = -32
+	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/talon_v2/engineering/star_store)
 "eD" = (
@@ -1661,6 +1751,9 @@
 /obj/structure/sign/warning/radioactive{
 	pixel_y = 32
 	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 4
+	},
 /turf/simulated/floor/plating,
 /area/talon_v2/engineering/generators)
 "eN" = (
@@ -1695,6 +1788,9 @@
 	},
 /obj/structure/cable/green{
 	icon_state = "1-4"
+	},
+/obj/item/decoration/garland/halloween{
+	pixel_x = 32
 	},
 /turf/simulated/floor/plating,
 /area/talon_v2/maintenance/aft_starboard)
@@ -1878,6 +1974,7 @@
 /obj/machinery/door/firedoor/glass/talon,
 /obj/structure/grille,
 /obj/structure/window/reinforced/full,
+/obj/item/decoration/garland/halloween,
 /turf/simulated/floor/plating,
 /area/talon_v2/crew_quarters/bar)
 "fp" = (
@@ -1973,6 +2070,9 @@
 /obj/structure/cable/green{
 	icon_state = "4-8"
 	},
+/obj/item/decoration/garland/halloween{
+	pixel_y = -32
+	},
 /turf/simulated/floor/carpet/blucarpet,
 /area/talon_v2/crew_quarters/cap_room)
 "fN" = (
@@ -2025,6 +2125,15 @@
 /obj/machinery/light/small,
 /turf/simulated/floor/plating,
 /area/talon_v2/maintenance/aft_starboard)
+"fT" = (
+/obj/structure/table/rack/shelf/steel,
+/obj/random/maintenance/cargo,
+/obj/random/maintenance/cargo,
+/obj/item/decoration/garland/halloween{
+	pixel_x = -32
+	},
+/turf/simulated/floor/tiled/techfloor,
+/area/talon_v2/gen_store)
 "fU" = (
 /obj/structure/railing/grey{
 	dir = 1
@@ -2175,6 +2284,17 @@
 /obj/effect/catwalk_plated/techfloor,
 /turf/simulated/floor/plating,
 /area/talon_v2/central_hallway/fore)
+"gt" = (
+/obj/machinery/door/firedoor/glass/talon,
+/obj/structure/grille,
+/obj/structure/window/reinforced/full,
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/item/decoration/garland/halloween,
+/turf/simulated/floor/plating,
+/area/talon_v2/hangar)
 "gu" = (
 /obj/structure/cable/green{
 	icon_state = "1-2"
@@ -2238,6 +2358,7 @@
 /obj/structure/cable/green{
 	icon_state = "1-2"
 	},
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/floor/plating,
 /area/talon_v2/maintenance/fore_port)
 "gK" = (
@@ -2332,6 +2453,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/aux{
 	dir = 4
 	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 4
+	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/talon_v2/ofd_ops)
 "ha" = (
@@ -2361,8 +2485,25 @@
 	req_one_access = list(301)
 	},
 /obj/effect/map_helper/airlock/door/ext_door,
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/talon_v2/maintenance/aft_port)
+"he" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/full,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/machinery/door/firedoor/glass/talon,
+/obj/machinery/door/blast/regular/open{
+	dir = 4;
+	id = "talon_boat_cockpit"
+	},
+/obj/structure/window/reinforced,
+/obj/item/weapon/carved_pumpkin/candled,
+/obj/item/decoration/tinsel/halloween,
+/turf/simulated/floor/plating,
+/area/shuttle/talonboat)
 "hg" = (
 /obj/structure/cable/green{
 	icon_state = "4-8"
@@ -2387,6 +2528,7 @@
 	dir = 2;
 	id = "talon_bridge_shields"
 	},
+/obj/item/decoration/garland/halloween,
 /turf/simulated/floor/plating,
 /area/talon_v2/bridge)
 "hi" = (
@@ -2467,8 +2609,19 @@
 	name = "Escape Pod Hatch"
 	},
 /obj/effect/floor_decal/industrial/hatch/yellow,
+/obj/item/decoration/tinsel/halloween{
+	dir = 4
+	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/shuttle/talonpod)
+"hv" = (
+/obj/structure/catwalk,
+/obj/structure/trash_pile,
+/obj/item/decoration/garland/halloween{
+	pixel_y = 32
+	},
+/turf/simulated/floor/plating,
+/area/talon_v2/maintenance/fore_port)
 "hw" = (
 /obj/machinery/atmospherics/pipe/simple/visible/blue,
 /obj/structure/catwalk,
@@ -2587,6 +2740,7 @@
 	dir = 1;
 	pixel_x = -32
 	},
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/floor/tiled/techmaint,
 /area/talon_v2/central_hallway/fore)
 "hP" = (
@@ -2616,6 +2770,10 @@
 /obj/structure/cable/green{
 	icon_state = "1-2"
 	},
+/obj/item/decoration/tinsel/halloween,
+/obj/item/decoration/tinsel/halloween{
+	dir = 4
+	},
 /turf/simulated/floor/tiled/techmaint,
 /area/talon_v2/armory)
 "hT" = (
@@ -2636,6 +2794,9 @@
 	req_one_access = list(301)
 	},
 /obj/effect/floor_decal/industrial/hatch/yellow,
+/obj/item/decoration/tinsel/halloween{
+	dir = 8
+	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/talon_v2/central_hallway/fore)
 "hW" = (
@@ -2671,6 +2832,18 @@
 	},
 /turf/simulated/floor/plating,
 /area/talon_v2/maintenance/aft_port)
+"id" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/structure/disposalpipe/segment,
+/obj/structure/cable/green{
+	icon_state = "1-2"
+	},
+/obj/item/decoration/garland/halloween{
+	pixel_x = 32
+	},
+/turf/simulated/floor/tiled/techmaint,
+/area/talon_v2/central_hallway)
 "ie" = (
 /obj/structure/hull_corner/long_horiz{
 	dir = 5
@@ -2692,6 +2865,7 @@
 /obj/structure/cable/green{
 	icon_state = "1-2"
 	},
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/floor/plating,
 /area/talon_v2/engineering)
 "ii" = (
@@ -2744,6 +2918,9 @@
 /obj/structure/cable/green{
 	icon_state = "1-8"
 	},
+/obj/item/decoration/garland/halloween{
+	pixel_x = 32
+	},
 /turf/simulated/floor/plating,
 /area/talon_v2/engineering)
 "iq" = (
@@ -2754,6 +2931,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/aux,
 /obj/machinery/door/firedoor/glass/talon,
 /obj/machinery/door/airlock/maintenance/common,
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/floor/plating,
 /area/talon_v2/maintenance/wing_port)
 "is" = (
@@ -2782,6 +2960,9 @@
 "ix" = (
 /obj/structure/table/woodentable,
 /obj/machinery/recharger,
+/obj/item/decoration/garland/halloween{
+	pixel_y = 32
+	},
 /turf/simulated/floor/carpet,
 /area/talon_v2/crew_quarters/mine_room)
 "iy" = (
@@ -2945,6 +3126,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 4
+	},
 /turf/simulated/floor/tiled/techmaint,
 /area/talon_v2/ofd_ops)
 "iQ" = (
@@ -3008,6 +3192,9 @@
 /obj/structure/cable/green{
 	icon_state = "4-8"
 	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 4
+	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/talon_v2/maintenance/wing_port)
 "jn" = (
@@ -3056,8 +3243,21 @@
 	id = "talon_cargo_port";
 	name = "Cargo Loading Hatch"
 	},
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/talon_v2/maintenance/wing_port)
+"jB" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/structure/disposalpipe/segment{
+	dir = 1
+	},
+/obj/structure/cable/green{
+	icon_state = "1-2"
+	},
+/obj/item/decoration/tinsel/halloween,
+/turf/simulated/floor/tiled/techfloor,
+/area/talon_v2/central_hallway/fore)
 "jC" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply,
@@ -3093,6 +3293,7 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
+/obj/item/decoration/garland/halloween,
 /turf/simulated/floor/plating,
 /area/talon_v2/hangar)
 "jN" = (
@@ -3127,6 +3328,13 @@
 	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/talon_v2/maintenance/fore_starboard)
+"jU" = (
+/obj/structure/table/rack/shelf/steel,
+/obj/item/decoration/garland/halloween{
+	pixel_y = -32
+	},
+/turf/simulated/floor/tiled/techfloor,
+/area/talon_v2/armory)
 "jY" = (
 /obj/structure/closet/crate,
 /obj/structure/railing/grey,
@@ -3214,6 +3422,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/aux{
 	dir = 4
 	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 8
+	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/talon_v2/maintenance/fore_starboard)
 "kk" = (
@@ -3254,6 +3465,10 @@
 	},
 /turf/simulated/floor/tiled/techmaint,
 /area/talon_v2/armory)
+"kq" = (
+/obj/item/decoration/tinsel/halloween,
+/turf/simulated/floor/plating,
+/area/talon_v2/engineering/port_store)
 "kt" = (
 /obj/structure/cable/green{
 	icon_state = "1-2"
@@ -3393,6 +3608,9 @@
 /turf/simulated/floor/plating,
 /area/talon_v2/engineering/atmospherics)
 "kR" = (
+/obj/item/decoration/garland/halloween{
+	pixel_y = 32
+	},
 /turf/simulated/floor/plating,
 /area/talon_v2/maintenance/fore_port)
 "kS" = (
@@ -3416,6 +3634,9 @@
 /turf/simulated/floor/plating,
 /area/talon_v2/engineering/starboard)
 "kW" = (
+/obj/item/decoration/garland/halloween{
+	pixel_y = 32
+	},
 /turf/simulated/floor/plating,
 /area/talon_v2/maintenance/fore_starboard)
 "kX" = (
@@ -3442,6 +3663,9 @@
 	name = "Engine Crawlway Access";
 	req_one_access = list(304)
 	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 4
+	},
 /turf/simulated/floor/plating,
 /area/talon_v2/engineering/starboard)
 "le" = (
@@ -3452,6 +3676,7 @@
 	dir = 1;
 	pixel_y = -32
 	},
+/obj/item/weapon/carved_pumpkin/candled,
 /turf/simulated/floor/tiled/techfloor,
 /area/talon_v2/central_hallway/fore)
 "lf" = (
@@ -3508,6 +3733,9 @@
 	},
 /obj/structure/cable/green{
 	icon_state = "4-8"
+	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 4
 	},
 /turf/simulated/floor/tiled/techmaint,
 /area/talon_v2/central_hallway)
@@ -3596,7 +3824,7 @@
 /obj/structure/cable/green{
 	icon_state = "4-8"
 	},
-/obj/structure/flora/pottedplant/mysterious,
+/obj/item/weapon/carved_pumpkin/candled,
 /turf/simulated/floor/tiled/techfloor,
 /area/talon_v2/central_hallway/fore)
 "lD" = (
@@ -3644,6 +3872,7 @@
 /obj/structure/cable/green{
 	icon_state = "1-2"
 	},
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/floor/tiled/techmaint,
 /area/talon_v2/eva_storage)
 "lK" = (
@@ -3697,6 +3926,7 @@
 /obj/structure/cable/green{
 	icon_state = "1-2"
 	},
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/floor/tiled/white,
 /area/talon_v2/medical)
 "lS" = (
@@ -3721,9 +3951,21 @@
 	},
 /turf/simulated/floor/tiled/techmaint,
 /area/talon_v2/secure_storage)
+"lW" = (
+/obj/machinery/door/firedoor/glass/talon,
+/obj/structure/grille,
+/obj/structure/window/reinforced/full,
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/item/decoration/tinsel/halloween,
+/turf/simulated/floor/plating,
+/area/talon_v2/hangar)
 "lX" = (
 /obj/machinery/door/firedoor/glass/talon,
 /obj/machinery/door/airlock/maintenance/common,
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/floor/plating,
 /area/talon_v2/maintenance/fore_port)
 "lY" = (
@@ -3738,6 +3980,7 @@
 /obj/structure/cable/green{
 	icon_state = "1-2"
 	},
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/floor/tiled/techmaint,
 /area/talon_v2/central_hallway/fore)
 "ma" = (
@@ -3810,6 +4053,7 @@
 /obj/structure/cable/green{
 	icon_state = "1-2"
 	},
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/floor/tiled/techmaint,
 /area/talon_v2/central_hallway/fore)
 "ml" = (
@@ -3833,6 +4077,7 @@
 	id = "talon_cargo_port";
 	name = "Cargo Loading Hatch"
 	},
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/talon_v2/maintenance/wing_port)
 "mq" = (
@@ -3879,6 +4124,9 @@
 /obj/machinery/camera/network/talon{
 	dir = 1
 	},
+/obj/item/decoration/garland/halloween{
+	pixel_y = -32
+	},
 /turf/simulated/floor/carpet,
 /area/talon_v2/crew_quarters/sec_room)
 "mE" = (
@@ -3898,6 +4146,7 @@
 "mH" = (
 /obj/machinery/door/firedoor/glass/talon,
 /obj/machinery/door/airlock/maintenance/common,
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/floor/plating,
 /area/talon_v2/maintenance/fore_starboard)
 "mI" = (
@@ -3941,6 +4190,9 @@
 /turf/simulated/floor/tiled/techmaint,
 /area/talon_v2/central_hallway)
 "mS" = (
+/obj/item/decoration/garland/halloween{
+	pixel_y = 32
+	},
 /turf/simulated/floor/wood,
 /area/talon_v2/crew_quarters/sec_room)
 "mT" = (
@@ -4002,6 +4254,9 @@
 	name = "Doctor's Cabin";
 	req_one_access = list(303)
 	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 8
+	},
 /turf/simulated/floor/tiled/techmaint,
 /area/talon_v2/crew_quarters/med_room)
 "ne" = (
@@ -4049,6 +4304,9 @@
 /area/talon_v2/central_hallway)
 "no" = (
 /obj/machinery/suit_cycler/vintage/tmedic,
+/obj/item/decoration/garland/halloween{
+	pixel_y = 32
+	},
 /turf/simulated/floor/wood,
 /area/talon_v2/crew_quarters/med_room)
 "np" = (
@@ -4089,6 +4347,7 @@
 	},
 /obj/structure/table/rack/steel,
 /obj/random/maintenance/engineering,
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/floor/plating,
 /area/talon_v2/engineering/port_store)
 "nw" = (
@@ -4208,6 +4467,7 @@
 /obj/structure/cable/green{
 	icon_state = "0-8"
 	},
+/obj/item/weapon/carved_pumpkin/candled,
 /turf/simulated/floor/wood,
 /area/talon_v2/crew_quarters/pilot_room)
 "nN" = (
@@ -4256,6 +4516,12 @@
 	},
 /turf/simulated/floor/wood,
 /area/talon_v2/crew_quarters/sec_room)
+"nX" = (
+/obj/item/decoration/garland/halloween{
+	pixel_y = -32
+	},
+/turf/simulated/floor/tiled/techmaint,
+/area/talon_v2/central_hallway/star)
 "nY" = (
 /obj/machinery/door/blast/regular/open{
 	id = "talon_boat_east"
@@ -4287,8 +4553,19 @@
 	id_tag = "tal_shuttle_sb";
 	req_one_access = list(301)
 	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 8
+	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/shuttle/talonboat)
+"nZ" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/structure/cable/green{
+	icon_state = "1-2"
+	},
+/obj/item/decoration/tinsel/halloween,
+/turf/simulated/floor/tiled/techmaint,
+/area/talon_v2/bridge)
 "od" = (
 /obj/structure/disposalpipe/segment{
 	dir = 1
@@ -4321,6 +4598,9 @@
 "ok" = (
 /obj/structure/bed/pod,
 /obj/item/weapon/bedsheet/brown,
+/obj/item/decoration/garland/halloween{
+	pixel_y = -32
+	},
 /turf/simulated/floor/carpet,
 /area/talon_v2/crew_quarters/mine_room)
 "ol" = (
@@ -4492,6 +4772,9 @@
 /obj/random/maintenance/cargo,
 /obj/random/maintenance/cargo,
 /obj/item/weapon/storage/box/lights/mixed,
+/obj/item/decoration/garland/halloween{
+	pixel_y = 32
+	},
 /turf/simulated/floor/tiled/techfloor,
 /area/talon_v2/gen_store)
 "oS" = (
@@ -4513,6 +4796,9 @@
 	dir = 1
 	},
 /obj/item/weapon/paper/talon_doctor,
+/obj/item/decoration/garland/halloween{
+	pixel_y = -32
+	},
 /turf/simulated/floor/carpet,
 /area/talon_v2/crew_quarters/med_room)
 "oW" = (
@@ -4606,6 +4892,7 @@
 /obj/structure/cable/green{
 	icon_state = "1-2"
 	},
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/shuttle/talonboat)
 "pl" = (
@@ -4630,6 +4917,9 @@
 	id_tag = "talon_secdoor";
 	name = "Guard's Cabin";
 	req_one_access = list(306)
+	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 4
 	},
 /turf/simulated/floor/tiled/techmaint,
 /area/talon_v2/crew_quarters/sec_room)
@@ -4699,6 +4989,9 @@
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/talon_v2/engineering)
 "pB" = (
+/obj/item/decoration/garland/halloween{
+	pixel_x = 32
+	},
 /turf/simulated/floor/tiled/techmaint,
 /area/talon_v2/crew_quarters/restrooms)
 "pC" = (
@@ -4868,6 +5161,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 1
 	},
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/floor/tiled/techmaint,
 /area/talon_v2/central_hallway/fore)
 "qe" = (
@@ -4898,6 +5192,13 @@
 /obj/structure/catwalk,
 /turf/simulated/floor/plating,
 /area/talon_v2/engineering/atmospherics)
+"qh" = (
+/obj/structure/catwalk,
+/obj/item/decoration/garland/halloween{
+	pixel_y = 32
+	},
+/turf/simulated/floor/plating,
+/area/talon_v2/maintenance/fore_starboard)
 "qi" = (
 /obj/machinery/firealarm{
 	layer = 3.3;
@@ -4940,10 +5241,17 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/talon_v2/brig)
 "qo" = (
-/obj/machinery/camera/network/talon,
-/obj/structure/flora/pottedplant/crystal,
-/turf/simulated/floor/tiled/techfloor,
-/area/talon_v2/central_hallway)
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/structure/catwalk,
+/obj/structure/cable/green{
+	icon_state = "1-2"
+	},
+/obj/item/decoration/garland/halloween{
+	pixel_x = -32
+	},
+/turf/simulated/floor/plating,
+/area/talon_v2/maintenance/aft_port)
 "qq" = (
 /obj/effect/map_helper/airlock/sensor/int_sensor,
 /obj/machinery/airlock_sensor{
@@ -5011,6 +5319,7 @@
 	id = "talon_cargo_star";
 	name = "Cargo Loading Hatch"
 	},
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/talon_v2/maintenance/wing_starboard)
 "qz" = (
@@ -5032,6 +5341,7 @@
 /obj/structure/cable/green{
 	icon_state = "1-2"
 	},
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/floor/plating,
 /area/talon_v2/engineering/port_store)
 "qD" = (
@@ -5140,6 +5450,24 @@
 	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/talon_v2/refining)
+"qR" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/structure/cable/green{
+	icon_state = "4-8"
+	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 8
+	},
+/turf/simulated/floor/tiled/techmaint,
+/area/talon_v2/central_hallway)
 "qU" = (
 /obj/effect/floor_decal/industrial/warning{
 	dir = 4
@@ -5223,6 +5551,9 @@
 	pixel_x = -31
 	},
 /obj/structure/handrail,
+/obj/item/decoration/garland/halloween{
+	pixel_y = 32
+	},
 /turf/simulated/floor/tiled/techmaint,
 /area/talon_v2/maintenance/wing_port)
 "rn" = (
@@ -5257,6 +5588,8 @@
 /obj/machinery/door/firedoor/glass/talon,
 /obj/structure/grille,
 /obj/structure/window/reinforced/full,
+/obj/item/decoration/tinsel/halloween,
+/obj/item/weapon/carved_pumpkin/candled,
 /turf/simulated/floor/plating,
 /area/talon_v2/central_hallway/fore)
 "ru" = (
@@ -5280,6 +5613,9 @@
 	name = "Flight Control";
 	req_one_access = list(302)
 	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 8
+	},
 /turf/simulated/floor/tiled/techfloor,
 /area/talon_v2/central_hallway)
 "rx" = (
@@ -5297,6 +5633,9 @@
 /obj/structure/table/standard,
 /obj/machinery/reagentgrinder,
 /obj/machinery/atmospherics/unary/vent_pump/on,
+/obj/item/decoration/garland/halloween{
+	pixel_y = 32
+	},
 /turf/simulated/floor/tiled/white,
 /area/talon_v2/medical)
 "rI" = (
@@ -5434,6 +5773,7 @@
 	name = "Pilot's Cabin";
 	req_one_access = list(307)
 	},
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/floor/tiled/techfloor,
 /area/talon_v2/crew_quarters/pilot_room)
 "sh" = (
@@ -5494,6 +5834,9 @@
 	icon_state = "4-8"
 	},
 /obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/item/decoration/tinsel/halloween{
 	dir = 4
 	},
 /turf/simulated/floor/tiled/techmaint,
@@ -5557,6 +5900,7 @@
 /obj/structure/railing/grey{
 	dir = 1
 	},
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/floor/tiled/techfloor,
 /area/talon_v2/maintenance/wing_port)
 "sz" = (
@@ -5639,6 +5983,9 @@
 	req_one_access = list(301)
 	},
 /obj/effect/map_helper/airlock/door/ext_door,
+/obj/item/decoration/tinsel/halloween{
+	dir = 8
+	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/talon_v2/maintenance/fore_starboard)
 "sJ" = (
@@ -5687,6 +6034,9 @@
 /obj/structure/cable/green{
 	icon_state = "4-8"
 	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 4
+	},
 /turf/simulated/floor/plating,
 /area/talon_v2/engineering/port_store)
 "sR" = (
@@ -5695,6 +6045,9 @@
 	dir = 1
 	},
 /obj/structure/vehiclecage/quadbike,
+/obj/item/decoration/garland/halloween{
+	pixel_x = -32
+	},
 /turf/simulated/floor/tiled/techfloor,
 /area/talon_v2/maintenance/wing_starboard)
 "sT" = (
@@ -5751,6 +6104,13 @@
 	},
 /turf/simulated/wall/shull,
 /area/talon_v2/central_hallway)
+"te" = (
+/obj/machinery/light,
+/obj/item/decoration/garland/halloween{
+	pixel_y = -32
+	},
+/turf/simulated/floor/tiled/techmaint,
+/area/talon_v2/central_hallway/star)
 "tf" = (
 /obj/structure/cable/green{
 	icon_state = "4-8"
@@ -5860,6 +6220,9 @@
 	id_tag = "talon_meddoor";
 	req_one_access = list(303)
 	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 8
+	},
 /turf/simulated/floor/plating,
 /area/talon_v2/crew_quarters/med_room)
 "tx" = (
@@ -5871,6 +6234,7 @@
 	dir = 8;
 	pixel_x = 26
 	},
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/floor/tiled/techmaint,
 /area/talon_v2/central_hallway)
 "tz" = (
@@ -5924,6 +6288,22 @@
 	},
 /turf/simulated/floor/tiled/techmaint,
 /area/talon_v2/brig)
+"tG" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/full,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/machinery/door/blast/regular/open{
+	id = "talon_windows"
+	},
+/obj/machinery/door/firedoor/glass/talon,
+/obj/item/weapon/carved_pumpkin/candled,
+/turf/simulated/floor/plating,
+/area/talon_v2/crew_quarters/bar)
 "tJ" = (
 /obj/structure/railing/grey{
 	dir = 1
@@ -5952,6 +6332,9 @@
 	dir = 8
 	},
 /obj/machinery/recharger,
+/obj/item/decoration/garland/halloween{
+	pixel_y = -32
+	},
 /turf/simulated/floor/wood,
 /area/talon_v2/crew_quarters/eng_room)
 "tQ" = (
@@ -5994,6 +6377,9 @@
 	},
 /obj/structure/cable/green{
 	icon_state = "4-8"
+	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 8
 	},
 /turf/simulated/floor/tiled/techmaint,
 /area/talon_v2/crew_quarters/restrooms)
@@ -6071,6 +6457,7 @@
 	dir = 2;
 	id = "talon_bridge_shields"
 	},
+/obj/item/decoration/garland/halloween,
 /turf/simulated/floor/plating,
 /area/talon_v2/bridge)
 "uo" = (
@@ -6552,6 +6939,9 @@
 /obj/machinery/door/airlock/maintenance/sec{
 	req_one_access = list(306)
 	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 4
+	},
 /turf/simulated/floor/tiled/techfloor,
 /area/talon_v2/brig)
 "vV" = (
@@ -6560,6 +6950,27 @@
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/shuttle/talonboat)
+"vX" = (
+/obj/structure/cable/green{
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/light{
+	dir = 1
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/item/decoration/garland/halloween{
+	pixel_y = 32
+	},
+/turf/simulated/floor/tiled/techmaint,
+/area/talon_v2/central_hallway/star)
 "vY" = (
 /obj/machinery/light/small,
 /turf/simulated/floor/tiled/techfloor,
@@ -6581,6 +6992,9 @@
 /obj/machinery/door/airlock/maintenance/common,
 /obj/structure/cable/green{
 	icon_state = "4-8"
+	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 4
 	},
 /turf/simulated/floor/plating,
 /area/talon_v2/maintenance/fore_port)
@@ -6630,6 +7044,9 @@
 	},
 /obj/effect/map_helper/airlock/door/ext_door,
 /obj/structure/disposalpipe/segment,
+/obj/item/decoration/tinsel/halloween{
+	dir = 4
+	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/talon_v2/ofd_ops)
 "wm" = (
@@ -6668,6 +7085,7 @@
 /obj/structure/railing/grey{
 	dir = 1
 	},
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/floor/tiled/techfloor,
 /area/talon_v2/maintenance/wing_starboard)
 "ws" = (
@@ -6808,6 +7226,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 1
 	},
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/floor/tiled/techmaint,
 /area/talon_v2/medical)
 "wP" = (
@@ -6894,6 +7313,7 @@
 	},
 /obj/effect/map_helper/airlock/door/int_door,
 /obj/machinery/atmospherics/pipe/simple/hidden/aux,
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/talon_v2/maintenance/aft_starboard)
 "xb" = (
@@ -6979,6 +7399,7 @@
 	dir = 4;
 	id = "talon_bridge_shields"
 	},
+/obj/item/decoration/garland/halloween,
 /turf/simulated/floor/plating,
 /area/talon_v2/bridge)
 "xo" = (
@@ -7013,6 +7434,7 @@
 /area/space)
 "xu" = (
 /obj/item/modular_computer/console/preset/talon,
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/floor/tiled/techfloor,
 /area/talon_v2/bridge)
 "xv" = (
@@ -7035,6 +7457,9 @@
 	},
 /obj/structure/cable/green{
 	icon_state = "4-8"
+	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 8
 	},
 /turf/simulated/floor/plating,
 /area/talon_v2/maintenance/wing_port)
@@ -7064,6 +7489,7 @@
 /obj/structure/cable/green{
 	icon_state = "1-2"
 	},
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/floor/plating,
 /area/talon_v2/maintenance/fore_port)
 "xH" = (
@@ -7097,6 +7523,9 @@
 	},
 /obj/structure/cable/green{
 	icon_state = "4-8"
+	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 4
 	},
 /turf/simulated/floor/plating,
 /area/talon_v2/maintenance/wing_starboard)
@@ -7149,11 +7578,24 @@
 	},
 /turf/simulated/floor/plating,
 /area/talon_v2/engineering)
+"xX" = (
+/obj/structure/cable/green{
+	icon_state = "1-2"
+	},
+/obj/structure/catwalk,
+/obj/item/decoration/garland/halloween{
+	pixel_x = -32
+	},
+/turf/simulated/floor/plating,
+/area/talon_v2/maintenance/aft_port)
 "xY" = (
 /obj/machinery/door/firedoor/glass/talon,
 /obj/machinery/door/airlock/engineering{
 	name = "Talon Starboard Engines";
 	req_one_access = list(304)
+	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 8
 	},
 /turf/simulated/floor/plating,
 /area/talon_v2/engineering/starboard)
@@ -7309,6 +7751,7 @@
 	dir = 4;
 	id = "talon_bridge_shields"
 	},
+/obj/item/decoration/garland/halloween,
 /turf/simulated/floor/plating,
 /area/talon_v2/bridge)
 "yx" = (
@@ -7322,6 +7765,7 @@
 	req_one_access = list(301)
 	},
 /obj/effect/map_helper/airlock/door/ext_door,
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/talon_v2/maintenance/aft_starboard)
 "yA" = (
@@ -7419,6 +7863,9 @@
 /area/talon_v2/engineering/port_store)
 "yU" = (
 /obj/machinery/suit_cycler/vintage/tminer,
+/obj/item/decoration/garland/halloween{
+	pixel_y = -32
+	},
 /turf/simulated/floor/wood,
 /area/talon_v2/crew_quarters/mine_room)
 "yV" = (
@@ -7448,6 +7895,9 @@
 /obj/machinery/light{
 	dir = 8
 	},
+/obj/item/decoration/garland/halloween{
+	pixel_x = -32
+	},
 /turf/simulated/floor/tiled/techfloor,
 /area/talon_v2/eva_storage)
 "yZ" = (
@@ -7475,12 +7925,18 @@
 /obj/structure/cable/green{
 	icon_state = "1-4"
 	},
+/obj/item/decoration/garland/halloween{
+	pixel_y = -32
+	},
 /turf/simulated/floor/tiled/techmaint,
 /area/talon_v2/central_hallway/port)
 "zd" = (
 /obj/structure/fitness/weightlifter,
 /obj/machinery/camera/network/talon{
 	dir = 4
+	},
+/obj/item/decoration/garland/halloween{
+	pixel_x = -32
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/talon_v2/workroom)
@@ -7581,6 +8037,7 @@
 	opacity = 0
 	},
 /obj/machinery/door/firedoor/glass/talon,
+/obj/item/weapon/carved_pumpkin/candled,
 /turf/simulated/floor/plating,
 /area/talon_v2/brig)
 "zw" = (
@@ -7589,6 +8046,23 @@
 	},
 /turf/simulated/floor/tiled/white,
 /area/talon_v2/medical)
+"zy" = (
+/obj/machinery/door/firedoor/glass/talon,
+/obj/structure/grille,
+/obj/structure/window/reinforced/full,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/machinery/door/blast/regular/open{
+	dir = 2;
+	id = "talon_bridge_shields"
+	},
+/obj/item/decoration/garland/halloween,
+/turf/simulated/floor/plating,
+/area/talon_v2/bridge)
 "zz" = (
 /obj/structure/catwalk,
 /obj/machinery/light/small,
@@ -7597,6 +8071,9 @@
 /area/talon_v2/maintenance/fore_port)
 "zA" = (
 /obj/machinery/suit_cycler/vintage/tengi,
+/obj/item/decoration/garland/halloween{
+	pixel_x = 32
+	},
 /turf/simulated/floor/wood,
 /area/talon_v2/crew_quarters/eng_room)
 "zB" = (
@@ -7662,6 +8139,9 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/light,
+/obj/item/decoration/garland/halloween{
+	pixel_y = -32
+	},
 /turf/simulated/floor/tiled/techmaint,
 /area/talon_v2/central_hallway/port)
 "zM" = (
@@ -7722,6 +8202,7 @@
 	dir = 4;
 	id = "talon_bridge_shields"
 	},
+/obj/item/decoration/garland/halloween,
 /turf/simulated/floor/plating,
 /area/talon_v2/bridge)
 "zZ" = (
@@ -7753,6 +8234,10 @@
 	},
 /turf/simulated/floor/tiled/white,
 /area/talon_v2/medical)
+"Aj" = (
+/obj/item/decoration/tinsel/halloween,
+/turf/simulated/floor/tiled/techmaint,
+/area/talon_v2/bridge)
 "Ak" = (
 /obj/machinery/door/firedoor/glass/talon,
 /obj/machinery/door/airlock/glass,
@@ -7760,6 +8245,7 @@
 	dir = 1;
 	pixel_x = 32
 	},
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/floor/tiled/techmaint,
 /area/talon_v2/central_hallway/fore)
 "An" = (
@@ -7770,7 +8256,7 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/obj/structure/flora/pottedplant/thinbush,
+/obj/item/weapon/carved_pumpkin/candled,
 /turf/simulated/floor/tiled/techfloor,
 /area/talon_v2/workroom)
 "As" = (
@@ -7789,6 +8275,7 @@
 	},
 /obj/machinery/door/firedoor/glass/talon,
 /obj/machinery/door/airlock/maintenance/common,
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/floor/plating,
 /area/talon_v2/maintenance/aft_starboard)
 "Av" = (
@@ -7885,6 +8372,9 @@
 	pixel_y = -25
 	},
 /obj/structure/reagent_dispensers/foam,
+/obj/item/decoration/garland/halloween{
+	pixel_x = 32
+	},
 /turf/simulated/floor/tiled/techfloor,
 /area/talon_v2/gen_store)
 "AL" = (
@@ -7947,6 +8437,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/aux,
 /obj/machinery/door/firedoor/glass/talon,
 /obj/machinery/door/airlock/maintenance/common,
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/floor/plating,
 /area/talon_v2/maintenance/wing_starboard)
 "AV" = (
@@ -7962,6 +8453,9 @@
 	id = "talon_boat_west";
 	pixel_y = -28;
 	req_one_access = list(301)
+	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 4
 	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/shuttle/talonboat)
@@ -8015,6 +8509,10 @@
 /obj/machinery/door/firedoor/glass/talon,
 /obj/structure/grille,
 /obj/structure/window/reinforced/full,
+/obj/item/weapon/carved_pumpkin/candled,
+/obj/item/decoration/tinsel/halloween{
+	dir = 4
+	},
 /turf/simulated/floor/plating,
 /area/talon_v2/ofd_ops)
 "Bf" = (
@@ -8061,6 +8559,9 @@
 /obj/machinery/light{
 	dir = 4
 	},
+/obj/item/decoration/garland/halloween{
+	pixel_x = 32
+	},
 /turf/simulated/floor/tiled/techfloor,
 /area/talon_v2/eva_storage)
 "Bu" = (
@@ -8084,7 +8585,7 @@
 	dir = 8;
 	pixel_x = 30
 	},
-/obj/structure/flora/pottedplant/orientaltree,
+/obj/item/weapon/carved_pumpkin/candled,
 /turf/simulated/floor/wood,
 /area/talon_v2/crew_quarters/bar)
 "Bz" = (
@@ -8117,6 +8618,9 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/obj/item/decoration/tinsel/halloween{
 	dir = 4
 	},
 /turf/simulated/floor/plating,
@@ -8160,6 +8664,11 @@
 	},
 /turf/simulated/floor/tiled/white,
 /area/talon_v2/medical)
+"BR" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/item/decoration/tinsel/halloween,
+/turf/simulated/floor/tiled/techmaint,
+/area/talon_v2/bridge)
 "BT" = (
 /obj/structure/cable/green{
 	icon_state = "2-8"
@@ -8195,11 +8704,17 @@
 /obj/machinery/atmospherics/unary/vent_pump/on{
 	dir = 1
 	},
+/obj/item/decoration/garland/halloween{
+	pixel_y = -32
+	},
 /turf/simulated/floor/tiled/white,
 /area/talon_v2/medical)
 "BV" = (
 /obj/machinery/light/small{
 	dir = 1
+	},
+/obj/item/decoration/garland/halloween{
+	pixel_y = 32
 	},
 /turf/simulated/floor/tiled/techmaint,
 /area/talon_v2/maintenance/wing_port)
@@ -8275,6 +8790,10 @@
 /obj/machinery/portable_atmospherics/canister/empty/phoron,
 /turf/simulated/floor/plating,
 /area/talon_v2/engineering/port_store)
+"Ct" = (
+/obj/item/decoration/tinsel/halloween,
+/turf/simulated/floor/plating,
+/area/talon_v2/engineering/star_store)
 "Cv" = (
 /obj/structure/disposaloutlet{
 	dir = 1
@@ -8354,6 +8873,9 @@
 	pixel_y = 8
 	},
 /obj/structure/table/standard,
+/obj/item/decoration/garland/halloween{
+	pixel_y = -32
+	},
 /turf/simulated/floor/tiled/white,
 /area/talon_v2/medical)
 "CH" = (
@@ -8430,6 +8952,9 @@
 /area/talon_v2/central_hallway)
 "CP" = (
 /obj/machinery/suit_cycler/vintage/tcrew,
+/obj/item/decoration/garland/halloween{
+	pixel_y = 32
+	},
 /turf/simulated/floor/tiled/techfloor,
 /area/talon_v2/eva_storage)
 "CR" = (
@@ -8578,6 +9103,7 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
+/obj/item/decoration/garland/halloween,
 /turf/simulated/floor/plating,
 /area/shuttle/talonboat)
 "DD" = (
@@ -8586,6 +9112,9 @@
 "DG" = (
 /obj/structure/disposalpipe/segment{
 	dir = 1
+	},
+/obj/item/decoration/garland/halloween{
+	pixel_x = -32
 	},
 /turf/simulated/floor/tiled/techmaint,
 /area/talon_v2/central_hallway/fore)
@@ -8702,6 +9231,9 @@
 	id_tag = "talon_minerdoor";
 	req_one_access = list(305)
 	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 8
+	},
 /turf/simulated/floor/plating,
 /area/talon_v2/crew_quarters/mine_room)
 "Ee" = (
@@ -8724,6 +9256,7 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/floor/tiled/techmaint,
 /area/talon_v2/crew_quarters/mine_room)
 "Ej" = (
@@ -8786,6 +9319,14 @@
 /obj/structure/loot_pile/maint/boxfort,
 /turf/simulated/floor/plating,
 /area/talon_v2/engineering/port_store)
+"Es" = (
+/obj/structure/cable/green{
+	icon_state = "1-2"
+	},
+/obj/structure/catwalk,
+/obj/item/decoration/tinsel/halloween,
+/turf/simulated/floor/plating,
+/area/talon_v2/engineering/star_store)
 "Eu" = (
 /obj/machinery/light/small{
 	dir = 8
@@ -8845,6 +9386,7 @@
 	opacity = 0
 	},
 /obj/machinery/door/firedoor/glass/talon,
+/obj/item/weapon/carved_pumpkin/candled,
 /turf/simulated/floor/plating,
 /area/talon_v2/brig)
 "EB" = (
@@ -8887,6 +9429,9 @@
 	},
 /obj/structure/cable/green{
 	icon_state = "1-8"
+	},
+/obj/item/decoration/garland/halloween{
+	pixel_x = -32
 	},
 /turf/simulated/floor/plating,
 /area/talon_v2/maintenance/aft_port)
@@ -8932,6 +9477,7 @@
 /obj/structure/handrail{
 	dir = 4
 	},
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/floor/tiled/techmaint,
 /area/talon_v2/maintenance/wing_port)
 "EN" = (
@@ -8941,6 +9487,7 @@
 	name = "Captain's Cabin";
 	req_one_access = list(302)
 	},
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/floor/tiled/techfloor,
 /area/talon_v2/bridge)
 "EO" = (
@@ -9134,6 +9681,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 4
+	},
 /turf/simulated/floor/tiled/techmaint,
 /area/talon_v2/central_hallway/port)
 "Fv" = (
@@ -9190,6 +9740,7 @@
 	name = "Cabin Access";
 	req_one_access = list(307)
 	},
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/floor/tiled/techfloor,
 /area/shuttle/talonboat)
 "Fz" = (
@@ -9228,6 +9779,13 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor/plating,
 /area/talon_v2/engineering/port_store)
+"FH" = (
+/obj/structure/cable/green{
+	icon_state = "1-2"
+	},
+/obj/item/decoration/tinsel/halloween,
+/turf/simulated/floor/tiled/techmaint,
+/area/talon_v2/central_hallway)
 "FK" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -9244,6 +9802,9 @@
 	dir = 1
 	},
 /obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/item/decoration/tinsel/halloween{
 	dir = 4
 	},
 /turf/simulated/floor/tiled/techmaint,
@@ -9411,6 +9972,7 @@
 	dir = 8;
 	pixel_x = -32
 	},
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/floor/tiled/techmaint,
 /area/talon_v2/central_hallway)
 "Gm" = (
@@ -9464,6 +10026,9 @@
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
+	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 8
 	},
 /turf/simulated/floor/tiled/techmaint,
 /area/talon_v2/central_hallway/port)
@@ -9586,8 +10151,17 @@
 	dir = 1;
 	pixel_y = -32
 	},
+/obj/item/weapon/carved_pumpkin/candled,
 /turf/simulated/floor/wood,
 /area/talon_v2/crew_quarters/sec_room)
+"GL" = (
+/obj/machinery/door/firedoor/glass/talon,
+/obj/machinery/door/airlock/maintenance/common,
+/obj/item/decoration/tinsel/halloween{
+	dir = 8
+	},
+/turf/simulated/floor/plating,
+/area/talon_v2/maintenance/aft_starboard)
 "GP" = (
 /obj/machinery/power/smes/buildable/offmap_spawn{
 	RCon_tag = "Talon Port SMES"
@@ -9636,6 +10210,7 @@
 	dir = 8
 	},
 /obj/structure/table/rack/steel,
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/floor/plating,
 /area/talon_v2/engineering/star_store)
 "Ha" = (
@@ -9695,6 +10270,9 @@
 	dir = 4
 	},
 /obj/machinery/door/firedoor/glass/talon,
+/obj/item/decoration/tinsel/halloween{
+	dir = 4
+	},
 /turf/simulated/floor/tiled/techfloor,
 /area/talon_v2/hangar)
 "Hn" = (
@@ -9712,6 +10290,17 @@
 /obj/machinery/camera/network/talon,
 /turf/simulated/floor/plating,
 /area/talon_v2/engineering/port)
+"Hp" = (
+/obj/machinery/door/firedoor/glass/talon,
+/obj/machinery/door/airlock/glass{
+	name = "Flight Control";
+	req_one_access = list(302)
+	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 4
+	},
+/turf/simulated/floor/tiled/techfloor,
+/area/talon_v2/central_hallway)
 "Hq" = (
 /obj/machinery/light/small{
 	dir = 8
@@ -9827,6 +10416,9 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/door/firedoor/glass/talon,
+/obj/item/decoration/tinsel/halloween{
+	dir = 8
+	},
 /turf/simulated/floor/tiled/techfloor,
 /area/talon_v2/hangar)
 "HA" = (
@@ -9899,6 +10491,7 @@
 	name = "Talon Port Engines";
 	req_one_access = list(304)
 	},
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/floor/plating,
 /area/talon_v2/engineering/port)
 "HI" = (
@@ -9909,6 +10502,9 @@
 "HJ" = (
 /obj/machinery/gear_painter{
 	pixel_y = 1
+	},
+/obj/item/decoration/garland/halloween{
+	pixel_y = 32
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/talon_v2/secure_storage)
@@ -9990,6 +10586,9 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 4
+	},
 /turf/simulated/floor/tiled/techmaint,
 /area/talon_v2/central_hallway/star)
 "HW" = (
@@ -10004,12 +10603,18 @@
 	name = "Engine Crawlway Access";
 	req_one_access = list(304)
 	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 8
+	},
 /turf/simulated/floor/plating,
 /area/talon_v2/engineering/port)
 "HX" = (
 /obj/machinery/vending/blood{
 	req_access = list(301);
 	req_log_access = 301
+	},
+/obj/item/decoration/garland/halloween{
+	pixel_y = 32
 	},
 /turf/simulated/floor/tiled/white,
 /area/talon_v2/medical)
@@ -10045,6 +10650,9 @@
 /obj/machinery/holoposter{
 	dir = 1;
 	pixel_y = 32
+	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 8
 	},
 /turf/simulated/floor/tiled/techmaint,
 /area/talon_v2/central_hallway/star)
@@ -10108,6 +10716,9 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
+	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 8
 	},
 /turf/simulated/floor/tiled/techmaint,
 /area/talon_v2/central_hallway/star)
@@ -10239,6 +10850,9 @@
 /area/talon_v2/brig)
 "Iz" = (
 /obj/structure/handrail,
+/obj/item/decoration/garland/halloween{
+	pixel_y = 32
+	},
 /turf/simulated/floor/tiled/techmaint,
 /area/talon_v2/maintenance/wing_starboard)
 "IA" = (
@@ -10342,6 +10956,7 @@
 	name = "Anomaly Storage";
 	req_one_access = list(301)
 	},
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/floor/tiled/techmaint,
 /area/talon_v2/anomaly_storage)
 "IU" = (
@@ -10351,6 +10966,16 @@
 	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/talon_v2/maintenance/wing_starboard)
+"IV" = (
+/obj/structure/catwalk,
+/obj/structure/cable/green{
+	icon_state = "1-2"
+	},
+/obj/item/decoration/garland/halloween{
+	pixel_x = 32
+	},
+/turf/simulated/floor/plating,
+/area/talon_v2/maintenance/aft_starboard)
 "IW" = (
 /obj/structure/cable/green{
 	icon_state = "2-4"
@@ -10374,6 +10999,17 @@
 /obj/structure/disposalpipe/trunk,
 /turf/simulated/floor/wood,
 /area/talon_v2/crew_quarters/mine_room)
+"IZ" = (
+/obj/structure/table/rack/shelf/steel,
+/obj/machinery/recharger/wallcharger{
+	pixel_x = 5;
+	pixel_y = 24
+	},
+/obj/item/decoration/garland/halloween{
+	pixel_x = -32
+	},
+/turf/simulated/floor/tiled/techfloor,
+/area/talon_v2/armory)
 "Jd" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/aux{
 	dir = 4
@@ -10389,6 +11025,9 @@
 "Je" = (
 /obj/structure/handrail{
 	dir = 8
+	},
+/obj/item/decoration/garland/halloween{
+	pixel_x = 32
 	},
 /turf/simulated/floor/tiled/techmaint,
 /area/talon_v2/maintenance/wing_starboard)
@@ -10475,6 +11114,9 @@
 	req_one_access = list(301)
 	},
 /obj/effect/map_helper/airlock/door/int_door,
+/obj/item/decoration/tinsel/halloween{
+	dir = 4
+	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/talon_v2/maintenance/wing_port)
 "Jt" = (
@@ -10502,6 +11144,7 @@
 /obj/structure/sign/warning/nosmoking_1{
 	pixel_x = 26
 	},
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/floor/tiled/techmaint,
 /area/talon_v2/engineering/atmospherics)
 "Jy" = (
@@ -10547,6 +11190,7 @@
 	id = "talon_boat_cockpit"
 	},
 /obj/structure/window/reinforced,
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/floor/plating,
 /area/shuttle/talonboat)
 "JB" = (
@@ -10651,8 +11295,17 @@
 /obj/structure/cable/green{
 	icon_state = "4-8"
 	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 8
+	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/talon_v2/maintenance/wing_starboard)
+"JX" = (
+/obj/item/decoration/garland/halloween{
+	pixel_x = -32
+	},
+/turf/simulated/floor/tiled/techmaint,
+/area/talon_v2/central_hallway/fore)
 "JZ" = (
 /obj/structure/cable/green{
 	icon_state = "4-8"
@@ -10665,6 +11318,20 @@
 	},
 /obj/effect/floor_decal/industrial/warning{
 	dir = 4
+	},
+/turf/simulated/floor/tiled/techmaint,
+/area/talon_v2/central_hallway/fore)
+"Kd" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/structure/disposalpipe/segment{
+	dir = 1
+	},
+/obj/structure/cable/green{
+	icon_state = "1-2"
+	},
+/obj/item/decoration/garland/halloween{
+	pixel_x = 32
 	},
 /turf/simulated/floor/tiled/techmaint,
 /area/talon_v2/central_hallway/fore)
@@ -10687,6 +11354,9 @@
 /obj/structure/cable/green{
 	icon_state = "4-8"
 	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 4
+	},
 /turf/simulated/floor/tiled/techmaint,
 /area/talon_v2/central_hallway/port)
 "Kg" = (
@@ -10701,6 +11371,9 @@
 	req_one_access = list(301)
 	},
 /obj/effect/map_helper/airlock/door/ext_door,
+/obj/item/decoration/tinsel/halloween{
+	dir = 4
+	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/talon_v2/maintenance/fore_port)
 "Km" = (
@@ -10755,6 +11428,7 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
+/obj/item/decoration/garland/halloween,
 /turf/simulated/floor/plating,
 /area/talon_v2/hangar)
 "Kv" = (
@@ -10770,6 +11444,9 @@
 	},
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
 	dir = 1
+	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 4
 	},
 /turf/simulated/floor/tiled/techmaint,
 /area/talon_v2/central_hallway/port)
@@ -10823,6 +11500,9 @@
 	dir = 1;
 	req_one_access = list(301)
 	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 8
+	},
 /turf/simulated/floor/tiled/techmaint,
 /area/talon_v2/central_hallway/port)
 "KH" = (
@@ -10849,6 +11529,9 @@
 /obj/structure/table/bench/wooden,
 /obj/structure/cable/green{
 	icon_state = "4-8"
+	},
+/obj/item/decoration/garland/halloween{
+	pixel_y = -32
 	},
 /turf/simulated/floor/wood,
 /area/talon_v2/crew_quarters/cap_room)
@@ -10889,6 +11572,14 @@
 /obj/effect/floor_decal/emblem/talon,
 /turf/simulated/floor/tiled/techfloor,
 /area/talon_v2/bridge)
+"KR" = (
+/obj/structure/cable/green{
+	icon_state = "1-2"
+	},
+/obj/structure/catwalk,
+/obj/item/decoration/tinsel/halloween,
+/turf/simulated/floor/plating,
+/area/talon_v2/engineering/port_store)
 "KS" = (
 /obj/machinery/atmospherics/portables_connector{
 	dir = 8
@@ -10913,6 +11604,9 @@
 	req_one_access = list(301)
 	},
 /obj/machinery/door/firedoor/glass/talon,
+/obj/item/decoration/tinsel/halloween{
+	dir = 8
+	},
 /turf/simulated/floor/tiled/techfloor,
 /area/talon_v2/hangar)
 "KY" = (
@@ -10950,6 +11644,9 @@
 	dir = 1;
 	req_one_access = list(301)
 	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 4
+	},
 /turf/simulated/floor/tiled/techmaint,
 /area/talon_v2/central_hallway/star)
 "Lg" = (
@@ -10967,7 +11664,7 @@
 	dir = 1;
 	pixel_y = 32
 	},
-/obj/structure/flora/pottedplant/unusual,
+/obj/item/weapon/carved_pumpkin/candled,
 /turf/simulated/floor/tiled/techfloor,
 /area/talon_v2/central_hallway)
 "Lj" = (
@@ -10979,6 +11676,7 @@
 "Lk" = (
 /obj/machinery/door/firedoor/glass/talon,
 /obj/machinery/door/airlock/maintenance/common,
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/floor/plating,
 /area/talon_v2/maintenance/aft_starboard)
 "Ll" = (
@@ -11057,6 +11755,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/floor/plating,
 /area/talon_v2/engineering/star_store)
 "Lx" = (
@@ -11073,6 +11772,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 1
 	},
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/floor/tiled/techmaint,
 /area/talon_v2/workroom)
 "Ly" = (
@@ -11097,6 +11797,9 @@
 	pixel_y = -24
 	},
 /obj/structure/cable/green,
+/obj/item/decoration/tinsel/halloween{
+	dir = 8
+	},
 /turf/simulated/floor/tiled/techmaint,
 /area/talon_v2/central_hallway/star)
 "LA" = (
@@ -11123,6 +11826,7 @@
 	dir = 2;
 	id = "talon_bridge_shields"
 	},
+/obj/item/decoration/garland/halloween,
 /turf/simulated/floor/plating,
 /area/talon_v2/bridge)
 "LC" = (
@@ -11188,6 +11892,7 @@
 	id = "talon_windows"
 	},
 /obj/machinery/door/firedoor/glass/talon,
+/obj/item/decoration/garland/halloween,
 /turf/simulated/floor/plating,
 /area/talon_v2/crew_quarters/bar)
 "LI" = (
@@ -11196,6 +11901,9 @@
 	dir = 1;
 	name = "Cargo Bay";
 	req_one_access = list(305)
+	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 8
 	},
 /turf/simulated/floor/tiled/techmaint,
 /area/talon_v2/central_hallway/star)
@@ -11271,6 +11979,9 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/aux{
+	dir = 4
+	},
+/obj/item/decoration/tinsel/halloween{
 	dir = 4
 	},
 /turf/simulated/floor/tiled/techfloor/grid,
@@ -11426,6 +12137,9 @@
 	req_one_access = list(301)
 	},
 /obj/effect/map_helper/airlock/door/int_door,
+/obj/item/decoration/tinsel/halloween{
+	dir = 8
+	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/talon_v2/maintenance/wing_starboard)
 "Mr" = (
@@ -11457,6 +12171,7 @@
 	id = "talon_cargo_star";
 	name = "Cargo Loading Hatch"
 	},
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/talon_v2/maintenance/wing_starboard)
 "Mv" = (
@@ -11481,6 +12196,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 8
+	},
 /turf/simulated/floor/tiled/techmaint,
 /area/talon_v2/crew_quarters/bar)
 "Mz" = (
@@ -11499,6 +12217,7 @@
 /obj/structure/cable/green{
 	icon_state = "4-8"
 	},
+/obj/item/decoration/garland/halloween,
 /turf/simulated/floor/plating,
 /area/talon_v2/crew_quarters/cap_room)
 "MB" = (
@@ -11574,6 +12293,9 @@
 	req_one_access = list(301)
 	},
 /obj/effect/map_helper/airlock/door/ext_door,
+/obj/item/decoration/tinsel/halloween{
+	dir = 8
+	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/talon_v2/maintenance/wing_starboard)
 "MO" = (
@@ -11583,6 +12305,7 @@
 	dir = 1
 	},
 /obj/random/multiple/corp_crate/talon_cargo,
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/floor/tiled/techfloor,
 /area/talon_v2/maintenance/wing_port)
 "MP" = (
@@ -11592,6 +12315,7 @@
 	dir = 1
 	},
 /obj/random/multiple/corp_crate/talon_cargo,
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/floor/tiled/techfloor,
 /area/talon_v2/maintenance/wing_port)
 "MU" = (
@@ -11599,6 +12323,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/door/firedoor/glass/talon,
 /obj/machinery/door/airlock/maintenance/common,
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/floor/plating,
 /area/talon_v2/maintenance/aft_port)
 "MV" = (
@@ -11615,12 +12340,20 @@
 	name = "Talon Starboard Engines";
 	req_one_access = list(304)
 	},
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/floor/plating,
 /area/talon_v2/engineering/starboard)
 "MW" = (
 /obj/machinery/recharge_station,
 /turf/simulated/floor/tiled/techfloor,
 /area/talon_v2/bridge)
+"MY" = (
+/obj/structure/catwalk,
+/obj/item/decoration/garland/halloween{
+	pixel_x = 32
+	},
+/turf/simulated/floor/plating,
+/area/talon_v2/maintenance/aft_starboard)
 "MZ" = (
 /obj/structure/cable/green{
 	icon_state = "1-2"
@@ -11684,6 +12417,8 @@
 /obj/structure/grille,
 /obj/structure/window/reinforced/full,
 /obj/machinery/door/firedoor/glass/talon,
+/obj/item/decoration/tinsel/halloween,
+/obj/item/weapon/carved_pumpkin/candled,
 /turf/simulated/floor/plating,
 /area/talon_v2/armory)
 "Nl" = (
@@ -11826,6 +12561,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/floor/plating,
 /area/talon_v2/engineering/port_store)
 "NG" = (
@@ -11849,6 +12585,9 @@
 	dir = 6
 	},
 /obj/effect/floor_decal/industrial/hatch/yellow,
+/obj/item/decoration/tinsel/halloween{
+	dir = 4
+	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/shuttle/talonpod)
 "NK" = (
@@ -11921,6 +12660,8 @@
 /obj/structure/grille,
 /obj/structure/window/reinforced/full,
 /obj/machinery/door/firedoor/glass/talon,
+/obj/item/decoration/tinsel/halloween,
+/obj/item/weapon/carved_pumpkin/candled,
 /turf/simulated/floor/plating,
 /area/talon_v2/eva_storage)
 "NZ" = (
@@ -11980,6 +12721,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 1
 	},
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/floor/tiled/techmaint,
 /area/talon_v2/refining)
 "Oj" = (
@@ -12020,12 +12762,14 @@
 /obj/structure/cable/green{
 	icon_state = "1-2"
 	},
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/floor/tiled/techmaint,
 /area/talon_v2/secure_storage)
 "On" = (
 /obj/machinery/door/firedoor/glass/talon,
 /obj/machinery/door/airlock/maintenance/common,
 /obj/structure/catwalk,
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/floor/plating,
 /area/talon_v2/maintenance/aft_starboard)
 "Oo" = (
@@ -12035,6 +12779,7 @@
 	dir = 1
 	},
 /obj/random/multiple/corp_crate/talon_cargo,
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/floor/tiled/techfloor,
 /area/talon_v2/maintenance/wing_starboard)
 "Op" = (
@@ -12044,6 +12789,7 @@
 	dir = 1
 	},
 /obj/random/multiple/corp_crate/talon_cargo,
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/floor/tiled/techfloor,
 /area/talon_v2/maintenance/wing_starboard)
 "Ot" = (
@@ -12059,6 +12805,16 @@
 	},
 /turf/simulated/floor/reinforced/airless,
 /area/talon_v2/engineering/starboard)
+"Ow" = (
+/obj/structure/cable/green{
+	icon_state = "1-2"
+	},
+/obj/structure/catwalk,
+/obj/item/decoration/garland/halloween{
+	pixel_x = 32
+	},
+/turf/simulated/floor/plating,
+/area/talon_v2/maintenance/aft_starboard)
 "Oy" = (
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
 	dir = 8
@@ -12229,6 +12985,9 @@
 /area/talon_v2/crew_quarters/bar)
 "OZ" = (
 /obj/structure/handrail,
+/obj/item/decoration/garland/halloween{
+	pixel_y = 32
+	},
 /turf/simulated/floor/tiled/techmaint,
 /area/talon_v2/maintenance/wing_port)
 "Pb" = (
@@ -12291,6 +13050,9 @@
 /obj/structure/cable/green{
 	icon_state = "4-8"
 	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 4
+	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/talon_v2/maintenance/wing_port)
 "Pi" = (
@@ -12298,6 +13060,9 @@
 /obj/machinery/door/airlock/engineering{
 	name = "Talon Port Engines";
 	req_one_access = list(304)
+	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 4
 	},
 /turf/simulated/floor/plating,
 /area/talon_v2/engineering/port)
@@ -12460,6 +13225,9 @@
 /obj/structure/cable/green{
 	icon_state = "4-8"
 	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 8
+	},
 /turf/simulated/floor/tiled/techmaint,
 /area/talon_v2/central_hallway)
 "PH" = (
@@ -12504,6 +13272,7 @@
 /obj/machinery/door/airlock{
 	name = "Cryo Storage"
 	},
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/floor/tiled/techmaint,
 /area/talon_v2/gen_store)
 "PP" = (
@@ -12829,6 +13598,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/aux{
 	dir = 4
 	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 4
+	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/talon_v2/maintenance/fore_port)
 "QW" = (
@@ -12860,6 +13632,7 @@
 /obj/structure/sign/warning/nosmoking_1{
 	pixel_x = -26
 	},
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/floor/plating,
 /area/talon_v2/engineering/port)
 "Rd" = (
@@ -12895,6 +13668,9 @@
 /obj/structure/bed/chair/bay/chair{
 	dir = 1
 	},
+/obj/item/decoration/garland/halloween{
+	pixel_x = -32
+	},
 /turf/simulated/floor/carpet,
 /area/talon_v2/crew_quarters/eng_room)
 "Ri" = (
@@ -12905,6 +13681,9 @@
 /obj/machinery/firealarm{
 	dir = 8;
 	pixel_x = -24
+	},
+/obj/item/decoration/garland/halloween{
+	pixel_x = 32
 	},
 /turf/simulated/floor/plating,
 /area/talon_v2/maintenance/aft_starboard)
@@ -12924,6 +13703,10 @@
 /obj/effect/shuttle_landmark/premade/talon_v2_near_aft_star,
 /turf/space,
 /area/space)
+"Rl" = (
+/obj/item/decoration/tinsel/halloween,
+/turf/simulated/floor/tiled/techmaint,
+/area/talon_v2/maintenance/wing_starboard)
 "Rn" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 10
@@ -12996,6 +13779,7 @@
 	dir = 4;
 	pixel_x = -26
 	},
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/floor/tiled/techmaint,
 /area/talon_v2/central_hallway)
 "RC" = (
@@ -13017,7 +13801,7 @@
 /obj/structure/railing/grey{
 	dir = 1
 	},
-/obj/structure/flora/pottedplant/small,
+/obj/item/weapon/carved_pumpkin/candled,
 /turf/simulated/floor/tiled/techfloor,
 /area/talon_v2/bridge)
 "RG" = (
@@ -13162,6 +13946,7 @@
 /obj/machinery/door/airlock/maintenance/medical{
 	req_one_access = list(303)
 	},
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/floor/plating,
 /area/talon_v2/medical)
 "Sk" = (
@@ -13183,6 +13968,13 @@
 	},
 /turf/simulated/floor/plating,
 /area/talon_v2/central_hallway/port)
+"Sq" = (
+/obj/structure/catwalk,
+/obj/item/decoration/garland/halloween{
+	pixel_y = 32
+	},
+/turf/simulated/floor/plating,
+/area/talon_v2/maintenance/fore_port)
 "Sr" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
@@ -13340,6 +14132,7 @@
 /obj/structure/cable/green{
 	icon_state = "1-2"
 	},
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/floor/tiled/techmaint,
 /area/talon_v2/crew_quarters/pilot_room)
 "SN" = (
@@ -13498,6 +14291,9 @@
 /obj/structure/cable/green{
 	icon_state = "4-8"
 	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 8
+	},
 /turf/simulated/floor/plating,
 /area/talon_v2/engineering/star_store)
 "Tl" = (
@@ -13634,6 +14430,9 @@
 	pixel_y = 28;
 	specialfunctions = 4
 	},
+/obj/item/decoration/garland/halloween{
+	pixel_x = 32
+	},
 /turf/simulated/floor/wood,
 /area/talon_v2/crew_quarters/pilot_room)
 "TN" = (
@@ -13672,6 +14471,9 @@
 /obj/machinery/cryopod/robot/talon,
 /obj/machinery/light{
 	dir = 4
+	},
+/obj/item/decoration/garland/halloween{
+	pixel_x = 32
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/talon_v2/secure_storage)
@@ -13780,6 +14582,9 @@
 /obj/machinery/door/airlock/maintenance/common,
 /obj/structure/cable/green{
 	icon_state = "4-8"
+	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 8
 	},
 /turf/simulated/floor/plating,
 /area/talon_v2/maintenance/fore_starboard)
@@ -13959,6 +14764,9 @@
 "UL" = (
 /obj/machinery/door/firedoor/glass/talon,
 /obj/effect/floor_decal/industrial/hatch/yellow,
+/obj/item/decoration/tinsel/halloween{
+	dir = 8
+	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/talon_v2/central_hallway/fore)
 "UM" = (
@@ -14088,8 +14896,22 @@
 	dir = 1
 	},
 /obj/structure/vehiclecage/quadbike,
+/obj/item/decoration/garland/halloween{
+	pixel_x = 32
+	},
 /turf/simulated/floor/tiled/techfloor,
 /area/talon_v2/maintenance/wing_port)
+"Vn" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/structure/disposalpipe/segment{
+	dir = 1
+	},
+/obj/item/decoration/garland/halloween{
+	pixel_x = -32
+	},
+/turf/simulated/floor/tiled/techmaint,
+/area/talon_v2/central_hallway)
 "Vp" = (
 /turf/simulated/floor/carpet/blucarpet,
 /area/talon_v2/crew_quarters/cap_room)
@@ -14109,7 +14931,7 @@
 	dir = 8;
 	pixel_x = 22
 	},
-/obj/structure/flora/pottedplant,
+/obj/item/weapon/carved_pumpkin/candled,
 /turf/simulated/floor/wood,
 /area/talon_v2/crew_quarters/meditation)
 "Vt" = (
@@ -14260,6 +15082,7 @@
 /area/talon_v2/anomaly_storage)
 "VP" = (
 /obj/structure/closet/walllocker_double/emergency_engi/east,
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/floor/tiled/techmaint,
 /area/talon_v2/central_hallway/fore)
 "VQ" = (
@@ -14441,6 +15264,7 @@
 /obj/structure/cable/green{
 	icon_state = "1-2"
 	},
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/floor/tiled/techmaint,
 /area/talon_v2/central_hallway)
 "Wu" = (
@@ -14515,6 +15339,9 @@
 	req_one_access = list(301)
 	},
 /obj/effect/map_helper/airlock/sensor/ext_sensor,
+/obj/item/decoration/tinsel/halloween{
+	dir = 8
+	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/talon_v2/maintenance/wing_starboard)
 "WF" = (
@@ -14554,6 +15381,7 @@
 	id = "talon_windows"
 	},
 /obj/machinery/door/firedoor/glass/talon,
+/obj/item/decoration/garland/halloween,
 /turf/simulated/floor/plating,
 /area/talon_v2/crew_quarters/cap_room)
 "WL" = (
@@ -14577,6 +15405,7 @@
 	name = "Hangar Bay";
 	req_one_access = list(301)
 	},
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/floor/tiled/techfloor,
 /area/talon_v2/hangar)
 "WQ" = (
@@ -14673,6 +15502,7 @@
 	dir = 2;
 	id = "talon_bridge_shields"
 	},
+/obj/item/weapon/carved_pumpkin/candled,
 /turf/simulated/floor/plating,
 /area/talon_v2/bridge)
 "Xf" = (
@@ -14972,6 +15802,8 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
+/obj/item/weapon/carved_pumpkin/candled,
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/floor/plating,
 /area/talon_v2/hangar)
 "Yg" = (
@@ -14980,6 +15812,7 @@
 	},
 /obj/effect/map_helper/airlock/door/int_door,
 /obj/machinery/atmospherics/pipe/simple/hidden/aux,
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/talon_v2/maintenance/aft_port)
 "Yh" = (
@@ -15094,6 +15927,7 @@
 	name = "window blast shields";
 	pixel_x = -28
 	},
+/obj/item/weapon/carved_pumpkin/candled,
 /turf/simulated/floor/tiled/techfloor,
 /area/talon_v2/anomaly_storage)
 "Yz" = (
@@ -15221,7 +16055,7 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/talon_v2/anomaly_storage)
 "YS" = (
-/obj/structure/flora/pottedplant/tall,
+/obj/item/weapon/carved_pumpkin/candled,
 /turf/simulated/floor/tiled/techfloor,
 /area/talon_v2/crew_quarters/restrooms)
 "YT" = (
@@ -15246,6 +16080,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/structure/disposalpipe/segment,
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/floor/plating,
 /area/talon_v2/engineering/starboard)
 "YX" = (
@@ -15271,6 +16106,9 @@
 /area/talon_v2/eva_storage)
 "YY" = (
 /obj/machinery/autolathe,
+/obj/item/decoration/garland/halloween{
+	pixel_y = 32
+	},
 /turf/simulated/floor/tiled/techfloor,
 /area/talon_v2/workroom)
 "YZ" = (
@@ -15298,6 +16136,7 @@
 "Zd" = (
 /obj/machinery/door/firedoor/glass/talon,
 /obj/machinery/door/airlock/glass,
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/floor/tiled/techmaint,
 /area/talon_v2/central_hallway/fore)
 "Ze" = (
@@ -15401,6 +16240,9 @@
 	pixel_y = -28;
 	req_one_access = list(301)
 	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 8
+	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/shuttle/talonboat)
 "Zv" = (
@@ -15427,6 +16269,9 @@
 	id_tag = "talon_engdoor";
 	name = "Engineer's Cabin";
 	req_one_access = list(304)
+	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 8
 	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/talon_v2/crew_quarters/eng_room)
@@ -15493,6 +16338,9 @@
 /obj/machinery/light{
 	dir = 8
 	},
+/obj/item/decoration/garland/halloween{
+	pixel_x = -32
+	},
 /turf/simulated/floor/tiled/techfloor,
 /area/talon_v2/secure_storage)
 "ZH" = (
@@ -15527,6 +16375,9 @@
 	req_one_access = list(301)
 	},
 /obj/effect/map_helper/airlock/sensor/ext_sensor,
+/obj/item/decoration/tinsel/halloween{
+	dir = 4
+	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/talon_v2/maintenance/wing_port)
 "ZK" = (
@@ -15569,6 +16420,9 @@
 /obj/structure/handrail{
 	dir = 4
 	},
+/obj/item/decoration/garland/halloween{
+	pixel_x = -32
+	},
 /turf/simulated/floor/tiled/techmaint,
 /area/talon_v2/maintenance/wing_port)
 "ZW" = (
@@ -15593,6 +16447,7 @@
 	dir = 4;
 	id = "talon_quietroom"
 	},
+/obj/item/decoration/garland/halloween,
 /turf/simulated/floor/plating,
 /area/talon_v2/crew_quarters/meditation)
 
@@ -21350,7 +22205,7 @@ CY
 CY
 EX
 EP
-CY
+cM
 CY
 CY
 CY
@@ -21634,7 +22489,7 @@ AD
 CY
 Fk
 EP
-CY
+cM
 CY
 AD
 CY
@@ -22056,7 +22911,7 @@ xB
 OQ
 oP
 kk
-LT
+fT
 OQ
 ay
 zK
@@ -22479,7 +23334,7 @@ oi
 XQ
 XQ
 jQ
-uS
+bs
 ul
 uS
 AI
@@ -22757,7 +23612,7 @@ aa
 lT
 Re
 Re
-XQ
+Sq
 XQ
 XQ
 XQ
@@ -23039,7 +23894,7 @@ aa
 lT
 Re
 Re
-XQ
+Sq
 Xm
 db
 db
@@ -23062,7 +23917,7 @@ Oj
 Oj
 IP
 CJ
-wf
+dM
 ib
 Oc
 tC
@@ -23197,18 +24052,18 @@ Dd
 nK
 Si
 Oj
-PB
+IZ
 WZ
 Mi
 go
-Qu
+jU
 IP
 iy
 Xa
 LO
 xo
 yn
-vK
+qo
 DN
 tC
 tC
@@ -23353,7 +24208,7 @@ BD
 Zc
 uG
 vK
-vK
+qo
 IO
 tC
 uL
@@ -23462,7 +24317,7 @@ aa
 lT
 Re
 Re
-XQ
+Sq
 XQ
 db
 db
@@ -23485,7 +24340,7 @@ PB
 OP
 OP
 OP
-Qu
+jU
 Zc
 Ha
 ti
@@ -23501,12 +24356,12 @@ it
 Nu
 bG
 rW
-rW
+xX
 rW
 rW
 LX
 rW
-rW
+xX
 rW
 bG
 rW
@@ -23515,7 +24370,7 @@ rW
 rW
 rW
 rW
-rW
+xX
 uf
 rW
 rW
@@ -23744,7 +24599,7 @@ aa
 uO
 Re
 Re
-ZW
+hv
 XQ
 Xm
 db
@@ -23795,7 +24650,7 @@ Nd
 wQ
 XH
 Zl
-XH
+kq
 XH
 XH
 XH
@@ -23937,7 +24792,7 @@ lN
 lN
 lN
 lN
-lN
+KR
 lN
 lN
 lN
@@ -24458,7 +25313,7 @@ Sz
 Tr
 mx
 NC
-qo
+ce
 FX
 sq
 Ga
@@ -24477,7 +25332,7 @@ KI
 Ns
 Gl
 XY
-XY
+Vn
 XY
 CA
 Jw
@@ -24612,12 +25467,12 @@ pG
 pG
 pG
 pG
-pG
+ap
 Iq
 GC
 KO
 zS
-YC
+FH
 YC
 YC
 Fo
@@ -24757,7 +25612,7 @@ Ks
 Ks
 fV
 Hj
-KX
+do
 fV
 Ks
 Ks
@@ -24992,8 +25847,8 @@ aa
 tm
 XP
 WL
-Xe
-Xe
+zy
+zy
 WL
 JO
 dp
@@ -25024,7 +25879,7 @@ lZ
 SQ
 Xn
 uq
-mc
+Kd
 mk
 an
 Wb
@@ -25169,7 +26024,7 @@ lU
 lU
 lU
 lU
-rw
+Hp
 td
 fV
 Po
@@ -25188,7 +26043,7 @@ Nv
 yh
 SY
 hY
-Yf
+gt
 bc
 Zc
 KS
@@ -25278,7 +26133,7 @@ um
 am
 Mj
 dD
-Bq
+BR
 Bq
 Ra
 dW
@@ -25287,11 +26142,11 @@ aS
 Kz
 as
 pL
-dA
+JX
 ze
 ex
 eH
-dA
+JX
 CN
 hO
 dA
@@ -25330,7 +26185,7 @@ Nz
 Sv
 SY
 hY
-Yf
+gt
 ci
 Zc
 Zc
@@ -25420,7 +26275,7 @@ ac
 xh
 QC
 QC
-QC
+Aj
 KQ
 Hw
 dX
@@ -25435,7 +26290,7 @@ WI
 WI
 fh
 WI
-WI
+jB
 WI
 WI
 gs
@@ -25455,9 +26310,9 @@ pp
 sf
 rK
 Bd
-Yf
+lW
 Po
-JA
+he
 Yb
 Tw
 Vj
@@ -25562,7 +26417,7 @@ dt
 ao
 Ea
 UJ
-Vc
+nZ
 Vc
 im
 ed
@@ -25614,7 +26469,7 @@ NG
 Sv
 SY
 Xf
-Yf
+gt
 vz
 Qa
 AZ
@@ -25702,7 +26557,7 @@ aa
 Ue
 ad
 hh
-ap
+RF
 eL
 xu
 at
@@ -25756,8 +26611,8 @@ NK
 PI
 SY
 Xf
-Yf
-GQ
+gt
+qR
 Qa
 Zo
 gC
@@ -26316,12 +27171,12 @@ pG
 pG
 pG
 pG
-pG
+ap
 DX
 HN
 pG
 gp
-pG
+ap
 pG
 pG
 tU
@@ -26466,7 +27321,7 @@ Od
 Wt
 FT
 pw
-FT
+id
 HK
 ig
 wy
@@ -26566,7 +27421,7 @@ XP
 XP
 XP
 QU
-LH
+tG
 LH
 QU
 fs
@@ -27061,7 +27916,7 @@ SW
 SW
 sB
 Uv
-FU
+Es
 FU
 FU
 FU
@@ -27152,7 +28007,7 @@ aa
 Ue
 Sg
 Sg
-rx
+qh
 rx
 jr
 Sk
@@ -27203,7 +28058,7 @@ lj
 wD
 in
 in
-in
+Ct
 in
 in
 in
@@ -27313,7 +28168,7 @@ zZ
 BX
 RQ
 cX
-lv
+nX
 fW
 Hg
 tJ
@@ -27356,7 +28211,7 @@ fb
 fb
 fb
 fb
-Lk
+GL
 Dq
 Dq
 Dq
@@ -27438,7 +28293,7 @@ aa
 Bm
 Sg
 Sg
-rx
+qh
 rx
 uZ
 Sk
@@ -27477,12 +28332,12 @@ UM
 mq
 Au
 rL
-rL
+Ow
 rL
 rL
 bM
 rL
-rL
+Ow
 rL
 Au
 rL
@@ -27491,7 +28346,7 @@ rL
 rL
 rL
 rL
-rL
+Ow
 tg
 rL
 rL
@@ -27613,7 +28468,7 @@ vc
 ps
 Xw
 AB
-tq
+IV
 OF
 Dq
 Dg
@@ -27752,7 +28607,7 @@ hL
 mm
 Bj
 tq
-tq
+IV
 OF
 Dq
 Dq
@@ -27867,7 +28722,7 @@ aa
 Bm
 Sg
 Sg
-rx
+qh
 rx
 rx
 Yo
@@ -27890,7 +28745,7 @@ fW
 fW
 fW
 hL
-hL
+MY
 iK
 JN
 Dq
@@ -28296,7 +29151,7 @@ aa
 Bm
 Sg
 Sg
-rx
+qh
 XD
 uZ
 Bw
@@ -28306,7 +29161,7 @@ Dx
 oO
 CI
 Bw
-cX
+vX
 rh
 HS
 ch
@@ -28875,7 +29730,7 @@ Aq
 CV
 Bw
 hi
-GU
+te
 HS
 Qc
 UC
@@ -29302,7 +30157,7 @@ Dl
 yC
 Iv
 yC
-yC
+Rl
 yC
 Dl
 yC
@@ -29586,7 +30441,7 @@ yC
 yC
 IJ
 yC
-yC
+Rl
 yC
 yC
 yC
