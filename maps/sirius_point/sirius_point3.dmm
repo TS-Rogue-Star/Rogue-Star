@@ -26,9 +26,7 @@
 "af" = (
 /obj/structure/flora/ausbushes/fullgrass,
 /obj/structure/window/reinforced/full,
-/turf/simulated/floor/outdoors/grass/forest{
-	outdoors = 0
-	},
+/turf/simulated/floor/outdoors/grass/sif/forest,
 /area/security/main)
 "ag" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -73,6 +71,9 @@
 /area/shuttle/excursion/cockpit)
 "al" = (
 /obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/item/decoration/tinsel/halloween{
 	dir = 4
 	},
 /turf/simulated/floor/tiled/monotile,
@@ -162,6 +163,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/floor/tiled/steel_ridged,
 /area/medical/patient_a)
 "az" = (
@@ -212,7 +214,7 @@
 /turf/simulated/floor/tiled,
 /area/crew_quarters/courtroom)
 "aG" = (
-/obj/structure/flora/pottedplant/stoutbush,
+/obj/item/weapon/carved_pumpkin/candled,
 /obj/machinery/firealarm,
 /obj/machinery/atmospherics/unary/vent_pump/on{
 	dir = 4
@@ -244,6 +246,9 @@
 /obj/machinery/camera/network/medbay{
 	dir = 1
 	},
+/obj/item/decoration/garland/halloween{
+	pixel_y = -32
+	},
 /turf/simulated/floor/tiled/white,
 /area/medical/virology)
 "aL" = (
@@ -265,6 +270,9 @@
 	dir = 4
 	},
 /obj/machinery/light,
+/obj/item/decoration/garland/halloween{
+	pixel_y = -32
+	},
 /turf/simulated/floor/tiled/eris/techmaint_cargo,
 /area/rnd/xenobiology)
 "aQ" = (
@@ -304,6 +312,17 @@
 	},
 /turf/simulated/floor/tiled/dark,
 /area/security/main)
+"aW" = (
+/obj/machinery/door/firedoor/glass,
+/obj/structure/grille,
+/obj/structure/window/reinforced/full,
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/item/decoration/tinsel/halloween,
+/turf/simulated/floor/plating,
+/area/lawoffice/moonbase/iaatwo)
 "aX" = (
 /turf/simulated/floor/glass/reinforced/vacuum/outdoors,
 /area/moonbase/surface/leveltwo/east)
@@ -373,6 +392,7 @@
 	dir = 1
 	},
 /obj/structure/window/reinforced,
+/obj/item/decoration/garland/halloween,
 /turf/simulated/floor/plating,
 /area/rnd/research)
 "bk" = (
@@ -409,6 +429,8 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
+/obj/item/weapon/carved_pumpkin/candled,
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/floor/plating,
 /area/lawoffice/moonbase/iaatwo)
 "bo" = (
@@ -692,7 +714,7 @@
 /turf/simulated/floor/plating,
 /area/engineering/engine_room)
 "bU" = (
-/obj/structure/flora/pottedplant/minitree,
+/obj/item/weapon/carved_pumpkin/candled,
 /obj/machinery/light{
 	dir = 1
 	},
@@ -828,6 +850,8 @@
 	name = "External Vent";
 	id = "xenopen2vent"
 	},
+/obj/item/decoration/tinsel/halloween,
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/floor/reinforced,
 /area/rnd/xenobiology)
 "cl" = (
@@ -910,6 +934,9 @@
 	},
 /obj/effect/floor_decal/milspec/color/orange/half{
 	dir = 4
+	},
+/obj/item/decoration/garland/halloween{
+	pixel_x = 32
 	},
 /turf/simulated/floor/tiled,
 /area/engineering/aft_hallway)
@@ -1020,6 +1047,7 @@
 /obj/machinery/atmospherics/pipe/zpipe/down/supply,
 /obj/machinery/atmospherics/pipe/zpipe/down/scrubbers,
 /obj/structure/disposalpipe/down,
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/floor/tiled/monotile,
 /area/rnd/research)
 "cN" = (
@@ -1059,6 +1087,7 @@
 	dir = 4;
 	id = "bridgelockdown"
 	},
+/obj/item/decoration/garland/halloween,
 /turf/simulated/floor/plating,
 /area/bridge_hallway)
 "cS" = (
@@ -1180,10 +1209,8 @@
 "df" = (
 /obj/structure/window/reinforced/full,
 /obj/structure/flora/ausbushes/pointybush,
-/turf/simulated/floor/outdoors/grass/forest{
-	outdoors = 0;
-	edge_blending_priority = 0
-	},
+/obj/item/decoration/garland/halloween,
+/turf/simulated/floor/outdoors/grass/sif/forest,
 /area/medical/moonbase/traumaward)
 "dg" = (
 /obj/structure/disposalpipe/trunk{
@@ -1208,6 +1235,9 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/item/decoration/garland/halloween{
+	pixel_x = 32
+	},
 /turf/simulated/floor/tiled/white,
 /area/medical/virology)
 "dm" = (
@@ -1259,6 +1289,16 @@
 /obj/machinery/camera/network/exploration,
 /turf/simulated/floor/tiled,
 /area/crew_quarters/moonbase/pilotroom)
+"dw" = (
+/obj/machinery/door/firedoor/glass,
+/obj/structure/grille,
+/obj/structure/window/reinforced/polarized/full{
+	id = "cmooffice"
+	},
+/obj/item/weapon/carved_pumpkin/candled,
+/obj/item/decoration/tinsel/halloween,
+/turf/simulated/floor/plating,
+/area/crew_quarters/heads/cmo)
 "dx" = (
 /obj/effect/floor_decal/milspec/color/red,
 /obj/item/clothing/mask/gas{
@@ -1280,6 +1320,9 @@
 	pixel_y = -3
 	},
 /obj/structure/table/rack/shelf/steel,
+/obj/item/decoration/garland/halloween{
+	pixel_y = -32
+	},
 /turf/simulated/floor/tiled/dark,
 /area/security/tactical)
 "dy" = (
@@ -1297,6 +1340,7 @@
 /obj/effect/floor_decal/milspec/color/emerald/half{
 	dir = 4
 	},
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/floor/tiled,
 /area/rnd/xenobiology)
 "dB" = (
@@ -1310,6 +1354,7 @@
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/floor/tiled/steel_ridged,
 /area/security/briefing_room)
 "dC" = (
@@ -1318,12 +1363,14 @@
 /obj/structure/window/reinforced/polarized/full{
 	id = "medpsych"
 	},
+/obj/item/decoration/garland/halloween,
 /turf/simulated/floor/plating,
 /area/medical/psych)
 "dD" = (
 /obj/machinery/door/firedoor/glass,
 /obj/structure/grille,
 /obj/structure/window/reinforced/full,
+/obj/item/decoration/garland/halloween,
 /turf/simulated/floor/plating,
 /area/crew_quarters/courtroom)
 "dE" = (
@@ -1379,6 +1426,9 @@
 /obj/machinery/light{
 	dir = 1
 	},
+/obj/item/decoration/garland/halloween{
+	pixel_y = 32
+	},
 /turf/simulated/floor/tiled,
 /area/rnd/xenobiology)
 "dK" = (
@@ -1394,6 +1444,12 @@
 	},
 /turf/simulated/floor/tiled,
 /area/hallway/arrival/moonbase/main)
+"dL" = (
+/obj/item/decoration/garland/halloween{
+	pixel_x = 32
+	},
+/turf/simulated/floor/water/pool,
+/area/crew_quarters/captain/moonbase/bedroom)
 "dM" = (
 /obj/structure/table/darkglass,
 /obj/item/weapon/storage/briefcase,
@@ -1423,6 +1479,8 @@
 /obj/structure/grille,
 /obj/structure/window/reinforced/full/dome,
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply,
+/obj/item/weapon/carved_pumpkin/candled,
+/obj/item/decoration/garland/halloween/short,
 /turf/simulated/floor/plating,
 /area/crew_quarters/bar)
 "dS" = (
@@ -1450,6 +1508,9 @@
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
+	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 8
 	},
 /turf/simulated/floor/tiled/steel_ridged,
 /area/crew_quarters/heads/hos)
@@ -1559,6 +1620,8 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
+/obj/item/decoration/tinsel/halloween,
+/obj/item/weapon/carved_pumpkin/candled,
 /turf/simulated/floor/plating,
 /area/security/main)
 "eh" = (
@@ -1638,6 +1701,9 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 4
+	},
 /turf/simulated/floor/tiled/steel_ridged,
 /area/crew_quarters/moonbase/abandonedoffice)
 "eo" = (
@@ -1653,6 +1719,22 @@
 /obj/item/decoration/tinsel/halloween,
 /turf/simulated/floor/tiled,
 /area/hallway/arrival/moonbase/dockingbays)
+"ep" = (
+/obj/machinery/door/firedoor/glass,
+/obj/structure/grille,
+/obj/structure/window/reinforced/polarized/full,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 8
+	},
+/obj/item/weapon/carved_pumpkin/candled,
+/turf/simulated/floor/plating,
+/area/security/tactical)
 "eq" = (
 /obj/effect/floor_decal/emblem/siriuspoint{
 	dir = 4
@@ -1698,6 +1780,23 @@
 /obj/effect/catwalk_plated/dark,
 /turf/simulated/floor/plating/eris,
 /area/security/main)
+"ex" = (
+/obj/machinery/door/firedoor/glass,
+/obj/machinery/door/airlock/maintenance,
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 8
+	},
+/turf/simulated/floor/tiled/steel_ridged,
+/area/maintenance/moonbase/level2/west)
 "ey" = (
 /turf/simulated/floor/carpet/purple,
 /area/maintenance/moonbase/level2/center)
@@ -1709,7 +1808,7 @@
 /turf/simulated/floor/airless/moonbaseplating/outdoors,
 /area/moonbase/surface/leveltwo/north)
 "eB" = (
-/obj/structure/flora/pottedplant/stoutbush,
+/obj/item/weapon/carved_pumpkin/candled,
 /obj/item/device/radio/intercom{
 	dir = 8;
 	pixel_x = -24
@@ -1774,6 +1873,7 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
+/obj/item/decoration/garland/halloween,
 /turf/simulated/floor/plating,
 /area/security/briefing_room)
 "eI" = (
@@ -1807,6 +1907,17 @@
 	},
 /turf/simulated/floor/airless/outdoors,
 /area/engineering/engine_room)
+"eM" = (
+/obj/machinery/door/firedoor/glass,
+/obj/structure/grille,
+/obj/structure/window/reinforced/polarized/full,
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/item/decoration/garland/halloween,
+/turf/simulated/floor/plating,
+/area/maintenance/moonbase/level2/center)
 "eN" = (
 /obj/structure/bed/chair/sofa/corp/right,
 /turf/simulated/floor/carpet/purple,
@@ -1853,6 +1964,9 @@
 /turf/simulated/floor/tiled/steel_ridged,
 /area/maintenance/groundbase/substation/sci)
 "eY" = (
+/obj/item/decoration/garland/halloween{
+	pixel_x = 32
+	},
 /turf/simulated/floor/plating,
 /area/engineering/engine_room)
 "fa" = (
@@ -1886,6 +2000,9 @@
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
+	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 8
 	},
 /turf/simulated/floor/tiled/steel_ridged,
 /area/crew_quarters/captain/moonbase/office)
@@ -2015,6 +2132,12 @@
 /obj/item/weapon/carved_pumpkin/candled,
 /turf/simulated/floor/tiled/steel,
 /area/shuttle/excursion/cargo)
+"fs" = (
+/obj/item/decoration/garland/halloween{
+	pixel_x = -32
+	},
+/turf/simulated/floor/tiled/steel,
+/area/maintenance/moonbase/level2/center)
 "ft" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -2110,9 +2233,7 @@
 "fC" = (
 /obj/structure/flora/ausbushes/brflowers,
 /obj/structure/window/reinforced/full,
-/turf/simulated/floor/outdoors/grass/forest{
-	outdoors = 0
-	},
+/turf/simulated/floor/outdoors/grass/sif/forest,
 /area/rnd/workshop)
 "fD" = (
 /obj/structure/toilet{
@@ -2123,6 +2244,13 @@
 	},
 /turf/simulated/floor/tiled/white,
 /area/crew_quarters/captain/moonbase/bedroom)
+"fE" = (
+/obj/machinery/door/firedoor/glass,
+/obj/structure/grille,
+/obj/structure/window/reinforced/full,
+/obj/item/weapon/carved_pumpkin/candled,
+/turf/simulated/floor/plating,
+/area/rnd/workshop)
 "fF" = (
 /obj/machinery/embedded_controller/radio/airlock/docking_port_multi{
 	dir = 4;
@@ -2175,6 +2303,8 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 2
 	},
+/obj/item/weapon/carved_pumpkin/candled,
+/obj/item/decoration/garland/halloween/short,
 /turf/simulated/floor/plating,
 /area/crew_quarters/bar)
 "fM" = (
@@ -2196,6 +2326,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 10
 	},
+/obj/item/decoration/garland/halloween,
 /turf/simulated/floor/plating,
 /area/crew_quarters/bar)
 "fR" = (
@@ -2250,6 +2381,12 @@
 /obj/item/weapon/paper/dockingcodes/sp,
 /turf/simulated/floor/tiled,
 /area/crew_quarters/moonbase/pilotroom)
+"fW" = (
+/obj/item/decoration/garland/halloween{
+	pixel_x = 32
+	},
+/turf/simulated/floor/reinforced,
+/area/quartermaster/storage)
 "fX" = (
 /obj/machinery/hologram/holopad,
 /turf/simulated/floor/carpet/oracarpet,
@@ -2282,6 +2419,9 @@
 /obj/structure/disposalpipe/trunk{
 	dir = 1
 	},
+/obj/item/decoration/garland/halloween{
+	pixel_y = -32
+	},
 /turf/simulated/floor/tiled,
 /area/rnd/xenobiology)
 "gc" = (
@@ -2296,9 +2436,8 @@
 "gd" = (
 /obj/structure/flora/ausbushes/lavendergrass,
 /obj/structure/window/reinforced/full,
-/turf/simulated/floor/outdoors/grass/forest{
-	outdoors = 0
-	},
+/obj/item/weapon/carved_pumpkin/candled,
+/turf/simulated/floor/outdoors/grass/sif/forest,
 /area/security/main)
 "ge" = (
 /obj/structure/cable/cyan{
@@ -2323,6 +2462,17 @@
 	},
 /turf/simulated/floor/wood,
 /area/crew_quarters/captain/moonbase/office)
+"gh" = (
+/obj/machinery/door/firedoor/glass,
+/obj/structure/grille,
+/obj/structure/window/reinforced/full,
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/item/decoration/garland/halloween,
+/turf/simulated/floor/plating,
+/area/crew_quarters/moonbase/pilotroom)
 "gi" = (
 /obj/structure/cable{
 	icon_state = "1-2"
@@ -2346,9 +2496,7 @@
 "gk" = (
 /obj/structure/flora/ausbushes/ppflowers,
 /obj/structure/window/reinforced/full,
-/turf/simulated/floor/outdoors/grass/forest{
-	outdoors = 0
-	},
+/turf/simulated/floor/outdoors/grass/sif/forest,
 /area/rnd/workshop)
 "gm" = (
 /obj/effect/floor_decal/milspec/color/blue,
@@ -2363,12 +2511,18 @@
 /obj/machinery/light{
 	dir = 1
 	},
+/obj/item/decoration/garland/halloween{
+	pixel_y = 32
+	},
 /turf/simulated/floor/tiled/white,
 /area/medical/virology)
 "go" = (
 /obj/effect/map_effect/interval/effect_emitter/steam,
 /obj/machinery/light{
 	dir = 1
+	},
+/obj/item/decoration/garland/halloween{
+	pixel_y = 32
 	},
 /turf/simulated/floor/water/pool,
 /area/crew_quarters/captain/moonbase/bedroom)
@@ -2393,10 +2547,28 @@
 	},
 /turf/simulated/floor/tiled/steel,
 /area/maintenance/moonbase/level2/center)
+"gs" = (
+/obj/machinery/door/firedoor/glass,
+/obj/structure/grille,
+/obj/structure/window/reinforced/polarized/full,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/effect/floor_decal/milspec/monotile/moonbase,
+/obj/effect/floor_decal/milspec/monotile/moonbase,
+/obj/item/decoration/garland/halloween,
+/turf/simulated/floor/plating,
+/area/maintenance/moonbase/level2/center)
 "gt" = (
 /obj/machinery/door/firedoor/glass,
 /obj/structure/cable/pink{
 	icon_state = "4-8"
+	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 8
 	},
 /turf/simulated/floor/tiled/steel_ridged,
 /area/security/tactical)
@@ -2433,6 +2605,16 @@
 	},
 /turf/simulated/floor/tiled/steel,
 /area/shuttle/excursion/cargo)
+"gw" = (
+/obj/machinery/door/firedoor/glass,
+/obj/structure/grille,
+/obj/structure/window/reinforced/full/dome,
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+	dir = 2
+	},
+/obj/item/decoration/garland/halloween,
+/turf/simulated/floor/plating,
+/area/crew_quarters/bar)
 "gA" = (
 /turf/simulated/wall/r_wall,
 /area/moonbase/surface/leveltwo/east)
@@ -2456,6 +2638,9 @@
 	id = "armoryaccess";
 	name = "Armory"
 	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 4
+	},
 /turf/simulated/floor/tiled/dark,
 /area/security/armoury)
 "gE" = (
@@ -2472,7 +2657,7 @@
 /turf/simulated/floor/tiled/monotile,
 /area/security/main)
 "gF" = (
-/obj/structure/flora/pottedplant/stoutbush,
+/obj/item/weapon/carved_pumpkin/candled,
 /obj/effect/floor_decal/milspec/color/red/half{
 	dir = 5
 	},
@@ -2486,6 +2671,10 @@
 	dir = 4
 	},
 /obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/item/weapon/carved_pumpkin/candled,
+/obj/item/decoration/tinsel/halloween{
 	dir = 8
 	},
 /turf/simulated/floor/plating,
@@ -2515,6 +2704,15 @@
 	},
 /turf/simulated/floor/tiled,
 /area/hallway/arrival/moonbase/main)
+"gJ" = (
+/obj/machinery/door/firedoor/glass,
+/obj/structure/grille,
+/obj/structure/window/reinforced/polarized/full{
+	id = "hos"
+	},
+/obj/item/decoration/tinsel/halloween,
+/turf/simulated/floor/plating,
+/area/crew_quarters/heads/hos)
 "gK" = (
 /obj/structure/cable{
 	icon_state = "2-4"
@@ -2577,6 +2775,9 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/obj/item/decoration/tinsel/halloween{
 	dir = 4
 	},
 /turf/simulated/floor/tiled/steel_ridged,
@@ -2678,6 +2879,9 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 8
+	},
 /turf/simulated/floor/tiled/steel_ridged,
 /area/rnd/workshop)
 "hd" = (
@@ -2754,8 +2958,13 @@
 	dir = 4
 	},
 /obj/structure/lattice,
+/obj/item/weapon/carved_pumpkin/candled,
 /turf/simulated/open,
 /area/medical/moonbase/traumaward)
+"hj" = (
+/obj/item/decoration/tinsel/halloween,
+/turf/simulated/floor/tiled,
+/area/crew_quarters/courtroom)
 "hk" = (
 /obj/effect/floor_decal/corner/lightgrey{
 	dir = 5
@@ -2854,6 +3063,12 @@
 	},
 /turf/simulated/floor/tiled/steel_ridged,
 /area/hallway/moonbase/northhall)
+"hw" = (
+/obj/item/decoration/tinsel/halloween{
+	dir = 4
+	},
+/turf/simulated/floor/tiled/monotile,
+/area/rnd/xenobiology)
 "hy" = (
 /turf/simulated/floor/plating,
 /area/maintenance/moonbase/level2/west)
@@ -2867,6 +3082,7 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
+/obj/item/decoration/garland/halloween,
 /turf/simulated/floor/plating,
 /area/quartermaster/storage)
 "hA" = (
@@ -3173,6 +3389,9 @@
 /obj/effect/floor_decal/fancy_shuttle{
 	fancy_shuttle_tag = "explo"
 	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 8
+	},
 /turf/simulated/floor/tiled/steel,
 /area/shuttle/excursion/cargo)
 "if" = (
@@ -3281,6 +3500,7 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
+/obj/item/decoration/garland/halloween,
 /turf/simulated/floor/plating,
 /area/security/moonbase/legal)
 "ir" = (
@@ -3449,6 +3669,12 @@
 /area/security/moonbase/legal)
 "iJ" = (
 /obj/machinery/light,
+/obj/item/decoration/garland/halloween{
+	pixel_x = -32
+	},
+/obj/item/decoration/garland/halloween{
+	pixel_x = 32
+	},
 /turf/simulated/open,
 /area/engineering/aft_hallway)
 "iK" = (
@@ -3537,6 +3763,7 @@
 /obj/machinery/door/firedoor/glass,
 /obj/structure/grille,
 /obj/structure/window/reinforced/full,
+/obj/item/decoration/garland/halloween,
 /turf/simulated/floor/plating,
 /area/rnd/xenobiology)
 "iV" = (
@@ -3551,6 +3778,10 @@
 	},
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
+	},
+/obj/item/weapon/carved_pumpkin/candled,
+/obj/item/decoration/tinsel/halloween{
+	dir = 4
 	},
 /turf/simulated/floor/plating,
 /area/engineering/engine_room)
@@ -3592,6 +3823,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
+/obj/item/decoration/garland/halloween,
 /turf/simulated/floor/plating,
 /area/crew_quarters/bar)
 "jb" = (
@@ -3701,9 +3933,11 @@
 /obj/structure/window/reinforced/polarized/full{
 	id = "medpsych"
 	},
-/turf/simulated/floor/outdoors/grass/forest{
-	outdoors = 0
+/obj/item/decoration/tinsel/halloween{
+	dir = 4
 	},
+/obj/item/weapon/carved_pumpkin/candled,
+/turf/simulated/floor/outdoors/grass/sif/forest,
 /area/medical/psych)
 "jl" = (
 /turf/simulated/wall/fancy_shuttle/window{
@@ -3803,6 +4037,13 @@
 	},
 /turf/simulated/floor/tiled,
 /area/engineering/engine_room)
+"jz" = (
+/obj/effect/floor_decal/milspec/color/red/half,
+/obj/item/decoration/garland/halloween{
+	pixel_y = -32
+	},
+/turf/simulated/floor/tiled/dark,
+/area/security/main)
 "jA" = (
 /obj/effect/floor_decal/milspec/color/emerald/half,
 /obj/structure/table/reinforced,
@@ -3827,6 +4068,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/structure/disposalpipe/segment,
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/floor/tiled/steel_ridged,
 /area/crew_quarters/heads/chief)
 "jD" = (
@@ -3850,6 +4092,7 @@
 	},
 /obj/effect/map_helper/airlock/door/int_door,
 /obj/machinery/atmospherics/pipe/manifold/hidden,
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/floor/tiled/steel_ridged,
 /area/engineering/engine_room)
 "jH" = (
@@ -4056,6 +4299,18 @@
 	},
 /turf/simulated/floor/tiled/white,
 /area/medical/ward)
+"kf" = (
+/obj/machinery/door/firedoor/glass,
+/obj/structure/grille,
+/obj/structure/window/reinforced/polarized/full,
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/item/weapon/carved_pumpkin/candled,
+/obj/item/decoration/tinsel/halloween,
+/turf/simulated/floor/plating,
+/area/crew_quarters/coffee_shop)
 "kg" = (
 /obj/effect/floor_decal/industrial/warning/color/red{
 	dir = 1
@@ -4141,6 +4396,17 @@
 	},
 /turf/simulated/floor/tiled/eris/steel/bar_light,
 /area/crew_quarters/moonbase/maintbar)
+"kt" = (
+/obj/machinery/door/firedoor/glass,
+/obj/structure/grille,
+/obj/structure/window/reinforced/polarized/full,
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/item/decoration/tinsel/halloween,
+/turf/simulated/floor/plating,
+/area/crew_quarters/coffee_shop)
 "kv" = (
 /obj/structure/railing/grey{
 	dir = 1
@@ -4161,6 +4427,7 @@
 /obj/machinery/door/firedoor/glass,
 /obj/structure/grille,
 /obj/structure/window/reinforced/full/dome,
+/obj/item/decoration/garland/halloween,
 /turf/simulated/floor/plating,
 /area/crew_quarters/bar)
 "kz" = (
@@ -4238,6 +4505,7 @@
 /obj/structure/cable{
 	icon_state = "32-2"
 	},
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/floor/tiled/monotile,
 /area/security/moonbase/legal)
 "kJ" = (
@@ -4326,7 +4594,7 @@
 	pixel_x = 4;
 	pixel_y = 38
 	},
-/obj/structure/flora/pottedplant/stoutbush,
+/obj/item/weapon/carved_pumpkin/candled,
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
 	dir = 8
 	},
@@ -4360,6 +4628,9 @@
 	dir = 8
 	},
 /obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/item/decoration/tinsel/halloween{
 	dir = 4
 	},
 /turf/simulated/floor/tiled/steel_ridged,
@@ -4494,6 +4765,7 @@
 	dir = 8
 	},
 /obj/structure/window/reinforced,
+/obj/item/decoration/garland/halloween,
 /turf/simulated/floor/plating,
 /area/security/moonbase/legal)
 "lk" = (
@@ -4708,6 +4980,9 @@
 /obj/machinery/door/firedoor/glass,
 /obj/machinery/door/airlock/glass_external,
 /obj/effect/map_helper/airlock/door/ext_door,
+/obj/item/decoration/tinsel/halloween{
+	dir = 4
+	},
 /turf/simulated/floor/tiled/steel_ridged,
 /area/engineering/engine_room)
 "lO" = (
@@ -4803,6 +5078,7 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
+/obj/item/decoration/garland/halloween,
 /turf/simulated/floor/plating,
 /area/crew_quarters/moonbase/pilotroom)
 "lX" = (
@@ -4970,6 +5246,12 @@
 	},
 /turf/simulated/floor/tiled,
 /area/rnd/workshop)
+"mp" = (
+/obj/machinery/door/firedoor/glass,
+/obj/machinery/door/airlock/maintenance,
+/obj/item/decoration/tinsel/halloween,
+/turf/simulated/floor/tiled/steel_ridged,
+/area/maintenance/moonbase/level2/center)
 "mq" = (
 /obj/structure/table/glass,
 /obj/item/weapon/folder/yellow,
@@ -4983,6 +5265,7 @@
 /obj/effect/floor_decal/milspec/color/emerald/half{
 	dir = 1
 	},
+/obj/item/weapon/carved_pumpkin/candled,
 /turf/simulated/floor/tiled,
 /area/rnd/research_foyer)
 "ms" = (
@@ -5116,6 +5399,19 @@
 /obj/structure/table/steel_reinforced,
 /turf/simulated/floor/tiled/steel,
 /area/shuttle/excursion/general)
+"mD" = (
+/obj/machinery/door/firedoor/glass,
+/obj/structure/grille,
+/obj/structure/window/reinforced/polarized/full,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/item/decoration/garland/halloween,
+/turf/simulated/floor/plating,
+/area/maintenance/moonbase/level2/center)
 "mE" = (
 /turf/simulated/floor/tiled,
 /area/security/moonbase/legal)
@@ -5152,10 +5448,13 @@
 /area/rnd/xenobiology)
 "mM" = (
 /obj/machinery/door/firedoor/glass,
+/obj/item/decoration/tinsel/halloween{
+	dir = 8
+	},
 /turf/simulated/floor/tiled/steel_ridged,
 /area/medical/moonbase/upperlevel)
 "mN" = (
-/obj/structure/flora/pottedplant/stoutbush,
+/obj/item/weapon/carved_pumpkin/candled,
 /obj/machinery/light{
 	dir = 8
 	},
@@ -5203,6 +5502,9 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/item/decoration/tinsel/halloween{
 	dir = 4
 	},
 /turf/simulated/floor/tiled/steel_ridged,
@@ -5317,7 +5619,7 @@
 /turf/simulated/floor/tiled/dark,
 /area/security/main)
 "nj" = (
-/obj/structure/flora/pottedplant/minitree,
+/obj/item/weapon/carved_pumpkin/candled,
 /obj/machinery/light{
 	dir = 4
 	},
@@ -5330,6 +5632,7 @@
 /obj/machinery/firealarm{
 	dir = 4
 	},
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/floor/tiled,
 /area/rnd/xenobiology)
 "nl" = (
@@ -5391,6 +5694,7 @@
 /obj/machinery/door/firedoor/glass,
 /obj/structure/grille,
 /obj/structure/window/reinforced/full,
+/obj/item/decoration/garland/halloween,
 /turf/simulated/floor/plating,
 /area/security/briefing_room)
 "nr" = (
@@ -5398,6 +5702,7 @@
 	req_one_access = list(5)
 	},
 /obj/machinery/door/firedoor/glass,
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/floor/tiled/steel_ridged,
 /area/medical/ward)
 "ns" = (
@@ -5438,6 +5743,21 @@
 /obj/machinery/computer/timeclock/premade/east,
 /turf/simulated/floor/tiled,
 /area/hallway/arrival/moonbase/main)
+"ny" = (
+/obj/machinery/door/firedoor/glass,
+/obj/structure/grille,
+/obj/structure/window/reinforced/polarized/full,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/hallway/moonbase/central)
 "nz" = (
 /obj/machinery/door/window/brigdoor/eastleft{
 	req_access = null
@@ -5625,6 +5945,18 @@
 	},
 /turf/simulated/floor/tiled/steel,
 /area/shuttle/excursion/general)
+"nS" = (
+/obj/machinery/door/firedoor/glass,
+/obj/structure/grille,
+/obj/structure/window/reinforced/polarized/full,
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/item/weapon/carved_pumpkin/candled,
+/obj/item/decoration/garland/halloween/short,
+/turf/simulated/floor/plating,
+/area/crew_quarters/coffee_shop)
 "nT" = (
 /obj/machinery/suit_cycler/pilot,
 /obj/effect/floor_decal/fancy_shuttle{
@@ -5668,6 +6000,7 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
+/obj/item/decoration/garland/halloween,
 /turf/simulated/floor/plating,
 /area/crew_quarters/moonbase/pilotroom)
 "nW" = (
@@ -5697,6 +6030,9 @@
 	name = "Research";
 	req_one_access = list(47)
 	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 4
+	},
 /turf/simulated/floor/tiled/steel_ridged,
 /area/rnd/research)
 "nY" = (
@@ -5712,6 +6048,7 @@
 	id_tint = "cmooffice";
 	req_one_access = list(40)
 	},
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/floor/tiled/steel_ridged,
 /area/crew_quarters/heads/cmo)
 "ob" = (
@@ -5837,6 +6174,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/floor/tiled/steel_ridged,
 /area/rnd/research)
 "op" = (
@@ -5934,8 +6272,13 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/structure/disposalpipe/segment,
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/floor/tiled/steel_ridged,
 /area/crew_quarters/heads/cmo)
+"oz" = (
+/obj/item/weapon/carved_pumpkin/candled,
+/turf/simulated/wall/r_wall,
+/area/rnd/research)
 "oA" = (
 /obj/structure/catwalk,
 /obj/structure/lattice,
@@ -6038,11 +6381,18 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
+/obj/item/weapon/carved_pumpkin/candled,
 /turf/simulated/floor/plating,
 /area/crew_quarters/moonbase/pilotroom)
 "oN" = (
 /obj/machinery/gateway{
 	dir = 9
+	},
+/obj/item/decoration/garland/halloween{
+	pixel_y = 32
+	},
+/obj/item/decoration/garland/halloween{
+	pixel_x = -32
 	},
 /turf/simulated/floor/tiled/eris/white/gray_platform,
 /area/ai_monitored/storage/emergency/eva)
@@ -6074,6 +6424,17 @@
 	},
 /turf/simulated/floor/carpet/blue2,
 /area/crew_quarters/heads/hos)
+"oT" = (
+/obj/machinery/door/firedoor/glass,
+/obj/structure/grille,
+/obj/structure/window/reinforced/full,
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/item/weapon/carved_pumpkin/candled,
+/turf/simulated/floor/plating,
+/area/security/detectives_office)
 "oU" = (
 /obj/machinery/door/firedoor/glass,
 /obj/machinery/door/airlock/glass_medical/polarized{
@@ -6093,8 +6454,21 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 4
+	},
 /turf/simulated/floor/tiled/steel_ridged,
 /area/medical/psych)
+"oV" = (
+/obj/effect/floor_decal/milspec/color/red/half{
+	dir = 8
+	},
+/obj/machinery/light{
+	dir = 8
+	},
+/obj/item/decoration/tinsel/halloween,
+/turf/simulated/floor/tiled/dark,
+/area/security/main)
 "oW" = (
 /obj/structure/cable/cyan{
 	icon_state = "2-8"
@@ -6138,6 +6512,9 @@
 /obj/structure/disposalpipe/segment,
 /obj/machinery/light{
 	dir = 4
+	},
+/obj/item/decoration/garland/halloween{
+	pixel_x = 32
 	},
 /turf/simulated/floor/tiled/eris/techmaint_cargo,
 /area/rnd/xenobiology)
@@ -6295,6 +6672,9 @@
 	network = list("Xenobiology")
 	},
 /obj/structure/disposalpipe/segment,
+/obj/item/decoration/garland/halloween{
+	pixel_x = 32
+	},
 /turf/simulated/floor/tiled/eris/techmaint_cargo,
 /area/rnd/xenobiology)
 "ps" = (
@@ -6525,6 +6905,9 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 4
+	},
 /turf/simulated/floor/tiled,
 /area/rnd/xenobiology)
 "pT" = (
@@ -6562,6 +6945,9 @@
 	},
 /obj/effect/floor_decal/milspec/color/emerald/half,
 /obj/effect/floor_decal/milspec/hatchmarks,
+/obj/item/decoration/tinsel/halloween{
+	dir = 4
+	},
 /turf/simulated/floor/tiled,
 /area/rnd/xenobiology)
 "pV" = (
@@ -6610,6 +6996,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 8
+	},
 /turf/simulated/floor/tiled/steel_ridged,
 /area/rnd/moonbase/serverroom)
 "qb" = (
@@ -6654,6 +7043,14 @@
 	},
 /turf/simulated/floor/tiled/white,
 /area/crew_quarters/captain/moonbase/bedroom)
+"qg" = (
+/obj/machinery/door/firedoor/glass,
+/obj/structure/grille,
+/obj/structure/window/reinforced/full/dome,
+/obj/item/decoration/garland/halloween/short,
+/obj/item/weapon/carved_pumpkin/candled,
+/turf/simulated/floor/plating,
+/area/crew_quarters/bar)
 "qh" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 10
@@ -6699,6 +7096,9 @@
 /area/rnd/rdoffice)
 "ql" = (
 /obj/machinery/door/firedoor/glass,
+/obj/item/decoration/tinsel/halloween{
+	dir = 4
+	},
 /turf/simulated/floor/tiled/steel_ridged,
 /area/rnd/research_foyer)
 "qm" = (
@@ -6856,10 +7256,16 @@
 /obj/machinery/light{
 	dir = 1
 	},
+/obj/item/decoration/garland/halloween{
+	pixel_y = 32
+	},
 /turf/simulated/floor/tiled/eris/techmaint_cargo,
 /area/rnd/xenobiology)
 "qE" = (
 /obj/machinery/door/firedoor/glass,
+/obj/item/decoration/tinsel/halloween{
+	dir = 8
+	},
 /turf/simulated/floor/tiled/steel_ridged,
 /area/security/main)
 "qG" = (
@@ -6899,12 +7305,15 @@
 /obj/structure/disposalpipe/trunk{
 	dir = 2
 	},
-/obj/structure/flora/pottedplant/orientaltree,
+/obj/item/weapon/carved_pumpkin/candled,
 /turf/simulated/floor/carpet/blue,
 /area/medical/psych)
 "qJ" = (
 /obj/effect/floor_decal/milspec/color/emerald/half{
 	dir = 10
+	},
+/obj/item/decoration/garland/halloween{
+	pixel_y = -32
 	},
 /turf/simulated/floor/tiled,
 /area/rnd/xenobiology)
@@ -7074,6 +7483,22 @@
 	fancy_shuttle_tag = "explo"
 	},
 /area/shuttle/excursion/cargo)
+"qX" = (
+/obj/machinery/door/firedoor/glass,
+/obj/structure/grille,
+/obj/structure/window/reinforced/full,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/item/weapon/carved_pumpkin/candled,
+/obj/item/decoration/tinsel/halloween{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/engineering/engine_room)
 "qY" = (
 /obj/effect/floor_decal/steeldecal/steel_decals5,
 /obj/machinery/item_bank{
@@ -7090,6 +7515,7 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 4
 	},
+/obj/item/decoration/garland/halloween,
 /turf/simulated/floor/plating,
 /area/crew_quarters/bar)
 "ra" = (
@@ -7100,6 +7526,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/floor/tiled/steel_ridged,
 /area/security/detectives_office)
 "rb" = (
@@ -7167,6 +7594,7 @@
 	id_tint = "rdoffice";
 	req_access = list(30)
 	},
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/floor/tiled/steel_ridged,
 /area/rnd/rdoffice)
 "rj" = (
@@ -7254,6 +7682,12 @@
 "rt" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/item/decoration/garland/halloween{
+	pixel_x = 32
+	},
+/obj/item/decoration/garland/halloween{
+	pixel_x = -32
+	},
 /turf/simulated/floor/tiled,
 /area/engineering/aft_hallway)
 "ru" = (
@@ -7422,6 +7856,9 @@
 	locked = 1;
 	req_access = list(39)
 	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 8
+	},
 /turf/simulated/floor/tiled/steel_ridged,
 /area/medical/virology)
 "rO" = (
@@ -7447,6 +7884,7 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
+/obj/item/decoration/garland/halloween,
 /turf/simulated/floor/plating,
 /area/security/moonbase/legal)
 "rQ" = (
@@ -7481,7 +7919,7 @@
 /turf/simulated/floor/tiled/dark,
 /area/security/tactical)
 "rT" = (
-/obj/structure/flora/pottedplant/minitree,
+/obj/item/weapon/carved_pumpkin/candled,
 /turf/simulated/floor/carpet/tealcarpet,
 /area/crew_quarters/heads/cmo)
 "rU" = (
@@ -7522,6 +7960,7 @@
 /obj/structure/railing/grey{
 	dir = 4
 	},
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/floor/tiled/monotile,
 /area/security/moonbase/legal)
 "sc" = (
@@ -7543,6 +7982,7 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
+/obj/item/decoration/garland/halloween,
 /turf/simulated/floor/plating,
 /area/maintenance/moonbase/level2/west)
 "se" = (
@@ -7569,6 +8009,7 @@
 /obj/structure/window/reinforced/polarized/full{
 	id = "hos"
 	},
+/obj/item/decoration/garland/halloween,
 /turf/simulated/floor/plating,
 /area/crew_quarters/heads/hos)
 "sh" = (
@@ -7657,6 +8098,12 @@
 	},
 /turf/simulated/floor/tiled/white,
 /area/medical/medbay_primary_storage)
+"sw" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/item/decoration/tinsel/halloween,
+/turf/simulated/floor/tiled,
+/area/crew_quarters/courtroom)
 "sx" = (
 /obj/machinery/door/firedoor/glass,
 /obj/structure/grille,
@@ -7684,10 +8131,14 @@
 /obj/structure/window/reinforced/polarized/full{
 	id = "patient2"
 	},
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/floor/plating,
 /area/medical/patient_b)
 "sC" = (
 /obj/structure/displaycase,
+/obj/item/decoration/garland/halloween{
+	pixel_y = 32
+	},
 /turf/simulated/floor/wood,
 /area/crew_quarters/captain/moonbase/office)
 "sD" = (
@@ -7723,6 +8174,7 @@
 /obj/machinery/atmospherics/unary/vent_pump/on{
 	dir = 4
 	},
+/obj/item/weapon/carved_pumpkin/candled,
 /turf/simulated/floor/tiled,
 /area/crew_quarters/courtroom)
 "sG" = (
@@ -7814,7 +8266,7 @@
 /turf/simulated/floor/tiled,
 /area/rnd/xenobiology)
 "sS" = (
-/obj/structure/flora/pottedplant/stoutbush,
+/obj/item/weapon/carved_pumpkin/candled,
 /obj/item/device/radio/intercom{
 	dir = 1;
 	name = "Station Intercom (General)";
@@ -7864,6 +8316,9 @@
 /obj/machinery/light,
 /obj/machinery/atmospherics/unary/vent_pump/on{
 	dir = 1
+	},
+/obj/item/decoration/garland/halloween{
+	pixel_y = -32
 	},
 /turf/simulated/floor/carpet/blue2,
 /area/crew_quarters/heads/hos)
@@ -7929,6 +8384,9 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 8
+	},
 /turf/simulated/floor/tiled/steel_ridged,
 /area/rnd/rdoffice)
 "tf" = (
@@ -7949,6 +8407,11 @@
 	},
 /turf/simulated/floor/tiled/eris/steel/bar_light,
 /area/crew_quarters/moonbase/maintbar)
+"ti" = (
+/obj/structure/grille,
+/obj/item/weapon/carved_pumpkin/candled,
+/turf/simulated/floor/airless/outdoors,
+/area/engineering/engine_room)
 "tj" = (
 /obj/structure/table/woodentable,
 /turf/simulated/floor/carpet/oracarpet,
@@ -8113,6 +8576,7 @@
 	dir = 1
 	},
 /obj/structure/window/reinforced,
+/obj/item/decoration/garland/halloween,
 /turf/simulated/floor/plating,
 /area/crew_quarters/heads/cmo)
 "tA" = (
@@ -8333,6 +8797,7 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
+/obj/item/decoration/garland/halloween,
 /turf/simulated/floor/plating,
 /area/maintenance/moonbase/level2/east)
 "ug" = (
@@ -8367,6 +8832,9 @@
 "uk" = (
 /obj/machinery/light{
 	dir = 4
+	},
+/obj/item/decoration/garland/halloween{
+	pixel_x = 32
 	},
 /turf/simulated/floor/reinforced,
 /area/quartermaster/storage)
@@ -8480,6 +8948,12 @@
 /obj/machinery/gateway{
 	dir = 5
 	},
+/obj/item/decoration/garland/halloween{
+	pixel_y = 32
+	},
+/obj/item/decoration/garland/halloween{
+	pixel_x = 32
+	},
 /turf/simulated/floor/tiled/eris/white/gray_platform,
 /area/ai_monitored/storage/emergency/eva)
 "uB" = (
@@ -8540,6 +9014,11 @@
 	},
 /turf/simulated/open/vacuum/outdoors,
 /area/moonbase/surface/leveltwo/south)
+"uL" = (
+/obj/structure/flora/ausbushes/lavendergrass,
+/obj/structure/window/reinforced/full,
+/turf/simulated/floor/outdoors/grass/sif/forest,
+/area/security/main)
 "uM" = (
 /turf/simulated/floor/tiled,
 /area/rnd/xenobiology)
@@ -8563,6 +9042,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden{
 	dir = 5
 	},
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/floor/tiled/steel_ridged,
 /area/engineering/engine_room)
 "uQ" = (
@@ -8591,7 +9071,7 @@
 /turf/simulated/floor/carpet/tealcarpet,
 /area/crew_quarters/heads/cmo)
 "uT" = (
-/obj/structure/flora/pottedplant/stoutbush,
+/obj/item/weapon/carved_pumpkin/candled,
 /obj/structure/disposalpipe/trunk{
 	dir = 4
 	},
@@ -8785,6 +9265,9 @@
 	req_one_access = list(5);
 	name = "Medbay"
 	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 8
+	},
 /turf/simulated/floor/tiled/steel_ridged,
 /area/medical/moonbase/upperlevel)
 "vu" = (
@@ -8930,6 +9413,9 @@
 	},
 /obj/machinery/disposal/wall/cleaner{
 	dir = 8
+	},
+/obj/item/decoration/garland/halloween{
+	pixel_x = 32
 	},
 /turf/simulated/floor/carpet/blue2,
 /area/crew_quarters/captain/moonbase/bedroom)
@@ -9213,6 +9699,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 8
+	},
 /turf/simulated/floor/tiled/steel_ridged,
 /area/security/tactical)
 "wu" = (
@@ -9386,9 +9875,10 @@
 /obj/structure/window/reinforced/polarized/full{
 	id = "medpsych"
 	},
-/turf/simulated/floor/outdoors/grass/forest{
-	outdoors = 0
+/obj/item/decoration/tinsel/halloween{
+	dir = 4
 	},
+/turf/simulated/floor/outdoors/grass/sif/forest,
 /area/medical/psych)
 "wO" = (
 /obj/structure/cable/cyan{
@@ -9622,6 +10112,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 4
+	},
 /turf/simulated/floor/tiled/steel_ridged,
 /area/medical/ward)
 "xs" = (
@@ -9698,6 +10191,9 @@
 /obj/structure/cable/green{
 	icon_state = "1-2"
 	},
+/obj/item/decoration/garland/halloween{
+	pixel_x = -32
+	},
 /turf/simulated/floor/plating,
 /area/engineering/engine_room)
 "xB" = (
@@ -9720,6 +10216,15 @@
 	},
 /turf/simulated/floor/tiled,
 /area/crew_quarters/courtroom)
+"xC" = (
+/obj/machinery/door/firedoor/glass,
+/obj/structure/grille,
+/obj/structure/window/reinforced/polarized/full{
+	id = "medpsych"
+	},
+/obj/item/weapon/carved_pumpkin/candled,
+/turf/simulated/floor/plating,
+/area/medical/psych)
 "xD" = (
 /obj/machinery/smartfridge/secure/virology,
 /obj/effect/floor_decal/corner/lime/full{
@@ -9767,10 +10272,8 @@
 "xI" = (
 /obj/structure/flora/ausbushes/lavendergrass,
 /obj/structure/window/reinforced/full,
-/turf/simulated/floor/outdoors/grass/forest{
-	outdoors = 0;
-	edge_blending_priority = 0
-	},
+/obj/item/decoration/garland/halloween,
+/turf/simulated/floor/outdoors/grass/sif/forest,
 /area/medical/moonbase/traumaward)
 "xK" = (
 /obj/structure/railing{
@@ -9854,12 +10357,11 @@
 "xV" = (
 /obj/structure/window/reinforced/full,
 /obj/structure/flora/ausbushes/ywflowers,
-/turf/simulated/floor/outdoors/grass/forest{
-	outdoors = 0
-	},
+/obj/item/decoration/garland/halloween,
+/turf/simulated/floor/outdoors/grass/sif/forest,
 /area/medical/medbay_primary_storage)
 "xW" = (
-/obj/structure/flora/pottedplant/minitree,
+/obj/item/weapon/carved_pumpkin/candled,
 /turf/simulated/floor/carpet/green,
 /area/crew_quarters/coffee_shop)
 "xX" = (
@@ -9991,6 +10493,7 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
+/obj/item/decoration/garland/halloween,
 /turf/simulated/floor/plating,
 /area/medical/medbay_primary_storage)
 "yl" = (
@@ -10018,6 +10521,7 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
+/obj/item/decoration/garland/halloween,
 /turf/simulated/floor/plating,
 /area/crew_quarters/coffee_shop)
 "yo" = (
@@ -10084,6 +10588,9 @@
 	dir = 1
 	},
 /obj/structure/table/glass,
+/obj/item/decoration/garland/halloween{
+	pixel_y = -32
+	},
 /turf/simulated/floor/tiled/white,
 /area/medical/virology)
 "yx" = (
@@ -10135,6 +10642,7 @@
 /obj/structure/window/reinforced/polarized/full{
 	id = "cmooffice"
 	},
+/obj/item/decoration/garland/halloween,
 /turf/simulated/floor/plating,
 /area/crew_quarters/heads/cmo)
 "yE" = (
@@ -10183,17 +10691,26 @@
 /obj/machinery/light{
 	dir = 8
 	},
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/floor/tiled,
 /area/crew_quarters/courtroom)
 "yJ" = (
 /obj/structure/railing/grey,
 /turf/simulated/mineral/floor/vacuum/moonbase/outdoors,
 /area/moonbase/surface/leveltwo/north)
+"yK" = (
+/obj/effect/floor_decal/milspec/color/emerald/half,
+/obj/item/weapon/carved_pumpkin/candled,
+/turf/simulated/floor/tiled,
+/area/rnd/research_foyer)
 "yL" = (
 /obj/machinery/door/firedoor/glass,
 /obj/machinery/door/airlock/multi_tile/glass{
 	dir = 1;
 	req_one_access = list(1)
+	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 8
 	},
 /turf/simulated/floor/tiled/steel_ridged,
 /area/security/main)
@@ -10252,6 +10769,7 @@
 	id_tint = "headmeetingroom";
 	name = "Meeting Room"
 	},
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/floor/tiled/steel_ridged,
 /area/bridge/meeting_room)
 "yU" = (
@@ -10339,6 +10857,8 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
+/obj/item/decoration/garland/halloween/short,
+/obj/item/weapon/carved_pumpkin/candled,
 /turf/simulated/floor/plating,
 /area/maintenance/moonbase/level1/solars)
 "ze" = (
@@ -10381,6 +10901,9 @@
 /obj/machinery/light{
 	dir = 1
 	},
+/obj/item/decoration/garland/halloween{
+	pixel_y = 32
+	},
 /turf/simulated/floor/tiled/eris/techmaint_cargo,
 /area/rnd/xenobiology)
 "zj" = (
@@ -10419,6 +10942,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/structure/disposalpipe/segment,
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/floor/tiled/steel_ridged,
 /area/medical/moonbase/traumaward)
 "zo" = (
@@ -10464,6 +10988,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/structure/disposalpipe/segment,
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/floor/tiled/steel_ridged,
 /area/bridge_hallway)
 "zu" = (
@@ -10527,6 +11052,9 @@
 /obj/item/device/personal_shield_generator/security,
 /obj/item/device/personal_shield_generator/security,
 /obj/machinery/atmospherics/unary/vent_scrubber/on,
+/obj/item/decoration/garland/halloween{
+	pixel_y = 32
+	},
 /turf/simulated/floor/tiled/dark,
 /area/security/tactical)
 "zB" = (
@@ -10539,7 +11067,7 @@
 /turf/simulated/wall/r_wall,
 /area/crew_quarters/heads/cmo)
 "zE" = (
-/obj/structure/flora/pottedplant/stoutbush,
+/obj/item/weapon/carved_pumpkin/candled,
 /obj/machinery/firealarm{
 	dir = 4
 	},
@@ -10602,6 +11130,9 @@
 /obj/machinery/camera/network/security{
 	dir = 1
 	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 8
+	},
 /turf/simulated/floor/tiled/dark,
 /area/security/main)
 "zM" = (
@@ -10655,6 +11186,9 @@
 	network = list("Xenobiology")
 	},
 /obj/structure/disposalpipe/segment,
+/obj/item/decoration/garland/halloween{
+	pixel_x = -32
+	},
 /turf/simulated/floor/tiled/eris/techmaint_cargo,
 /area/rnd/xenobiology)
 "zS" = (
@@ -10669,6 +11203,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/structure/disposalpipe/segment,
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/floor/tiled/steel_ridged,
 /area/lawoffice/moonbase/iaatwo)
 "zU" = (
@@ -10728,6 +11263,21 @@
 	},
 /turf/simulated/floor/tiled,
 /area/rnd/xenobiology)
+"Aa" = (
+/obj/machinery/door/firedoor/glass,
+/obj/structure/grille,
+/obj/structure/window/reinforced/full,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/engineering/engine_room)
 "Ab" = (
 /obj/structure/table/woodentable,
 /obj/item/weapon/book/manual/security_space_law,
@@ -10811,6 +11361,14 @@
 	},
 /turf/simulated/floor/carpet/blue2,
 /area/medical/moonbase/upperlevel)
+"Am" = (
+/obj/machinery/door/firedoor/glass,
+/obj/machinery/door/airlock/maintenance,
+/obj/item/decoration/tinsel/halloween{
+	dir = 8
+	},
+/turf/simulated/floor/tiled/steel_ridged,
+/area/maintenance/moonbase/level2/center)
 "An" = (
 /obj/structure/cable/yellow{
 	icon_state = "2-4"
@@ -10864,6 +11422,9 @@
 /obj/structure/railing/grey{
 	dir = 1
 	},
+/obj/item/decoration/garland/halloween{
+	pixel_y = 32
+	},
 /turf/simulated/floor/tiled/monotile,
 /area/hallway/moonbase/northhall)
 "Av" = (
@@ -10891,6 +11452,16 @@
 	},
 /turf/simulated/floor/tiled/dark,
 /area/security/main)
+"AA" = (
+/obj/machinery/door/firedoor/glass,
+/obj/structure/grille,
+/obj/structure/window/reinforced/polarized/full{
+	id = "rdoffice"
+	},
+/obj/item/weapon/carved_pumpkin/candled,
+/obj/item/decoration/tinsel/halloween,
+/turf/simulated/floor/plating,
+/area/rnd/rdoffice)
 "AB" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/aux,
 /obj/structure/cable/cyan{
@@ -11167,6 +11738,9 @@
 /obj/machinery/camera/network/command{
 	dir = 4
 	},
+/obj/item/decoration/garland/halloween{
+	pixel_x = -32
+	},
 /turf/simulated/floor/carpet/blue2,
 /area/crew_quarters/captain/moonbase/bedroom)
 "Bs" = (
@@ -11224,6 +11798,9 @@
 	dir = 1
 	},
 /obj/effect/floor_decal/milspec/hatchmarks,
+/obj/item/decoration/tinsel/halloween{
+	dir = 4
+	},
 /turf/simulated/floor/tiled,
 /area/rnd/xenobiology)
 "By" = (
@@ -11368,6 +11945,22 @@
 /obj/structure/railing,
 /turf/simulated/open,
 /area/crew_quarters/bar)
+"BP" = (
+/obj/machinery/door/firedoor/glass,
+/obj/structure/grille,
+/obj/structure/window/reinforced/polarized/full,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 4
+	},
+/obj/item/weapon/carved_pumpkin/candled,
+/turf/simulated/floor/plating,
+/area/hallway/moonbase/central)
 "BQ" = (
 /obj/structure/table/rack/steel,
 /obj/item/ammo_magazine/ammo_box/b12g/beanbag,
@@ -11471,6 +12064,7 @@
 /obj/machinery/door/firedoor/glass,
 /obj/structure/grille,
 /obj/structure/window/reinforced/full,
+/obj/item/decoration/garland/halloween,
 /turf/simulated/floor/plating,
 /area/rnd/workshop)
 "Cd" = (
@@ -11541,6 +12135,9 @@
 /obj/effect/floor_decal/milspec/color/orange/half{
 	dir = 4
 	},
+/obj/item/decoration/garland/halloween{
+	pixel_x = 32
+	},
 /turf/simulated/floor/tiled,
 /area/engineering/aft_hallway)
 "Cp" = (
@@ -11590,6 +12187,18 @@
 "Cv" = (
 /turf/simulated/wall/r_wall,
 /area/security/main)
+"Cw" = (
+/obj/effect/floor_decal/milspec/color/blue/half{
+	dir = 4
+	},
+/obj/machinery/light{
+	dir = 4
+	},
+/obj/item/decoration/garland/halloween{
+	pixel_x = 32
+	},
+/turf/simulated/floor/tiled,
+/area/crew_quarters/courtroom)
 "Cx" = (
 /obj/machinery/firealarm,
 /turf/simulated/floor/tiled/white,
@@ -11606,9 +12215,13 @@
 	base_turf = /turf/simulated/floor/reinforced/airless/outdoors
 	})
 "Cz" = (
-/obj/structure/flora/pottedplant/stoutbush,
-/turf/simulated/floor/carpet/blue2,
-/area/bridge/meeting_room)
+/obj/machinery/door/firedoor/glass,
+/obj/structure/grille,
+/obj/structure/window/reinforced/full/dome,
+/obj/item/weapon/carved_pumpkin/candled,
+/obj/item/decoration/garland/halloween/short,
+/turf/simulated/floor/plating,
+/area/crew_quarters/bar)
 "CA" = (
 /turf/simulated/wall/fancy_shuttle{
 	fancy_shuttle_tag = "explo"
@@ -11644,9 +12257,7 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/turf/simulated/floor/outdoors/grass/forest{
-	outdoors = 0
-	},
+/turf/simulated/floor/outdoors/grass/sif/forest,
 /area/security/main)
 "CF" = (
 /obj/effect/floor_decal/milspec/color/emerald/half{
@@ -11660,6 +12271,16 @@
 	},
 /turf/simulated/floor/tiled,
 /area/ai_monitored/storage/emergency/eva)
+"CG" = (
+/obj/machinery/door/firedoor/glass,
+/obj/structure/grille,
+/obj/structure/window/reinforced/polarized/full{
+	id = "ceoffice"
+	},
+/obj/item/weapon/carved_pumpkin/candled,
+/obj/item/decoration/garland/halloween/short,
+/turf/simulated/floor/plating,
+/area/crew_quarters/heads/chief)
 "CI" = (
 /turf/simulated/wall/r_wall,
 /area/bridge_hallway)
@@ -11687,6 +12308,9 @@
 	dir = 1
 	},
 /obj/machinery/atmospherics/unary/vent_scrubber/on,
+/obj/item/decoration/garland/halloween{
+	pixel_y = 32
+	},
 /turf/simulated/floor/tiled,
 /area/security/moonbase/legal)
 "CM" = (
@@ -11752,6 +12376,7 @@
 /obj/structure/window/reinforced/polarized/full{
 	id = "patient1"
 	},
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/floor/plating,
 /area/medical/patient_a)
 "CS" = (
@@ -11847,8 +12472,23 @@
 /obj/structure/window/reinforced/polarized/full{
 	id = "rdoffice"
 	},
+/obj/item/decoration/garland/halloween,
 /turf/simulated/floor/plating,
 /area/rnd/rdoffice)
+"Dg" = (
+/obj/machinery/door/firedoor/glass,
+/obj/structure/grille,
+/obj/structure/window/reinforced/polarized/full,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/effect/floor_decal/milspec/monotile/moonbase,
+/obj/item/decoration/garland/halloween,
+/turf/simulated/floor/plating,
+/area/maintenance/moonbase/level2/center)
 "Dh" = (
 /obj/machinery/atmospherics/pipe/zpipe/down/scrubbers,
 /obj/machinery/atmospherics/pipe/zpipe/down/supply,
@@ -11995,6 +12635,7 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
+/obj/item/decoration/garland/halloween,
 /turf/simulated/floor/plating,
 /area/security/detectives_office)
 "DC" = (
@@ -12159,6 +12800,9 @@
 "DS" = (
 /obj/machinery/light{
 	dir = 8
+	},
+/obj/item/decoration/garland/halloween{
+	pixel_x = -32
 	},
 /turf/simulated/floor/tiled/eris/techmaint_cargo,
 /area/rnd/xenobiology)
@@ -12330,6 +12974,9 @@
 /obj/effect/floor_decal/fancy_shuttle{
 	fancy_shuttle_tag = "explo"
 	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 8
+	},
 /turf/simulated/floor/tiled/steel,
 /area/shuttle/excursion/cargo)
 "Ek" = (
@@ -12435,6 +13082,7 @@
 /obj/structure/window/reinforced/polarized/full{
 	id = "headmeetingroom"
 	},
+/obj/item/decoration/garland/halloween,
 /turf/simulated/floor/plating,
 /area/bridge/meeting_room)
 "EA" = (
@@ -12447,6 +13095,9 @@
 /area/hallway/arrival/moonbase/dockingbays)
 "ED" = (
 /obj/machinery/door/firedoor/glass,
+/obj/item/decoration/tinsel/halloween{
+	dir = 4
+	},
 /turf/simulated/floor/tiled/steel_ridged,
 /area/rnd/research)
 "EE" = (
@@ -12473,6 +13124,7 @@
 /obj/structure/grille,
 /obj/structure/window/reinforced/full/dome,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/item/decoration/garland/halloween,
 /turf/simulated/floor/plating,
 /area/crew_quarters/bar)
 "EH" = (
@@ -12676,6 +13328,7 @@
 	dir = 4
 	},
 /obj/structure/lattice,
+/obj/item/weapon/carved_pumpkin/candled,
 /turf/simulated/open,
 /area/medical/moonbase/traumaward)
 "Fg" = (
@@ -12688,6 +13341,9 @@
 /obj/structure/bed/chair/sofa/corp/corner,
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
 	dir = 8
+	},
+/obj/item/decoration/garland/halloween{
+	pixel_x = 32
 	},
 /turf/simulated/floor/carpet/blue2,
 /area/crew_quarters/captain/moonbase/bedroom)
@@ -12791,6 +13447,7 @@
 /obj/machinery/light{
 	dir = 4
 	},
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/floor/tiled,
 /area/crew_quarters/courtroom)
 "Ft" = (
@@ -12801,6 +13458,8 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
+/obj/item/weapon/carved_pumpkin/candled,
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/floor/plating,
 /area/lawoffice/moonbase/iaaone)
 "Fu" = (
@@ -12832,8 +13491,22 @@
 /obj/machinery/light,
 /turf/simulated/floor/tiled/dark,
 /area/security/tactical)
+"FC" = (
+/obj/machinery/door/firedoor/glass,
+/obj/structure/grille,
+/obj/structure/window/reinforced/full/dome,
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+	dir = 1
+	},
+/obj/item/decoration/garland/halloween/short,
+/obj/item/weapon/carved_pumpkin/candled,
+/turf/simulated/floor/plating,
+/area/crew_quarters/bar)
 "FD" = (
 /obj/structure/railing/grey,
+/obj/item/decoration/garland/halloween{
+	pixel_y = -32
+	},
 /turf/simulated/floor/tiled/monotile,
 /area/hallway/moonbase/westhall)
 "FE" = (
@@ -12914,6 +13587,21 @@
 	},
 /turf/simulated/floor/tiled,
 /area/hallway/arrival/moonbase/main)
+"FR" = (
+/obj/machinery/door/firedoor/glass,
+/obj/structure/grille,
+/obj/structure/window/reinforced/polarized/full,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 8
+	},
+/turf/simulated/floor/plating,
+/area/hallway/moonbase/central)
 "FS" = (
 /obj/machinery/button/remote/blast_door{
 	dir = 4;
@@ -12924,6 +13612,7 @@
 /obj/effect/floor_decal/milspec/color/emerald/half{
 	dir = 8
 	},
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/floor/tiled,
 /area/rnd/xenobiology)
 "FT" = (
@@ -13039,6 +13728,13 @@
 "Gj" = (
 /turf/simulated/floor/glass/reinforced,
 /area/crew_quarters/bar)
+"Gm" = (
+/obj/effect/floor_decal/milspec/color/red/half{
+	dir = 4
+	},
+/obj/item/decoration/tinsel/halloween,
+/turf/simulated/floor/tiled/dark,
+/area/security/main)
 "Go" = (
 /obj/machinery/gateway{
 	dir = 10
@@ -13073,6 +13769,20 @@
 	},
 /turf/simulated/floor/plating,
 /area/maintenance/moonbase/level2/east)
+"Gr" = (
+/obj/machinery/door/firedoor/glass,
+/obj/structure/grille,
+/obj/structure/window/reinforced/polarized/full,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/item/weapon/carved_pumpkin/candled,
+/obj/item/decoration/garland/halloween/short,
+/turf/simulated/floor/plating,
+/area/quartermaster/storage)
 "Gs" = (
 /obj/structure/cable{
 	icon_state = "1-2"
@@ -13271,6 +13981,9 @@
 /area/hallway/moonbase/central)
 "GQ" = (
 /obj/structure/closet/firecloset/full/atmos,
+/obj/item/decoration/garland/halloween{
+	pixel_y = -32
+	},
 /turf/simulated/floor/tiled,
 /area/storage/emergency_storage/emergency5)
 "GR" = (
@@ -13324,6 +14037,9 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 8
+	},
 /turf/simulated/floor/tiled/steel_ridged,
 /area/medical/virology)
 "GV" = (
@@ -13356,6 +14072,7 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
+/obj/item/decoration/garland/halloween,
 /turf/simulated/floor/plating,
 /area/engineering/engine_room)
 "GY" = (
@@ -13411,6 +14128,9 @@
 /obj/effect/floor_decal/industrial/warning/color{
 	dir = 1
 	},
+/obj/item/decoration/garland/halloween{
+	pixel_y = 32
+	},
 /turf/simulated/floor/tiled/eris/techmaint_cargo,
 /area/rnd/xenobiology)
 "He" = (
@@ -13464,12 +14184,16 @@
 /area/bridge_hallway)
 "Hn" = (
 /obj/machinery/suit_cycler/exploration,
+/obj/item/decoration/garland/halloween{
+	pixel_y = -32
+	},
 /turf/simulated/floor/tiled/techfloor,
 /area/ai_monitored/storage/emergency/eva)
 "Ho" = (
 /obj/machinery/light{
 	dir = 4
 	},
+/obj/item/weapon/carved_pumpkin,
 /turf/simulated/floor/tiled/dark,
 /area/crew_quarters/moonbase/abandonedoffice/solgov)
 "Hp" = (
@@ -13495,7 +14219,7 @@
 /turf/simulated/floor/carpet/purple,
 /area/rnd/rdoffice)
 "Hq" = (
-/obj/structure/flora/pottedplant/stoutbush,
+/obj/item/weapon/carved_pumpkin/candled,
 /obj/item/device/radio/intercom{
 	dir = 1;
 	name = "Station Intercom (General)";
@@ -13527,6 +14251,7 @@
 /obj/machinery/door/firedoor/glass,
 /obj/machinery/door/airlock/glass_medical,
 /obj/structure/disposalpipe/segment,
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/floor/tiled/steel_ridged,
 /area/medical/medbay_primary_storage)
 "Hu" = (
@@ -13546,6 +14271,19 @@
 	},
 /turf/simulated/floor/tiled,
 /area/hallway/arrival/moonbase/main)
+"Hv" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/effect/catwalk_plated,
+/obj/structure/disposalpipe/segment,
+/obj/item/decoration/garland/halloween{
+	pixel_x = 32
+	},
+/turf/simulated/floor/plating,
+/area/maintenance/moonbase/level2/center)
 "Hw" = (
 /obj/effect/floor_decal/steeldecal/steel_decals5{
 	dir = 8
@@ -13725,6 +14463,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/floor/tiled/steel_ridged,
 /area/engineering/aft_hallway)
 "HT" = (
@@ -13770,6 +14509,9 @@
 /obj/effect/floor_decal/milspec/color/emerald/half{
 	dir = 6
 	},
+/obj/item/decoration/garland/halloween{
+	pixel_y = -32
+	},
 /turf/simulated/floor/tiled,
 /area/rnd/xenobiology)
 "HZ" = (
@@ -13777,9 +14519,11 @@
 /obj/structure/window/reinforced/polarized/full{
 	id = "medpsych"
 	},
-/turf/simulated/floor/outdoors/grass/forest{
-	outdoors = 0
+/obj/item/decoration/tinsel/halloween{
+	dir = 4
 	},
+/obj/item/weapon/carved_pumpkin/candled,
+/turf/simulated/floor/outdoors/grass/sif/forest,
 /area/medical/psych)
 "Ib" = (
 /obj/structure/window/reinforced,
@@ -13792,6 +14536,12 @@
 	},
 /turf/simulated/floor/reinforced,
 /area/quartermaster/storage)
+"Ig" = (
+/obj/item/decoration/garland/halloween{
+	pixel_y = -32
+	},
+/turf/simulated/floor/tiled/white,
+/area/crew_quarters/captain/moonbase/bedroom)
 "Ih" = (
 /obj/structure/railing/grey{
 	dir = 8
@@ -13872,6 +14622,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 6
 	},
+/obj/item/decoration/garland/halloween,
 /turf/simulated/floor/plating,
 /area/crew_quarters/bar)
 "It" = (
@@ -14165,6 +14916,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/floor/tiled/steel_ridged,
 /area/medical/medbay_primary_storage)
 "Jh" = (
@@ -14228,6 +14980,9 @@
 	pixel_x = 4;
 	pixel_y = 6
 	},
+/obj/item/decoration/garland/halloween{
+	pixel_y = -32
+	},
 /turf/simulated/floor/tiled/dark,
 /area/security/tactical)
 "Jp" = (
@@ -14249,6 +15004,9 @@
 /obj/effect/floor_decal/milspec/color/blue/half{
 	dir = 10
 	},
+/obj/item/decoration/garland/halloween{
+	pixel_x = -32
+	},
 /turf/simulated/floor/tiled,
 /area/bridge_hallway)
 "Jt" = (
@@ -14258,6 +15016,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/floor/tiled/steel_ridged,
 /area/engineering/engine_room)
 "Ju" = (
@@ -14392,10 +15151,8 @@
 /area/hallway/arrival/moonbase/dockingbays)
 "JJ" = (
 /obj/structure/window/reinforced/full,
-/obj/structure/flora/ausbushes/leafybush,
-/turf/simulated/floor/outdoors/grass/forest{
-	outdoors = 0
-	},
+/obj/item/weapon/carved_pumpkin/candled,
+/turf/simulated/floor/outdoors/grass/sif/forest,
 /area/medical/medbay_primary_storage)
 "JK" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -14455,6 +15212,9 @@
 /obj/structure/railing/grey{
 	dir = 1
 	},
+/obj/item/decoration/garland/halloween{
+	pixel_y = 32
+	},
 /turf/simulated/floor/tiled/monotile,
 /area/hallway/moonbase/westhall)
 "JR" = (
@@ -14513,6 +15273,7 @@
 /turf/simulated/floor/tiled,
 /area/rnd/research)
 "JZ" = (
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/floor/tiled/steel_ridged,
 /area/security/briefing_room)
 "Ka" = (
@@ -14666,6 +15427,9 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 8
+	},
 /turf/simulated/floor/tiled/steel_ridged,
 /area/medical/virology)
 "Kq" = (
@@ -14712,6 +15476,9 @@
 	name = "Research";
 	req_one_access = list(47)
 	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 4
+	},
 /turf/simulated/floor/tiled/steel_ridged,
 /area/rnd/research_foyer)
 "Kw" = (
@@ -14739,6 +15506,9 @@
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
+	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 8
 	},
 /turf/simulated/floor/tiled/steel_ridged,
 /area/crew_quarters/medical_restroom)
@@ -14793,6 +15563,7 @@
 /obj/machinery/door/firedoor/glass,
 /obj/structure/grille,
 /obj/structure/window/reinforced/full,
+/obj/item/decoration/garland/halloween,
 /turf/simulated/floor/plating,
 /area/medical/ward)
 "KH" = (
@@ -14950,6 +15721,9 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 4
+	},
 /turf/simulated/floor/tiled/steel_ridged,
 /area/security/detectives_office)
 "KY" = (
@@ -14984,6 +15758,13 @@
 "La" = (
 /turf/simulated/wall/r_wall,
 /area/rnd/workshop)
+"Lb" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/item/weapon/carved_pumpkin/candled,
+/turf/simulated/floor/tiled/eris/steel/brown_platform,
+/area/crew_quarters/bar)
 "Lc" = (
 /obj/structure/disposalpipe/segment{
 	dir = 8;
@@ -15031,6 +15812,9 @@
 	dir = 4
 	},
 /obj/machinery/light,
+/obj/item/decoration/tinsel/halloween{
+	dir = 4
+	},
 /turf/simulated/floor/tiled,
 /area/security/moonbase/legal)
 "Lg" = (
@@ -15120,6 +15904,7 @@
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
 	dir = 8
 	},
+/obj/item/weapon/carved_pumpkin/candled,
 /turf/simulated/floor/tiled,
 /area/crew_quarters/courtroom)
 "Lq" = (
@@ -15140,6 +15925,9 @@
 /area/quartermaster/storage)
 "Ls" = (
 /obj/structure/railing/grey,
+/obj/item/decoration/garland/halloween{
+	pixel_y = -32
+	},
 /turf/simulated/floor/tiled/monotile,
 /area/hallway/moonbase/northhall)
 "Lt" = (
@@ -15191,6 +15979,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/structure/disposalpipe/segment,
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/floor/tiled/steel_ridged,
 /area/lawoffice/moonbase/iaaone)
 "Lw" = (
@@ -15351,6 +16140,9 @@
 /obj/effect/floor_decal/milspec/color/red,
 /obj/structure/dispenser/oxygen,
 /obj/machinery/atmospherics/unary/vent_scrubber/on,
+/obj/item/decoration/garland/halloween{
+	pixel_y = 32
+	},
 /turf/simulated/floor/tiled/dark,
 /area/security/tactical)
 "LO" = (
@@ -15393,6 +16185,7 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
+/obj/item/decoration/garland/halloween,
 /turf/simulated/floor/plating,
 /area/maintenance/moonbase/level2/west)
 "LS" = (
@@ -15477,6 +16270,9 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 4
+	},
 /turf/simulated/floor/tiled/steel_ridged,
 /area/maintenance/moonbase/level2/center)
 "Mb" = (
@@ -15493,6 +16289,17 @@
 /area/shuttle/spboat/aft{
 	base_turf = /turf/simulated/floor/reinforced/airless/outdoors
 	})
+"Mc" = (
+/obj/machinery/door/firedoor/glass,
+/obj/structure/grille,
+/obj/structure/window/reinforced/full,
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/item/decoration/tinsel/halloween,
+/turf/simulated/floor/plating,
+/area/lawoffice/moonbase/iaaone)
 "Md" = (
 /obj/structure/cable/cyan{
 	icon_state = "1-4"
@@ -15623,6 +16430,7 @@
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/floor/tiled/steel_ridged,
 /area/crew_quarters/courtroom)
 "Mv" = (
@@ -15667,6 +16475,7 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
+/obj/item/decoration/garland/halloween,
 /turf/simulated/floor/plating,
 /area/space)
 "My" = (
@@ -15733,6 +16542,7 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
+/obj/item/decoration/garland/halloween,
 /turf/simulated/floor/plating,
 /area/rnd/rdoffice)
 "MH" = (
@@ -15762,6 +16572,7 @@
 	},
 /obj/structure/window/reinforced,
 /obj/structure/lattice,
+/obj/item/weapon/carved_pumpkin/candled,
 /turf/simulated/open,
 /area/medical/moonbase/traumaward)
 "MM" = (
@@ -15837,6 +16648,9 @@
 /turf/simulated/floor/carpet/blue2,
 /area/hallway/moonbase/central)
 "MV" = (
+/obj/item/decoration/garland/halloween{
+	pixel_y = 32
+	},
 /turf/simulated/open,
 /area/security/main)
 "MX" = (
@@ -15854,6 +16668,7 @@
 	id = "headmeetingroom"
 	},
 /obj/item/weapon/carved_pumpkin/candled,
+/obj/item/decoration/garland/halloween/short,
 /turf/simulated/floor/plating,
 /area/bridge/meeting_room)
 "MZ" = (
@@ -15915,6 +16730,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/floor/tiled/steel_ridged,
 /area/medical/patient_b)
 "Nf" = (
@@ -16133,6 +16949,9 @@
 	},
 /obj/machinery/power/apc{
 	dir = 1
+	},
+/obj/item/decoration/garland/halloween{
+	pixel_y = 32
 	},
 /turf/simulated/floor/tiled/white,
 /area/medical/virology)
@@ -16368,6 +17187,18 @@
 	},
 /turf/simulated/open,
 /area/hallway/moonbase/central)
+"Ok" = (
+/obj/machinery/door/firedoor/glass,
+/obj/structure/grille,
+/obj/structure/window/reinforced/full,
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/item/decoration/garland/halloween/short,
+/obj/item/weapon/carved_pumpkin/candled,
+/turf/simulated/floor/plating,
+/area/maintenance/moonbase/level1/solars)
 "Ol" = (
 /obj/structure/bed/chair{
 	dir = 4
@@ -16434,6 +17265,7 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
+/obj/item/decoration/garland/halloween,
 /turf/simulated/floor/plating,
 /area/medical/virology)
 "Ot" = (
@@ -16497,6 +17329,13 @@
 	dir = 1
 	},
 /turf/simulated/floor/tiled,
+/area/rnd/xenobiology)
+"OD" = (
+/obj/effect/catwalk_plated,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/item/decoration/tinsel/halloween,
+/turf/simulated/floor/plating/eris,
 /area/rnd/xenobiology)
 "OE" = (
 /obj/structure/bed/chair/sofa/corp/left{
@@ -16678,6 +17517,9 @@
 /obj/structure/railing/grey{
 	dir = 8
 	},
+/obj/item/decoration/garland/halloween{
+	pixel_y = 32
+	},
 /turf/simulated/open,
 /area/bridge_hallway)
 "OW" = (
@@ -16702,6 +17544,7 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
+/obj/item/decoration/garland/halloween,
 /turf/simulated/floor/plating,
 /area/security/detectives_office)
 "OZ" = (
@@ -16738,9 +17581,8 @@
 "Pf" = (
 /obj/structure/window/reinforced/full,
 /obj/structure/flora/ausbushes/brflowers,
-/turf/simulated/floor/outdoors/grass/forest{
-	outdoors = 0
-	},
+/obj/item/decoration/garland/halloween,
+/turf/simulated/floor/outdoors/grass/sif/forest,
 /area/medical/medbay_primary_storage)
 "Ph" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
@@ -16796,7 +17638,7 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/obj/structure/flora/pottedplant/minitree,
+/obj/item/weapon/carved_pumpkin/candled,
 /turf/simulated/floor/tiled/white,
 /area/medical/ward)
 "Po" = (
@@ -16885,6 +17727,9 @@
 /obj/machinery/door/airlock/multi_tile/glass{
 	dir = 1
 	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 4
+	},
 /turf/simulated/floor/tiled/steel_ridged,
 /area/crew_quarters/courtroom)
 "Pv" = (
@@ -16932,6 +17777,7 @@
 /obj/structure/disposalpipe/down{
 	dir = 1
 	},
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/floor/tiled/monotile,
 /area/rnd/research)
 "Pz" = (
@@ -16941,6 +17787,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 5
 	},
+/obj/item/decoration/garland/halloween,
 /turf/simulated/floor/plating,
 /area/crew_quarters/bar)
 "PA" = (
@@ -16976,6 +17823,9 @@
 /obj/machinery/optable,
 /obj/effect/floor_decal/industrial/warning/color{
 	dir = 8
+	},
+/obj/item/decoration/garland/halloween{
+	pixel_x = -32
 	},
 /turf/simulated/floor/tiled/eris/techmaint_cargo,
 /area/rnd/xenobiology)
@@ -17032,6 +17882,9 @@
 /area/hydroponics)
 "PK" = (
 /obj/machinery/atmospherics/unary/vent_pump/on,
+/obj/item/decoration/garland/halloween{
+	pixel_y = 32
+	},
 /turf/simulated/floor/tiled,
 /area/security/moonbase/legal)
 "PL" = (
@@ -17149,6 +18002,9 @@
 /obj/machinery/alarm{
 	dir = 1
 	},
+/obj/item/decoration/garland/halloween{
+	pixel_y = -32
+	},
 /turf/simulated/floor/tiled,
 /area/storage/emergency_storage/emergency5)
 "Qa" = (
@@ -17180,6 +18036,7 @@
 /obj/structure/cable/white{
 	icon_state = "1-2"
 	},
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/floor/tiled/steel_ridged,
 /area/rnd/workshop)
 "Qd" = (
@@ -17227,6 +18084,9 @@
 /obj/structure/bed/chair/comfy{
 	dir = 4
 	},
+/obj/item/decoration/garland/halloween{
+	pixel_y = -32
+	},
 /turf/simulated/floor/carpet/blue2,
 /area/crew_quarters/heads/hos)
 "Qk" = (
@@ -17262,6 +18122,18 @@
 /obj/item/decoration/tinsel/halloween,
 /turf/simulated/floor/tiled/steel_ridged,
 /area/hallway/arrival/moonbase/main)
+"Qn" = (
+/obj/machinery/door/firedoor/glass,
+/obj/structure/grille,
+/obj/structure/window/reinforced/polarized/full,
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/item/weapon/carved_pumpkin/candled,
+/obj/item/decoration/garland/halloween/short,
+/turf/simulated/floor/plating,
+/area/quartermaster/storage)
 "Qp" = (
 /obj/structure/window/reinforced{
 	dir = 1
@@ -17272,9 +18144,8 @@
 "Qq" = (
 /obj/structure/window/reinforced/full,
 /obj/structure/flora/ausbushes/sparsegrass,
-/turf/simulated/floor/outdoors/grass/forest{
-	outdoors = 0
-	},
+/obj/item/decoration/garland/halloween,
+/turf/simulated/floor/outdoors/grass/sif/forest,
 /area/medical/medbay_primary_storage)
 "Qr" = (
 /obj/machinery/door/firedoor/glass,
@@ -17295,6 +18166,22 @@
 	},
 /turf/simulated/floor/tiled,
 /area/hallway/arrival/moonbase/main)
+"Qu" = (
+/obj/machinery/door/firedoor/glass,
+/obj/structure/grille,
+/obj/structure/window/reinforced/polarized/full{
+	id = "capoffice"
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/item/decoration/garland/halloween,
+/obj/item/decoration/garland/halloween,
+/turf/simulated/floor/plating,
+/area/crew_quarters/captain/moonbase/office)
 "Qv" = (
 /obj/structure/cable/pink{
 	icon_state = "2-4"
@@ -17346,9 +18233,8 @@
 "Qz" = (
 /obj/structure/window/reinforced/full,
 /obj/structure/flora/ausbushes/ppflowers,
-/turf/simulated/floor/outdoors/grass/forest{
-	outdoors = 0
-	},
+/obj/item/decoration/garland/halloween,
+/turf/simulated/floor/outdoors/grass/sif/forest,
 /area/medical/medbay_primary_storage)
 "QA" = (
 /turf/simulated/floor/glass/reinforced/vacuum/outdoors,
@@ -17416,7 +18302,7 @@
 /turf/simulated/floor/tiled/eris/cafe,
 /area/security/main)
 "QM" = (
-/obj/structure/flora/pottedplant/stoutbush,
+/obj/item/weapon/carved_pumpkin/candled,
 /obj/machinery/light{
 	dir = 4
 	},
@@ -17434,6 +18320,7 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
+/obj/item/decoration/garland/halloween,
 /turf/simulated/floor/plating,
 /area/crew_quarters/captain/moonbase/office)
 "QP" = (
@@ -17442,6 +18329,9 @@
 /area/moonbase/surface/leveltwo/west)
 "QQ" = (
 /obj/machinery/door/firedoor/glass,
+/obj/item/decoration/tinsel/halloween{
+	dir = 4
+	},
 /turf/simulated/floor/tiled/steel_ridged,
 /area/crew_quarters/courtroom)
 "QR" = (
@@ -17465,9 +18355,7 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/turf/simulated/floor/outdoors/grass/forest{
-	outdoors = 0
-	},
+/turf/simulated/floor/outdoors/grass/sif/forest,
 /area/security/main)
 "QW" = (
 /obj/machinery/newscaster{
@@ -17489,6 +18377,7 @@
 	id = "headmeetingroom"
 	},
 /obj/item/weapon/carved_pumpkin/candled,
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/floor/plating,
 /area/bridge_hallway)
 "Ra" = (
@@ -17554,6 +18443,7 @@
 "Rf" = (
 /obj/structure/flora/ausbushes/brflowers,
 /obj/structure/window/basic/full,
+/obj/item/weapon/carved_pumpkin/candled,
 /turf/simulated/floor/outdoors/grass/forest{
 	outdoors = 0
 	},
@@ -17657,6 +18547,9 @@
 	icon_state = "4-8"
 	},
 /obj/effect/map_helper/airlock/door/ext_door,
+/obj/item/decoration/tinsel/halloween{
+	dir = 4
+	},
 /turf/simulated/floor/tiled/steel_ridged,
 /area/engineering/engine_room)
 "Rr" = (
@@ -17886,6 +18779,9 @@
 	dir = 9;
 	network = list("Xenobiology")
 	},
+/obj/item/decoration/garland/halloween{
+	pixel_x = 32
+	},
 /turf/simulated/floor/tiled/eris/techmaint_cargo,
 /area/rnd/xenobiology)
 "RO" = (
@@ -17966,6 +18862,12 @@
 "RW" = (
 /turf/simulated/floor/tiled,
 /area/crew_quarters/courtroom)
+"RX" = (
+/obj/item/decoration/garland/halloween{
+	pixel_y = 32
+	},
+/turf/simulated/open,
+/area/medical/moonbase/traumaward)
 "RY" = (
 /obj/machinery/hologram/holopad,
 /turf/simulated/floor/plating/eris,
@@ -17973,6 +18875,12 @@
 "RZ" = (
 /turf/simulated/floor/plating,
 /area/maintenance/moonbase/level2/east)
+"Sa" = (
+/obj/item/decoration/garland/halloween{
+	pixel_x = -32
+	},
+/turf/simulated/floor/reinforced,
+/area/quartermaster/storage)
 "Sb" = (
 /obj/item/clothing/suit/armor/pcarrier/explorer,
 /obj/item/clothing/suit/armor/pcarrier/explorer,
@@ -18022,6 +18930,7 @@
 	icon_state = "1-2"
 	},
 /obj/effect/catwalk_plated/dark,
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/floor/plating/eris,
 /area/security/main)
 "Sh" = (
@@ -18031,18 +18940,21 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 8
 	},
+/obj/item/decoration/garland/halloween,
 /turf/simulated/floor/plating,
 /area/crew_quarters/bar)
 "Si" = (
 /obj/structure/window/reinforced/full,
 /obj/structure/flora/ausbushes/pointybush,
-/turf/simulated/floor/outdoors/grass/forest{
-	outdoors = 0
-	},
+/obj/item/decoration/garland/halloween,
+/turf/simulated/floor/outdoors/grass/sif/forest,
 /area/medical/medbay_primary_storage)
 "Sk" = (
 /obj/effect/floor_decal/milspec/color/red/half{
 	dir = 1
+	},
+/obj/item/decoration/garland/halloween{
+	pixel_y = 32
 	},
 /turf/simulated/floor/tiled/dark,
 /area/security/main)
@@ -18112,6 +19024,7 @@
 /turf/simulated/floor,
 /area/maintenance/groundbase/substation/sci)
 "Sq" = (
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/floor/tiled/steel_ridged,
 /area/medical/moonbase/traumaward)
 "Sr" = (
@@ -18215,6 +19128,7 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
+/obj/item/decoration/garland/halloween,
 /turf/simulated/floor/plating,
 /area/ai_monitored/storage/emergency/eva)
 "SI" = (
@@ -18314,6 +19228,9 @@
 /obj/structure/cable{
 	icon_state = "32-2"
 	},
+/obj/item/decoration/garland/halloween{
+	pixel_x = -32
+	},
 /turf/simulated/floor/tiled/monotile,
 /area/bridge_hallway)
 "SU" = (
@@ -18350,12 +19267,16 @@
 /obj/machinery/door/airlock/glass,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/floor/tiled/steel_ridged,
 /area/crew_quarters/courtroom)
 "SZ" = (
 /obj/structure/window/reinforced{
 	dir = 4;
 	pixel_x = 4
+	},
+/obj/item/decoration/garland/halloween{
+	pixel_y = 32
 	},
 /turf/simulated/open,
 /area/security/main)
@@ -18600,10 +19521,29 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
+/obj/item/decoration/garland/halloween,
 /turf/simulated/floor/plating,
 /area/quartermaster/storage)
+"TE" = (
+/obj/structure/table/rack{
+	dir = 8;
+	layer = 2.6
+	},
+/obj/item/clothing/shoes/magboots,
+/obj/item/clothing/shoes/magboots,
+/obj/item/clothing/mask/breath,
+/obj/item/clothing/mask/breath,
+/obj/item/clothing/suit/space/void/exploration,
+/obj/item/clothing/suit/space/void/exploration,
+/obj/item/clothing/head/helmet/space/void/exploration,
+/obj/item/clothing/head/helmet/space/void/exploration,
+/obj/item/decoration/garland/halloween{
+	pixel_y = -32
+	},
+/turf/simulated/floor/tiled/techfloor,
+/area/ai_monitored/storage/emergency/eva)
 "TG" = (
-/obj/structure/flora/pottedplant/minitree,
+/obj/item/weapon/carved_pumpkin/candled,
 /obj/structure/sign/painting/public{
 	pixel_x = 30;
 	pixel_y = 0
@@ -18665,6 +19605,7 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
+/obj/item/decoration/garland/halloween,
 /turf/simulated/floor/plating,
 /area/security/evidence_storage)
 "TR" = (
@@ -18744,6 +19685,16 @@
 /obj/effect/landmark/start/iaa,
 /turf/simulated/floor/carpet/blue2,
 /area/lawoffice/moonbase/iaatwo)
+"Ua" = (
+/obj/machinery/camera/network/research/xenobio{
+	dir = 5;
+	network = list("Xenobiology")
+	},
+/obj/item/decoration/garland/halloween{
+	pixel_x = -32
+	},
+/turf/simulated/floor/tiled/eris/techmaint_cargo,
+/area/rnd/xenobiology)
 "Uc" = (
 /obj/effect/floor_decal/steeldecal/steel_decals5{
 	dir = 4
@@ -18759,6 +19710,7 @@
 /obj/machinery/door/airlock{
 	req_access = list(20)
 	},
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/floor/tiled/steel_ridged,
 /area/crew_quarters/captain/moonbase/bedroom)
 "Ue" = (
@@ -18795,6 +19747,7 @@
 	dir = 8
 	},
 /obj/structure/lattice,
+/obj/item/weapon/carved_pumpkin/candled,
 /turf/simulated/open,
 /area/medical/moonbase/traumaward)
 "Ui" = (
@@ -18849,6 +19802,9 @@
 	locked = 1;
 	req_access = list(39)
 	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 8
+	},
 /turf/simulated/floor/tiled/steel_ridged,
 /area/medical/virology)
 "Un" = (
@@ -18884,6 +19840,9 @@
 /obj/structure/table/glass,
 /obj/item/weapon/towel/random,
 /obj/item/weapon/towel/random,
+/obj/item/decoration/garland/halloween{
+	pixel_x = -32
+	},
 /turf/simulated/floor/tiled/white,
 /area/crew_quarters/captain/moonbase/bedroom)
 "Ur" = (
@@ -18932,7 +19891,7 @@
 /turf/simulated/floor/carpet/blue2,
 /area/medical/moonbase/upperlevel)
 "Uz" = (
-/obj/structure/flora/pottedplant/stoutbush,
+/obj/item/weapon/carved_pumpkin/candled,
 /obj/machinery/firealarm,
 /obj/machinery/atmospherics/unary/vent_pump/on{
 	dir = 4
@@ -19127,6 +20086,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 4
+	},
 /turf/simulated/floor/tiled/steel_ridged,
 /area/security/evidence_storage)
 "UZ" = (
@@ -19284,6 +20246,9 @@
 /obj/machinery/light{
 	dir = 1
 	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 4
+	},
 /turf/simulated/floor/tiled,
 /area/security/moonbase/legal)
 "Vs" = (
@@ -19411,6 +20376,9 @@
 /obj/machinery/light{
 	dir = 8
 	},
+/obj/item/decoration/garland/halloween{
+	pixel_x = -32
+	},
 /turf/simulated/floor/reinforced,
 /area/quartermaster/storage)
 "VJ" = (
@@ -19436,6 +20404,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/structure/disposalpipe/segment,
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/floor/tiled/steel_ridged,
 /area/crew_quarters/captain/moonbase/bedroom)
 "VL" = (
@@ -19502,6 +20471,7 @@
 "VT" = (
 /obj/structure/flora/ausbushes/ppflowers,
 /obj/structure/window/basic/full,
+/obj/item/weapon/carved_pumpkin/candled,
 /turf/simulated/floor/outdoors/grass/forest{
 	outdoors = 0
 	},
@@ -19518,6 +20488,19 @@
 /obj/structure/prop/machine/comm_tower/starts_on,
 /turf/simulated/floor/airless/outdoors,
 /area/moonbase/surface/leveltwo/west)
+"VW" = (
+/obj/machinery/door/firedoor/glass,
+/obj/structure/grille,
+/obj/structure/window/reinforced/full,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/item/decoration/garland/halloween,
+/turf/simulated/floor/plating,
+/area/maintenance/moonbase/level1/solars)
 "VX" = (
 /turf/simulated/floor/glass/reinforced/vacuum/outdoors,
 /area/moonbase/surface/leveltwo/west)
@@ -19553,6 +20536,10 @@
 /obj/machinery/atmospherics/pipe/simple/hidden,
 /turf/simulated/wall/r_wall,
 /area/engineering/engine_room)
+"Wc" = (
+/obj/item/weapon/carved_pumpkin,
+/turf/simulated/floor/plating,
+/area/crew_quarters/moonbase/abandonedoffice/solgov)
 "Wd" = (
 /obj/machinery/door/firedoor/glass,
 /obj/structure/grille,
@@ -19562,6 +20549,9 @@
 	},
 /obj/structure/window/reinforced{
 	dir = 4
+	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 8
 	},
 /turf/simulated/floor/plating,
 /area/security/tactical)
@@ -19573,6 +20563,7 @@
 	dir = 4;
 	pixel_x = -27
 	},
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/floor/tiled,
 /area/rnd/xenobiology)
 "Wf" = (
@@ -19703,6 +20694,9 @@
 /area/medical/medbay_primary_storage)
 "Wt" = (
 /obj/structure/prop/rock/small/water,
+/obj/item/decoration/garland/halloween{
+	pixel_y = 32
+	},
 /turf/simulated/floor/water/indoors,
 /area/bridge_hallway)
 "Wu" = (
@@ -19780,6 +20774,7 @@
 /obj/structure/window/reinforced/polarized/full{
 	id = "ceoffice"
 	},
+/obj/item/decoration/garland/halloween,
 /turf/simulated/floor/plating,
 /area/crew_quarters/heads/chief)
 "WA" = (
@@ -19800,6 +20795,9 @@
 	},
 /obj/machinery/camera/network/civilian{
 	dir = 1
+	},
+/obj/item/decoration/garland/halloween{
+	pixel_y = -32
 	},
 /turf/simulated/floor/tiled,
 /area/security/moonbase/legal)
@@ -19943,6 +20941,9 @@
 /obj/structure/cable/pink{
 	icon_state = "4-8"
 	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 8
+	},
 /turf/simulated/floor/tiled/dark,
 /area/security/main)
 "WO" = (
@@ -20046,6 +21047,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 9
 	},
+/obj/item/decoration/garland/halloween,
 /turf/simulated/floor/plating,
 /area/crew_quarters/bar)
 "Xb" = (
@@ -20078,6 +21080,7 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
+/obj/item/decoration/garland/halloween,
 /turf/simulated/floor/plating,
 /area/maintenance/moonbase/level1/solars)
 "Xi" = (
@@ -20168,9 +21171,8 @@
 "Xp" = (
 /obj/structure/flora/ausbushes/lavendergrass,
 /obj/structure/window/reinforced/full,
-/turf/simulated/floor/outdoors/grass/forest{
-	outdoors = 0
-	},
+/obj/item/decoration/garland/halloween,
+/turf/simulated/floor/outdoors/grass/sif/forest,
 /area/medical/medbay_primary_storage)
 "Xq" = (
 /obj/machinery/door/firedoor/glass,
@@ -20179,6 +21181,7 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 1
 	},
+/obj/item/decoration/garland/halloween,
 /turf/simulated/floor/plating,
 /area/crew_quarters/bar)
 "Xr" = (
@@ -20193,6 +21196,9 @@
 /area/security/detectives_office)
 "Xv" = (
 /obj/item/weapon/carved_pumpkin/candled,
+/obj/item/decoration/garland/halloween{
+	pixel_y = -32
+	},
 /turf/simulated/floor/wood,
 /area/crew_quarters/captain/moonbase/office)
 "Xw" = (
@@ -20273,10 +21279,8 @@
 "XJ" = (
 /obj/structure/window/reinforced/full,
 /obj/structure/flora/ausbushes/ywflowers,
-/turf/simulated/floor/outdoors/grass/forest{
-	outdoors = 0;
-	edge_blending_priority = 0
-	},
+/obj/item/decoration/garland/halloween,
+/turf/simulated/floor/outdoors/grass/sif/forest,
 /area/medical/moonbase/traumaward)
 "XL" = (
 /turf/simulated/mineral/floor/vacuum/moonbase/outdoors,
@@ -20312,9 +21316,8 @@
 "XQ" = (
 /obj/structure/flora/ausbushes/fullgrass,
 /obj/structure/window/reinforced/full,
-/turf/simulated/floor/outdoors/grass/forest{
-	outdoors = 0
-	},
+/obj/item/weapon/carved_pumpkin/candled,
+/turf/simulated/floor/outdoors/grass/sif/forest,
 /area/rnd/workshop)
 "XU" = (
 /obj/machinery/power/smes/buildable/point_of_interest,
@@ -20421,6 +21424,7 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
+/obj/item/weapon/carved_pumpkin/candled,
 /turf/simulated/floor/plating,
 /area/crew_quarters/moonbase/pilotroom)
 "Yl" = (
@@ -20440,6 +21444,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/structure/disposalpipe/segment,
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/floor/tiled/steel_ridged,
 /area/bridge_hallway)
 "Yo" = (
@@ -20503,6 +21508,15 @@
 "Yx" = (
 /turf/simulated/wall/r_wall,
 /area/medical/ward)
+"Yy" = (
+/obj/machinery/door/blast/regular{
+	dir = 4;
+	name = "External Vent";
+	id = "xenopen2vent"
+	},
+/obj/item/decoration/tinsel/halloween,
+/turf/simulated/floor/reinforced,
+/area/rnd/xenobiology)
 "Yz" = (
 /obj/structure/cable{
 	icon_state = "4-8"
@@ -20519,6 +21533,12 @@
 	},
 /turf/simulated/floor/plating/eris,
 /area/bridge_hallway)
+"YC" = (
+/obj/item/decoration/garland/halloween{
+	pixel_x = -32
+	},
+/turf/simulated/floor/water/pool,
+/area/crew_quarters/captain/moonbase/bedroom)
 "YD" = (
 /obj/structure/cable{
 	icon_state = "1-2"
@@ -20624,6 +21644,7 @@
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/floor/tiled/steel_ridged,
 /area/bridge_hallway)
 "YR" = (
@@ -20640,8 +21661,22 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
+/obj/item/weapon/carved_pumpkin/candled,
+/obj/item/decoration/tinsel/halloween{
+	dir = 4
+	},
 /turf/simulated/floor/plating,
 /area/hallway/moonbase/northhall)
+"YT" = (
+/obj/machinery/door/firedoor/glass,
+/obj/structure/grille,
+/obj/structure/window/reinforced/polarized/full{
+	id = "hos"
+	},
+/obj/item/decoration/tinsel/halloween,
+/obj/item/weapon/carved_pumpkin/candled,
+/turf/simulated/floor/plating,
+/area/crew_quarters/heads/hos)
 "YU" = (
 /turf/simulated/wall/r_wall,
 /area/rnd/rdoffice)
@@ -20694,7 +21729,7 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/obj/structure/flora/pottedplant/orientaltree,
+/obj/item/weapon/carved_pumpkin/candled,
 /turf/simulated/floor/carpet/blue,
 /area/medical/psych)
 "Zd" = (
@@ -20845,6 +21880,18 @@
 /obj/item/decoration/garland/halloween,
 /turf/simulated/floor/plating,
 /area/security/checkpoint2)
+"Zq" = (
+/obj/effect/floor_decal/milspec/color/blue/half{
+	dir = 8
+	},
+/obj/machinery/light{
+	dir = 8
+	},
+/obj/item/decoration/garland/halloween{
+	pixel_x = -32
+	},
+/turf/simulated/floor/tiled,
+/area/crew_quarters/courtroom)
 "Zr" = (
 /obj/machinery/access_button{
 	command = "cycle_exterior";
@@ -20932,7 +21979,7 @@
 /turf/simulated/floor/wood,
 /area/bridge/meeting_room)
 "ZD" = (
-/obj/structure/flora/pottedplant/orientaltree,
+/obj/item/weapon/carved_pumpkin/candled,
 /turf/simulated/floor/carpet/blue2,
 /area/crew_quarters/captain/moonbase/bedroom)
 "ZF" = (
@@ -21010,10 +22057,14 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
+/obj/item/decoration/garland/halloween,
 /turf/simulated/floor/plating,
 /area/crew_quarters/heads/hos)
 "ZP" = (
 /obj/machinery/light,
+/obj/item/decoration/garland/halloween{
+	pixel_y = -32
+	},
 /turf/simulated/floor/tiled/eris/techmaint_cargo,
 /area/rnd/xenobiology)
 "ZQ" = (
@@ -22843,6 +23894,7 @@ sj
 sj
 sj
 sj
+ti
 BA
 BA
 BA
@@ -22856,8 +23908,7 @@ BA
 BA
 BA
 BA
-BA
-BA
+ti
 aE
 aE
 aE
@@ -24547,16 +25598,16 @@ sj
 sj
 sj
 sj
-BA
+ti
 xi
 oB
 EI
 EI
-GX
-GX
+qX
+Aa
 iV
-GX
-GX
+Aa
+qX
 EI
 EI
 co
@@ -24703,7 +25754,7 @@ Tp
 EI
 co
 co
-BA
+ti
 aE
 aE
 Mj
@@ -24997,7 +26048,7 @@ aE
 Wz
 Wz
 Wz
-Wz
+CG
 Wz
 Wz
 Wz
@@ -25084,7 +26135,7 @@ bm
 bm
 pA
 zd
-zd
+VW
 zd
 pA
 bm
@@ -25224,11 +26275,11 @@ bm
 bm
 bm
 bm
-Xg
+Ok
 zI
 Wq
 Zs
-Xg
+Ok
 bm
 bm
 bm
@@ -25294,7 +26345,7 @@ no
 Mo
 CS
 rq
-on
+Wc
 on
 LV
 Mj
@@ -25420,7 +26471,7 @@ Mj
 aE
 aE
 aE
-Wz
+CG
 NL
 Fz
 Fz
@@ -25650,11 +26701,11 @@ bm
 bm
 bm
 bm
-Xg
+Ok
 Pa
 MO
 hR
-Xg
+Ok
 bm
 bm
 bm
@@ -26076,11 +27127,11 @@ bm
 bm
 bm
 bm
-Xg
+Ok
 kb
 ZZ
 BZ
-Xg
+Ok
 bm
 bm
 bm
@@ -26134,7 +27185,7 @@ yI
 aF
 re
 vQ
-Ya
+Zq
 IE
 IE
 Ya
@@ -26148,7 +27199,7 @@ md
 MR
 Fi
 IZ
-Ft
+Mc
 Mj
 aE
 aE
@@ -26220,7 +27271,7 @@ bm
 bm
 pA
 zd
-zd
+VW
 zd
 pA
 bm
@@ -26272,7 +27323,7 @@ Mj
 dD
 fy
 kS
-Dd
+sw
 Dd
 pO
 vs
@@ -26290,7 +27341,7 @@ mO
 rp
 yB
 Ck
-Ft
+Mc
 Mj
 aE
 aE
@@ -26432,7 +27483,7 @@ Cm
 au
 mf
 Fi
-Ft
+Mc
 Mj
 aE
 aE
@@ -26840,7 +27891,7 @@ aE
 dD
 iP
 wx
-RW
+hj
 RW
 Uu
 Xf
@@ -26986,7 +28037,7 @@ Fr
 SI
 mu
 gm
-SO
+Cw
 Gf
 Gf
 SO
@@ -27000,7 +28051,7 @@ Dx
 EZ
 Gy
 Fn
-bn
+aW
 Mj
 aE
 aE
@@ -27107,7 +28158,7 @@ ld
 jA
 qj
 em
-nY
+Ua
 Ed
 Tl
 Za
@@ -27142,7 +28193,7 @@ Yf
 TH
 iQ
 hX
-bn
+aW
 Mj
 aE
 aE
@@ -27284,7 +28335,7 @@ uh
 fI
 TZ
 Gy
-bn
+aW
 Mj
 Mj
 Mj
@@ -27518,7 +28569,7 @@ bm
 cU
 aS
 US
-ck
+Yy
 nY
 DS
 Ed
@@ -27528,7 +28579,7 @@ mQ
 XW
 qj
 Bx
-ld
+hw
 al
 pU
 qj
@@ -27660,7 +28711,7 @@ bm
 cU
 aS
 US
-ck
+Yy
 Ed
 Ed
 Ed
@@ -27802,7 +28853,7 @@ bm
 cU
 aS
 US
-ck
+Yy
 Ed
 dE
 Ed
@@ -27810,16 +28861,16 @@ Bf
 XN
 CJ
 Lk
-Lk
+OD
 Lk
 pi
 Qf
 Lk
-Lk
+OD
 Lk
 Yt
 Lk
-Lk
+OD
 Lk
 xT
 cN
@@ -27944,7 +28995,7 @@ bm
 cU
 aS
 US
-ck
+Yy
 Ed
 Ed
 Za
@@ -28266,7 +29317,7 @@ GW
 Rk
 IS
 Sk
-Dq
+jz
 Xy
 NT
 hp
@@ -28538,7 +29589,7 @@ qj
 VX
 VX
 VX
-OY
+oT
 Jp
 am
 VL
@@ -28814,7 +29865,7 @@ UG
 UG
 UG
 UG
-UG
+oz
 UG
 UG
 UG
@@ -28920,9 +29971,9 @@ QA
 QA
 QA
 ky
+Cz
 ky
-ky
-ky
+Cz
 ky
 QA
 QA
@@ -28977,7 +30028,7 @@ MV
 ME
 EY
 Yj
-hV
+oV
 nh
 Pq
 rc
@@ -29261,7 +30312,7 @@ sN
 sN
 or
 Rj
-Mp
+Gm
 JR
 Mp
 tq
@@ -29522,7 +30573,7 @@ Cc
 gM
 sf
 sf
-zU
+yK
 Df
 sY
 Tf
@@ -29545,7 +30596,7 @@ FW
 FW
 FW
 jV
-sg
+YT
 NN
 TX
 kd
@@ -29687,7 +30738,7 @@ En
 KO
 XY
 QW
-sg
+gJ
 Te
 OK
 Lt
@@ -29829,7 +30880,7 @@ En
 IK
 XY
 FW
-sg
+YT
 Dm
 UW
 jj
@@ -29944,20 +30995,20 @@ XQ
 Ts
 hP
 Jr
-Cc
+fE
 DV
 SQ
 SQ
 BG
-Df
+AA
 ek
 qk
 vM
 ID
 YU
-gG
-gG
-gG
+BP
+ny
+BP
 LI
 kP
 Ug
@@ -29967,7 +31018,7 @@ Kb
 LI
 gd
 QV
-gd
+uL
 af
 CE
 gd
@@ -30055,7 +31106,7 @@ Ov
 Ov
 Ov
 wP
-lr
+Lb
 Gj
 Gj
 Gj
@@ -30096,7 +31147,7 @@ IF
 Hp
 Wr
 oK
-Df
+AA
 Yd
 Ym
 Yv
@@ -30129,7 +31180,7 @@ gT
 JO
 Rm
 lJ
-ym
+nS
 bF
 bF
 Ro
@@ -30380,7 +31431,7 @@ Yg
 rd
 aH
 fA
-Df
+AA
 qe
 qe
 qe
@@ -30548,7 +31599,7 @@ ZN
 jg
 LA
 Wd
-Wd
+ep
 Wd
 LA
 gT
@@ -30693,7 +31744,7 @@ do
 do
 do
 do
-ym
+kt
 YV
 YV
 PO
@@ -30753,7 +31804,7 @@ bm
 bm
 bm
 QA
-Xq
+FC
 ZH
 GG
 Yi
@@ -30835,7 +31886,7 @@ do
 do
 do
 do
-ym
+kt
 xW
 Ot
 PO
@@ -30923,7 +31974,7 @@ Ov
 Yi
 Ov
 fj
-fL
+gw
 QA
 US
 Mx
@@ -30977,11 +32028,11 @@ do
 do
 do
 do
-ym
+kf
 Ca
 jX
 PO
-ym
+nS
 bF
 bF
 Ro
@@ -31037,7 +32088,7 @@ bm
 bm
 bm
 QA
-Xq
+FC
 ZH
 wk
 Yi
@@ -31119,7 +32170,7 @@ do
 do
 do
 do
-ym
+kt
 eD
 IP
 PO
@@ -31261,7 +32312,7 @@ do
 do
 do
 do
-ym
+kt
 ys
 Zh
 PO
@@ -31353,7 +32404,7 @@ QA
 QA
 US
 JM
-Zf
+ex
 JM
 Yx
 KF
@@ -31365,7 +32416,7 @@ xy
 dC
 dC
 dC
-dC
+xC
 xy
 mM
 vt
@@ -31397,10 +32448,10 @@ PT
 CI
 kC
 kC
-Ui
-sx
-To
-To
+Dg
+gs
+mD
+mD
 kC
 kC
 kC
@@ -31508,7 +32559,7 @@ Zc
 Qd
 hQ
 kj
-dC
+xC
 eR
 vv
 zD
@@ -31516,7 +32567,7 @@ GJ
 rT
 sT
 Bd
-yD
+dw
 sQ
 sQ
 sQ
@@ -31530,7 +32581,7 @@ tM
 tM
 Lx
 Em
-Cz
+vx
 CI
 MH
 Ey
@@ -31538,7 +32589,7 @@ YX
 in
 CI
 ry
-bk
+fs
 gr
 bk
 OS
@@ -31549,7 +32600,7 @@ mS
 sH
 bk
 qA
-YK
+eM
 bF
 bF
 Ro
@@ -31682,16 +32733,16 @@ zt
 el
 el
 wd
-el
+Hv
 el
 el
 el
 YD
-el
+Hv
 nG
 el
 jQ
-YK
+eM
 bF
 bF
 Ro
@@ -31800,7 +32851,7 @@ op
 dt
 GA
 Oz
-yD
+dw
 Yd
 Ym
 Yv
@@ -31822,16 +32873,16 @@ fd
 AP
 AP
 kC
-hr
+Am
 kC
 kC
 kC
-hr
+Am
 kC
 kC
 kC
 kC
-hr
+Am
 kC
 kC
 bF
@@ -31944,7 +32995,7 @@ IA
 rZ
 zD
 gG
-gG
+FR
 gG
 cf
 TI
@@ -32231,7 +33282,7 @@ aX
 aX
 aX
 cF
-vb
+YC
 vb
 Sr
 Uq
@@ -32392,7 +33443,7 @@ AP
 wn
 EV
 ey
-hr
+mp
 Sv
 Sv
 Sv
@@ -32515,7 +33566,7 @@ qo
 aX
 aX
 cF
-vb
+dL
 vb
 Sr
 MJ
@@ -32802,7 +33853,7 @@ qw
 cF
 up
 ct
-MJ
+Ig
 cF
 cF
 cF
@@ -32813,7 +33864,7 @@ cF
 QO
 QO
 QO
-QO
+Qu
 AP
 OQ
 Ce
@@ -32896,9 +33947,9 @@ QA
 QA
 QA
 ky
+qg
 ky
-ky
-ky
+qg
 ky
 QA
 QA
@@ -33919,7 +34970,7 @@ cV
 KN
 to
 AV
-bP
+RX
 Zm
 iz
 zm
@@ -33947,7 +34998,7 @@ qw
 Qs
 hz
 hz
-hz
+Gr
 Qs
 Qs
 Qs
@@ -34061,7 +35112,7 @@ NV
 dN
 bW
 AV
-bP
+RX
 ar
 EQ
 Sq
@@ -34093,10 +35144,10 @@ YE
 zb
 Kj
 Ie
+Sa
 Eq
 Eq
-Eq
-Eq
+Sa
 Eq
 Eq
 VI
@@ -34370,7 +35421,7 @@ qw
 qw
 qw
 qw
-TD
+Qn
 ef
 ef
 cr
@@ -35364,7 +36415,7 @@ qw
 qw
 qw
 qw
-TD
+Qn
 ef
 ef
 cr
@@ -35655,10 +36706,10 @@ YE
 El
 HV
 su
+fW
 Eq
 Eq
-Eq
-Eq
+fW
 Eq
 Eq
 uk
@@ -35793,7 +36844,7 @@ qw
 Qs
 hz
 hz
-hz
+Gr
 Qs
 Qs
 Qs
@@ -37291,7 +38342,7 @@ Kd
 Kd
 Kd
 Kd
-Yk
+gh
 cC
 iA
 jt
@@ -37433,7 +38484,7 @@ Kd
 Kd
 Kd
 Kd
-Yk
+gh
 oe
 AU
 AU
@@ -37575,7 +38626,7 @@ Kd
 Kd
 Kd
 Kd
-Yk
+gh
 oJ
 AU
 dm
@@ -37859,7 +38910,7 @@ Kd
 Kd
 Kd
 Kd
-Yk
+gh
 fV
 AU
 pX
@@ -38001,7 +39052,7 @@ Kd
 Kd
 Kd
 Kd
-Yk
+gh
 vF
 AU
 AU
@@ -38143,7 +39194,7 @@ Kd
 Kd
 Kd
 Kd
-Yk
+gh
 gF
 kK
 Un
@@ -38158,7 +39209,7 @@ BL
 PM
 PM
 nE
-Hx
+TE
 dX
 Dw
 Dw
@@ -39010,7 +40061,7 @@ Sb
 nf
 nf
 MZ
-Hx
+TE
 dX
 Dw
 Dw
