@@ -106,8 +106,8 @@
 		if(thing.incorporeal_move)
 			continue
 		if(spont_pref_check(holder,thing,SPONT_PRED))
-			thing.forceMove(holder.vore_selected)
 			to_chat(thing,SPAN_OCCULT("\The [holder] phases in around you, [holder.vore_selected.vore_verb]ing you into their [holder.vore_selected.name]!"))
+			thing.forceMove(holder.vore_selected)
 
 /datum/modifier/ghostwalk/proc/consider_turf(var/turf/T)
 	if(!T)
