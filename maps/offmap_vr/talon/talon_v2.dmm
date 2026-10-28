@@ -7986,6 +7986,14 @@
 	},
 /turf/simulated/floor/plating,
 /area/talon_v2/engineering/port_store)
+"zp" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/item/decoration/garland/halloween{
+	pixel_x = -32
+	},
+/turf/simulated/floor/tiled/techmaint,
+/area/talon_v2/central_hallway)
 "zq" = (
 /obj/machinery/airlock_sensor{
 	dir = 8;
@@ -9236,6 +9244,16 @@
 	},
 /turf/simulated/floor/plating,
 /area/talon_v2/crew_quarters/mine_room)
+"Ed" = (
+/obj/structure/disposalpipe/segment,
+/obj/structure/cable/green{
+	icon_state = "1-2"
+	},
+/obj/item/decoration/garland/halloween{
+	pixel_x = 32
+	},
+/turf/simulated/floor/tiled/techmaint,
+/area/talon_v2/central_hallway)
 "Ee" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 10
@@ -14629,6 +14647,9 @@
 "Ur" = (
 /obj/structure/sign/department/bridge{
 	name = "PILOT'S QUARTERS";
+	pixel_y = -32
+	},
+/obj/item/decoration/garland/halloween{
 	pixel_y = -32
 	},
 /turf/simulated/floor/tiled/techfloor,
@@ -25324,14 +25345,14 @@ wv
 QS
 xf
 PP
-QS
+zp
 RB
 NE
 nn
 KI
 Ns
 Gl
-XY
+Vn
 Vn
 XY
 CA
@@ -27312,14 +27333,14 @@ wx
 oS
 to
 CO
-CO
+Ed
 tx
 LD
 HT
 FT
 Od
 Wt
-FT
+id
 pw
 id
 HK
