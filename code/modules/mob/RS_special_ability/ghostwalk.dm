@@ -5,9 +5,11 @@
 	set desc = "Walk like ghost!"
 	set category = "Abilities"
 
+	if(stat || restrained()|| stunned || weakened || sleeping || buckled)
+		to_chat(src, SPAN_DANGER("You can't do that right now."))
+		return
 	if(isbelly(loc))
 		return
-
 	var/datum/modifier/ghostwalk/mod = get_modifier_of_type(/datum/modifier/ghostwalk)
 	if(mod)
 		mod.expire()
@@ -145,3 +147,17 @@
 	if(incorporeal_move == 3)
 		return TRUE
 	return FALSE
+
+/obj/item/ghostwalk_orb
+	name = "mysterious orb"
+	desc = "Spooky!"
+	icon = 'icons/rogue-star/misc.dmi'
+	icon_state = "orb"
+
+/obj/item/ghostwalk_orb/attack_self(mob/user)
+	. = ..()
+	user.verbs.Add(/mob/living/proc/ghostwalk)
+	to_chat(user, SPAN_OCCULT("\The [src] sinks into your body and becomes one with you... You feel like you have gained a new ability."))
+	log_admin("[user] added ghost walk via [type]")
+	user.drop_from_inventory(src)
+	qdel(src)
