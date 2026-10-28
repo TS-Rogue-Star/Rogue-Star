@@ -26,7 +26,7 @@
 "af" = (
 /obj/structure/flora/ausbushes/fullgrass,
 /obj/structure/window/reinforced/full,
-/turf/simulated/floor/outdoors/grass/sif/forest,
+/turf/simulated/floor/outdoors/grass/sif/forest/halloween,
 /area/security/main)
 "ag" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -868,7 +868,7 @@
 /area/crew_quarters/moonbase/abandonedoffice)
 "cm" = (
 /obj/structure/flora/ausbushes/ppflowers,
-/turf/simulated/floor/outdoors/grass/sif/forest,
+/turf/simulated/floor/outdoors/grass/sif/forest/halloween,
 /area/hallway/arrival/moonbase/main)
 "cn" = (
 /obj/structure/table/fancyblack,
@@ -1210,7 +1210,7 @@
 /obj/structure/window/reinforced/full,
 /obj/structure/flora/ausbushes/pointybush,
 /obj/item/decoration/garland/halloween,
-/turf/simulated/floor/outdoors/grass/sif/forest,
+/turf/simulated/floor/outdoors/grass/sif/forest/halloween,
 /area/medical/moonbase/traumaward)
 "dg" = (
 /obj/structure/disposalpipe/trunk{
@@ -2233,7 +2233,7 @@
 "fC" = (
 /obj/structure/flora/ausbushes/brflowers,
 /obj/structure/window/reinforced/full,
-/turf/simulated/floor/outdoors/grass/sif/forest,
+/turf/simulated/floor/outdoors/grass/sif/forest/halloween,
 /area/rnd/workshop)
 "fD" = (
 /obj/structure/toilet{
@@ -2437,7 +2437,7 @@
 /obj/structure/flora/ausbushes/lavendergrass,
 /obj/structure/window/reinforced/full,
 /obj/item/weapon/carved_pumpkin/candled,
-/turf/simulated/floor/outdoors/grass/sif/forest,
+/turf/simulated/floor/outdoors/grass/sif/forest/halloween,
 /area/security/main)
 "ge" = (
 /obj/structure/cable/cyan{
@@ -2496,7 +2496,7 @@
 "gk" = (
 /obj/structure/flora/ausbushes/ppflowers,
 /obj/structure/window/reinforced/full,
-/turf/simulated/floor/outdoors/grass/sif/forest,
+/turf/simulated/floor/outdoors/grass/sif/forest/halloween,
 /area/rnd/workshop)
 "gm" = (
 /obj/effect/floor_decal/milspec/color/blue,
@@ -3937,7 +3937,7 @@
 	dir = 4
 	},
 /obj/item/weapon/carved_pumpkin/candled,
-/turf/simulated/floor/outdoors/grass/sif/forest,
+/turf/simulated/floor/outdoors/grass/sif/forest/halloween,
 /area/medical/psych)
 "jl" = (
 /turf/simulated/wall/fancy_shuttle/window{
@@ -9017,7 +9017,7 @@
 "uL" = (
 /obj/structure/flora/ausbushes/lavendergrass,
 /obj/structure/window/reinforced/full,
-/turf/simulated/floor/outdoors/grass/sif/forest,
+/turf/simulated/floor/outdoors/grass/sif/forest/halloween,
 /area/security/main)
 "uM" = (
 /turf/simulated/floor/tiled,
@@ -9878,7 +9878,7 @@
 /obj/item/decoration/tinsel/halloween{
 	dir = 4
 	},
-/turf/simulated/floor/outdoors/grass/sif/forest,
+/turf/simulated/floor/outdoors/grass/sif/forest/halloween,
 /area/medical/psych)
 "wO" = (
 /obj/structure/cable/cyan{
@@ -10273,7 +10273,7 @@
 /obj/structure/flora/ausbushes/lavendergrass,
 /obj/structure/window/reinforced/full,
 /obj/item/decoration/garland/halloween,
-/turf/simulated/floor/outdoors/grass/sif/forest,
+/turf/simulated/floor/outdoors/grass/sif/forest/halloween,
 /area/medical/moonbase/traumaward)
 "xK" = (
 /obj/structure/railing{
@@ -10358,7 +10358,7 @@
 /obj/structure/window/reinforced/full,
 /obj/structure/flora/ausbushes/ywflowers,
 /obj/item/decoration/garland/halloween,
-/turf/simulated/floor/outdoors/grass/sif/forest,
+/turf/simulated/floor/outdoors/grass/sif/forest/halloween,
 /area/medical/medbay_primary_storage)
 "xW" = (
 /obj/item/weapon/carved_pumpkin/candled,
@@ -12257,7 +12257,7 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/turf/simulated/floor/outdoors/grass/sif/forest,
+/turf/simulated/floor/outdoors/grass/sif/forest/halloween,
 /area/security/main)
 "CF" = (
 /obj/effect/floor_decal/milspec/color/emerald/half{
@@ -14523,7 +14523,7 @@
 	dir = 4
 	},
 /obj/item/weapon/carved_pumpkin/candled,
-/turf/simulated/floor/outdoors/grass/sif/forest,
+/turf/simulated/floor/outdoors/grass/sif/forest/halloween,
 /area/medical/psych)
 "Ib" = (
 /obj/structure/window/reinforced,
@@ -15152,7 +15152,7 @@
 "JJ" = (
 /obj/structure/window/reinforced/full,
 /obj/item/weapon/carved_pumpkin/candled,
-/turf/simulated/floor/outdoors/grass/sif/forest,
+/turf/simulated/floor/outdoors/grass/sif/forest/halloween,
 /area/medical/medbay_primary_storage)
 "JK" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -17146,7 +17146,7 @@
 "Oe" = (
 /obj/structure/flora/ausbushes/genericbush,
 /obj/item/weapon/carved_pumpkin/candled,
-/turf/simulated/floor/outdoors/grass/sif/forest,
+/turf/simulated/floor/outdoors/grass/sif/forest/halloween,
 /area/hallway/arrival/moonbase/main)
 "Of" = (
 /obj/machinery/light{
@@ -17582,7 +17582,7 @@
 /obj/structure/window/reinforced/full,
 /obj/structure/flora/ausbushes/brflowers,
 /obj/item/decoration/garland/halloween,
-/turf/simulated/floor/outdoors/grass/sif/forest,
+/turf/simulated/floor/outdoors/grass/sif/forest/halloween,
 /area/medical/medbay_primary_storage)
 "Ph" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
@@ -18145,7 +18145,7 @@
 /obj/structure/window/reinforced/full,
 /obj/structure/flora/ausbushes/sparsegrass,
 /obj/item/decoration/garland/halloween,
-/turf/simulated/floor/outdoors/grass/sif/forest,
+/turf/simulated/floor/outdoors/grass/sif/forest/halloween,
 /area/medical/medbay_primary_storage)
 "Qr" = (
 /obj/machinery/door/firedoor/glass,
@@ -18234,7 +18234,7 @@
 /obj/structure/window/reinforced/full,
 /obj/structure/flora/ausbushes/ppflowers,
 /obj/item/decoration/garland/halloween,
-/turf/simulated/floor/outdoors/grass/sif/forest,
+/turf/simulated/floor/outdoors/grass/sif/forest/halloween,
 /area/medical/medbay_primary_storage)
 "QA" = (
 /turf/simulated/floor/glass/reinforced/vacuum/outdoors,
@@ -18262,7 +18262,7 @@
 "QF" = (
 /obj/structure/flora/ausbushes/ppflowers,
 /obj/item/weapon/carved_pumpkin/candled,
-/turf/simulated/floor/outdoors/grass/sif/forest,
+/turf/simulated/floor/outdoors/grass/sif/forest/halloween,
 /area/hallway/arrival/moonbase/main)
 "QG" = (
 /obj/machinery/light,
@@ -18355,7 +18355,7 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/turf/simulated/floor/outdoors/grass/sif/forest,
+/turf/simulated/floor/outdoors/grass/sif/forest/halloween,
 /area/security/main)
 "QW" = (
 /obj/machinery/newscaster{
@@ -18947,7 +18947,7 @@
 /obj/structure/window/reinforced/full,
 /obj/structure/flora/ausbushes/pointybush,
 /obj/item/decoration/garland/halloween,
-/turf/simulated/floor/outdoors/grass/sif/forest,
+/turf/simulated/floor/outdoors/grass/sif/forest/halloween,
 /area/medical/medbay_primary_storage)
 "Sk" = (
 /obj/effect/floor_decal/milspec/color/red/half{
@@ -20281,7 +20281,7 @@
 /area/medical/moonbase/upperlevel)
 "Vu" = (
 /obj/structure/flora/ausbushes/lavendergrass,
-/turf/simulated/floor/outdoors/grass/sif/forest,
+/turf/simulated/floor/outdoors/grass/sif/forest/halloween,
 /area/hallway/arrival/moonbase/main)
 "Vv" = (
 /obj/machinery/door/firedoor/glass/hidden/shuttle,
@@ -21172,7 +21172,7 @@
 /obj/structure/flora/ausbushes/lavendergrass,
 /obj/structure/window/reinforced/full,
 /obj/item/decoration/garland/halloween,
-/turf/simulated/floor/outdoors/grass/sif/forest,
+/turf/simulated/floor/outdoors/grass/sif/forest/halloween,
 /area/medical/medbay_primary_storage)
 "Xq" = (
 /obj/machinery/door/firedoor/glass,
@@ -21280,7 +21280,7 @@
 /obj/structure/window/reinforced/full,
 /obj/structure/flora/ausbushes/ywflowers,
 /obj/item/decoration/garland/halloween,
-/turf/simulated/floor/outdoors/grass/sif/forest,
+/turf/simulated/floor/outdoors/grass/sif/forest/halloween,
 /area/medical/moonbase/traumaward)
 "XL" = (
 /turf/simulated/mineral/floor/vacuum/moonbase/outdoors,
@@ -21317,7 +21317,7 @@
 /obj/structure/flora/ausbushes/fullgrass,
 /obj/structure/window/reinforced/full,
 /obj/item/weapon/carved_pumpkin/candled,
-/turf/simulated/floor/outdoors/grass/sif/forest,
+/turf/simulated/floor/outdoors/grass/sif/forest/halloween,
 /area/rnd/workshop)
 "XU" = (
 /obj/machinery/power/smes/buildable/point_of_interest,
