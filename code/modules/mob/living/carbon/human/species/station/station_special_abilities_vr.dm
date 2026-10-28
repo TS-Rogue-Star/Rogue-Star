@@ -1400,10 +1400,11 @@
 //It involves projectiles (which means it can be VV'd onto a gun for shenanigans)
 //It can also be recolored via the proc, which persists between rounds.
 
-/mob/living/proc/long_vore() // Allows the user to tongue grab a creature in range. Made a /living proc so frogs can frog you.
-	set name = "Grab Prey With Appendage"
+//RS REFACTOR. ORIGINAL PROC NAMED long_vore().
+/mob/living/proc/configue_long_vore() // Allows the user to tongue grab a creature in range. Made a /living proc so frogs can frog you.
+	set name = "Configure Appendage"//RS EDIT
 	set category = "Abilities"
-	set desc = "Grab a target with any of your appendages!"
+	set desc = "Configure or use your appendages."//RS EDIT
 
 	if(stat || paralysis || weakened || stunned) //No tongue flicking while stunned.
 		to_chat(src, "<span class='warning'>You can't do that in your current state.</span>")
@@ -1417,10 +1418,10 @@
 				B = M
 				dunnit = TRUE
 		if(!dunnit)
-			to_chat(src, "<span class='warning'>You can't do that in your current state.</span>")
+			to_chat(src, "<span class='warning'>You can't do that in your current state, or your appendage is resting!</span>")
 			return	//RS ADD END
 
-	last_special = world.time + 10 //Anti-spam.
+	last_special = world.time + 3 //Anti-spam. //RS EDIT 10 -> 3 Fuck you 10 seconds is CRAZY
 
 	if (!istype(src, /mob/living))
 		to_chat(src, "<span class='warning'>It doesn't work that way.</span>")
@@ -1476,6 +1477,79 @@
 		last_special = world.time + 100 //Cooldown for successful strike.
 		if(B)	//RS ADD
 			B.expire()	//RS ADD
+
+//RS ADD START
+/mob/living/proc/long_vore()
+	set name = "Quickuse Appendage"//RS EDIT
+	set category = "Abilities"
+	set desc = "Use your Appendage on the nearest valid target!"//RS EDIT
+
+	if(stat || paralysis || weakened || stunned) //No tongue flicking while stunned.
+		to_chat(src, "<span class='warning'>You can't do that in your current state.</span>")
+		return
+
+	var/datum/modifier/blend_in/B	//RS ADD START - Allow long vore trait to be used with chameleon blend in trait!
+	if(world.time < last_special)
+		var/dunnit = FALSE
+		for(var/datum/modifier/M in modifiers)
+			if(M.type == /datum/modifier/blend_in)
+				B = M
+				dunnit = TRUE
+		if(!dunnit)
+			to_chat(src, "<span class='warning'>You can't do that in your current state, or your appendage is resting!</span>")
+			return	//RS ADD END
+
+	last_special = world.time + 3 //Anti-spam. //RS EDIT 10 -> 3 Fuck you 10 seconds is CRAZY
+
+	if (!istype(src, /mob/living))
+		to_chat(src, "<span class='warning'>It doesn't work that way.</span>")
+		return
+	var/list/targets = list() //IF IT IS NOT BROKEN. DO NOT FIX IT.
+
+	for(var/mob/living/L in range(5, src))
+		if(!istype(L, /mob/living)) //Don't eat anything that isn't mob/living. Failsafe.
+			continue
+		if(L == src) //no eating yourself. 1984.
+			continue
+		if(spont_pref_check(src,L,THROW_VORE) || spont_pref_check(L,src,THROW_VORE))	//RS EDIT
+			targets += L
+
+	if(!(targets.len))
+		to_chat(src, "<span class='notice'>No eligible targets found.</span>")
+		return
+
+	var/mob/living/counter = 1
+	var/mob/living/target = targets[counter]
+
+	if(!target)
+		return
+
+	while(target)
+		target = targets[counter]
+		if(!target)
+			to_chat(src, "<span class='notice'>No eligible targets found.</span>")
+			return
+
+		if(!istype(target, /mob/living)) //Safety.
+			counter += 1
+			continue
+
+		if (get_dist(src,target) >= 6)
+			counter += 1
+			continue
+		break
+
+	visible_message("<span class='notice'>\The [src] attempts to snatch up [target]!</span>", \
+					"<span class='notice'>You attempt to snatch up [target]!</span>" )
+	playsound(src, 'sound/vore/sunesound/pred/schlorp.ogg', 25)
+
+	//Code to shoot the beam here.
+	var/obj/item/projectile/beam/appendage/appendage_attack = new /obj/item/projectile/beam/appendage(get_turf(loc))
+	appendage_attack.launch_projectile(target, BP_TORSO, src) //Send it.
+	last_special = world.time + 100 //Cooldown for successful strike.
+	if(B)	//RS ADD
+		B.expire()	//RS ADD
+//RS ADD END
 
 /obj/item/projectile/beam/appendage //The tongue projecitle.
 	name = "appendage"

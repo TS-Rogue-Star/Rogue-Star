@@ -162,6 +162,7 @@
 /datum/trait/neutral/long_vore/apply(var/datum/species/S,var/mob/living/carbon/human/H)
 	..()
 	H.verbs |= /mob/living/proc/long_vore
+	H.verbs |= /mob/living/proc/configue_long_vore //RS ADD
 /* - RS removal: made these default verbs
 /datum/trait/neutral/feeder
 	name = "Feeder"
