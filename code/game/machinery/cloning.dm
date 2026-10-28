@@ -220,11 +220,10 @@
 			return PROCESS_KILL
 
 	else if((!occupant) || (occupant.loc != src))
-		if(occupant)
-			connected?.wake_processing()
 		occupant = null
 		if(locked)
 			locked = 0
+		connected?.wake_processing()
 		return PROCESS_KILL
 
 	return

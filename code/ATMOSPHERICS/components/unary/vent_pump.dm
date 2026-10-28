@@ -439,6 +439,10 @@
 	..()
 	if(old_stat != stat)
 		update_icon()
+		// RS Add Start: Airlock and Fire Safety Processing (Lira, October 2026)
+		if(!(stat & (NOPOWER|BROKEN)))
+			broadcast_status()
+		// RS Add End
 
 /obj/machinery/atmospherics/unary/vent_pump/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
 	if (!W.is_wrench())
@@ -471,3 +475,9 @@
 
 #undef PRESSURE_CHECK_EXTERNAL
 #undef PRESSURE_CHECK_INTERNAL
+
+// RS Add: Airlock and Fire Safety Processing (Lira, October 2026)
+/obj/machinery/atmospherics/unary/vent_pump/vv_edit_var(var_name, new_value)
+	. = ..()
+	if(. && var_name == "stat")
+		broadcast_status()

@@ -35,7 +35,7 @@
 	for(var/obj/machinery/power/M in nodes)
 		nodes -= M
 		M.powernet = null
-	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_POWER_TOPOLOGY_CHANGED) // RS Add: Computer and Related Machinery Idle Processing (Lira, October 2026)
+	SSmachines.queue_power_topology_change() // RS Add: Computer and Related Machinery Idle Processing (Lira, October 2026)
 	STOP_PROCESSING_POWERNET(src)
 	return ..()
 
@@ -58,7 +58,7 @@
 /datum/powernet/proc/remove_cable(var/obj/structure/cable/C)
 	cables -= C
 	C.powernet = null
-	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_POWER_TOPOLOGY_CHANGED) // RS Add: Computer and Related Machinery Idle Processing (Lira, October 2026)
+	SSmachines.queue_power_topology_change() // RS Add: Computer and Related Machinery Idle Processing (Lira, October 2026)
 	if(is_empty())//the powernet is now empty...
 		qdel(src)///... delete it
 
@@ -72,7 +72,7 @@
 			C.powernet.remove_cable(C) //..remove it
 	C.powernet = src
 	cables +=C
-	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_POWER_TOPOLOGY_CHANGED) // RS Add: Computer and Related Machinery Idle Processing (Lira, October 2026)
+	SSmachines.queue_power_topology_change() // RS Add: Computer and Related Machinery Idle Processing (Lira, October 2026)
 
 //remove a power machine from the current powernet
 //if the powernet is then empty, delete it
@@ -80,7 +80,7 @@
 /datum/powernet/proc/remove_machine(var/obj/machinery/power/M)
 	nodes -=M
 	M.powernet = null
-	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_POWER_TOPOLOGY_CHANGED) // RS Add: Computer and Related Machinery Idle Processing (Lira, October 2026)
+	SSmachines.queue_power_topology_change() // RS Add: Computer and Related Machinery Idle Processing (Lira, October 2026)
 	if(is_empty())//the powernet is now empty...
 		qdel(src)///... delete it - qdel
 
@@ -95,7 +95,7 @@
 			M.disconnect_from_network()//..remove it
 	M.powernet = src
 	nodes[M] = M
-	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_POWER_TOPOLOGY_CHANGED) // RS Add: Computer and Related Machinery Idle Processing (Lira, October 2026)
+	SSmachines.queue_power_topology_change() // RS Add: Computer and Related Machinery Idle Processing (Lira, October 2026)
 
 // Triggers warning for certain amount of ticks
 /datum/powernet/proc/trigger_warning(var/duration_ticks = 20)

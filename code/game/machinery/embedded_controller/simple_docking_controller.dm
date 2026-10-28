@@ -38,12 +38,14 @@
 	if(!receive_tag) return
 
 	if(receive_tag==tag_door)
+		master?.wake_processing() // RS Add: Airlock and Fire Safety Processing (Lira, October 2026)
 		memory["door_status"]["state"] = signal.data["door_status"]
 		memory["door_status"]["lock"] = signal.data["lock_status"]
 
 	..(signal, receive_method, receive_param)
 
 /datum/embedded_program/docking/simple/receive_user_command(command)
+	master?.wake_processing() // RS Add: Airlock and Fire Safety Processing (Lira, October 2026)
 	. = TRUE
 	switch(command)
 		if("force_door")

@@ -13,7 +13,11 @@
 
 /datum/embedded_program/Destroy()
 	if(master)
-		master.program = null
+		// RS Edit Start: Airlock and Fire Safety Processing (Lira, October 2026)
+		if(master.program == src)
+			master.program = null
+		master.wake_processing()
+		// RS Edit End
 		master = null
 	return ..()
 
@@ -29,3 +33,13 @@
 		master.post_signal(signal, comm_line)
 	else
 		qdel(signal)
+
+// RS Add: Airlock and Fire Safety Processing (Lira, October 2026)
+/datum/embedded_program/proc/needs_processing()
+	return TRUE
+
+// RS Add: Airlock and Fire Safety Processing (Lira, October 2026)
+/datum/embedded_program/vv_edit_var(var_name, new_value)
+	. = ..()
+	if(.)
+		master?.wake_processing()
