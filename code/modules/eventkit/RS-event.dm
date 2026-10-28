@@ -14,7 +14,8 @@ GLOBAL_VAR(special_station_name)
 		/mob/living/proc/sense_ghosts,
 		/mob/living/proc/set_size,
 		/mob/living/proc/pomf,
-		/mob/living/proc/register_home
+		/mob/living/proc/register_home,
+		/mob/living/proc/ghostwalk
 		)
 
 	var/choice = tgui_input_list(usr, "Which verb would you like to add/remove?", "Event Verb", possible_verbs)

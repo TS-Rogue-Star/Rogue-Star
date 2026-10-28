@@ -238,6 +238,7 @@
 			return
 		var/turf/T = get_turf(target)
 		OL.place_directional_light(T)
+		T.reveal_ghostwalkers()	//RS ADD
 
 /obj/item/device/flashlight/pen
 	name = "penlight"

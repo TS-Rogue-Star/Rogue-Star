@@ -357,7 +357,7 @@
 	var/is_leaving_belly = FALSE
 
 /client/proc/Process_Incorpmove(direct)
-
+//RS EDIT START
 	//Prompts users before they leave a vorebelly
 	if(isbelly(mob.loc) && isobserver(mob))
 		if(is_leaving_belly)
@@ -367,32 +367,31 @@
 			is_leaving_belly = FALSE
 			return
 		is_leaving_belly = FALSE
-//RS Edit end
 
+	var/turf/T = get_step(mob, direct)
+	if(!T)
+		return
 	var/turf/mobloc = get_turf(mob)
+	if(!holder)
+		var/area/A = T.loc
+		if(isliving(mob) && A.block_phase_shift)
+			to_chat(mob, "<span class='warning'>Something blocks you from entering this location while phased out.</span>")
+			return
+		if(isobserver(mob) && A.block_ghosts)
+			to_chat(mob, "<span class='warning'>Ghosts can't enter this location.</span>")
+			var/area/our_area = mobloc.loc
+			if(our_area.block_ghosts)
+				var/mob/observer/dead/D = mob
+				D.return_to_spawn()
+			return
+	mob.dir = direct
 
 	switch(mob.incorporeal_move)
 		if(1)
-			var/turf/T = get_step(mob, direct)
-			if(!T)
-				return
-			var/area/A = T.loc	//RS ADD
 			if(mob.check_holy(T))
 				to_chat(mob, "<span class='warning'>You cannot get past holy grounds while you are in this plane of existence!</span>")
 				return
-			if(!holder)		//RS EDIT START
-				if(isliving(mob) && A.block_phase_shift)
-					to_chat(mob, "<span class='warning'>Something blocks you from entering this location while phased out.</span>")
-					return
-				if(isobserver(mob) && A.block_ghosts)
-					to_chat(mob, "<span class='warning'>Ghosts can't enter this location.</span>")
-					var/area/our_area = mobloc.loc
-					if(our_area.block_ghosts)
-						var/mob/observer/dead/D = mob
-						D.return_to_spawn()
-					return
 			mob.forceMove(get_step(mob, direct))
-			mob.dir = direct	//RS EDIT END
 		if(2)
 			if(prob(50))
 				var/locx
@@ -423,17 +422,39 @@
 				mob.forceMove(locate(locx,locy,mobloc.z))
 				spawn(0)
 					var/limit = 2//For only two trailing shadows.
-					for(var/turf/T in getline(mobloc, mob.loc))
+					for(var/turf/ourturf in getline(mobloc, mob.loc))
 						spawn(0)
-							anim(T,mob,'icons/mob/mob.dmi',,"shadow",,mob.dir)
+							anim(ourturf,mob,'icons/mob/mob.dmi',,"shadow",,mob.dir)
 						limit--
 						if(limit<=0)	break
 			else
 				spawn(0)
 					anim(mobloc,mob,'icons/mob/mob.dmi',,"shadow",,mob.dir)
 				mob.forceMove(get_step(mob, direct))
-			mob.dir = direct
-
+		if(3)
+			if(!mob.checkMoveCooldown())
+				return
+			if(mob.check_holy(T))
+				to_chat(mob, "<span class='warning'>You cannot get past holy grounds while you are in this plane of existence!</span>")
+				return
+			var/datum/modifier/ghostwalk/mod
+			if(isliving(mob))
+				var/mob/living/L = mob
+				mod = L.get_modifier_of_type(/datum/modifier/ghostwalk)
+			if(mod?.consider_turf(T))
+				to_chat(mob, SPAN_OCCULT("Something blocks you from crossing here while ghostwalking..."))
+				mob.setMoveCooldown(2 SECONDS)
+				return
+			var/total_delay = mob.movement_delay(T, direct)
+			total_delay = DS2NEARESTTICK(total_delay)
+			if(!IS_CARDINAL(direct))
+				total_delay *= 2
+			if(T.check_density(FALSE,FALSE))
+				total_delay *= 4
+			mob.glide_for(total_delay)
+			mob.setMoveCooldown(total_delay)
+			mob.loc = T
+		//RS EDIT END
 	mob.Post_Incorpmove()
 	return 1
 
