@@ -96,3 +96,18 @@ var/list/grass_types = list(
 		/obj/structure/flora/sif/eyes = 5,
 		/obj/structure/flora/sif/tendrils = 30
 		)
+
+/turf/simulated/floor/outdoors/grass/sif/forest/halloween
+	name = "thick growth"
+	icon_state = "grass_sif_dark0"
+	initial_flooring = /decl/flooring/grass/sif/forest
+	edge_blending_priority = 5
+	tree_chance = 0
+	grass_chance = 1
+	outdoors = FALSE
+
+	grass_types = list(
+		/obj/structure/flora/sif/frostbelle = 1,
+		/obj/structure/flora/sif/eyes = 5,
+		/obj/structure/flora/sif/tendrils = 30
+		)
