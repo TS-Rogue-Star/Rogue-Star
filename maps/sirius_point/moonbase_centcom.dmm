@@ -4499,6 +4499,9 @@
 	dir = 10
 	},
 /obj/machinery/computer/transhuman/resleeving,
+/obj/item/decoration/garland/halloween{
+	pixel_y = 32
+	},
 /turf/simulated/floor/tiled/white,
 /area/centcom/medical)
 "os" = (
@@ -4989,6 +4992,9 @@
 /obj/effect/floor_decal/corner/paleblue/bordercorner2{
 	dir = 6
 	},
+/obj/item/decoration/garland/halloween{
+	pixel_x = 32
+	},
 /turf/simulated/floor/tiled/white,
 /area/centcom/medical)
 "qH" = (
@@ -5437,6 +5443,9 @@
 	},
 /obj/effect/floor_decal/corner/paleblue/border{
 	dir = 4
+	},
+/obj/item/decoration/garland/halloween{
+	pixel_x = 32
 	},
 /turf/simulated/floor/tiled/white,
 /area/centcom/medical)
@@ -6130,6 +6139,18 @@
 /obj/item/weapon/carved_pumpkin/candled,
 /turf/simulated/shuttle/floor,
 /area/shuttle/escape)
+"vF" = (
+/obj/effect/floor_decal/borderfloorwhite{
+	dir = 8
+	},
+/obj/effect/floor_decal/corner/paleblue/border{
+	dir = 8
+	},
+/obj/item/decoration/garland/halloween{
+	pixel_x = -32
+	},
+/turf/simulated/floor/tiled/white,
+/area/centcom/medical)
 "vL" = (
 /obj/structure/curtain/open/shower,
 /obj/machinery/shower{
@@ -9841,6 +9862,9 @@
 /obj/effect/floor_decal/corner/paleblue/border{
 	dir = 8
 	},
+/obj/item/decoration/garland/halloween{
+	pixel_x = -32
+	},
 /turf/simulated/floor/tiled/white,
 /area/centcom/medical)
 "HZ" = (
@@ -10020,6 +10044,9 @@
 	},
 /obj/effect/floor_decal/steeldecal/steel_decals10{
 	dir = 8
+	},
+/obj/machinery/light{
+	dir = 4
 	},
 /turf/simulated/floor/tiled/white,
 /area/centcom/medical)
@@ -11062,6 +11089,9 @@
 /obj/item/roller/adv{
 	pixel_y = 12
 	},
+/obj/item/decoration/garland/halloween{
+	pixel_y = -32
+	},
 /turf/simulated/floor/tiled/white,
 /area/centcom/medical)
 "KK" = (
@@ -11943,6 +11973,9 @@
 	pixel_y = 8
 	},
 /obj/item/weapon/backup_implanter,
+/obj/item/decoration/garland/halloween{
+	pixel_x = -32
+	},
 /turf/simulated/floor/tiled/white,
 /area/centcom/medical)
 "MJ" = (
@@ -12309,6 +12342,9 @@
 	dir = 4
 	},
 /obj/structure/closet/crate/bin,
+/obj/item/decoration/garland/halloween{
+	pixel_x = 32
+	},
 /turf/simulated/floor/tiled/white,
 /area/centcom/medical)
 "Nz" = (
@@ -14760,6 +14796,9 @@
 	name = "Surgery Cleaner";
 	pixel_x = 2;
 	pixel_y = 2
+	},
+/obj/item/decoration/garland/halloween{
+	pixel_x = 32
 	},
 /turf/simulated/floor/tiled/white,
 /area/centcom/medical)
@@ -26614,7 +26653,7 @@ LK
 Md
 MI
 xL
-IS
+vF
 NU
 aw
 Dy
