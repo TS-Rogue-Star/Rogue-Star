@@ -1,3 +1,7 @@
+/////////////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star October 2026: Airlock and Fire Safety Processing //
+/////////////////////////////////////////////////////////////////////////////////////
+
 
 #define STATE_UNDOCKED		0
 #define STATE_DOCKING		1
@@ -91,6 +95,7 @@
 
 	if (recipient != id_tag)
 		return	//this signal is not for us
+	master?.wake_processing() // RS Add: Airlock and Fire Safety Processing (Lira, October 2026)
 
 	switch (command)
 		if ("confirm_dock")
@@ -204,6 +209,7 @@
 
 	tag_target = target
 	control_mode = MODE_CLIENT
+	master?.wake_processing() // RS Add: Airlock and Fire Safety Processing (Lira, October 2026)
 
 	send_docking_command(tag_target, "request_dock")
 
@@ -212,6 +218,7 @@
 		return
 
 	dock_state = STATE_UNDOCKING
+	master?.wake_processing() // RS Add: Airlock and Fire Safety Processing (Lira, October 2026)
 	broadcast_docking_status()
 
 	if (!override_enabled)
@@ -244,12 +251,15 @@
 	return 1
 
 /datum/embedded_program/docking/proc/enable_override()
+	master?.wake_processing() // RS Add: Airlock and Fire Safety Processing (Lira, October 2026)
 	override_enabled = 1
 
 /datum/embedded_program/docking/proc/disable_override()
+	master?.wake_processing() // RS Add: Airlock and Fire Safety Processing (Lira, October 2026)
 	override_enabled = 0
 
 /datum/embedded_program/docking/proc/reset()
+	master?.wake_processing() // RS Add: Airlock and Fire Safety Processing (Lira, October 2026)
 	dock_state = STATE_UNDOCKED
 	broadcast_docking_status()
 
@@ -298,6 +308,10 @@
 
 /datum/embedded_program/docking/proc/get_name()
 	return display_name ? display_name : "[get_area(master)] ([master.x], [master.y])"
+
+// RS Add: Airlock and Fire Safety Processing (Lira, October 2026)
+/datum/embedded_program/docking/needs_processing()
+	return dock_state == STATE_DOCKING || dock_state == STATE_UNDOCKING || (dock_state == STATE_UNDOCKED && control_mode == MODE_CLIENT) || response_sent || resend_counter
 
 #undef STATE_UNDOCKED
 #undef STATE_DOCKING

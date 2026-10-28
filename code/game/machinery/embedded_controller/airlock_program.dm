@@ -1,3 +1,7 @@
+/////////////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star October 2026: Airlock and Fire Safety Processing //
+/////////////////////////////////////////////////////////////////////////////////////
+
 //Handles the control of airlocks
 #define STATE_IDLE			0
 #define STATE_PREPARE		1
@@ -113,8 +117,15 @@
 					else
 						receive_user_command("cycle_int")
 
+	// RS Add Start: Airlock and Fire Safety Processing (Lira, October 2026)
+	else
+		return
+	master?.wake_processing()
+	// RS Add End
+
 
 /datum/embedded_program/airlock/receive_user_command(command)
+	master?.wake_processing() // RS Add: Airlock and Fire Safety Processing (Lira, October 2026)
 	var/shutdown_pump = 0
 	. = TRUE
 	switch(command)
@@ -278,14 +289,17 @@
 //these are here so that other types don't have to make so many assuptions about our implementation
 
 /datum/embedded_program/airlock/proc/begin_cycle_in()
+	master?.wake_processing() // RS Add: Airlock and Fire Safety Processing (Lira, October 2026)
 	state = STATE_IDLE
 	target_state = TARGET_INOPEN
 	memory["purge"] = cycle_to_external_air
 
 /datum/embedded_program/airlock/proc/begin_dock_cycle()
+	master?.wake_processing() // RS Add: Airlock and Fire Safety Processing (Lira, October 2026)
 	state = STATE_IDLE
 	target_state = TARGET_INOPEN
 /datum/embedded_program/airlock/proc/begin_cycle_out()
+	master?.wake_processing() // RS Add: Airlock and Fire Safety Processing (Lira, October 2026)
 	state = STATE_IDLE
 	target_state = TARGET_OUTOPEN
 	memory["purge"] = cycle_to_external_air
@@ -295,6 +309,7 @@
 	toggleDoor(memory["exterior_status"], tag_exterior_door, 1, "close")
 
 /datum/embedded_program/airlock/proc/stop_cycling()
+	master?.wake_processing() // RS Add: Airlock and Fire Safety Processing (Lira, October 2026)
 	state = STATE_IDLE
 	target_state = TARGET_NONE
 
@@ -425,3 +440,7 @@ send an additional command to open the door again.
 #undef TARGET_NONE
 #undef TARGET_INOPEN
 #undef TARGET_OUTOPEN
+
+// RS Add: Airlock and Fire Safety Processing (Lira, October 2026)
+/datum/embedded_program/airlock/needs_processing()
+	return !done_cycling() || (memory["pump_status"] != "off" && memory["pump_status"] != "unknown")

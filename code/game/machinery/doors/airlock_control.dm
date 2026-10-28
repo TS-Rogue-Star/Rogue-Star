@@ -165,6 +165,7 @@
 	var/on = 1
 	var/alert = 0
 	var/previousPressure
+	processing_on_demand = TRUE // RS Add: Airlock and Fire Safety Processing (Lira, October 2026)
 
 /obj/machinery/airlock_sensor/update_icon()
 	if(on)
@@ -184,9 +185,11 @@
 	radio_connection.post_signal(src, signal, range = AIRLOCK_CONTROL_RANGE, radio_filter = RADIO_AIRLOCK)
 	flick("airlock_sensor_cycle", src)
 
+// RS Edit: Airlock and Fire Safety Processing (Lira, October 2026)
 /obj/machinery/airlock_sensor/process()
+	var/datum/gas_mixture/air_sample = on ? return_air() : null
+	watch_room_atmos(sensor_turf(), air_sample, null)
 	if(on)
-		var/datum/gas_mixture/air_sample = return_air()
 		var/pressure = round(air_sample.return_pressure(),0.1)
 
 		if(abs(pressure - previousPressure) > 0.001 || previousPressure == null)
@@ -203,6 +206,8 @@
 			alert = (pressure < ONE_ATMOSPHERE*0.8)
 
 			update_icon()
+
+	return PROCESS_KILL
 
 /obj/machinery/airlock_sensor/proc/set_frequency(new_frequency)
 	radio_controller.remove_object(src, frequency)
@@ -299,3 +304,11 @@
 /obj/machinery/access_button/airlock_exterior
 	frequency = 1379
 	command = "cycle_exterior"
+
+// RS Add: Airlock and Fire Safety Processing (Lira, October 2026)
+/obj/machinery/airlock_sensor/proc/sensor_turf()
+	return get_turf(src)
+
+// RS Add: Airlock and Fire Safety Processing (Lira, October 2026)
+/obj/machinery/airlock_sensor/airlock_exterior/shuttle/sensor_turf()
+	return get_step(src, dir) || ..()

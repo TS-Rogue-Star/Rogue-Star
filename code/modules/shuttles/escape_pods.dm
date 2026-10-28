@@ -123,6 +123,7 @@
 	var/closing = 0
 
 /datum/embedded_program/docking/simple/escape_pod_berth/proc/arm()
+	master?.wake_processing() // RS Add: Airlock and Fire Safety Processing (Lira, October 2026)
 	if(!armed)
 		armed = 1
 		open_door()
@@ -149,4 +150,9 @@
 	return		//don't do anything - the doors only open when the pod is armed.
 
 /datum/embedded_program/docking/simple/escape_pod_berth/prepare_for_undocking()
+	master?.wake_processing() // RS Add: Airlock and Fire Safety Processing (Lira, October 2026)
 	eject_time = world.time + eject_delay*10
+
+// RS Add: Airlock and Fire Safety Processing (Lira, October 2026)
+/datum/embedded_program/docking/simple/escape_pod_berth/needs_processing()
+	return ..() || (eject_time && !closing)
