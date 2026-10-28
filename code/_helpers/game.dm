@@ -234,7 +234,7 @@
 	var/list/radio_positions = list()
 	var/list/radio_ranges = list()
 	var/list/checked_ranges = list()
-	var/list/listeners = player_list.Copy()
+	var/list/listeners = player_list | GLOB.npc_workers	// RS EDIT
 	for(var/mob/living/M in listeners)
 		if(QDELETED(M))
 			continue
@@ -288,7 +288,7 @@
 	// Try to find all the players who can hear the message
 	for(var/mob/M as anything in listeners)
 		CHECK_TICK
-		if(QDELETED(M) || !(M in player_list))
+		if(QDELETED(M) || !((M in player_list) || (M in GLOB.npc_workers)))	// RS EDIT
 			continue
 		var/turf/T = listener_positions[M]
 		var/list/coverage = speaker_coverage
@@ -297,7 +297,7 @@
 			coverage = list()
 			for(var/radio_index = length(radios); radio_index >= 1; radio_index--)
 				CHECK_TICK
-				if(QDELETED(M) || !(M in player_list))
+				if(QDELETED(M) || !((M in player_list) || (M in GLOB.npc_workers)))	// RS EDIT
 					break
 				var/obj/item/device/radio/R = radios[radio_index]
 				if(QDELETED(R))
@@ -311,7 +311,7 @@
 				if((hearing_range == 0 && !speaker.invisibility) || (T in hear(hearing_range, speaker)))
 					coverage[T] = R
 					break
-			if(QDELETED(M) || !(M in player_list))
+			if(QDELETED(M) || !((M in player_list) || (M in GLOB.npc_workers)))	// RS EDIT
 				continue
 		if(M.can_hear_radio(coverage, T))
 			. += M
@@ -405,6 +405,12 @@
 			continue
 		if(get_turf(M) in hearturfs)
 			mobs |= M
+
+	// RS ADD START
+	for(var/mob/living/M in GLOB.npc_workers)
+		if(get_turf(M) in hearturfs)
+			mobs |= M
+	// RS ADD END
 
 	//For objects below the top level who still want to hear
 	for(var/obj in listening_objects)

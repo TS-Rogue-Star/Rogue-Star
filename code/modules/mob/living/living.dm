@@ -799,8 +799,10 @@
 
 	resting = !resting
 	to_chat(src, "<span class='notice'>You are now [resting ? "resting" : "getting up"].</span>")
+	// RS Add Start
 	allowtilttime = world.time + TILT_INCAPACITATED_WAITTIME
 	how_tilted = 0
+	// RS Add End
 	update_canmove()
 
 //called when the mob receives a bright flash
@@ -1015,6 +1017,10 @@
 			break
 
 	if(lying != lying_prev)
+		// RS Add Start: Computer and Related Machinery Idle Processing (Lira, October 2026)
+		if(isturf(loc))
+			SEND_SIGNAL(loc, COMSIG_TURF_PATIENT_POSTURE_CHANGED, src)
+		// RS Add End
 		lying_prev = lying
 		update_transform()
 		//VOREStation Add
@@ -1028,8 +1034,10 @@
 					unbuckle_mob(L)
 				L.Stun(5)
 		//VOREStation Add End
+	// RS Add Start
 	if(!canmove)
 		allowtilttime = world.time + TILT_INCAPACITATED_WAITTIME
+	// RS Add End
 
 	return canmove
 

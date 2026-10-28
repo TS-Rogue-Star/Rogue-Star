@@ -1,4 +1,10 @@
+/////////////////////////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star October 2026: Computer and Related Machinery Idle Processing //
+/////////////////////////////////////////////////////////////////////////////////////////////////
+
 /obj/machinery/computer/HolodeckControl
+	processing_enabled = TRUE // RS Add: Computer and Related Machinery Idle Processing (Lira, October 2026)
+	processing_on_demand = TRUE // RS Add: Computer and Related Machinery Idle Processing (Lira, October 2026)
 	name = "holodeck control console"
 	desc = "A computer used to control a nearby holodeck."
 	icon_keyboard = "tech_key"
@@ -209,18 +215,28 @@
 	if (stat != oldstat && active && (stat & NOPOWER))
 		emergencyShutdown()
 
+// RS Edit: Computer and Related Machinery Idle Processing (Lira, October 2026)
 /obj/machinery/computer/HolodeckControl/process()
-	for(var/item in holographic_objs) // do this first, to make sure people don't take items out when power is down.
+	holographic_objs -= null
+	for(var/atom/movable/item in holographic_objs) // do this first, to make sure people don't take items out when power is down.
+		if(QDELETED(item))
+			holographic_objs -= item
+			continue
 		if(!(get_turf(item) in linkedholodeck))
 			derez(item, 0)
 
-	if (!safety_disabled)
-		for(var/mob/living/simple_mob/animal/space/carp/holodeck/C in holographic_mobs)
-			if (get_area(C.loc) != linkedholodeck)
-				holographic_mobs -= C
-				C.derez()
+	holographic_mobs -= null
+	for(var/mob/living/simple_mob/animal/space/carp/holodeck/C in holographic_mobs)
+		if(QDELETED(C))
+			holographic_mobs -= C
+			continue
+		if(!safety_disabled && get_area(C.loc) != linkedholodeck)
+			holographic_mobs -= C
+			C.derez()
 
 	if(!..())
+		if(!holographic_objs.len && !holographic_mobs.len)
+			return PROCESS_KILL
 		return
 	if(active)
 		use_power(item_power_usage * (holographic_objs.len + holographic_mobs.len))
@@ -241,6 +257,8 @@
 					s.start()
 				T.ex_act(3)
 				T.hotspot_expose(1000,500,1)
+	if(!active && !holographic_objs.len && !holographic_mobs.len)
+		return PROCESS_KILL
 
 /obj/machinery/computer/HolodeckControl/proc/derez(var/obj/obj , var/silent = 1)
 	holographic_objs.Remove(obj)
@@ -305,8 +323,9 @@
 				return 0
 
 	last_change = world.time
-	active = 1
-	update_use_power(USE_POWER_ACTIVE)
+	active = (prog != powerdown_program) // RS Edit: Computer and Related Machinery Idle Processing (Lira, October 2026)
+	wake_processing() // RS Add: Computer and Related Machinery Idle Processing (Lira, October 2026)
+	update_use_power(active ? USE_POWER_ACTIVE : USE_POWER_IDLE) // RS Edit: Computer and Related Machinery Idle Processing (Lira, October 2026)
 
 	for(var/item in holographic_objs)
 		derez(item)
@@ -362,6 +381,7 @@
 					holographic_mobs += new /mob/living/simple_mob/animal/space/carp/holodeck(L.loc)
 
 		update_projections()
+		wake_processing() // RS Add: Computer and Related Machinery Idle Processing (Lira, October 2026)
 
 	return 1
 
@@ -377,6 +397,7 @@
 
 	last_gravity_change = world.time
 	active = 1
+	wake_processing() // RS Add: Computer and Related Machinery Idle Processing (Lira, October 2026)
 	update_use_power(USE_POWER_IDLE)
 
 	if(A.has_gravity)

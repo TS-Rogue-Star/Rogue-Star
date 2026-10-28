@@ -1169,6 +1169,29 @@ var/global/list/damage_icon_parts = list() //see UpdateDamageIcon()
 	else
 		return TAIL_UPPER_LAYER
 
+// RS Add: Tail Turn Optimization (Lira, October 2026)
+/mob/living/carbon/human/proc/update_tail_layer()
+	if(QDESTROYING(src))
+		return
+
+	var/tail_layer = get_tail_layer()
+	if(tail_style && tail_style.clip_mask_state)
+		tail_layer = TAIL_UPPER_LAYER
+	if(tail_alt && tail_layer == TAIL_UPPER_LAYER)
+		tail_layer = TAIL_UPPER_LAYER_ALT
+	if(overlays_standing[tail_layer])
+		return
+
+	var/image/tail_image = overlays_standing[TAIL_UPPER_LAYER] || overlays_standing[TAIL_UPPER_LAYER_ALT] || overlays_standing[TAIL_LOWER_LAYER]
+	if(!tail_image)
+		return
+	remove_layer(TAIL_UPPER_LAYER)
+	remove_layer(TAIL_UPPER_LAYER_ALT)
+	remove_layer(TAIL_LOWER_LAYER)
+	tail_image.layer = BODY_LAYER + tail_layer
+	overlays_standing[tail_layer] = tail_image
+	apply_layer(tail_layer)
+
 /mob/living/carbon/human/proc/update_tail_showing()
 	if(QDESTROYING(src))
 		return
@@ -1225,6 +1248,7 @@ var/global/list/damage_icon_parts = list() //see UpdateDamageIcon()
 	return tail_icon
 
 /mob/living/carbon/human/proc/set_tail_state(var/t_state)
+	update_tail_layer() // RS Add: Tail Turn Optimization (Lira, October 2026)
 	var/tail_layer = get_tail_layer()
 	if(src.tail_style && src.tail_style.clip_mask_state)
 		tail_layer = TAIL_UPPER_LAYER		// Use default, let clip mask handle everything
@@ -1264,7 +1288,7 @@ var/global/list/damage_icon_parts = list() //see UpdateDamageIcon()
 	if(tail_overlay)
 		spawn(20)
 			//check that the animation hasn't changed in the meantime
-			if(overlays_standing[tail_layer] == tail_overlay && tail_overlay.icon_state == t_state)
+			if((tail_overlay in overlays_standing) && tail_overlay.icon_state == t_state) // RS Edit: Tail Turn Optimization (Lira, October 2026)
 				animate_tail_stop()
 
 /mob/living/carbon/human/proc/animate_tail_start()

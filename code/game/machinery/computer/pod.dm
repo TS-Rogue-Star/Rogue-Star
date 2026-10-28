@@ -1,6 +1,8 @@
 //This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
 
 /obj/machinery/computer/pod
+	processing_enabled = TRUE // RS Add: Computer and Related Machinery Idle Processing (Lira, October 2026)
+	processing_on_demand = TRUE // RS Add: Computer and Related Machinery Idle Processing (Lira, October 2026)
 	name = "pod launch control console"
 	desc = "A control console for launching pods. Some people prefer firing Mechas."
 	icon_screen = "mass_driver"
@@ -141,9 +143,10 @@
 	return
 
 
+// RS Edit: Computer and Related Machinery Idle Processing (Lira, October 2026)
 /obj/machinery/computer/pod/process()
-	if(!..())
-		return
+	if(!..() || !timing)
+		return PROCESS_KILL
 	if(timing)
 		if(time > 0)
 			time = round(time) - 1
@@ -152,6 +155,8 @@
 			time = 0
 			timing = 0
 		updateDialog()
+	if(!timing)
+		return PROCESS_KILL
 	return
 
 
@@ -175,6 +180,7 @@
 
 		if(href_list["time"])
 			timing = text2num(href_list["time"])
+			wake_processing() // RS Add: Computer and Related Machinery Idle Processing (Lira, October 2026)
 		if(href_list["tp"])
 			var/tp = text2num(href_list["tp"])
 			time += tp

@@ -22,6 +22,7 @@
 /area/redgate/structure/powered/no_efb)
 "bl" = (
 /obj/structure/bed/chair/sofa/beige,
+/mob/living/simple_mob/elf,
 /turf/simulated/floor/holofloor/wood,
 /area/redgate/structure/powered)
 "bS" = (
@@ -53,6 +54,13 @@
 "cf" = (
 /turf/simulated/floor/holofloor/wood,
 /area/redgate/structure/powered)
+"cy" = (
+/mob/living/simple_mob/vore/deer/hat{
+	load_owner = "seriouslydontsavethis";
+	name = "Smasher"
+	},
+/turf/simulated/floor/outdoors/snow,
+/area/redgate)
 "cA" = (
 /turf/unsimulated/wall{
 	opacity = 0
@@ -69,6 +77,7 @@
 /obj/effect/floor_decal/spline/plain{
 	dir = 1
 	},
+/mob/living/simple_mob/elf,
 /turf/simulated/floor/holofloor/wood,
 /area/redgate/structure/powered)
 "dc" = (
@@ -194,6 +203,9 @@
 /area/redgate/structure/powered)
 "fu" = (
 /obj/structure/bed/chair/comfy/green{
+	dir = 4
+	},
+/mob/living/simple_mob/elf{
 	dir = 4
 	},
 /turf/simulated/floor/holofloor/wood,
@@ -350,6 +362,9 @@
 /obj/structure/bed/chair/comfy/red{
 	dir = 4
 	},
+/mob/living/simple_mob/elf{
+	dir = 4
+	},
 /turf/simulated/floor/holofloor/wood,
 /area/redgate/structure/powered)
 "hn" = (
@@ -374,6 +389,9 @@
 /area/redgate)
 "jo" = (
 /obj/structure/bed/chair/comfy/red{
+	dir = 1
+	},
+/mob/living/simple_mob/elf{
 	dir = 1
 	},
 /turf/simulated/floor/holofloor/wood,
@@ -485,6 +503,7 @@
 /area/redgate/structure/powered)
 "lw" = (
 /obj/structure/bed/chair/sofa/right/lime,
+/mob/living/simple_mob/elf,
 /turf/simulated/floor/holofloor/wood,
 /area/redgate/structure/powered/no_efb)
 "lE" = (
@@ -729,6 +748,9 @@
 /obj/structure/bed/chair/comfy/green{
 	dir = 8
 	},
+/mob/living/simple_mob/elf{
+	dir = 8
+	},
 /turf/simulated/floor/holofloor/wood,
 /area/redgate/structure/powered)
 "qo" = (
@@ -804,6 +826,7 @@
 /area/redgate/structure/powered)
 "uB" = (
 /obj/structure/bed/chair/sofa/left/beige,
+/mob/living/simple_mob/elf,
 /turf/simulated/floor/holofloor/wood,
 /area/redgate/structure/powered)
 "vt" = (
@@ -817,6 +840,7 @@
 /obj/effect/floor_decal/spline/plain{
 	dir = 1
 	},
+/mob/living/simple_mob/elf,
 /turf/simulated/floor/holofloor/wood,
 /area/redgate/structure/powered)
 "vF" = (
@@ -874,7 +898,7 @@
 /turf/simulated/floor/bmarble,
 /area/redgate/structure/powered)
 "wz" = (
-/obj/structure/flora/tree/pine/xmas/presents,
+/obj/structure/snowgrave,
 /turf/simulated/floor/holofloor/wood,
 /area/redgate/structure/powered)
 "wB" = (
@@ -947,6 +971,9 @@
 /obj/structure/bed/chair/comfy/blue{
 	dir = 1
 	},
+/mob/living/simple_mob/elf{
+	dir = 1
+	},
 /turf/simulated/floor/holofloor/wood,
 /area/redgate/structure/powered)
 "yY" = (
@@ -1008,6 +1035,14 @@
 	},
 /turf/simulated/floor/holofloor/wood,
 /area/redgate/structure/powered)
+"Am" = (
+/obj/structure/table/bench/sifwooden/padded,
+/obj/random/maintenance/foodstuff,
+/mob/living/simple_mob/elf{
+	dir = 4
+	},
+/turf/simulated/floor/holofloor/wood,
+/area/redgate/structure/powered/no_efb)
 "AH" = (
 /turf/simulated/floor/concrete{
 	outdoors = 0
@@ -1103,6 +1138,9 @@
 /obj/structure/bed/chair/comfy/red{
 	dir = 8
 	},
+/mob/living/simple_mob/elf{
+	dir = 8
+	},
 /turf/simulated/floor/holofloor/wood,
 /area/redgate/structure/powered)
 "Gz" = (
@@ -1147,6 +1185,9 @@
 /obj/structure/bed/chair/sofa/corp{
 	dir = 1
 	},
+/mob/living/simple_mob/elf{
+	dir = 1
+	},
 /turf/simulated/floor/holofloor/wood,
 /area/redgate/structure/powered)
 "Il" = (
@@ -1171,6 +1212,9 @@
 /area/redgate/structure/powered/no_efb)
 "Jo" = (
 /obj/structure/table/bench/sifwooden/padded,
+/mob/living/simple_mob/elf{
+	dir = 4
+	},
 /turf/simulated/floor/holofloor/wood,
 /area/redgate/structure/powered/no_efb)
 "Jt" = (
@@ -1220,6 +1264,21 @@
 /obj/machinery/computer/security/telescreen/entertainment,
 /turf/simulated/floor/holofloor/wood,
 /area/redgate/structure/powered)
+"KM" = (
+/obj/structure/bed/chair{
+	dir = 4
+	},
+/mob/living/simple_mob/elf{
+	dir = 4
+	},
+/turf/simulated/floor/holofloor/wood,
+/area/redgate/structure/powered)
+"Ly" = (
+/mob/living/simple_mob/elf{
+	dir = 1
+	},
+/turf/simulated/floor/holofloor/wood,
+/area/redgate/structure/powered/no_efb)
 "LG" = (
 /obj/structure/table/woodentable,
 /obj/item/device/flashlight/lamp/green,
@@ -1242,6 +1301,27 @@
 /obj/structure/window/reinforced/full,
 /turf/simulated/floor/plating,
 /area/redgate/structure/powered)
+"Mo" = (
+/mob/living/simple_mob/vore/deer/hat{
+	load_owner = "seriouslydontsavethis";
+	name = "Glancer"
+	},
+/turf/simulated/floor/outdoors/snow,
+/area/redgate)
+"Ms" = (
+/mob/living/simple_mob/vore/deer/hat{
+	load_owner = "seriouslydontsavethis";
+	name = "Quipid"
+	},
+/turf/simulated/floor/outdoors/snow,
+/area/redgate)
+"NC" = (
+/mob/living/simple_mob/vore/deer/hat{
+	load_owner = "seriouslydontsavethis";
+	name = "Glitzen"
+	},
+/turf/simulated/floor/outdoors/snow,
+/area/redgate)
 "NZ" = (
 /obj/effect/floor_decal/spline/plain{
 	dir = 8
@@ -1415,9 +1495,23 @@
 	},
 /turf/simulated/floor/bmarble,
 /area/redgate/structure/powered)
+"Re" = (
+/mob/living/simple_mob/vore/deer/hat{
+	load_owner = "seriouslydontsavethis";
+	name = "Danner"
+	},
+/turf/simulated/floor/outdoors/snow,
+/area/redgate)
 "Ry" = (
 /turf/simulated/floor/outdoors/newdirt_nograss,
 /area/redgate)
+"RG" = (
+/obj/structure/table/bench/sifwooden/padded,
+/mob/living/simple_mob/elf{
+	dir = 8
+	},
+/turf/simulated/floor/holofloor/wood,
+/area/redgate/structure/powered/no_efb)
 "Sl" = (
 /obj/structure/simple_door/iron,
 /turf/simulated/floor/holofloor/wood,
@@ -1425,6 +1519,10 @@
 "SB" = (
 /turf/space,
 /area/space)
+"SY" = (
+/mob/living/simple_mob/elf,
+/turf/simulated/floor/outdoors/sidewalk/slab,
+/area/redgate)
 "Tl" = (
 /obj/structure/railing/grey,
 /turf/simulated/floor/bmarble,
@@ -1466,6 +1564,7 @@
 /area/redgate/structure/powered)
 "Vl" = (
 /obj/structure/bed/chair/comfy/blue,
+/mob/living/simple_mob/elf,
 /turf/simulated/floor/holofloor/wood,
 /area/redgate/structure/powered)
 "Vm" = (
@@ -1476,6 +1575,9 @@
 /area/redgate/structure/powered/no_efb)
 "VA" = (
 /obj/structure/bed/chair{
+	dir = 4
+	},
+/mob/living/simple_mob/elf{
 	dir = 4
 	},
 /turf/simulated/floor/holofloor/wood,
@@ -1624,6 +1726,9 @@
 "XZ" = (
 /obj/structure/table/bench/sifwooden/padded,
 /obj/random/maintenance/foodstuff,
+/mob/living/simple_mob/elf{
+	dir = 8
+	},
 /turf/simulated/floor/holofloor/wood,
 /area/redgate/structure/powered/no_efb)
 "Yj" = (
@@ -6940,7 +7045,7 @@ VD
 VD
 VD
 VD
-VD
+NC
 VD
 VD
 sR
@@ -7625,7 +7730,7 @@ VD
 Ut
 Jo
 Gz
-XZ
+Am
 Ut
 VD
 VD
@@ -8465,7 +8570,7 @@ SB
 sy
 sy
 VD
-VD
+Mo
 VD
 VD
 VD
@@ -8761,7 +8866,7 @@ VD
 Ut
 XZ
 Qn
-Jo
+RG
 Ut
 VD
 VD
@@ -11616,7 +11721,7 @@ Ry
 Ry
 Ry
 Ry
-rI
+SY
 rI
 rI
 rI
@@ -12753,7 +12858,7 @@ VD
 VD
 VD
 VD
-VD
+Re
 VD
 VD
 VD
@@ -15187,10 +15292,10 @@ Ry
 VD
 Hq
 ed
-ed
+KM
 Ut
 lw
-Xm
+Ly
 Ut
 VD
 sR
@@ -15436,7 +15541,7 @@ VD
 VD
 VD
 VD
-VD
+Ms
 VD
 VD
 VD
@@ -16463,7 +16568,7 @@ VD
 VD
 VD
 VD
-VD
+cy
 VD
 VD
 VD

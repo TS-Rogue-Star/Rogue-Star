@@ -219,6 +219,7 @@
 
 ///from base of turf/ChangeTurf(): (path, list/new_baseturfs, flags, list/transferring_comps)
 #define COMSIG_TURF_CHANGE "turf_change"
+#define COMSIG_TURF_ATMOS_CHANGED "turf_atmos_changed" // RS Add: Room Atmosphere Processing (Lira, October 2026)
 ///from base of atom/has_gravity(): (atom/asker, list/forced_gravities)
 #define COMSIG_TURF_HAS_GRAVITY "turf_has_gravity"
 ///from base of turf/multiz_turf_del(): (turf/source, direction)
@@ -795,4 +796,15 @@
 #define COMSIG_DUNGEON_TRIGGER "dungeon_trigger"
 #define COMSIG_DUNGEON_UNTRIGGER "dungeon_untrigger"
 #define COMSIG_RESOLVE_ATTACKBY "resolve_attackby"
-//RS ADD END
+#define COMSIG_CELL_CHARGE_CHANGED "cell_charge_changed" // Charging Station Processing (Lira, October 2026)
+
+// Computer and Related Machinery Idle Processing (Lira, October 2026)
+#define COMSIG_SHIP_SENSOR_CHANGED "ship_sensor_changed"
+#define COMSIG_GLOB_POWER_WARNING_CHANGED "glob_power_warning_changed"
+#define COMSIG_GLOB_POWER_TOPOLOGY_CHANGED "glob_power_topology_changed"
+#define COMSIG_GLOB_POWER_SENSORS_CHANGED "glob_power_sensors_changed"
+#define COMSIG_TURF_PATIENT_POSTURE_CHANGED "turf_patient_posture_changed"
+#define COMSIG_CLONING_MACHINE_CHANGED "cloning_machine_changed"
+#define COMSIG_GLOB_CLONING_ELIGIBILITY_CHANGED "glob_cloning_eligibility_changed"
+
+// RS Add End

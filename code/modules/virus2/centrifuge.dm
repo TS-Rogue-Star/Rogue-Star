@@ -1,4 +1,6 @@
 /obj/machinery/computer/centrifuge
+	processing_enabled = TRUE // RS Add: Computer and Related Machinery Idle Processing (Lira, October 2026)
+	processing_on_demand = TRUE // RS Add: Computer and Related Machinery Idle Processing (Lira, October 2026)
 	name = "isolation centrifuge"
 	desc = "Used to separate things with different weight. Spin 'em round, round, right round."
 	icon = 'icons/obj/virology_vr.dmi' //VOREStation Edit
@@ -80,9 +82,11 @@
 
 	return data
 
+// RS Edit: Computer and Related Machinery Idle Processing (Lira, October 2026)
 /obj/machinery/computer/centrifuge/process()
 	..()
-	if(stat & (NOPOWER|BROKEN)) return
+	if(stat & (NOPOWER|BROKEN) || (!curing && !isolating))
+		return PROCESS_KILL
 
 	if(curing)
 		curing -= 1
@@ -93,6 +97,8 @@
 		isolating -= 1
 		if(isolating == 0)
 			isolate()
+	if(!curing && !isolating)
+		return PROCESS_KILL
 
 /obj/machinery/computer/centrifuge/tgui_act(action, params)
 	if(..())
@@ -112,6 +118,7 @@
 				var/datum/disease2/disease/virus = locate(params["isolate"])
 				virus2 = virus.getcopy()
 				isolating = 40
+				wake_processing() // RS Add: Computer and Related Machinery Idle Processing (Lira, October 2026)
 				update_icon()
 			. = TRUE
 		if("antibody")
@@ -131,6 +138,7 @@
 					delay = delay/2
 
 			curing = round(delay)
+			wake_processing() // RS Add: Computer and Related Machinery Idle Processing (Lira, October 2026)
 			playsound(src, 'sound/machines/juicer.ogg', 50, 1)
 			update_icon()
 			. = TRUE

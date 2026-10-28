@@ -1,3 +1,7 @@
+/////////////////////////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star October 2026: Computer and Related Machinery Idle Processing //
+/////////////////////////////////////////////////////////////////////////////////////////////////
+
 /obj/machinery/air_sensor
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "gsensor1"
@@ -336,6 +340,8 @@
 	radio_connection.post_signal(src, signal, radio_filter = RADIO_ATMOSIA)
 
 /obj/machinery/computer/general_air_control/fuel_injection
+	processing_enabled = TRUE // RS Add: Computer and Related Machinery Idle Processing (Lira, October 2026)
+	processing_on_demand = TRUE // RS Add: Computer and Related Machinery Idle Processing (Lira, October 2026)
 	icon = 'icons/obj/computer.dmi'
 	icon_screen = "alert:0"
 	var/device_tag
@@ -345,10 +351,11 @@
 	var/on_temperature = 1200
 	circuit = /obj/item/weapon/circuitboard/air_management/injector_control
 
+// RS Edit: Computer and Related Machinery Idle Processing (Lira, October 2026)
 /obj/machinery/computer/general_air_control/fuel_injection/process()
 	if(automation)
 		if(!radio_connection)
-			return FALSE
+			return PROCESS_KILL
 
 		var/injecting = 0
 		for(var/id_tag in sensor_information)
@@ -366,13 +373,14 @@
 
 		signal.data = list(
 			"tag" = device_tag,
-			"power" = injecting,
+			"power" = "[injecting]",
 			"sigtype"="command"
 		)
 
 		radio_connection.post_signal(src, signal, radio_filter = RADIO_ATMOSIA)
 
 	..()
+	return PROCESS_KILL
 
 /obj/machinery/computer/general_air_control/fuel_injection/tgui_data(mob/user)
 	var/list/data = ..()
@@ -386,15 +394,23 @@
 
 	return data
 
+// RS Edit: Computer and Related Machinery Idle Processing (Lira, October 2026)
 /obj/machinery/computer/general_air_control/fuel_injection/receive_signal(datum/signal/signal)
 	if(!signal || signal.encryption) return
 
 	var/id_tag = signal.data["tag"]
-
 	if(device_tag == id_tag)
+		var/changed = !device_info || device_info["power"] != signal.data["power"]
 		device_info = signal.data
+		if(automation && changed)
+			wake_processing()
 	else
+		var/list/previous = sensor_information[id_tag]
+		var/old_temperature = previous?["temperature"]
 		..(signal)
+		var/list/current = sensor_information[id_tag]
+		if(automation && current && old_temperature != current["temperature"])
+			wake_processing()
 
 /obj/machinery/computer/general_air_control/fuel_injection/tgui_act(action, params)
 	if(..())
@@ -419,6 +435,7 @@
 
 		if("toggle_automation")
 			automation = !automation
+			wake_processing() // RS Add: Computer and Related Machinery Idle Processing (Lira, October 2026)
 			. = TRUE
 
 		if("toggle_injector")
@@ -453,3 +470,7 @@
 
 			radio_connection.post_signal(src, signal, radio_filter = RADIO_ATMOSIA)
 			. = TRUE
+// RS Add: Computer and Related Machinery Idle Processing (Lira, October 2026)
+/obj/machinery/computer/general_air_control/fuel_injection/set_frequency(new_frequency)
+	. = ..()
+	wake_processing()

@@ -257,4 +257,6 @@ Class Procs:
 		energy_delta = maximum_energy_delta
 
 	A.temperature -= energy_delta / (A.heat_capacity() * A.group_multiplier)
+	A.room_atmos_changed() // RS Add: Room Atmosphere Processing (Lira, October 2026)
 	B.temperature += energy_delta / (B.heat_capacity() * B.group_multiplier)
+	B.room_atmos_changed() // RS Add: Room Atmosphere Processing (Lira, October 2026)

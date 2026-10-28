@@ -1,3 +1,7 @@
+////////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star October 2026: Portable Connector Processing //
+////////////////////////////////////////////////////////////////////////////////
+
 /obj/machinery/atmospherics/portables_connector
 	icon = 'icons/atmos/connector.dmi'
 	icon_state = "map_connector"
@@ -20,6 +24,7 @@
 	var/on = 0
 	use_power = USE_POWER_OFF
 	level = 1
+	processing_on_demand = TRUE // RS Add: Portable Connector Processing (Lira, October 2026)
 
 /obj/machinery/atmospherics/portables_connector/fuel
 	icon_state = "map_connector-fuel"
@@ -52,16 +57,39 @@
 /obj/machinery/atmospherics/portables_connector/hide(var/i)
 	update_underlays()
 
+// RS Edit: Portable Connector Processing (Lira, October 2026)
 /obj/machinery/atmospherics/portables_connector/process()
 	..()
-	if(!on)
-		return
 	if(!connected_device)
 		on = 0
-		return
-	if(network)
+	if(!on || !network)
+		return room_atmos_sleep(TRUE)
+	watch_room_atmos(null, null, network)
+	var/datum/gas_mixture/connected_air = get_connected_air()
+	if(connected_air && connected_air.temperature > PHORON_MINIMUM_BURN_TEMPERATURE)
 		network.update = 1
-	return 1
+	if(network.update)
+		return 1
+	return room_atmos_sleep()
+
+// RS Add: Portable Connector Processing (Lira, October 2026)
+/obj/machinery/atmospherics/portables_connector/wake_processing()
+	if(!QDELETED(src) && on && connected_device && network)
+		network.update = 1
+	return ..()
+
+// RS Add: Portable Connector Processing (Lira, October 2026)
+/obj/machinery/atmospherics/portables_connector/vv_edit_var(var_name, new_value)
+	. = ..()
+	if(. && var_name == NAMEOF(src, on))
+		wake_processing()
+
+// RS Add: Portable Connector Processing (Lira, October 2026)
+/obj/machinery/atmospherics/portables_connector/proc/get_connected_air()
+	if(istype(connected_device, /obj/mecha))
+		var/obj/mecha/M = connected_device
+		return M.internal_tank?.air_contents
+	return connected_device?.air_contents
 
 // Housekeeping and pipe network stuff below
 /obj/machinery/atmospherics/portables_connector/get_neighbor_nodes_for_init()
@@ -70,6 +98,7 @@
 /obj/machinery/atmospherics/portables_connector/network_expand(datum/pipe_network/new_network, obj/machinery/atmospherics/pipe/reference)
 	if(reference == node)
 		network = new_network
+		room_atmos_subscription?.invalidate() // RS Add: Portable Connector Processing (Lira, October 2026)
 
 	if(new_network.normal_members.Find(src))
 		return 0
@@ -78,11 +107,12 @@
 
 	return null
 
+// RS Edit: Portable Connector Processing (Lira, October 2026)
 /obj/machinery/atmospherics/portables_connector/Destroy()
-	. = ..()
-
 	if(connected_device)
 		connected_device.disconnect()
+
+	. = ..()
 
 	if(node)
 		node.disconnect(src)
@@ -91,6 +121,7 @@
 	node = null
 
 /obj/machinery/atmospherics/portables_connector/atmos_init()
+	room_atmos_subscription?.invalidate() // RS Add: Portable Connector Processing (Lira, October 2026)
 	if(node)
 		return
 
@@ -125,14 +156,17 @@
 /obj/machinery/atmospherics/portables_connector/reassign_network(datum/pipe_network/old_network, datum/pipe_network/new_network)
 	if(network == old_network)
 		network = new_network
+		room_atmos_subscription?.invalidate() // RS Add: Portable Connector Processing (Lira, October 2026)
 
 	return 1
 
+// RS Edit: Portable Connector Processing (Lira, October 2026)
 /obj/machinery/atmospherics/portables_connector/return_network_air(datum/pipe_network/reference)
 	var/list/results = list()
 
-	if(connected_device)
-		results += connected_device.air_contents
+	var/datum/gas_mixture/connected_air = get_connected_air()
+	if(connected_air)
+		results += connected_air
 
 	return results
 
@@ -140,6 +174,7 @@
 	if(reference==node)
 		qdel(network)
 		node = null
+		room_atmos_subscription?.invalidate() // RS Add: Portable Connector Processing (Lira, October 2026)
 
 	update_underlays()
 

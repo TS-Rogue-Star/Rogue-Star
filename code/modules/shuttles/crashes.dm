@@ -66,6 +66,7 @@
 	var/boomsize = shuttle_turfs.len / 10 // Bigger shuttle = bigger boom
 	explosion(epicenter, 0, boomsize, boomsize*2, boomsize*3)
 	moving_status = SHUTTLE_CRASHED
+	notify_status_displays() // RS Add: Station Display and Media Processing (Lira, October 2026)
 	command_announcement.Announce("[crash_message]", "Shuttle Alert")
 
 	// Put people back

@@ -1,3 +1,9 @@
+/////////////////////////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star October 2026: Charging Station Processing /////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star October 2026: Computer and Related Machinery Idle Processing //
+/////////////////////////////////////////////////////////////////////////////////////////////////
+
 /*
 Overview:
    Used to create objects that need a per step proc call.  Default definition of 'New()'
@@ -117,6 +123,8 @@ Class Procs:
 	// If this is 0.5 then a 50 damage bullet will break this structure 25% of the time
 	var/bullet_vulnerability = 0.25
 
+	var/processing_enabled = TRUE // RS Add: Computer and Related Machinery Idle Processing (Lira, October 2026)
+	var/processing_on_demand = FALSE // RS Add: Charging Station Processing (Lira, October 2026)
 	var/speed_process = FALSE			//If false, SSmachines. If true, SSfastprocess.
 
 	blocks_emissive = EMISSIVE_BLOCK_GENERIC
@@ -133,10 +141,13 @@ Class Procs:
 	global.machines += src
 	if(ispath(circuit))
 		circuit = new circuit(src)
-	if(!speed_process)
-		START_MACHINE_PROCESSING(src)
-	else
-		START_PROCESSING(SSfastprocess, src)
+	// RS Edit Start: Computer and Related Machinery Idle Processing (Lira, October 2026)
+	if(processing_enabled)
+		if(!speed_process)
+			START_MACHINE_PROCESSING(src)
+		else
+			START_PROCESSING(SSfastprocess, src)
+	// RS Edit End
 	if(!mapload)
 		power_change()
 
@@ -200,6 +211,18 @@ Class Procs:
 	return
 
 /obj/machinery/vv_edit_var(var/var_name, var/new_value)
+	// RS Add Start: Room Atmosphere Processing (Lira, October 2026)
+	if(var_name == NAMEOF(src, room_atmos_subscription))
+		return FALSE
+	// RS Add End
+	// RS Add Start: Charging Station Processing (Lira, October 2026)
+	if(processing_on_demand)
+		if(var_name == NAMEOF(src, speed_process))
+			set_processing_speed(new_value)
+			datum_flags |= DF_VAR_EDITED
+			return TRUE
+		wake_processing()
+	// RS Add End
 	if(var_name == NAMEOF(src, use_power))
 		update_use_power(new_value)
 		return TRUE
@@ -569,3 +592,26 @@ Class Procs:
 
 /datum/proc/remove_visual(mob/M)
 	return
+
+// RS Add: Charging Station Processing (Lira, October 2026)
+/obj/machinery/proc/wake_processing()
+	SIGNAL_HANDLER
+	if(QDELETED(src) || !processing_enabled)
+		return
+	if(speed_process)
+		START_PROCESSING(SSfastprocess, src)
+	else
+		START_MACHINE_PROCESSING(src)
+
+// RS Add: Charging Station Processing (Lira, October 2026)
+/obj/machinery/proc/set_processing_speed(new_speed)
+	if(speed_process == new_speed)
+		return
+	if(speed_process)
+		STOP_PROCESSING(SSfastprocess, src)
+		SSfastprocess.currentrun -= src
+	else
+		STOP_MACHINE_PROCESSING(src)
+		SSmachines.current_run -= src
+	speed_process = new_speed
+	wake_processing()

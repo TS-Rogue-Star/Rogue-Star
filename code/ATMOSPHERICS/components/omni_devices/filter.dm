@@ -45,6 +45,7 @@
 				atmos_filters -= P
 
 			P.air.volume = 200
+			P.air.room_atmos_changed() // RS Add: Room Atmosphere Processing (Lira, October 2026)
 			switch(P.mode)
 				if(ATM_INPUT)
 					input = P

@@ -170,7 +170,7 @@ SUBSYSTEM_DEF(garbage)
 				var/type = D.type
 				var/datum/qdel_item/I = items[type]
 
-				log_world("## TESTING: GC: -- \ref[D] | [type] was unable to be GC'd --")
+				log_debug("GC: -- \ref[D] | [type] was unable to be GC'd --") // RS Edit: Garbage Collection Debug Logging (Lira, October 2026)
 				#ifdef TESTING
 				for(var/client/admin as anything in GLOB.admins) //Using testing() here would fill the logs with ADMIN_VV garbage
 					if(!check_rights_for(admin, R_ADMIN))

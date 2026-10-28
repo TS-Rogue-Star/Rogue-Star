@@ -1,3 +1,7 @@
+////////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star October 2026: Portable Connector Processing //
+////////////////////////////////////////////////////////////////////////////////
+
 #define MECHA_INT_FIRE 1
 #define MECHA_INT_TEMP_CONTROL 2
 #define MECHA_INT_SHORT_CIRCUIT 4
@@ -245,6 +249,7 @@
 	return ..()
 
 /obj/mecha/Destroy()
+	disconnect() // RS Add: Portable Connector Processing (Lira, October 2026)
 	src.go_out()
 	for(var/mob/M in src) //Be Extra Sure
 		M.forceMove(get_turf(src))
@@ -411,6 +416,7 @@
 			var/datum/gas_mixture/int_tank_air = internal_tank.return_air()
 			if(int_tank_air && int_tank_air.volume>0) //heat the air_contents
 				int_tank_air.temperature = min(6000+T0C, int_tank_air.temperature+rand(10,15))
+				int_tank_air.room_atmos_changed() // RS Add: Portable Connector Processing (Lira, October 2026)
 		if(cabin_air && cabin_air.volume>0)
 			cabin_air.temperature = min(6000+T0C, cabin_air.temperature+rand(10,15))
 			if(cabin_air.temperature>max_temperature/2)
@@ -1740,6 +1746,7 @@
 			. = t_air.temperature
 	return
 
+// RS Edit: Portable Connector Processing (Lira, October 2026)
 /obj/mecha/proc/connect(obj/machinery/atmospherics/portables_connector/new_port)
 	//Make sure not already connected to something else
 	if(connected_port || !new_port || new_port.connected_device)
@@ -1752,25 +1759,38 @@
 	//Perform the connection
 	connected_port = new_port
 	connected_port.connected_device = src
+	connected_port.on = 1
 
 	//Actually enforce the air sharing
 	var/datum/pipe_network/network = connected_port.return_network(src)
-	if(network && !(internal_tank.return_air() in network.gases))
-		network.gases += internal_tank.return_air()
+	if(network)
+		var/datum/gas_mixture/tank_air = internal_tank.return_air()
+		if(!(tank_air in network.gases))
+			network.gases += tank_air
+		tank_air.room_atmos_network = network
 		network.update = 1
+		network.room_atmos_changed()
+	connected_port.wake_processing()
 	playsound(src, 'sound/mecha/gasconnected.ogg', 50, 1)
 	log_message("Connected to gas port.")
 	return 1
 
+// RS Edit: Portable Connector Processing (Lira, October 2026)
 /obj/mecha/proc/disconnect()
 	if(!connected_port)
 		return 0
 
 	var/datum/pipe_network/network = connected_port.return_network(src)
 	if(network)
-		network.gases -= internal_tank.return_air()
+		var/datum/gas_mixture/tank_air = internal_tank?.return_air()
+		network.gases -= tank_air
+		if(tank_air?.room_atmos_network == network)
+			tank_air.room_atmos_network = null
+		network.room_atmos_changed()
 
 	connected_port.connected_device = null
+	connected_port.on = 0
+	connected_port.wake_processing()
 	connected_port = null
 	playsound(src, 'sound/mecha/gasdisconnected.ogg', 50, 1)
 	src.log_message("Disconnected from gas port.")

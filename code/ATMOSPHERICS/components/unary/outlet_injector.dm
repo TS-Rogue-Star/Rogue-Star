@@ -101,6 +101,7 @@
 	frequency = new_frequency
 	if(frequency)
 		radio_connection = radio_controller.add_object(src, frequency)
+		broadcast_status() // RS Add: Computer and Related Machinery Idle Processing (Lira, October 2026)
 
 /obj/machinery/atmospherics/unary/outlet_injector/proc/broadcast_status()
 	if(!radio_connection)
@@ -131,7 +132,7 @@
 	if(!signal.data["tag"] || (signal.data["tag"] != id) || (signal.data["sigtype"]!="command"))
 		return 0
 
-	if(signal.data["power"])
+	if(!isnull(signal.data["power"])) // RS Edit: Computer and Related Machinery Idle Processing (Lira, October 2026)
 		update_use_power(text2num(signal.data["power"]))
 
 	if(signal.data["power_toggle"])
@@ -175,3 +176,16 @@
 			"<span class='notice'>You have unfastened \the [src].</span>", \
 			"You hear a ratchet.")
 		deconstruct()
+
+// RS Add: Computer and Related Machinery Idle Processing (Lira, October 2026)
+/obj/machinery/atmospherics/unary/outlet_injector/update_use_power(new_use_power)
+	var/old_use_power = use_power
+	. = ..()
+	if(use_power != old_use_power)
+		broadcast_status()
+
+// RS Add: Computer and Related Machinery Idle Processing (Lira, October 2026)
+/obj/machinery/atmospherics/unary/outlet_injector/vv_edit_var(var_name, new_value)
+	. = ..()
+	if(.)
+		broadcast_status()

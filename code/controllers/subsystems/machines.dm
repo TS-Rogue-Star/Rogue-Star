@@ -114,6 +114,7 @@ SUBSYSTEM_DEF(machines)
 
 /datum/controller/subsystem/machines/proc/process_machinery(resumed = 0)
 	if (!resumed)
+		flush_room_atmos_wakes() // RS Add: Room Atmosphere Processing (Lira, October 2026)
 		src.current_run = global.processing_machines.Copy()
 
 	var/wait = src.wait

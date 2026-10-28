@@ -1,7 +1,13 @@
+///////////////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star October 2026: Station Display and Media Processing //
+///////////////////////////////////////////////////////////////////////////////////////
+
 #define FONT_SIZE "5pt"
 #define FONT_COLOR "#09f"
 #define FONT_STYLE "Arial Black"
 #define SCROLL_SPEED 2
+
+GLOBAL_LIST_EMPTY(shuttle_status_displays) // RS Add: Station Display and Media Processing (Lira, October 2026)
 
 // Status display
 // (formerly Countdown timer display)
@@ -20,6 +26,7 @@
 	unacidable = TRUE
 	use_power = USE_POWER_IDLE
 	idle_power_usage = 10
+	processing_on_demand = TRUE // RS Add: Station Display and Media Processing (Lira, October 2026)
 	circuit =  /obj/item/weapon/circuitboard/status_display
 	var/mode = 1	// 0 = Blank
 					// 1 = Shuttle timer
@@ -53,6 +60,7 @@
 	var/seclevel = "green"
 
 /obj/machinery/status_display/Destroy()
+	GLOB.shuttle_status_displays -= src // RS Add: Station Display and Media Processing (Lira, October 2026)
 	if(radio_controller)
 		radio_controller.remove_object(src,frequency)
 	return ..()
@@ -67,26 +75,59 @@
 // register for radio system
 /obj/machinery/status_display/Initialize()
 	. = ..()
+	GLOB.shuttle_status_displays += src // RS Add: Station Display and Media Processing (Lira, October 2026)
 	if(radio_controller)
 		radio_controller.add_object(src, frequency)
 
 // timed process
+// RS Edit: Station Display and Media Processing (Lira, October 2026)
 /obj/machinery/status_display/process()
+	update()
+	if(!needs_processing())
+		return PROCESS_KILL
+
+// RS Add: Station Display and Media Processing (Lira, October 2026)
+/obj/machinery/status_display/proc/needs_processing()
+	if((stat & NOPOWER) || (friendc && !ignore_friendc))
+		return FALSE
+	switch(mode)
+		if(STATUS_DISPLAY_MESSAGE)
+			return index1 || index2
+		if(STATUS_DISPLAY_TRANSFER_SHUTTLE_TIME)
+			if(!emergency_shuttle?.shuttle)
+				return FALSE
+			if(emergency_shuttle.wait_for_launch || emergency_shuttle.shuttle.is_launching() || emergency_shuttle.shuttle.has_arrive_time())
+				return TRUE
+			if(emergency_shuttle.waiting_to_leave())
+				return emergency_shuttle.estimate_launch_time() >= 0
+			return emergency_shuttle.has_eta() && emergency_shuttle.estimate_arrival_time() >= 0
+		if(STATUS_DISPLAY_TIME)
+			return TRUE
+	return FALSE
+
+// RS Add: Station Display and Media Processing (Lira, October 2026)
+/obj/machinery/status_display/power_change()
+	. = ..()
 	if(stat & NOPOWER)
 		remove_display()
-		return
-	update()
+		set_light(0)
 
 /obj/machinery/status_display/emp_act(severity)
 	if(stat & (BROKEN|NOPOWER))
 		..(severity)
 		return
 	set_picture("ai_bsod")
+	wake_processing() // RS Add: Station Display and Media Processing (Lira, October 2026)
 	..(severity)
 
 // set what is displayed
 /obj/machinery/status_display/proc/update()
 	remove_display()
+	// RS Add Start: Station Display and Media Processing (Lira, October 2026)
+	if(stat & NOPOWER)
+		set_light(0)
+		return 1
+	// RS Add End
 	if(friendc && !ignore_friendc)
 		set_picture("ai_friend")
 		return 1
@@ -95,7 +136,7 @@
 		if(STATUS_DISPLAY_BLANK)	//blank
 			return 1
 		if(STATUS_DISPLAY_TRANSFER_SHUTTLE_TIME)				//emergency shuttle timer
-			if(!emergency_shuttle)
+			if(!emergency_shuttle?.shuttle) // RS Edit: Station Display and Media Processing (Lira, October 2026)
 				message1 = "-ETA-"
 				message2 = "Never" // You're here forever.
 				return 1
@@ -154,6 +195,7 @@
 		. += "The display says:<br>\t[sanitize(message1)]<br>\t[sanitize(message2)]"
 
 /obj/machinery/status_display/proc/set_message(m1, m2)
+	wake_processing() // RS Add: Station Display and Media Processing (Lira, October 2026)
 	if(m1)
 		index1 = (length(m1) > CHARS_PER_LINE)
 		message1 = m1
@@ -172,6 +214,11 @@
 	remove_display()
 	if(seclevel != newlevel)
 		seclevel = newlevel
+	// RS Add Start: Station Display and Media Processing (Lira, October 2026)
+	if(stat & NOPOWER)
+		set_light(0)
+		return
+	// RS Add End
 	switch(seclevel)
 		if("green")	set_light(l_range = 2, l_power = 0.25, l_color = "#00ff00")
 		if("yellow")	set_light(l_range = 2, l_power = 0.25, l_color = "#ffff00")
@@ -184,6 +231,7 @@
 
 // Called when the alert level is changed.
 /obj/machinery/status_display/proc/on_alert_changed(new_level)
+	wake_processing() // RS Add: Station Display and Media Processing (Lira, October 2026)
 	// On most alerts, this will change to a flashing alert picture in a specific color.
 	// Doing that for green alert automatically doesn't really make sense, but it is still available on the comm consoles/PDAs.
 	if(seclevel2num(new_level) == SEC_LEVEL_GREEN)
@@ -262,8 +310,18 @@
 			mode = STATUS_DISPLAY_TIME
 			set_light(0)
 	update()
+	wake_processing() // RS Add: Station Display and Media Processing (Lira, October 2026)
 
 #undef FONT_SIZE
 #undef FONT_COLOR
 #undef FONT_STYLE
 #undef SCROLL_SPEED
+
+// RS Add: Station Display and Media Processing (Lira, October 2026)
+/proc/wake_shuttle_status_displays(supply = FALSE)
+	for(var/obj/machinery/status_display/D as anything in GLOB.shuttle_status_displays)
+		if(supply)
+			if(istype(D, /obj/machinery/status_display/supply_display) && D.mode == D.STATUS_DISPLAY_CUSTOM)
+				D.wake_processing()
+		else if(D.mode == D.STATUS_DISPLAY_TRANSFER_SHUTTLE_TIME)
+			D.wake_processing()

@@ -17,6 +17,7 @@
 	if(mind && mind.current == src)
 		spellremove(src)
 	ghostize()
+	cloning_state_changed() // RS Add: Computer and Related Machinery Idle Processing (Lira, October 2026)
 	// RS Edit Start: Mob Deletion Optimization (Lira, September 2026)
 	QDEL_NULL(ability_master)
 	set_focus(null)
@@ -282,6 +283,7 @@
 	face_atom(A)
 	return 1
 
+// RS Add
 /mob/verb/tiltcounterclock()
 	set hidden = TRUE
 	if(world.time <= allowtilttime) //This is a sloppy "wait" fix to work around tilting durring the get-up animation
@@ -293,6 +295,7 @@
 		how_tilted = how_tilted - 5
 		is_shifted = TRUE
 
+// RS Add
 /mob/verb/tiltclock()
 	set hidden = TRUE
 	if(world.time <= allowtilttime) //This is a sloppy "wait" fix to work around tilting durring the get-up animation
@@ -1081,6 +1084,10 @@
 /mob/proc/set_stat(var/new_stat)
 	. = (stat != new_stat)
 	stat = new_stat
+	// RS Add Start: Computer and Related Machinery Idle Processing (Lira, October 2026)
+	if(.)
+		cloning_state_changed()
+	// RS Add End
 
 /mob/verb/face_direction()
 
@@ -1376,3 +1383,16 @@ GLOBAL_LIST_EMPTY_TYPED(living_players_by_zlevel, /list)
 /mob/proc/grab_ghost(force)
 	if(mind)
 		return mind.grab_ghost(force = force)
+
+// RS Add: Computer and Related Machinery Idle Processing (Lira, October 2026)
+/mob/proc/cloning_state_changed()
+	if(mind || client)
+		SEND_GLOBAL_SIGNAL(COMSIG_GLOB_CLONING_ELIGIBILITY_CHANGED, src, mind)
+
+// RS Add: Computer and Related Machinery Idle Processing (Lira, October 2026)
+/mob/vv_edit_var(var_name, new_value)
+	. = ..()
+	if(.)
+		cloning_state_changed()
+		if(var_name == "lying" && isturf(loc))
+			SEND_SIGNAL(loc, COMSIG_TURF_PATIENT_POSTURE_CHANGED, src)

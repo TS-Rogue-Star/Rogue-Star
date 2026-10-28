@@ -1418,6 +1418,7 @@
 			return  // User is not in this belly
 
 	R.setClickCooldown(50)
+	owner.ai_holder?.prey_struggled(R)	// RS ADD
 
 	// RS edit start - port virgo 15559
 	var/living_count = 0

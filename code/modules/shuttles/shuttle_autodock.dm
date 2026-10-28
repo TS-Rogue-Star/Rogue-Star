@@ -1,3 +1,7 @@
+///////////////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star October 2026: Station Display and Media Processing //
+///////////////////////////////////////////////////////////////////////////////////////
+
 // Subtype of shuttle that handles docking with docking controllers
 // Consists of code pulled down from the old /datum/shuttle and up from /datum/shuttle/ferry
 // Note: Since all known shuttles extend this type, this really could just be built into /datum/shuttle
@@ -179,6 +183,7 @@
 	in_use = user	//obtain an exclusive lock on the shuttle
 
 	process_state = WAIT_LAUNCH
+	notify_status_displays() // RS Add: Station Display and Media Processing (Lira, October 2026)
 	undock()
 
 // Queue shuttle for forced undock and launch by shuttle subsystem.

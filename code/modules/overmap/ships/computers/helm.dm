@@ -15,6 +15,8 @@ GLOBAL_LIST_EMPTY(all_waypoints)
 // End LEGACY_RECORD_STRUCTURE(all_waypoints, waypoint)
 
 /obj/machinery/computer/ship/helm
+	processing_enabled = TRUE // RS Add: Computer and Related Machinery Idle Processing (Lira, October 2026)
+	processing_on_demand = TRUE // RS Add: Computer and Related Machinery Idle Processing (Lira, October 2026)
 	name = "helm control console"
 	icon_keyboard = "teleport_key"
 	icon_screen = "helm"
@@ -52,8 +54,11 @@ GLOBAL_LIST_EMPTY(all_waypoints)
 			R.fields["y"] = S.y
 			known_sectors[S.name] = R
 
+// RS Edit: Computer and Related Machinery Idle Processing (Lira, October 2026)
 /obj/machinery/computer/ship/helm/process()
 	..()
+	if(QDELETED(linked) || !autopilot || !dx || !dy || autopilot_disabled)
+		return PROCESS_KILL
 	if(autopilot && dx && dy && !autopilot_disabled)
 		var/turf/T = locate(dx,dy,global.using_map.overmap_z)
 		if(linked.loc == T)
@@ -78,6 +83,8 @@ GLOBAL_LIST_EMPTY(all_waypoints)
 			else if(speed + acceleration <= speedlimit)
 				linked.accelerate(direction, accellimit)
 		linked.operator_skill = null//if this is on you can't dodge meteors
+		if(!autopilot)
+			return PROCESS_KILL
 		return
 
 /obj/machinery/computer/ship/helm/relaymove(var/mob/user, direction)
@@ -197,6 +204,7 @@ GLOBAL_LIST_EMPTY(all_waypoints)
 					return
 				if(newx)
 					dx = CLAMP(newx, 1, world.maxx)
+					wake_processing() // RS Add: Computer and Related Machinery Idle Processing (Lira, October 2026)
 
 			if(params["sety"])
 				var/newy = tgui_input_number(usr, "Input new destiniation y coordinate", "Coordinate input", dy)
@@ -204,6 +212,7 @@ GLOBAL_LIST_EMPTY(all_waypoints)
 					return
 				if(newy)
 					dy = CLAMP(newy, 1, world.maxy)
+					wake_processing() // RS Add: Computer and Related Machinery Idle Processing (Lira, October 2026)
 			. = TRUE
 
 		if("setds")
@@ -256,6 +265,10 @@ GLOBAL_LIST_EMPTY(all_waypoints)
 			. = TRUE
 
 	add_fingerprint(usr)
+	// RS Add Start: Computer and Related Machinery Idle Processing (Lira, October 2026)
+	if(.)
+		wake_processing()
+	// RS Add End
 	if(. && !issilicon(usr))
 		playsound(src, "terminal_type", 50, 1)
 
