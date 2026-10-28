@@ -80,14 +80,7 @@
 		holder.alpha = 64
 	else
 		expire()
-/*
-/datum/modifier/ghostwalk/tick()
-	. = ..()
-	var/turf/T = get_turf(holder)
-	if(!T)
-		return
-	for
-*/
+
 /datum/modifier/ghostwalk/expire(silent)
 	. = ..()
 	holder.incorporeal_move = 0
