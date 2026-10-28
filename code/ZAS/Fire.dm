@@ -194,6 +194,10 @@ If it gains pressure too slowly, it may leak or just rupture instead of explodin
 
 	firelevel = fl
 	air_master.active_hotspots.Add(src)
+	// RS Add Start: Airlock and Fire Safety Processing (Lira, October 2026)
+	var/turf/T = loc
+	T.room_atmos_changed()
+	// RS Add End
 
 /obj/fire/proc/fire_color(var/env_temperature)
 	var/temperature = max(4000*sqrt(firelevel/GLOB.vsc.fire_firelevel_multiplier), env_temperature) // RS Edit: vsc global fix (Lira, March 2026)
@@ -211,6 +215,7 @@ If it gains pressure too slowly, it may leak or just rupture instead of explodin
 
 		T.fire = null
 		loc = null
+		T.room_atmos_changed() // RS Add: Airlock and Fire Safety Processing (Lira, October 2026)
 	air_master.active_hotspots.Remove(src)
 
 
@@ -431,3 +436,13 @@ If it gains pressure too slowly, it may leak or just rupture instead of explodin
 	apply_damage(0.6*mx*legs_exposure,  BURN, BP_R_LEG, 0, 0, "Fire")
 	apply_damage(0.4*mx*arms_exposure,  BURN, BP_L_ARM, 0, 0, "Fire")
 	apply_damage(0.4*mx*arms_exposure,  BURN, BP_R_ARM, 0, 0, "Fire")
+
+// RS Add: Airlock and Fire Safety Processing (Lira, October 2026)
+/obj/fire/Moved(atom/old_loc, direction, forced = FALSE)
+	. = ..()
+	if(isturf(old_loc))
+		var/turf/T = old_loc
+		T.room_atmos_changed()
+	if(isturf(loc))
+		var/turf/T = loc
+		T.room_atmos_changed()

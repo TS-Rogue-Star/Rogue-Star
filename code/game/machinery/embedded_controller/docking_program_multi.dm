@@ -35,6 +35,7 @@
 	var/recipient = signal.data["recipient"]	//the intended recipient of the docking signal
 
 	if (receive_tag in children_tags)
+		master?.wake_processing() // RS Add: Airlock and Fire Safety Processing (Lira, October 2026)
 
 		//track children status
 		if (signal.data["override_status"])
@@ -123,6 +124,7 @@
 		src.master_tag = controller.master_tag
 
 /datum/embedded_program/airlock/multi_docking/receive_user_command(command)
+	master?.wake_processing() // RS Add: Airlock and Fire Safety Processing (Lira, October 2026)
 	if (command == "toggle_override")
 		if (override_enabled)
 			override_enabled = 0
@@ -144,6 +146,7 @@
 
 	if (receive_tag != master_tag)
 		return	//only respond to master
+	master?.wake_processing() // RS Add: Airlock and Fire Safety Processing (Lira, October 2026)
 
 	//track master's status
 	if (signal.data["dock_status"])
@@ -223,3 +226,7 @@
 	signal.data["tag"] = id_tag
 	signal.data["override_status"] = override_enabled? "enabled" : "disabled"
 	post_signal(signal)
+
+// RS Add: Airlock and Fire Safety Processing (Lira, October 2026)
+/datum/embedded_program/airlock/multi_docking/needs_processing()
+	return ..() || (docking_enabled && !response_sent)

@@ -1,3 +1,7 @@
+/////////////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star October 2026: Airlock and Fire Safety Processing //
+/////////////////////////////////////////////////////////////////////////////////////
+
 /*
 FIRE ALARM
 */
@@ -25,6 +29,7 @@ FIRE ALARM
 	var/seclevel
 	circuit = /obj/item/weapon/circuitboard/firealarm
 	var/alarms_hidden = FALSE //If the alarms from this machine are visible on consoles
+	processing_on_demand = TRUE // RS Add: Airlock and Fire Safety Processing (Lira, October 2026)
 
 /obj/machinery/firealarm/alarms_hidden
 	alarms_hidden = TRUE
@@ -135,9 +140,11 @@ FIRE ALARM
 	alarm()
 	return
 
+// RS Edit: Airlock and Fire Safety Processing (Lira, October 2026)
 /obj/machinery/firealarm/process()//Note: this processing was mostly phased out due to other code, and only runs when needed
+	watch_room_atmos(get_turf(src), null, null)
 	if(stat & (NOPOWER|BROKEN))
-		return
+		return PROCESS_KILL
 
 	if(timing)
 		if(time > 0)
@@ -146,14 +153,15 @@ FIRE ALARM
 			alarm()
 			time = 0
 			timing = 0
-			STOP_PROCESSING(SSobj, src)
 		updateDialog()
 	last_process = world.timeofday
 
 	if(locate(/obj/fire) in src.loc)
 		alarm()
+		return
 
-	return
+	if(!timing)
+		return PROCESS_KILL
 
 /obj/machinery/firealarm/power_change()
 	..()
@@ -303,3 +311,9 @@ Just a object used in constructing fire alarms
 		usr << browse(null, "window=partyalarm")
 		return
 	return
+
+// RS Add: Airlock and Fire Safety Processing (Lira, October 2026)
+/obj/machinery/firealarm/vv_edit_var(var_name, new_value)
+	if(var_name == "timing" && new_value && !timing)
+		last_process = world.timeofday
+	return ..()
