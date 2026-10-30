@@ -1,3 +1,7 @@
+/////////////////////////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star October 2026: Computer and Related Machinery Idle Processing //
+/////////////////////////////////////////////////////////////////////////////////////////////////
+
 #define DNA_BLOCK_SIZE 3
 
 // Buffer datatype flags.
@@ -96,6 +100,7 @@
 		precision_coeff = P.rating
 	for(var/obj/item/weapon/stock_parts/micro_laser/P in component_parts)
 		damage_coeff = P.rating
+	SEND_SIGNAL(src, COMSIG_CLONING_MACHINE_CHANGED) // RS Add: Computer and Related Machinery Idle Processing (Lira, October 2026)
 
 /obj/machinery/dna_scannernew/relaymove(mob/user as mob)
 	if(user.stat)
@@ -151,6 +156,7 @@
 	usr.client.eye = src
 	usr.loc = src
 	src.occupant = usr
+	SEND_SIGNAL(src, COMSIG_CLONING_MACHINE_CHANGED) // RS Add: Computer and Related Machinery Idle Processing (Lira, October 2026)
 	src.icon_state = "scanner_1"
 	src.add_fingerprint(usr)
 	SStgui.update_uis(src)
@@ -206,6 +212,7 @@
 		M.client.eye = src
 	M.loc = src
 	src.occupant = M
+	SEND_SIGNAL(src, COMSIG_CLONING_MACHINE_CHANGED) // RS Add: Computer and Related Machinery Idle Processing (Lira, October 2026)
 	src.icon_state = "scanner_1"
 
 	// search for ghosts, if the corpse is empty and the scanner is connected to a cloner
@@ -236,6 +243,7 @@
 	else
 		src.occupant.loc = src.loc
 	src.occupant = null
+	SEND_SIGNAL(src, COMSIG_CLONING_MACHINE_CHANGED) // RS Add: Computer and Related Machinery Idle Processing (Lira, October 2026)
 	src.icon_state = "scanner_0"
 	SStgui.update_uis(src)
 
@@ -799,3 +807,31 @@
 #undef PAGE_REJUVENATORS
 
 /////////////////////////// DNA MACHINES
+
+// RS Add: Computer and Related Machinery Idle Processing (Lira, October 2026)
+/obj/machinery/dna_scannernew/power_change()
+	. = ..()
+	if(.)
+		SEND_SIGNAL(src, COMSIG_CLONING_MACHINE_CHANGED)
+
+// RS Add: Computer and Related Machinery Idle Processing (Lira, October 2026)
+/obj/machinery/dna_scannernew/vv_edit_var(var_name, new_value)
+	. = ..()
+	if(.)
+		SEND_SIGNAL(src, COMSIG_CLONING_MACHINE_CHANGED)
+
+
+// RS Add: Computer and Related Machinery Idle Processing (Lira, October 2026)
+/obj/machinery/dna_scannernew/Exited(atom/movable/leaving, atom/new_loc)
+	. = ..()
+	if(leaving == occupant)
+		occupant = null
+		icon_state = "scanner_0"
+		SEND_SIGNAL(src, COMSIG_CLONING_MACHINE_CHANGED)
+
+// RS Add: Computer and Related Machinery Idle Processing (Lira, October 2026)
+/datum/dna2/record/vv_edit_var(var_name, new_value)
+	. = ..()
+	if(.)
+		var/datum/mind/record_mind = locate(mind)
+		SEND_GLOBAL_SIGNAL(COMSIG_GLOB_CLONING_ELIGIBILITY_CHANGED, null, record_mind)

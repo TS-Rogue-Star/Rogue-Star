@@ -1,3 +1,7 @@
+/////////////////////////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star October 2026: Computer and Related Machinery Idle Processing //
+/////////////////////////////////////////////////////////////////////////////////////////////////
+
 // POWERNET SENSOR
 //
 // Last Change 31.12.2014 by Atlantis
@@ -8,6 +12,7 @@
 // This is used in NanoUI, for example.
 
 /obj/machinery/power/sensor
+	processing_on_demand = TRUE // RS Add: Computer and Related Machinery Idle Processing (Lira, October 2026)
 	name = "Powernet Sensor"
 	desc = "Small machine which transmits data about specific powernet"
 	anchored = TRUE
@@ -35,19 +40,25 @@
 	. = ..()
 	history["supply"] = list()
 	history["demand"] = list()
+	// RS Add Start: Computer and Related Machinery Idle Processing (Lira, October 2026)
+	RegisterSignal(SSdcs, COMSIG_GLOB_POWER_TOPOLOGY_CHANGED, PROC_REF(wake_processing))
+	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_POWER_SENSORS_CHANGED)
+	// RS Add End
 
 // Proc: auto_set_name()
 // Parameters: None
 // Description: Sets name of this sensor according to the ID tag.
 /obj/machinery/power/sensor/proc/auto_set_name()
 	name = "[name_tag] - Powernet Sensor"
+	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_POWER_SENSORS_CHANGED) // RS Add: Computer and Related Machinery Idle Processing (Lira, October 2026)
 
 /obj/machinery/power/sensor/Destroy()
+	UnregisterSignal(SSdcs, COMSIG_GLOB_POWER_TOPOLOGY_CHANGED) // RS Add: Computer and Related Machinery Idle Processing (Lira, October 2026)
 	. = ..()
 	// TODO - Switch power_monitor to register deletion events instead of this.
 	for(var/obj/machinery/computer/power_monitor/PM in machines)
 		if(PM.power_monitor)
-			PM.power_monitor.refresh_sensors()
+			PM.refresh_power_sensors() // RS Edit: Computer and Related Machinery Idle Processing (Lira, October 2026)
 	history.Cut()
 	history = null
 
@@ -68,6 +79,10 @@
 	if(!powernet)
 		use_power = USE_POWER_IDLE
 		connect_to_network()
+		// RS Add Start: Computer and Related Machinery Idle Processing (Lira, October 2026)
+		if(!powernet)
+			return PROCESS_KILL
+		// RS Add End
 	else
 		use_power = USE_POWER_ACTIVE
 		record()
@@ -271,3 +286,17 @@
 
 
 
+
+// RS Add: Computer and Related Machinery Idle Processing (Lira, October 2026)
+/obj/machinery/power/sensor/Moved(atom/old_loc, direction, forced = FALSE)
+	. = ..()
+	disconnect_from_network()
+	wake_processing()
+	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_POWER_SENSORS_CHANGED)
+
+// RS Add: Computer and Related Machinery Idle Processing (Lira, October 2026)
+/obj/machinery/power/sensor/vv_edit_var(var_name, new_value)
+	. = ..()
+	if(.)
+		wake_processing()
+		SEND_GLOBAL_SIGNAL(COMSIG_GLOB_POWER_SENSORS_CHANGED)

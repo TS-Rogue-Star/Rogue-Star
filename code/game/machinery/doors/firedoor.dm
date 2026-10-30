@@ -1,3 +1,7 @@
+/////////////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star October 2026: Airlock and Fire Safety Processing //
+/////////////////////////////////////////////////////////////////////////////////////
+
 
 #define FIREDOOR_MAX_PRESSURE_DIFF 25 // kPa
 #define FIREDOOR_MAX_TEMP 50 // °C
@@ -34,6 +38,7 @@
 	var/list/areas_added
 	var/list/users_to_open = new
 	var/next_process_time = 0
+	processing_on_demand = TRUE // RS Add: Airlock and Fire Safety Processing (Lira, October 2026)
 
 	var/hatch_open = 0
 
@@ -57,18 +62,8 @@
 		if(F != src)
 			log_debug("Duplicate firedoors at [x],[y],[z]")
 			return INITIALIZE_HINT_QDEL
-	
-	var/area/A = get_area(src)
-	ASSERT(istype(A))
 
-	LAZYADD(A.all_doors, src)
-	areas_added = list(A)
-
-	for(var/direction in cardinal)
-		A = get_area(get_step(src,direction))
-		if(istype(A) && !(A in areas_added))
-			LAZYADD(A.all_doors, src)
-			areas_added += A
+	update_area_membership() // RS Edit: Airlock and Fire Safety Processing (Lira, October 2026)
 
 /obj/machinery/door/firedoor/Destroy()
 	for(var/area/A in areas_added)
@@ -80,7 +75,7 @@
 
 /obj/machinery/door/firedoor/examine(mob/user)
 	. = ..()
-	
+
 	if(!Adjacent(user))
 		return .
 
@@ -156,6 +151,8 @@
 	"\The [src]", list("Yes, [density ? "open" : "close"]", "No"))
 	if(answer == "No")
 		return
+	if(!answer) //RS ADD - Don't toggle if we get no answer (i.e. User closes the window)
+		return  //RS ADD
 	toggle_for(user) // RS ADD
 
 // RS ADD Start
@@ -362,11 +359,19 @@
 	return ..()
 
 // CHECK PRESSURE
+// RS Edit: Airlock and Fire Safety Processing (Lira, October 2026)
 /obj/machinery/door/firedoor/process()
 	..()
 
 	if(!density)
-		return PROCESS_KILL
+		QDEL_NULL(room_atmos_subscription)
+		if(!close_door_at)
+			return PROCESS_KILL
+		return
+	if(!room_atmos_subscription)
+		room_atmos_subscription = new /datum/room_atmos_subscription/firedoor(src)
+	var/datum/room_atmos_subscription/firedoor/subscription = room_atmos_subscription
+	subscription.bind_neighbors(get_turf(src))
 	if(next_process_time <= world.time)
 		next_process_time = world.time + 100		// 10 second delays between process updates
 		var/changed = 0
@@ -407,6 +412,8 @@
 			changed = 1
 		if(changed)
 			update_icon()
+		if(!close_door_at && subscription.neighbor_turfs)
+			return PROCESS_KILL
 
 /obj/machinery/door/firedoor/proc/latetoggle()
 	if(operating || !nextstate)
@@ -426,7 +433,7 @@
 	. = ..()
 	// Queue us for processing when we are closed!
 	if(density)
-		START_MACHINE_PROCESSING(src)
+		wake_processing() // RS Edit: Airlock and Fire Safety Processing (Lira, October 2026)
 
 /obj/machinery/door/firedoor/open(var/forced = 0)
 	if(hatch_open)
@@ -444,7 +451,11 @@
 			log_admin("[usr]([usr.ckey]) has forced open an emergency shutter.")
 			message_admins("[usr]([usr.ckey]) has forced open an emergency shutter.")
 	latetoggle()
-	return ..()
+	// RS Edit Start: Airlock and Fire Safety Processing (Lira, October 2026)
+	. = ..()
+	wake_processing()
+	return .
+	// RS Edit End
 
 /obj/machinery/door/firedoor/do_animate(animation)
 	switch(animation)
@@ -533,3 +544,30 @@
 	icon = 'icons/obj/doors/DoorHazardGlass.dmi'
 	icon_state = "door_open"
 	glass = 1
+
+// RS Add: Airlock and Fire Safety Processing (Lira, October 2026)
+/obj/machinery/door/firedoor/autoclose_in(delay)
+	close_door_at = world.time + delay
+	wake_processing()
+
+// RS Edit: Airlock and Fire Safety Processing (Lira, October 2026)
+/obj/machinery/door/firedoor/proc/update_area_membership()
+	for(var/area/old_area in areas_added)
+		LAZYREMOVE(old_area.all_doors, src)
+	var/area/A = get_area(src)
+	ASSERT(istype(A))
+
+	LAZYADD(A.all_doors, src)
+	areas_added = list(A)
+
+	for(var/direction in cardinal)
+		A = get_area(get_step(src,direction))
+		if(istype(A) && !(A in areas_added))
+			LAZYADD(A.all_doors, src)
+			areas_added += A
+
+// RS Add: Airlock and Fire Safety Processing (Lira, October 2026)
+/obj/machinery/door/firedoor/Moved(atom/old_loc, direction, forced = FALSE)
+	. = ..()
+	if(areas_added && !QDELETED(src))
+		update_area_membership()

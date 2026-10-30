@@ -1,3 +1,7 @@
+/////////////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star October 2026: Airlock and Fire Safety Processing //
+/////////////////////////////////////////////////////////////////////////////////////
+
 /obj/machinery/embedded_controller
 	name = "Embedded Controller"
 	anchored = TRUE
@@ -6,6 +10,7 @@
 	var/datum/embedded_program/program	//the currently executing program
 	var/list/valid_actions = list()
 	var/on = 1
+	processing_on_demand = TRUE // RS Add: Airlock and Fire Safety Processing (Lira, October 2026)
 
 /obj/machinery/embedded_controller/Initialize()
 	if(ispath(program))
@@ -39,11 +44,14 @@
 	if(usr)
 		add_fingerprint(usr)
 
+// RS Edit: Airlock and Fire Safety Processing (Lira, October 2026)
 /obj/machinery/embedded_controller/process()
 	if(program)
 		program.process()
 
 	update_icon()
+	if(!program || !program.needs_processing())
+		return PROCESS_KILL
 
 /obj/machinery/embedded_controller/attack_ai(mob/user as mob)
 	tgui_interact(user)

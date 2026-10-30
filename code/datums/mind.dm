@@ -93,6 +93,7 @@
 
 	if(new_character.mind)		//remove any mind currently in our new body's mind variable
 		new_character.mind.current = null
+		SEND_GLOBAL_SIGNAL(COMSIG_GLOB_CLONING_ELIGIBILITY_CHANGED, new_character, new_character.mind) // RS Add: Computer and Related Machinery Idle Processing (Lira, October 2026)
 
 	current = new_character		//link ourself to our new body
 	new_character.mind = src	//and link our new body to ourself
@@ -102,6 +103,7 @@
 
 	if(active)
 		new_character.key = key		//now transfer the key to link the client to our new body
+	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_CLONING_ELIGIBILITY_CHANGED, new_character, src) // RS Add: Computer and Related Machinery Idle Processing (Lira, October 2026)
 
 /datum/mind/proc/store_memory(new_text)
 	memory += "[new_text]<BR>"
@@ -577,3 +579,9 @@
 	. = ..()
 	mind.assigned_role = "Juggernaut"
 	mind.special_role = "Cultist"
+
+// RS Add: Computer and Related Machinery Idle Processing (Lira, October 2026)
+/datum/mind/vv_edit_var(var_name, new_value)
+	. = ..()
+	if(.)
+		SEND_GLOBAL_SIGNAL(COMSIG_GLOB_CLONING_ELIGIBILITY_CHANGED, current, src)

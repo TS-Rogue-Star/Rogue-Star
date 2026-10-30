@@ -1,4 +1,10 @@
+/////////////////////////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star October 2026: Computer and Related Machinery Idle Processing //
+/////////////////////////////////////////////////////////////////////////////////////////////////
+
 /obj/machinery/computer/ship/sensors
+	processing_enabled = TRUE // RS Add: Computer and Related Machinery Idle Processing (Lira, October 2026)
+	processing_on_demand = TRUE // RS Add: Computer and Related Machinery Idle Processing (Lira, October 2026)
 	name = "sensors console"
 	icon_keyboard = "teleport_key"
 	icon_screen = "teleport"
@@ -19,13 +25,40 @@
 		return
 	find_sensors()
 
+// RS Edit: Computer and Related Machinery Idle Processing (Lira, October 2026)
 /obj/machinery/computer/ship/sensors/proc/find_sensors()
-	if(!linked)
-		return
-	for(var/obj/machinery/shipsensors/S in global.machines)
-		if(linked.check_ownership(S))
-			sensors = S
-			break
+	var/obj/machinery/shipsensors/found
+	if(!QDELETED(linked))
+		for(var/obj/machinery/shipsensors/S in global.machines)
+			if(linked.check_ownership(S))
+				found = S
+				break
+	set_sensors(found)
+
+// RS Add: Computer and Related Machinery Idle Processing (Lira, October 2026)
+/obj/machinery/computer/ship/sensors/proc/set_sensors(obj/machinery/shipsensors/new_sensors)
+	if(sensors)
+		UnregisterSignal(sensors, list(COMSIG_SHIP_SENSOR_CHANGED, COMSIG_PARENT_QDELETING))
+	sensors = QDELETED(new_sensors) ? null : new_sensors
+	if(sensors)
+		RegisterSignal(sensors, COMSIG_SHIP_SENSOR_CHANGED, PROC_REF(wake_processing))
+		RegisterSignal(sensors, COMSIG_PARENT_QDELETING, PROC_REF(sensor_deleted))
+	wake_processing()
+
+// RS Add: Computer and Related Machinery Idle Processing (Lira, October 2026)
+/obj/machinery/computer/ship/sensors/proc/sensor_deleted()
+	SIGNAL_HANDLER
+	set_sensors(null)
+
+// RS Add: Computer and Related Machinery Idle Processing (Lira, October 2026)
+/obj/machinery/computer/ship/sensors/vv_edit_var(var_name, new_value)
+	if(var_name == NAMEOF(src, sensors))
+		if(new_value && !istype(new_value, /obj/machinery/shipsensors))
+			return FALSE
+		set_sensors(new_value)
+		datum_flags |= DF_VAR_EDITED
+		return TRUE
+	return ..()
 
 /obj/machinery/computer/ship/sensors/tgui_interact(mob/user, datum/tgui/ui)
 	if(!linked)
@@ -119,17 +152,20 @@
 	if(. && !issilicon(usr))
 		playsound(src, "terminal_type", 50, 1)
 
+// RS Edit: Computer and Related Machinery Idle Processing (Lira, October 2026)
 /obj/machinery/computer/ship/sensors/process()
 	..()
-	if(!linked)
-		return
-	if(sensors && sensors.use_power && sensors.powered())
+	if(QDELETED(linked))
+		return PROCESS_KILL
+	if(!QDELETED(sensors) && sensors.use_power && sensors.powered())
 		var/sensor_range = round(sensors.range*1.5) + 1
 		linked.set_light(sensor_range + 0.5)
 	else
 		linked.set_light(0)
+	return PROCESS_KILL
 
 /obj/machinery/shipsensors
+	processing_on_demand = TRUE // RS Add: Computer and Related Machinery Idle Processing (Lira, October 2026)
 	name = "sensors suite"
 	desc = "Long range gravity scanner with various other sensors, used to detect irregularities in surrounding space. Can only run in vacuum to protect delicate quantum BS elements." //VOREStation Edit
 	icon = 'icons/obj/stationobjs_vr.dmi' //VOREStation Edit
@@ -202,6 +238,7 @@
 	update_use_power(!use_power)
 	update_icon()
 
+// RS Edit: Computer and Related Machinery Idle Processing (Lira, October 2026)
 /obj/machinery/shipsensors/process()
 	if(use_power) //can't run in non-vacuum
 		if(!in_vacuum())
@@ -218,15 +255,21 @@
 
 	if (heat > 0)
 		heat = max(0, heat - heat_reduction)
+	if(!use_power && !heat)
+		return PROCESS_KILL
 
+// RS Edit: Computer and Related Machinery Idle Processing (Lira, October 2026)
 /obj/machinery/shipsensors/power_change()
 	. = ..()
 	if(use_power && !powered())
 		toggle()
+	else if(.)
+		sensor_state_changed()
 
 /obj/machinery/shipsensors/proc/set_range(nrange)
 	range = nrange
 	change_power_consumption(1500 * (range**2), USE_POWER_IDLE) //Exponential increase, also affects speed of overheating
+	sensor_state_changed() // RS Add: Computer and Related Machinery Idle Processing (Lira, October 2026)
 
 /obj/machinery/shipsensors/emp_act(severity)
 	if(!use_power)
@@ -242,3 +285,25 @@
 /obj/machinery/shipsensors/weak
 	heat_reduction = 0.2
 	desc = "Miniaturized gravity scanner with various other sensors, used to detect irregularities in surrounding space. Can only run in vacuum to protect delicate quantum bluespace elements."
+
+// RS Add: Computer and Related Machinery Idle Processing (Lira, October 2026)
+/obj/machinery/shipsensors/proc/sensor_state_changed()
+	wake_processing()
+	SEND_SIGNAL(src, COMSIG_SHIP_SENSOR_CHANGED)
+
+// RS Add: Computer and Related Machinery Idle Processing (Lira, October 2026)
+/obj/machinery/shipsensors/vv_edit_var(var_name, new_value)
+	. = ..()
+	if(.)
+		sensor_state_changed()
+
+// RS Add: Computer and Related Machinery Idle Processing (Lira, October 2026)
+/obj/machinery/shipsensors/Moved(atom/old_loc, direction, forced = FALSE)
+	. = ..()
+	sensor_state_changed()
+
+// RS Add: Computer and Related Machinery Idle Processing (Lira, October 2026)
+/obj/machinery/shipsensors/update_use_power(new_use_power)
+	. = ..()
+	if(.)
+		sensor_state_changed()

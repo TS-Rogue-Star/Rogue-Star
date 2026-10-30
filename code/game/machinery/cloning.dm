@@ -1,3 +1,7 @@
+/////////////////////////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star October 2026: Computer and Related Machinery Idle Processing //
+/////////////////////////////////////////////////////////////////////////////////////////////////
+
 //Cloning revival method.
 //The pod handles the actual cloning while the computer manages the clone profiles
 
@@ -27,6 +31,7 @@
 #define MINIMUM_HEAL_LEVEL 40
 
 /obj/machinery/clonepod
+	processing_on_demand = TRUE // RS Add: Computer and Related Machinery Idle Processing (Lira, October 2026)
 	name = "cloning pod"
 	desc = "An electronically-lockable pod for growing organic tissue."
 	density = TRUE
@@ -105,6 +110,7 @@
 
 	var/mob/living/carbon/human/H = new /mob/living/carbon/human(src, R.dna.species)
 	occupant = H
+	wake_processing() // RS Add: Computer and Related Machinery Idle Processing (Lira, October 2026)
 
 	if(!R.dna.real_name)	//to prevent null names
 		R.dna.real_name = "clone ([rand(0,999)])"
@@ -171,19 +177,20 @@
 	return 1
 
 //Grow clones to maturity then kick them out.  FREELOADERS
+// RS Edit: Computer and Related Machinery Idle Processing (Lira, October 2026)
 /obj/machinery/clonepod/process()
 	if(stat & NOPOWER) //Autoeject if power is lost
 		if(occupant)
 			locked = 0
 			go_out()
-		return
+		return PROCESS_KILL
 
 	if((occupant) && (occupant.loc == src))
 		if((occupant.stat == DEAD) || (occupant.suiciding) || !occupant.key)  //Autoeject corpses and suiciding dudes.
 			locked = 0
 			go_out()
 			connected_message("Clone Rejected: Deceased.")
-			return
+			return PROCESS_KILL
 
 		else if(occupant.health < heal_level && occupant.getCloneLoss() > 0)
 			occupant.Paralyse(4)
@@ -210,13 +217,14 @@
 			connected_message("Cloning Process Complete.")
 			locked = 0
 			go_out()
-			return
+			return PROCESS_KILL
 
 	else if((!occupant) || (occupant.loc != src))
 		occupant = null
 		if(locked)
 			locked = 0
-		return
+		connected?.wake_processing()
+		return PROCESS_KILL
 
 	return
 
@@ -302,6 +310,7 @@
 	for(var/obj/item/weapon/stock_parts/manipulator/P in component_parts)
 		speed_coeff += P.rating
 	heal_level = max(min((efficiency * 15) + 10, 100), MINIMUM_HEAL_LEVEL)
+	connected?.wake_processing() // RS Add: Computer and Related Machinery Idle Processing (Lira, October 2026)
 
 /obj/machinery/clonepod/proc/get_completion()
 	. = (100 * ((occupant.health + 100) / (heal_level + 100)))
@@ -323,6 +332,7 @@
 
 	if(mess) //Clean that mess and dump those gibs!
 		mess = 0
+		connected?.wake_processing() // RS Add: Computer and Related Machinery Idle Processing (Lira, October 2026)
 		gibs(src.loc)
 		update_icon()
 		return
@@ -340,6 +350,7 @@
 		if(!(patient.species.flags & NO_SCAN)) //If, for some reason, someone makes a genetically-unalterable clone, let's not make them permanently disabled.
 			domutcheck(occupant) //Waiting until they're out before possible transforming.
 	occupant = null
+	connected?.wake_processing() // RS Add: Computer and Related Machinery Idle Processing (Lira, October 2026)
 
 	update_icon()
 	return
@@ -588,3 +599,19 @@
 		if(istype(A, /obj/machinery/clonepod))
 			A:malfunction()
 */
+
+// RS Add: Computer and Related Machinery Idle Processing (Lira, October 2026)
+/obj/machinery/clonepod/Destroy()
+	if(connected)
+		connected.pods -= src
+		if(connected.selected_pod == src)
+			connected.selected_pod = null
+		connected.wake_processing()
+		connected = null
+	return ..()
+
+// RS Add: Computer and Related Machinery Idle Processing (Lira, October 2026)
+/obj/machinery/clonepod/vv_edit_var(var_name, new_value)
+	. = ..()
+	if(.)
+		connected?.wake_processing()

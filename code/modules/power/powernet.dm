@@ -1,3 +1,7 @@
+/////////////////////////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star October 2026: Computer and Related Machinery Idle Processing //
+/////////////////////////////////////////////////////////////////////////////////////////////////
+
 /datum/powernet
 	var/list/cables = list()	// all cables & junctions
 	var/list/nodes = list()		// all connected machines
@@ -31,6 +35,7 @@
 	for(var/obj/machinery/power/M in nodes)
 		nodes -= M
 		M.powernet = null
+	SSmachines.queue_power_topology_change() // RS Add: Computer and Related Machinery Idle Processing (Lira, October 2026)
 	STOP_PROCESSING_POWERNET(src)
 	return ..()
 
@@ -53,6 +58,7 @@
 /datum/powernet/proc/remove_cable(var/obj/structure/cable/C)
 	cables -= C
 	C.powernet = null
+	SSmachines.queue_power_topology_change() // RS Add: Computer and Related Machinery Idle Processing (Lira, October 2026)
 	if(is_empty())//the powernet is now empty...
 		qdel(src)///... delete it
 
@@ -66,6 +72,7 @@
 			C.powernet.remove_cable(C) //..remove it
 	C.powernet = src
 	cables +=C
+	SSmachines.queue_power_topology_change() // RS Add: Computer and Related Machinery Idle Processing (Lira, October 2026)
 
 //remove a power machine from the current powernet
 //if the powernet is then empty, delete it
@@ -73,6 +80,7 @@
 /datum/powernet/proc/remove_machine(var/obj/machinery/power/M)
 	nodes -=M
 	M.powernet = null
+	SSmachines.queue_power_topology_change() // RS Add: Computer and Related Machinery Idle Processing (Lira, October 2026)
 	if(is_empty())//the powernet is now empty...
 		qdel(src)///... delete it - qdel
 
@@ -87,10 +95,16 @@
 			M.disconnect_from_network()//..remove it
 	M.powernet = src
 	nodes[M] = M
+	SSmachines.queue_power_topology_change() // RS Add: Computer and Related Machinery Idle Processing (Lira, October 2026)
 
 // Triggers warning for certain amount of ticks
 /datum/powernet/proc/trigger_warning(var/duration_ticks = 20)
+	var/was_warning = !!problem // RS Add: Computer and Related Machinery Idle Processing (Lira, October 2026)
 	problem = max(duration_ticks, problem)
+	// RS Add Start: Computer and Related Machinery Idle Processing (Lira, October 2026)
+	if(!!problem != was_warning)
+		SEND_GLOBAL_SIGNAL(COMSIG_GLOB_POWER_WARNING_CHANGED)
+	// RS Add End
 
 
 //handles the power changes in the powernet
@@ -100,6 +114,10 @@
 
 	if(problem > 0)
 		problem = max(problem - 1, 0)
+		// RS Add Start: Computer and Related Machinery Idle Processing (Lira, October 2026)
+		if(!problem)
+			SEND_GLOBAL_SIGNAL(COMSIG_GLOB_POWER_WARNING_CHANGED)
+		// RS Add End
 
 	if(nodes && nodes.len) // Added to fix a bad list bug -- TLE
 		for(var/obj/machinery/power/terminal/term in nodes)
@@ -191,3 +209,10 @@
 
 /area/proc/get_apc()
 	return apc
+
+// RS Add: Computer and Related Machinery Idle Processing (Lira, October 2026)
+/datum/powernet/vv_edit_var(var_name, new_value)
+	var/was_warning = !!problem
+	. = ..()
+	if(. && !!problem != was_warning)
+		SEND_GLOBAL_SIGNAL(COMSIG_GLOB_POWER_WARNING_CHANGED)

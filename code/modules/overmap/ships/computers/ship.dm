@@ -14,6 +14,10 @@ somewhere on that shuttle. Subtypes of these can be then used to perform ship ov
 		return
 	if(sector.check_ownership(src))
 		linked = sector
+		// RS Add Start: Computer and Related Machinery Idle Processing (Lira, October 2026)
+		if(processing_on_demand)
+			wake_processing()
+		// RS Add End
 		return 1
 
 /obj/machinery/computer/ship/proc/sync_linked(var/user = null)
@@ -117,8 +121,9 @@ somewhere on that shuttle. Subtypes of these can be then used to perform ship ov
 	else
 		return 0
 
+// RS Edit: Computer and Related Machinery Idle Processing (Lira, October 2026)
 /obj/machinery/computer/ship/sensors/Destroy()
-	sensors = null
+	set_sensors(null)
 	if(LAZYLEN(viewers))
 		for(var/datum/weakref/W in viewers)
 			var/M = W.resolve()

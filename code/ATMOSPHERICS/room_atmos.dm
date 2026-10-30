@@ -72,6 +72,7 @@ var/global/list/room_atmos_changed_networks = list()
 
 /datum/room_atmos_subscription
 	var/obj/machinery/machine
+	var/turf/owner_turf
 	var/turf/environment_turf
 	var/datum/gas_mixture/environment
 	var/datum/pipe_network/network
@@ -94,6 +95,9 @@ var/global/list/room_atmos_changed_networks = list()
 	return ..()
 
 /datum/room_atmos_subscription/proc/clear_sources()
+	if(owner_turf)
+		UnregisterSignal(owner_turf, COMSIG_PARENT_QDELETING)
+		owner_turf = null
 	if(environment_turf)
 		UnregisterSignal(environment_turf, list(COMSIG_TURF_ATMOS_CHANGED, COMSIG_PARENT_QDELETING))
 		environment_turf = null
@@ -112,16 +116,22 @@ var/global/list/room_atmos_changed_networks = list()
 	machine?.wake_processing()
 
 /datum/room_atmos_subscription/proc/bind(turf/T, datum/gas_mixture/G, datum/pipe_network/N)
+	var/turf/new_owner_turf = get_turf(machine)
+	if(new_owner_turf == T)
+		new_owner_turf = null
 	if(QDELETED(N))
 		N = null
 	if(!istype(T, /turf/simulated))
 		G = null
-	if(T == environment_turf && G == environment && N == network)
+	if(new_owner_turf == owner_turf && T == environment_turf && G == environment && N == network)
 		return
 	clear_sources()
+	owner_turf = new_owner_turf
 	environment_turf = T
 	environment = G
 	network = N
+	if(owner_turf)
+		RegisterSignal(owner_turf, COMSIG_PARENT_QDELETING, PROC_REF(invalidate))
 	if(T)
 		RegisterSignal(T, list(COMSIG_TURF_ATMOS_CHANGED, COMSIG_PARENT_QDELETING), PROC_REF(invalidate))
 	if(G)

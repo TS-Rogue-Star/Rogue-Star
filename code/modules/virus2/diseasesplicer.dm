@@ -1,4 +1,6 @@
 /obj/machinery/computer/diseasesplicer
+	processing_enabled = TRUE // RS Add: Computer and Related Machinery Idle Processing (Lira, October 2026)
+	processing_on_demand = TRUE // RS Add: Computer and Related Machinery Idle Processing (Lira, October 2026)
 	name = "disease splicer"
 	icon_keyboard = "med_key"
 	icon_screen = "crew"
@@ -93,9 +95,10 @@
 
 	return data
 
+// RS Edit: Computer and Related Machinery Idle Processing (Lira, October 2026)
 /obj/machinery/computer/diseasesplicer/process()
-	if(stat & (NOPOWER|BROKEN))
-		return
+	if(stat & (NOPOWER|BROKEN) || (!scanning && !splicing && !burning))
+		return PROCESS_KILL
 
 	if(scanning)
 		scanning -= 1
@@ -129,6 +132,8 @@
 
 			ping("\The [src] pings, \"Backup disk saved.\"")
 			SStgui.update_uis(src)
+	if(!scanning && !splicing && !burning)
+		return PROCESS_KILL
 
 /obj/machinery/computer/diseasesplicer/tgui_act(action, list/params, datum/tgui/ui, datum/tgui_state/state)
 	if(..())
@@ -136,6 +141,7 @@
 
 	var/mob/user = usr
 	add_fingerprint(user)
+	wake_processing() // RS Add: Computer and Related Machinery Idle Processing (Lira, October 2026)
 
 	switch(action)
 		if("grab")

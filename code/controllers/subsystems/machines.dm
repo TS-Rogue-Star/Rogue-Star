@@ -1,3 +1,7 @@
+/////////////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star October 2026: Airlock and Fire Safety Processing //
+/////////////////////////////////////////////////////////////////////////////////////
+
 #define SSMACHINES_PIPENETS      1
 #define SSMACHINES_MACHINERY     2
 #define SSMACHINES_POWERNETS     3
@@ -22,6 +26,7 @@ SUBSYSTEM_DEF(machines)
 	var/cost_power_objects = 0
 
 	var/list/current_run = list()
+	var/power_topology_pending = FALSE // RS Add: Airlock and Fire Safety Processing (Lira, October 2026)
 
 /datum/controller/subsystem/machines/Initialize(timeofday)
 	makepowernets()
@@ -57,7 +62,7 @@ SUBSYSTEM_DEF(machines)
 // RS Edit: Atmos Initialization Cleanup (Lira, September 2026)
 /datum/controller/subsystem/machines/proc/setup_atmos_machinery(list/atmos_machines)
 	var/list/actual_atmos_machines = list()
-	
+
 	for(var/obj/machinery/atmospherics/machine in atmos_machines)
 		if(!QDELETED(machine))
 			machine.atmos_init()
@@ -112,8 +117,20 @@ SUBSYSTEM_DEF(machines)
 		if(MC_TICK_CHECK)
 			return
 
+// RS Add: Airlock and Fire Safety Processing (Lira, October 2026)
+/datum/controller/subsystem/machines/proc/queue_power_topology_change()
+	power_topology_pending = TRUE
+
+// RS Add: Airlock and Fire Safety Processing (Lira, October 2026)
+/datum/controller/subsystem/machines/proc/flush_power_topology_changes()
+	if(!power_topology_pending)
+		return
+	power_topology_pending = FALSE
+	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_POWER_TOPOLOGY_CHANGED)
+
 /datum/controller/subsystem/machines/proc/process_machinery(resumed = 0)
 	if (!resumed)
+		flush_power_topology_changes() // RS Add: Airlock and Fire Safety Processing (Lira, October 2026)
 		flush_room_atmos_wakes() // RS Add: Room Atmosphere Processing (Lira, October 2026)
 		src.current_run = global.processing_machines.Copy()
 
@@ -163,6 +180,7 @@ SUBSYSTEM_DEF(machines)
 			return
 
 /datum/controller/subsystem/machines/Recover()
+	power_topology_pending = SSmachines.power_topology_pending // RS Add: Airlock and Fire Safety Processing (Lira, October 2026)
 	for(var/datum/D as anything in global.pipe_networks)
 		if(!istype(D, /datum/pipe_network))
 			error("Found wrong type during SSmachinery recovery: list=global.pipe_networks, item=[D], type=[D?.type]")

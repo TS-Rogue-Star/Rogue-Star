@@ -17,6 +17,7 @@
 
 /obj/machinery/embedded_controller/radio/airlock/docking_port/Initialize()
 	. = ..()
+	QDEL_NULL(program) // RS Add: Airlock and Fire Safety Processing (Lira, October 2026)
 	airlock_program = new/datum/embedded_program/airlock/docking(src)
 	docking_program = new/datum/embedded_program/docking/airlock(src, airlock_program)
 	program = docking_program
@@ -173,3 +174,18 @@
 	src.program:initiate_undocking()
 
 */
+
+// RS Add: Airlock and Fire Safety Processing (Lira, October 2026)
+/datum/embedded_program/docking/airlock/needs_processing()
+	return ..() || airlock_program?.needs_processing()
+
+// RS Add: Airlock and Fire Safety Processing (Lira, October 2026)
+/datum/embedded_program/docking/airlock/Destroy()
+	QDEL_NULL(airlock_program)
+	return ..()
+
+// RS Add: Airlock and Fire Safety Processing (Lira, October 2026)
+/obj/machinery/embedded_controller/radio/airlock/docking_port/Destroy()
+	. = ..()
+	airlock_program = null
+	docking_program = null
