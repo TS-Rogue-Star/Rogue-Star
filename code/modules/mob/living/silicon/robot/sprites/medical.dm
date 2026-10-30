@@ -156,6 +156,8 @@
 	rest_sprite_options = list("Default", "Bellyup")
 
 
+
+
 // Surgeon
 
 // Regular sprites
@@ -259,6 +261,10 @@
 	module_type = "Surgeon"
 	sprite_icon = 'icons/mob/robot/surgical_large.dmi'
 
+
+
+
+//back to normal glamour
 /datum/robot_sprite/dogborg/tall/surgical/do_equipment_glamour(var/obj/item/weapon/robot_module/module)
 	if(!has_custom_equipment_sprites)
 		return
@@ -406,6 +412,7 @@
 	module_type = "Crisis"
 	sprite_icon = 'icons/mob/robot/crisis_large.dmi'
 
+
 /datum/robot_sprite/dogborg/tall/crisis/do_equipment_glamour(var/obj/item/weapon/robot_module/module)
 	if(!has_custom_equipment_sprites)
 		return
@@ -429,3 +436,43 @@
 	sprite_icon_state = "raptor"
 	has_custom_equipment_sprites = TRUE
 	rest_sprite_options = list("Default", "Bellyup")
+
+// dullahan crisis sprite stuff (tall)
+
+/datum/robot_sprite/dogborg/tall/dullahanmedicalmodule
+	module_type = list("Crisis", "Surgeon")
+	sprite_icon = 'icons/mob/dullahanborg/dullahan_med.dmi'
+
+/datum/robot_sprite/dogborg/tall/dullahanmedicalmodule/do_equipment_glamour(var/obj/item/weapon/robot_module/module)
+	if(!has_custom_equipment_sprites)
+		return
+
+	..()
+
+	var/obj/item/weapon/shockpaddles/robot/SP = locate() in module.modules
+	if(SP)
+		SP.name = "paws of life"
+		SP.desc = "Zappy paws. For fixing cardiac arrest."
+		SP.icon = 'icons/mob/dogborg_vr.dmi'
+		SP.icon_state = "defibpaddles0"
+		SP.attack_verb = list("batted", "pawed", "bopped", "whapped")
+
+	var/obj/item/device/dogborg/sleeper/SB = locate() in module.modules
+	if(SB)
+		SB.icon_state = "sleeper"
+
+/datum/robot_sprite/dogborg/tall/dullahanmedicalmodule/dullahanmedical
+	name = "Dullahan"
+	sprite_icon_state = "dullahanmed"
+	has_eye_light_sprites = TRUE
+	has_custom_open_sprites = TRUE
+	has_vore_belly_sprites = TRUE
+	rest_sprite_options = list("Default", "Sit")
+
+/datum/robot_sprite/dogborg/tall/dullahanmedicalmodule/dullahanmedicalalt
+	name = "Dullahan v2"
+	sprite_icon_state = "dullahanmed_alt"
+	has_eye_light_sprites = TRUE
+	has_custom_open_sprites = TRUE
+	has_vore_belly_sprites = TRUE
+	rest_sprite_options = list("Default", "Sit")
