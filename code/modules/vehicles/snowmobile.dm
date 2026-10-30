@@ -46,7 +46,7 @@
 		speed_mod = outdoors_speed_mod * 6 //Well that was a stupid idea wasn't it?
 	else if(istype(loc, /turf/simulated/floor/outdoors/rocks))
 		speed_mod = initial(speed_mod) * 1.5 //Rocks are hard, hard and skids don't mix so you're relying on the treads. Basically foot speed.
-	else if(istype(loc, /turf/simulated/floor/outdoors/dirt) || istype(loc, /turf/simulated/floor/outdoors/grass) || istype(loc, /turf/simulated/floor/outdoors/newdirt) || istype(loc, /turf/simulated/floor/outdoors/newdirt_nograss))
+	else if(istype(loc, /turf/simulated/floor/outdoors/dirt) || istype(loc, /turf/simulated/floor/outdoors/grass) || istype(loc, /turf/simulated/floor/outdoors/dirt/soft) || istype(loc, /turf/simulated/floor/outdoors/dirt/soft_nograss))
 		speed_mod = outdoors_speed_mod //Dirt and grass aren't strictly what this is designed for but its a baseline.
 	else if(istype(loc, /turf/simulated/floor/outdoors/mud))
 		speed_mod = outdoors_speed_mod * 1.4 //Workable, not great though.

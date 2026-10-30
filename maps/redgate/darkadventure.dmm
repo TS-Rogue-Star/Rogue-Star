@@ -106,7 +106,7 @@
 /area/redgate/wilds)
 "mv" = (
 /obj/structure/table/bench/wooden,
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/redgate/wilds)
 "mU" = (
 /obj/structure/bed/chair/sofa/right{
@@ -160,7 +160,7 @@
 /area/redgate/structure)
 "uO" = (
 /obj/random/mob/semirandom_mob_spawner/vore/retaliate,
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/redgate/wilds)
 "vk" = (
 /obj/structure/prop/rock/small,
@@ -259,7 +259,7 @@
 /area/redgate/wilds)
 "Fq" = (
 /obj/structure/flora/rocks2,
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/redgate/wilds)
 "Ft" = (
 /obj/structure/table/standard,
@@ -327,7 +327,7 @@
 /area/redgate/wilds)
 "OE" = (
 /obj/structure/bonfire,
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/redgate/wilds)
 "Pj" = (
 /obj/random/maintenance,
@@ -389,7 +389,7 @@
 /turf/simulated/floor/outdoors/mud,
 /area/redgate/wilds)
 "WW" = (
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/redgate/wilds)
 "Xh" = (
 /obj/random/mob/semirandom_mob_spawner/vore/retaliate,

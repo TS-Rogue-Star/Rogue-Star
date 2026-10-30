@@ -226,7 +226,7 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/submap/groundbase/poi/wildvillage)
 "S" = (
 /turf/simulated/floor/carpet/purcarpet,
@@ -256,7 +256,7 @@
 /turf/simulated/floor,
 /area/submap/groundbase/poi/wildvillage/square/square12)
 "W" = (
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/submap/groundbase/poi/wildvillage)
 "X" = (
 /obj/structure/table/glass,

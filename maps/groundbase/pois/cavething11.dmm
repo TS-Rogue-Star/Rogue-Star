@@ -20,7 +20,7 @@
 	},
 /area/maintenance/groundbase/poi/caves)
 "q" = (
-/turf/simulated/floor/outdoors/newdirt_nograss{
+/turf/simulated/floor/outdoors/dirt/soft_nograss{
 	outdoors = 0
 	},
 /area/maintenance/groundbase/poi/caves)

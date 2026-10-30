@@ -3,7 +3,7 @@
 /turf/template_noop,
 /area/submap/groundbase/poi/wildvillage)
 "b" = (
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/submap/groundbase/poi/wildvillage)
 "c" = (
 /obj/structure/bed/chair/sofa/left/brown{
@@ -41,7 +41,7 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/submap/groundbase/poi/wildvillage)
 "l" = (
 /obj/structure/fence,
