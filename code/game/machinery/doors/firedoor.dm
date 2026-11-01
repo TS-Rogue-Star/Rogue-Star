@@ -62,7 +62,7 @@
 		if(F != src)
 			log_debug("Duplicate firedoors at [x],[y],[z]")
 			return INITIALIZE_HINT_QDEL
-	
+
 	update_area_membership() // RS Edit: Airlock and Fire Safety Processing (Lira, October 2026)
 
 /obj/machinery/door/firedoor/Destroy()
@@ -75,7 +75,7 @@
 
 /obj/machinery/door/firedoor/examine(mob/user)
 	. = ..()
-	
+
 	if(!Adjacent(user))
 		return .
 
@@ -151,6 +151,8 @@
 	"\The [src]", list("Yes, [density ? "open" : "close"]", "No"))
 	if(answer == "No")
 		return
+	if(!answer) //RS ADD - Don't toggle if we get no answer (i.e. User closes the window)
+		return  //RS ADD
 	toggle_for(user) // RS ADD
 
 // RS ADD Start

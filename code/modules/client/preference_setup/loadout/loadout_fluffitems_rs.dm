@@ -167,3 +167,9 @@
 	display_name = "Portal Plushie"
 	ckeywhitelist = list("googlyfox")
 	character_name = null
+
+/datum/gear/fluff/ChristineLunar_ghost_orb
+	path = /obj/item/ghostwalk_orb
+	display_name = "Ghostwalk Orb"
+	ckeywhitelist = list("tomtyph")
+	character_name = list("Christine Lunar")
