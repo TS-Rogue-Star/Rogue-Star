@@ -63,6 +63,7 @@ var/global/icon/GLOB_markings_base_preview_icon = null
 	var/datum/browser/markings_subwindow = null
 
 // Sanitize ear/wing/tail styles
+// RS Edit: Character Preference Filtering (Lira, October 2026)
 /datum/preferences/proc/sanitize_body_styles()
 
 	// Grandfather in anyone loading paths from a save.
@@ -80,25 +81,25 @@ var/global/icon/GLOB_markings_base_preview_icon = null
 			tail_style = instance.name
 
 	// Sanitize for non-existent keys.
-	if(ear_style && !(ear_style in get_available_styles(global.ear_styles_list)))
+	if(ear_style && ear_style != "Normal" && !get_available_style(global.ear_styles_list, ear_style))
 		var/backup = get_available_backup_style(global.ear_styles_list, ear_style)
 		if(backup)
 			ear_style = backup
 		else
 			ear_style = null
-	if(ear_secondary_style && !(ear_secondary_style in get_available_styles(global.ear_styles_list))) // RS EDIT START (Port of VS PR#16513 'Adds a second ear slot.')
+	if(ear_secondary_style && ear_secondary_style != "Normal" && !get_available_style(global.ear_styles_list, ear_secondary_style)) // RS EDIT START (Port of VS PR#16513 'Adds a second ear slot.')
 		var/backup = get_available_backup_style(global.ear_styles_list, ear_style)
 		if(backup)
 			ear_secondary_style = backup
 		else
 			ear_secondary_style = null // RS EDIT END (Port of VS PR#16513 'Adds a second ear slot.')
-	if(wing_style && !(wing_style in get_available_styles(global.wing_styles_list)))
+	if(wing_style && wing_style != "Normal" && !get_available_style(global.wing_styles_list, wing_style))
 		var/backup = get_available_backup_style(global.wing_styles_list, wing_style)
 		if(backup)
 			wing_style = backup
 		else
 			wing_style = null
-	if(tail_style && !(tail_style in get_available_styles(global.tail_styles_list)))
+	if(tail_style && tail_style != "Normal" && !get_available_style(global.tail_styles_list, tail_style))
 		var/backup = get_available_backup_style(global.tail_styles_list, tail_style)
 		if(backup)
 			tail_style = backup
@@ -119,6 +120,19 @@ var/global/icon/GLOB_markings_base_preview_icon = null
 		if(instance.species_allowed && (!species || !(species in instance.species_allowed)) && (!custom_base || !(custom_base in instance.species_allowed))) //VOREStation Edit: Custom Species || RS Edit: Keep admin views consistent (Lira, December 2025)
 			continue
 		.[instance.name] = instance
+
+// RS Add: Character Preference Filtering (Lira, October 2026)
+/datum/preferences/proc/get_available_style(list/style_list, style_name)
+	if(!istext(style_name))
+		return null
+	for(var/i = length(style_list), i >= 1, i--)
+		var/datum/sprite_accessory/instance = style_list[style_list[i]]
+		if(!istype(instance) || instance.name != style_name)
+			continue
+		var/list/available = get_available_styles(list("candidate" = instance))
+		if(available[style_name] == instance)
+			return instance
+	return null
 
 /datum/preferences/proc/get_available_backup_style(var/style_list, var/our_value)
 	. = list("Normal" = null)
@@ -606,8 +620,7 @@ var/global/icon/GLOB_markings_base_preview_icon = null
 		character.digitigrade = 0
 		pref.digitigrade = 0
 
-	var/list/ear_styles = pref.get_available_styles(global.ear_styles_list)
-	character.ear_style =  ear_styles[pref.ear_style]
+	character.ear_style = pref.get_available_style(global.ear_styles_list, pref.ear_style) // RS Edit: Character Preference Filtering (Lira, October 2026)
 	character.r_ears =     pref.r_ears
 	character.b_ears =     pref.b_ears
 	character.g_ears =     pref.g_ears
@@ -619,11 +632,10 @@ var/global/icon/GLOB_markings_base_preview_icon = null
 	character.g_ears3 =    pref.g_ears3
 
 	// apply secondary ears; sanitize again to prevent runtimes in rendering //RS EDIT START (Port of VS PR#16513 'Adds a second ear slot.')
-	character.ear_secondary_style = ear_styles[pref.ear_secondary_style]
+	character.ear_secondary_style = pref.get_available_style(global.ear_styles_list, pref.ear_secondary_style) // RS Edit: Character Preference Filtering (Lira, October 2026)
 	character.ear_secondary_colors = SANITIZE_LIST(pref.ear_secondary_colors) //RS EDIT END (Port of VS PR#16513 'Adds a second ear slot.')
 
-	var/list/tail_styles = pref.get_available_styles(global.tail_styles_list)
-	character.tail_style = tail_styles[pref.tail_style]
+	character.tail_style = pref.get_available_style(global.tail_styles_list, pref.tail_style) // RS Edit: Character Preference Filtering (Lira, October 2026)
 	character.r_tail =     pref.r_tail
 	character.b_tail =     pref.b_tail
 	character.g_tail =     pref.g_tail
@@ -634,8 +646,7 @@ var/global/icon/GLOB_markings_base_preview_icon = null
 	character.b_tail3 =    pref.b_tail3
 	character.g_tail3 =    pref.g_tail3
 
-	var/list/wing_styles = pref.get_available_styles(global.wing_styles_list)
-	character.wing_style = wing_styles[pref.wing_style]
+	character.wing_style = pref.get_available_style(global.wing_styles_list, pref.wing_style) // RS Edit: Character Preference Filtering (Lira, October 2026)
 	character.r_wing =     pref.r_wing
 	character.b_wing =     pref.b_wing
 	character.g_wing =     pref.g_wing

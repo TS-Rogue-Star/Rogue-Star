@@ -1,3 +1,5 @@
+// RS File
+
 //This is why we can't have nice things!
 /mob/living/simple_mob/vore/ant
 	name = "ant"
@@ -200,6 +202,9 @@
 		Q.ckey = ckey
 	if(load_owner)
 		Q.load_owner = load_owner
+	Q.registered_pet_name = registered_pet_name
+	if(registered_pet_name)
+		Q.registered_pet_type = registered_pet_type ? registered_pet_type : type
 	qdel(src)
 
 /mob/living/simple_mob/vore/ant/proc/silly_name()
