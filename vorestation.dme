@@ -2010,6 +2010,8 @@
 #include "code\modules\client\client procs.dm"
 #include "code\modules\client\client procs_vr.dm"
 #include "code\modules\client\movement.dm"
+#include "code\modules\client\pet_register.dm"
+#include "code\modules\client\pet_register_portraits.dm"
 #include "code\modules\client\preferences.dm"
 #include "code\modules\client\preferences_factions.dm"
 #include "code\modules\client\preferences_savefile.dm"

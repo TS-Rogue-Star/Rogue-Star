@@ -1,5 +1,9 @@
 //RS FILE
 
+///////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star September 2026: Pet Register Interface //
+///////////////////////////////////////////////////////////////////////////
+
 /mob
 	var/datum/etching/etching
 	var/datum/character_memory/character_memory // Persistent memory system (Lira, May 2026)
@@ -222,6 +226,7 @@
 	var/pet_slots = 1				//How many pets are you allowed to save?
 	var/list/pet_data				//Any extra data the pet may have
 	var/loaded_pet					//The name of whatever pet you may have pulled
+	var/pet_revision = 0
 
 /datum/etching/New(var/L)
 	if(!L)
@@ -327,16 +332,16 @@
 	if(ourclient)
 		log_debug("<span class = 'rose'>Client etching load complete for [P.real_name].</span>")
 
-/datum/etching/proc/save(delet = FALSE)
+/datum/etching/proc/save(delet = FALSE, verify_write = FALSE)
 	if(ourmob)
 		if(IsGuestKey(ourmob.key))
-			return
+			return FALSE
 
 	if(!savable || !needs_saving)
-		return
+		return FALSE
 
 	if(shutting_down)	//Don't try to save more than once if we're already saving and shutting down.
-		return
+		return FALSE
 	if(delet)	//Our mob got deleted, so we're saving and quitting.
 		shutting_down = TRUE
 
@@ -344,7 +349,7 @@
 		if(shutting_down)
 			ourmob = null
 			qdel(src)
-		return
+		return FALSE
 
 	var/list/to_save = list(
 		"xp" = xp
@@ -362,7 +367,7 @@
 
 	if(!json_to_file)
 		log_debug("Saving: [save_path] failed json encode.")
-		return
+		return FALSE
 
 	log_debug("ETCHING: save called on [ourmob]: [json_to_file]")
 
@@ -371,15 +376,28 @@
 		rustg_file_write(json_to_file, save_path)
 	catch
 		error("Etching failed to write to file for [ourmob.real_name]: [json_to_file] - [save_path]")
+		return FALSE
 
 	if(!fexists(save_path))
 		log_debug("Saving: [save_path] failed file write")
+		return FALSE
+	if(verify_write)
+		var/saved_json
+		try
+			saved_json = file2text(save_path)
+		catch(var/exception/error)
+			log_runtime(error, src, "Etching save verification could not read: [save_path]")
+			return FALSE
+		if(saved_json != json_to_file)
+			log_error("Etching save verification did not match: [save_path]")
+			return FALSE
 
 	needs_saving = FALSE
 
 	if(shutting_down)
 		ourmob = null
 		qdel(src)
+	return TRUE
 
 /datum/etching/proc/setup(var/datum/preferences/P)
 	needs_saving = TRUE
@@ -441,81 +459,105 @@
 	savable = FALSE
 	ourmob?.character_memory?.enable_event_character() // Persistent memory system (Lira, May 2026)
 
-/datum/etching/proc/pet_save(var/mob/living/simple_mob/M, var/pet_name)
-	if(!M || !pet_name)
+/datum/etching/proc/pet_commit(list/next_data, next_slots, next_balance)
+	if(!islist(next_data) || !isnum(next_slots) || next_slots < 1 || next_slots > 10 || next_data.len > next_slots || !isnum(next_balance) || next_balance < 0)
 		return FALSE
-
-	if(!pet_slots)
-		pet_slots = 1
-	if(pet_data)
-		var/list/petlist = pet_data[M.name]
-		var/update_pet = FALSE
-		if(petlist)
-			if(petlist["type"] == "[M.type]")
-				update_pet = TRUE
-		if(!update_pet && pet_data.len >= pet_slots)
-			var/to_be_overwritten = tgui_input_list(ourmob,"To save this pet you will need to override an existing pet","Overwrite pet",pet_data)
-			if(!to_be_overwritten)
-				return FALSE
-			remove_pet(to_be_overwritten)
-
-	var/list/our_data = M.mob_bank_save(ourmob)
-	if(our_data)
-		if(!pet_data)
-			pet_data = list()
-		pet_data[pet_name] = our_data
-
+	var/list/previous_data = pet_data
+	var/previous_slots = pet_slots
+	var/previous_balance = triangles
+	var/previous_dirty = needs_saving
+	pet_data = next_data
+	pet_slots = next_slots
+	triangles = next_balance
 	needs_saving = TRUE
-	save()
+	var/committed = FALSE
+	try
+		committed = event_character || save(verify_write = TRUE)
+	catch(var/exception/error)
+		pet_data = previous_data
+		pet_slots = previous_slots
+		triangles = previous_balance
+		needs_saving = previous_dirty
+		throw error
+	if(!committed)
+		pet_data = previous_data
+		pet_slots = previous_slots
+		triangles = previous_balance
+		needs_saving = previous_dirty
+		return FALSE
+	pet_revision++
 	return TRUE
 
-/datum/etching/proc/pet_load(var/turf/T)
-	if(!T)
+/datum/etching/proc/pet_replacement_valid(pet_name, replacement, updating = FALSE)
+	if(!pet_register_name_valid(pet_name))
 		return FALSE
-	if(!pet_data)
+	if(replacement && (!islist(pet_data) || !(replacement in pet_data) || replacement == loaded_pet))
 		return FALSE
-	if(pet_data.len <= 0)
+	if(islist(pet_data) && (pet_name in pet_data) && !updating && replacement != pet_name)
 		return FALSE
+	var/next_count = LAZYLEN(pet_data) + ((islist(pet_data) && (pet_name in pet_data)) ? 0 : 1) - ((replacement && replacement != pet_name) ? 1 : 0)
+	return next_count <= max(1, pet_slots)
 
-	var/which_pet
-
-	if(pet_data.len != 1)
-		which_pet = tgui_input_list(ourmob,"Which pet would you like to select?", "Which pet", pet_data)
-	else
-		which_pet = pet_data[1]
-
-	if(!which_pet)
+/datum/etching/proc/pet_save(var/mob/living/simple_mob/M, var/pet_name, replacement)
+	if(!M || QDELETED(M) || !pet_register_name_valid(pet_name))
 		return FALSE
-
-	if(!do_after(ourmob, 10 SECONDS, T, exclusive = TASK_ALL_EXCLUSIVE))
+	var/list/existing = LAZYACCESS(pet_data, pet_name)
+	var/updating = islist(existing) && existing["type"] == "[M.registered_pet_type ? M.registered_pet_type : M.type]" && M.load_owner == ourmob?.ckey && M.registered_pet_name == pet_name
+	if(!pet_replacement_valid(pet_name, replacement, updating))
 		return FALSE
+	var/list/our_data = M.mob_bank_save(ourmob)
+	if(!islist(our_data) || !our_data.len || !pet_register_type(our_data["type"]))
+		return FALSE
+	our_data = our_data.Copy()
+	if(updating && istext(existing["note"]))
+		our_data["note"] = existing["note"]
+	var/list/next_data = islist(pet_data) ? pet_data.Copy() : list()
+	if(replacement)
+		next_data.Remove(replacement)
+	next_data[pet_name] = our_data
+	return pet_commit(next_data, max(1, pet_slots), triangles)
 
-	loaded_pet = which_pet
-
+/datum/etching/proc/pet_load(var/turf/T, which_pet)
+	if(!T || !ourmob?.client || loaded_pet || !istext(which_pet) || !islist(pet_data))
+		return FALSE
 	var/list/our_pet_list = pet_data[which_pet]
-	var/our_pet_type = our_pet_list["type"]
+	if(!islist(our_pet_list))
+		return FALSE
+	var/our_pet_type = pet_register_type(our_pet_list["type"])
+	if(!our_pet_type)
+		return FALSE
 
 	var/mob/living/simple_mob/M = new our_pet_type(T)
-	M.load_owner = ourmob.ckey
-	M.name = which_pet
-	M.real_name = M.name
-	M.mob_bank_load(ourmob, our_pet_list)
-	M.faction = ourmob.faction
-	M.hunter = FALSE
-	M.desc += " It has a PET tag: \"[M.real_name]\", if lost, return to [ourmob.real_name]."
-	M.revivedby = ourmob.real_name
-	M.verbs += /mob/living/simple_mob/proc/toggle_ghostjoin
-	M.verbs += /mob/living/simple_mob/proc/toggle_follow
-	if(M.ai_holder?.hostile)
-		M.verbs += /mob/living/simple_mob/proc/toggle_hostile
-		M.ai_holder.hostile = FALSE
-		M.ai_holder.vore_hostile = FALSE
+	try
+		M.load_owner = ourmob.ckey
+		M.registered_pet_name = which_pet
+		M.name = which_pet
+		M.real_name = M.name
+		M.mob_bank_load(ourmob, our_pet_list.Copy())
+		M.faction = ourmob.faction
+		M.hunter = FALSE
+		M.desc += " It has a PET tag: \"[M.real_name]\", if lost, return to [ourmob.real_name]."
+		M.revivedby = ourmob.real_name
+		M.verbs += /mob/living/simple_mob/proc/toggle_ghostjoin
+		M.verbs += /mob/living/simple_mob/proc/toggle_follow
+		if(M.ai_holder?.hostile)
+			M.verbs += /mob/living/simple_mob/proc/toggle_hostile
+			M.ai_holder.hostile = FALSE
+			M.ai_holder.vore_hostile = FALSE
+	catch(var/exception/error)
+		qdel(M)
+		throw error
+	if(!ourmob?.client)
+		qdel(M)
+		return FALSE
 	if(!ourmob.client.multichar_last)
 		ourmob.client.multichar_list |= M
 		ourmob.client.multichar_list |= ourmob
 		ourmob.client.multichar_last = M
 		ourmob.verbs += /mob/living/proc/toggle_pet_swap
 		M.verbs += /mob/living/proc/toggle_pet_swap
+	loaded_pet = which_pet
+	pet_revision++
 	return M
 
 /datum/etching/proc/remove_pet(var/to_be_removed)
@@ -523,71 +565,31 @@
 		return
 	pet_data.Remove(to_be_removed)
 
-/datum/etching/proc/purchase_pet_slot()
-	if(pet_slots >= 10)
-		to_chat(ourmob, SPAN_DANGER("Your petatronic storage cannot be expanded further at this time."))
+/datum/etching/proc/purchase_pet_slot(expected_cost)
+	var/slots = max(1, pet_slots)
+	var/cost = slots * 5
+	if(slots >= 10 || expected_cost != cost || triangles < cost)
 		return FALSE
-	var/cost = pet_slots * 5
+	return pet_commit(islist(pet_data) ? pet_data.Copy() : list(), slots + 1, triangles - cost)
 
-	if(tgui_alert(ourmob, "Would you like to purchase additional pet storage space? ◬:[cost]", "Pet Storage Expansion", list("Purchase", "Cancel")) != "Purchase")
+/datum/etching/proc/manage_pets(pet_name, new_name, new_note, expected_revision)
+	if(!istext(pet_name) || expected_revision != pet_revision || pet_name == loaded_pet || !islist(pet_data))
 		return FALSE
-	if(cost > triangles)
-		to_chat(ourmob, SPAN_DANGER("We're sorry, you must not have enough ◬ banked. To purchase an additional pet storage space, ◬:[cost] is required. Store ◬ in your bank account and try again."))
+	if(!pet_register_name_valid(new_name) || !istext(new_note) || length(new_note) > 500)
 		return FALSE
-	pet_slots ++
-	triangles -= cost
-	needs_saving = TRUE
-	return TRUE
-
-/datum/etching/proc/manage_pets()
-	var/choice = tgui_input_list(ourmob, "Which pet would you like to manage?", "Manage Pets", pet_data)
-	if(!choice)
-		return
-	if(choice == loaded_pet)
-		to_chat(ourmob, SPAN_WARNING("You will need to return [choice] to storage to manage their data."))
-		return
-	var/list/our_pet_data = pet_data[choice]
-
-	var/operation = tgui_input_list(ourmob, "What would you like to do?", "Choose System Operation",list("Rename", "Edit Note"))
-
-	switch(operation)
-		if("Rename")
-			var/new_name = tgui_input_text(ourmob, "What will the new name be?", "Rename [choice]", choice)
-			if(length(new_name) > PET_NAME_MAX)
-				to_chat(ourmob, SPAN_WARNING("[new_name] is too long. ([PET_NAME_MAX] characters)"))
-				return
-			if(!new_name)
-				to_chat(ourmob, SPAN_WARNING("Renaming cancelled."))
-				return
-			pet_data[new_name] = our_pet_data
-			if(!pet_data[new_name])
-				to_chat(ourmob, SPAN_WARNING("Renaming failed for some reason. Please contact a developer."))
-				return
-			pet_data.Remove(choice)
-			to_chat(ourmob, SPAN_NOTICE("Renaming success."))
-			needs_saving = TRUE
-			save()
-
-		if("Edit Note")
-			var/note_default = null
-			if(our_pet_data["note"])
-				note_default = our_pet_data["note"]
-			var/new_note = tgui_input_text(ourmob, "What will the new note be? (500)", "Note Edit: [choice]", note_default, 500)
-			if(length(new_note) > 500)
-				to_chat(ourmob, SPAN_WARNING("\"[new_note]\" is too long. ([length(new_note)]/500 characters)"))
-				return
-			if(new_note)
-				our_pet_data["note"] = new_note
-				pet_data[choice] = our_pet_data
-				to_chat(ourmob, SPAN_OCCULT("Note added to [choice]: [new_note]"))
-				needs_saving = TRUE
-			else if(tgui_alert(ourmob, "Do you want to clear the existing note?", "Clear Note", list("No", "Yes")) == "Yes")
-				our_pet_data.Remove("note")
-				pet_data[choice] = our_pet_data
-				to_chat(ourmob, SPAN_NOTICE("Note removed."))
-				needs_saving = TRUE
-		else
-			to_chat(ourmob, SPAN_WARNING("Pet management cancelled."))
+	var/list/record = pet_data[pet_name]
+	if(!islist(record) || (new_name != pet_name && (new_name in pet_data)))
+		return FALSE
+	var/list/next_data = pet_data.Copy()
+	record = record.Copy()
+	if(length(new_note))
+		record["note"] = new_note
+	else
+		record.Remove("note")
+	if(new_name != pet_name)
+		next_data.Remove(pet_name)
+	next_data[new_name] = record
+	return pet_commit(next_data, max(1, pet_slots), triangles)
 
 /client/view_var_Topic(href, href_list, hsrc)
 	. = ..()
