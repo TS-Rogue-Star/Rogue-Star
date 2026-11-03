@@ -1,3 +1,7 @@
+///////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star October 2026: Piped Gas Flow and Telemetry //
+///////////////////////////////////////////////////////////////////////////////
+
 /obj/machinery/atmospherics/trinary
 	dir = SOUTH
 	initialize_directions = SOUTH|NORTH|WEST
@@ -72,6 +76,7 @@
 	return list(node1, node2, node3)
 
 /obj/machinery/atmospherics/trinary/network_expand(datum/pipe_network/new_network, obj/machinery/atmospherics/pipe/reference)
+	piped_atmos_invalidate() // RS Add: Piped Gas Flow and Telemetry (Lira, October 2026)
 	if(reference == node1)
 		network1 = new_network
 
@@ -111,6 +116,7 @@
 	return get_node_connect_dirs_trinary(dir, mirrored, tee)
 
 /obj/machinery/atmospherics/trinary/atmos_init()
+	piped_atmos_invalidate() // RS Add: Piped Gas Flow and Telemetry (Lira, October 2026)
 	if(node1 && node2 && node3)
 		return
 
@@ -155,6 +161,7 @@
 	return null
 
 /obj/machinery/atmospherics/trinary/reassign_network(datum/pipe_network/old_network, datum/pipe_network/new_network)
+	piped_atmos_invalidate() // RS Add: Piped Gas Flow and Telemetry (Lira, October 2026)
 	if(network1 == old_network)
 		network1 = new_network
 	if(network2 == old_network)
@@ -177,6 +184,7 @@
 	return results
 
 /obj/machinery/atmospherics/trinary/disconnect(obj/machinery/atmospherics/reference)
+	piped_atmos_invalidate() // RS Add: Piped Gas Flow and Telemetry (Lira, October 2026)
 	if(reference==node1)
 		qdel(network1)
 		node1 = null

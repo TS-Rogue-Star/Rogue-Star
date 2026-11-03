@@ -807,4 +807,8 @@
 #define COMSIG_CLONING_MACHINE_CHANGED "cloning_machine_changed"
 #define COMSIG_GLOB_CLONING_ELIGIBILITY_CHANGED "glob_cloning_eligibility_changed"
 
+// Piped Gas Flow and Telemetry (Lira, October 2026)
+#define COMSIG_PIPED_ATMOS_CHANGED "piped_atmos_changed"
+#define COMSIG_RADIO_NEW_LISTENER "radio_new_listener"
+
 // RS Add End

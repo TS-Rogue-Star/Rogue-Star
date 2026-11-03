@@ -1,4 +1,9 @@
+///////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star October 2026: Piped Gas Flow and Telemetry //
+///////////////////////////////////////////////////////////////////////////////
+
 /obj/machinery/atmospherics/trinary/mixer
+	processing_on_demand = TRUE // RS Add: Piped Gas Flow and Telemetry (Lira, October 2026)
 	icon = 'icons/atmos/mixer.dmi'
 	icon_state = "map"
 	construction_type = /obj/item/pipe/trinary/flippable
@@ -46,6 +51,7 @@
 	if (!mixing_inputs)
 		mixing_inputs = list(src.air1 = node1_concentration, src.air2 = node2_concentration)
 
+// RS Edit: Piped Gas Flow and Telemetry (Lira, October 2026)
 /obj/machinery/atmospherics/trinary/mixer/process()
 	..()
 
@@ -53,7 +59,7 @@
 	last_flow_rate = 0
 
 	if((stat & (NOPOWER|BROKEN)) || !use_power)
-		return
+		return piped_atmos_sleep_disabled()
 
 	//Figure out the amount of moles to transfer
 	var/transfer_moles = (set_flow_rate*mixing_inputs[air1]/air1.volume)*air1.total_moles + (set_flow_rate*mixing_inputs[air1]/air2.volume)*air2.total_moles
@@ -75,6 +81,8 @@
 		last_power_draw = power_draw
 		use_power(power_draw)
 
+	if(power_draw < 0 && !piped_atmos_reacting())
+		return piped_atmos_sleep()
 	return 1
 
 /obj/machinery/atmospherics/trinary/mixer/tgui_interact(mob/user, datum/tgui/ui)
@@ -158,6 +166,7 @@
 			mixing_inputs[air2] = max(0, min(1, value / 100))
 			mixing_inputs[air1] = 1.0 - mixing_inputs[air2]
 			. = TRUE
+	wake_processing() // RS Add: Piped Gas Flow and Telemetry (Lira, October 2026)
 	update_icon()
 
 //

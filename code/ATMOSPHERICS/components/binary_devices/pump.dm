@@ -1,3 +1,7 @@
+///////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star October 2026: Piped Gas Flow and Telemetry //
+///////////////////////////////////////////////////////////////////////////////
+
 /*
 Every cycle, the pump uses the air in air_in to try and make air_out the perfect pressure.
 
@@ -13,6 +17,7 @@ Thus, the two variables affect pump operation are set in New():
 */
 
 /obj/machinery/atmospherics/binary/pump
+	processing_on_demand = TRUE // RS Add: Piped Gas Flow and Telemetry (Lira, October 2026)
 	icon = 'icons/atmos/pump.dmi'
 	icon_state = "map_off"
 	construction_type = /obj/item/pipe/directional
@@ -88,12 +93,14 @@ Thus, the two variables affect pump operation are set in New():
 /obj/machinery/atmospherics/binary/pump/hide(var/i)
 	update_underlays()
 
+// RS Edit: Piped Gas Flow and Telemetry (Lira, October 2026)
 /obj/machinery/atmospherics/binary/pump/process()
+	build_network()
 	last_power_draw = 0
 	last_flow_rate = 0
 
 	if((stat & (NOPOWER|BROKEN)) || !use_power)
-		return
+		return piped_atmos_sleep_disabled()
 
 	var/power_draw = -1
 	var/pressure_delta = target_pressure - air2.return_pressure()
@@ -113,6 +120,8 @@ Thus, the two variables affect pump operation are set in New():
 		if(network2)
 			network2.update = 1
 
+	if(power_draw < 0)
+		return piped_atmos_sleep()
 	return 1
 
 //Radio remote control
@@ -174,6 +183,7 @@ Thus, the two variables affect pump operation are set in New():
 /obj/machinery/atmospherics/binary/pump/receive_signal(datum/signal/signal)
 	if(!signal.data["tag"] || (signal.data["tag"] != id) || (signal.data["sigtype"]!="command"))
 		return 0
+	wake_processing() // RS Add: Piped Gas Flow and Telemetry (Lira, October 2026)
 
 	if(signal.data["power"])
 		if(text2num(signal.data["power"]))
@@ -230,6 +240,7 @@ Thus, the two variables affect pump operation are set in New():
 			. = TRUE
 
 	add_fingerprint(usr)
+	wake_processing() // RS Add: Piped Gas Flow and Telemetry (Lira, October 2026)
 	update_icon()
 
 /obj/machinery/atmospherics/binary/pump/power_change()

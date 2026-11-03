@@ -173,7 +173,7 @@ var/global/list/room_atmos_changed_networks = list()
 		for(var/turf/T as anything in contents)
 			T.room_atmos_changed()
 
-/obj/machinery/atmospherics/unary/update_use_power(new_use_power)
+/obj/machinery/atmospherics/update_use_power(new_use_power)
 	. = ..()
 	if(. && processing_on_demand)
 		wake_processing()

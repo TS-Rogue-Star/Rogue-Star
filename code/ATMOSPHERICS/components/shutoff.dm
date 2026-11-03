@@ -1,6 +1,11 @@
+///////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star October 2026: Piped Gas Flow and Telemetry //
+///////////////////////////////////////////////////////////////////////////////
+
 GLOBAL_LIST_EMPTY(shutoff_valves)
 
 /obj/machinery/atmospherics/valve/shutoff
+	processing_on_demand = TRUE // RS Add: Piped Gas Flow and Telemetry (Lira, October 2026)
 	icon = 'icons/atmos/clamp.dmi'
 	icon_state = "map_vclamp0"
 	pipe_state = "vclamp"
@@ -35,6 +40,7 @@ GLOBAL_LIST_EMPTY(shutoff_valves)
 	src.add_fingerprint(usr)
 	update_icon(1)
 	close_on_leaks = !close_on_leaks
+	wake_processing() // RS Add: Piped Gas Flow and Telemetry (Lira, October 2026)
 	to_chat(user, "You [close_on_leaks ? "enable" : "disable"] the automatic shutoff circuit.")
 	return TRUE
 
@@ -48,13 +54,14 @@ GLOBAL_LIST_EMPTY(shutoff_valves)
 		open ? close() : open()
 		to_chat(user, "You manually [open ? "open" : "close"] the valve.")
 
+// RS Edit: Piped Gas Flow and Telemetry (Lira, October 2026)
 /obj/machinery/atmospherics/valve/shutoff/process()
 	..()
 
 	if(!network_node1 || !network_node2 || !node1 || !node2)
 		if(open && close_on_leaks)
 			close()
-		return
+		return piped_atmos_sleep()
 
 	if(close_on_leaks)
 		if(open && (network_node1.leaks.len || network_node2.leaks.len))
@@ -62,7 +69,7 @@ GLOBAL_LIST_EMPTY(shutoff_valves)
 						 // If we cannot see the leak, then this will not close the valve, and any valves that can see the leak will cut it off from us
 		else if(!open && !network_node1.leaks.len && !network_node2.leaks.len)
 			open()
-	return
+	return piped_atmos_sleep()
 
 // Breadth-first search for any leaking pipes that we can directly see
 /obj/machinery/atmospherics/valve/shutoff/proc/find_leaks()

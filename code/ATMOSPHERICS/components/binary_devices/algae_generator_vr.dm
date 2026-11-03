@@ -1,6 +1,11 @@
+///////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star October 2026: Piped Gas Flow and Telemetry //
+///////////////////////////////////////////////////////////////////////////////
+
 #define MAT_ALGAE "algae"
 
 /obj/machinery/atmospherics/binary/algae_farm
+	processing_on_demand = TRUE // RS Add: Piped Gas Flow and Telemetry (Lira, October 2026)
 	name = "algae oxygen generator"
 	desc = "An oxygen generator using algae to convert carbon dioxide to oxygen."
 	icon = 'icons/obj/machines/algae_vr.dmi'
@@ -53,6 +58,7 @@
 	. = ..()
 	internal = null
 
+// RS Edit: Piped Gas Flow and Telemetry (Lira, October 2026)
 /obj/machinery/atmospherics/binary/algae_farm/process()
 	..()
 	recent_moles_transferred = 0
@@ -64,7 +70,7 @@
 			last_power_draw = idle_power_usage
 		else
 			last_power_draw = 0
-		return 0
+		return piped_atmos_sleep_disabled()
 
 	last_power_draw = active_power_usage
 
@@ -72,11 +78,11 @@
 	if(stored_material[MAT_ALGAE] < algae_per_mole)
 		ui_error = "Insufficient [material_display_name(MAT_ALGAE)] to process."
 		update_icon()
-		return
+		return piped_atmos_sleep()
 	if(stored_material[MAT_GRAPHITE] + carbon_per_mole > storage_capacity[MAT_GRAPHITE])
 		ui_error = "[material_display_name(MAT_GRAPHITE)] output storage is full."
 		update_icon()
-		return
+		return piped_atmos_sleep()
 	var/moles_to_convert = min(moles_per_tick,\
 		stored_material[MAT_ALGAE] * algae_per_mole,\
 		storage_capacity[MAT_GRAPHITE] - stored_material[MAT_GRAPHITE])
@@ -94,7 +100,9 @@
 	if(co2_moles < MINIMUM_MOLES_TO_FILTER)
 		ui_error = "Insufficient [gas_data.name[input_gas]] to process."
 		update_icon()
-		return
+		if(piped_atmos_reacting())
+			return
+		return piped_atmos_sleep()
 
 	// STEP 4 - Consume the resources
 	var/converted_moles = min(co2_moles, moles_per_tick)
@@ -143,6 +151,7 @@
 	tgui_interact(user)
 
 /obj/machinery/atmospherics/binary/algae_farm/RefreshParts()
+	wake_processing() // RS Add: Piped Gas Flow and Telemetry (Lira, October 2026)
 	..()
 
 	var/cap_rating = 0
@@ -231,6 +240,7 @@
 
 // 0 amount = 0 means ejecting a full stack; -1 means eject everything
 /obj/machinery/atmospherics/binary/algae_farm/proc/eject_materials(var/material_name, var/amount)
+	wake_processing() // RS Add: Piped Gas Flow and Telemetry (Lira, October 2026)
 	var/recursive = amount == -1 ? 1 : 0
 	var/datum/material/matdata = get_material_by_name(material_name)
 	var/stack_type = matdata.stack_type
@@ -246,6 +256,7 @@
 
 // Attept to load materials.  Returns 0 if item wasn't a stack of materials, otherwise 1 (even if failed to load)
 /obj/machinery/atmospherics/binary/algae_farm/proc/try_load_materials(var/mob/user, var/obj/item/stack/material/S)
+	wake_processing() // RS Add: Piped Gas Flow and Telemetry (Lira, October 2026)
 	if(!istype(S))
 		return 0
 	if(!(S.material.name in stored_material))
