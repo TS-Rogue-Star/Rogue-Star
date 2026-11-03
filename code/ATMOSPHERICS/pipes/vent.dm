@@ -1,7 +1,12 @@
+///////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star October 2026: Piped Gas Flow and Telemetry //
+///////////////////////////////////////////////////////////////////////////////
+
 //
 // Vent Pipe - Unpowered vent
 //
 /obj/machinery/atmospherics/pipe/vent
+	processing_on_demand = TRUE // RS Add: Piped Gas Flow and Telemetry (Lira, October 2026)
 	icon = 'icons/obj/atmospherics/pipe_vent.dmi'
 	icon_state = "intact"
 
@@ -27,6 +32,7 @@
 	name = "Larger vent"
 	volume = 1000
 
+// RS Edit: Piped Gas Flow and Telemetry (Lira, October 2026)
 /obj/machinery/atmospherics/pipe/vent/process()
 	if(!parent)
 		if(build_killswitch <= 0)
@@ -34,9 +40,14 @@
 		else
 			build_killswitch--
 		..()
+		if(!parent)
+			return piped_atmos_sleep()
 		return
-	else
-		parent.mingle_with_turf(loc, volume)
+	var/turf/T = get_turf(src)
+	var/datum/gas_mixture/environment = T?.return_air()
+	if(piped_atmos_equal(environment))
+		return piped_atmos_sleep(T, environment)
+	parent.mingle_with_turf(loc, volume)
 
 /obj/machinery/atmospherics/pipe/vent/Destroy()
 	if(node1)
@@ -58,6 +69,7 @@
 		icon_state = "exposed"
 
 /obj/machinery/atmospherics/pipe/vent/atmos_init()
+	piped_atmos_invalidate() // RS Add: Piped Gas Flow and Telemetry (Lira, October 2026)
 	var/connect_direction = dir
 
 	for(var/obj/machinery/atmospherics/target in get_step(src,connect_direction))
@@ -68,6 +80,7 @@
 	update_icon()
 
 /obj/machinery/atmospherics/pipe/vent/disconnect(obj/machinery/atmospherics/reference)
+	piped_atmos_invalidate() // RS Add: Piped Gas Flow and Telemetry (Lira, October 2026)
 	if(reference == node1)
 		if(istype(node1, /obj/machinery/atmospherics/pipe))
 			qdel(parent)

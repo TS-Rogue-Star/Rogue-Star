@@ -1,8 +1,13 @@
+///////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star October 2026: Piped Gas Flow and Telemetry //
+///////////////////////////////////////////////////////////////////////////////
+
 //Basically a one way passive valve. If the pressure inside is greater than the environment then gas will flow passively,
 //but it does not permit gas to flow back from the environment into the injector. Can be turned off to prevent any gas flow.
 //When it receives the "inject" signal, it will try to pump it's entire contents into the environment regardless of pressure, using power.
 
 /obj/machinery/atmospherics/unary/outlet_injector
+	processing_on_demand = TRUE // RS Add: Piped Gas Flow and Telemetry (Lira, October 2026)
 	icon = 'icons/atmos/injector.dmi'
 	icon_state = "map_injector"
 	pipe_state = "injector"
@@ -52,6 +57,7 @@
 	if(old_stat != stat)
 		update_icon()
 
+// RS Edit: Piped Gas Flow and Telemetry (Lira, October 2026)
 /obj/machinery/atmospherics/unary/outlet_injector/process()
 	..()
 
@@ -59,7 +65,7 @@
 	last_flow_rate = 0
 
 	if((stat & (NOPOWER|BROKEN)) || !use_power)
-		return
+		return piped_atmos_sleep_disabled()
 
 	var/power_draw = -1
 	var/datum/gas_mixture/environment = loc.return_air()
@@ -75,6 +81,8 @@
 		if(network)
 			network.update = 1
 
+	if(power_draw < 0)
+		return piped_atmos_sleep()
 	return 1
 
 /obj/machinery/atmospherics/unary/outlet_injector/proc/inject()
@@ -86,6 +94,7 @@
 		return 0
 
 	injecting = 1
+	wake_processing() // RS Add: Piped Gas Flow and Telemetry (Lira, October 2026)
 
 	if(air_contents.temperature > 0)
 		var/power_used = pump_gas(src, air_contents, environment, air_contents.total_moles, power_rating)
@@ -131,6 +140,7 @@
 /obj/machinery/atmospherics/unary/outlet_injector/receive_signal(datum/signal/signal)
 	if(!signal.data["tag"] || (signal.data["tag"] != id) || (signal.data["sigtype"]!="command"))
 		return 0
+	wake_processing() // RS Add: Piped Gas Flow and Telemetry (Lira, October 2026)
 
 	if(!isnull(signal.data["power"])) // RS Edit: Computer and Related Machinery Idle Processing (Lira, October 2026)
 		update_use_power(text2num(signal.data["power"]))

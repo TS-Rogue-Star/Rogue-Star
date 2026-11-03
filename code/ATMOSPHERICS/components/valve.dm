@@ -1,3 +1,7 @@
+///////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star October 2026: Piped Gas Flow and Telemetry //
+///////////////////////////////////////////////////////////////////////////////
+
 /obj/machinery/atmospherics/valve
 	icon = 'icons/atmos/valve.dmi'
 	icon_state = "map_valve0"
@@ -51,6 +55,7 @@
 	return list(node1, node2)
 
 /obj/machinery/atmospherics/valve/network_expand(datum/pipe_network/new_network, obj/machinery/atmospherics/pipe/reference)
+	piped_atmos_invalidate() // RS Add: Piped Gas Flow and Telemetry (Lira, October 2026)
 	if(reference == node1)
 		network_node1 = new_network
 		if(open)
@@ -89,6 +94,7 @@
 	node2 = null
 
 /obj/machinery/atmospherics/valve/proc/open()
+	piped_atmos_invalidate() // RS Add: Piped Gas Flow and Telemetry (Lira, October 2026)
 	if(open) return 0
 
 	open = 1
@@ -106,6 +112,7 @@
 	return 1
 
 /obj/machinery/atmospherics/valve/proc/close()
+	piped_atmos_invalidate() // RS Add: Piped Gas Flow and Telemetry (Lira, October 2026)
 	if(!open)
 		return 0
 
@@ -146,6 +153,7 @@
 	return
 
 /obj/machinery/atmospherics/valve/atmos_init()
+	piped_atmos_invalidate() // RS Add: Piped Gas Flow and Telemetry (Lira, October 2026)
 	normalize_dir()
 
 	var/node1_dir
@@ -194,6 +202,7 @@
 	return null
 
 /obj/machinery/atmospherics/valve/reassign_network(datum/pipe_network/old_network, datum/pipe_network/new_network)
+	piped_atmos_invalidate() // RS Add: Piped Gas Flow and Telemetry (Lira, October 2026)
 	if(network_node1 == old_network)
 		network_node1 = new_network
 	if(network_node2 == old_network)
@@ -205,6 +214,7 @@
 	return null
 
 /obj/machinery/atmospherics/valve/disconnect(obj/machinery/atmospherics/reference)
+	piped_atmos_invalidate() // RS Add: Piped Gas Flow and Telemetry (Lira, October 2026)
 	if(reference==node1)
 		qdel(network_node1)
 		node1 = null

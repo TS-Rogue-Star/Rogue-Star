@@ -126,6 +126,7 @@ GLOBAL_LIST_BOILERPLATE(all_engine_setup_markers, /obj/effect/engine_setup)
 		log_and_message_admins("## WARNING: Unable to locate pump at [x] [y] [z]!")
 		return SETUP_WARNING
 	P.target_pressure = P.max_pressure_setting
+	P.wake_processing() // RS Add: Piped Gas Flow and Telemetry (Lira, October 2026)
 	P.update_use_power(USE_POWER_IDLE)
 	P.update_icon()
 	return SETUP_OK

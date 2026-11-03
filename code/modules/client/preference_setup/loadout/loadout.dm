@@ -65,17 +65,22 @@ var/list/gear_datums = list()
 	to_file(S["gear_list"], pref.gear_list)
 	to_file(S["gear_slot"], pref.gear_slot)
 
+// RS Edit: Character Preference Filtering (Lira, October 2026)
 /datum/category_item/player_setup_item/loadout/proc/valid_gear_choices(var/max_cost)
 	. = list()
 	var/mob/preference_mob = preference_mob() //VOREStation Add
+	var/list/species_access = list()
 	for(var/gear_name in gear_datums)
 		var/datum/gear/G = gear_datums[gear_name]
 
 		if(G.whitelisted && config.loadout_whitelist != LOADOUT_WHITELIST_OFF && pref.client) //VOREStation Edit.
 			if(config.loadout_whitelist == LOADOUT_WHITELIST_STRICT && G.whitelisted != pref.species)
 				continue
-			if(config.loadout_whitelist == LOADOUT_WHITELIST_LAX && !is_alien_whitelisted(preference_mob(), GLOB.all_species[G.whitelisted]))
-				continue
+			if(config.loadout_whitelist == LOADOUT_WHITELIST_LAX)
+				if(!(G.whitelisted in species_access))
+					species_access[G.whitelisted] = is_alien_whitelisted(preference_mob, GLOB.all_species[G.whitelisted])
+				if(!species_access[G.whitelisted])
+					continue
 		if(max_cost && G.cost > max_cost)
 			continue
 		//VOREStation Edit Start
@@ -87,6 +92,7 @@ var/list/gear_datums = list()
 		//VOREStation Edit End
 		. += gear_name
 
+// RS Edit: Character Preference Filtering (Lira, October 2026)
 /datum/category_item/player_setup_item/loadout/sanitize_character()
 	var/mob/preference_mob = preference_mob()
 	if(!islist(pref.gear))
@@ -98,11 +104,12 @@ var/list/gear_datums = list()
 		if(!(gear_name in gear_datums))
 			pref.gear -= gear_name
 	var/total_cost = 0
+	var/list/valid_choices = length(pref.gear) ? valid_gear_choices() : null
 	for(var/gear_name in pref.gear)
 		if(!gear_datums[gear_name])
 			to_chat(preference_mob, "<span class='warning'>You cannot have more than one of the \the [gear_name]</span>")
 			pref.gear -= gear_name
-		else if(!(gear_name in valid_gear_choices()))
+		else if(!(gear_name in valid_choices))
 			to_chat(preference_mob, "<span class='warning'>You cannot take \the [gear_name] as you are not whitelisted for the species or item.</span>")		//Vorestation Edit
 			pref.gear -= gear_name
 		else
