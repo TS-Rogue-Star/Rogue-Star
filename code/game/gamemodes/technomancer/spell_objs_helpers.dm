@@ -13,6 +13,27 @@
 					return TRUE
 	return FALSE
 
+//RS ADD START - Same as above but we try to bump in case it's a door or whatever
+/turf/proc/check_density_and_bump(var/ignore_objs = FALSE, var/ignore_mobs = FALSE, var/bumpsource)
+	if(density)
+		return TRUE
+	if(!ignore_objs || !ignore_mobs)
+		for(var/atom/movable/stuff in contents)
+			if(!stuff.density)
+				continue
+			if(bumpsource)
+				stuff.Bumped(bumpsource)
+			if(!stuff.density)
+				continue
+			if(ignore_objs && isobj(stuff))
+				continue
+			else if(ignore_mobs && isliving(stuff)) // Ghosts aren't dense but keeping this limited to living type will probably save headaches in the future.
+				continue
+			else
+				return TRUE
+	return FALSE
+//RS ADD END
+
 // Used to distinguish friend from foe.
 /obj/item/weapon/spell/proc/is_ally(var/mob/living/L)
 	if(L == owner) // The best ally is ourselves.

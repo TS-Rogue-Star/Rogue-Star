@@ -11,7 +11,6 @@
 /obj/drone_helm/Initialize(mapload)
 	. = ..()
 	search_for_teleporter()
-	hud = new()
 
 /obj/drone_helm/proc/search_for_teleporter()
 	var/turf/to_search = locate(x,y+1,z)
@@ -57,16 +56,25 @@
 		return FALSE
 	enter(user)
 
-/obj/drone_helm/proc/enter(var/mob/living/user)
+/obj/drone_helm/proc/enter(var/mob/living/carbon/human/user)
 	if(contents.len || !user)
+		to_chat(user, SPAN_DANGER("It's already occupied."))
 		return FALSE
 	user.loc = src
+	if(ishuman(user))
+		if(user.hud_used)
+			if(!hud)
+				hud = new /datum/mini_hud/drone(user.hud_used, src)
+			else
+				hud.apply_to_hud(user.hud_used)
+//		user.client.screen |= hud
 	look(user)
 
 /obj/drone_helm/relaymove(mob/user, direction)
-	deployable.relaymove(user, direction)
+	if(deployable)
+		deployable.relaymove(user, direction)
 
-/obj/drone_helm/check_eye(user)
+/obj/drone_helm/check_eye(var/mob/user)
 	. = ..()
 	if(user.loc != src)
 		return FALSE
@@ -102,11 +110,20 @@
 	set src in view(1)
 
 	var/turf/T = get_turf(src)
-	deployable.driver.unset_machine()
-	deployable.driver = null
+	if(deployable?.driver)
+		deployable.driver.unset_machine()
+		deployable.driver = null
 
 	for(var/atom/movable/thing in contents)
 		thing.forceMove(T)
+		if(!isliving(thing))
+			continue
+		var/mob/living/L = thing
+		if(!L.client)
+			continue
+		if(hud)
+			L.hud_used.remove_minihud(hud)
+//		L.client.screen -= hud
 
 /obj/drone_helm/proc/deploy()
 	set name = "Deploy"
@@ -117,7 +134,7 @@
 		return
 
 	if(!deployable)
-		generate_deployable()
+		generate_deployable(user)
 		look(user)
 		return
 	else if(!linked_teleporter)
@@ -150,7 +167,9 @@
 	linked_teleporter.pair(new_deployable)
 	eject()
 
-/obj/drone_helm/proc/generate_deployable()
+/obj/drone_helm/proc/generate_deployable(var/mob/living/user)
+	if(!user)
+		return
 	if(deployable)
 		trash_deployable()
 	deployable = new /obj/overworld_vehicle/drone(get_turf(src))
@@ -174,13 +193,11 @@
 	visible_message(deployable.driver,SPAN_OCCULT("[src] [deployable] integrity: [deployable.health]"))
 
 /obj/drone_helm/proc/land()
+	to_world("WAHOO LET'S LAND")
 
 ///// HUD /////
 
 /datum/mini_hud/drone
-	icon = 'icons/rogue-star/overworld.dmi'
-	icon_state = "eject"
-
 	var/obj/drone_helm/owner_console
 	var/obj/screen/drone/energy/energy
 	var/obj/screen/drone/health/health
@@ -192,22 +209,22 @@
 /datum/mini_hud/drone/New(var/datum/hud/other, var/obj/drone_helm/owner)
 	owner_console = owner
 	energy = new ()
-	owner_console.RegisterSignal(energy, COMSIG_CLICK, PROC_REF(report_energy), TRUE)
-	RegisterSignal(owner_console, ENERGY_RELAY, PROC_REF(update_energy), TRUE)
+	owner_console.RegisterSignal(energy, COMSIG_CLICK, /obj/drone_helm/proc/report_energy, TRUE)
+	RegisterSignal(owner_console, COMSIG_ENERGY_RELAY, PROC_REF(update_energy), TRUE)
 	health = new ()
-	owner_console.RegisterSignal(health, COMSIG_CLICK, PROC_REF(report_health), TRUE)
-	RegisterSignal(owner_console, HEALTH_RELAY, PROC_REF(update_health), TRUE)
+	owner_console.RegisterSignal(health, COMSIG_CLICK,/obj/drone_helm/proc/report_health, TRUE)
+	RegisterSignal(owner_console, COMSIG_HEALTH_RELAY, PROC_REF(update_health), TRUE)
 
 	deploy = new ()
-	owner_console.RegisterSignal(deploy, COMSIG_CLICK, PROC_REF(deploy), TRUE)
+	owner_console.RegisterSignal(deploy, COMSIG_CLICK, /obj/drone_helm/proc/deploy, TRUE)
 	eject = new ()
-	owner_console.RegisterSignal(eject, COMSIG_CLICK, PROC_REF(eject), TRUE)
+	owner_console.RegisterSignal(eject, COMSIG_CLICK, /obj/drone_helm/verb/eject, TRUE)
 	land = new ()
-	owner_console.RegisterSignal(land, COMSIG_CLICK, PROC_REF(land), TRUE)
+	owner_console.RegisterSignal(land, COMSIG_CLICK, /obj/drone_helm/proc/land, TRUE)
 	screenobjs = list(energy, health, deploy, eject, land)
 
 	for(var/obj/screen/S as anything in screenobjs)
-		S.master = owner_drone
+		S.master = owner_console
 	..()
 
 /datum/mini_hud/drone/Destroy()
@@ -216,8 +233,8 @@
 	owner_console.UnregisterSignal(deploy, COMSIG_CLICK)
 	owner_console.UnregisterSignal(eject, COMSIG_CLICK)
 	owner_console.UnregisterSignal(land, COMSIG_CLICK)
-	UnregisterSignal(owner_console,ENERGY_RELAY)
-	UnregisterSignal(owner_console,HEALTH_RELAY)
+	UnregisterSignal(owner_console,COMSIG_ENERGY_RELAY)
+	UnregisterSignal(owner_console,COMSIG_HEALTH_RELAY)
 	owner_console = null
 	. = ..()
 
@@ -253,15 +270,16 @@
 		else
 			energy.icon_state = "energy-0"
 
+/obj/screen/drone
+	icon = 'icons/rogue-star/overworld.dmi'
+	icon_state = "eject"
+
 /obj/screen/drone/deploy
 	name = "Deploy"
 	icon_state = "deploy"
 	screen_loc = ui_rig_airtoggle
 
 /obj/screen/drone/deploy/Click()
-	if(isliving(usr))
-		var/mob/living/L = usr
-//		if(L.loc == )
 	SEND_SIGNAL(src,COMSIG_CLICK)
 
 /obj/screen/drone/eject
@@ -270,8 +288,8 @@
 	screen_loc = ui_rig_airtoggle
 
 /obj/screen/drone/land
-	name = "Eject"
-	icon_state = "eject"
+	name = "Land"
+	icon_state = "land"
 	screen_loc = ui_rig_airtoggle
 
 /obj/screen/drone/energy

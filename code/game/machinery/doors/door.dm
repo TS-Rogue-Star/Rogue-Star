@@ -123,7 +123,13 @@
 			open()
 		else
 			do_animate("deny")
-
+	//RS ADD
+	if(istype(AM, /obj/overworld_vehicle/drone))
+		if(check_access(null))
+			open()
+		else
+			do_animate("deny")
+	//RS ADD
 	if(istype(AM, /mob/living/bot))
 		var/mob/living/bot/bot = AM
 		if(src.check_access(bot.botcard))

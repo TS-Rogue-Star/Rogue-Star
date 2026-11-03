@@ -40,6 +40,9 @@
 
 	var/movement_mode = OWV_WALK			//Our current movement mode, determines how our inputs are interpretted and how our momentum is processed
 	var/remote_controlled = FALSE			//If true our driver won't be in passengers
+	var/locked = FALSE
+	var/health = 100
+	var/energy = 100
 
 /obj/overworld_vehicle/Initialize(mapload)
 	. = ..()
@@ -58,7 +61,10 @@
 /obj/overworld_vehicle/process()
 	switch(movement_mode)
 		if(OWV_WALK)
-			process_walk()
+			if(world.time > last_input + input_cooldown)
+				STOP_PROCESSING(SSprocessing,src)
+				update_icon()
+			return
 		if(OWV_DRIVE)
 			process_drive()
 		if(OWV_SPACE)
@@ -67,7 +73,6 @@
 	if(isstopped())
 		STOP_PROCESSING(SSprocessing,src)
 		update_icon()
-		return
 
 /obj/overworld_vehicle/attack_hand(mob/living/user)
 	if(passengers.len >= seats)
@@ -77,6 +82,32 @@
 	passengers += user
 	if(!driver)
 		driver = user
+
+/obj/overworld_vehicle/touch_map_edge()
+	if(z in using_map.sealed_levels)
+		return
+
+	if(using_map.use_overmap)
+		overmap_transition()
+
+/obj/overworld_vehicle/proc/overmap_transition()
+	var/turf/T = get_turf(src)
+	if(!T)
+		return
+	var/obj/effect/overmap/visitable/M = get_overmap_sector(T.z)
+	if (!M)
+		return
+
+	if(!isturf(M.loc))
+		return
+
+	var/where_x = (((x - 1) / (world.maxx - 1)) * 32) - 16
+	var/where_y = (((y - 1) / (world.maxy - 1)) * 32) - 16
+	forceMove(M.loc)
+	turfpos[1] = where_x
+	turfpos[2] = where_y
+	pixel_x = where_x
+	pixel_y = where_y
 
 /obj/overworld_vehicle/proc/manifest(var/list/our_manifest)	//We need to figure out how to get a list of things this object will care about
 	if(!our_manifest)
@@ -123,10 +154,10 @@
 	input_momentum[1] = xmo
 	input_momentum[2] = ymo
 
+	START_PROCESSING(SSprocessing, src)
 	if(movement_mode == OWV_WALK)
 		process_walk()
 	else if(isstopped())
-		START_PROCESSING(SSprocessing, src)
 		process()
 
 /obj/overworld_vehicle/proc/get_slowdown()
@@ -135,9 +166,6 @@
 	return T.movement_cost
 
 /obj/overworld_vehicle/proc/process_walk()
-	if(noinput())
-		return
-
 	var/momentum_add = ground_accelleration
 	var/friction = TRUE
 
@@ -146,10 +174,8 @@
 		friction = T.friction
 		if(T.movement_cost)
 			momentum_add *=	T.movement_cost
-
-	if(friction)
-		momentum[1] = 0
-		momentum[2] = 0
+	if(noinput())
+		return
 
 	if(input_momentum[1])
 		momentum[1] = clamp(momentum[1] + (input_momentum[1] * momentum_add) ,-max_ground_momentum,max_ground_momentum)
@@ -158,7 +184,9 @@
 
 	momentum_check(max_ground_momentum)
 	actually_move()
-
+	if(friction)
+		momentum[1] = 0
+		momentum[2] = 0
 
 /obj/overworld_vehicle/proc/actually_move(var/animate_movement = TRUE)
 
@@ -338,11 +366,6 @@
 		return FALSE
 	if(!isturf(location))
 		location = get_turf(location)
-	if(location.check_density(FALSE,TRUE))
-		if(location.x != x)
-			locdata[1] = FALSE
-		if(location.y != y)
-			locdata[2] = FALSE
 	if(istype(location,/turf/unsimulated/map/edge))
 		location.Bumped(src)
 		if(!locdata[1])
@@ -350,6 +373,11 @@
 			locdata[3] = FALSE
 		if(!locdata[2])
 			wrap("y")
+	else if(location.check_density_and_bump(FALSE,TRUE,src))
+		if(location.x != x)
+			locdata[1] = FALSE
+		if(location.y != y)
+			locdata[2] = FALSE
 	return locdata
 
 /obj/overworld_vehicle/proc/wrap(var/which)
@@ -443,19 +471,16 @@
 	icon = 'icons/rogue-star/overworld.dmi'
 	icon_state = "drone"
 	idle_state = "drone"
-	move_state = "drone"
+	move_state = "pip_m"
 	remote_controlled = TRUE
 	speed = 10
-	var/locked = FALSE
-	var/health = 100
-	var/energy = 100
+	space_accelleration = 0.1
 
 /obj/overworld_vehicle/drone/relaymove(mob/user, direction)
 	if(locked)
 		return
 
 	. = ..()
-
 
 /obj/overworld_vehicle/proc/adjust_health(var/amount)
 	if(!amount)
