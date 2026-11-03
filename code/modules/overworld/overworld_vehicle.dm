@@ -239,7 +239,9 @@
 			pixel_y += (final_turf.y - y) * -32
 			match_client_pix()
 			forceMove(final_turf,NONE,0)
-
+			if(loc != final_turf)
+				new_pos_x = turfpos[1]
+				new_pos_y = turfpos[2]
 
 	turfpos[1] = new_pos_x
 	turfpos[2] = new_pos_y
@@ -366,6 +368,11 @@
 		return FALSE
 	if(!isturf(location))
 		location = get_turf(location)
+	if(location.check_density_and_bump(FALSE,TRUE,src))
+		if(location.x != x)
+			locdata[1] = FALSE
+		if(location.y != y)
+			locdata[2] = FALSE
 	if(istype(location,/turf/unsimulated/map/edge))
 		location.Bumped(src)
 		if(!locdata[1])
@@ -373,11 +380,6 @@
 			locdata[3] = FALSE
 		if(!locdata[2])
 			wrap("y")
-	else if(location.check_density_and_bump(FALSE,TRUE,src))
-		if(location.x != x)
-			locdata[1] = FALSE
-		if(location.y != y)
-			locdata[2] = FALSE
 	return locdata
 
 /obj/overworld_vehicle/proc/wrap(var/which)
