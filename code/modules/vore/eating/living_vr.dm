@@ -785,6 +785,11 @@
 		to_chat(user, "<span class='notice'>They aren't able to be devoured.</span>")
 		log_and_message_admins("[key_name_admin(src)] attempted to devour [key_name_admin(prey)] against their prefs ([prey ? ADMIN_JMP(prey) : "null"])")
 		return FALSE
+	// RS Add Start: Mob Vore Preference Enforcement (Lira, November 2026)
+	if(isanimal(pred) && !prey.allowmobvore)
+		to_chat(user, "<span class='notice'>They aren't able to be devoured by mobs.</span>")
+		return FALSE
+	// RS Add End
 	if(!npc_vore_check(pred, prey))	//RS ADD
 		to_chat(user, "<span class='notice'>They aren't able to be devoured by NPCs.</span>")	//RS ADD
 		return FALSE	//RS ADD
