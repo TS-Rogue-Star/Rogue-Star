@@ -1,8 +1,11 @@
 /////////////////////////////////////////////////////////////////////////////////////////////////
 // Updated by Lira for Rogue Star October 2026: Computer and Related Machinery Idle Processing //
 /////////////////////////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star October 2026: Piped Gas Flow and Telemetry ////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////
 
 /obj/machinery/air_sensor
+	processing_on_demand = TRUE // RS Add: Piped Gas Flow and Telemetry (Lira, October 2026)
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "gsensor1"
 	name = "Gas Sensor"
@@ -30,14 +33,17 @@
 /obj/machinery/air_sensor/update_icon()
 	icon_state = "gsensor[on]"
 
+// RS Edit: Piped Gas Flow and Telemetry (Lira, October 2026)
 /obj/machinery/air_sensor/process()
-	if(on)
+	var/turf/T = get_turf(src)
+	var/datum/gas_mixture/air_sample = on ? return_air() : null
+	var/datum/room_atmos_subscription/piped/S = watch_piped_atmos(list(T, istype(T, /turf/simulated) ? air_sample : null, radio_connection))
+	if(on && radio_connection)
 		var/datum/signal/signal = new
 		signal.transmission_method = TRANSMISSION_RADIO //radio signal
 		signal.data["tag"] = id_tag
 		signal.data["timestamp"] = world.time
 
-		var/datum/gas_mixture/air_sample = return_air()
 
 		if(output&1)
 			signal.data["pressure"] = num2text(round(air_sample.return_pressure(),0.1),)
@@ -62,11 +68,17 @@
 				signal.data["carbon_dioxide"] = 0
 		signal.data["sigtype"]="status"
 		radio_connection.post_signal(src, signal, radio_filter = RADIO_ATMOSIA)
+		S.report_after(10 SECONDS)
+	else if(S.heartbeat_timer)
+		deltimer(S.heartbeat_timer)
+		S.heartbeat_timer = null
+	return PROCESS_KILL
 
 /obj/machinery/air_sensor/proc/set_frequency(new_frequency)
 	radio_controller.remove_object(src, frequency)
 	frequency = new_frequency
 	radio_connection = radio_controller.add_object(src, frequency, RADIO_ATMOSIA)
+	wake_processing() // RS Add: Piped Gas Flow and Telemetry (Lira, October 2026)
 
 /obj/machinery/air_sensor/Initialize()
 	. = ..()
@@ -415,7 +427,7 @@
 /obj/machinery/computer/general_air_control/fuel_injection/tgui_act(action, params)
 	if(..())
 		return TRUE
-	
+
 	switch(action)
 		if("refresh_status")
 			device_info = null

@@ -1,3 +1,7 @@
+///////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star October 2026: Piped Gas Flow and Telemetry //
+///////////////////////////////////////////////////////////////////////////////
+
 //--------------------------------------------
 // Gas filter - omni variant
 //--------------------------------------------
@@ -64,9 +68,10 @@
 
 	return 0
 
+// RS Edit: Piped Gas Flow and Telemetry (Lira, October 2026)
 /obj/machinery/atmospherics/omni/atmos_filter/process()
 	if(!..())
-		return 0
+		return piped_atmos_sleep_disabled()
 
 	var/datum/gas_mixture/output_air = output.air	//BYOND doesn't like referencing "output.air.return_pressure()" so we need to make a direct reference
 	var/datum/gas_mixture/input_air = input.air		// it's completely happy with them if they're in a loop though i.e. "P.air.return_pressure()"... *shrug*
@@ -90,6 +95,8 @@
 			if(P.network)
 				P.network.update = 1
 
+	if(power_draw < 0)
+		return piped_atmos_sleep()
 	return 1
 
 /obj/machinery/atmospherics/omni/atmos_filter/tgui_interact(mob/user,datum/tgui/ui = null)
@@ -188,6 +195,7 @@
 			switch_filter(dir_flag(params["dir"]), mode_return_switch(new_filter))
 			. = TRUE
 
+	wake_processing() // RS Add: Piped Gas Flow and Telemetry (Lira, October 2026)
 	update_icon()
 
 /obj/machinery/atmospherics/omni/atmos_filter/proc/mode_return_switch(var/mode)

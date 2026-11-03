@@ -1,3 +1,7 @@
+///////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star October 2026: Piped Gas Flow and Telemetry //
+///////////////////////////////////////////////////////////////////////////////
+
 
 /datum/pipeline
 	var/datum/gas_mixture/air
@@ -19,6 +23,7 @@
 		temporarily_store_air()
 	for(var/obj/machinery/atmospherics/pipe/P in members)
 		P.parent = null
+		P.piped_atmos_invalidate() // RS Add: Piped Gas Flow and Telemetry (Lira, October 2026)
 	members = null
 	edges = null
 	leaks = null
@@ -113,6 +118,7 @@
 			if(!istype(result,/obj/machinery/atmospherics/pipe) && (result!=reference))
 				result.network_expand(new_network, edge)
 
+	SEND_SIGNAL(src, COMSIG_PIPED_ATMOS_CHANGED) // RS Add: Piped Gas Flow and Telemetry (Lira, October 2026)
 	return 1
 
 /datum/pipeline/proc/return_network(obj/machinery/atmospherics/reference)

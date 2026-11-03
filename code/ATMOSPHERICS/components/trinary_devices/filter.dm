@@ -1,4 +1,9 @@
+///////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star October 2026: Piped Gas Flow and Telemetry //
+///////////////////////////////////////////////////////////////////////////////
+
 /obj/machinery/atmospherics/trinary/atmos_filter
+	processing_on_demand = TRUE // RS Add: Piped Gas Flow and Telemetry (Lira, October 2026)
 	icon = 'icons/atmos/filter.dmi'
 	icon_state = "map"
 	construction_type = /obj/item/pipe/trinary/flippable
@@ -75,6 +80,7 @@
 		icon_state += "off"
 		update_use_power(USE_POWER_OFF)
 
+// RS Edit: Piped Gas Flow and Telemetry (Lira, October 2026)
 /obj/machinery/atmospherics/trinary/atmos_filter/process()
 	..()
 
@@ -82,7 +88,7 @@
 	last_flow_rate = 0
 
 	if((stat & (NOPOWER|BROKEN)) || !use_power)
-		return
+		return piped_atmos_sleep_disabled()
 
 	//Figure out the amount of moles to transfer
 	var/transfer_moles = (set_flow_rate/air1.volume)*air1.total_moles
@@ -104,6 +110,8 @@
 		last_power_draw = power_draw
 		use_power(power_draw)
 
+	if(power_draw < 0 && !piped_atmos_reacting())
+		return piped_atmos_sleep()
 	return 1
 
 /obj/machinery/atmospherics/trinary/atmos_filter/Initialize()
@@ -219,6 +227,7 @@
 					filtered_out += "nitrous_oxide"
 
 	add_fingerprint(usr)
+	wake_processing() // RS Add: Piped Gas Flow and Telemetry (Lira, October 2026)
 	update_icon()
 
 //

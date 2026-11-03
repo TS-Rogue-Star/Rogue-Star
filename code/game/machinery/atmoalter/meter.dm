@@ -1,4 +1,9 @@
+///////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star October 2026: Piped Gas Flow and Telemetry //
+///////////////////////////////////////////////////////////////////////////////
+
 /obj/machinery/meter
+	processing_on_demand = TRUE // RS Add: Piped Gas Flow and Telemetry (Lira, October 2026)
 	name = "meter"
 	desc = "It measures something."
 	icon = 'icons/obj/meter_vr.dmi'
@@ -31,19 +36,28 @@
 		P = locate(/obj/machinery/atmospherics/pipe) in loc
 	return P
 
+// RS Edit: Piped Gas Flow and Telemetry (Lira, October 2026)
 /obj/machinery/meter/process()
+	if(QDELETED(target))
+		target = null
+	var/datum/gas_mixture/environment = target?.return_air()
+	var/datum/radio_frequency/radio_connection
+	if(frequency && environment && !(stat & (BROKEN|NOPOWER)))
+		radio_connection = radio_controller.return_frequency(frequency)
+	var/list/sources = piped_atmos_sources(environment, !(stat & (BROKEN|NOPOWER)))
+	sources += radio_connection
+	var/datum/room_atmos_subscription/piped/S = watch_piped_atmos(sources)
 	if(!target)
 		icon_state = "meterX"
-		return 0
+		return PROCESS_KILL
 
 	if(stat & (BROKEN|NOPOWER))
 		icon_state = "meter0"
-		return 0
+		return PROCESS_KILL
 
-	var/datum/gas_mixture/environment = target.return_air()
 	if(!environment)
 		icon_state = "meterX"
-		return 0
+		return PROCESS_KILL
 
 	var/env_pressure = environment.return_pressure()
 	if(env_pressure <= 0.15*ONE_ATMOSPHERE)
@@ -60,10 +74,7 @@
 	else
 		icon_state = "meter4"
 
-	if(frequency)
-		var/datum/radio_frequency/radio_connection = radio_controller.return_frequency(frequency)
-
-		if(!radio_connection) return
+	if(radio_connection)
 
 		var/datum/signal/signal = new
 		signal.source = src
@@ -75,6 +86,8 @@
 			"sigtype" = "status"
 		)
 		radio_connection.post_signal(src, signal)
+		S.report_after(10 SECONDS)
+	return PROCESS_KILL
 
 /obj/machinery/meter/examine(mob/user)
 	. = ..()
@@ -123,6 +136,7 @@
 		if(!pipes_on_turf.len)
 			return
 		target = pipes_on_turf[1]
+		wake_processing() // RS Add: Piped Gas Flow and Telemetry (Lira, October 2026)
 		pipes_on_turf.Remove(target)
 		pipes_on_turf.Add(target)
 		to_chat(user, "<span class='notice'>Pipe meter set to moniter \the [target].</span>")

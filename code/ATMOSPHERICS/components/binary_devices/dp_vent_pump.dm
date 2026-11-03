@@ -1,3 +1,7 @@
+///////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star October 2026: Piped Gas Flow and Telemetry //
+///////////////////////////////////////////////////////////////////////////////
+
 #define DEFAULT_PRESSURE_DELTA 10000
 
 #define EXTERNAL_PRESSURE_BOUND ONE_ATMOSPHERE
@@ -9,6 +13,7 @@
 #define PRESSURE_CHECK_OUTPUT 4
 
 /obj/machinery/atmospherics/binary/dp_vent_pump
+	processing_on_demand = TRUE // RS Add: Piped Gas Flow and Telemetry (Lira, October 2026)
 	icon = 'icons/atmos/vent_pump.dmi'
 	icon_state = "map_dp_vent"
 
@@ -104,6 +109,7 @@
 	update_icon()
 	update_underlays()
 
+// RS Edit: Piped Gas Flow and Telemetry (Lira, October 2026)
 /obj/machinery/atmospherics/binary/dp_vent_pump/process()
 	..()
 
@@ -111,7 +117,7 @@
 	last_flow_rate = 0
 
 	if(stat & (NOPOWER|BROKEN) || !use_power)
-		return 0
+		return piped_atmos_sleep_disabled()
 
 	var/datum/gas_mixture/environment = loc.return_air()
 
@@ -143,6 +149,8 @@
 		last_power_draw = power_draw
 		use_power(power_draw)
 
+	if(power_draw < 0)
+		return piped_atmos_sleep()
 	return 1
 
 /obj/machinery/atmospherics/binary/dp_vent_pump/proc/get_pressure_delta(datum/gas_mixture/environment)
@@ -214,6 +222,7 @@
 /obj/machinery/atmospherics/binary/dp_vent_pump/receive_signal(datum/signal/signal)
 	if(!signal.data["tag"] || (signal.data["tag"] != id) || (signal.data["sigtype"]!="command"))
 		return 0
+	wake_processing() // RS Add: Piped Gas Flow and Telemetry (Lira, October 2026)
 	if(signal.data["power"])
 		update_use_power(text2num(signal.data["power"]))
 

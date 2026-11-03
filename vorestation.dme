@@ -218,6 +218,7 @@
 #include "code\ATMOSPHERICS\datum_pipe_network.dm"
 #include "code\ATMOSPHERICS\datum_pipeline.dm"
 #include "code\ATMOSPHERICS\firedoor_atmos.dm"
+#include "code\ATMOSPHERICS\piped_atmos.dm"
 #include "code\ATMOSPHERICS\room_atmos.dm"
 #include "code\ATMOSPHERICS\components\portables_connector.dm"
 #include "code\ATMOSPHERICS\components\shutoff.dm"

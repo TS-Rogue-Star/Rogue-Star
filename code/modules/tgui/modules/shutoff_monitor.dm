@@ -12,6 +12,7 @@
 			if(!istype(S))
 				return FALSE
 			S.close_on_leaks = !S.close_on_leaks
+			S.wake_processing() // RS Add: Piped Gas Flow and Telemetry (Lira, October 2026)
 			return TRUE
 
 		if("toggle_open")
