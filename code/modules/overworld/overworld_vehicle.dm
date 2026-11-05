@@ -189,11 +189,11 @@
 			momentum_add *= 10
 
 	if(input_momentum[1])
-		momentum[1] = clamp(momentum[1] + (input_momentum[1] * momentum_add) ,-max_ground_momentum,max_ground_momentum)
+		momentum[1] = clamp(momentum[1] + (input_momentum[1] * momentum_add) ,-modified_max_momentum,modified_max_momentum)
 	if(input_momentum[2])
-		momentum[2] = clamp(momentum[2] + (input_momentum[2] * momentum_add) ,-max_ground_momentum,max_ground_momentum)
+		momentum[2] = clamp(momentum[2] + (input_momentum[2] * momentum_add) ,-modified_max_momentum,modified_max_momentum)
 
-	momentum_check(max_ground_momentum)
+	momentum_check(modified_max_momentum)
 	actually_move()
 	if(friction)
 		momentum[1] = 0
@@ -204,10 +204,10 @@
 	input_momentum[1] = 0
 	input_momentum[2] = 0
 
-	var/slowdown = get_slowdown()
+	var/slowdown = 1 + max(0, get_slowdown())
 
-	var/new_pos_x = turfpos[1] + momentum[1] * speed - (100 * slowdown)
-	var/new_pos_y = turfpos[2] + momentum[2] * speed - (100 * slowdown)
+	var/new_pos_x = turfpos[1] + momentum[1] * speed / slowdown
+	var/new_pos_y = turfpos[2] + momentum[2] * speed / slowdown
 	var/newx = x
 	var/newy = y
 	if(new_pos_x > 16)
