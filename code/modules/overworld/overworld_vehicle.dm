@@ -40,12 +40,15 @@
 
 	var/movement_mode = OWV_WALK			//Our current movement mode, determines how our inputs are interpretted and how our momentum is processed
 	var/remote_controlled = FALSE			//If true our driver won't be in passengers
+	var/on_map = FALSE						//If true it's on the OM, and may behave differently
 	var/locked = FALSE
 	var/health = 100
 	var/energy = 100
 
 /obj/overworld_vehicle/Initialize(mapload)
 	. = ..()
+	RegisterSignal(src, COMSIG_ATOM_ENTERING, /obj/overworld_vehicle/proc/consider_turf)
+
 
 /obj/overworld_vehicle/update_icon()
 	. = ..()
@@ -103,11 +106,15 @@
 
 	var/where_x = (((x - 1) / (world.maxx - 1)) * 32) - 16
 	var/where_y = (((y - 1) / (world.maxy - 1)) * 32) - 16
+	var/velx = momentum[1]
+	var/vely = momentum[2]
 	forceMove(M.loc)
 	turfpos[1] = where_x
 	turfpos[2] = where_y
 	pixel_x = where_x
 	pixel_y = where_y
+	momentum[1] = velx *= 0.01
+	momentum[2] = vely *= 0.01
 
 /obj/overworld_vehicle/proc/manifest(var/list/our_manifest)	//We need to figure out how to get a list of things this object will care about
 	if(!our_manifest)
@@ -154,11 +161,10 @@
 	input_momentum[1] = xmo
 	input_momentum[2] = ymo
 
-	START_PROCESSING(SSprocessing, src)
 	if(movement_mode == OWV_WALK)
 		process_walk()
 	else if(isstopped())
-		process()
+		START_PROCESSING(SSprocessing, src)
 
 /obj/overworld_vehicle/proc/get_slowdown()
 	var/turf/T = get_turf(src)
@@ -176,6 +182,11 @@
 			momentum_add *=	T.movement_cost
 	if(noinput())
 		return
+	var/modified_max_momentum = max_ground_momentum
+	if(momentum_add > 0)
+		if(!on_map)
+			modified_max_momentum *= 2
+			momentum_add *= 10
 
 	if(input_momentum[1])
 		momentum[1] = clamp(momentum[1] + (input_momentum[1] * momentum_add) ,-max_ground_momentum,max_ground_momentum)
@@ -247,24 +258,34 @@
 	turfpos[2] = new_pos_y
 	update_icon()
 
-	if(isoverworld(loc))
-		var/turf/unsimulated/map/consider = loc
-		if(!consider.friction)
-			movement_mode = OWV_SPACE
-			START_PROCESSING(SSprocessing, src)
-
 	if(animate_movement)
 		animate_move(new_pos_x,new_pos_y)
 
+/obj/overworld_vehicle/proc/consider_turf()
+	if(isoverworld(loc))
+		on_map = TRUE
+		var/turf/unsimulated/map/consider = loc
+		if(!consider.friction)
+			update_movement_mode(OWV_SPACE)
+		return
+	on_map = FALSE
+	if(isspace(loc))
+		update_movement_mode(OWV_SPACE)
+	else
+		update_movement_mode(OWV_WALK)
 
-
-
-
-
-
-
-
-
+/obj/overworld_vehicle/proc/update_movement_mode(var/new_mode)
+	if(!new_mode)
+		return
+	if(new_mode == movement_mode)
+		return
+	movement_mode = new_mode
+	switch(movement_mode)
+		if(OWV_WALK)
+		if(OWV_DRIVE)
+			START_PROCESSING(SSprocessing, src)
+		if(OWV_SPACE)
+			START_PROCESSING(SSprocessing, src)
 
 
 
@@ -309,18 +330,19 @@
 
 /obj/overworld_vehicle/proc/process_space()
 	if(isstopped())
-		to_world("Stopped")
 		if(space_accelleration <= 0)
-			to_world("No accelleration")
 			input_momentum[1] = 0
 			input_momentum[2] = 0
 			return
 		if(noinput())
-			to_world("No input")
 			return
 
-	if(space_accelleration > 0)
-		var/momentum_add = space_accelleration
+	var/modified_max_space_momentum = max_space_momentum
+	var/momentum_add = space_accelleration
+	if(momentum_add > 0)
+		if(!on_map)
+			modified_max_space_momentum *= 2
+			momentum_add *= 10
 
 		if(isoverworld(loc))
 			var/turf/unsimulated/map/T = loc
@@ -328,11 +350,11 @@
 				momentum_add *=	T.movement_cost
 
 		if(input_momentum[1])
-			momentum[1] = clamp(momentum[1] + (input_momentum[1] * momentum_add) ,-max_space_momentum,max_space_momentum)
+			momentum[1] = clamp(momentum[1] + (input_momentum[1] * momentum_add) ,-modified_max_space_momentum,modified_max_space_momentum)
 		if(input_momentum[2])
-			momentum[2] = clamp(momentum[2] + (input_momentum[2] * momentum_add) ,-max_space_momentum,max_space_momentum)
+			momentum[2] = clamp(momentum[2] + (input_momentum[2] * momentum_add) ,-modified_max_space_momentum,modified_max_space_momentum)
 
-	momentum_check(max_space_momentum)
+	momentum_check(modified_max_space_momentum)
 	actually_move()
 
 
@@ -375,9 +397,9 @@
 			locdata[2] = FALSE
 	if(istype(location,/turf/unsimulated/map/edge))
 		location.Bumped(src)
+		locdata[3] = FALSE
 		if(!locdata[1])
 			wrap("x")
-			locdata[3] = FALSE
 		if(!locdata[2])
 			wrap("y")
 	return locdata

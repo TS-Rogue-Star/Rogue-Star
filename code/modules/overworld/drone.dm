@@ -132,7 +132,6 @@
 	var/mob/user = usr
 	if(user.loc != src)
 		return
-
 	if(!deployable)
 		generate_deployable(user)
 		look(user)
@@ -157,6 +156,9 @@
 		if(choice == "Return")
 			trash_deployable()
 			return
+	if(deployable.on_map)
+		to_chat(user, SPAN_WARNING("You can't deploy the teleporter here, you need to land the drone first."))
+		return
 
 	var/obj/deployable_teleporter/drone/new_deployable = new(get_turf(deployable))
 	deployable.locked = TRUE
@@ -193,7 +195,41 @@
 	visible_message(deployable.driver,SPAN_OCCULT("[src] [deployable] integrity: [deployable.health]"))
 
 /obj/drone_helm/proc/land()
-	to_world("WAHOO LET'S LAND")
+	if(!deployable)
+		return
+	var/turf/T = get_turf(deployable)
+	if(!T)
+		return
+	if(!istype(T, /turf/unsimulated/map))
+		return
+	var/mob/living/user = usr
+	if(!isliving(user))
+		return
+	var/list/destinations = list()
+	for(var/obj/effect/overmap/visitable/v in T.contents)
+		if(!istype(v, /obj/effect/overmap/visitable))
+			continue
+		for(var/obj/effect/shuttle_landmark/landmark in v.generic_waypoints)
+			var/turf/lt = get_turf(landmark)
+			if(lt.check_density(FALSE,TRUE))
+				continue
+			destinations |= landmark
+
+	if(!destinations.len)
+		to_chat(user, SPAN_WARNING("There is nowhere to land here."))
+		return
+	var/obj/effect/overmap/visitable/our_dest = tgui_input_list(user, "Where will you land?", "Drone Landing", destinations)
+	if(!our_dest)
+		to_chat(user, SPAN_DANGER("Landing aborted"))
+		return
+	to_chat(user, span_green("\The [deployable] begins its landing approach..."))
+	if(do_after(user, 10 SECONDS))
+		if(deployable.loc != T)
+			to_chat(user, SPAN_WARNING("\The [deployable] moved too far away and missed the landing site."))
+			return
+		deployable.forceMove(get_turf(our_dest))
+		deployable.momentum = list(0,0)
+
 
 ///// HUD /////
 
