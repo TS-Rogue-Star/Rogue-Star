@@ -182,9 +182,24 @@
 	input_momentum[2] = 0
 
 	var/slowdown = 1 + max(0, get_slowdown())
+	var/move_x = momentum[1] * speed / slowdown
+	var/move_y = momentum[2] * speed / slowdown
+	var/move_steps = max(1, CEILING(max(abs(move_x), abs(move_y)) / 32, 1))
+	var/start_x = x * 32 + pixel_x
+	var/start_y = y * 32 + pixel_y
+	for(var/i = 1 to move_steps)
+		if(!actually_move_step(momentum[1] ? move_x / move_steps : 0, momentum[2] ? move_y / move_steps : 0, animate_movement && move_steps == 1))
+			return
+	if(animate_movement && move_steps > 1)
+		pixel_x = start_x - x * 32
+		pixel_y = start_y - y * 32
+		match_client_pix()
+		animate_move(turfpos[1],turfpos[2])
 
-	var/new_pos_x = turfpos[1] + momentum[1] * speed / slowdown
-	var/new_pos_y = turfpos[2] + momentum[2] * speed / slowdown
+/obj/overworld_vehicle/proc/actually_move_step(var/move_x, var/move_y, var/animate_movement = TRUE)
+	var/continue_moving = TRUE
+	var/new_pos_x = turfpos[1] + move_x
+	var/new_pos_y = turfpos[2] + move_y
 	var/newx = x
 	var/newy = y
 	if(new_pos_x > 16)
@@ -205,20 +220,21 @@
 		var/list/locdata = consider_location(T)
 		var/final_x = x
 		var/final_y = y
-		animate_movement = locdata[3]
+		continue_moving = locdata[3]
+		animate_movement = animate_movement && continue_moving
 
 		if(locdata[1])
 			final_x = newx
 		else
 			new_pos_x = pixel_x
-			if(animate_movement)
+			if(continue_moving)
 				momentum[1] = 0
 
 		if(locdata[2])
 			final_y = newy
 		else
 			new_pos_y = pixel_y
-			if(animate_movement)
+			if(continue_moving)
 				momentum[2] = 0
 
 		if(final_x != x || final_y != y)
@@ -228,6 +244,7 @@
 			match_client_pix()
 			forceMove(final_turf,NONE,0)
 			if(loc != final_turf)
+				continue_moving = FALSE
 				new_pos_x = turfpos[1]
 				new_pos_y = turfpos[2]
 
@@ -237,6 +254,11 @@
 
 	if(animate_movement)
 		animate_move(new_pos_x,new_pos_y)
+	else
+		pixel_x = new_pos_x
+		pixel_y = new_pos_y
+		match_client_pix()
+	return continue_moving
 
 /obj/overworld_vehicle/proc/consider_turf()
 	if(isoverworld(loc))
@@ -365,7 +387,7 @@
 /obj/overworld_vehicle/proc/consider_location(var/turf/location)
 	var/list/locdata = list(TRUE,TRUE,TRUE)	//1 = x density 2 = y density 3 = should we animate our movement
 	if(!location)
-		return FALSE
+		return list(FALSE,FALSE,TRUE)
 	if(!isturf(location))
 		location = get_turf(location)
 	if(location.check_density_and_bump(FALSE,TRUE,src))
