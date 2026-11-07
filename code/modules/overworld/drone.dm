@@ -57,9 +57,16 @@
 	enter(user)
 
 /obj/drone_helm/proc/enter(var/mob/living/carbon/human/user)
-	if(contents.len || !user)
+	if(user.loc == src)
+		return
+	if(contents.len)
 		to_chat(user, SPAN_DANGER("It's already occupied."))
-		return FALSE
+		return
+	if(!tgui_alert(user,"Do you want to enter [src]?","[src]",list("Enter","Do not")) == "Enter")
+		return
+	if(contents.len)
+		to_chat(user, SPAN_DANGER("It's already occupied."))
+		return
 	user.loc = src
 	if(ishuman(user))
 		if(user.hud_used)
@@ -67,8 +74,13 @@
 				hud = new /datum/mini_hud/drone(user.hud_used, src)
 			else
 				hud.apply_to_hud(user.hud_used)
-//		user.client.screen |= hud
-	look(user)
+	if(deployable)
+		if(drone_check())
+			look(user)
+		else
+			tgui_alert(user, "The deployed drone is non-functional. A new drone will need to be deployed to continue operation. Press the deploy button to your left to deploy a drone.","[src]",list("Okay"))
+	else
+		tgui_alert(user, "Press the deploy button to your left to deploy a drone.","[src]",list("Okay"))
 
 /obj/drone_helm/relaymove(mob/user, direction)
 	if(deployable)
@@ -83,6 +95,9 @@
 /obj/drone_helm/proc/look(var/mob/user)
 	if(!deployable || !user)
 		return
+	if(deployable.energy <= 0)
+		to_chat(user, SPAN_DANGER("\The [deployable] doesn't respond..."))
+		return
 	deployable.driver = user
 	user.set_machine(src)
 	if(isliving(user))
@@ -91,18 +106,6 @@
 		L.handle_vision()
 		L.client.perspective = EYE_PERSPECTIVE
 		L.client.eye = deployable
-
-//	if(linked)
-//		apply_visual(user)
-//		user.reset_view(linked)
-//		if(linked.real_appearance)
-//			user.client?.images += linked.real_appearance
-
-
-//	user.set_viewsize(world.view + extra_view)
-//	GLOB.moved_event.register(user, src, /obj/machinery/computer/ship/proc/unlook)
-	// TODO GLOB.stat_set_event.register(user, src, /obj/machinery/computer/ship/proc/unlook)
-//	LAZYDISTINCTADD(viewers, WEAKREF(user))
 
 /obj/drone_helm/verb/eject()
 	set name = "Eject"
@@ -123,7 +126,6 @@
 			continue
 		if(hud)
 			L.hud_used.remove_minihud(hud)
-//		L.client.screen -= hud
 
 /obj/drone_helm/proc/deploy()
 	set name = "Deploy"
@@ -178,10 +180,14 @@
 	deployable.register_driver(user)
 	SEND_SIGNAL(src,COMSIG_HEALTH_RELAY,deployable.health)
 	SEND_SIGNAL(src,COMSIG_ENERGY_RELAY,deployable.energy)
+	RegisterSignal(deployable, COMSIG_ENERGY_RELAY, /obj/drone_helm/proc/update_energy_hud, TRUE)
+	RegisterSignal(deployable, COMSIG_HEALTH_RELAY, /obj/drone_helm/proc/update_health_hud, TRUE)
 
 /obj/drone_helm/proc/trash_deployable()
 	if(deployable)
 		deployable.driver.unset_machine()
+		UnregisterSignal(deployable, COMSIG_ENERGY_RELAY)
+		UnregisterSignal(deployable, COMSIG_HEALTH_RELAY)
 		QDEL_NULL(deployable)
 	if(linked_teleporter.partner)
 		qdel(linked_teleporter.partner)
@@ -189,10 +195,10 @@
 	SEND_SIGNAL(src,COMSIG_ENERGY_RELAY,0)
 
 /obj/drone_helm/proc/report_energy()
-	visible_message(deployable.driver,span_green("[src] [deployable] energy: [deployable.energy]"))
+	visible_message(span_green("[src] [deployable] energy: [deployable.energy]"))
 
 /obj/drone_helm/proc/report_health()
-	visible_message(deployable.driver,SPAN_OCCULT("[src] [deployable] integrity: [deployable.health]"))
+	visible_message(SPAN_OCCULT("[src] [deployable] integrity: [deployable.health]"))
 
 /obj/drone_helm/proc/land()
 	if(!deployable)
@@ -230,6 +236,31 @@
 		deployable.forceMove(get_turf(our_dest))
 		deployable.momentum = list(0,0)
 
+/obj/drone_helm/proc/power_out()
+	disconnect()
+
+/obj/drone_helm/proc/disconnect()
+	if(!deployable)
+		return
+
+	deployable.driver.unset_machine()
+	deployable.driver = null
+
+/obj/drone_helm/proc/drone_check()
+	if(!deployable)
+		return FALSE
+	if(deployable.energy <= 0)
+		return FALSE
+	if(deployable.health <= 0)
+		return FALSE
+	return TRUE
+
+/obj/drone_helm/proc/update_energy_hud()
+	if(hud && deployable)
+		hud.update_health(deployable.health)
+/obj/drone_helm/proc/update_health_hud()
+	if(hud && deployable)
+		hud.update_energy(deployable.energy)
 
 ///// HUD /////
 
@@ -246,10 +277,10 @@
 	owner_console = owner
 	energy = new ()
 	owner_console.RegisterSignal(energy, COMSIG_CLICK, /obj/drone_helm/proc/report_energy, TRUE)
-	RegisterSignal(owner_console, COMSIG_ENERGY_RELAY, PROC_REF(update_energy), TRUE)
+	RegisterSignal(owner_console, COMSIG_ENERGY_RELAY, /datum/mini_hud/drone/proc/update_energy, TRUE)
 	health = new ()
 	owner_console.RegisterSignal(health, COMSIG_CLICK,/obj/drone_helm/proc/report_health, TRUE)
-	RegisterSignal(owner_console, COMSIG_HEALTH_RELAY, PROC_REF(update_health), TRUE)
+	RegisterSignal(owner_console, COMSIG_HEALTH_RELAY, /datum/mini_hud/drone/proc/update_health, TRUE)
 
 	deploy = new ()
 	owner_console.RegisterSignal(deploy, COMSIG_CLICK, /obj/drone_helm/proc/deploy, TRUE)
@@ -274,34 +305,32 @@
 	owner_console = null
 	. = ..()
 
-/datum/mini_hud/drone/proc/update_health()
-	var/our_health = args[2]
+/datum/mini_hud/drone/proc/update_health(var/our_health)
 	switch(our_health)
 		if(90 to 100)
 			health.icon_state = "health-5"
-		if(70 to 89)
+		if(70 to 90)
 			health.icon_state = "health-4"
-		if(40 to 69)
+		if(40 to 70)
 			health.icon_state = "health-3"
-		if(20 to 39)
+		if(20 to 40)
 			health.icon_state = "health-2"
-		if(1 to 19)
+		if(1 to 20)
 			health.icon_state = "health-1"
 		else
 			health.icon_state = "health-0"
 
-/datum/mini_hud/drone/proc/update_energy()
-	var/our_energy = args[2]
+/datum/mini_hud/drone/proc/update_energy(var/our_energy)
 	switch(our_energy)
 		if(90 to 100)
 			energy.icon_state = "energy-5"
-		if(70 to 89)
+		if(70 to 90)
 			energy.icon_state = "energy-4"
-		if(40 to 69)
+		if(40 to 70)
 			energy.icon_state = "energy-3"
-		if(20 to 39)
+		if(20 to 40)
 			energy.icon_state = "energy-2"
-		if(1 to 19)
+		if(1 to 20)
 			energy.icon_state = "energy-1"
 		else
 			energy.icon_state = "energy-0"

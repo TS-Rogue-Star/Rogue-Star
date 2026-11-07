@@ -128,10 +128,14 @@
 
 /obj/overworld_vehicle/relaymove(mob/user, direction)
 	if(user != driver)
-		return
+		return FALSE
+	if(energy <= 0)
+		return FALSE
+	if(health <= 0)
+		return FALSE
 
 	if(world.time < last_input + input_cooldown)
-		return
+		return FALSE
 	last_input = world.time
 
 	var/xmo = 0
@@ -165,39 +169,12 @@
 		process_walk()
 	else if(isstopped())
 		START_PROCESSING(SSprocessing, src)
+	return TRUE
 
 /obj/overworld_vehicle/proc/get_slowdown()
 	var/turf/T = get_turf(src)
 
 	return T.movement_cost
-
-/obj/overworld_vehicle/proc/process_walk()
-	var/momentum_add = ground_accelleration
-	var/friction = TRUE
-
-	if(isoverworld(loc))
-		var/turf/unsimulated/map/T = loc
-		friction = T.friction
-		if(T.movement_cost)
-			momentum_add *=	T.movement_cost
-	if(noinput())
-		return
-	var/modified_max_momentum = max_ground_momentum
-	if(momentum_add > 0)
-		if(!on_map)
-			modified_max_momentum *= 2
-			momentum_add *= 10
-
-	if(input_momentum[1])
-		momentum[1] = clamp(momentum[1] + (input_momentum[1] * momentum_add) ,-modified_max_momentum,modified_max_momentum)
-	if(input_momentum[2])
-		momentum[2] = clamp(momentum[2] + (input_momentum[2] * momentum_add) ,-modified_max_momentum,modified_max_momentum)
-
-	momentum_check(modified_max_momentum)
-	actually_move()
-	if(friction)
-		momentum[1] = 0
-		momentum[2] = 0
 
 /obj/overworld_vehicle/proc/actually_move(var/animate_movement = TRUE)
 
@@ -289,8 +266,35 @@
 
 
 
-/obj/overworld_vehicle/proc/process_drive()
+/obj/overworld_vehicle/proc/process_walk()
+	var/momentum_add = ground_accelleration
+	var/friction = TRUE
 
+	if(isoverworld(loc))
+		var/turf/unsimulated/map/T = loc
+		friction = T.friction
+	if(noinput())
+		return
+	var/modified_max_momentum = max_ground_momentum
+	if(momentum_add > 0)
+		if(!on_map)
+			modified_max_momentum *= 2
+			momentum_add *= 10
+
+	if(input_momentum[1])
+		momentum[1] = clamp(momentum[1] + (input_momentum[1] * momentum_add) ,-modified_max_momentum,modified_max_momentum)
+	if(input_momentum[2])
+		momentum[2] = clamp(momentum[2] + (input_momentum[2] * momentum_add) ,-modified_max_momentum,modified_max_momentum)
+
+	momentum_check(modified_max_momentum)
+	actually_move()
+	if(friction)
+		momentum[1] = 0
+		momentum[2] = 0
+
+
+
+/obj/overworld_vehicle/proc/process_drive()
 	if(momentum[1] == 0 && momentum[2] == 0 & input_momentum[1] == 0 && input_momentum[2] == 0)
 		return
 
@@ -300,9 +304,6 @@
 	if(isoverworld(loc))
 		var/turf/unsimulated/map/T = loc
 		friction = T.friction
-		if(T.movement_cost)
-			momentum_add *=	T.movement_cost
-
 	if(!input_momentum[1])
 		if(friction)
 			momentum[1] *= friction
@@ -322,12 +323,6 @@
 
 
 
-
-
-
-
-
-
 /obj/overworld_vehicle/proc/process_space()
 	if(isstopped())
 		if(space_accelleration <= 0)
@@ -344,11 +339,6 @@
 			modified_max_space_momentum *= 2
 			momentum_add *= 10
 
-		if(isoverworld(loc))
-			var/turf/unsimulated/map/T = loc
-			if(T.movement_cost)
-				momentum_add *=	T.movement_cost
-
 		if(input_momentum[1])
 			momentum[1] = clamp(momentum[1] + (input_momentum[1] * momentum_add) ,-modified_max_space_momentum,modified_max_space_momentum)
 		if(input_momentum[2])
@@ -356,18 +346,6 @@
 
 	momentum_check(modified_max_space_momentum)
 	actually_move()
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -503,20 +481,22 @@
 /obj/overworld_vehicle/drone/relaymove(mob/user, direction)
 	if(locked)
 		return
-
 	. = ..()
+
+	if(.)
+		adjust_energy(-0.1)
 
 /obj/overworld_vehicle/proc/adjust_health(var/amount)
 	if(!amount)
 		return
 	health += amount
-	SEND_SIGNAL(src,COMSIG_OWV_HEALTH)
+	SEND_SIGNAL(src,COMSIG_HEALTH_RELAY, health)
 
 /obj/overworld_vehicle/proc/adjust_energy(var/amount)
 	if(!amount)
 		return
 	energy += amount
-	SEND_SIGNAL(src,COMSIG_OWV_ENERGY)
+	SEND_SIGNAL(src,COMSIG_ENERGY_RELAY, energy)
 
 
 
