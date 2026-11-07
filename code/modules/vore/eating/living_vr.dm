@@ -28,6 +28,7 @@
 	var/vis_height = 32					// Sprite height used for resize features.
 	var/appendage_color = "#e03997" //Default pink. Used for the 'long_vore' trait.
 	var/appendage_alt_setting = FALSE	// Dictates if 'long_vore' user pulls prey to them or not. 1 = user thrown towards target.
+	var/appendage_targeting_mode = "Select from list"	// RS ADD - Stores what targeting mode the pred uses for launching appendage
 	var/trash_catching = FALSE 			//RSEdit: Toggle for trash throw vore || Ports trash eater throw vore from CHOMPStation PR#5987
 	var/obj/item/paint_brush/organic/linked_brush 	//RSAddition: Allows for natural painters. This is the paintbrush.
 	//Commented out by maintainer request
