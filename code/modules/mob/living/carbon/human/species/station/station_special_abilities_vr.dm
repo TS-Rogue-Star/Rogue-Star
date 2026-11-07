@@ -1400,6 +1400,7 @@
 //It involves projectiles (which means it can be VV'd onto a gun for shenanigans)
 //It can also be recolored via the proc, which persists between rounds.
 
+// RS Edit
 /mob/living/proc/long_vore() // Allows the user to tongue grab a creature in range. Made a /living proc so frogs can frog you.
 	set name = "Appendage Menu"
 	set category = "Abilities"
@@ -1427,6 +1428,7 @@
 		to_chat(src, "<span class='warning'>Selection invalid. Something went wrong. Ping a developer.</span>")
 		return
 
+// RS Edit
 /mob/living/proc/use_appendage()
 	set name = "Grab Prey With Appendage"
 	set category = "Abilities"
@@ -1528,6 +1530,7 @@
 	if(B)	//RS ADD
 		B.expire()	//RS ADD
 
+// RS Edit
 /mob/living/proc/set_appendage_color_prompt()
 	var/new_color = input(usr, "Choose a color to set your appendage to!", "", appendage_color) as color|null
 	if(new_color)
@@ -1538,6 +1541,7 @@
 		to_chat(src, "<span class='notice'>No change made, and a Color has not been set.</span>")
 		return
 
+// RS Edit
 /mob/living/proc/set_appendage_throw_mode_prompt()
 	var/choice = tgui_alert(usr, "Choose if you want to be pulled to the target or pull them to you. Current pull mode is set to [appendage_alt_setting ? "\"Pull self to target\"" : "\"Pull target to self\""].", "Functionality Setting", list("Pull target to self", "Pull self to target"))
 	if(!choice)
@@ -1555,6 +1559,7 @@
 		to_chat(src, "<span class='warning'>No change made. Something went wrong. Ping a developer.</span>")
 		return
 
+// RS Add
 /mob/living/proc/set_appendage_targeting_mode_prompt()
 	var/choice = tgui_alert(usr, "Select a targeting mode. Current mode: [appendage_targeting_mode].", "Targeting mode", list("Select from list", "Target closest"))
 	if(!choice)
@@ -1572,6 +1577,7 @@
 		to_chat(src, "<span class='warning'>No change made. Something went wrong. Ping a developer.</span>")
 		return
 
+// RS Edit
 /mob/living/proc/handle_chameleon_blend_in()
 	var/datum/modifier/blend_in/B
 	for(var/datum/modifier/M in modifiers)
