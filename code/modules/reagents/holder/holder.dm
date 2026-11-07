@@ -271,7 +271,7 @@
 /datum/reagents/proc/trans_to(var/atom/target, var/amount = 1, var/multiplier = 1, var/copy = 0)
 	if(iscarbon(target) || ismob(target))  // Reagent bellies || RS Edit || Chomp Port
 		return splash_mob(target, amount * multiplier, copy) //Touch effects handled by splash_mob
-	touch(target, amount * multiplier) //First, handle mere touch effects ||RS Edit || Chomp Port
+//	touch(target, amount * multiplier) //First, handle mere touch effects ||RS Edit || Chomp Port	//Both trans_to_turf/obj to touch individually, so this makes them touch twice
 	if(isturf(target))
 		return trans_to_turf(target, amount, multiplier, copy)
 	if(isobj(target) && target.is_open_container() && !isbelly(target.loc)) // RS Edit || Chomp Port

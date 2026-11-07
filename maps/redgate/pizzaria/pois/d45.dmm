@@ -4,14 +4,14 @@
 /area/redgate/structure/powered)
 "r" = (
 /obj/structure/prop/statue/phoron,
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/redgate/structure/powered)
 "s" = (
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/redgate/structure/powered)
 "K" = (
 /obj/random/mob/semirandom_mob_spawner/scarybot,
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/redgate/structure/powered)
 
 (1,1,1) = {"

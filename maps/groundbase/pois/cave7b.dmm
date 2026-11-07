@@ -7,7 +7,7 @@
 /turf/simulated/mineral/floor/ignore_mapgen,
 /area/maintenance/groundbase/poi/caves)
 "x" = (
-/turf/simulated/floor/outdoors/newdirt_nograss{
+/turf/simulated/floor/outdoors/dirt/soft_nograss{
 	outdoors = 0
 	},
 /area/maintenance/groundbase/poi/caves)

@@ -12,7 +12,7 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/submap/groundbase/poi/wildvillage)
 "d" = (
 /obj/machinery/button/windowtint{
@@ -252,7 +252,7 @@
 /turf/simulated/floor/bmarble,
 /area/submap/groundbase/poi/wildvillage/wide/wide5)
 "N" = (
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/submap/groundbase/poi/wildvillage)
 "O" = (
 /turf/simulated/floor/outdoors/sidewalk/side,

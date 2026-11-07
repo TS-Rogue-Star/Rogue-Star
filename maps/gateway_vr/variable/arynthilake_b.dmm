@@ -730,7 +730,7 @@
 /turf/simulated/floor/tiled/eris/cafe,
 /area/gateway/arynthilake/dome)
 "nZ" = (
-/turf/simulated/floor/outdoors/newdirt{
+/turf/simulated/floor/outdoors/dirt/soft{
 	outdoors = 0
 	},
 /area/gateway/arynthilake/caves)
@@ -1092,7 +1092,7 @@
 /area/gateway/arynthilake/dome)
 "xj" = (
 /obj/random/mob/semirandom_mob_spawner/humanoid/retaliate,
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/gateway/arynthilake)
 "xk" = (
 /obj/machinery/light/small{
@@ -1232,7 +1232,7 @@
 /area/gateway/arynthilake/dome)
 "AI" = (
 /obj/effect/landmark/mcguffin_spawner,
-/turf/simulated/floor/outdoors/newdirt{
+/turf/simulated/floor/outdoors/dirt/soft{
 	outdoors = 0
 	},
 /area/gateway/arynthilake/caves)
@@ -1285,7 +1285,7 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/gateway/arynthilake/gateway)
 "CD" = (
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/gateway/arynthilake)
 "CK" = (
 /obj/structure/bookcase,
@@ -1370,7 +1370,7 @@
 /area/gateway/arynthilake/dome)
 "Fc" = (
 /obj/effect/landmark/mcguffin_spawner,
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/gateway/arynthilake)
 "Fg" = (
 /obj/structure/ladder,
@@ -1716,7 +1716,7 @@
 /area/gateway/arynthilake/caves)
 "LY" = (
 /obj/random/mob/semirandom_mob_spawner/animal/retaliate/c,
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/gateway/arynthilake)
 "LZ" = (
 /obj/machinery/light,
@@ -1786,7 +1786,7 @@
 /turf/simulated/floor/tiled/eris/cafe,
 /area/gateway/arynthilake/dome)
 "MZ" = (
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/gateway/arynthilake/dome)
 "Nb" = (
 /obj/structure/flora/pottedplant/unusual,
@@ -1894,7 +1894,7 @@
 /obj/structure/railing{
 	dir = 4
 	},
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/gateway/arynthilake)
 "Pn" = (
 /obj/structure/table/bench/marble,
@@ -2003,7 +2003,7 @@
 /area/gateway/arynthilake/dome)
 "Rc" = (
 /obj/structure/bonfire,
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/gateway/arynthilake)
 "Rk" = (
 /turf/simulated/floor/carpet/blucarpet{
@@ -2244,7 +2244,7 @@
 /obj/structure/railing{
 	dir = 1
 	},
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/gateway/arynthilake/caveruins)
 "Vo" = (
 /turf/simulated/floor/outdoors/grass/forest,
@@ -2292,7 +2292,7 @@
 /area/gateway/arynthilake/dome)
 "Wu" = (
 /obj/structure/catwalk,
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/gateway/arynthilake/caveruins)
 "Ww" = (
 /obj/machinery/light/small{

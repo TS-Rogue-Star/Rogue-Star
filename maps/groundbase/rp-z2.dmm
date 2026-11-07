@@ -493,7 +493,7 @@
 /turf/simulated/floor/tiled/white,
 /area/groundbase/medical/lobby)
 "bB" = (
-/turf/simulated/floor/outdoors/newdirt{
+/turf/simulated/floor/outdoors/dirt/soft{
 	outdoors = 0
 	},
 /area/groundbase/level2/ne)
@@ -539,7 +539,7 @@
 	},
 /area/groundbase/dorms/room5)
 "bG" = (
-/turf/simulated/floor/outdoors/newdirt{
+/turf/simulated/floor/outdoors/dirt/soft{
 	outdoors = 0
 	},
 /area/groundbase/level2/nw)
@@ -2385,7 +2385,7 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/groundbase/level2/ne)
 "hJ" = (
 /obj/machinery/camera/network/research/xenobio,
@@ -2762,7 +2762,7 @@
 /obj/effect/landmark{
 	name = "maint_pred"
 	},
-/turf/simulated/floor/outdoors/newdirt{
+/turf/simulated/floor/outdoors/dirt/soft{
 	outdoors = 0
 	},
 /area/groundbase/level2/nw)
@@ -5275,7 +5275,7 @@
 /area/groundbase/level2/ne)
 "rb" = (
 /obj/structure/table/sifwooden_reinforced,
-/turf/simulated/floor/outdoors/newdirt{
+/turf/simulated/floor/outdoors/dirt/soft{
 	outdoors = 0
 	},
 /area/groundbase/level2/ne)
@@ -5317,7 +5317,7 @@
 	icon_state = "1-2"
 	},
 /obj/structure/barricade,
-/turf/simulated/floor/outdoors/newdirt{
+/turf/simulated/floor/outdoors/dirt/soft{
 	outdoors = 0
 	},
 /area/groundbase/level2/nw)
@@ -5658,7 +5658,7 @@
 /turf/simulated/floor/tiled,
 /area/groundbase/science/hall)
 "si" = (
-/turf/simulated/floor/outdoors/newdirt{
+/turf/simulated/floor/outdoors/dirt/soft{
 	outdoors = 0
 	},
 /area/groundbase/level2/se)
@@ -6100,7 +6100,7 @@
 /obj/effect/landmark{
 	name = "maint_pred"
 	},
-/turf/simulated/floor/outdoors/newdirt{
+/turf/simulated/floor/outdoors/dirt/soft{
 	outdoors = 0
 	},
 /area/groundbase/level2/se)
@@ -9076,7 +9076,7 @@
 /turf/simulated/floor/tiled,
 /area/groundbase/cargo/office)
 "Co" = (
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/groundbase/level2/se)
 "Cp" = (
 /obj/effect/floor_decal/industrial/warning{
@@ -10711,10 +10711,10 @@
 /area/groundbase/civilian/library)
 "HN" = (
 /obj/structure/table/bench/wooden,
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/groundbase/level2/ne)
 "HP" = (
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/groundbase/cargo/office)
 "HT" = (
 /obj/structure/railing{
@@ -12688,7 +12688,7 @@
 /area/groundbase/level2/ne)
 "NK" = (
 /obj/machinery/light/small,
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/groundbase/level2/ne)
 "NL" = (
 /obj/structure/cable/yellow{
@@ -14524,7 +14524,7 @@
 /turf/simulated/floor/lino,
 /area/groundbase/civilian/cafe)
 "Tb" = (
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/groundbase/level2/ne)
 "Tc" = (
 /obj/machinery/light{
@@ -15282,7 +15282,7 @@
 	pixel_x = 32;
 	pixel_y = 32
 	},
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/groundbase/level2/ne)
 "Vd" = (
 /obj/effect/floor_decal/milspec/color/purple/half{
@@ -15591,7 +15591,7 @@
 /obj/effect/landmark{
 	name = "maint_pred"
 	},
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/groundbase/level2/ne)
 "Wl" = (
 /obj/structure/cable/yellow{
@@ -16425,7 +16425,7 @@
 /turf/simulated/floor/carpet/bcarpet,
 /area/groundbase/civilian/mime)
 "YX" = (
-/turf/simulated/floor/outdoors/newdirt{
+/turf/simulated/floor/outdoors/dirt/soft{
 	outdoors = 0
 	},
 /area/groundbase/unexplored/rock)

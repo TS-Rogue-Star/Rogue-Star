@@ -4,15 +4,15 @@
 	outdoors = OUTDOORS_YES
 	edge_blending_priority = 1
 
-/turf/simulated/floor/outdoors/newdirt
+/turf/simulated/floor/outdoors/dirt/soft
 	name = "dirt"
 	desc = "Looks dirty."
 	icon = 'icons/turf/outdoors_vr.dmi'
 	icon_state = "dirt0"
 	edge_blending_priority = 2
-	initial_flooring = /decl/flooring/outdoors/newdirt
+	initial_flooring = /decl/flooring/outdoors/dirt/soft
 
-/decl/flooring/outdoors/newdirt
+/decl/flooring/outdoors/dirt/soft
 	name = "dirt"
 	desc = "Looks dirty."
 	icon = 'icons/turf/outdoors_vr.dmi'
@@ -28,7 +28,7 @@
 		'sound/effects/footstep/MedDirt3.ogg',
 		'sound/effects/footstep/MedDirt4.ogg'))
 
-/turf/simulated/floor/outdoors/newdirt/Initialize(mapload)
+/turf/simulated/floor/outdoors/dirt/soft/Initialize(mapload)
 	var/possibledirts = list(
 		"dirt0" = 150,
 		"dirt1" = 25,
@@ -45,15 +45,15 @@
 	return ..()
 
 
-/turf/simulated/floor/outdoors/newdirt_nograss
+/turf/simulated/floor/outdoors/dirt/soft_nograss
 	name = "dirt"
 	desc = "Looks dirty."
 	icon = 'icons/turf/outdoors_vr.dmi'
 	icon_state = "dirt0"
 	edge_blending_priority = 2
-	initial_flooring = /decl/flooring/outdoors/newdirt
+	initial_flooring = /decl/flooring/outdoors/dirt/soft
 
-/turf/simulated/floor/outdoors/newdirt_nograss/Initialize(mapload)
+/turf/simulated/floor/outdoors/dirt/soft_nograss/Initialize(mapload)
 	var/possibledirts = list(
 		"dirt0" = 200,
 		"dirt6" = 20,

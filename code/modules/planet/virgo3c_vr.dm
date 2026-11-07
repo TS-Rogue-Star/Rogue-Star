@@ -671,8 +671,8 @@ var/datum/planet/virgo3c/planet_virgo3c = null
 	alpha = 0xFF
 	VIRGO3C_SET_ATMOS
 
-VIRGO3C_TURF_CREATE(/turf/simulated/floor/outdoors/newdirt)
-VIRGO3C_TURF_CREATE(/turf/simulated/floor/outdoors/newdirt_nograss)
+VIRGO3C_TURF_CREATE(/turf/simulated/floor/outdoors/dirt/soft)
+VIRGO3C_TURF_CREATE(/turf/simulated/floor/outdoors/dirt/soft_nograss)
 VIRGO3C_TURF_CREATE(/turf/simulated/floor/outdoors/sidewalk)
 VIRGO3C_TURF_CREATE(/turf/simulated/floor/outdoors/sidewalk/side)
 VIRGO3C_TURF_CREATE(/turf/simulated/floor/outdoors/sidewalk/slab)
