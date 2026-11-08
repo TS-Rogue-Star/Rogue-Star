@@ -61,7 +61,7 @@
 		to_chat(user, "<span class='notice'>[src] is full.</span>")
 		return 1
 
-	var/trans = target.reagents.trans_to_obj(src, target:amount_per_transfer_from_this)
+	var/trans = target.reagents.trans_to_obj(src, target:amount_per_transfer_from_this, mixer = user) // RS Edit: Drink Memories (Lira, November 2026)
 	to_chat(user, "<span class='notice'>You fill [src] with [trans] units of the contents of [target].</span>")
 	return 1
 
@@ -144,6 +144,6 @@
 		to_chat(user, "<span class='notice'>[target] is full.</span>")
 		return 1
 
-	var/trans = reagents.trans_to(target, amount_per_transfer_from_this)
+	var/trans = reagents.trans_to(target, amount_per_transfer_from_this, mixer = user) // RS Edit: Drink Memories (Lira, November 2026)
 	to_chat(user, "<span class='notice'>You transfer [trans] units of the solution to [target].</span>")
 	return 1

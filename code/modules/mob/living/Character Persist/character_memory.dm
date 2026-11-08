@@ -1,8 +1,10 @@
-/////////////////////////////////////////////////////////////////////////
-//Created by Lira for Rogue Star May 2026 for persistent memory system //
-/////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////
+// Created by Lira for Rogue Star May 2026 for persistent memory system //
+//////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star November 2026: Drink Memories //////////
+//////////////////////////////////////////////////////////////////////////
 
-#define CHARACTER_MEMORY_VERSION 1
+#define CHARACTER_MEMORY_VERSION 2
 #define CHARACTER_MEMORY_NOTE_LIMIT 4000
 #define CHARACTER_MEMORY_EVENT_DETAIL_LIMIT 80
 #define CHARACTER_MEMORY_EVENT_DETAIL_SEPARATOR "||"
@@ -43,6 +45,7 @@ GLOBAL_DATUM_INIT(tgui_character_memory_state, /datum/tgui_state/character_memor
 	ourmob = null
 	memory_db = null
 	contacts = null
+	drinks = null
 	ui_contact_tokens = null
 	return ..()
 
@@ -89,7 +92,7 @@ GLOBAL_DATUM_INIT(tgui_character_memory_state, /datum/tgui_state/character_memor
 		savable = FALSE
 		return
 	contacts = list()
-	if(!ensure_database() || !load_database_contacts())
+	if(!ensure_database() || !load_database_contacts() || !load_database_drinks())
 		log_debug("<span class = 'danger'>Character memory database failed to load! File path: '[save_path]'. Aborting and clearing save_path.</span>")
 		save_path = null
 		memory_db = null
@@ -200,6 +203,8 @@ GLOBAL_DATUM_INIT(tgui_character_memory_state, /datum/tgui_state/character_memor
 	return TRUE
 
 /datum/character_memory/proc/init_database_schema()
+	if(!init_drinks_schema())
+		return FALSE
 	if(!execute_database_update("CREATE TABLE IF NOT EXISTS meta (name TEXT NOT NULL PRIMARY KEY, value TEXT)", "create character memory meta table"))
 		return FALSE
 	if(!execute_database_update("CREATE TABLE IF NOT EXISTS contacts (contact_id TEXT NOT NULL PRIMARY KEY, display_name TEXT, last_seen TEXT, notes TEXT NOT NULL DEFAULT '')", "create character memory contacts table"))
@@ -428,6 +433,10 @@ GLOBAL_DATUM_INIT(tgui_character_memory_state, /datum/tgui_state/character_memor
 			if(!save_database_contact_counts(contact_id))
 				success = FALSE
 				break
+	if(success && !execute_database_update("DELETE FROM drinks", "clear character memory drinks"))
+		success = FALSE
+	if(success && !save_database_drinks())
+		success = FALSE
 	if(!success)
 		execute_database_update("ROLLBACK", "rollback character memory full sync transaction")
 		return FALSE
@@ -827,6 +836,7 @@ GLOBAL_DATUM_INIT(tgui_character_memory_state, /datum/tgui_state/character_memor
 	data["error"] = error_message
 	data["note_limit"] = CHARACTER_MEMORY_NOTE_LIMIT
 	data["savable"] = savable
+	add_drinks_ui_data(data)
 
 	normalize_contacts()
 	var/list/contact_sort_rows = list()
@@ -884,6 +894,10 @@ GLOBAL_DATUM_INIT(tgui_character_memory_state, /datum/tgui_state/character_memor
 	status_message = null
 	error_message = null
 	switch(action)
+		if("select_drink")
+			if(params["id"] in drinks)
+				selected_drink = params["id"]
+			return TRUE
 		if("select_contact")
 			var/contact_id = resolve_ui_contact_id(params["id"])
 			if(!contact_id)

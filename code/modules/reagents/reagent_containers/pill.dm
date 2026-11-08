@@ -83,7 +83,7 @@
 
 		add_attack_logs(user,null,"Spiked [target.name] with a pill containing [reagentlist()]")
 
-		reagents.trans_to(target, reagents.total_volume)
+		reagents.trans_to(target, reagents.total_volume, mixer = user) // RS Edit: Drink Memories (Lira, November 2026)
 		for(var/mob/O in viewers(2, user))
 			O.show_message("<span class='warning'>[user] puts something in \the [target].</span>", 1)
 

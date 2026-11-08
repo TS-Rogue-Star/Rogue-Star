@@ -74,7 +74,7 @@
 			return
 
 		else
-			trans = reagents.trans_to_obj(target, amount_per_transfer_from_this)
+			trans = reagents.trans_to_obj(target, amount_per_transfer_from_this, mixer = user) // RS Edit: Drink Memories (Lira, November 2026)
 			to_chat(user, "<span class='notice'>You transfer [trans] units of the solution.</span>")
 
 	else // Taking from something
@@ -87,7 +87,7 @@
 			to_chat(user, "<span class='notice'>[target] is empty.</span>")
 			return
 
-		var/trans = target.reagents.trans_to_obj(src, amount_per_transfer_from_this)
+		var/trans = target.reagents.trans_to_obj(src, amount_per_transfer_from_this, mixer = user) // RS Edit: Drink Memories (Lira, November 2026)
 
 		to_chat(user, "<span class='notice'>You fill the dropper with [trans] units of the solution.</span>")
 

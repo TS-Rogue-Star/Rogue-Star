@@ -1,3 +1,7 @@
+//////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star November 2026: Drink Memories //
+//////////////////////////////////////////////////////////////////
+
 #define PROCESS_REACTION_ITER 5 //when processing a reaction, iterate this many times
 
 /datum/reagents
@@ -76,7 +80,8 @@
 			total_volume += R.volume
 	return
 
-/datum/reagents/proc/handle_reactions()
+// RS Edit: Drink Memories (Lira, November 2026)
+/datum/reagents/proc/handle_reactions(var/mob/mixer = null)
 	if(QDELETED(my_atom))
 		return FALSE
 	if(my_atom.flags & NOREACT)
@@ -99,10 +104,13 @@
 	for(var/decl/chemical_reaction/C as anything in effect_reactions)
 		C.post_reaction(src)
 	update_total()
+	if(mixer && length(effect_reactions))
+		record_mixed_drinks(mixer, effect_reactions)
 
 /* Holder-to-chemical */
 
-/datum/reagents/proc/add_reagent(var/id, var/amount, var/data = null, var/safety = 0)
+// RS Edit: Drink Memories (Lira, November 2026)
+/datum/reagents/proc/add_reagent(var/id, var/amount, var/data = null, var/safety = 0, var/mob/mixer = null)
 	if(!isnum(amount) || amount <= 0)
 		return 0
 
@@ -121,7 +129,7 @@
 				current.mix_data(data, amount)
 			update_total()
 			if(!safety)
-				handle_reactions()
+				handle_reactions(mixer)
 			if(my_atom)
 				my_atom.on_reagent_change()
 			return 1
@@ -134,7 +142,7 @@
 		R.initialize_data(data)
 		update_total()
 		if(!safety)
-			handle_reactions()
+			handle_reactions(mixer)
 		if(my_atom)
 			my_atom.on_reagent_change()
 		return 1
@@ -148,7 +156,7 @@
 			del_reagent(R.id)
 			update_total()
 
-/datum/reagents/proc/remove_reagent(var/id, var/amount, var/safety = 0)
+/datum/reagents/proc/remove_reagent(var/id, var/amount, var/safety = 0, var/mob/mixer = null) // RS Edit: Drink Memories (Lira, November 2026)
 	if(!isnum(amount))
 		return 0
 	for(var/datum/reagent/current in reagent_list)
@@ -156,7 +164,7 @@
 			current.volume -= amount // It can go negative, but it doesn't matter
 			update_total() // Because this proc will delete it then
 			if(!safety)
-				handle_reactions()
+				handle_reactions(mixer) // RS Edit: Drink Memories (Lira, November 2026)
 			if(my_atom)
 				my_atom.on_reagent_change()
 			return 1
@@ -240,7 +248,8 @@
 	handle_reactions()
 	return amount
 
-/datum/reagents/proc/trans_to_holder(var/datum/reagents/target, var/amount = 1, var/multiplier = 1, var/copy = 0) // Transfers [amount] reagents from [src] to [target], multiplying them by [multiplier]. Returns actual amount removed from [src] (not amount transferred to [target]).
+// RS Edit: Drink Memories (Lira, November 2026)
+/datum/reagents/proc/trans_to_holder(var/datum/reagents/target, var/amount = 1, var/multiplier = 1, var/copy = 0, var/mob/mixer = null) // Transfers [amount] reagents from [src] to [target], multiplying them by [multiplier]. Returns actual amount removed from [src] (not amount transferred to [target]).
 	if(!target || !istype(target))
 		return
 
@@ -258,8 +267,8 @@
 			remove_reagent(current.id, amount_to_transfer, 1)
 
 	if(!copy)
-		handle_reactions()
-	target.handle_reactions()
+		handle_reactions(mixer)
+	target.handle_reactions(mixer)
 	return amount
 
 /* Holder-to-atom and similar procs */
@@ -268,14 +277,15 @@
 //not directly injected into the contents. It first calls touch, then the appropriate trans_to_*() or splash_mob().
 //If for some reason touch effects are bypassed (e.g. injecting stuff directly into a reagent container or person),
 //call the appropriate trans_to_*() proc.
-/datum/reagents/proc/trans_to(var/atom/target, var/amount = 1, var/multiplier = 1, var/copy = 0)
+// RS Edit: Drink Memories (Lira, November 2026)
+/datum/reagents/proc/trans_to(var/atom/target, var/amount = 1, var/multiplier = 1, var/copy = 0, var/mob/mixer = null)
 	if(iscarbon(target) || ismob(target))  // Reagent bellies || RS Edit || Chomp Port
 		return splash_mob(target, amount * multiplier, copy) //Touch effects handled by splash_mob
 	touch(target, amount * multiplier) //First, handle mere touch effects ||RS Edit || Chomp Port
 	if(isturf(target))
 		return trans_to_turf(target, amount, multiplier, copy)
 	if(isobj(target) && target.is_open_container() && !isbelly(target.loc)) // RS Edit || Chomp Port
-		return trans_to_obj(target, amount, multiplier, copy)
+		return trans_to_obj(target, amount, multiplier, copy, mixer)
 	return 0
 
 //Splashing reagents is messier than trans_to, the target's loc gets some of the reagents as well.
@@ -318,7 +328,7 @@
 	else if (istype(target, /datum/reagents))
 		return F.trans_to_holder(target, amount)
 
-/datum/reagents/proc/trans_id_to(var/atom/target, var/id, var/amount = 1)
+/datum/reagents/proc/trans_id_to(var/atom/target, var/id, var/amount = 1, var/mob/mixer = null) // RS Edit: Drink Memories (Lira, November 2026)
 	if (!target || !target.reagents)
 		return
 
@@ -330,9 +340,9 @@
 	var/datum/reagents/F = new /datum/reagents(amount)
 	var/tmpdata = get_data(id)
 	F.add_reagent(id, amount, tmpdata)
-	remove_reagent(id, amount)
+	remove_reagent(id, amount, mixer = mixer) // RS Edit: Drink Memories (Lira, November 2026)
 
-	return F.trans_to(target, amount) // Let this proc check the atom's type
+	return F.trans_to(target, amount, mixer = mixer) // Let this proc check the atom's type // RS Edit: Drink Memories (Lira, November 2026)
 
 // When applying reagents to an atom externally, touch() is called to trigger any on-touch effects of the reagent.
 // This does not handle transferring reagents to things.
@@ -421,7 +431,8 @@
 	R.touch_turf(target, amount)
 	return
 
-/datum/reagents/proc/trans_to_obj(var/obj/target, var/amount = 1, var/multiplier = 1, var/copy = 0) // Objects may or may not; if they do, it's probably a beaker or something and we need to transfer properly; otherwise, just touch.
+// RS Edit: Drink Memories (Lira, November 2026)
+/datum/reagents/proc/trans_to_obj(var/obj/target, var/amount = 1, var/multiplier = 1, var/copy = 0, var/mob/mixer = null) // Objects may or may not; if they do, it's probably a beaker or something and we need to transfer properly; otherwise, just touch.
 	if(!target)
 		return
 
@@ -431,7 +442,7 @@
 		R.touch_obj(target, amount)
 		return
 
-	return trans_to_holder(target.reagents, amount, multiplier, copy)
+	return trans_to_holder(target.reagents, amount, multiplier, copy, mixer)
 
 /* Atom reagent creation - use it all the time */
 
