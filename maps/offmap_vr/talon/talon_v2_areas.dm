@@ -2,6 +2,7 @@
 	name = "\improper ITV Talon"
 	icon = 'icons/turf/areas_vr_talon.dmi'
 	icon_state = "dark"
+	dynamic_lighting = 1
 
 /area/talon_v2/maintenance/fore_port
 	name = "\improper Talon - Fore Port Maintenance"
