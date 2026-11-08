@@ -140,7 +140,7 @@
 					to_chat(user, "<span class='notice'>You cannot directly remove reagents from this object.</span>")
 					return
 
-				var/trans = target.reagents.trans_to_obj(src, amount_per_transfer_from_this)
+				var/trans = target.reagents.trans_to_obj(src, amount_per_transfer_from_this, mixer = user) // RS Edit: Drink Memories (Lira, November 2026)
 				to_chat(user, "<span class='notice'>You fill the syringe with [trans] units of the solution.</span>")
 				update_icon()
 
@@ -215,7 +215,7 @@
 					if(!reagents.total_volume || !do_after(user,cycle_time,target))
 						break
 			else
-				trans += reagents.trans_to_obj(target, amount_per_transfer_from_this)
+				trans += reagents.trans_to_obj(target, amount_per_transfer_from_this, mixer = user) // RS Edit: Drink Memories (Lira, November 2026)
 
 			if (reagents.total_volume <= 0 && mode == SYRINGE_INJECT)
 				mode = SYRINGE_DRAW

@@ -302,7 +302,7 @@
 					P.name = "[answer] pack"
 					P.desc = "A small condiment pack. The label says it contains [answer]."
 					P.icon_state = "bouilloncube"//Reskinned monkey cube
-					reagents.trans_to_obj(P, 10)
+					reagents.trans_to_obj(P, 10, mixer = usr) // RS Edit: Drink Memories (Lira, November 2026)
 				if("create_pill")
 					if(condi || !reagents.total_volume)
 						return
@@ -325,7 +325,7 @@
 						P.icon_state = "pill[pillsprite]"
 						if(P.icon_state in list("pill1", "pill2", "pill3", "pill4")) // if using greyscale, take colour from reagent
 							P.color = reagents.get_color()
-						reagents.trans_to_obj(P, amount_per_pill)
+						reagents.trans_to_obj(P, amount_per_pill, mixer = usr) // RS Edit: Drink Memories (Lira, November 2026)
 						// Load the pills in the bottle if there's one loaded
 						if(istype(loaded_pill_bottle) && length(loaded_pill_bottle.contents) < loaded_pill_bottle.max_storage_space)
 							P.forceMove(loaded_pill_bottle)
@@ -358,7 +358,7 @@
 						P.name = "[answer] patch"
 						P.pixel_x = rand(-7, 7) // random position
 						P.pixel_y = rand(-7, 7)
-						reagents.trans_to_obj(P, amount_per_patch)
+						reagents.trans_to_obj(P, amount_per_patch, mixer = usr) // RS Edit: Drink Memories (Lira, November 2026)
 						// if(is_medical_patch)
 							// P.instant_application = TRUE
 							// P.icon_state = "bandaid_med"
@@ -385,7 +385,7 @@
 						P.pixel_x = rand(-7, 7) // random position
 						P.pixel_y = rand(-7, 7)
 						//P.icon_state = "vial-[bottlesprite]" || "bottle-1"
-						reagents.trans_to_obj(P, amount_per_vial)
+						reagents.trans_to_obj(P, amount_per_vial, mixer = usr) // RS Edit: Drink Memories (Lira, November 2026)
 						P.update_icon()
 				if("create_vials_multiple") //RS Add
 					if(condi || !reagents.total_volume)
@@ -410,7 +410,7 @@
 						P.pixel_x = rand(-7, 7) // random position
 						P.pixel_y = rand(-7, 7)
 						P.icon_state = "bottle-[bottlesprite]" || "bottle-1"
-						reagents.trans_to_obj(P, amount_per_bottle)
+						reagents.trans_to_obj(P, amount_per_bottle, mixer = usr) // RS Edit: Drink Memories (Lira, November 2026)
 						P.update_icon()
 				if("create_bottle_multiple")
 					if(condi || !reagents.total_volume)
@@ -494,9 +494,9 @@
 				return
 			var/remaining = amount - reagents.get_free_space()
 			if(remaining <= 0)
-				R.trans_id_to(src, id, amount)
+				R.trans_id_to(src, id, amount, mixer = usr) // RS Edit: Drink Memories (Lira, November 2026)
 			else
-				R.trans_id_to(src, id, reagents.get_free_space())
+				R.trans_id_to(src, id, reagents.get_free_space(), mixer = usr) // RS Edit: Drink Memories (Lira, November 2026)
 		if("remove")
 			var/id = params["id"]
 			var/amount = text2num(params["amount"])
@@ -508,11 +508,11 @@
 					return
 				var/remaining = amount - R.get_free_space()	//figure out if we'd have leftovers
 				if(remaining <= 0)	//No leftovers means we can fill the whole thing
-					reagents.trans_id_to(beaker, id, amount)
+					reagents.trans_id_to(beaker, id, amount, mixer = usr) // RS Edit: Drink Memories (Lira, November 2026)
 				else
-					reagents.trans_id_to(beaker, id, R.get_free_space())
+					reagents.trans_id_to(beaker, id, R.get_free_space(), mixer = usr) // RS Edit: Drink Memories (Lira, November 2026)
 			else
-				reagents.remove_reagent(id, amount)
+				reagents.remove_reagent(id, amount, mixer = usr) // RS Edit: Drink Memories (Lira, November 2026)
 		if("eject")
 			if(!beaker)
 				return
@@ -534,7 +534,7 @@
 			if(!condi || !reagents.total_volume)
 				return
 			var/obj/item/weapon/reagent_containers/food/condiment/P = new(loc)
-			reagents.trans_to_obj(P, 50)
+			reagents.trans_to_obj(P, 50, mixer = usr) // RS Edit: Drink Memories (Lira, November 2026)
 		else
 			return FALSE
 
