@@ -1169,5 +1169,8 @@ var/list/ai_verbs_default = list(
 	silicon_mob_list -= src
 	QDEL_NULL(eyeobj)
 
+/mob/living/silicon/ai/CanObtainCentcommMessage() // RS Add
+	return TRUE
+
 #undef AI_CHECK_WIRELESS
 #undef AI_CHECK_RADIO
