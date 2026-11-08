@@ -59,6 +59,12 @@
 
 	var/nom_mob = FALSE //If a mob is meant to be hostile for vore purposes but is otherwise not hostile, if true makes certain AI ignore the mob
 
+	// RS Edit Start, stuns
+	var/xeno_stuns = TRUE				// Can xenotasers stun this mob? NOTE: This is not for slimes, they have their own code for taser hits. This is for other mobs.
+	var/taser_hits = 0					// How many times hit?
+	var/last_stun = 0					// When was the last hit?
+	// RS Edit End
+
 // Release belly contents before being gc'd!
 /mob/living/simple_mob/Destroy()
 	release_vore_contents()
