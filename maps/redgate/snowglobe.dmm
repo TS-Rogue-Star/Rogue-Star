@@ -225,7 +225,7 @@
 	dir = 1;
 	pixel_y = -3
 	},
-/turf/simulated/floor/outdoors/newdirt_nograss,
+/turf/simulated/floor/outdoors/dirt/soft_nograss,
 /area/redgate)
 "iK" = (
 /obj/structure/bed/chair/sofa{
@@ -641,7 +641,7 @@
 /turf/simulated/floor/holofloor/wood,
 /area/redgate/structure/powered)
 "Ct" = (
-/turf/simulated/floor/outdoors/newdirt_nograss,
+/turf/simulated/floor/outdoors/dirt/soft_nograss,
 /area/redgate)
 "CI" = (
 /obj/machinery/light/floortube{
@@ -1349,7 +1349,7 @@
 	dir = 1;
 	pixel_y = -5
 	},
-/turf/simulated/floor/outdoors/newdirt_nograss,
+/turf/simulated/floor/outdoors/dirt/soft_nograss,
 /area/redgate)
 "ZV" = (
 /obj/effect/floor_decal/spline/plain{

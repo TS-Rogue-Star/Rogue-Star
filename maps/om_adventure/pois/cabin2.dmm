@@ -113,7 +113,7 @@
 /turf/simulated/floor/carpet,
 /area/om_adventure/poi/cabin2)
 "F" = (
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/om_adventure/poi/cabin2)
 "H" = (
 /obj/structure/table/woodentable,

@@ -18,7 +18,7 @@
 /area/submap/groundbase/poi/wildvillage)
 "n" = (
 /obj/machinery/portable_atmospherics/hydroponics/soil,
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/submap/groundbase/poi/wildvillage/square/square5)
 "s" = (
 /obj/structure/fence{

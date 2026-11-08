@@ -145,7 +145,7 @@
 	},
 /area/gateway/honlethhighlands/town)
 "aJ" = (
-/turf/simulated/floor/outdoors/newdirt{
+/turf/simulated/floor/outdoors/dirt/soft{
 	temperature = 253.15
 	},
 /area/gateway/honlethhighlands/caves)
@@ -270,7 +270,7 @@
 /area/gateway/honlethhighlands/caves)
 "bi" = (
 /obj/item/weapon/stool,
-/turf/simulated/floor/outdoors/newdirt{
+/turf/simulated/floor/outdoors/dirt/soft{
 	temperature = 253.15
 	},
 /area/gateway/honlethhighlands/beach)
@@ -283,14 +283,14 @@
 /obj/item/stack/material/log{
 	amount = 15
 	},
-/turf/simulated/floor/outdoors/newdirt{
+/turf/simulated/floor/outdoors/dirt/soft{
 	temperature = 253.15
 	},
 /area/gateway/honlethhighlands/beach)
 "bl" = (
 /obj/structure/table,
 /obj/effect/landmark/mcguffin_spawner,
-/turf/simulated/floor/outdoors/newdirt{
+/turf/simulated/floor/outdoors/dirt/soft{
 	temperature = 253.15
 	},
 /area/gateway/honlethhighlands/beach)
@@ -339,7 +339,7 @@
 /area/gateway/honlethhighlands/town/bar)
 "bA" = (
 /obj/random/mob/semirandom_mob_spawner/vore/passive/c,
-/turf/simulated/floor/outdoors/newdirt{
+/turf/simulated/floor/outdoors/dirt/soft{
 	temperature = 253.15
 	},
 /area/gateway/honlethhighlands)
@@ -527,7 +527,7 @@
 /area/gateway/honlethhighlands/town/bar)
 "fl" = (
 /obj/random/mob/semirandom_mob_spawner/humanoid/retaliate,
-/turf/simulated/floor/outdoors/newdirt{
+/turf/simulated/floor/outdoors/dirt/soft{
 	temperature = 253.15
 	},
 /area/gateway/honlethhighlands/town)
@@ -633,7 +633,7 @@
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/gateway/honlethhighlands/gate)
 "hD" = (
-/turf/simulated/floor/outdoors/newdirt{
+/turf/simulated/floor/outdoors/dirt/soft{
 	temperature = 253.15
 	},
 /area/gateway/honlethhighlands)
@@ -1297,7 +1297,7 @@
 /turf/simulated/floor/plating,
 /area/gateway/honlethhighlands/town/supply)
 "tU" = (
-/turf/simulated/floor/outdoors/newdirt{
+/turf/simulated/floor/outdoors/dirt/soft{
 	temperature = 253.15
 	},
 /area/gateway/honlethhighlands/beach)
@@ -1518,7 +1518,7 @@
 /turf/simulated/floor/plating,
 /area/gateway/honlethhighlands/town/command)
 "yl" = (
-/turf/simulated/floor/outdoors/newdirt{
+/turf/simulated/floor/outdoors/dirt/soft{
 	temperature = 253.15
 	},
 /area/gateway/honlethhighlands/town)
@@ -1644,7 +1644,7 @@
 /area/gateway/honlethhighlands/gate)
 "Aj" = (
 /obj/random/mob/semirandom_mob_spawner/humanoid/retaliate,
-/turf/simulated/floor/outdoors/newdirt{
+/turf/simulated/floor/outdoors/dirt/soft{
 	temperature = 253.15
 	},
 /area/gateway/honlethhighlands/beach)
@@ -1890,7 +1890,7 @@
 /area/gateway/honlethhighlands/town/supply)
 "Ej" = (
 /obj/random/mob/semirandom_mob_spawner/animal/retaliate,
-/turf/simulated/floor/outdoors/newdirt{
+/turf/simulated/floor/outdoors/dirt/soft{
 	temperature = 253.15
 	},
 /area/gateway/honlethhighlands)
@@ -2053,7 +2053,7 @@
 /area/gateway/honlethhighlands/town/garden)
 "HR" = (
 /obj/random/mob/semirandom_mob_spawner/animal/retaliate/b,
-/turf/simulated/floor/outdoors/newdirt{
+/turf/simulated/floor/outdoors/dirt/soft{
 	temperature = 253.15
 	},
 /area/gateway/honlethhighlands/caves)
@@ -2503,7 +2503,7 @@
 /area/gateway/honlethhighlands/town/garden)
 "SG" = (
 /obj/random/mob/semirandom_mob_spawner/vore/retaliate/c,
-/turf/simulated/floor/outdoors/newdirt{
+/turf/simulated/floor/outdoors/dirt/soft{
 	temperature = 253.15
 	},
 /area/gateway/honlethhighlands)
@@ -2788,7 +2788,7 @@
 /area/gateway/honlethhighlands)
 "Yo" = (
 /obj/effect/landmark/gateway_scatter,
-/turf/simulated/floor/outdoors/newdirt{
+/turf/simulated/floor/outdoors/dirt/soft{
 	temperature = 253.15
 	},
 /area/gateway/honlethhighlands)

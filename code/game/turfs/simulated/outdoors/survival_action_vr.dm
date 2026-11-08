@@ -1,6 +1,6 @@
 var/static/list/has_rocks = list("dirt5", "dirt6", "dirt7", "dirt8", "dirt9")
 
-/turf/simulated/floor/outdoors/newdirt/attack_hand(mob/user)
+/turf/simulated/floor/outdoors/dirt/soft/attack_hand(mob/user)
 	if(user.pulling)
 		return ..()
 	if(!Adjacent(user))
@@ -54,7 +54,7 @@ var/static/list/has_rocks = list("dirt5", "dirt6", "dirt7", "dirt8", "dirt9")
 	else
 		return ..()
 
-/turf/simulated/floor/outdoors/newdirt
+/turf/simulated/floor/outdoors/dirt/soft
 	rock_chance = 5
 /turf/simulated/floor/outdoors/dirt
 	rock_chance = 10
@@ -63,7 +63,7 @@ var/static/list/has_rocks = list("dirt5", "dirt6", "dirt7", "dirt8", "dirt9")
 /turf/simulated/floor/outdoors/ironsand
 	rock_chance = 50
 
-/turf/simulated/floor/outdoors/newdirt/examine(var/mob/user)
+/turf/simulated/floor/outdoors/dirt/soft/examine(var/mob/user)
 	. = ..()
 	if(Adjacent(user))
 		var/static/list/has_rocks = list("dirt5", "dirt6", "dirt7", "dirt8", "dirt9")

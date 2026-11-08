@@ -8,7 +8,7 @@
 /area/redgate)
 "d" = (
 /obj/structure/fence/wood/end,
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/redgate)
 "e" = (
 /obj/light_object/torch{
@@ -46,7 +46,7 @@
 	},
 /area/redgate)
 "k" = (
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/redgate)
 "l" = (
 /obj/effect/map_effect/portal/master/side_b{
@@ -80,7 +80,7 @@
 /obj/structure/fence/wood/corner{
 	dir = 4
 	},
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/redgate)
 "q" = (
 /obj/effect/map_effect/portal/master/side_a{
@@ -130,13 +130,13 @@
 /obj/structure/fence/wood/corner{
 	dir = 8
 	},
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/redgate)
 "z" = (
 /obj/structure/fence/wood{
 	dir = 1
 	},
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/redgate)
 "C" = (
 /obj/light_object/torch{
@@ -146,7 +146,7 @@
 /area/redgate)
 "D" = (
 /obj/machinery/portable_atmospherics/hydroponics/soil,
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/redgate)
 "E" = (
 /turf/simulated/floor/outdoors/grass/seasonal/dark{
@@ -175,7 +175,7 @@
 /obj/structure/fence/wood{
 	dir = 4
 	},
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/redgate)
 "K" = (
 /obj/effect/map_effect/portal/master/side_b{
@@ -191,23 +191,23 @@
 /obj/structure/fence/wood/end{
 	dir = 1
 	},
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/redgate)
 "N" = (
 /mob/living/simple_mob/vore/alienanimals/teppi,
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/redgate)
 "O" = (
 /obj/structure/fence/wood/end{
 	dir = 4
 	},
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/redgate)
 "P" = (
 /obj/structure/fence/wood/end{
 	dir = 8
 	},
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/redgate)
 "Q" = (
 /turf/simulated/mineral/cave,
@@ -219,11 +219,11 @@
 /obj/structure/fence/wood/corner{
 	dir = 1
 	},
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/redgate)
 "T" = (
 /obj/structure/fence/wood/corner,
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/redgate)
 "U" = (
 /obj/effect/map_effect/portal/master/side_a{

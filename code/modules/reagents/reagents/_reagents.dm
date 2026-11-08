@@ -57,6 +57,8 @@
 
 /datum/reagent/proc/touch_turf(var/turf/T, var/amount) // Cleaner cleaning, lube lubbing, etc, all go here
 	SEND_SIGNAL(T, COMSIG_REAGENTS_TOUCH, src, amount)
+	T.reagent_interact(id,amount)	//RS ADD
+
 	return
 
 /datum/reagent/proc/on_mob_life(var/mob/living/carbon/M, var/alien, var/datum/reagents/metabolism/location) // Currently, on_mob_life is called on carbons. Any interaction with non-carbon mobs (lube) will need to be done in touch_mob.
