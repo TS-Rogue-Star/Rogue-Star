@@ -156,12 +156,15 @@
 	If both sides have both pred/prey enabled, favours the character being thrown as prey."
 	cost = 0
 	has_preferences = list("appendage_color" = list(TRAIT_PREF_TYPE_COLOR, "Appendage Colour", TRAIT_VAREDIT_TARGET_MOB, "#e03997"),
-	"appendage_alt_setting" = list(TRAIT_PREF_TYPE_BOOLEAN, "Throw yourself?", TRAIT_VAREDIT_TARGET_MOB, FALSE),)
+	"appendage_alt_setting" = list(TRAIT_PREF_TYPE_BOOLEAN, "Throw yourself?", TRAIT_VAREDIT_TARGET_MOB, FALSE),
+	"appendage_targeting_mode" = list(TRAIT_PREF_TYPE_LIST, "Targeting mode", TRAIT_VAREDIT_TARGET_MOB, "Select from list"),) // RS Add
+	list_options = list("Select from list", "Target closest") // RS Add
 	custom_only = FALSE
 
 /datum/trait/neutral/long_vore/apply(var/datum/species/S,var/mob/living/carbon/human/H)
 	..()
 	H.verbs |= /mob/living/proc/long_vore
+	H.verbs |= /mob/living/proc/use_appendage // RS Add
 /* - RS removal: made these default verbs
 /datum/trait/neutral/feeder
 	name = "Feeder"

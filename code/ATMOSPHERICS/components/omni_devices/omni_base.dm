@@ -1,7 +1,12 @@
+///////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star October 2026: Piped Gas Flow and Telemetry //
+///////////////////////////////////////////////////////////////////////////////
+
 //--------------------------------------------
 // Base omni device
 //--------------------------------------------
 /obj/machinery/atmospherics/omni
+	processing_on_demand = TRUE // RS Add: Piped Gas Flow and Telemetry (Lira, October 2026)
 	name = "omni device"
 	icon = 'icons/atmos/omni_devices_vr.dmi' //VOREStation Edit - New Icon
 	icon_state = "base"
@@ -47,13 +52,15 @@
 
 	build_icons()
 
+// RS Edit: Piped Gas Flow and Telemetry (Lira, October 2026)
 /obj/machinery/atmospherics/omni/update_icon()
+	cut_overlays()
 	if(stat & NOPOWER)
-		overlays = overlays_off
+		add_overlay(overlays_off)
 	else if(error_check())
-		overlays = overlays_error
+		add_overlay(overlays_error)
 	else
-		overlays = use_power ? (overlays_on) : (overlays_off)
+		add_overlay(use_power ? overlays_on : overlays_off)
 
 	underlays = underlays_current
 
@@ -62,6 +69,7 @@
 /obj/machinery/atmospherics/omni/proc/error_check()
 	return
 
+// RS Edit: Piped Gas Flow and Telemetry (Lira, October 2026)
 /obj/machinery/atmospherics/omni/process()
 	last_power_draw = 0
 	last_flow_rate = 0
@@ -70,7 +78,11 @@
 		update_use_power(USE_POWER_OFF)
 
 	if((stat & (NOPOWER|BROKEN)) || !use_power)
+		if(type == /obj/machinery/atmospherics/omni)
+			return piped_atmos_sleep_disabled()
 		return 0
+	if(type == /obj/machinery/atmospherics/omni)
+		return piped_atmos_sleep()
 	return 1
 
 /obj/machinery/atmospherics/omni/power_change()
@@ -203,6 +215,7 @@
 	update_underlays()
 
 /obj/machinery/atmospherics/omni/proc/update_ports()
+	piped_atmos_invalidate() // RS Add: Piped Gas Flow and Telemetry (Lira, October 2026)
 	sort_ports()
 	update_port_icons()
 	for(var/datum/omni_port/P in ports)
@@ -220,6 +233,7 @@
 	return neighbor_nodes
 
 /obj/machinery/atmospherics/omni/network_expand(datum/pipe_network/new_network, obj/machinery/atmospherics/pipe/reference)
+	piped_atmos_invalidate() // RS Add: Piped Gas Flow and Telemetry (Lira, October 2026)
 	for(var/datum/omni_port/P in ports)
 		if(reference == P.node)
 			P.network = new_network
@@ -244,6 +258,7 @@
 	. = ..()
 
 /obj/machinery/atmospherics/omni/atmos_init()
+	piped_atmos_invalidate() // RS Add: Piped Gas Flow and Telemetry (Lira, October 2026)
 	for(var/datum/omni_port/P in ports)
 		if(P.node || P.mode == 0)
 			continue
@@ -274,6 +289,7 @@
 	return null
 
 /obj/machinery/atmospherics/omni/reassign_network(datum/pipe_network/old_network, datum/pipe_network/new_network)
+	piped_atmos_invalidate() // RS Add: Piped Gas Flow and Telemetry (Lira, October 2026)
 	for(var/datum/omni_port/P in ports)
 		if(P.network == old_network)
 			P.network = new_network
@@ -290,6 +306,7 @@
 	return results
 
 /obj/machinery/atmospherics/omni/disconnect(obj/machinery/atmospherics/reference)
+	piped_atmos_invalidate() // RS Add: Piped Gas Flow and Telemetry (Lira, October 2026)
 	for(var/datum/omni_port/P in ports)
 		if(reference == P.node)
 			qdel(P.network)

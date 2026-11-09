@@ -75,7 +75,7 @@
 			to_chat(user, "<span class='warning'>\The [src] is full.</span>")
 			return
 
-		var/trans = target.reagents.trans_to(src, target:amount_per_transfer_from_this)
+		var/trans = target.reagents.trans_to(src, target:amount_per_transfer_from_this, mixer = user) // RS Edit: Drink Memories (Lira, November 2026)
 		to_chat(user, "<span class='notice'>You fill \the [src] with [trans] units of the contents of \the [target].</span>")
 
 	else if(target.is_open_container() && target.reagents) //Something like a glass. Player probably wants to transfer TO it.
@@ -88,7 +88,7 @@
 			to_chat(user, "<span class='warning'>\The [target] is full.</span>")
 			return
 
-		var/trans = src.reagents.trans_to(target, amount_per_transfer_from_this)
+		var/trans = src.reagents.trans_to(target, amount_per_transfer_from_this, mixer = user) // RS Edit: Drink Memories (Lira, November 2026)
 		to_chat(user, "<span class='notice'>You transfer [trans] units of the solution to \the [target].</span>")
 
 	else

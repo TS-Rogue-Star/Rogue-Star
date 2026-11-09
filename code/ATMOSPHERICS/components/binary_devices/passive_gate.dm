@@ -1,8 +1,13 @@
+///////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star October 2026: Piped Gas Flow and Telemetry //
+///////////////////////////////////////////////////////////////////////////////
+
 #define REGULATE_NONE	0
 #define REGULATE_INPUT	1	//shuts off when input side is below the target pressure
 #define REGULATE_OUTPUT	2	//shuts off when output side is above the target pressure
 
 /obj/machinery/atmospherics/binary/passive_gate
+	processing_on_demand = TRUE // RS Add: Piped Gas Flow and Telemetry (Lira, October 2026)
 	icon = 'icons/atmos/passive_gate.dmi'
 	icon_state = "map"
 	construction_type = /obj/item/pipe/directional
@@ -51,13 +56,14 @@
 /obj/machinery/atmospherics/binary/passive_gate/hide(var/i)
 	update_underlays()
 
+// RS Edit: Piped Gas Flow and Telemetry (Lira, October 2026)
 /obj/machinery/atmospherics/binary/passive_gate/process()
 	..()
 
 	last_flow_rate = 0
 
 	if(!unlocked)
-		return 0
+		return piped_atmos_sleep_disabled()
 
 	var/output_starting_pressure = air2.return_pressure()
 	var/input_starting_pressure = air1.return_pressure()
@@ -137,6 +143,8 @@
 		flowing = 1
 
 	update_icon()
+	if(returnval < 0)
+		return piped_atmos_sleep()
 
 
 //Radio remote control
@@ -177,6 +185,7 @@
 /obj/machinery/atmospherics/binary/passive_gate/receive_signal(datum/signal/signal)
 	if(!signal.data["tag"] || (signal.data["tag"] != id) || (signal.data["sigtype"]!="command"))
 		return 0
+	wake_processing() // RS Add: Piped Gas Flow and Telemetry (Lira, October 2026)
 
 	if("power" in signal.data)
 		unlocked = text2num(signal.data["power"])
@@ -275,6 +284,7 @@
 					var/new_flow_rate = tgui_input_number(usr,"Enter new flow rate limit (0-[air1.volume]L/s)","Flow Rate Control",src.set_flow_rate,air1.volume,0)
 					src.set_flow_rate = between(0, new_flow_rate, air1.volume)
 
+	wake_processing() // RS Add: Piped Gas Flow and Telemetry (Lira, October 2026)
 	update_icon()
 	add_fingerprint(usr)
 

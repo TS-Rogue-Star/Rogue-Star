@@ -347,6 +347,7 @@ var/global/datum/controller/radio/radio_controller
 		devices_line = new
 		devices[radio_filter] = devices_line
 	devices_line+=device
+	SEND_SIGNAL(src, COMSIG_RADIO_NEW_LISTENER) // RS Add: Piped Gas Flow and Telemetry (Lira, October 2026)
 //			var/list/obj/devices_line___ = devices[filter_str]
 //			var/l = devices_line___.len
 	//log_admin("DEBUG: devices_line.len=[devices_line.len]")

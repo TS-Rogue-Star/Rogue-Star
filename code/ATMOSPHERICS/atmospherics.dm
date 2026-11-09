@@ -1,3 +1,7 @@
+///////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star October 2026: Piped Gas Flow and Telemetry //
+///////////////////////////////////////////////////////////////////////////////
+
 /*
 Quick overview:
 
@@ -120,11 +124,14 @@ Pipelines + Other Objects -> Pipe network
 
 	return node.pipe_color
 
+// RS Edit: Piped Gas Flow and Telemetry (Lira, October 2026)
 /obj/machinery/atmospherics/process()
 	last_flow_rate = 0
 	last_power_draw = 0
 
 	build_network()
+	if(type in piped_atmos_base_types)
+		return piped_atmos_sleep()
 
 /obj/machinery/atmospherics/proc/network_expand(datum/pipe_network/new_network, obj/machinery/atmospherics/pipe/reference)
 	// Check to see if should be added to network. Add self if so and adjust variables appropriately.

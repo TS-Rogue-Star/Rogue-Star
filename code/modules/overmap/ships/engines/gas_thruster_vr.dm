@@ -13,6 +13,7 @@
 	bound_height = 64
 
 /obj/machinery/atmospherics/unary/engine/bigger/atmos_init()
+	piped_atmos_invalidate() // RS Add: Piped Gas Flow and Telemetry (Lira, October 2026)
 	if(node)
 		return
 
@@ -55,6 +56,7 @@
 			icon_state = initial(icon_state)
 
 /obj/machinery/atmospherics/unary/engine/biggest/atmos_init()
+	piped_atmos_invalidate() // RS Add: Piped Gas Flow and Telemetry (Lira, October 2026)
 	if(node)
 		return
 

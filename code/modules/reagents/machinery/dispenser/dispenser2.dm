@@ -168,7 +168,7 @@
 			if(cartridges[label] && container && container.is_open_container())
 				var/obj/item/weapon/reagent_containers/chem_disp_cartridge/C = cartridges[label]
 				playsound(src, 'sound/machines/reagent_dispense.ogg', 25, 1)
-				C.reagents.trans_to(container, amount)
+				C.reagents.trans_to(container, amount, mixer = usr) // RS Edit: Drink Memories (Lira, November 2026)
 		if("remove")
 			var/amount = text2num(params["amount"])
 			if(!container || !amount)
@@ -176,7 +176,7 @@
 			var/datum/reagents/R = container.reagents
 			var/id = params["reagent"]
 			if(amount > 0)
-				R.remove_reagent(id, amount)
+				R.remove_reagent(id, amount, mixer = usr) // RS Edit: Drink Memories (Lira, November 2026)
 			else if(amount == -1) // Isolate
 				R.isolate_reagent(id)
 		if("ejectBeaker")

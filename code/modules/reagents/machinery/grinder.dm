@@ -204,7 +204,8 @@
 	if(beaker)
 		replace_beaker(user)
 
-/obj/machinery/reagentgrinder/proc/grind()
+// RS Edit: Drink Memories (Lira, November 2026)
+/obj/machinery/reagentgrinder/proc/grind(mob/user)
 
 	power_change()
 	if(stat & (NOPOWER|BROKEN))
@@ -240,13 +241,13 @@
 					if(islist(sheet_components))
 						amount_to_take = (amount_to_take/(sheet_components.len))
 						for(var/i in sheet_components)
-							beaker.reagents.add_reagent(i, (amount_to_take*REAGENTS_PER_SHEET))
+							beaker.reagents.add_reagent(i, (amount_to_take*REAGENTS_PER_SHEET), mixer = user)
 					else
-						beaker.reagents.add_reagent(sheet_components, (amount_to_take*REAGENTS_PER_SHEET))
+						beaker.reagents.add_reagent(sheet_components, (amount_to_take*REAGENTS_PER_SHEET), mixer = user)
 					continue
 
 		if(O.reagents)
-			O.reagents.trans_to_obj(beaker, min(O.reagents.total_volume, remaining_volume))
+			O.reagents.trans_to_obj(beaker, min(O.reagents.total_volume, remaining_volume), mixer = user)
 			if(O.reagents.total_volume == 0)
 				holdingitems -= O
 				qdel(O)

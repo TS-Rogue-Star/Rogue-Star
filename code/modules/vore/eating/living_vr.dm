@@ -28,6 +28,7 @@
 	var/vis_height = 32					// Sprite height used for resize features.
 	var/appendage_color = "#e03997" //Default pink. Used for the 'long_vore' trait.
 	var/appendage_alt_setting = FALSE	// Dictates if 'long_vore' user pulls prey to them or not. 1 = user thrown towards target.
+	var/appendage_targeting_mode = "Select from list"	// RS ADD - Stores what targeting mode the pred uses for launching appendage
 	var/trash_catching = FALSE 			//RSEdit: Toggle for trash throw vore || Ports trash eater throw vore from CHOMPStation PR#5987
 	var/obj/item/paint_brush/organic/linked_brush 	//RSAddition: Allows for natural painters. This is the paintbrush.
 	//Commented out by maintainer request
@@ -785,6 +786,11 @@
 		to_chat(user, "<span class='notice'>They aren't able to be devoured.</span>")
 		log_and_message_admins("[key_name_admin(src)] attempted to devour [key_name_admin(prey)] against their prefs ([prey ? ADMIN_JMP(prey) : "null"])")
 		return FALSE
+	// RS Add Start: Mob Vore Preference Enforcement (Lira, November 2026)
+	if(isanimal(pred) && !prey.allowmobvore)
+		to_chat(user, "<span class='notice'>They aren't able to be devoured by mobs.</span>")
+		return FALSE
+	// RS Add End
 	if(!npc_vore_check(pred, prey))	//RS ADD
 		to_chat(user, "<span class='notice'>They aren't able to be devoured by NPCs.</span>")	//RS ADD
 		return FALSE	//RS ADD

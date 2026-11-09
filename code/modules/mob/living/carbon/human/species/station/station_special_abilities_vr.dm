@@ -1400,48 +1400,66 @@
 //It involves projectiles (which means it can be VV'd onto a gun for shenanigans)
 //It can also be recolored via the proc, which persists between rounds.
 
+// RS Edit
 /mob/living/proc/long_vore() // Allows the user to tongue grab a creature in range. Made a /living proc so frogs can frog you.
+	set name = "Appendage Menu"
+	set category = "Abilities"
+	set desc = "Opens the appendage menu."
+
+	var/choice = tgui_alert(src, "Do you wish to change the color of your appendage, use it, change throw mode, or change targeting mode?", "Selection List", list("Use it", "Color", "Throw mode", "Targeting mode"))
+
+	if(!choice)
+		return //Nothing happens
+
+	else if(choice == "Color") //Easy way to set color so we don't bloat up the menu with even more buttons.
+		set_appendage_color_prompt()
+		return
+
+	else if(choice == "Throw mode")
+		set_appendage_throw_mode_prompt()
+		return
+
+	else if(choice == "Targeting mode")
+		set_appendage_targeting_mode_prompt()
+
+	else if(choice == "Use it")
+		use_appendage()
+	else
+		to_chat(src, "<span class='warning'>Selection invalid. Something went wrong. Ping a developer.</span>")
+		return
+
+// RS Edit
+/mob/living/proc/use_appendage()
 	set name = "Grab Prey With Appendage"
 	set category = "Abilities"
 	set desc = "Grab a target with any of your appendages!"
+
+	if(world.time < last_special && !handle_chameleon_blend_in())
+		to_chat(src, "<span class='warning'>You've used a special move too recently! Your appendage is resting!</span>")
+		return
+
+	last_special = world.time + 10 //Anti-spam.
+
 
 	if(stat || paralysis || weakened || stunned) //No tongue flicking while stunned.
 		to_chat(src, "<span class='warning'>You can't do that in your current state.</span>")
 		return
 
-	var/datum/modifier/blend_in/B	//RS ADD START - Allow long vore trait to be used with chameleon blend in trait!
-	if(world.time < last_special)
-		var/dunnit = FALSE
-		for(var/datum/modifier/M in modifiers)
-			if(M.type == /datum/modifier/blend_in)
-				B = M
-				dunnit = TRUE
-		if(!dunnit)
-			to_chat(src, "<span class='warning'>You can't do that in your current state.</span>")
-			return	//RS ADD END
-
-	last_special = world.time + 10 //Anti-spam.
-
 	if (!istype(src, /mob/living))
 		to_chat(src, "<span class='warning'>It doesn't work that way.</span>")
 		return
 
-	var/choice = tgui_alert(src, "Do you wish to change the color of your appendage, use it, or change its functionality?", "Selection List", list("Use it", "Color", "Functionality"))
+	var/datum/modifier/blend_in/B = handle_chameleon_blend_in()
 
-	if(choice == "Color") //Easy way to set color so we don't bloat up the menu with even more buttons.
-		var/new_color = input(usr, "Choose a color to set your appendage to!", "", appendage_color) as color|null
-		if(new_color)
-			appendage_color = new_color
-	if(choice == "Functionality") //Easy way to set color so we don't bloat up the menu with even more buttons.
-		var/choice2 = tgui_alert(usr, "Choose if you want to be pulled to the target or pull them to you!", "Functionality Setting", list("Pull target to self", "Pull self to target"))
-		if(choice2 == "Pull target to self")
-			appendage_alt_setting = 0
-		else
-			appendage_alt_setting = 1
-	else
+	//if(!B)
+	//	to_chat(src, "<span class='warning'>Something is wrong with Chameleon stuff. Yellow fox, Help!</span>")
+	//	return
+
+	var/mob/living/target
+
+	if(appendage_targeting_mode == "Select from list")
 		var/list/targets = list() //IF IT IS NOT BROKEN. DO NOT FIX IT.
-
-		for(var/mob/living/L in range(5, src))
+		for(var/mob/living/L in view(5, src))
 			if(!istype(L, /mob/living)) //Don't eat anything that isn't mob/living. Failsafe.
 				continue
 			if(L == src) //no eating yourself. 1984.
@@ -1453,29 +1471,119 @@
 			to_chat(src, "<span class='notice'>No eligible targets found.</span>")
 			return
 
-		var/mob/living/target = tgui_input_list(src, "Please select a target.", "Victim", targets)
+		target = tgui_input_list(src, "Please select a target.", "Victim", targets)
 
-		if(!target)
+	if(appendage_targeting_mode == "Target closest")
+		var/list/targets = list()
+
+		for(var/mob/living/L in view(5, src))
+			if(!istype(L, /mob/living)) //Don't eat anything that isn't mob/living. Failsafe.
+				continue
+			if(L == src) //no eating yourself. 1984.
+				continue
+			if(!(L in check_trajectory(L, src, PASSTABLE)))
+				continue
+			if(spont_pref_check(src,L,THROW_VORE) || spont_pref_check(L,src,THROW_VORE))
+				targets += L
+
+		if(!(targets.len)) // List empty
+			to_chat(src, "<span class='notice'>No eligible targets found.</span>")
 			return
 
-		if(!istype(target, /mob/living)) //Safety.
-			to_chat(src, "<span class='warning'>You need to select a living target!</span>")
-			return
+		var/mob/living/counter = 1
+		target = targets[counter]
 
-		if (get_dist(src,target) >= 6)
-			to_chat(src, "<span class='warning'>You need to be closer to do that.</span>")
-			return
+		while(target)
+			target = targets[counter]
+			if(!target) // Catch out of bounds exception
+				to_chat(src, "<span class='notice'>No eligible targets found.</span>")
+				return
 
-		visible_message("<span class='notice'>\The [src] attempts to snatch up [target]!</span>", \
-						"<span class='notice'>You attempt to snatch up [target]!</span>" )
-		playsound(src, 'sound/vore/sunesound/pred/schlorp.ogg', 25)
+			if(!istype(target, /mob/living)) //Safety.
+				counter += 1
+				continue
 
-		//Code to shoot the beam here.
-		var/obj/item/projectile/beam/appendage/appendage_attack = new /obj/item/projectile/beam/appendage(get_turf(loc))
-		appendage_attack.launch_projectile(target, BP_TORSO, src) //Send it.
-		last_special = world.time + 100 //Cooldown for successful strike.
-		if(B)	//RS ADD
-			B.expire()	//RS ADD
+			if (get_dist(src,target) >= 6) // Moved out of range, move on.
+				counter += 1
+				continue
+			break
+	if(!target)
+		to_chat(src, "<span class='notice'>No eligible targets found.</span>")
+		return
+
+	if(!istype(target, /mob/living)) //Safety.
+		to_chat(src, "<span class='warning'>You need to select a living target!</span>")
+		return
+
+	if (get_dist(src,target) >= 6)
+		to_chat(src, "<span class='warning'>You need to be closer to do that.</span>")
+		return
+
+	visible_message("<span class='notice'>\The [src] attempts to snatch up [target]!</span>", \
+					"<span class='notice'>You attempt to snatch up [target]!</span>" )
+	playsound(src, 'sound/vore/sunesound/pred/schlorp.ogg', 25)
+
+	//Code to shoot the beam here.
+	var/obj/item/projectile/beam/appendage/appendage_attack = new /obj/item/projectile/beam/appendage(get_turf(loc))
+	appendage_attack.launch_projectile(target, BP_TORSO, src) //Send it.
+	last_special = world.time + 100 //Cooldown for successful strike.
+	if(B)	//RS ADD
+		B.expire()	//RS ADD
+
+// RS Edit
+/mob/living/proc/set_appendage_color_prompt()
+	var/new_color = input(usr, "Choose a color to set your appendage to!", "", appendage_color) as color|null
+	if(new_color)
+		to_chat(src, "<span class='info'>New color set!</span>")
+		appendage_color = new_color
+		return
+	else
+		to_chat(src, "<span class='notice'>No change made, and a Color has not been set.</span>")
+		return
+
+// RS Edit
+/mob/living/proc/set_appendage_throw_mode_prompt()
+	var/choice = tgui_alert(usr, "Choose if you want to be pulled to the target or pull them to you. Current pull mode is set to [appendage_alt_setting ? "\"Pull self to target\"" : "\"Pull target to self\""].", "Functionality Setting", list("Pull target to self", "Pull self to target"))
+	if(!choice)
+		to_chat(src, "<span class='notice'>No change made.</span>")
+		return
+	if(choice == "Pull target to self")
+		to_chat(src, "<span class='notice'>Current pull mode has been set to \"Pull target to self\".</span>")
+		appendage_alt_setting = 0
+		return
+	if(choice == "Pull self to target")
+		to_chat(src, "<span class='notice'>Current pull mode has been set to \"Pull self to target\"</span>")
+		appendage_alt_setting = 1
+		return
+	else
+		to_chat(src, "<span class='warning'>No change made. Something went wrong. Ping a developer.</span>")
+		return
+
+// RS Add
+/mob/living/proc/set_appendage_targeting_mode_prompt()
+	var/choice = tgui_alert(usr, "Select a targeting mode. Current mode: [appendage_targeting_mode].", "Targeting mode", list("Select from list", "Target closest"))
+	if(!choice)
+		to_chat(src, "<span class='notice'>No change made to targeting mode.</span>")
+		return
+	if(choice == "Select from list")
+		to_chat(src, "<span class='notice'>Current targeting mode has been set to \"Select from list\".</span>")
+		appendage_targeting_mode = "Select from list"
+		return
+	if(choice == "Target closest")
+		to_chat(src, "<span class='notice'>Current pull mode has been set to \"Target closest\"</span>")
+		appendage_targeting_mode = "Target closest"
+		return
+	else
+		to_chat(src, "<span class='warning'>No change made. Something went wrong. Ping a developer.</span>")
+		return
+
+// RS Edit
+/mob/living/proc/handle_chameleon_blend_in()
+	var/datum/modifier/blend_in/B
+	for(var/datum/modifier/M in modifiers)
+		if(M.type == /datum/modifier/blend_in)
+			B = M
+	return B
 
 /obj/item/projectile/beam/appendage //The tongue projecitle.
 	name = "appendage"

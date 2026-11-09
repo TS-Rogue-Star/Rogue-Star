@@ -90,6 +90,7 @@
 	verbs |= /mob/living/proc/glow_toggle
 	verbs |= /mob/living/proc/glow_color
 	verbs |= /mob/living/proc/long_vore
+	verbs |= /mob/living/proc/use_appendage // RS Add
 	verbs |= /mob/living/proc/target_lunge
 	movement_cooldown = -1
 

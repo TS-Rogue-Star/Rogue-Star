@@ -147,7 +147,7 @@
 	to_chat(user, "<span class='notice'>You press \the [src]'s chamber agitator button.</span>")
 	if(on)
 		visible_message("<b>\The [src]</b> rattles to life.")
-		reagents.handle_reactions()
+		reagents.handle_reactions(user) // RS Edit: Drink Memories (Lira, November 2026)
 	else
 		spawn(1 SECOND)
 			to_chat(user, "<span class='notice'>Nothing happens..</span>")
@@ -235,6 +235,10 @@
 				W.add_fingerprint(user)
 				W.forceMove(src)
 				InputBeaker = W
+				// RS Add Start: Drink Memories (Lira, November 2026)
+				var/datum/reagents/distilling/buffer = reagents
+				buffer.begin_drink_batch(user)
+				// RS Add End
 
 		if("install output")
 			if(!OutputBeaker)

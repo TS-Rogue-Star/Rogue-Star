@@ -1,3 +1,7 @@
+///////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star October 2026: Piped Gas Flow and Telemetry //
+///////////////////////////////////////////////////////////////////////////////
+
 //--------------------------------------------
 // Gas mixer - omni variant
 //--------------------------------------------
@@ -99,9 +103,10 @@
 
 	return 0
 
+// RS Edit: Piped Gas Flow and Telemetry (Lira, October 2026)
 /obj/machinery/atmospherics/omni/mixer/process()
 	if(!..())
-		return 0
+		return piped_atmos_sleep_disabled()
 
 	//Figure out the amount of moles to transfer
 	var/transfer_moles = 0
@@ -123,6 +128,8 @@
 		if(output.network)
 			output.network.update = 1
 
+	if(power_draw < 0)
+		return piped_atmos_sleep()
 	return 1
 
 /obj/machinery/atmospherics/omni/mixer/tgui_interact(mob/user,datum/tgui/ui = null)
@@ -202,6 +209,7 @@
 				return
 			con_lock(dir_flag(params["dir"]))
 
+	wake_processing() // RS Add: Piped Gas Flow and Telemetry (Lira, October 2026)
 	update_icon()
 
 /obj/machinery/atmospherics/omni/mixer/proc/switch_mode(var/port = NORTH, var/mode = ATM_NONE)

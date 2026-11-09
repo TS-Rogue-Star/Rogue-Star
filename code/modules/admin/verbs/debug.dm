@@ -546,6 +546,7 @@
 					Pump.air2.update_values()
 				Pump.update_use_power(USE_POWER_IDLE)
 				Pump.target_pressure = 4500
+				Pump.wake_processing() // RS Add: Piped Gas Flow and Telemetry (Lira, October 2026)
 				Pump.update_icon()
 
 			else if(istype(M,/obj/machinery/power/supermatter))

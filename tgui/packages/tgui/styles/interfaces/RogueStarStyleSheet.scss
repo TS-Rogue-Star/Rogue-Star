@@ -715,6 +715,21 @@ $titlebar-height: 38px;
     font-size: 0.75rem;
   }
 
+  .RogueStar__memoryIngredientLink {
+    padding: 0;
+    border: 0;
+    background: none;
+    color: colors.$blue;
+    font: inherit;
+    text-decoration: underline;
+    cursor: pointer;
+
+    &:hover,
+    &:focus {
+      color: colors.$primary;
+    }
+  }
+
   .RogueStar__memoryStripe:nth-child(even) {
     background-color: rgba(229, 188, 106, 0.14);
     box-shadow: inset 0 0 0 1px rgba(229, 188, 106, 0.08);

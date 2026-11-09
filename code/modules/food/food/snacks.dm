@@ -1000,7 +1000,7 @@
 	if(!(proximity && O.is_open_container()))
 		return
 	to_chat(user, span_notice("You crack \the [src] into \the [O]."))
-	reagents.trans_to(O, reagents.total_volume)
+	reagents.trans_to(O, reagents.total_volume, mixer = user) // RS Edit: Drink Memories (Lira, November 2026)
 	user.drop_from_inventory(src)
 	qdel(src)
 
@@ -4830,7 +4830,7 @@
 	if(!(proximity && O.is_open_container()))
 		return
 	to_chat(user, span_notice("You tear \the [src]'s sac open, pouring it into \the [O]."))
-	reagents.trans_to(O, reagents.total_volume)
+	reagents.trans_to(O, reagents.total_volume, mixer = user) // RS Edit: Drink Memories (Lira, November 2026)
 	user.drop_from_inventory(src)
 	qdel(src)
 
