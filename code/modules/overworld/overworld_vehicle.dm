@@ -4,6 +4,13 @@
 #define OWV_DRIVE	2
 #define OWV_SPACE	3
 
+var/global/list/every_overworld_vehicle = list()
+var/global/list/Zs_with_active_overworld_vehicle = list()
+/proc/recalc_overworld_vehicle_zs()
+	Zs_with_active_overworld_vehicle.Cut()
+	for(var/obj/overworld_vehicle/O in every_overworld_vehicle)
+		Zs_with_active_overworld_vehicle |= O.z
+
 /obj/overworld_vehicle
 	name = "vehicle"
 	desc = "I'm not driving I'm travelling!"
@@ -48,7 +55,13 @@
 /obj/overworld_vehicle/Initialize(mapload)
 	. = ..()
 	RegisterSignal(src, COMSIG_ATOM_ENTERING, /obj/overworld_vehicle/proc/consider_turf)
+	every_overworld_vehicle |= src
+	recalc_overworld_vehicle_zs()
 
+/obj/overworld_vehicle/Destroy()
+	every_overworld_vehicle -= src
+	. = ..()
+	recalc_overworld_vehicle_zs()
 
 /obj/overworld_vehicle/update_icon()
 	. = ..()
@@ -266,13 +279,19 @@
 	return continue_moving
 
 /obj/overworld_vehicle/proc/consider_turf()
+	var/old_om = on_map
 	if(isoverworld(loc))
 		on_map = TRUE
+		if(old_om != on_map)
+			SEND_SIGNAL(src,COMSIG_VEHICLE_ENTERED_OM)
 		var/turf/unsimulated/map/consider = loc
 		if(!consider.friction)
 			update_movement_mode(OWV_SPACE)
 		return
 	on_map = FALSE
+	if(old_om != on_map)
+		SEND_SIGNAL(src,COMSIG_VEHICLE_EXITED_OM)
+
 	if(isspace(loc))
 		update_movement_mode(OWV_SPACE)
 	else
@@ -574,6 +593,10 @@
 			adjust_health(-25)
 			to_chat(user, SPAN_NOTICE("You repair \the [src]!"))
 
+/obj/overworld_vehicle/forceMove(atom/destination)
+	. = ..()
+	recalc_overworld_vehicle_zs()
+
 /turf/unsimulated/map
 	var/friction = 0
 
@@ -614,9 +637,14 @@
 	icon_state = "drone"
 	idle_state = "drone"
 	move_state = "pip_m"
+	seats = 0
 	remote_controlled = TRUE
 	speed = 10
 	space_accelleration = 0.1
+
+/obj/overworld_vehicle/drone/Initialize(mapload)
+	. = ..()
+	set_light(2)
 
 /obj/overworld_vehicle/drone/relaymove(mob/user, direction)
 	if(locked)
@@ -640,7 +668,9 @@
 	energy += amount
 	SEND_SIGNAL(src,COMSIG_ENERGY_RELAY, energy)
 	if(energy <= 0)
+		energy = 0
 		power_out()
+		set_light(0)
 
 
 

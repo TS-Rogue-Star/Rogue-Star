@@ -46,9 +46,11 @@ SUBSYSTEM_DEF(ai)
 		var/mob/living/L = A.holder	//VOREStation Edit Start
 		if(!L?.loc)
 			continue
-
-		if((get_z(L) && process_z[get_z(L)]) || !L.low_priority) //VOREStation Edit End
+		var/which_z = get_z(L)	//RS EDIT
+		if((which_z && process_z[which_z]) || !L.low_priority) //VOREStation Edit End
 			A.handle_strategicals()
+		else if(which_z in Zs_with_active_overworld_vehicle)	//RS ADD - Beat the SHIT out of these drones I want you to HATE THEM
+			A.handle_strategicals()	//RS ADD
 		else
 			slept_mobs++
 			A.set_stance(STANCE_IDLE)

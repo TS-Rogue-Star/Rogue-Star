@@ -803,4 +803,6 @@
 #define COMSIG_ENERGY_RELAY "energy_relay"
 #define COMSIG_VEHICLE_DESTRUCTION "vehicle_destruction"
 #define COMSIG_VEHICLE_POWER_OUT "vehicle_power_out"
+#define COMSIG_VEHICLE_ENTERED_OM "owv_enter_om"
+#define COMSIG_VEHICLE_EXITED_OM "owv_exit_om"
 //RS ADD END

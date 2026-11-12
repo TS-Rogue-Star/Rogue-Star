@@ -7,6 +7,8 @@
 	var/obj/overworld_vehicle/drone/deployable
 	var/obj/deployable_teleporter/linked_teleporter
 	var/datum/mini_hud/drone/hud
+	var/last_deploy = 0
+	var/deploy_cooldown = 10 MINUTES
 
 /obj/drone_helm/Initialize(mapload)
 	. = ..()
@@ -70,17 +72,13 @@
 	user.loc = src
 	if(ishuman(user))
 		if(user.hud_used)
-			if(!hud)
-				hud = new /datum/mini_hud/drone(user.hud_used, src)
-			else
-				hud.apply_to_hud(user.hud_used)
+			refresh_hud(user)
 	if(deployable)
 		if(drone_check())
 			look(user)
 		else
-			tgui_alert(user, "The deployed drone is non-functional. A new drone will need to be deployed to continue operation. Press the deploy button to your left to deploy a drone.","[src]",list("Okay"))
-	else
-		tgui_alert(user, "Press the deploy button to your left to deploy a drone.","[src]",list("Okay"))
+			tgui_alert(user, "The deployed drone is non-functional. A new drone will need to be deployed to continue operation. Press the deploy button.","[src]",list("Okay"))
+	RegisterSignal(user, COMSIG_MOB_LOGIN, /obj/drone_helm/proc/refresh_hud, TRUE)
 	update_health_hud()
 	update_energy_hud()
 
@@ -124,10 +122,27 @@
 		if(!isliving(thing))
 			continue
 		var/mob/living/L = thing
+		UnregisterSignal(L, COMSIG_MOB_LOGIN)
 		if(!L.client)
 			continue
-		if(hud)
-			L.hud_used.remove_minihud(hud)
+	if(hud)
+		QDEL_NULL(hud)
+
+/obj/drone_helm/proc/refresh_hud(var/mob/living/carbon/human/driver)
+	if(!driver)
+		for(var/thing in contents)
+			if(ishuman(thing))
+				var/mob/living/carbon/human/H = thing
+				if(!H.client)
+					continue
+				refresh_hud(H)
+				return
+	if(hud)
+		QDEL_NULL(hud)
+	hud = new /datum/mini_hud/drone(driver.hud_used, src)
+	if(deployable?.on_map)
+		hud.on_om()
+	look(driver)
 
 /obj/drone_helm/proc/deploy()
 	set name = "Deploy"
@@ -176,14 +191,42 @@
 /obj/drone_helm/proc/generate_deployable(var/mob/living/user)
 	if(!user)
 		return
+	if(last_deploy)
+		if(last_deploy + deploy_cooldown > world.time)
+			to_chat(user, SPAN_WARNING("\The [src] is still fabricating the next drone. It can not be launched yet."))
+			return
 	if(deployable)
 		trash_deployable()
-	deployable = new /obj/overworld_vehicle/drone(get_turf(src))
+	var/turf/target
+	var/list/potential_spawners = list()
+	for(var/obj/effect/landmark/drone_launcher/L in landmarks_list)
+		if(!istype(L))
+			continue
+		if(L.z != z)
+			continue
+		potential_spawners |= L
+	potential_spawners += "Here"
+	var/choice = tgui_input_list(user, "Where would you like the drone to be generated?", "DEPLOYING DRONE", potential_spawners)
+	if(!choice)
+		return
+	if(choice == "Here")
+		if(linked_teleporter)
+			target = get_turf(linked_teleporter)
+		else
+			target = get_turf(src)
+	else if(isobj(choice))
+		target = get_turf(choice)
+	if(!target)
+		to_chat(user, SPAN_WARNING("An error has occured and a drone could not be generated. Contact a developer."))
+		return
+	deployable = new /obj/overworld_vehicle/drone(target)
 	deployable.register_driver(user)
 	RegisterSignal(deployable, COMSIG_ENERGY_RELAY, /obj/drone_helm/proc/update_energy_hud, TRUE)
 	RegisterSignal(deployable, COMSIG_HEALTH_RELAY, /obj/drone_helm/proc/update_health_hud, TRUE)
 	RegisterSignal(deployable, COMSIG_VEHICLE_DESTRUCTION, /obj/drone_helm/proc/vehicle_destroyed, TRUE)
 	RegisterSignal(deployable, COMSIG_VEHICLE_POWER_OUT, /obj/drone_helm/proc/power_out, TRUE)
+	hud.RegisterSignal(deployable, COMSIG_VEHICLE_ENTERED_OM, /datum/mini_hud/drone/proc/on_om, TRUE)
+	hud.RegisterSignal(deployable, COMSIG_VEHICLE_EXITED_OM, /datum/mini_hud/drone/proc/off_om, TRUE)
 	update_health_hud()
 	update_energy_hud()
 
@@ -199,14 +242,25 @@
 	update_energy_hud()
 
 /obj/drone_helm/proc/report_energy()
-	visible_message(span_green("[src] [deployable] energy: [deployable.energy]"))
+	if(deployable)
+		visible_message(span_green("[src] chirps, \"Deployable energy: [deployable.energy].\""))
+	else
+		to_chat(usr, SPAN_DANGER("You would need to deploy a drone before you can check its energy..."))
 
 /obj/drone_helm/proc/report_health()
-	visible_message(SPAN_OCCULT("[src] [deployable] integrity: [deployable.health]"))
+	if(deployable)
+		visible_message(SPAN_OCCULT("[src] chirps, \"Deployable integrity: [deployable.health].\""))
+	else
+		to_chat(usr, SPAN_DANGER("You would need to deploy a drone before you can check its health..."))
 
 /obj/drone_helm/proc/land()
 	if(!deployable)
 		return
+	if(abs(deployable.momentum[1]) + abs(deployable.momentum[2]) > 0.25)
+		to_chat(usr, SPAN_DANGER("Warning: unsafe landing speed. Aborting."))
+		return
+	deployable.momentum[1] = 0
+	deployable.momentum[2] = 0
 	var/turf/T = get_turf(deployable)
 	if(!T)
 		return
@@ -219,11 +273,16 @@
 	for(var/obj/effect/overmap/visitable/v in T.contents)
 		if(!istype(v, /obj/effect/overmap/visitable))
 			continue
-		for(var/obj/effect/shuttle_landmark/landmark in v.generic_waypoints)
-			var/turf/lt = get_turf(landmark)
+		for(var/obj/effect/landmark/drone_landsite/L in landmarks_list)
+			if(!istype(L))
+				continue
+			if(!(L.z in v.map_z))
+				if(!(L.z in v.extra_z_levels))
+					continue
+			var/turf/lt = get_turf(L)
 			if(lt.check_density(FALSE,TRUE))
 				continue
-			destinations |= landmark
+			destinations |= L
 
 	if(!destinations.len)
 		to_chat(user, SPAN_WARNING("There is nowhere to land here."))
@@ -324,43 +383,30 @@
 	. = ..()
 
 /datum/mini_hud/drone/proc/update_health(var/our_health)
-	switch(our_health)
-		if(90 to 100)
-			health.icon_state = "health-5"
-		if(70 to 90)
-			health.icon_state = "health-4"
-		if(40 to 70)
-			health.icon_state = "health-3"
-		if(20 to 40)
-			health.icon_state = "health-2"
-		if(1 to 20)
-			health.icon_state = "health-1"
-		else
-			health.icon_state = "health-0"
+	health.update_health(our_health)
 
 /datum/mini_hud/drone/proc/update_energy(var/our_energy)
-	switch(our_energy)
-		if(90 to 100)
-			energy.icon_state = "energy-5"
-		if(70 to 90)
-			energy.icon_state = "energy-4"
-		if(40 to 70)
-			energy.icon_state = "energy-3"
-		if(20 to 40)
-			energy.icon_state = "energy-2"
-		if(1 to 20)
-			energy.icon_state = "energy-1"
-		else
-			energy.icon_state = "energy-0"
+	energy.update_energy(our_energy)
+
+/datum/mini_hud/drone/proc/on_om()
+	land.alpha = 255
+	land.mouse_opacity = TRUE
+	deploy.alpha = 50
+	deploy.mouse_opacity = FALSE
+/datum/mini_hud/drone/proc/off_om()
+	land.alpha = 50
+	land.mouse_opacity = FALSE
+	deploy.alpha = 255
+	deploy.mouse_opacity = TRUE
 
 /obj/screen/drone
-	icon = 'icons/rogue-star/overworld.dmi'
+	icon = 'icons/rogue-star/overworld_drone_ui.dmi'
 	icon_state = "eject"
+	screen_loc = "CENTER-2:16,SOUTH+2:16"
 
 /obj/screen/drone/deploy
 	name = "Deploy"
 	icon_state = "deploy"
-	screen_loc = ui_rig_airtoggle
 
 /obj/screen/drone/deploy/Click()
 	SEND_SIGNAL(src,COMSIG_CLICK)
@@ -368,19 +414,91 @@
 /obj/screen/drone/eject
 	name = "Eject"
 	icon_state = "eject"
-	screen_loc = ui_rig_airtoggle
+
+/obj/screen/drone/eject/MouseEntered(location, control, params)
+	. = ..()
+	flick("eject_on", src)
 
 /obj/screen/drone/land
 	name = "Land"
 	icon_state = "land"
-	screen_loc = ui_rig_airtoggle
+	alpha = 50
+	mouse_opacity = FALSE
 
 /obj/screen/drone/energy
 	name = "Energy"
-	icon_state = "energy-5"
-	screen_loc = ui_rig_airtoggle
+	icon_state = "energy_frame"
+	var/static/icon_cache = list()
+
+/obj/screen/drone/energy/proc/update_energy(var/our_value)
+	our_value = round(our_value, 2)
+	if(our_value < 0)
+		our_value = 0
+
+	var/iconkey = "energy-[our_value]"
+	var/image/ourstate = icon_cache[iconkey]
+
+	if(!ourstate)
+		var/icon/bar = new('icons/rogue-star/overworld_drone_ui.dmi',"energy_bar")
+		var/icon/frame = new('icons/rogue-star/overworld_drone_ui.dmi',"energy_frame")
+		if(our_value < 100)
+			var/icon/mask = new('icons/rogue-star/overworld_drone_ui.dmi',"mask")
+			bar.Blend(mask,ICON_ADD,40 + our_value / 2)
+		bar.Blend(frame,ICON_OVERLAY)
+		ourstate = image(bar)
+		ourstate.appearance_flags = RESET_COLOR|KEEP_APART|PIXEL_SCALE
+
+		icon_cache[iconkey] = ourstate
+
+	icon = ourstate
+
 
 /obj/screen/drone/health
 	name = "Health"
-	icon_state = "health"
-	screen_loc = ui_rig_airtoggle
+	icon_state = "health_frame"
+	var/static/icon_cache = list()
+
+/obj/screen/drone/health/proc/update_health(var/our_value)
+	our_value = round(our_value, 2)
+	if(our_value < 0)
+		our_value = 0
+
+	var/iconkey = "health-[our_value]"
+	var/image/ourstate = icon_cache[iconkey]
+
+	if(!ourstate)
+		var/bar_state = "health_bar"
+		switch(our_value)
+			if(76 to INFINITY)
+				bar_state = "health_bar"
+			if(51 to 75)
+				bar_state = "health_bar_yellow"
+			if(26 to 50)
+				bar_state = "health_bar_orange"
+			else
+				bar_state = "health_bar_red"
+		var/icon/bar = new('icons/rogue-star/overworld_drone_ui.dmi',bar_state)
+		var/icon/frame = new('icons/rogue-star/overworld_drone_ui.dmi',"health_frame")
+		if(our_value < 100)
+			var/icon/mask = new('icons/rogue-star/overworld_drone_ui.dmi',"mask")
+			bar.Blend(mask,ICON_ADD,40 + our_value / 2)
+
+		bar.Blend(frame,ICON_OVERLAY)
+		ourstate = image(bar)
+		ourstate.appearance_flags = RESET_COLOR|KEEP_APART|PIXEL_SCALE
+
+		icon_cache[iconkey] = ourstate
+
+	icon = ourstate
+
+/obj/effect/landmark/drone_launcher
+	name = "drone launcher"
+	desc = "Launches drones."
+	icon = 'icons/rogue-star/misc.dmi'
+	icon_state = "tenna"
+	invisibility = 0
+/obj/effect/landmark/drone_landsite
+	name = "drone landsite"
+	desc = "Drones land here"
+	icon = 'icons/rogue-star/misc.dmi'
+	icon_state = "tenna"
