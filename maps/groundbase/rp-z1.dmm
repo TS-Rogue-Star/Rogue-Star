@@ -20619,8 +20619,7 @@
 /area/groundbase/civilian/bar)
 "rPD" = (
 /obj/machinery/door/window/brigdoor/southright{
-	req_access = list(77);
-	req_one_access = newlist()
+	req_access = list(77)
 	},
 /obj/effect/floor_decal/steeldecal/steel_decals5,
 /turf/simulated/floor/tiled,
@@ -21255,7 +21254,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/window/brigdoor/westright{
 	dir = 4;
-	name = "Research Desk";
+	name = "Hydroponics Desk";
 	req_access = null;
 	req_one_access = list(35,28)
 	},
