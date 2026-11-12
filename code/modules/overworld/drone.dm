@@ -81,6 +81,8 @@
 			tgui_alert(user, "The deployed drone is non-functional. A new drone will need to be deployed to continue operation. Press the deploy button to your left to deploy a drone.","[src]",list("Okay"))
 	else
 		tgui_alert(user, "Press the deploy button to your left to deploy a drone.","[src]",list("Okay"))
+	update_health_hud()
+	update_energy_hud()
 
 /obj/drone_helm/relaymove(mob/user, direction)
 	if(deployable)
@@ -178,10 +180,12 @@
 		trash_deployable()
 	deployable = new /obj/overworld_vehicle/drone(get_turf(src))
 	deployable.register_driver(user)
-	SEND_SIGNAL(src,COMSIG_HEALTH_RELAY,deployable.health)
-	SEND_SIGNAL(src,COMSIG_ENERGY_RELAY,deployable.energy)
 	RegisterSignal(deployable, COMSIG_ENERGY_RELAY, /obj/drone_helm/proc/update_energy_hud, TRUE)
 	RegisterSignal(deployable, COMSIG_HEALTH_RELAY, /obj/drone_helm/proc/update_health_hud, TRUE)
+	RegisterSignal(deployable, COMSIG_VEHICLE_DESTRUCTION, /obj/drone_helm/proc/vehicle_destroyed, TRUE)
+	RegisterSignal(deployable, COMSIG_VEHICLE_POWER_OUT, /obj/drone_helm/proc/power_out, TRUE)
+	update_health_hud()
+	update_energy_hud()
 
 /obj/drone_helm/proc/trash_deployable()
 	if(deployable)
@@ -191,8 +195,8 @@
 		QDEL_NULL(deployable)
 	if(linked_teleporter.partner)
 		qdel(linked_teleporter.partner)
-	SEND_SIGNAL(src,COMSIG_HEALTH_RELAY,0)
-	SEND_SIGNAL(src,COMSIG_ENERGY_RELAY,0)
+	update_health_hud()
+	update_energy_hud()
 
 /obj/drone_helm/proc/report_energy()
 	visible_message(span_green("[src] [deployable] energy: [deployable.energy]"))
@@ -237,6 +241,7 @@
 		deployable.momentum = list(0,0)
 
 /obj/drone_helm/proc/power_out()
+	visible_message(SPAN_WARNING("Warning: [deployable] power depleted. Drone lost."), runemessage = "Drone lost...")
 	disconnect()
 
 /obj/drone_helm/proc/disconnect()
@@ -255,11 +260,24 @@
 		return FALSE
 	return TRUE
 
-/obj/drone_helm/proc/update_energy_hud()
-	if(hud && deployable)
-		hud.update_health(deployable.health)
+/obj/drone_helm/proc/vehicle_destroyed()
+	visible_message(SPAN_WARNING("Warning: [deployable] critical malfunction. Drone lost."), runemessage = "Drone lost...")
+	trash_deployable()
+
 /obj/drone_helm/proc/update_health_hud()
-	if(hud && deployable)
+	if(!hud)
+		return
+	if(!deployable)
+		hud.update_health(0)
+	else
+		hud.update_health(deployable.health)
+
+/obj/drone_helm/proc/update_energy_hud()
+	if(!hud)
+		return
+	if(!deployable)
+		hud.update_energy(0)
+	else
 		hud.update_energy(deployable.energy)
 
 ///// HUD /////

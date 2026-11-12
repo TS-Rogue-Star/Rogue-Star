@@ -173,7 +173,8 @@
 
 /obj/overworld_vehicle/proc/get_slowdown()
 	var/turf/T = get_turf(src)
-
+	if(!T)
+		return FALSE
 	return T.movement_cost
 
 /obj/overworld_vehicle/proc/actually_move(var/animate_movement = TRUE)
@@ -228,6 +229,7 @@
 		else
 			new_pos_x = pixel_x
 			if(continue_moving)
+				bonk(momentum[1])
 				momentum[1] = 0
 
 		if(locdata[2])
@@ -235,10 +237,13 @@
 		else
 			new_pos_y = pixel_y
 			if(continue_moving)
+				bonk(momentum[2])
 				momentum[2] = 0
 
 		if(final_x != x || final_y != y)
 			var/turf/final_turf = locate(final_x,final_y,z)
+			if(!final_turf)
+				return
 			pixel_x += (final_turf.x - x) * -32
 			pixel_y += (final_turf.y - y) * -32
 			match_client_pix()
@@ -354,6 +359,8 @@
 		if(noinput())
 			return
 
+	consider_space_weather()
+
 	var/modified_max_space_momentum = max_space_momentum
 	var/momentum_add = space_accelleration
 	if(momentum_add > 0)
@@ -455,6 +462,117 @@
 
 /obj/overworld_vehicle/proc/process_drive_move()
 
+/obj/overworld_vehicle/proc/bonk(var/bonk_momentum)
+	if(!bonk_momentum)
+		return
+	if(movement_mode == OWV_WALK)
+		return
+	bonk_momentum = abs(bonk_momentum)
+	if(on_map)
+		bonk_momentum *= 100
+		if(bonk_momentum > 0.05)
+			adjust_health(-bonk_momentum)
+	else if(bonk_momentum > 2)
+		adjust_health(-bonk_momentum)
+
+/obj/overworld_vehicle/proc/destruction()
+	SEND_SIGNAL(src,COMSIG_VEHICLE_DESTRUCTION)
+	return
+
+/obj/overworld_vehicle/proc/power_out()
+	SEND_SIGNAL(src,COMSIG_VEHICLE_POWER_OUT)
+	return
+
+/obj/overworld_vehicle/proc/consider_space_weather()
+	var/total_momentum = abs(momentum[1]) + abs(momentum[2])
+	for(var/obj/effect/overmap/event/E in loc.contents)
+		if(!istype(E, /obj/effect/overmap/event))
+			continue
+		if(istype(E,/obj/effect/overmap/event/meteor))
+			if(prob(total_momentum * 10))
+				if(driver)
+					to_chat(driver, SPAN_WARNING("\The [src] impacted a meteor!!!"))
+				momentum[1] = 0
+				momentum[2] = 0
+				bonk(total_momentum)
+		if(istype(E,/obj/effect/overmap/event/dust))
+			if(prob(total_momentum * 5))
+				if(driver)
+					to_chat(driver, SPAN_WARNING("\The [src] impacted debris!!!"))
+				bonk(total_momentum * 0.5)
+		if(istype(E,/obj/effect/overmap/event/carp))
+			if(prob(total_momentum * 5))
+				if(driver)
+					to_chat(driver, SPAN_WARNING("\The [src] impacted a carp!!!"))
+				adjust_health(-25)
+		if(istype(E,/obj/effect/overmap/event/ion))
+			adjust_energy(-5)
+			if(prob(10))
+				if(driver)
+					to_chat(driver, SPAN_WARNING("\The [src]'s circuits are overheating!!!"))
+				adjust_health(-50)
+				adjust_energy(-25)
+		if(istype(E,/obj/effect/overmap/event/electric))
+			adjust_energy(5)
+			if(prob(5))
+				if(driver)
+					to_chat(driver, SPAN_WARNING("\The [src] was struck by lightning!!!"))
+				adjust_health(-50)
+
+/obj/overworld_vehicle/emp_act(severity)
+	. = ..()
+	adjust_energy(-25)
+	switch(severity)
+		if(1.0)
+			adjust_health(-25)
+		if(2.0)
+			adjust_health(-50)
+		if(3.0)
+			adjust_health(-100)
+
+/obj/overworld_vehicle/ex_act(strength)
+	. = ..()
+	switch(strength)
+		if(1.0)
+			adjust_health(-50)
+		if(2.0)
+			adjust_health(-100)
+		if(3.0)
+			adjust_health(-100)
+
+/obj/overworld_vehicle/airlock_crush(crush_damage)
+	. = ..()
+	adjust_health(-100)
+
+/obj/overworld_vehicle/attack_generic(mob/user)
+	. = ..()
+
+/obj/overworld_vehicle/bullet_act(obj/item/projectile/Proj)
+	var/damage = round(Proj.get_structure_damage() * 1.33)
+	if(damage > 0)
+		if(driver)
+			to_chat(driver, SPAN_WARNING("\The [src] is taking fire!!!"))
+	adjust_health(-damage)
+
+/obj/overworld_vehicle/attack_generic(mob/living/L, damage)
+	if(damage > 0)
+		if(driver)
+			to_chat(driver, SPAN_WARNING("\The [src] is under attack!!!"))
+	adjust_health(-damage)
+
+/obj/overworld_vehicle/attackby(obj/item/O, mob/user)
+	. = ..()
+	if(user.a_intent != I_HELP)
+		user.setClickCooldown(user.get_attack_speed(O))
+		if(O.force > 0)
+			if(driver)
+				to_chat(driver, SPAN_WARNING("\The [src] is under attack!!!"))
+		adjust_health(-O.force)
+	else if(istype(O, /obj/item/weapon/weldingtool))
+		var/obj/item/weapon/weldingtool/our_welder = O
+		if(our_welder.remove_fuel(1,user))
+			adjust_health(-25)
+			to_chat(user, SPAN_NOTICE("You repair \the [src]!"))
 
 /turf/unsimulated/map
 	var/friction = 0
@@ -513,13 +631,16 @@
 		return
 	health += amount
 	SEND_SIGNAL(src,COMSIG_HEALTH_RELAY, health)
+	if(health <= 0)
+		destruction()
 
 /obj/overworld_vehicle/proc/adjust_energy(var/amount)
 	if(!amount)
 		return
 	energy += amount
 	SEND_SIGNAL(src,COMSIG_ENERGY_RELAY, energy)
-
+	if(energy <= 0)
+		power_out()
 
 
 

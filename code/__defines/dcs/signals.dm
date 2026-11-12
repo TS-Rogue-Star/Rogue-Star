@@ -801,5 +801,6 @@
 
 #define COMSIG_HEALTH_RELAY "health_relay"
 #define COMSIG_ENERGY_RELAY "energy_relay"
-
+#define COMSIG_VEHICLE_DESTRUCTION "vehicle_destruction"
+#define COMSIG_VEHICLE_POWER_OUT "vehicle_power_out"
 //RS ADD END
