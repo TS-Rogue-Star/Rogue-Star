@@ -1,6 +1,8 @@
-//////////////////////////////////////////////////////////////////
-// Created by Lira for Rogue Star November 2026: Drink Memories //
-//////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////
+// Created by Lira for Rogue Star November 2026: Drink Memories //////
+//////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star November 2026: Chemistry Memories //
+//////////////////////////////////////////////////////////////////////
 
 /datum/character_memory
 	var/list/drinks = list()
@@ -146,11 +148,13 @@
 			ingredients[reagent_id] = recipe.required_reagents[reagent_id]
 	for(var/reagent_id in recipe.required_reagents)
 		ingredients[reagent_id] = recipe.required_reagents[reagent_id]
+	var/datum/reagent/product = SSchemistry.chemical_reagents[recipe.result]
 	var/list/data = list(
 		"ingredients" = build_drink_ingredients(ingredients, multiplier),
 		"catalysts" = catalysts,
 		"inhibitors" = build_drink_ingredients(recipe.inhibitors),
 		"yield" = recipe.result_amount * multiplier,
+		"product" = product?.name || recipe.result,
 		"minimum_yield" = recipe.result_amount,
 		"input_volume" = input_volume + leftover_volume,
 		"mixture_volume" = recipe.result_amount * multiplier + leftover_volume,
@@ -191,9 +195,9 @@
 		var/reagent_id = catalyst["id"]
 		amounts[reagent_id] = max(amounts[reagent_id], catalyst["total"])
 	for(var/reagent_id in amounts)
-		if(!islist(drinks[reagent_id]) || (reagent_id in path))
+		if(!length(known_reagent_recipes(reagent_id)) || (reagent_id in path))
 			continue
-		for(var/decl/chemical_reaction/recipe as anything in character_memory_drink_recipes(reagent_id))
+		for(var/decl/chemical_reaction/recipe as anything in known_reagent_recipes(reagent_id))
 			var/multiplier = max(1, CEILING(amounts[reagent_id] / recipe.result_amount, 1))
 			var/list/recipe_data = build_drink_recipe(recipe, multiplier, path)
 			LAZYADD(recipes[reagent_id], list(recipe_data))
@@ -230,19 +234,38 @@
 
 /datum/character_memory/proc/build_drink_search_ingredients(var/drink_id)
 	var/list/names = list()
-	if(!islist(drinks[drink_id]))
+	if(!length(known_reagent_recipes(drink_id)))
 		return names
 	var/list/pending = list(drink_id)
 	for(var/index = 1, index <= length(pending), index++)
-		for(var/decl/chemical_reaction/recipe as anything in character_memory_drink_recipes(pending[index]))
+		for(var/decl/chemical_reaction/recipe as anything in known_reagent_recipes(pending[index]))
 			var/list/ingredients = recipe.required_reagents.Copy()
 			ingredients |= recipe.catalysts
 			for(var/reagent_id in ingredients)
 				var/datum/reagent/ingredient = SSchemistry.chemical_reagents[reagent_id]
 				names |= ingredient?.name || reagent_id
-				if(islist(drinks[reagent_id]))
+				if(length(known_reagent_recipes(reagent_id)))
 					pending |= reagent_id
 	return names
+
+/datum/character_memory/proc/flatten_reagent_recipe_detail(var/list/detail)
+	if(!islist(detail))
+		return null
+	var/list/steps = list()
+	var/list/recipes = detail["recipes"]
+	var/list/pending = recipes.Copy()
+	for(var/index = 1, index <= length(pending), index++)
+		var/list/recipe = pending[index]
+		var/list/ingredient_recipes = recipe["ingredient_recipes"]
+		for(var/reagent_id in ingredient_recipes)
+			var/list/step_ids = list()
+			for(var/list/ingredient_recipe as anything in ingredient_recipes[reagent_id])
+				steps += list(ingredient_recipe)
+				pending += list(ingredient_recipe)
+				step_ids += length(steps)
+			ingredient_recipes[reagent_id] = step_ids
+	detail["recipe_steps"] = steps
+	return detail
 
 /datum/character_memory/proc/add_drinks_ui_data(var/list/data)
 	var/list/rows = list()
@@ -264,4 +287,4 @@
 	data["bartending_xp"] = length(drinks)
 	data["drinks_made"] = total_made
 	data["selected_drink"] = selected_drink
-	data["drink_detail"] = build_drink_detail(selected_drink)
+	data["drink_detail"] = flatten_reagent_recipe_detail(build_drink_detail(selected_drink))
