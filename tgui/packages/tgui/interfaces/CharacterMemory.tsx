@@ -3,6 +3,8 @@
 // ///////////////////////////////////////////////////////////////////////
 // Updated by Lira for Rogue Star November 2026: Drink Memories //////////
 // ///////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star November 2026: Chemistry Memories //////
+// ///////////////////////////////////////////////////////////////////////
 
 import { Component } from 'inferno';
 import { useBackend, useLocalState } from '../backend';
@@ -18,7 +20,7 @@ import {
   Tabs,
   TextArea,
 } from '../components';
-import { Window } from '../layouts';
+import { Layout, Window } from '../layouts';
 import CustomEyeIconAsset from '../../../public/Icons/Rogue Star/eye 1.png';
 
 const ROGUE_STAR_THEME = 'nanotrasen rogue-star-window';
@@ -143,6 +145,7 @@ type DrinkIngredient = {
 };
 
 type DrinkRecipe = {
+  product: string;
   ingredients: DrinkIngredient[];
   catalysts: (DrinkIngredient & { consumed: number; total: number })[];
   inhibitors: DrinkIngredient[];
@@ -160,7 +163,7 @@ type DrinkRecipe = {
   equipment: string;
   slime_extract?: string;
   temperature?: string;
-  ingredient_recipes: Record<string, DrinkRecipe[]>;
+  ingredient_recipes: Record<string, number[]>;
 };
 
 type DrinkRow = {
@@ -168,9 +171,21 @@ type DrinkRow = {
   name: string;
   times_made: number;
   ingredient_names?: string[];
+  search_text?: string;
+};
+
+type ChemicalProperties = {
+  effects: string;
+  application?: string;
+  limitations?: string;
+  overdose: number;
+  overdose_effects: string;
+  overdose_touch: boolean;
+  interactions: string[];
 };
 
 type DrinkDetail = DrinkRow & {
+  medical?: ChemicalProperties;
   description: string;
   image: string;
   traits?: {
@@ -182,6 +197,7 @@ type DrinkDetail = DrinkRow & {
   first_made?: string;
   last_made?: string;
   recipes: DrinkRecipe[];
+  recipe_steps: DrinkRecipe[];
 };
 
 type Data = {
@@ -192,6 +208,11 @@ type Data = {
   contacts: ContactRow[];
   selected_contact?: string;
   detail?: ContactDetail;
+  chemicals: DrinkRow[];
+  selected_chemical?: string;
+  chemical_detail?: DrinkDetail;
+  chemistry_xp: number;
+  chemicals_made: number;
   drinks: DrinkRow[];
   selected_drink?: string;
   drink_detail?: DrinkDetail;
@@ -351,228 +372,263 @@ export const CharacterMemory = (_props, context) => {
       resizable
       statusIcon={statusIcon}
       title="Memory">
-      <Window.Content scrollable>
-        <Box className="RogueStar" position="relative" minHeight="100%">
-          <Tabs>
-            <Tabs.Tab
-              selected={tab === 'characters'}
-              onClick={() => setTab('characters')}
-              icon="users">
-              Characters
-            </Tabs.Tab>
-            <Tabs.Tab
-              selected={tab === 'drinks'}
-              onClick={() => setTab('drinks')}
-              icon="cocktail">
-              Drinks
-            </Tabs.Tab>
-          </Tabs>
-          {tab === 'drinks' ? (
-            <DrinkMemory />
-          ) : (
-            <Stack fill>
-              <Stack.Item basis="30%" grow>
-                <Section title={contactTitle} fill>
-                  {contacts.length ? (
-                    <Stack vertical fill>
-                      <Stack.Item>
-                        <Stack wrap>
-                          {CATEGORY_FILTERS.map((filter) => (
-                            <Stack.Item key={filter.id}>
+      <Window.Content>
+        <Stack className="RogueStar" position="relative" vertical fill>
+          <Stack.Item>
+            <Tabs>
+              <Tabs.Tab
+                selected={tab === 'characters'}
+                onClick={() => setTab('characters')}
+                icon="users">
+                Characters
+              </Tabs.Tab>
+              <Tabs.Tab
+                selected={tab === 'drinks'}
+                onClick={() => setTab('drinks')}
+                icon="cocktail">
+                Drinks
+              </Tabs.Tab>
+              <Tabs.Tab
+                selected={tab === 'chemistry'}
+                onClick={() => setTab('chemistry')}
+                icon="flask">
+                Chemistry
+              </Tabs.Tab>
+            </Tabs>
+          </Stack.Item>
+          <Stack.Item grow minHeight={0}>
+            {tab === 'chemistry' ? (
+              <ReagentMemory key="chemistry" chemistry />
+            ) : tab === 'drinks' ? (
+              <ReagentMemory key="drinks" />
+            ) : (
+              <Stack fill>
+                <Stack.Item basis="30%" grow>
+                  <Section title={contactTitle} fill scrollable>
+                    {contacts.length ? (
+                      <Stack vertical>
+                        <Stack.Item>
+                          <Stack wrap>
+                            {CATEGORY_FILTERS.map((filter) => (
+                              <Stack.Item key={filter.id}>
+                                <Button
+                                  className={CHIP_BUTTON_CLASS}
+                                  selected={categoryFilter === filter.id}
+                                  onClick={() =>
+                                    selectCategoryFilter(filter.id)
+                                  }>
+                                  {filter.label}
+                                </Button>
+                              </Stack.Item>
+                            ))}
+                          </Stack>
+                        </Stack.Item>
+                        {visibleContacts.length ? (
+                          visibleContacts.map((contact) => (
+                            <Stack.Item key={contact.id} mb={0.25}>
                               <Button
-                                className={CHIP_BUTTON_CLASS}
-                                selected={categoryFilter === filter.id}
-                                onClick={() => selectCategoryFilter(filter.id)}>
-                                {filter.label}
+                                className={PILL_BUTTON_CLASS}
+                                fluid
+                                selected={contact.id === selected_contact}
+                                onClick={() =>
+                                  act('select_contact', { id: contact.id })
+                                }>
+                                <Stack align="center" justify="space-between">
+                                  <Stack.Item grow>
+                                    <Box textAlign="left">{contact.name}</Box>
+                                  </Stack.Item>
+                                  <Stack.Item>
+                                    <Box
+                                      as="span"
+                                      className={CHIP_BUTTON_CLASS}
+                                      px="0.5rem"
+                                      py="0.2rem">
+                                      {contact.day_count}
+                                    </Box>
+                                  </Stack.Item>
+                                </Stack>
                               </Button>
                             </Stack.Item>
-                          ))}
-                        </Stack>
-                      </Stack.Item>
-                      {visibleContacts.length ? (
-                        visibleContacts.map((contact) => (
-                          <Stack.Item key={contact.id} mb={0.25}>
-                            <Button
-                              className={PILL_BUTTON_CLASS}
-                              fluid
-                              selected={contact.id === selected_contact}
-                              onClick={() =>
-                                act('select_contact', { id: contact.id })
-                              }>
-                              <Stack align="center" justify="space-between">
-                                <Stack.Item grow>
-                                  <Box textAlign="left">{contact.name}</Box>
-                                </Stack.Item>
-                                <Stack.Item>
-                                  <Box
-                                    as="span"
-                                    className={CHIP_BUTTON_CLASS}
-                                    px="0.5rem"
-                                    py="0.2rem">
-                                    {contact.day_count}
-                                  </Box>
-                                </Stack.Item>
-                              </Stack>
-                            </Button>
+                          ))
+                        ) : (
+                          <Stack.Item>
+                            <Box color="label">
+                              No memories in this category.
+                            </Box>
                           </Stack.Item>
-                        ))
+                        )}
+                      </Stack>
+                    ) : (
+                      <Box color="label">No memories recorded.</Box>
+                    )}
+                  </Section>
+                </Stack.Item>
+                <Stack.Item grow basis="70%" position="relative">
+                  <Layout.Content scrollable>
+                    <Stack vertical>
+                      {status && (
+                        <Stack.Item>
+                          <NoticeBox success>{status}</NoticeBox>
+                        </Stack.Item>
+                      )}
+                      {error && (
+                        <Stack.Item>
+                          <NoticeBox danger>{error}</NoticeBox>
+                        </Stack.Item>
+                      )}
+                      {detail ? (
+                        <>
+                          <Stack.Item>
+                            <Section
+                              title={detail.name}
+                              buttons={
+                                <Button
+                                  className={CHIP_BUTTON_CLASS}
+                                  icon="sync-alt"
+                                  onClick={() => act('refresh')}
+                                />
+                              }>
+                              <Table>
+                                <Table.Row>
+                                  <Table.Cell color="label">
+                                    First met
+                                  </Table.Cell>
+                                  <Table.Cell>
+                                    {formatMemoryDate(detail.first_met)}
+                                  </Table.Cell>
+                                  <Table.Cell color="label">
+                                    Last met
+                                  </Table.Cell>
+                                  <Table.Cell>
+                                    {formatMemoryDate(detail.last_seen)}
+                                  </Table.Cell>
+                                </Table.Row>
+                              </Table>
+                            </Section>
+                          </Stack.Item>
+                          <Stack.Item>
+                            <Section
+                              title="Memory Note"
+                              buttons={
+                                <Stack>
+                                  <Stack.Item>
+                                    <Box
+                                      color={
+                                        clippedDraft.length >= note_limit
+                                          ? 'bad'
+                                          : 'label'
+                                      }>
+                                      {clippedDraft.length}/{note_limit}
+                                    </Box>
+                                  </Stack.Item>
+                                  <Stack.Item>
+                                    <Button
+                                      className={`${CHIP_BUTTON_CLASS} RogueStar__glowButton--positive`}
+                                      icon="save"
+                                      disabled={!noteChanged}
+                                      onClick={() =>
+                                        act('save_note', {
+                                          id: activeId,
+                                          note: clippedDraft,
+                                        })
+                                      }
+                                    />
+                                  </Stack.Item>
+                                </Stack>
+                              }>
+                              <TextArea
+                                height="8rem"
+                                maxLength={note_limit}
+                                onInput={(_, value) => setDraft(value)}
+                                value={clippedDraft}
+                              />
+                            </Section>
+                          </Stack.Item>
+                          <Stack.Item>
+                            <Section title="Totals">
+                              <EventTable rows={filteredTotals} />
+                            </Section>
+                          </Stack.Item>
+                          <Stack.Item grow>
+                            <Section title="Daily Memory" fill>
+                              <DailyTable days={filteredDays} />
+                            </Section>
+                          </Stack.Item>
+                        </>
                       ) : (
                         <Stack.Item>
-                          <Box color="label">No memories in this category.</Box>
+                          <Section title="Memory">
+                            <Box color="label">No contact selected.</Box>
+                          </Section>
                         </Stack.Item>
                       )}
                     </Stack>
-                  ) : (
-                    <Box color="label">No memories recorded.</Box>
-                  )}
-                </Section>
-              </Stack.Item>
-              <Stack.Item grow basis="70%">
-                <Stack vertical fill>
-                  {status && (
-                    <Stack.Item>
-                      <NoticeBox success>{status}</NoticeBox>
-                    </Stack.Item>
-                  )}
-                  {error && (
-                    <Stack.Item>
-                      <NoticeBox danger>{error}</NoticeBox>
-                    </Stack.Item>
-                  )}
-                  {detail ? (
-                    <>
-                      <Stack.Item>
-                        <Section
-                          title={detail.name}
-                          buttons={
-                            <Button
-                              className={CHIP_BUTTON_CLASS}
-                              icon="sync-alt"
-                              onClick={() => act('refresh')}
-                            />
-                          }>
-                          <Table>
-                            <Table.Row>
-                              <Table.Cell color="label">First met</Table.Cell>
-                              <Table.Cell>
-                                {formatMemoryDate(detail.first_met)}
-                              </Table.Cell>
-                              <Table.Cell color="label">Last met</Table.Cell>
-                              <Table.Cell>
-                                {formatMemoryDate(detail.last_seen)}
-                              </Table.Cell>
-                            </Table.Row>
-                          </Table>
-                        </Section>
-                      </Stack.Item>
-                      <Stack.Item>
-                        <Section
-                          title="Memory Note"
-                          buttons={
-                            <Stack>
-                              <Stack.Item>
-                                <Box
-                                  color={
-                                    clippedDraft.length >= note_limit
-                                      ? 'bad'
-                                      : 'label'
-                                  }>
-                                  {clippedDraft.length}/{note_limit}
-                                </Box>
-                              </Stack.Item>
-                              <Stack.Item>
-                                <Button
-                                  className={`${CHIP_BUTTON_CLASS} RogueStar__glowButton--positive`}
-                                  icon="save"
-                                  disabled={!noteChanged}
-                                  onClick={() =>
-                                    act('save_note', {
-                                      id: activeId,
-                                      note: clippedDraft,
-                                    })
-                                  }
-                                />
-                              </Stack.Item>
-                            </Stack>
-                          }>
-                          <TextArea
-                            height="8rem"
-                            maxLength={note_limit}
-                            onInput={(_, value) => setDraft(value)}
-                            value={clippedDraft}
-                          />
-                        </Section>
-                      </Stack.Item>
-                      <Stack.Item>
-                        <Section title="Totals">
-                          <EventTable rows={filteredTotals} />
-                        </Section>
-                      </Stack.Item>
-                      <Stack.Item grow>
-                        <Section title="Daily Memory" fill>
-                          <DailyTable days={filteredDays} />
-                        </Section>
-                      </Stack.Item>
-                    </>
-                  ) : (
-                    <Stack.Item>
-                      <Section title="Memory">
-                        <Box color="label">No contact selected.</Box>
-                      </Section>
-                    </Stack.Item>
-                  )}
-                </Stack>
-              </Stack.Item>
-            </Stack>
-          )}
-        </Box>
+                  </Layout.Content>
+                </Stack.Item>
+              </Stack>
+            )}
+          </Stack.Item>
+        </Stack>
       </Window.Content>
     </Window>
   );
 };
 
-const DrinkMemory = (_props, context) => {
+const ReagentMemory = ({ chemistry = false }, context) => {
   const { act, data } = useBackend<Data>(context);
-  const { drinks = [], drink_detail: detail, selected_drink } = data;
+  const drinks = (chemistry ? data.chemicals : data.drinks) || [];
+  const detail = chemistry ? data.chemical_detail : data.drink_detail;
+  const selected = chemistry ? data.selected_chemical : data.selected_drink;
+  const noun = chemistry ? 'chemical' : 'drink';
+  const title = chemistry ? 'Chemistry' : 'Drinks';
   const [search, setSearch] = useLocalState(
     context,
-    'characterMemoryDrinkSearch',
+    chemistry ? 'characterMemoryChemicalSearch' : 'characterMemoryDrinkSearch',
     ''
   );
   const query = search.trim().toLowerCase();
   const visibleDrinks = drinks.filter(
     (drink) =>
       drink.name.toLowerCase().includes(query) ||
-      drink.ingredient_names?.some((name) => name.toLowerCase().includes(query))
+      drink.ingredient_names?.some((name) =>
+        name.toLowerCase().includes(query)
+      ) ||
+      (chemistry && drink.search_text?.includes(query))
   );
 
   return (
-    <Stack vertical>
+    <Stack vertical fill>
       {!drinks.length ? (
         <Stack.Item>
           <NoticeBox>
-            No drinks remembered yet. Mix your first drink to save its recipe
+            No {noun}s remembered yet. Mix your first {noun} to save its recipe
             here.
           </NoticeBox>
         </Stack.Item>
       ) : (
-        <Stack.Item>
-          <Stack align="flex-start">
+        <Stack.Item grow minHeight={0}>
+          <Stack fill>
             <Stack.Item basis="30%" grow>
               <Section
-                title={`Drinks (${drinks.length})`}
+                title={`${title} (${drinks.length})`}
+                fill
+                scrollable
                 buttons={
                   <Button
                     className={CHIP_BUTTON_CLASS}
                     icon="sync-alt"
-                    tooltip="Refresh drink memories"
+                    tooltip={`Refresh ${noun} memories`}
                     onClick={() => act('refresh')}
                   />
                 }>
                 <Input
                   fluid
                   mb={1}
-                  placeholder="Search drinks or ingredients..."
+                  placeholder={
+                    chemistry
+                      ? 'Search chemicals, uses, or ingredients...'
+                      : 'Search drinks or ingredients...'
+                  }
                   value={search}
                   onInput={(_, value) => setSearch(value)}
                 />
@@ -582,8 +638,12 @@ const DrinkMemory = (_props, context) => {
                     className={PILL_BUTTON_CLASS}
                     fluid
                     mb={0.5}
-                    selected={drink.id === selected_drink}
-                    onClick={() => act('select_drink', { id: drink.id })}>
+                    selected={drink.id === selected}
+                    onClick={() =>
+                      act(chemistry ? 'select_chemical' : 'select_drink', {
+                        id: drink.id,
+                      })
+                    }>
                     <Stack justify="space-between" align="center">
                       <Stack.Item grow>
                         <Box textAlign="left">{drink.name}</Box>
@@ -593,13 +653,13 @@ const DrinkMemory = (_props, context) => {
                   </Button>
                 ))}
                 {!visibleDrinks.length && (
-                  <Box color="label">No learned drinks match your search.</Box>
+                  <Box color="label">No learned {noun}s match your search.</Box>
                 )}
               </Section>
             </Stack.Item>
             <Stack.Item basis="70%" grow>
               {detail ? (
-                <Section title={detail.name}>
+                <Section title={detail.name} fill scrollable>
                   <Stack align="center" mb={2}>
                     <Stack.Item>
                       <Box
@@ -615,7 +675,9 @@ const DrinkMemory = (_props, context) => {
                       />
                     </Stack.Item>
                     <Stack.Item grow>
-                      <Box mb={1}>{detail.description}</Box>
+                      {!detail.medical && (
+                        <Box mb={1}>{detail.description}</Box>
+                      )}
                       <Box bold>
                         Made {detail.times_made}{' '}
                         {detail.times_made === 1 ? 'time' : 'times'}
@@ -628,6 +690,9 @@ const DrinkMemory = (_props, context) => {
                       </Box>
                     </Stack.Item>
                   </Stack>
+                  {detail.medical && (
+                    <ChemicalCharacteristics properties={detail.medical} />
+                  )}
                   {detail.traits && (
                     <Section title="Drink characteristics">
                       <LabeledList>
@@ -662,6 +727,7 @@ const DrinkMemory = (_props, context) => {
                         catalysts={recipe.catalysts}
                         pourOrder={recipe.pour_order}
                         ingredientRecipes={recipe.ingredient_recipes}
+                        recipeSteps={detail.recipe_steps}
                       />
                       <DrinkRecipeDetails recipe={recipe} />
                       <DrinkRecipePreparation recipe={recipe} />
@@ -675,7 +741,7 @@ const DrinkMemory = (_props, context) => {
                   )}
                 </Section>
               ) : (
-                <NoticeBox>Select a drink to see its recipe.</NoticeBox>
+                <NoticeBox>Select a {noun} to see its recipe.</NoticeBox>
               )}
             </Stack.Item>
           </Stack>
@@ -684,6 +750,55 @@ const DrinkMemory = (_props, context) => {
     </Stack>
   );
 };
+
+const ChemicalCharacteristics = ({
+  properties,
+}: {
+  readonly properties: ChemicalProperties;
+}) => (
+  <Section title="Use and effects">
+    <LabeledList>
+      <LabeledList.Item label="Purpose">{properties.effects}</LabeledList.Item>
+      {!!properties.application && (
+        <LabeledList.Item label="How to use">
+          {properties.application}
+        </LabeledList.Item>
+      )}
+      {!!properties.limitations && (
+        <LabeledList.Item label="Limits and hazards">
+          <Box color="average">{properties.limitations}</Box>
+        </LabeledList.Item>
+      )}
+      <LabeledList.Item label="Overdose">
+        {properties.overdose > 0 ? (
+          <>
+            <Box bold color="bad">
+              Above {formatDrinkAmount(properties.overdose)} units
+            </Box>
+            <Box>{properties.overdose_effects}</Box>
+            <Box color="label">
+              Typical threshold; varies by species.{' '}
+              {properties.overdose_touch
+                ? 'Also applies to skin contact.'
+                : 'Does not apply to skin contact.'}
+            </Box>
+          </>
+        ) : (
+          'No known overdose threshold'
+        )}
+      </LabeledList.Item>
+      {!!properties.interactions.length && (
+        <LabeledList.Item label="Interactions">
+          {properties.interactions.map((interaction) => (
+            <Box key={interaction} mb={0.5}>
+              {interaction}
+            </Box>
+          ))}
+        </LabeledList.Item>
+      )}
+    </LabeledList>
+  </Section>
+);
 
 const formatDrinkAmount = (amount: number) =>
   amount > 0 && amount < 0.001 ? '<0.001' : Math.round(amount * 1000) / 1000;
@@ -698,7 +813,7 @@ const DrinkRecipeDetails = ({ recipe }: { readonly recipe: DrinkRecipe }) => (
     <LabeledList>
       <LabeledList.Item label="Produces">
         {formatDrinkAmount(recipe.yield)}{' '}
-        {recipe.yield === 1 ? 'unit' : 'units'} of drink
+        {recipe.yield === 1 ? 'unit' : 'units'} of {recipe.product}
         {recipe.leftovers.length
           ? `; ${formatDrinkAmount(recipe.mixture_volume)} units in the container including leftovers`
           : ''}
@@ -761,11 +876,13 @@ const IngredientTable = ({
   catalysts = [],
   pourOrder = [],
   ingredientRecipes,
+  recipeSteps,
 }: {
   readonly ingredients: DrinkIngredient[];
   readonly catalysts?: DrinkRecipe['catalysts'];
   readonly pourOrder?: DrinkIngredient[];
   readonly ingredientRecipes: DrinkRecipe['ingredient_recipes'];
+  readonly recipeSteps: DrinkRecipe[];
 }) => {
   const rows: (DrinkIngredient & { consumed?: number })[] = ingredients.map(
     (ingredient) => ({ ...ingredient })
@@ -796,7 +913,10 @@ const IngredientTable = ({
         <DrinkIngredientRow
           key={ingredient.id}
           ingredient={ingredient}
-          recipes={ingredientRecipes[ingredient.id] || []}
+          recipes={(ingredientRecipes[ingredient.id] || []).map(
+            (stepId) => recipeSteps[stepId - 1]
+          )}
+          recipeSteps={recipeSteps}
         />
       ))}
     </Table>
@@ -807,13 +927,14 @@ class DrinkIngredientRow extends Component<
   {
     readonly ingredient: DrinkIngredient & { consumed?: number };
     readonly recipes: DrinkRecipe[];
+    readonly recipeSteps: DrinkRecipe[];
   },
   { expanded: boolean }
 > {
   state = { expanded: false };
 
   render() {
-    const { ingredient, recipes } = this.props;
+    const { ingredient, recipes, recipeSteps } = this.props;
     const expanded = this.state.expanded && recipes.length > 0;
     return (
       <>
@@ -857,6 +978,7 @@ class DrinkIngredientRow extends Component<
                       catalysts={recipe.catalysts}
                       pourOrder={recipe.pour_order}
                       ingredientRecipes={recipe.ingredient_recipes}
+                      recipeSteps={recipeSteps}
                     />
                     <DrinkRecipeDetails recipe={recipe} />
                     {(ingredient.amount < recipe.yield ||
