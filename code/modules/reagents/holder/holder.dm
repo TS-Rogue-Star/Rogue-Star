@@ -106,6 +106,7 @@
 	update_total()
 	if(mixer && length(effect_reactions))
 		record_mixed_drinks(mixer, effect_reactions)
+		record_mixed_chemicals(mixer, effect_reactions)
 
 /* Holder-to-chemical */
 

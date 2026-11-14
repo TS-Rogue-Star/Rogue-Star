@@ -41,3 +41,4 @@
 		C.post_reaction(src)
 	update_total()
 	record_mixed_drinks(drink_maker?.resolve(), effect_reactions, remembered_drinks)
+	record_mixed_chemicals(drink_maker?.resolve(), effect_reactions, remembered_drinks)
