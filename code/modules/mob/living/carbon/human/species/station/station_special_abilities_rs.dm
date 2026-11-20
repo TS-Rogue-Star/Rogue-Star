@@ -253,3 +253,163 @@
 	plane = PLANE_ADMIN_SECRET
 	anchored = TRUE
 	mouse_opacity = 0
+
+/////Fairy Ring/////
+/mob/living/proc/make_fairy_ring()
+	set name = "Fairy Ring"
+	set desc = "Plant a fairy ring!"
+	set category = "Abilities"
+
+	if(stat || sleeping || weakened || stunned || !isturf(src.loc))
+		to_chat(src, SPAN_DANGER("You can't do that right now."))
+		return
+
+	var/datum/modifier/fairy_ring_parent/ring = get_modifier_of_type(/datum/modifier/fairy_ring_parent)
+	if(ring)
+		var/choice = tgui_alert(src,"You have placed a fairy ring already. Would you like to destroy it to place a new one here?","Fairy Ring",list("Move", "Destroy", "Cancel"))
+		if(!choice || choice == "Cancel")
+			return
+		ring.expire()
+		if(choice == "Destroy")
+			return
+	var/obj/belly/ourdest = tgui_input_list(src, "Which belly would you like the ring to lead to?","Fairy Ring Destination",vore_organs)
+	if(!ourdest)
+		return
+	if(!do_after(src, 10 SECONDS,get_turf(src), exclusive = TRUE))
+		to_chat(SPAN_DANGER("You were interrupted."))
+		return
+	var/datum/modifier/fairy_ring_parent/newring = add_modifier(/datum/modifier/fairy_ring_parent)
+	newring.destination = ourdest
+	to_chat(src, SPAN_OCCULT("You plant a fairy ring..."))
+
+/datum/modifier/fairy_ring_parent
+	name = "Fairy Ring"
+	desc = "You made a fairy ring!"
+
+	var/obj/fairy_ring/our_ring
+	var/obj/belly/destination
+
+/datum/modifier/fairy_ring_parent/New(new_holder, new_origin)
+	. = ..()
+	our_ring = new /obj/fairy_ring(get_turf(holder))
+	RegisterSignal(our_ring,COMSIG_PARENT_QDELETING,PROC_REF(expire),TRUE)
+	RegisterSignal(our_ring,COMSIG_CROSSED_MOVABLE,PROC_REF(trigger),TRUE)
+
+/datum/modifier/fairy_ring_parent/expire(silent)
+	if(our_ring)
+		UnregisterSignal(our_ring,COMSIG_PARENT_QDELETING)
+		UnregisterSignal(our_ring,COMSIG_CROSSED_MOVABLE)
+		our_ring.fade_out()
+		our_ring = null
+	if(destination)
+		destination = null
+	. = ..()
+
+/datum/modifier/fairy_ring_parent/proc/trigger()
+	if(!destination || !our_ring)
+		return
+	var/mob/living/target = args[2]
+	if(!target)
+		return
+	if(!isliving(target))
+		return
+	if(target == holder)	//Don't fall into your own belly.
+		to_chat(holder, SPAN_OCCULT("You can feel yourself walk across your [destination.name]..."))
+		return
+	if(!target.ckey)
+		return
+	if(isbelly(holder.loc))
+		var/obj/belly/B = holder.loc
+		if(B.owner == target)	//Don't fall into the belly of people you ate.
+			return
+	if(!spont_pref_check(holder,target,SPONT_PRED))
+		return
+	if(!CheckMobZConnection(holder, target))
+		to_chat(holder, SPAN_OCCULT("You can just barely feel someone walk across your [destination]... but you are too far away for them to make their way to you..."))
+		return
+	target.visible_message(SPAN_OCCULT("\The [target] falls through the ground inside of \the [our_ring]!"),SPAN_OCCULT("You fall through the ground inside of \the [our_ring], and into someone's [destination]!"))
+	to_chat(holder,SPAN_OCCULT("\The [target] suddenly falls into your [our_ring]!!"))
+	target.forceMove(destination)	//Gworp
+
+/obj/fairy_ring
+	name = "Fairy Ring"
+	desc = "A ring of mushrooms! How neat! Some say that if you step inside you will be transported somewhere else!"
+	icon = 'icons/rogue-star/misc.dmi'
+	icon_state = "shroom1"
+	anchored = TRUE
+	var/count = 0
+
+/obj/fairy_ring/Initialize()
+	update_icon()
+	alpha = 0
+	SetTransform(0.1)
+	animate(src, 3 SECONDS, transform = matrix()*1, alpha = 255)
+	. = ..()
+
+/obj/fairy_ring/proc/giv_shroom()
+	var/image/mush = image(icon,null,"shroom[rand(1,4)]")
+	mush.color = random_color(TRUE)
+	mush.appearance_flags = RESET_COLOR|KEEP_APART|PIXEL_SCALE
+	return mush
+
+/obj/fairy_ring/update_icon()
+	icon_state = "blank"
+	cut_overlays()
+	var/how_big = rand(20,32)
+	var/image/shroom = giv_shroom()
+	shroom.pixel_y = how_big	//North
+	add_overlay(shroom)
+	shroom = giv_shroom()
+	shroom.pixel_y = -how_big	//South
+	add_overlay(shroom)
+	shroom = giv_shroom()
+	shroom.pixel_x = how_big	//East
+	add_overlay(shroom)
+	shroom = giv_shroom()
+	shroom.pixel_x = -how_big	//West
+	add_overlay(shroom)
+	how_big = round(how_big * 0.75)
+	shroom = giv_shroom()
+	shroom.pixel_y = how_big	//Northeast
+	shroom.pixel_x = how_big
+	add_overlay(shroom)
+	shroom = giv_shroom()
+	shroom.pixel_y = -how_big	//Southeast
+	shroom.pixel_x = how_big
+	add_overlay(shroom)
+	shroom = giv_shroom()
+	shroom.pixel_y = how_big	//Northwest
+	shroom.pixel_x = -how_big
+	add_overlay(shroom)
+	shroom = giv_shroom()
+	shroom.pixel_y = -how_big	//Southwest
+	shroom.pixel_x = -how_big
+	add_overlay(shroom)
+
+/obj/fairy_ring/process()
+	if(count > 3)
+		STOP_PROCESSING(SSobj, src)
+		qdel(src)
+		return
+	count ++
+
+/obj/fairy_ring/proc/fade_out()
+	animate(src, 3 SECONDS, transform = matrix()*0.1, alpha = 0)
+	START_PROCESSING(SSobj, src)
+
+/obj/fairy_ring/Crossed(O)
+	. = ..()
+	SEND_SIGNAL(src,COMSIG_CROSSED_MOVABLE,O)
+
+/obj/item/fairy_mushroom
+	name = "mushroom"
+	desc = "Looks funny."
+	icon = 'icons/rogue-star/misc.dmi'
+	icon_state = "shroom1"
+	drop_sound = 'sound/items/drop/food.ogg'
+	pickup_sound = 'sound/items/pickup/food.ogg'
+
+/obj/item/fairy_mushroom/attack(mob/living/M, mob/living/user, target_zone, attack_modifier)
+	M.verbs |= /mob/living/proc/make_fairy_ring
+	playsound(M, 'sound/items/eatfood.ogg', rand(10,50), 1, preference = /datum/client_preference/food_eating_noises)
+	qdel(src)

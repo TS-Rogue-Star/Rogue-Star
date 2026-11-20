@@ -53,3 +53,19 @@ var/list/z_levels = list()// Each bit re... haha just kidding this is a list of 
 		. = GetBelow(ref)
 	else
 		. = get_step(ref, dir)
+
+//RS ADD START
+/proc/CheckMobZConnection(var/mob/living/A, var/mob/living/B)
+	if(A.z == B.z)
+		return TRUE
+	if(AreConnectedZLevels(A.z, B.z))
+		return TRUE
+	var/obj/effect/overmap/visitable/V = get_overmap_sector(A.z)
+	if(!V)
+		return FALSE
+	if(!(A.z in V.map_z))
+		return FALSE
+	if(!(B.z in V.map_z))
+		return FALSE
+	return TRUE
+//RS ADD END
