@@ -41,7 +41,8 @@
 				prob(1);/obj/fiftyspawner/diamond,
 				prob(5);/obj/fiftyspawner/phoron,
 				prob(1);/obj/item/weapon/telecube/randomized,
-				prob(1);/obj/item/capture_crystal/random
+				prob(1);/obj/item/capture_crystal/random,
+				prob(1);/obj/item/fairy_mushroom	//RS ADD
 				)
 
 /obj/random/awayloot/nofail

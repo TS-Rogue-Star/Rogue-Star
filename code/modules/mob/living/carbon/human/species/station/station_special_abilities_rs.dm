@@ -325,9 +325,9 @@
 	if(!spont_pref_check(holder,target,SPONT_PRED))
 		return
 	if(!CheckMobZConnection(holder, target))
-		to_chat(holder, SPAN_OCCULT("You can just barely feel someone walk across your [destination]... but you are too far away for them to make their way to you..."))
+		to_chat(holder, SPAN_OCCULT("You can just barely feel someone walk across your [destination.name]... but you are too far away for them to make their way to you..."))
 		return
-	target.visible_message(SPAN_OCCULT("\The [target] falls through the ground inside of \the [our_ring]!"),SPAN_OCCULT("You fall through the ground inside of \the [our_ring], and into someone's [destination]!"))
+	target.visible_message(SPAN_OCCULT("\The [target] falls through the ground inside of \the [our_ring]!"),SPAN_OCCULT("You fall through the ground inside of \the [our_ring], and into someone's [destination.name]!"))
 	to_chat(holder,SPAN_OCCULT("\The [target] suddenly falls into your [our_ring]!!"))
 	target.forceMove(destination)	//Gworp
 
@@ -408,6 +408,12 @@
 	icon_state = "shroom1"
 	drop_sound = 'sound/items/drop/food.ogg'
 	pickup_sound = 'sound/items/pickup/food.ogg'
+
+/obj/item/fairy_mushroom/Initialize()
+	. = ..()
+	color = random_color(TRUE)
+	pixel_x = rand(-8,8)
+	pixel_y = rand(-8,8)
 
 /obj/item/fairy_mushroom/attack(mob/living/M, mob/living/user, target_zone, attack_modifier)
 	M.verbs |= /mob/living/proc/make_fairy_ring
