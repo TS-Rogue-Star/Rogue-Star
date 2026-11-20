@@ -417,5 +417,6 @@
 
 /obj/item/fairy_mushroom/attack(mob/living/M, mob/living/user, target_zone, attack_modifier)
 	M.verbs |= /mob/living/proc/make_fairy_ring
+	to_chat(M, SPAN_OCCULT("You feel like you have gained a new ability."))
 	playsound(M, 'sound/items/eatfood.ogg', rand(10,50), 1, preference = /datum/client_preference/food_eating_noises)
 	qdel(src)
