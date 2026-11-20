@@ -11598,12 +11598,7 @@
 /turf/simulated/floor/tiled/monotile,
 /area/quartermaster/storage)
 "hjL" = (
-/obj/effect/floor_decal/milspec/stripe{
-	dir = 8
-	},
-/obj/structure/railing/grey{
-	dir = 8
-	},
+/obj/structure/railing/grey,
 /turf/simulated/floor/tiled/milspec,
 /area/quartermaster/storage)
 "hkm" = (
@@ -27424,7 +27419,7 @@
 	dir = 1;
 	id = "packageSort1"
 	},
-/obj/structure/plasticflaps,
+/obj/structure/plasticflaps/mining,
 /turf/simulated/floor/tiled/monotile,
 /area/quartermaster/moonbase/trashroom)
 "rEP" = (
@@ -31510,7 +31505,6 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/obj/structure/railing/grey,
 /turf/simulated/floor/tiled/milspec,
 /area/quartermaster/storage)
 "uew" = (
@@ -33924,9 +33918,7 @@
 /area/maintenance/moonbase/level1/east)
 "vUE" = (
 /obj/effect/floor_decal/milspec/color/green/half,
-/obj/structure/closet/secure_closet/hydroponics/sci{
-	req_access = list(47,55)
-	},
+/obj/structure/closet/secure_closet/hydroponics/sci,
 /turf/simulated/floor/tiled,
 /area/rnd/xenobiology/xenoflora)
 "vUM" = (
@@ -50423,8 +50415,8 @@ aoC
 pZN
 bQF
 udS
+hjL
 sVd
-cJD
 cJD
 flW
 vwf
@@ -50565,8 +50557,8 @@ iwp
 jte
 ozR
 rVc
+rVc
 xQH
-hjL
 avu
 xsW
 vwf
