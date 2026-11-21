@@ -663,3 +663,33 @@ sound/instruments/synthesis_samples/woodwind/fluid_tenor_sax,<br>
 **Link:** https://github.com/TS-Rogue-Star/Rogue-Star/pull/766<br>
 **License:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)<br>
 <br>
+**File:** `icons/inventory/uniform/item_rs.dmi`<br>
+**Icon-States:** hyper_skirt, bluespace_skirt<br>
+**Creator:** Original jumpsuit by `heroman3003`, original skirt by `JakkSergal`, modified by `DameonOwen`<br>
+**Link:** https://github.com/TS-Rogue-Star/Rogue-Star/pull/1183<br>
+**License:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)<br>
+<br>
+**File:** `icons/inventory/uniform/mob_rs.dmi`<br>
+**Icon-States:** hyper_skirt, bluespace_skirt<br>
+**Creator:** Original jumpsuit by `heroman3003`, original skirt by `JakkSergal`, modified by `DameonOwen`<br>
+**Link:** https://github.com/TS-Rogue-Star/Rogue-Star/pull/1183<br>
+**License:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)<br>
+<br>
+**File:** `icons/mob/human_face_rs.dmi`<br>
+**Icon-States:** hair_unshaven_mohawk<br>
+**Creator:** Original by `Belsima`, modified by `DameonOwen`<br>
+**Link:** https://github.com/TS-Rogue-Star/Rogue-Star/pull/<br>
+**License:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)<br>
+<br>
+**File:** `icons/mob/human_face_m_rs.dmi`<br>
+**Icon-States:** hair_unshaven_mohawk<br>
+**Creator:** Original by `Belsima`, modified by `DameonOwen`<br>
+**Link:** https://github.com/TS-Rogue-Star/Rogue-Star/pull/<br>
+**License:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)<br>
+<br>
+**File:** `icons/mob/hair_gradients.dmi`<br>
+**Icon-States:** star, striped_pinwheel<br>
+**Creator:** Created by `DameonOwen`<br>
+**Link:** https://github.com/TS-Rogue-Star/Rogue-Star/pull/<br>
+**License:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)<br>
+<br>
