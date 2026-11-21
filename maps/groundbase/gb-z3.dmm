@@ -1388,7 +1388,7 @@
 /turf/simulated/floor/wood,
 /area/groundbase/medical/cmo)
 "wm" = (
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/groundbase/level3/nw)
 "wn" = (
 /obj/machinery/firealarm,

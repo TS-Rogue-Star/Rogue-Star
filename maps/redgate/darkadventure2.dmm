@@ -315,7 +315,7 @@
 /turf/simulated/floor/redgrid,
 /area/redgate/wilds)
 "oU" = (
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/redgate/wilds)
 "pe" = (
 /obj/random/mob/semirandom_mob_spawner/pet/bird,
@@ -693,7 +693,7 @@
 /area/redgate/wilds)
 "ME" = (
 /obj/structure/flora/ausbushes,
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/redgate/wilds)
 "NJ" = (
 /obj/machinery/telecomms/relay/preset/station,
@@ -746,7 +746,7 @@
 /area/redgate/wilds)
 "PG" = (
 /obj/structure/flora/tree/dead,
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/redgate/wilds)
 "QB" = (
 /obj/effect/low_wall_spawner/bay/reinforced/rglass,

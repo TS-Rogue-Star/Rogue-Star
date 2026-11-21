@@ -22,7 +22,7 @@
 /obj/structure/bed/chair/sofa/bench/right{
 	dir = 1
 	},
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/submap/groundbase/poi/wildvillage/long/long2)
 "n" = (
 /obj/structure/table/rack,
@@ -47,7 +47,7 @@
 	},
 /area/submap/groundbase/poi/wildvillage/long/long2)
 "q" = (
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/submap/groundbase/poi/wildvillage)
 "s" = (
 /obj/machinery/light{
@@ -80,7 +80,7 @@
 /obj/structure/bed/chair/sofa/bench/left{
 	dir = 1
 	},
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/submap/groundbase/poi/wildvillage/long/long2)
 "F" = (
 /obj/machinery/light{
@@ -100,7 +100,7 @@
 	},
 /area/submap/groundbase/poi/wildvillage/long/long2)
 "L" = (
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/submap/groundbase/poi/wildvillage/long/long2)
 "N" = (
 /turf/simulated/floor/water,
@@ -109,7 +109,7 @@
 /obj/structure/bed/chair/sofa/bench{
 	dir = 1
 	},
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/submap/groundbase/poi/wildvillage/long/long2)
 "R" = (
 /obj/structure/table/rack,

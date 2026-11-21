@@ -33,7 +33,7 @@
 /turf/simulated/floor/carpet/tealcarpet,
 /area/submap/groundbase/poi/wildvillage/wide/wide3)
 "g" = (
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/submap/groundbase/poi/wildvillage/wide/wide3)
 "h" = (
 /obj/machinery/light/small{
@@ -171,7 +171,7 @@
 /turf/simulated/wall,
 /area/submap/groundbase/poi/wildvillage/wide/wide3)
 "C" = (
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/submap/groundbase/poi/wildvillage)
 "D" = (
 /obj/structure/bed/chair/sofa/right/beige{
@@ -257,7 +257,7 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/submap/groundbase/poi/wildvillage/wide/wide3)
 "S" = (
 /obj/structure/grille,

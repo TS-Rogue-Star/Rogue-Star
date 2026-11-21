@@ -1263,7 +1263,7 @@
 /area/groundbase/science/rnd)
 "cP" = (
 /obj/structure/table/borosilicate,
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/groundbase/science/picnic)
 "cQ" = (
 /obj/machinery/firealarm{
@@ -2194,7 +2194,7 @@
 /turf/simulated/wall,
 /area/groundbase/medical/psych)
 "fz" = (
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/groundbase/civilian/kitchen)
 "fB" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -2560,7 +2560,7 @@
 	dir = 1
 	},
 /obj/effect/landmark/start/visitor,
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/groundbase/level2/se)
 "gE" = (
 /turf/simulated/floor/tiled/dark,
@@ -2622,7 +2622,7 @@
 /area/groundbase/cargo/office)
 "gM" = (
 /obj/structure/bed/chair/sofa/bench/left,
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/groundbase/level2/ne)
 "gN" = (
 /obj/structure/cable/yellow{
@@ -3420,7 +3420,7 @@
 /turf/simulated/floor/tiled,
 /area/groundbase/cargo/office)
 "iW" = (
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/groundbase/civilian/mime)
 "iX" = (
 /obj/structure/bed/chair/comfy/blue{
@@ -4076,7 +4076,7 @@
 /obj/effect/landmark{
 	name = "maint_pred"
 	},
-/turf/simulated/floor/outdoors/newdirt_nograss{
+/turf/simulated/floor/outdoors/dirt/soft_nograss{
 	outdoors = 0
 	},
 /area/groundbase/level2/se)
@@ -4242,7 +4242,7 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/groundbase/civilian/mime)
 "lp" = (
 /obj/structure/bed/chair/office/dark,
@@ -4497,7 +4497,7 @@
 /turf/simulated/wall/r_wall,
 /area/groundbase/science/xenobot)
 "lW" = (
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/groundbase/science/picnic)
 "lX" = (
 /obj/effect/floor_decal/chapel,
@@ -4810,7 +4810,7 @@
 /turf/simulated/floor/tiled/white,
 /area/groundbase/medical/lobby)
 "mP" = (
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/groundbase/science/xenobot)
 "mQ" = (
 /obj/machinery/door/firedoor,
@@ -5333,7 +5333,7 @@
 /turf/simulated/floor/tiled/steel_ridged,
 /area/groundbase/dorms/room3)
 "oF" = (
-/turf/simulated/floor/outdoors/newdirt{
+/turf/simulated/floor/outdoors/dirt/soft{
 	outdoors = 0
 	},
 /area/groundbase/level2/se)
@@ -5615,7 +5615,7 @@
 /turf/simulated/open,
 /area/groundbase/civilian/bar/upper)
 "pt" = (
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/groundbase/science/rnd)
 "pu" = (
 /obj/structure/table/glass,
@@ -5635,7 +5635,7 @@
 /turf/simulated/floor/tiled/white,
 /area/groundbase/medical/triage)
 "pw" = (
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/groundbase/level2/nw)
 "pz" = (
 /obj/structure/cable/yellow{
@@ -5867,7 +5867,7 @@
 	pixel_x = 32;
 	pixel_y = -32
 	},
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/groundbase/level2/se)
 "qe" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -5955,7 +5955,7 @@
 /turf/simulated/floor/tiled/white,
 /area/medical/virology)
 "qq" = (
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/groundbase/science/robotics)
 "qr" = (
 /obj/structure/cable/yellow{
@@ -6126,7 +6126,7 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/groundbase/command/hop)
 "qN" = (
 /obj/machinery/status_display/supply_display{
@@ -6416,7 +6416,7 @@
 /turf/simulated/floor/tiled/white,
 /area/groundbase/medical/triage)
 "rz" = (
-/turf/simulated/floor/outdoors/newdirt_nograss{
+/turf/simulated/floor/outdoors/dirt/soft_nograss{
 	outdoors = 0
 	},
 /area/groundbase/level2/ne)
@@ -6687,7 +6687,7 @@
 /obj/structure/bed/chair/sofa/bench/right{
 	dir = 1
 	},
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/groundbase/level2/se)
 "ss" = (
 /obj/structure/cable/yellow{
@@ -7026,7 +7026,7 @@
 /turf/simulated/floor/outdoors/grass/seasonal/notrees_nomobs_lowsnow,
 /area/groundbase/level2/sw)
 "tr" = (
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/groundbase/civilian/hydroponics)
 "ts" = (
 /obj/structure/cable/yellow{
@@ -7068,7 +7068,7 @@
 /obj/structure/bed/chair/sofa/bench/left{
 	dir = 1
 	},
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/groundbase/level2/se)
 "tB" = (
 /obj/machinery/door/blast/regular{
@@ -7168,7 +7168,7 @@
 /turf/simulated/floor/wood,
 /area/groundbase/dorms/room5)
 "tN" = (
-/turf/simulated/floor/outdoors/newdirt_nograss{
+/turf/simulated/floor/outdoors/dirt/soft_nograss{
 	outdoors = 0
 	},
 /area/groundbase/level2/se)
@@ -8036,7 +8036,7 @@
 /obj/machinery/light/small/fairylights{
 	pixel_y = -1
 	},
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/groundbase/level2/nw)
 "wm" = (
 /obj/machinery/computer/supplycomp/control{
@@ -8240,10 +8240,10 @@
 /obj/structure/bed/chair/sofa/bench{
 	dir = 4
 	},
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/groundbase/level2/nw)
 "wS" = (
-/turf/simulated/floor/outdoors/newdirt_nograss{
+/turf/simulated/floor/outdoors/dirt/soft_nograss{
 	outdoors = 0
 	},
 /area/groundbase/unexplored/rock)
@@ -9400,7 +9400,7 @@
 /turf/simulated/floor/tiled/dark,
 /area/groundbase/dorms)
 "At" = (
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/groundbase/level2/se)
 "Au" = (
 /obj/effect/landmark{
@@ -9801,7 +9801,7 @@
 /obj/structure/bed/chair/sofa/bench/right{
 	dir = 4
 	},
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/groundbase/level2/nw)
 "Bx" = (
 /obj/machinery/door/firedoor,
@@ -9855,7 +9855,7 @@
 /area/groundbase/cargo/office)
 "BJ" = (
 /obj/effect/landmark/stardog,
-/turf/simulated/floor/outdoors/newdirt{
+/turf/simulated/floor/outdoors/dirt/soft{
 	outdoors = 0
 	},
 /area/groundbase/level2/se)
@@ -10101,7 +10101,7 @@
 /obj/effect/landmark{
 	name = "maint_pred"
 	},
-/turf/simulated/floor/outdoors/newdirt_nograss{
+/turf/simulated/floor/outdoors/dirt/soft_nograss{
 	outdoors = 0
 	},
 /area/groundbase/unexplored/rock)
@@ -10362,7 +10362,7 @@
 /obj/structure/bed/chair/sofa/bench/left{
 	dir = 1
 	},
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/groundbase/level2/ne)
 "Df" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -11052,7 +11052,7 @@
 /area/medical/virology)
 "EZ" = (
 /obj/machinery/light/small/fairylights,
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/groundbase/level2/nw)
 "Fa" = (
 /obj/machinery/door/firedoor,
@@ -11178,7 +11178,7 @@
 /turf/simulated/floor/tiled/white,
 /area/groundbase/dorms/room5)
 "Fs" = (
-/turf/simulated/floor/outdoors/newdirt{
+/turf/simulated/floor/outdoors/dirt/soft{
 	outdoors = 0
 	},
 /area/groundbase/level2/nw)
@@ -11194,13 +11194,13 @@
 /area/groundbase/medical/lobby)
 "Fu" = (
 /obj/machinery/light/bigfloorlamp,
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/groundbase/science/picnic)
 "Fv" = (
 /turf/simulated/floor/outdoors/grass/seasonal/dark/lowsnow,
 /area/groundbase/science/picnic)
 "Fw" = (
-/turf/simulated/floor/outdoors/newdirt{
+/turf/simulated/floor/outdoors/dirt/soft{
 	outdoors = 0
 	},
 /area/groundbase/unexplored/rock)
@@ -11365,7 +11365,7 @@
 "FU" = (
 /obj/structure/table/bench/standard,
 /obj/effect/landmark/start/rd,
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/groundbase/science/picnic)
 "FW" = (
 /obj/effect/landmark{
@@ -12213,7 +12213,7 @@
 /obj/structure/bed/chair/sofa/bench/right{
 	dir = 1
 	},
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/groundbase/level2/ne)
 "Il" = (
 /obj/item/weapon/bedsheet/mimedouble,
@@ -12639,7 +12639,7 @@
 /area/groundbase/cargo/qm)
 "Jq" = (
 /obj/structure/table/bench/standard,
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/groundbase/science/picnic)
 "Jr" = (
 /turf/simulated/floor{
@@ -13229,7 +13229,7 @@
 /turf/simulated/floor/tiled/white,
 /area/groundbase/medical/triage)
 "KW" = (
-/turf/simulated/floor/outdoors/newdirt_nograss{
+/turf/simulated/floor/outdoors/dirt/soft_nograss{
 	outdoors = 0
 	},
 /area/groundbase/level2/nw)
@@ -13355,7 +13355,7 @@
 	dir = 1
 	},
 /obj/effect/landmark/start/visitor,
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/groundbase/level2/ne)
 "Ls" = (
 /obj/item/device/radio/intercom{
@@ -14211,7 +14211,7 @@
 /turf/simulated/floor/outdoors/sidewalk/side,
 /area/groundbase/level2/ne)
 "ND" = (
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/groundbase/command/hop)
 "NE" = (
 /obj/machinery/atmospherics/unary/vent_pump/on{
@@ -14862,7 +14862,7 @@
 /area/groundbase/dorms/room1)
 "Pt" = (
 /obj/structure/bed/chair/sofa/bench/right,
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/groundbase/level2/ne)
 "Pu" = (
 /obj/structure/disposalpipe/trunk{
@@ -15698,7 +15698,7 @@
 /turf/simulated/floor/wood,
 /area/groundbase/dorms/room3)
 "RL" = (
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/groundbase/level2/sw)
 "RO" = (
 /obj/machinery/light{
@@ -17260,7 +17260,7 @@
 /obj/structure/bed/chair/sofa/bench/left{
 	dir = 4
 	},
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/groundbase/level2/nw)
 "Ws" = (
 /obj/structure/closet/firecloset/full,
@@ -17384,7 +17384,7 @@
 /area/groundbase/level2/se)
 "WI" = (
 /obj/effect/landmark/stardog,
-/turf/simulated/floor/outdoors/newdirt_nograss{
+/turf/simulated/floor/outdoors/dirt/soft_nograss{
 	outdoors = 0
 	},
 /area/groundbase/level2/nw)
@@ -17448,7 +17448,7 @@
 /turf/simulated/floor/tiled/freezer/cold,
 /area/groundbase/civilian/kitchen/freezer)
 "WW" = (
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/groundbase/science/circuits)
 "WX" = (
 /obj/structure/railing/grey{
@@ -17641,7 +17641,7 @@
 "XC" = (
 /obj/structure/bed/chair/sofa/bench,
 /obj/effect/landmark/start/visitor,
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/groundbase/level2/ne)
 "XD" = (
 /obj/structure/bed/chair/sofa/corp,
@@ -17679,7 +17679,7 @@
 	},
 /area/groundbase/science/xenobot)
 "XJ" = (
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/groundbase/level2/ne)
 "XK" = (
 /obj/structure/table/hardwoodtable,

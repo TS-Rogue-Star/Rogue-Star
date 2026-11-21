@@ -21,10 +21,10 @@
 	dir = 8
 	},
 /obj/effect/floor_decal/spline/fancy/wood,
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/redgate/train/animals)
 "aJ" = (
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/redgate/train/teppi)
 "aK" = (
 /obj/structure/prop/machine/tgmc_console2,
@@ -50,7 +50,7 @@
 /turf/simulated/shuttle/floor/black,
 /area/redgate/train/bar)
 "aY" = (
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/redgate/train/animals)
 "bi" = (
 /obj/machinery/door/airlock/glass{
@@ -287,7 +287,7 @@
 /area/redgate/train/viewing)
 "fM" = (
 /mob/living/simple_mob/vore/alienanimals/teppi,
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/redgate/train/teppi)
 "fN" = (
 /obj/structure/closet/walllocker/emerglocker{
@@ -354,7 +354,7 @@
 /obj/effect/floor_decal/spline/fancy/wood{
 	dir = 5
 	},
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/redgate/train/teppi)
 "gF" = (
 /obj/structure/closet/walllocker/emerglocker{
@@ -407,7 +407,7 @@
 /obj/structure/fence{
 	dir = 8
 	},
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/redgate/train/teppi)
 "iu" = (
 /obj/machinery/light,
@@ -497,7 +497,7 @@
 /area/redgate/train/overboard)
 "jL" = (
 /mob/living/simple_mob/vore/alienanimals/teppi/baby,
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/redgate/train/teppi)
 "jS" = (
 /turf/simulated/shuttle/floor/skipjack{
@@ -682,7 +682,7 @@
 /obj/effect/floor_decal/spline/fancy/wood{
 	dir = 1
 	},
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/redgate/train/animals)
 "nb" = (
 /obj/structure/closet/walllocker/emerglocker{
@@ -1014,7 +1014,7 @@
 /area/redgate/train/storage)
 "sv" = (
 /obj/random/mob/semirandom_mob_spawner/vore/retaliate/b,
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/redgate/train/animals)
 "sy" = (
 /turf/simulated/shuttle/floor/yellow,
@@ -1033,7 +1033,7 @@
 /area/redgate/train/seating)
 "sP" = (
 /obj/structure/fence/door/opened,
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/redgate/train/teppi)
 "sX" = (
 /obj/structure/bed/chair/shuttle{
@@ -1130,7 +1130,7 @@
 /area/redgate/train/overboard)
 "us" = (
 /obj/random/mob/semirandom_mob_spawner/vore/retaliate,
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/redgate/train/teppi)
 "uS" = (
 /obj/fiftyspawner/log/sif,
@@ -1176,7 +1176,7 @@
 /area/redgate/train/overboard)
 "wb" = (
 /obj/structure/fence/door,
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/redgate/train/teppi)
 "wg" = (
 /obj/machinery/light/floortube{
@@ -1236,7 +1236,7 @@
 /obj/effect/floor_decal/spline/fancy/wood{
 	dir = 1
 	},
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/redgate/train/teppi)
 "xq" = (
 /obj/structure/stairs/spawner/north,
@@ -1319,7 +1319,7 @@
 /obj/effect/floor_decal/spline/fancy/wood{
 	dir = 9
 	},
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/redgate/train/teppi)
 "yk" = (
 /obj/effect/step_trigger/death/train_crush,
@@ -1417,7 +1417,7 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/redgate/train/teppi)
 "yR" = (
 /obj/structure/grille,
@@ -1566,7 +1566,7 @@
 /obj/effect/floor_decal/spline/fancy/wood{
 	dir = 8
 	},
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/redgate/train/teppi)
 "Bo" = (
 /obj/structure/bed/chair/shuttle{
@@ -1647,7 +1647,7 @@
 /obj/effect/floor_decal/spline/fancy/wood{
 	dir = 6
 	},
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/redgate/train/animals)
 "Co" = (
 /turf/unsimulated/mineral{
@@ -1782,7 +1782,7 @@
 /obj/effect/floor_decal/spline/fancy/wood{
 	dir = 10
 	},
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/redgate/train/teppi)
 "Ev" = (
 /turf/simulated/shuttle/wall/voidcraft,
@@ -1822,7 +1822,7 @@
 /obj/effect/floor_decal/spline/fancy/wood{
 	dir = 4
 	},
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/redgate/train/animals)
 "Fg" = (
 /obj/structure/closet/walllocker/emerglocker{
@@ -2079,7 +2079,7 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/redgate/train/teppi)
 "ID" = (
 /obj/structure/table/marble,
@@ -2152,7 +2152,7 @@
 /obj/effect/floor_decal/spline/fancy/wood{
 	dir = 8
 	},
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/redgate/train/animals)
 "Kb" = (
 /obj/item/weapon/stool/padded{
@@ -2171,7 +2171,7 @@
 /obj/effect/floor_decal/spline/fancy/wood{
 	dir = 9
 	},
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/redgate/train/animals)
 "Ke" = (
 /turf/simulated/shuttle/wall/voidcraft,
@@ -2241,7 +2241,7 @@
 /obj/effect/floor_decal/spline/fancy/wood{
 	dir = 6
 	},
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/redgate/train/teppi)
 "KR" = (
 /obj/random/tank,
@@ -2360,7 +2360,7 @@
 /obj/effect/floor_decal/spline/fancy/wood{
 	dir = 4
 	},
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/redgate/train/teppi)
 "LL" = (
 /obj/structure/fence/corner{
@@ -2369,7 +2369,7 @@
 /obj/effect/floor_decal/spline/fancy/wood{
 	dir = 8
 	},
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/redgate/train/teppi)
 "LO" = (
 /obj/structure/closet/hydrant{
@@ -2635,7 +2635,7 @@
 /obj/effect/floor_decal/spline/fancy/wood{
 	dir = 8
 	},
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/redgate/train/teppi)
 "PG" = (
 /obj/structure/closet/walllocker/emerglocker{
@@ -2685,7 +2685,7 @@
 /area/redgate/train/overboard)
 "Qw" = (
 /obj/effect/floor_decal/spline/fancy/wood,
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/redgate/train/teppi)
 "QH" = (
 /obj/structure/table/standard,
@@ -2842,7 +2842,7 @@
 /obj/effect/floor_decal/spline/fancy/wood{
 	dir = 1
 	},
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/redgate/train/animals)
 "SO" = (
 /obj/structure/railing{
@@ -2898,7 +2898,7 @@
 /obj/effect/floor_decal/spline/fancy/wood{
 	dir = 4
 	},
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/redgate/train/teppi)
 "TR" = (
 /obj/structure/bed/chair/shuttle{
@@ -2939,7 +2939,7 @@
 /obj/effect/floor_decal/spline/fancy/wood{
 	dir = 10
 	},
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/redgate/train/animals)
 "Ub" = (
 /obj/structure/grille,
@@ -2958,7 +2958,7 @@
 "Un" = (
 /obj/structure/fence/door,
 /obj/effect/floor_decal/spline/fancy/wood,
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/redgate/train/animals)
 "Ux" = (
 /turf/simulated/shuttle/floor/skipjack{
@@ -3008,7 +3008,7 @@
 /obj/effect/floor_decal/spline/fancy/wood{
 	dir = 8
 	},
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/redgate/train/teppi)
 "Vz" = (
 /obj/structure/bed/chair/shuttle{
@@ -3135,7 +3135,7 @@
 /obj/effect/floor_decal/spline/fancy/wood{
 	dir = 5
 	},
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/redgate/train/animals)
 "XU" = (
 /obj/structure/bed/chair/shuttle{
@@ -3162,7 +3162,7 @@
 /obj/effect/floor_decal/spline/fancy/wood{
 	dir = 4
 	},
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/redgate/train/teppi)
 "Yq" = (
 /turf/simulated/shuttle/wall/voidcraft,
@@ -3248,7 +3248,7 @@
 /obj/effect/floor_decal/spline/fancy/wood{
 	dir = 4
 	},
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/redgate/train/teppi)
 "Zl" = (
 /obj/machinery/light/floortube{
@@ -3329,7 +3329,7 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/redgate/train/teppi)
 "ZP" = (
 /obj/structure/closet/walllocker_double/casino/north,

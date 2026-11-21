@@ -86,7 +86,7 @@
 /area/redgate/islands/gear)
 "dk" = (
 /obj/item/weapon/oar,
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/redgate/islands/ocean)
 "dr" = (
 /obj/structure/table/darkglass,
@@ -1175,7 +1175,7 @@
 	},
 /area/redgate/islands/ocean)
 "JB" = (
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/redgate/islands/ocean)
 "JP" = (
 /obj/item/poi/brokenoldreactor,

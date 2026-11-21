@@ -155,7 +155,7 @@
 /obj/item/weapon/stool/baystool/padded{
 	dir = 8
 	},
-/turf/simulated/floor/outdoors/newdirt{
+/turf/simulated/floor/outdoors/dirt/soft{
 	outdoors = 0
 	},
 /area/groundbase/civilian/bar)
@@ -868,7 +868,7 @@
 /area/groundbase/medical/or2)
 "aQQ" = (
 /obj/item/weapon/pickaxe,
-/turf/simulated/floor/outdoors/newdirt{
+/turf/simulated/floor/outdoors/dirt/soft{
 	outdoors = 0
 	},
 /area/groundbase/level1/se)
@@ -1567,7 +1567,7 @@
 /area/groundbase/command/tcomms/storage)
 "bBa" = (
 /obj/structure/table/borosilicate,
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/groundbase/science/picnic)
 "bBl" = (
 /obj/effect/floor_decal/industrial/danger,
@@ -1810,7 +1810,7 @@
 /obj/machinery/light/small/fairylights{
 	pixel_y = -1
 	},
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/groundbase/level1/nw)
 "bLC" = (
 /obj/machinery/alarm,
@@ -2031,7 +2031,7 @@
 /area/groundbase/level1/nw)
 "bRw" = (
 /obj/structure/girder,
-/turf/simulated/floor/outdoors/newdirt{
+/turf/simulated/floor/outdoors/dirt/soft{
 	outdoors = 0
 	},
 /area/groundbase/medical/geneticslab)
@@ -2390,7 +2390,7 @@
 /area/groundbase/cargo/mining)
 "cgZ" = (
 /obj/structure/table/wooden_reinforced,
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/groundbase/level1/nw)
 "chC" = (
 /obj/effect/floor_decal/industrial/danger,
@@ -2657,7 +2657,7 @@
 /area/groundbase/security/lobby)
 "ctG" = (
 /obj/structure/stairs/spawner/south,
-/turf/simulated/floor/outdoors/newdirt_nograss{
+/turf/simulated/floor/outdoors/dirt/soft_nograss{
 	outdoors = 0
 	},
 /area/groundbase/level1/se)
@@ -2674,7 +2674,7 @@
 /obj/structure/bed/chair/sofa/bench/left{
 	dir = 1
 	},
-/turf/simulated/floor/outdoors/newdirt_nograss,
+/turf/simulated/floor/outdoors/dirt/soft_nograss,
 /area/groundbase/level1/sw)
 "cwb" = (
 /obj/effect/floor_decal/steeldecal/steel_decals5{
@@ -2684,7 +2684,7 @@
 /area/groundbase/science/rnd)
 "cwF" = (
 /obj/structure/bed/chair/sofa/bench/left,
-/turf/simulated/floor/outdoors/newdirt_nograss,
+/turf/simulated/floor/outdoors/dirt/soft_nograss,
 /area/groundbase/level1/ne)
 "cwM" = (
 /obj/structure/cable/yellow{
@@ -3022,7 +3022,7 @@
 /area/groundbase/engineering/techstorage)
 "cKY" = (
 /obj/structure/table/bench/standard,
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/groundbase/science/picnic)
 "cKZ" = (
 /obj/structure/disposalpipe/segment{
@@ -3474,7 +3474,7 @@
 	dir = 1
 	},
 /obj/effect/landmark/start/visitor,
-/turf/simulated/floor/outdoors/newdirt_nograss,
+/turf/simulated/floor/outdoors/dirt/soft_nograss,
 /area/groundbase/level1/sw)
 "dfq" = (
 /obj/effect/floor_decal/milspec/color/purple/half{
@@ -3495,7 +3495,7 @@
 "dfP" = (
 /obj/structure/table/bench/padded,
 /obj/effect/landmark/start/entertainer,
-/turf/simulated/floor/outdoors/newdirt{
+/turf/simulated/floor/outdoors/dirt/soft{
 	outdoors = 0
 	},
 /area/groundbase/civilian/bar)
@@ -3790,7 +3790,7 @@
 /obj/item/weapon/stool/baystool/padded{
 	dir = 1
 	},
-/turf/simulated/floor/outdoors/newdirt{
+/turf/simulated/floor/outdoors/dirt/soft{
 	outdoors = 0
 	},
 /area/groundbase/civilian/bar)
@@ -4178,7 +4178,7 @@
 /turf/simulated/floor/tiled,
 /area/groundbase/engineering/atmos)
 "dMt" = (
-/turf/simulated/floor/outdoors/newdirt{
+/turf/simulated/floor/outdoors/dirt/soft{
 	outdoors = 0
 	},
 /area/groundbase/unexplored/rock)
@@ -4288,7 +4288,7 @@
 /turf/simulated/floor/tiled,
 /area/groundbase/engineering/techstorage)
 "dSo" = (
-/turf/simulated/floor/outdoors/newdirt{
+/turf/simulated/floor/outdoors/dirt/soft{
 	outdoors = 0
 	},
 /area/groundbase/medical/geneticslab)
@@ -4559,7 +4559,7 @@
 /obj/effect/landmark{
 	name = "maint_pred"
 	},
-/turf/simulated/floor/outdoors/newdirt{
+/turf/simulated/floor/outdoors/dirt/soft{
 	outdoors = 0
 	},
 /area/groundbase/level1/ne)
@@ -4818,7 +4818,7 @@
 /area/groundbase/level1/ne)
 "erw" = (
 /obj/item/clothing/head/welding,
-/turf/simulated/floor/outdoors/newdirt{
+/turf/simulated/floor/outdoors/dirt/soft{
 	outdoors = 0
 	},
 /area/groundbase/level1/nw)
@@ -4840,7 +4840,7 @@
 /obj/effect/step_trigger/teleporter/to_mining{
 	pixel_y = -32
 	},
-/turf/simulated/floor/outdoors/newdirt_nograss{
+/turf/simulated/floor/outdoors/dirt/soft_nograss{
 	outdoors = 0
 	},
 /area/groundbase/level1/sw)
@@ -5104,7 +5104,7 @@
 /turf/simulated/floor/tiled,
 /area/ai_monitored/storage/eva)
 "eBk" = (
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/groundbase/level1/ne)
 "eBt" = (
 /obj/structure/table/reinforced,
@@ -5230,7 +5230,7 @@
 /turf/simulated/floor/outdoors/sidewalk/slab,
 /area/groundbase/level1/se)
 "eHS" = (
-/turf/simulated/floor/outdoors/newdirt{
+/turf/simulated/floor/outdoors/dirt/soft{
 	outdoors = 0
 	},
 /area/groundbase/level1/nw)
@@ -5734,7 +5734,7 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/groundbase/engineering/storage)
 "eZu" = (
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/groundbase/unexplored/outdoors)
 "eZF" = (
 /obj/structure/table/standard,
@@ -5921,7 +5921,7 @@
 /obj/structure/bed/chair/sofa/bench/left{
 	dir = 4
 	},
-/turf/simulated/floor/outdoors/newdirt_nograss,
+/turf/simulated/floor/outdoors/dirt/soft_nograss,
 /area/groundbase/level1/sw)
 "fjV" = (
 /obj/effect/floor_decal/milspec/color/orange/half{
@@ -7133,7 +7133,7 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/groundbase/level1/sw)
 "gtd" = (
 /obj/machinery/computer/power_monitor,
@@ -7315,7 +7315,7 @@
 /turf/simulated/floor/bmarble,
 /area/groundbase/civilian/kitchen)
 "gzg" = (
-/turf/simulated/floor/outdoors/newdirt_nograss,
+/turf/simulated/floor/outdoors/dirt/soft_nograss,
 /area/groundbase/unexplored/outdoors)
 "gzu" = (
 /obj/structure/table/woodentable,
@@ -7347,7 +7347,7 @@
 	dir = 8
 	},
 /obj/effect/landmark/start/intern,
-/turf/simulated/floor/outdoors/newdirt_nograss,
+/turf/simulated/floor/outdoors/dirt/soft_nograss,
 /area/groundbase/level1/se)
 "gEd" = (
 /obj/structure/bed/chair/backed_red{
@@ -7458,7 +7458,7 @@
 /area/groundbase/cargo/mining)
 "gIg" = (
 /obj/machinery/floodlight,
-/turf/simulated/floor/outdoors/newdirt{
+/turf/simulated/floor/outdoors/dirt/soft{
 	outdoors = 0
 	},
 /area/groundbase/level1/se)
@@ -7932,7 +7932,7 @@
 /obj/structure/bed/chair/sofa/bench/left{
 	dir = 1
 	},
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/groundbase/level1/sw)
 "hao" = (
 /obj/machinery/atmospherics/pipe/simple/visible/black{
@@ -8418,7 +8418,7 @@
 /obj/structure/bed/chair/sofa/bench/right{
 	dir = 1
 	},
-/turf/simulated/floor/outdoors/newdirt_nograss,
+/turf/simulated/floor/outdoors/dirt/soft_nograss,
 /area/groundbase/level1/sw)
 "hwQ" = (
 /obj/item/clothing/head/hardhat/orange,
@@ -9441,7 +9441,7 @@
 /turf/simulated/floor,
 /area/groundbase/engineering/storage)
 "irP" = (
-/turf/simulated/floor/outdoors/newdirt{
+/turf/simulated/floor/outdoors/dirt/soft{
 	outdoors = 0
 	},
 /area/groundbase/level1/ne)
@@ -9789,7 +9789,7 @@
 	},
 /obj/structure/table/bench/padded,
 /obj/effect/landmark/start/intern,
-/turf/simulated/floor/outdoors/newdirt{
+/turf/simulated/floor/outdoors/dirt/soft{
 	outdoors = 0
 	},
 /area/groundbase/civilian/bar)
@@ -10005,7 +10005,7 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/turf/simulated/floor/outdoors/newdirt{
+/turf/simulated/floor/outdoors/dirt/soft{
 	outdoors = 0
 	},
 /area/groundbase/level1/ne)
@@ -10971,7 +10971,7 @@
 /obj/effect/landmark{
 	name = "maint_pred"
 	},
-/turf/simulated/floor/outdoors/newdirt{
+/turf/simulated/floor/outdoors/dirt/soft{
 	outdoors = 0
 	},
 /area/groundbase/level1/nw)
@@ -11145,7 +11145,7 @@
 /obj/item/weapon/stool/baystool/padded{
 	dir = 4
 	},
-/turf/simulated/floor/outdoors/newdirt{
+/turf/simulated/floor/outdoors/dirt/soft{
 	outdoors = 0
 	},
 /area/groundbase/civilian/bar)
@@ -11434,7 +11434,7 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
-/turf/simulated/floor/outdoors/newdirt{
+/turf/simulated/floor/outdoors/dirt/soft{
 	outdoors = 0
 	},
 /area/groundbase/level1/ne)
@@ -11679,7 +11679,7 @@
 /area/groundbase/science/xenobot)
 "kpZ" = (
 /obj/machinery/light/small,
-/turf/simulated/floor/outdoors/newdirt{
+/turf/simulated/floor/outdoors/dirt/soft{
 	outdoors = 0
 	},
 /area/groundbase/level1/se)
@@ -12034,7 +12034,7 @@
 /turf/simulated/floor/tiled/dark,
 /area/groundbase/security/lobby)
 "kCe" = (
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/groundbase/science/picnic)
 "kCi" = (
 /obj/structure/toilet{
@@ -12317,7 +12317,7 @@
 /area/groundbase/science/circuits)
 "kQn" = (
 /obj/structure/table/bench/wooden,
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/groundbase/level1/nw)
 "kQq" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/green{
@@ -12755,7 +12755,7 @@
 /area/groundbase/civilian/kitchen)
 "lkQ" = (
 /obj/structure/bed/chair/sofa/bench/right,
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/groundbase/level1/sw)
 "lkY" = (
 /obj/structure/cable/yellow{
@@ -12772,7 +12772,7 @@
 /turf/simulated/floor,
 /area/groundbase/engineering/storage)
 "llq" = (
-/turf/simulated/floor/outdoors/newdirt{
+/turf/simulated/floor/outdoors/dirt/soft{
 	outdoors = 0
 	},
 /area/groundbase/level1/sw)
@@ -13423,7 +13423,7 @@
 /turf/simulated/floor/tiled,
 /area/groundbase/civilian/hydroponics)
 "lOz" = (
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/groundbase/level1/nw)
 "lOJ" = (
 /obj/structure/table/standard,
@@ -13962,7 +13962,7 @@
 /area/ai_monitored/storage/eva)
 "mlF" = (
 /obj/machinery/light/bigfloorlamp,
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/groundbase/science/picnic)
 "mml" = (
 /obj/machinery/alarm,
@@ -14502,7 +14502,7 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
-/turf/simulated/floor/outdoors/newdirt{
+/turf/simulated/floor/outdoors/dirt/soft{
 	outdoors = 0
 	},
 /area/groundbase/level1/se)
@@ -14755,7 +14755,7 @@
 "nfp" = (
 /obj/structure/table/bench/standard,
 /obj/effect/landmark/start/rd,
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/groundbase/science/picnic)
 "nfC" = (
 /obj/structure/cable/yellow{
@@ -15053,7 +15053,7 @@
 "nso" = (
 /obj/structure/bed/chair/sofa/bench,
 /obj/effect/landmark/start/visitor,
-/turf/simulated/floor/outdoors/newdirt_nograss,
+/turf/simulated/floor/outdoors/dirt/soft_nograss,
 /area/groundbase/level1/nw)
 "nsK" = (
 /obj/machinery/door/firedoor,
@@ -15633,7 +15633,7 @@
 /obj/effect/step_trigger/teleporter/to_mining{
 	pixel_y = -32
 	},
-/turf/simulated/floor/outdoors/newdirt_nograss{
+/turf/simulated/floor/outdoors/dirt/soft_nograss{
 	outdoors = 0
 	},
 /area/groundbase/level1/se)
@@ -16025,7 +16025,7 @@
 	},
 /obj/random/firstaid,
 /obj/random/maintenance,
-/turf/simulated/floor/outdoors/newdirt_nograss{
+/turf/simulated/floor/outdoors/dirt/soft_nograss{
 	outdoors = 0
 	},
 /area/groundbase/level1/se)
@@ -16123,7 +16123,7 @@
 /area/groundbase/command/meeting)
 "oww" = (
 /obj/structure/bed/chair/sofa/bench/left,
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/groundbase/level1/sw)
 "owP" = (
 /obj/machinery/light/bigfloorlamp,
@@ -16226,7 +16226,7 @@
 	dir = 4
 	},
 /obj/effect/landmark/start/intern,
-/turf/simulated/floor/outdoors/newdirt_nograss,
+/turf/simulated/floor/outdoors/dirt/soft_nograss,
 /area/groundbase/level1/nw)
 "oAs" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
@@ -16589,7 +16589,7 @@
 /obj/structure/bed/chair/sofa/bench/left{
 	dir = 4
 	},
-/turf/simulated/floor/outdoors/newdirt_nograss,
+/turf/simulated/floor/outdoors/dirt/soft_nograss,
 /area/groundbase/level1/nw)
 "oPm" = (
 /obj/structure/table/rack/steel,
@@ -17093,7 +17093,7 @@
 /area/groundbase/civilian/bar)
 "pgw" = (
 /obj/random/trash_pile,
-/turf/simulated/floor/outdoors/newdirt{
+/turf/simulated/floor/outdoors/dirt/soft{
 	outdoors = 0
 	},
 /area/groundbase/level1/se)
@@ -17794,7 +17794,7 @@
 /area/maintenance/groundbase/substation/aiciv)
 "pGG" = (
 /obj/item/weapon/weldingtool/mini/two,
-/turf/simulated/floor/outdoors/newdirt{
+/turf/simulated/floor/outdoors/dirt/soft{
 	outdoors = 0
 	},
 /area/groundbase/level1/nw)
@@ -18312,7 +18312,7 @@
 /turf/simulated/floor/tiled/white,
 /area/groundbase/medical/or1)
 "pZo" = (
-/turf/simulated/floor/outdoors/newdirt{
+/turf/simulated/floor/outdoors/dirt/soft{
 	outdoors = 0
 	},
 /area/groundbase/science/hall)
@@ -18571,7 +18571,7 @@
 	dir = 8
 	},
 /obj/effect/landmark/start/intern,
-/turf/simulated/floor/outdoors/newdirt_nograss,
+/turf/simulated/floor/outdoors/dirt/soft_nograss,
 /area/groundbase/level1/ne)
 "qiX" = (
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
@@ -19630,7 +19630,7 @@
 /obj/structure/bed/chair/sofa/bench/left{
 	dir = 8
 	},
-/turf/simulated/floor/outdoors/newdirt_nograss,
+/turf/simulated/floor/outdoors/dirt/soft_nograss,
 /area/groundbase/level1/se)
 "reR" = (
 /obj/structure/table/rack/steel,
@@ -20613,7 +20613,7 @@
 "rOV" = (
 /obj/structure/table/bench/padded,
 /obj/effect/landmark/start/intern,
-/turf/simulated/floor/outdoors/newdirt{
+/turf/simulated/floor/outdoors/dirt/soft{
 	outdoors = 0
 	},
 /area/groundbase/civilian/bar)
@@ -20648,7 +20648,7 @@
 /area/groundbase/engineering/atmos)
 "rQn" = (
 /obj/structure/table/bench/padded,
-/turf/simulated/floor/outdoors/newdirt{
+/turf/simulated/floor/outdoors/dirt/soft{
 	outdoors = 0
 	},
 /area/groundbase/civilian/bar)
@@ -20693,7 +20693,7 @@
 /obj/structure/bed/chair/sofa/bench/right{
 	dir = 1
 	},
-/turf/simulated/floor/outdoors/newdirt_nograss,
+/turf/simulated/floor/outdoors/dirt/soft_nograss,
 /area/groundbase/level1/se)
 "rSh" = (
 /obj/structure/disposalpipe/segment,
@@ -20728,7 +20728,7 @@
 /obj/effect/step_trigger/teleporter/to_mining{
 	pixel_y = -32
 	},
-/turf/simulated/floor/outdoors/newdirt_nograss{
+/turf/simulated/floor/outdoors/dirt/soft_nograss{
 	outdoors = 0
 	},
 /area/groundbase/level1/ne)
@@ -20950,7 +20950,7 @@
 /obj/structure/bed/chair/sofa/bench/right{
 	dir = 8
 	},
-/turf/simulated/floor/outdoors/newdirt_nograss,
+/turf/simulated/floor/outdoors/dirt/soft_nograss,
 /area/groundbase/level1/ne)
 "sdm" = (
 /turf/simulated/floor/outdoors/sidewalk,
@@ -21267,7 +21267,7 @@
 /turf/simulated/floor,
 /area/groundbase/civilian/hydroponics)
 "soW" = (
-/turf/simulated/floor/outdoors/newdirt{
+/turf/simulated/floor/outdoors/dirt/soft{
 	outdoors = 0
 	},
 /area/groundbase/civilian/bar)
@@ -21306,7 +21306,7 @@
 /turf/simulated/floor/outdoors/sidewalk/side,
 /area/groundbase/level1/ne)
 "suc" = (
-/turf/simulated/floor/outdoors/newdirt_nograss{
+/turf/simulated/floor/outdoors/dirt/soft_nograss{
 	outdoors = 0
 	},
 /area/groundbase/level1/nw)
@@ -21378,7 +21378,7 @@
 /obj/structure/bed/chair/sofa/bench/right{
 	dir = 4
 	},
-/turf/simulated/floor/outdoors/newdirt_nograss,
+/turf/simulated/floor/outdoors/dirt/soft_nograss,
 /area/groundbase/level1/sw)
 "szC" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -21626,7 +21626,7 @@
 	},
 /area/groundbase/civilian/bar)
 "sLR" = (
-/turf/simulated/floor/outdoors/newdirt{
+/turf/simulated/floor/outdoors/dirt/soft{
 	outdoors = 0
 	},
 /area/groundbase/level1/se)
@@ -22151,7 +22151,7 @@
 	dir = 4
 	},
 /obj/effect/landmark/start/intern,
-/turf/simulated/floor/outdoors/newdirt_nograss,
+/turf/simulated/floor/outdoors/dirt/soft_nograss,
 /area/groundbase/level1/sw)
 "tfX" = (
 /obj/effect/floor_decal/milspec/color/purple/half,
@@ -22552,13 +22552,13 @@
 /area/groundbase/command/tcomms/storage)
 "tCC" = (
 /obj/structure/bed/chair/sofa/bench/left,
-/turf/simulated/floor/outdoors/newdirt_nograss,
+/turf/simulated/floor/outdoors/dirt/soft_nograss,
 /area/groundbase/level1/nw)
 "tCF" = (
 /obj/structure/bed/chair/sofa/bench/left{
 	dir = 8
 	},
-/turf/simulated/floor/outdoors/newdirt_nograss,
+/turf/simulated/floor/outdoors/dirt/soft_nograss,
 /area/groundbase/level1/ne)
 "tCL" = (
 /obj/machinery/vending/hydronutrients/brig{
@@ -23437,7 +23437,7 @@
 /turf/simulated/floor/tiled,
 /area/groundbase/civilian/apparel)
 "uhW" = (
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/groundbase/level1/sw)
 "uhY" = (
 /obj/machinery/atmospherics/pipe/simple/visible/red,
@@ -23454,7 +23454,7 @@
 /obj/structure/bed/chair/sofa/bench/right{
 	dir = 4
 	},
-/turf/simulated/floor/outdoors/newdirt_nograss,
+/turf/simulated/floor/outdoors/dirt/soft_nograss,
 /area/groundbase/level1/nw)
 "uiG" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
@@ -23536,7 +23536,7 @@
 /area/groundbase/science/picnic)
 "ulk" = (
 /obj/machinery/camera/network/engineering,
-/turf/simulated/floor/outdoors/newdirt{
+/turf/simulated/floor/outdoors/dirt/soft{
 	outdoors = 0
 	},
 /area/groundbase/level1/se)
@@ -23650,7 +23650,7 @@
 /turf/simulated/floor/tiled/dark,
 /area/groundbase/security/lobby)
 "urN" = (
-/turf/simulated/floor/outdoors/newdirt{
+/turf/simulated/floor/outdoors/dirt/soft{
 	outdoors = 0
 	},
 /area/prison/cell_block/gb/abandonedbrig)
@@ -24337,7 +24337,7 @@
 /turf/simulated/floor/tiled,
 /area/groundbase/civilian/apparel)
 "vam" = (
-/turf/simulated/floor/outdoors/newdirt_nograss{
+/turf/simulated/floor/outdoors/dirt/soft_nograss{
 	outdoors = 0
 	},
 /area/groundbase/level1/sw)
@@ -24623,7 +24623,7 @@
 /turf/simulated/floor/tiled,
 /area/groundbase/engineering/workshop)
 "vmr" = (
-/turf/simulated/floor/outdoors/newdirt_nograss{
+/turf/simulated/floor/outdoors/dirt/soft_nograss{
 	outdoors = 0
 	},
 /area/groundbase/level1/se)
@@ -24685,7 +24685,7 @@
 	dir = 4
 	},
 /obj/effect/landmark/start/visitor,
-/turf/simulated/floor/outdoors/newdirt{
+/turf/simulated/floor/outdoors/dirt/soft{
 	outdoors = 0
 	},
 /area/groundbase/civilian/bar)
@@ -25149,7 +25149,7 @@
 /obj/structure/bed/chair/sofa/bench/right{
 	dir = 8
 	},
-/turf/simulated/floor/outdoors/newdirt_nograss,
+/turf/simulated/floor/outdoors/dirt/soft_nograss,
 /area/groundbase/level1/se)
 "vLk" = (
 /obj/structure/disposalpipe/segment,
@@ -25277,7 +25277,7 @@
 /area/groundbase/engineering/storage)
 "vSA" = (
 /obj/structure/bed/chair/sofa/bench/right,
-/turf/simulated/floor/outdoors/newdirt_nograss,
+/turf/simulated/floor/outdoors/dirt/soft_nograss,
 /area/groundbase/level1/nw)
 "vSC" = (
 /obj/structure/cable/yellow{
@@ -25496,7 +25496,7 @@
 	},
 /obj/item/weapon/storage/mre/random,
 /obj/random/maintenance,
-/turf/simulated/floor/outdoors/newdirt_nograss{
+/turf/simulated/floor/outdoors/dirt/soft_nograss{
 	outdoors = 0
 	},
 /area/groundbase/level1/se)
@@ -26181,7 +26181,7 @@
 /obj/item/device/flashlight/flare,
 /obj/item/device/flashlight/flare,
 /obj/structure/closet/walllocker_double/cargo/east,
-/turf/simulated/floor/outdoors/newdirt{
+/turf/simulated/floor/outdoors/dirt/soft{
 	outdoors = 0
 	},
 /area/groundbase/level1/ne)
@@ -26360,7 +26360,7 @@
 /obj/structure/table/reinforced,
 /obj/machinery/firealarm,
 /obj/random/medical,
-/turf/simulated/floor/outdoors/newdirt{
+/turf/simulated/floor/outdoors/dirt/soft{
 	outdoors = 0
 	},
 /area/groundbase/medical/geneticslab)
@@ -26422,7 +26422,7 @@
 /turf/simulated/floor/tiled,
 /area/groundbase/engineering/workshop)
 "wWH" = (
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/groundbase/civilian/hydroponics)
 "wWY" = (
 /obj/machinery/conveyor{
@@ -26493,7 +26493,7 @@
 /turf/simulated/floor/carpet/oracarpet,
 /area/groundbase/engineering/breakroom)
 "wZZ" = (
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/groundbase/level1/se)
 "xaN" = (
 /obj/structure/cable{
@@ -26578,7 +26578,7 @@
 	dir = 8
 	},
 /obj/effect/landmark/start/visitor,
-/turf/simulated/floor/outdoors/newdirt{
+/turf/simulated/floor/outdoors/dirt/soft{
 	outdoors = 0
 	},
 /area/groundbase/civilian/bar)
@@ -27008,7 +27008,7 @@
 /area/groundbase/science/hall)
 "xxu" = (
 /obj/machinery/light/small,
-/turf/simulated/floor/outdoors/newdirt_nograss{
+/turf/simulated/floor/outdoors/dirt/soft_nograss{
 	outdoors = 0
 	},
 /area/groundbase/level1/se)
@@ -27483,7 +27483,7 @@
 /area/groundbase/engineering/atmos)
 "xQu" = (
 /obj/structure/stairs/spawner/north,
-/turf/simulated/floor/outdoors/newdirt_nograss{
+/turf/simulated/floor/outdoors/dirt/soft_nograss{
 	outdoors = 0
 	},
 /area/groundbase/level1/nw)
@@ -27698,7 +27698,7 @@
 "ybp" = (
 /obj/effect/landmark/start/visitor,
 /obj/structure/table/bench/padded,
-/turf/simulated/floor/outdoors/newdirt{
+/turf/simulated/floor/outdoors/dirt/soft{
 	outdoors = 0
 	},
 /area/groundbase/civilian/bar)
@@ -27872,7 +27872,7 @@
 /area/groundbase/medical/office)
 "yhG" = (
 /obj/structure/bed/chair/sofa/bench,
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/groundbase/level1/sw)
 "yhH" = (
 /obj/structure/bed/chair{
@@ -27953,7 +27953,7 @@
 	dir = 1
 	},
 /obj/effect/landmark/start/visitor,
-/turf/simulated/floor/outdoors/newdirt{
+/turf/simulated/floor/outdoors/dirt/soft{
 	outdoors = 0
 	},
 /area/groundbase/civilian/bar)

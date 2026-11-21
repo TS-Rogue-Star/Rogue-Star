@@ -443,7 +443,7 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/turf/simulated/floor/outdoors/newdirt{
+/turf/simulated/floor/outdoors/dirt/soft{
 	outdoors = 0
 	},
 /area/groundbase/hotspring)
@@ -2856,7 +2856,7 @@
 /turf/simulated/floor/plating,
 /area/maintenance/moonbase/basement/motel)
 "hx" = (
-/turf/simulated/floor/outdoors/newdirt{
+/turf/simulated/floor/outdoors/dirt/soft{
 	outdoors = 0
 	},
 /area/moonbase/basement/caves/flooded)
@@ -3057,7 +3057,7 @@
 /obj/effect/map_effect/perma_light{
 	light_color = "#87CEEB"
 	},
-/turf/simulated/floor/outdoors/newdirt{
+/turf/simulated/floor/outdoors/dirt/soft{
 	outdoors = 0
 	},
 /area/groundbase/hotspring)
@@ -6599,7 +6599,7 @@
 "rw" = (
 /obj/machinery/light,
 /obj/structure/table/bench/wooden,
-/turf/simulated/floor/outdoors/newdirt{
+/turf/simulated/floor/outdoors/dirt/soft{
 	outdoors = 0
 	},
 /area/groundbase/hotspring)
@@ -9195,7 +9195,7 @@
 /turf/simulated/floor/tiled/monotile,
 /area/engineering/atmos)
 "yx" = (
-/turf/simulated/floor/outdoors/newdirt{
+/turf/simulated/floor/outdoors/dirt/soft{
 	outdoors = 0
 	},
 /area/crew_quarters/moonbase/basement/iceroom)
@@ -9518,7 +9518,7 @@
 /area/moonbase/dorms/dorm3)
 "zu" = (
 /obj/structure/table/bench/wooden,
-/turf/simulated/floor/outdoors/newdirt{
+/turf/simulated/floor/outdoors/dirt/soft{
 	outdoors = 0
 	},
 /area/groundbase/hotspring)
@@ -12289,7 +12289,7 @@
 "GA" = (
 /obj/machinery/door/firedoor/glass,
 /obj/structure/simple_door/wood,
-/turf/simulated/floor/outdoors/newdirt{
+/turf/simulated/floor/outdoors/dirt/soft{
 	outdoors = 0
 	},
 /area/moonbase/basement/caves/flooded)
@@ -12774,7 +12774,7 @@
 /area/crew_quarters/kitchen)
 "HV" = (
 /obj/structure/simple_door/wood,
-/turf/simulated/floor/outdoors/newdirt{
+/turf/simulated/floor/outdoors/dirt/soft{
 	outdoors = 0
 	},
 /area/groundbase/hotspring)
@@ -14503,7 +14503,7 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
-/turf/simulated/floor/outdoors/newdirt{
+/turf/simulated/floor/outdoors/dirt/soft{
 	outdoors = 0
 	},
 /area/groundbase/hotspring)
@@ -14951,7 +14951,7 @@
 /area/crew_quarters/pool)
 "Ny" = (
 /obj/machinery/camera/network/civilian,
-/turf/simulated/floor/outdoors/newdirt{
+/turf/simulated/floor/outdoors/dirt/soft{
 	outdoors = 0
 	},
 /area/groundbase/hotspring)
@@ -16104,7 +16104,7 @@
 	dir = 4
 	},
 /obj/structure/closet/athletic_swimwear,
-/turf/simulated/floor/outdoors/newdirt{
+/turf/simulated/floor/outdoors/dirt/soft{
 	outdoors = 0
 	},
 /area/groundbase/hotspring)
@@ -16303,7 +16303,7 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/turf/simulated/floor/outdoors/newdirt{
+/turf/simulated/floor/outdoors/dirt/soft{
 	outdoors = 0
 	},
 /area/moonbase/basement/caves/flooded)
@@ -18814,7 +18814,7 @@
 /area/hallway/moonbase/basement)
 "XG" = (
 /obj/structure/closet/athletic_swimwear,
-/turf/simulated/floor/outdoors/newdirt{
+/turf/simulated/floor/outdoors/dirt/soft{
 	outdoors = 0
 	},
 /area/groundbase/hotspring)
@@ -19049,7 +19049,7 @@
 /area/maintenance/moonbase/basement/engibreakroom)
 "Yp" = (
 /obj/structure/table/bench/wooden,
-/turf/simulated/floor/outdoors/newdirt{
+/turf/simulated/floor/outdoors/dirt/soft{
 	outdoors = 0
 	},
 /area/crew_quarters/moonbase/basement/iceroom)
@@ -19148,7 +19148,7 @@
 /area/crew_quarters/moonbase/maintbar)
 "YA" = (
 /obj/structure/bonfire,
-/turf/simulated/floor/outdoors/newdirt{
+/turf/simulated/floor/outdoors/dirt/soft{
 	outdoors = 0
 	},
 /area/crew_quarters/moonbase/basement/iceroom)
@@ -19325,7 +19325,7 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/engineering/moonbase/oxygenproduction)
 "YY" = (
-/turf/simulated/floor/outdoors/newdirt{
+/turf/simulated/floor/outdoors/dirt/soft{
 	outdoors = 0
 	},
 /area/groundbase/hotspring)

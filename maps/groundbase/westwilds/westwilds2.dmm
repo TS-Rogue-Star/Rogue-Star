@@ -926,7 +926,7 @@
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
 	dir = 5
 	},
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/submap/groundbase/wilderness/west)
 "hB" = (
 /obj/machinery/atmospherics/portables_connector{
@@ -1493,7 +1493,7 @@
 /obj/machinery/atmospherics/pipe/simple/visible/black{
 	dir = 9
 	},
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/groundbase/science/outpost/toxins_mixing)
 "lM" = (
 /obj/effect/floor_decal/industrial/warning/corner{
@@ -1947,7 +1947,7 @@
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
 	dir = 9
 	},
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/submap/groundbase/wilderness/west)
 "pN" = (
 /obj/machinery/atmospherics/unary/vent_pump/on,
@@ -2098,7 +2098,7 @@
 /turf/simulated/floor/tiled/dark,
 /area/groundbase/science/outpost/anomaly_storage)
 "qz" = (
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/groundbase/engineering/solarfield)
 "qD" = (
 /obj/structure/grille,
@@ -2649,7 +2649,7 @@
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	dir = 6
 	},
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/groundbase/science/outpost/toxins_mixing)
 "uA" = (
 /obj/effect/floor_decal/steeldecal/steel_decals9,
@@ -3705,7 +3705,7 @@
 	dir = 1;
 	target_pressure = 200
 	},
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/groundbase/science/outpost/toxins_mixing)
 "BU" = (
 /obj/structure/closet/secure_closet/freezer/fridge,
@@ -4360,7 +4360,7 @@
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
 	dir = 10
 	},
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/submap/groundbase/wilderness/west)
 "Hr" = (
 /obj/effect/floor_decal/industrial/warning/corner{
@@ -4605,7 +4605,7 @@
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
 	dir = 6
 	},
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/submap/groundbase/wilderness/west)
 "IO" = (
 /obj/structure/window/reinforced{
@@ -4752,7 +4752,7 @@
 /obj/effect/map_effect/portal/line/side_b{
 	dir = 8
 	},
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/submap/groundbase/wilderness/west)
 "Kw" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging/junction{
@@ -5388,7 +5388,7 @@
 /obj/machinery/atmospherics/pipe/simple/visible/yellow{
 	dir = 4
 	},
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/groundbase/science/outpost/toxins_mixing)
 "Qk" = (
 /obj/machinery/door/firedoor/glass,
@@ -5641,7 +5641,7 @@
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	dir = 6
 	},
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/groundbase/science/outpost/toxins_mixing)
 "Sx" = (
 /obj/structure/cable/heavyduty{
@@ -5780,7 +5780,7 @@
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging/junction{
 	dir = 8
 	},
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/submap/groundbase/wilderness/west)
 "UN" = (
 /turf/simulated/floor/tiled/white,
@@ -5880,7 +5880,7 @@
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
 	dir = 4
 	},
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/submap/groundbase/wilderness/west)
 "VG" = (
 /obj/structure/cable/green{
@@ -6018,7 +6018,7 @@
 /area/groundbase/science/outpost/toxins_mixing)
 "WR" = (
 /obj/machinery/atmospherics/pipe/vent/high_volume,
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/groundbase/science/outpost/toxins_mixing)
 "WS" = (
 /turf/simulated/floor/tiled,
@@ -6088,10 +6088,10 @@
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	dir = 9
 	},
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/groundbase/science/outpost/toxins_mixing)
 "XS" = (
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/submap/groundbase/wilderness/west)
 "XW" = (
 /obj/structure/cable{

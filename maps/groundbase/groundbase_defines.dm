@@ -401,7 +401,7 @@
 /datum/map_z_level/groundbase/level_one
 	z = Z_LEVEL_GB_BOTTOM
 	name = "Level 1"
-	base_turf = /turf/simulated/floor/outdoors/newdirt_nograss/virgo3c
+	base_turf = /turf/simulated/floor/outdoors/dirt/soft_nograss/virgo3c
 	transit_chance = 0
 	holomap_offset_x = SHIP_HOLOMAP_MARGIN_X
 	holomap_offset_y = SHIP_HOLOMAP_MARGIN_Y
@@ -536,7 +536,7 @@
 /datum/map_z_level/gb_lateload/mining
 	z = Z_LEVEL_MINING
 	name = "V3c Underground"
-	base_turf = /turf/simulated/floor/outdoors/newdirt_nograss/virgo3c
+	base_turf = /turf/simulated/floor/outdoors/dirt/soft_nograss/virgo3c
 	flags = MAP_LEVEL_PLAYER|MAP_LEVEL_CONTACT|MAP_LEVEL_CONSOLES
 
 #include "../expedition_vr/aerostat/_aerostat.dm"

@@ -94,7 +94,7 @@
 /turf/simulated/floor/wood,
 /area/tether_away/beach)
 "ax" = (
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/tether_away/beach/jungle)
 "ay" = (
 /obj/structure/table/glass,
@@ -1750,7 +1750,7 @@
 /turf/simulated/floor/lino,
 /area/tether_away/beach/resort/kitchen)
 "Ow" = (
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/tether_away/beach/cavebase)
 "OK" = (
 /obj/effect/overlay/palmtree_l,

@@ -96,7 +96,7 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/submap/groundbase/poi/wildvillage)
 "B" = (
 /obj/structure/table/standard,
@@ -180,7 +180,7 @@
 	},
 /area/submap/groundbase/poi/wildvillage/square/square7)
 "S" = (
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/submap/groundbase/poi/wildvillage)
 "U" = (
 /obj/machinery/light{

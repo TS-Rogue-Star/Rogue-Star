@@ -14,7 +14,7 @@
 /turf/simulated/floor/wood,
 /area/submap/groundbase/poi/wildvillage/square/square3)
 "j" = (
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/submap/groundbase/poi/wildvillage)
 "k" = (
 /obj/structure/bed/chair/sofa/brown{
@@ -94,7 +94,7 @@
 /area/submap/groundbase/poi/wildvillage/square/square3)
 "H" = (
 /obj/machinery/light/small,
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/submap/groundbase/poi/wildvillage)
 "J" = (
 /obj/structure/table/standard,

@@ -8453,7 +8453,7 @@
 /area/security/briefing_room)
 "uF" = (
 /obj/structure/table/bench/wooden,
-/turf/simulated/floor/outdoors/newdirt{
+/turf/simulated/floor/outdoors/dirt/soft{
 	outdoors = 0
 	},
 /area/crew_quarters/bar)
@@ -8985,7 +8985,7 @@
 	pixel_x = 0;
 	pixel_y = 6
 	},
-/turf/simulated/floor/outdoors/newdirt{
+/turf/simulated/floor/outdoors/dirt/soft{
 	outdoors = 0
 	},
 /area/crew_quarters/bar)

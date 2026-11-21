@@ -657,7 +657,7 @@
 /area/redgate/fantasy/bakery)
 "el" = (
 /obj/fruitspawner/cabbage,
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/redgate/fantasy/streets)
 "eo" = (
 /obj/structure/bed/chair/sofa/brown{
@@ -2935,7 +2935,7 @@
 /area/redgate/fantasy/arena)
 "sa" = (
 /obj/fruitspawner/glowshroom,
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/redgate/fantasy/druid)
 "sb" = (
 /obj/structure/prop/fantasy/pinkbanner{
@@ -3277,7 +3277,7 @@
 /area/redgate/fantasy/house)
 "uh" = (
 /obj/fruitspawner/carrot,
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/redgate/fantasy/streets)
 "ui" = (
 /obj/structure/closet/crate/wooden,
@@ -5252,7 +5252,7 @@
 /area/redgate/fantasy/gambling)
 "GC" = (
 /obj/fruitspawner/pumpkin,
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/redgate/fantasy/streets)
 "GE" = (
 /obj/structure/bed/chair/wood{
@@ -7745,7 +7745,7 @@
 /area/redgate/fantasy/castle)
 "Wz" = (
 /obj/fruitspawner/potato,
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/redgate/fantasy/streets)
 "WA" = (
 /obj/structure/window/basic/full,
@@ -8050,7 +8050,7 @@
 /turf/simulated/floor/concrete,
 /area/redgate/fantasy/castle)
 "Yt" = (
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/redgate/fantasy/streets)
 "Yu" = (
 /obj/effect/floor_decal/spline/fancy/wood{

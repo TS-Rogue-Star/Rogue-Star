@@ -3,7 +3,7 @@
 /obj/structure/bed/chair/sofa/bench/right{
 	dir = 4
 	},
-/turf/simulated/floor/outdoors/newdirt_nograss,
+/turf/simulated/floor/outdoors/dirt/soft_nograss,
 /area/groundbase/level1/eastspur)
 "ab" = (
 /obj/machinery/door/firedoor,
@@ -21,7 +21,7 @@
 /obj/effect/landmark{
 	name = "maint_pred"
 	},
-/turf/simulated/floor/outdoors/newdirt_nograss{
+/turf/simulated/floor/outdoors/dirt/soft_nograss{
 	outdoors = 0
 	},
 /area/maintenance/groundbase/level1/netunnel)
@@ -481,7 +481,7 @@
 /obj/structure/bed/chair/sofa/bench/left{
 	dir = 1
 	},
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/groundbase/level1/centsquare)
 "bg" = (
 /turf/simulated/wall,
@@ -722,7 +722,7 @@
 	},
 /area/groundbase/command/tcomms/chamber)
 "bJ" = (
-/turf/simulated/floor/outdoors/newdirt_nograss,
+/turf/simulated/floor/outdoors/dirt/soft_nograss,
 /area/groundbase/level1/eastspur)
 "bK" = (
 /turf/simulated/floor/bluegrid{
@@ -880,7 +880,7 @@
 /turf/simulated/floor/carpet/gaycarpet,
 /area/groundbase/civilian/clown)
 "ca" = (
-/turf/simulated/floor/outdoors/newdirt{
+/turf/simulated/floor/outdoors/dirt/soft{
 	outdoors = 0
 	},
 /area/maintenance/groundbase/level1/swtunnel)
@@ -1525,7 +1525,7 @@
 /obj/structure/bed/chair/sofa/bench/right{
 	dir = 1
 	},
-/turf/simulated/floor/outdoors/newdirt_nograss,
+/turf/simulated/floor/outdoors/dirt/soft_nograss,
 /area/groundbase/level1/centsquare)
 "dt" = (
 /obj/machinery/light{
@@ -1741,7 +1741,7 @@
 	},
 /area/groundbase/level1/northspur)
 "dM" = (
-/turf/simulated/floor/outdoors/newdirt_nograss{
+/turf/simulated/floor/outdoors/dirt/soft_nograss{
 	outdoors = 0
 	},
 /area/maintenance/groundbase/level1/swtunnel)
@@ -3114,7 +3114,7 @@
 /obj/structure/bed/chair/sofa/bench/right{
 	dir = 4
 	},
-/turf/simulated/floor/outdoors/newdirt_nograss,
+/turf/simulated/floor/outdoors/dirt/soft_nograss,
 /area/groundbase/level1/centsquare)
 "gL" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
@@ -3444,12 +3444,12 @@
 /area/groundbase/security/equipment)
 "hD" = (
 /obj/random/trash_pile,
-/turf/simulated/floor/outdoors/newdirt_nograss{
+/turf/simulated/floor/outdoors/dirt/soft_nograss{
 	outdoors = 0
 	},
 /area/maintenance/groundbase/level1/nwtunnel)
 "hE" = (
-/turf/simulated/floor/outdoors/newdirt_nograss,
+/turf/simulated/floor/outdoors/dirt/soft_nograss,
 /area/groundbase/level1/se)
 "hF" = (
 /obj/structure/table/marble,
@@ -3800,7 +3800,7 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
-/turf/simulated/floor/outdoors/newdirt_nograss,
+/turf/simulated/floor/outdoors/dirt/soft_nograss,
 /area/groundbase/security/halle)
 "iv" = (
 /obj/structure/table/reinforced,
@@ -3913,7 +3913,7 @@
 /turf/simulated/floor,
 /area/maintenance/groundbase/substation/secsci)
 "iG" = (
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/maintenance/groundbase/level1/netunnel)
 "iH" = (
 /turf/simulated/wall/r_wall,
@@ -4569,7 +4569,7 @@
 /turf/simulated/floor/tiled/dark,
 /area/groundbase/security/halle)
 "kd" = (
-/turf/simulated/floor/outdoors/newdirt_nograss{
+/turf/simulated/floor/outdoors/dirt/soft_nograss{
 	outdoors = 0
 	},
 /area/groundbase/level1/centsquare)
@@ -4634,7 +4634,7 @@
 /obj/effect/landmark{
 	name = "maint_pred"
 	},
-/turf/simulated/floor/outdoors/newdirt_nograss{
+/turf/simulated/floor/outdoors/dirt/soft_nograss{
 	outdoors = 0
 	},
 /area/maintenance/groundbase/level1/swtunnel)
@@ -5010,7 +5010,7 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/turf/simulated/floor/outdoors/newdirt_nograss,
+/turf/simulated/floor/outdoors/dirt/soft_nograss,
 /area/groundbase/engineering/engine)
 "kW" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
@@ -5408,7 +5408,7 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
-/turf/simulated/floor/outdoors/newdirt_nograss{
+/turf/simulated/floor/outdoors/dirt/soft_nograss{
 	outdoors = 0
 	},
 /area/groundbase/command/ai/foyer)
@@ -5751,7 +5751,7 @@
 /turf/simulated/floor/tiled,
 /area/groundbase/engineering/ce)
 "my" = (
-/turf/simulated/floor/outdoors/newdirt_nograss,
+/turf/simulated/floor/outdoors/dirt/soft_nograss,
 /area/groundbase/level1/ne)
 "mz" = (
 /obj/machinery/atmospherics/pipe/manifold4w/hidden/yellow,
@@ -5800,7 +5800,7 @@
 /turf/simulated/floor/tiled,
 /area/groundbase/cargo/mining)
 "mG" = (
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/groundbase/unexplored/outdoors)
 "mH" = (
 /obj/structure/table/woodentable,
@@ -5828,7 +5828,7 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/turf/simulated/floor/outdoors/newdirt_nograss{
+/turf/simulated/floor/outdoors/dirt/soft_nograss{
 	outdoors = 0
 	},
 /area/groundbase/medical/lhallway)
@@ -6073,7 +6073,7 @@
 /obj/effect/step_trigger/teleporter/to_mining{
 	pixel_y = -32
 	},
-/turf/simulated/floor/outdoors/newdirt_nograss{
+/turf/simulated/floor/outdoors/dirt/soft_nograss{
 	outdoors = 0
 	},
 /area/maintenance/groundbase/level1/netunnel)
@@ -6418,7 +6418,7 @@
 /turf/simulated/floor/tiled,
 /area/groundbase/civilian/gateway)
 "nS" = (
-/turf/simulated/floor/outdoors/newdirt_nograss{
+/turf/simulated/floor/outdoors/dirt/soft_nograss{
 	outdoors = 0
 	},
 /area/maintenance/groundbase/level1/stunnel)
@@ -6637,7 +6637,7 @@
 /turf/simulated/floor/outdoors/sidewalk/slab,
 /area/groundbase/level1/northspur)
 "os" = (
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/groundbase/security/lobby)
 "ot" = (
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
@@ -7275,12 +7275,12 @@
 /turf/simulated/floor/tiled,
 /area/groundbase/civilian/gateway)
 "pU" = (
-/turf/simulated/floor/outdoors/newdirt_nograss{
+/turf/simulated/floor/outdoors/dirt/soft_nograss{
 	outdoors = 0
 	},
 /area/maintenance/groundbase/level1/netunnel)
 "pV" = (
-/turf/simulated/floor/outdoors/newdirt{
+/turf/simulated/floor/outdoors/dirt/soft{
 	outdoors = 0
 	},
 /area/groundbase/unexplored/rock)
@@ -7554,7 +7554,7 @@
 /obj/structure/bed/chair/sofa/bench/right{
 	dir = 8
 	},
-/turf/simulated/floor/outdoors/newdirt_nograss,
+/turf/simulated/floor/outdoors/dirt/soft_nograss,
 /area/groundbase/level1/centsquare)
 "qJ" = (
 /obj/machinery/conveyor{
@@ -7833,7 +7833,7 @@
 /obj/effect/step_trigger/teleporter/to_mining{
 	pixel_y = -32
 	},
-/turf/simulated/floor/outdoors/newdirt_nograss{
+/turf/simulated/floor/outdoors/dirt/soft_nograss{
 	outdoors = 0
 	},
 /area/maintenance/groundbase/level1/nwtunnel)
@@ -7955,19 +7955,19 @@
 /obj/structure/bed/chair/sofa/bench/left{
 	dir = 4
 	},
-/turf/simulated/floor/outdoors/newdirt_nograss,
+/turf/simulated/floor/outdoors/dirt/soft_nograss,
 /area/groundbase/level1/eastspur)
 "rC" = (
 /obj/effect/map_effect/portal/line/side_a{
 	dir = 4
 	},
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/groundbase/level1/westspur)
 "rD" = (
 /obj/machinery/light/small{
 	dir = 1
 	},
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/groundbase/level1/centsquare)
 "rE" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -8085,7 +8085,7 @@
 /turf/simulated/floor/tiled/techmaint,
 /area/groundbase/engineering/atmos)
 "rT" = (
-/turf/simulated/floor/outdoors/newdirt_nograss{
+/turf/simulated/floor/outdoors/dirt/soft_nograss{
 	outdoors = 0
 	},
 /area/groundbase/level1/sw)
@@ -8219,7 +8219,7 @@
 /turf/simulated/floor/tiled/techmaint,
 /area/groundbase/engineering/atmos)
 "sm" = (
-/turf/simulated/floor/outdoors/newdirt_nograss{
+/turf/simulated/floor/outdoors/dirt/soft_nograss{
 	outdoors = 0
 	},
 /area/groundbase/level1/ne)
@@ -8500,7 +8500,7 @@
 /turf/simulated/floor/outdoors/sidewalk,
 /area/groundbase/level1/centsquare)
 "sV" = (
-/turf/simulated/floor/outdoors/newdirt{
+/turf/simulated/floor/outdoors/dirt/soft{
 	outdoors = 0
 	},
 /area/maintenance/groundbase/level1/setunnel)
@@ -8788,7 +8788,7 @@
 /obj/structure/bed/chair/sofa/bench/left{
 	dir = 1
 	},
-/turf/simulated/floor/outdoors/newdirt_nograss,
+/turf/simulated/floor/outdoors/dirt/soft_nograss,
 /area/groundbase/level1/centsquare)
 "tC" = (
 /obj/structure/table/reinforced,
@@ -9039,7 +9039,7 @@
 /area/groundbase/civilian/bar)
 "uh" = (
 /obj/structure/stairs/spawner/south,
-/turf/simulated/floor/outdoors/newdirt_nograss{
+/turf/simulated/floor/outdoors/dirt/soft_nograss{
 	outdoors = 0
 	},
 /area/maintenance/groundbase/level1/setunnel)
@@ -9102,7 +9102,7 @@
 /turf/simulated/floor/tiled,
 /area/groundbase/cargo/mining)
 "un" = (
-/turf/simulated/floor/outdoors/newdirt_nograss,
+/turf/simulated/floor/outdoors/dirt/soft_nograss,
 /area/groundbase/engineering/engine)
 "uo" = (
 /obj/structure/cable/yellow{
@@ -9473,7 +9473,7 @@
 /turf/simulated/floor/lino,
 /area/groundbase/civilian/cafe)
 "vj" = (
-/turf/simulated/floor/outdoors/newdirt_nograss{
+/turf/simulated/floor/outdoors/dirt/soft_nograss{
 	outdoors = 0
 	},
 /area/maintenance/groundbase/level1/setunnel)
@@ -9506,7 +9506,7 @@
 /turf/simulated/floor/wood,
 /area/groundbase/civilian/cafe)
 "vp" = (
-/turf/simulated/floor/outdoors/newdirt{
+/turf/simulated/floor/outdoors/dirt/soft{
 	outdoors = 0
 	},
 /area/maintenance/groundbase/level1/stunnel)
@@ -9908,7 +9908,7 @@
 "wn" = (
 /obj/structure/bed/chair/sofa/bench,
 /obj/effect/landmark/start/visitor,
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/groundbase/level1/southeastspur)
 "wp" = (
 /obj/structure/cable/ender{
@@ -11990,7 +11990,7 @@
 /turf/simulated/floor/tiled/white,
 /area/groundbase/civilian/mensrestroom)
 "Bk" = (
-/turf/simulated/floor/outdoors/newdirt_nograss{
+/turf/simulated/floor/outdoors/dirt/soft_nograss{
 	outdoors = 0
 	},
 /area/groundbase/unexplored/rock)
@@ -12041,7 +12041,7 @@
 /obj/effect/step_trigger/teleporter/to_mining{
 	pixel_y = -32
 	},
-/turf/simulated/floor/outdoors/newdirt_nograss{
+/turf/simulated/floor/outdoors/dirt/soft_nograss{
 	outdoors = 0
 	},
 /area/maintenance/groundbase/level1/swtunnel)
@@ -12352,7 +12352,7 @@
 /turf/simulated/floor/tiled/dark,
 /area/groundbase/security/lobby)
 "Cb" = (
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/maintenance/groundbase/level1/stunnel)
 "Cc" = (
 /obj/machinery/door/firedoor,
@@ -12626,7 +12626,7 @@
 /obj/structure/bed/chair/sofa/bench/left{
 	dir = 4
 	},
-/turf/simulated/floor/outdoors/newdirt_nograss,
+/turf/simulated/floor/outdoors/dirt/soft_nograss,
 /area/groundbase/level1/centsquare)
 "CK" = (
 /obj/machinery/vending/assist,
@@ -12752,7 +12752,7 @@
 /turf/simulated/floor/tiled,
 /area/groundbase/civilian/gateway)
 "Db" = (
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/groundbase/level1/southeastspur)
 "Dc" = (
 /turf/simulated/wall/r_wall,
@@ -13214,7 +13214,7 @@
 /obj/effect/landmark{
 	name = "maint_pred"
 	},
-/turf/simulated/floor/outdoors/newdirt_nograss{
+/turf/simulated/floor/outdoors/dirt/soft_nograss{
 	outdoors = 0
 	},
 /area/groundbase/unexplored/rock)
@@ -13222,7 +13222,7 @@
 /turf/simulated/wall/r_wall,
 /area/groundbase/command/ai/foyer)
 "Eg" = (
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/maintenance/groundbase/level1/swtunnel)
 "Eh" = (
 /obj/structure/cable/heavyduty{
@@ -13413,7 +13413,7 @@
 /obj/structure/bed/chair/sofa/bench{
 	dir = 4
 	},
-/turf/simulated/floor/outdoors/newdirt_nograss,
+/turf/simulated/floor/outdoors/dirt/soft_nograss,
 /area/groundbase/level1/eastspur)
 "EI" = (
 /obj/structure/cable/yellow{
@@ -13816,7 +13816,7 @@
 /turf/simulated/mineral/cave,
 /area/groundbase/level1/centsquare)
 "FF" = (
-/turf/simulated/floor/outdoors/newdirt_nograss{
+/turf/simulated/floor/outdoors/dirt/soft_nograss{
 	outdoors = 0
 	},
 /area/maintenance/groundbase/level1/nwtunnel)
@@ -13996,7 +13996,7 @@
 /obj/structure/bed/chair/sofa/bench/left{
 	dir = 8
 	},
-/turf/simulated/floor/outdoors/newdirt_nograss,
+/turf/simulated/floor/outdoors/dirt/soft_nograss,
 /area/groundbase/level1/centsquare)
 "Gf" = (
 /obj/random/coin/sometimes,
@@ -14156,7 +14156,7 @@
 	dir = 8
 	},
 /obj/effect/landmark/start/intern,
-/turf/simulated/floor/outdoors/newdirt_nograss,
+/turf/simulated/floor/outdoors/dirt/soft_nograss,
 /area/groundbase/level1/centsquare)
 "Gw" = (
 /obj/structure/table/reinforced,
@@ -14265,7 +14265,7 @@
 /turf/simulated/wall,
 /area/maintenance/groundbase/substation/aiciv)
 "GK" = (
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/groundbase/level1/northspur)
 "GL" = (
 /obj/machinery/power/sensor{
@@ -14586,7 +14586,7 @@
 /area/groundbase/engineering/lobby)
 "Hx" = (
 /obj/structure/bed/chair/sofa/bench/left,
-/turf/simulated/floor/outdoors/newdirt_nograss,
+/turf/simulated/floor/outdoors/dirt/soft_nograss,
 /area/groundbase/level1/centsquare)
 "Hy" = (
 /obj/structure/cable{
@@ -14951,7 +14951,7 @@
 /area/groundbase/engineering/atmos)
 "Io" = (
 /obj/structure/bed/chair/sofa/bench/right,
-/turf/simulated/floor/outdoors/newdirt_nograss,
+/turf/simulated/floor/outdoors/dirt/soft_nograss,
 /area/groundbase/level1/centsquare)
 "Ip" = (
 /obj/machinery/computer/atmos_alert,
@@ -15240,7 +15240,7 @@
 /turf/simulated/floor/tiled/white,
 /area/groundbase/medical/lhallway)
 "IZ" = (
-/turf/simulated/floor/outdoors/newdirt_nograss{
+/turf/simulated/floor/outdoors/dirt/soft_nograss{
 	outdoors = 0
 	},
 /area/groundbase/command/ai/foyer)
@@ -15285,7 +15285,7 @@
 /area/groundbase/engineering/eva)
 "Jf" = (
 /obj/structure/bed/chair/sofa/bench/right,
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/groundbase/level1/southeastspur)
 "Jg" = (
 /obj/machinery/atmospherics/unary/vent_scrubber/on,
@@ -15431,7 +15431,7 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/turf/simulated/floor/outdoors/newdirt_nograss{
+/turf/simulated/floor/outdoors/dirt/soft_nograss{
 	outdoors = 0
 	},
 /area/groundbase/civilian/clown)
@@ -15979,7 +15979,7 @@
 /area/groundbase/civilian/apparel)
 "KJ" = (
 /obj/effect/landmark/stardog,
-/turf/simulated/floor/outdoors/newdirt_nograss{
+/turf/simulated/floor/outdoors/dirt/soft_nograss{
 	outdoors = 0
 	},
 /area/maintenance/groundbase/level1/stunnel)
@@ -16198,7 +16198,7 @@
 /turf/simulated/floor/wood,
 /area/groundbase/civilian/gameroom)
 "Lk" = (
-/turf/simulated/floor/outdoors/newdirt_nograss,
+/turf/simulated/floor/outdoors/dirt/soft_nograss,
 /area/groundbase/level1/centsquare)
 "Ll" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -16390,7 +16390,7 @@
 /turf/simulated/floor/tiled,
 /area/groundbase/engineering/lobby)
 "LH" = (
-/turf/simulated/floor/outdoors/newdirt{
+/turf/simulated/floor/outdoors/dirt/soft{
 	outdoors = 0
 	},
 /area/groundbase/level1/sw)
@@ -17404,7 +17404,7 @@
 	dir = 4
 	},
 /obj/effect/landmark/start/intern,
-/turf/simulated/floor/outdoors/newdirt_nograss,
+/turf/simulated/floor/outdoors/dirt/soft_nograss,
 /area/groundbase/level1/centsquare)
 "Oe" = (
 /obj/effect/landmark/start/hos,
@@ -17607,7 +17607,7 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/groundbase/cargo/mining)
 "OE" = (
 /obj/machinery/door/firedoor,
@@ -17798,7 +17798,7 @@
 /turf/simulated/wall/r_wall,
 /area/groundbase/engineering/storage)
 "Pi" = (
-/turf/simulated/floor/outdoors/newdirt_nograss{
+/turf/simulated/floor/outdoors/dirt/soft_nograss{
 	outdoors = 0
 	},
 /area/groundbase/level1/northspur)
@@ -17885,7 +17885,7 @@
 	dir = 1
 	},
 /obj/effect/landmark/start/visitor,
-/turf/simulated/floor/outdoors/newdirt_nograss,
+/turf/simulated/floor/outdoors/dirt/soft_nograss,
 /area/groundbase/level1/centsquare)
 "Ps" = (
 /obj/machinery/power/sensor{
@@ -18640,7 +18640,7 @@
 /turf/simulated/floor/tiled,
 /area/groundbase/engineering/storage)
 "Rn" = (
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/maintenance/groundbase/level1/nwtunnel)
 "Ro" = (
 /obj/structure/cable{
@@ -18828,7 +18828,7 @@
 /area/groundbase/civilian/cafe)
 "RJ" = (
 /obj/structure/stairs/spawner/north,
-/turf/simulated/floor/outdoors/newdirt_nograss{
+/turf/simulated/floor/outdoors/dirt/soft_nograss{
 	outdoors = 0
 	},
 /area/maintenance/groundbase/level1/nwtunnel)
@@ -18978,7 +18978,7 @@
 /obj/machinery/camera/network/command{
 	dir = 4
 	},
-/turf/simulated/floor/outdoors/newdirt_nograss{
+/turf/simulated/floor/outdoors/dirt/soft_nograss{
 	outdoors = 0
 	},
 /area/groundbase/command/ai/foyer)
@@ -19287,7 +19287,7 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/turf/simulated/floor/outdoors/newdirt_nograss{
+/turf/simulated/floor/outdoors/dirt/soft_nograss{
 	outdoors = 0
 	},
 /area/groundbase/security/halls)
@@ -19561,7 +19561,7 @@
 /area/groundbase/medical/or2)
 "Tt" = (
 /obj/effect/landmark/stardog,
-/turf/simulated/floor/outdoors/newdirt_nograss{
+/turf/simulated/floor/outdoors/dirt/soft_nograss{
 	outdoors = 0
 	},
 /area/maintenance/groundbase/level1/swtunnel)
@@ -20062,7 +20062,7 @@
 /turf/simulated/floor/tiled,
 /area/groundbase/engineering/engine)
 "UE" = (
-/turf/simulated/floor/outdoors/newdirt{
+/turf/simulated/floor/outdoors/dirt/soft{
 	outdoors = 0
 	},
 /area/maintenance/groundbase/level1/netunnel)
@@ -20164,7 +20164,7 @@
 "US" = (
 /obj/structure/bed/chair/sofa/bench,
 /obj/effect/landmark/start/visitor,
-/turf/simulated/floor/outdoors/newdirt_nograss,
+/turf/simulated/floor/outdoors/dirt/soft_nograss,
 /area/groundbase/level1/centsquare)
 "UU" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
@@ -20321,12 +20321,12 @@
 /obj/effect/mouse_hole_spawner{
 	dir = 8
 	},
-/turf/simulated/floor/outdoors/newdirt_nograss{
+/turf/simulated/floor/outdoors/dirt/soft_nograss{
 	outdoors = 0
 	},
 /area/maintenance/groundbase/level1/nwtunnel)
 "Vq" = (
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/groundbase/level1/southwestspur)
 "Vr" = (
 /obj/structure/cable/yellow{
@@ -20568,7 +20568,7 @@
 /area/maintenance/groundbase/level1/swtunnel)
 "VT" = (
 /obj/structure/bed/chair/sofa/bench/left,
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/groundbase/level1/southeastspur)
 "VU" = (
 /obj/item/weapon/storage/box/bodybags,
@@ -20808,7 +20808,7 @@
 /turf/simulated/floor/tiled,
 /area/groundbase/engineering/workshop)
 "Wx" = (
-/turf/simulated/floor/outdoors/newdirt_nograss{
+/turf/simulated/floor/outdoors/dirt/soft_nograss{
 	outdoors = 0
 	},
 /area/groundbase/level1/nw)
@@ -20828,7 +20828,7 @@
 /turf/simulated/floor/tiled/white,
 /area/groundbase/civilian/bar)
 "WB" = (
-/turf/simulated/floor/outdoors/newdirt{
+/turf/simulated/floor/outdoors/dirt/soft{
 	outdoors = 0
 	},
 /area/maintenance/groundbase/level1/nwtunnel)
@@ -21030,7 +21030,7 @@
 /turf/simulated/floor/tiled,
 /area/groundbase/engineering/workshop)
 "WX" = (
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/maintenance/groundbase/level1/setunnel)
 "WY" = (
 /obj/structure/table/rack{
@@ -21475,7 +21475,7 @@
 /turf/simulated/wall/r_wall,
 /area/groundbase/security/armory)
 "XX" = (
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/groundbase/level1/eastspur)
 "XY" = (
 /turf/simulated/wall/r_wall,
@@ -21565,7 +21565,7 @@
 	},
 /area/groundbase/level1/northspur)
 "Yj" = (
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/groundbase/level1/sw)
 "Yk" = (
 /obj/machinery/atmospherics/pipe/simple/visible/cyan{
@@ -21709,7 +21709,7 @@
 /turf/simulated/floor/outdoors/sidewalk/slab,
 /area/groundbase/level1/southwestspur)
 "YC" = (
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/groundbase/level1/centsquare)
 "YD" = (
 /obj/effect/floor_decal/corner/paleblue/full{
@@ -21793,7 +21793,7 @@
 /turf/simulated/wall/r_wall,
 /area/groundbase/engineering/techstorage)
 "YM" = (
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/groundbase/level1/westspur)
 "YN" = (
 /obj/structure/closet/secure_closet/detective,
@@ -22188,7 +22188,7 @@
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/groundbase/command/ai/robot)
 "ZK" = (
-/turf/simulated/floor/outdoors/newdirt_nograss{
+/turf/simulated/floor/outdoors/dirt/soft_nograss{
 	outdoors = 0
 	},
 /area/groundbase/civilian/clown)

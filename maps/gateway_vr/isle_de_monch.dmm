@@ -152,7 +152,7 @@
 /area/tether_away/beach/resort)
 "iM" = (
 /obj/structure/barricade,
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/tether_away/beach/resort)
 "jk" = (
 /turf/simulated/floor/water/beach{
@@ -165,7 +165,7 @@
 /area/tether_away/beach/resort)
 "ju" = (
 /obj/structure/girder,
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/tether_away/beach/resort)
 "jy" = (
 /turf/simulated/floor/water/beach/corner,
@@ -360,7 +360,7 @@
 /obj/structure/hull_corner{
 	dir = 4
 	},
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/tether_away/beach/resort)
 "rd" = (
 /obj/effect/map_helper/airlock/sensor/int_sensor,
@@ -700,7 +700,7 @@
 /turf/simulated/floor/plating,
 /area/tether_away/beach/resort)
 "Em" = (
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/tether_away/beach/resort)
 "ET" = (
 /turf/simulated/floor/outdoors/grass,
@@ -708,7 +708,7 @@
 "Fr" = (
 /obj/structure/barricade,
 /obj/structure/barricade/planks,
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/tether_away/beach/resort)
 "Ft" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/fuel{
@@ -718,7 +718,7 @@
 /area/tether_away/beach/resort)
 "FK" = (
 /obj/structure/hull_corner,
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/tether_away/beach/resort)
 "FP" = (
 /obj/effect/decal/remains,
@@ -767,7 +767,7 @@
 /area/tether_away/beach/resort)
 "Hx" = (
 /obj/effect/decal/remains,
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/tether_away/beach/resort)
 "HH" = (
 /obj/machinery/door/firedoor/glass,

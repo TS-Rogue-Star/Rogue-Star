@@ -64,7 +64,7 @@
 /turf/simulated/floor/lino,
 /area/redgate/eggnogtown/bar)
 "ai" = (
-/turf/simulated/floor/outdoors/newdirt{
+/turf/simulated/floor/outdoors/dirt/soft{
 	temperature = 253.15
 	},
 /area/redgate/eggnogtown)
@@ -138,7 +138,7 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/turf/simulated/floor/outdoors/newdirt_nograss{
+/turf/simulated/floor/outdoors/dirt/soft_nograss{
 	temperature = 258.15
 	},
 /area/redgate/eggnogtown/bar)
@@ -146,7 +146,7 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
-/turf/simulated/floor/outdoors/newdirt_nograss{
+/turf/simulated/floor/outdoors/dirt/soft_nograss{
 	temperature = 258.15
 	},
 /area/redgate/eggnogtown/bar)
@@ -169,7 +169,7 @@
 /area/redgate/eggnogtown/bar)
 "aw" = (
 /obj/structure/bonfire,
-/turf/simulated/floor/outdoors/newdirt{
+/turf/simulated/floor/outdoors/dirt/soft{
 	temperature = 253.15
 	},
 /area/redgate/eggnogtown)
@@ -644,7 +644,7 @@
 	pixel_x = 28;
 	pixel_y = -26
 	},
-/turf/simulated/floor/outdoors/newdirt{
+/turf/simulated/floor/outdoors/dirt/soft{
 	outdoors = 0
 	},
 /area/redgate/eggnogtown/greenhouse)
@@ -1075,7 +1075,7 @@
 /area/redgate/eggnogtown/kitchihome/den)
 "gP" = (
 /obj/item/weapon/stool/padded,
-/turf/simulated/floor/outdoors/newdirt{
+/turf/simulated/floor/outdoors/dirt/soft{
 	outdoors = 0
 	},
 /area/redgate/eggnogtown/greenhouse)
@@ -1245,7 +1245,7 @@
 /obj/item/weapon/stool/padded{
 	dir = 8
 	},
-/turf/simulated/floor/outdoors/newdirt{
+/turf/simulated/floor/outdoors/dirt/soft{
 	outdoors = 0
 	},
 /area/redgate/eggnogtown/greenhouse)
@@ -1780,7 +1780,7 @@
 	},
 /area/redgate/eggnogtown)
 "rL" = (
-/turf/simulated/floor/outdoors/newdirt_nograss{
+/turf/simulated/floor/outdoors/dirt/soft_nograss{
 	temperature = 258.15
 	},
 /area/redgate/eggnogtown/visitorlounge)
@@ -1908,7 +1908,7 @@
 /obj/item/weapon/stool/padded{
 	dir = 4
 	},
-/turf/simulated/floor/outdoors/newdirt{
+/turf/simulated/floor/outdoors/dirt/soft{
 	outdoors = 0
 	},
 /area/redgate/eggnogtown/greenhouse)
@@ -2616,7 +2616,7 @@
 /turf/simulated/floor/wmarble,
 /area/redgate/eggnogtown/arturoswolfden)
 "DM" = (
-/turf/simulated/floor/outdoors/newdirt_nograss{
+/turf/simulated/floor/outdoors/dirt/soft_nograss{
 	temperature = 258.15
 	},
 /area/redgate/eggnogtown/hall)
@@ -2699,7 +2699,7 @@
 /area/redgate/eggnogtown/vibeout)
 "Fd" = (
 /obj/structure/bonfire/permanent,
-/turf/simulated/floor/outdoors/newdirt{
+/turf/simulated/floor/outdoors/dirt/soft{
 	outdoors = 0
 	},
 /area/redgate/eggnogtown/greenhouse)
@@ -2925,7 +2925,7 @@
 /turf/simulated/floor/bmarble,
 /area/redgate/eggnogtown/hall)
 "Iq" = (
-/turf/simulated/floor/outdoors/newdirt_nograss{
+/turf/simulated/floor/outdoors/dirt/soft_nograss{
 	temperature = 258.15
 	},
 /area/redgate/eggnogtown/greenhouse)
@@ -2992,7 +2992,7 @@
 /turf/simulated/floor/tiled/monotile,
 /area/redgate/eggnogtown/dining/botany)
 "Jm" = (
-/turf/simulated/floor/outdoors/newdirt{
+/turf/simulated/floor/outdoors/dirt/soft{
 	outdoors = 0
 	},
 /area/redgate/eggnogtown/greenhouse)
@@ -3929,7 +3929,7 @@
 /turf/simulated/wall/iron,
 /area/redgate/eggnogtown/cavehome)
 "Wr" = (
-/turf/simulated/floor/outdoors/newdirt_nograss{
+/turf/simulated/floor/outdoors/dirt/soft_nograss{
 	temperature = 258.15
 	},
 /area/redgate/eggnogtown)

@@ -334,7 +334,7 @@
 	},
 /area/groundbase/medical/patio)
 "dO" = (
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/groundbase/level3/nw)
 "dP" = (
 /obj/structure/bed/chair/office/light{

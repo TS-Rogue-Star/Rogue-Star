@@ -14,7 +14,7 @@
 /area/submap/groundbase/poi/wildvillage/square/square6)
 "o" = (
 /obj/machinery/portable_atmospherics/hydroponics/soil,
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/submap/groundbase/poi/wildvillage/square/square6)
 "q" = (
 /obj/structure/fence/corner{

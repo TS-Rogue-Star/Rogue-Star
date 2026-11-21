@@ -10,11 +10,11 @@
 /turf/simulated/floor/outdoors/grass/seasonal/dark/lowsnow,
 /area/submap/groundbase/poi/outdoor)
 "R" = (
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/submap/groundbase/poi/outdoor)
 "S" = (
 /obj/structure/table/bench/sifwooden,
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/submap/groundbase/poi/outdoor)
 
 (1,1,1) = {"

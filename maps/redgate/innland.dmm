@@ -900,7 +900,7 @@
 	},
 /area/redgate/wilds)
 "ge" = (
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/redgate/wilds)
 "kw" = (
 /turf/unsimulated/wall/planetary/normal/virgo4{
@@ -966,7 +966,7 @@
 /turf/simulated/floor/water,
 /area/redgate/wilds)
 "ve" = (
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/dirt/soft,
 /area/redgate/structure/powered)
 "xW" = (
 /turf/simulated/floor/outdoors/grass/seasonal{
