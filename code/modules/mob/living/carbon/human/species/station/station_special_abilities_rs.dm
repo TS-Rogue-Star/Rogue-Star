@@ -329,7 +329,9 @@
 		return
 	target.visible_message(SPAN_OCCULT("\The [target] falls through the ground inside of \the [our_ring]!"),SPAN_OCCULT("You fall through the ground inside of \the [our_ring], and into someone's [destination.name]!"))
 	to_chat(holder,SPAN_OCCULT("\The [target] suddenly falls into your [our_ring]!!"))
-	target.forceMove(destination)	//Gworp
+	if(target.buckled)
+		target.buckled.unbuckle_mob()
+	destination.nom_mob(target, holder)	//Gworp
 
 /obj/fairy_ring
 	name = "Fairy Ring"

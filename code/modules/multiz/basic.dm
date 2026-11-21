@@ -56,16 +56,18 @@ var/list/z_levels = list()// Each bit re... haha just kidding this is a list of 
 
 //RS ADD START
 /proc/CheckMobZConnection(var/mob/living/A, var/mob/living/B)
-	if(A.z == B.z)
+	var/turf/Aturf = get_turf(A)
+	var/turf/Bturf = get_turf(B)
+	if(Aturf.z == Bturf.z)
 		return TRUE
-	if(AreConnectedZLevels(A.z, B.z))
+	if(AreConnectedZLevels(Aturf.z, Bturf.z))
 		return TRUE
-	var/obj/effect/overmap/visitable/V = get_overmap_sector(A.z)
+	var/obj/effect/overmap/visitable/V = get_overmap_sector(Aturf.z)
 	if(!V)
 		return FALSE
-	if(!(A.z in V.map_z))
+	if(!(Aturf.z in V.map_z))
 		return FALSE
-	if(!(B.z in V.map_z))
+	if(!(Bturf.z in V.map_z))
 		return FALSE
 	return TRUE
 //RS ADD END
