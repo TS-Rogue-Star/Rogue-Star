@@ -218,6 +218,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 /area/centcom/evac
 	name = "\improper CentCom Emergency Shuttle"
+	dynamic_lighting = 1
 
 /area/centcom/suppy
 	name = "\improper CentCom Supply Shuttle"
@@ -233,6 +234,11 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 /area/centcom/living
 	name = "\improper CentCom Living Quarters"
+	dynamic_lighting = 1
+
+/area/centcom/shuttlepods
+	name = "\improper CentCom Shuttle Zone"
+	dynamic_lighting = 1
 
 /area/centcom/specops
 	name = "\improper CentCom Special Ops"
@@ -242,45 +248,55 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 /area/centcom/holding
 	name = "\improper Holding Facility"
+	dynamic_lighting = 1
 
 /area/centcom/terminal
 	name = "\improper Docking Terminal"
 	icon_state = "centcom_dock"
 	ambience = AMBIENCE_ARRIVALS
+	dynamic_lighting = 1
 
 /area/centcom/tram
 	name = "\improper Tram Station"
 	ambience = AMBIENCE_ARRIVALS
+	dynamic_lighting = 1
 
 /area/centcom/security
 	name = "\improper CentCom Security"
 	icon_state = "centcom_security"
+	dynamic_lighting = 1
 
 /area/centcom/medical
 	name = "\improper CentCom Medical"
 	icon_state = "centcom_medical"
+	dynamic_lighting = 1
 
 /area/centcom/command
 	name = "\improper CentCom Command" //Central Command Command totally isn't RAS Syndrome in action.
 	icon_state = "centcom_command"
 	ambience = AMBIENCE_HIGHSEC
+	dynamic_lighting = 1
 
 /area/centcom/main_hall
 	name = "\improper Main Hallway"
 	icon_state = "centcom_hallway1"
+	dynamic_lighting = 1
 
 /area/centcom/bar
 	name = "\improper CentCom Bar"
 	icon_state = "centcom_crew"
+	dynamic_lighting = 1
 
 /area/centcom/restaurant
 	name = "\improper CentCom Restaurant"
 	icon_state = "centcom_crew"
+	dynamic_lighting = 1
 
 /area/centcom/bathroom
 	name = "\improper CentCom Bathroom"
 	icon_state = "centcom_crew"
 	sound_env = SMALL_ENCLOSED
+	dynamic_lighting = 1
 
 //SYNDICATES
 
