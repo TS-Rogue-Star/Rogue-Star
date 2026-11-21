@@ -9814,12 +9814,6 @@
 	},
 /turf/simulated/floor/carpet,
 /area/moonbase/dorms/dorm5)
-"Ar" = (
-/obj/machinery/alarm{
-	dir = 4
-	},
-/turf/simulated/floor/plating,
-/area/maintenance/moonbase/basement/northair)
 "As" = (
 /obj/machinery/light/small{
 	dir = 1
@@ -24774,7 +24768,7 @@ zv
 mu
 xq
 bv
-Ar
+mu
 kN
 nP
 zH
