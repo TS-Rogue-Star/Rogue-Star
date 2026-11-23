@@ -12,5 +12,7 @@ GLOBAL_LIST_INIT(hair_gradients, list(
 	"Reflected High (Inverted)" = "reflected_inverse_high",
 	"Wavy" = "wavy",
 	"Striped" = "striped",
-	"Striped (Vertical)" = "striped_vertical"
+	"Striped (Vertical)" = "striped_vertical",
+	"Striped (Pinwheel)" = "striped_pinwheel", //RS Add - Pinwheel gradient
+	"Star" = "star" // RS Add - Star gradient
 	))

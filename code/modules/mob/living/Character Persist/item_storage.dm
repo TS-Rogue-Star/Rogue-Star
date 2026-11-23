@@ -56,8 +56,7 @@ var/global/list/permanent_unlockables = list(
 	/obj/item/clothing/mask/muzzle/ballgag/ringgag,
 	/obj/item/clothing/glasses/sunglasses/blindfold,
 	/obj/item/capture_crystal,
-	/obj/item/selectable_item/chemistrykit/gender
-)
+	/obj/item/selectable_item/chemistrykit/gender)
 
 /datum/etching
 	var/triangles = 0							//Triangle money
