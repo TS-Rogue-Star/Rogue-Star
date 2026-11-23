@@ -984,7 +984,8 @@ var/list/preferences_datums = list()
 	else if(href_list["resetslot"])
 		if("No" == tgui_alert(usr, "This will reset the current slot. Continue?", "Reset current slot?", list("No", "Yes")))
 			return 0
-		if("No" == tgui_alert(usr, "Are you completely sure that you want to reset this character slot?", "Reset current slot?", list("No", "Yes")))
+		var/choice = tgui_input_text(usr, "This action will PERMANENTLY DELETE [real_name]'s character data. If you would like to proceed, please enter the character's full name.","THIS IS PERMANENT")	//RS EDIT
+		if(choice != real_name)	//RS EDIT
 			return 0
 		load_character(SAVE_RESET)
 		sanitize_preferences()
