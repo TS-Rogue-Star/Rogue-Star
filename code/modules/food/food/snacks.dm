@@ -1,3 +1,7 @@
+/////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star November 2026: Food Memories //
+/////////////////////////////////////////////////////////////////
+
 //Food items that are eaten normally and don't leave anything behind.
 /obj/item/weapon/reagent_containers/food/snacks
 	name = "snack"
@@ -14,6 +18,7 @@
 	var/bitecount = 0
 	var/trash = null
 	var/slice_path
+	var/knife_slice_path // RS Add: Food Memories (Lira, November 2026)
 	var/slices_num
 	var/dried_type = null
 	var/dry = 0
@@ -142,7 +147,7 @@
 
 		//Check to see if we can above, feeding/eating below
 		if(user == feedee)
-			go_on_take_a_bite(feedee)
+			go_on_take_a_bite(feedee, user = user)
 			var/list/hungry_adverbs = list("hungrily","ravenously","energetically","impatiently","vigorously","zealously","voraciously","eagerly","greedily")
 			var/list/swallow_verbs = list("swallow","gulp","devour","eat","consume","ingest")
 			if (fullness <= 50)
@@ -271,6 +276,7 @@
 				feed_duration = reagent_transfer * 2
 				feedee.add_modifier(/datum/modifier/forcefeeding)
 
+		var/datum/cooking_memory_binding/operator = capture_cooking_operator(feeder)
 		if(!do_mob(feeder, feedee, feed_duration, exclusive = TASK_USER_EXCLUSIVE))
 			to_chat(feeder,SPAN_WARNING("You were interrupted."))
 			var/datum/modifier/forcefeeding/F = feedee.get_modifier_of_type(/datum/modifier/forcefeeding)
@@ -288,12 +294,12 @@
 					forceMove(belly_target)
 					feedee.visible_message(SPAN_NOTICE("\The [feeder] manages to [feed_verb] the whole [src] to \the [feedee]!!!"),runemessage = "N O M")
 					return TRUE
-				go_on_take_a_bite(feedee)
+				go_on_take_a_bite(feedee, user = operator?.resolve())
 				feedee.visible_message(SPAN_NOTICE("\The [feeder] manages to [feed_verb] \the [src] to \the [feedee]!!!"),runemessage = "nom")
 			if(I_DISARM)
 				//slap someone with food knocking them down and feeding them a bite and destroying the food
 				var/food_name = name
-				go_on_take_a_bite(feedee)
+				go_on_take_a_bite(feedee, user = operator?.resolve())
 				feedee.visible_message(SPAN_DANGER("\The [food_name] splatters all over \the [feedee]!!!"))
 				feedee.smelly = TRUE
 				if(!QDELETED(src))
@@ -304,7 +310,7 @@
 				return
 			if(I_HURT)
 				//shove food inside giving nutrition but destroying the food
-				go_on_take_a_bite(feedee,TRUE)
+				go_on_take_a_bite(feedee, TRUE, operator?.resolve())
 				if(QDELETED(src))
 					feedee.visible_message(SPAN_DANGER("\The [feeder] manages to [feed_verb] the whole [src] into \the [feedee]!!!"),runemessage = "U L P")
 				else
@@ -316,16 +322,12 @@
 		return TRUE
 	return FALSE
 
-/obj/item/weapon/reagent_containers/food/snacks/proc/go_on_take_a_bite(var/mob/living/L,var/max = FALSE)
+/obj/item/weapon/reagent_containers/food/snacks/proc/go_on_take_a_bite(var/mob/living/L, var/max = FALSE, var/mob/user = null)
 	if(!reagents || !reagents.total_volume)	//Handle ingestion of the reagent.
 		return FALSE
 	playsound(L, eating_sound, rand(10,50), 1, preference = /datum/client_preference/food_eating_noises)
-	if(max)
-		reagents.trans_to_mob(L, reagents.total_volume, CHEM_INGEST)
-	else if(reagents.total_volume > bitesize)
-		reagents.trans_to_mob(L, bitesize, CHEM_INGEST)
-	else
-		reagents.trans_to_mob(L, reagents.total_volume, CHEM_INGEST)
+	var/amount = max ? reagents.total_volume : min(bitesize, reagents.total_volume)
+	reagents.trans_to_mob(L, amount, CHEM_INGEST, source_mixer = user)
 	bitecount++
 	On_Consume(L)
 	return TRUE
@@ -425,7 +427,7 @@
 			var/reagents_per_slice = reagents.total_volume/slices_num
 			for(var/i=1 to (slices_num-slices_lost))
 				var/obj/slice = new slice_path (src.loc)
-				reagents.trans_to_obj(slice, reagents_per_slice)
+				reagents.trans_to_obj(slice, reagents_per_slice, mixer = user) // RS Edit: Food Memories (Lira, November 2026)
 				if(food_inserted_micros && food_inserted_micros.len && istype(slice, /obj/item/weapon/reagent_containers/food/snacks))
 					var/obj/item/weapon/reagent_containers/food/snacks/S = slice
 					for(var/mob/living/F in food_inserted_micros)
@@ -455,6 +457,13 @@
 		return
 
 	return ..()
+
+// RS Add: Food Memories (Lira, November 2026)
+/obj/item/weapon/reagent_containers/food/snacks/proc/make_knife_slices(var/mob/user)
+	var/obj/item/weapon/reagent_containers/food/snacks/piece
+	for(var/i in 1 to slices_num)
+		piece = new knife_slice_path(src)
+	piece?.record_hand_preparation(user)
 
 /obj/item/weapon/reagent_containers/food/snacks/proc/is_sliceable()
 	return (slices_num && slice_path && slices_num > 0)
@@ -498,7 +507,7 @@
 	user.nutrition += 100 * (1 / user.mob_size)	//RS ADD
 	bitecount++
 	if(reagents)
-		reagents.trans_to_mob(user, bitesize, CHEM_INGEST)
+		reagents.trans_to_mob(user, bitesize, CHEM_INGEST, source_mixer = user) // RS Edit: Food Memories (Lira, November 2026)
 	spawn(5)
 		if(!src && !user.client)
 			user.custom_emote(1,"[pick("burps", "cries for more", "burps twice", "looks at the area where the food was")]")
@@ -1004,10 +1013,20 @@
 	user.drop_from_inventory(src)
 	qdel(src)
 
+// RS Add: Food Memories (Lira, November 2026)
+/obj/item/weapon/reagent_containers/food/snacks/egg/throw_at(atom/target, range, speed, mob/thrower, spin = TRUE, datum/callback/callback)
+	. = ..()
+	if(.)
+		var/datum/thrownthing/flight = throwing
+		flight.source_mixer = capture_cooking_operator(thrower)
+
 /obj/item/weapon/reagent_containers/food/snacks/egg/throw_impact(atom/hit_atom)
 	. = ..()
 	new/obj/effect/decal/cleanable/egg_smudge(src.loc)
-	src.reagents.splash(hit_atom, reagents.total_volume)
+	// RS Edit Start: Food Memories (Lira, November 2026)
+	var/datum/thrownthing/flight = SSthrowing.processing[src]
+	src.reagents.splash(hit_atom, reagents.total_volume, source_mixer = flight?.source_mixer?.resolve())
+	// RS Edit End
 	src.visible_message("<font color='red'>[src.name] has been squashed.</font>","<font color='red'>You hear a smack.</font>")
 	qdel(src)
 
@@ -1675,6 +1694,12 @@
 	reagents.add_reagent("amatoxin", 3)
 	reagents.add_reagent("psilocybin", 1)
 
+// RS Add Start: Food Memories (Lira, November 2026)
+/var/const/EXCEPTIONAL_PLUMP_PIE_CHANCE = 10
+/var/const/EXCEPTIONAL_PLUMP_PIE_NAME = "exceptional plump pie"
+/var/const/EXCEPTIONAL_PLUMP_PIE_DESC = "The oven is taken by a fey mood! It has cooked an exceptional plump pie!"
+// RS Add End
+
 /obj/item/weapon/reagent_containers/food/snacks/plump_pie
 	name = "plump pie"
 	desc = "I bet you love stuff made out of plump helmets!"
@@ -1685,11 +1710,13 @@
 	nutriment_desc = list("heartiness" = 2, "mushroom" = 3, "pie" = 3)
 	bitesize = 2
 
-/obj/item/weapon/reagent_containers/food/snacks/plump_pie/Initialize()
+// RS Edit: Food Memories (Lira, November 2026)
+/obj/item/weapon/reagent_containers/food/snacks/plump_pie/Initialize(mapload, var/exceptional)
 	. = ..()
-	if(prob(10))
-		name = "exceptional plump pie"
-		desc = "Microwave is taken by a fey mood! It has cooked an exceptional plump pie!"
+	is_exceptional = isnull(exceptional) ? prob(EXCEPTIONAL_PLUMP_PIE_CHANCE) : exceptional
+	if(is_exceptional)
+		name = EXCEPTIONAL_PLUMP_PIE_NAME
+		desc = EXCEPTIONAL_PLUMP_PIE_DESC
 		reagents.add_reagent("nutriment", 8, nutriment_desc)
 		reagents.add_reagent("tricordrazine", 5)
 
@@ -2498,6 +2525,12 @@
 	. = ..()
 	reagents.add_reagent("slimejelly", 5)
 
+// RS Edit Start: Food Memories (Lira, November 2026)
+/var/const/EXCEPTIONAL_PLUMP_BISCUIT_CHANCE = 10
+/var/const/EXCEPTIONAL_PLUMP_BISCUIT_NAME = "exceptional plump helmet biscuit"
+/var/const/EXCEPTIONAL_PLUMP_BISCUIT_DESC = "Microwave is taken by a fey mood! It has cooked an exceptional plump helmet biscuit!"
+// RS Edit End
+
 /obj/item/weapon/reagent_containers/food/snacks/plumphelmetbiscuit
 	name = "plump helmet biscuit"
 	desc = "This is a finely-prepared plump helmet biscuit. The ingredients are exceptionally minced plump helmet, and well-minced dwarven wheat flour."
@@ -2508,11 +2541,13 @@
 	nutriment_desc = list("mushroom" = 4)
 	bitesize = 2
 
-/obj/item/weapon/reagent_containers/food/snacks/plumphelmetbiscuit/Initialize()
+// RS Edit: Food Memories (Lira, November 2026)
+/obj/item/weapon/reagent_containers/food/snacks/plumphelmetbiscuit/Initialize(mapload, var/exceptional)
 	. = ..()
-	if(prob(10))
-		name = "exceptional plump helmet biscuit"
-		desc = "Microwave is taken by a fey mood! It has cooked an exceptional plump helmet biscuit!"
+	is_exceptional = isnull(exceptional) ? prob(EXCEPTIONAL_PLUMP_BISCUIT_CHANCE) : exceptional
+	if(is_exceptional)
+		name = EXCEPTIONAL_PLUMP_BISCUIT_NAME
+		desc = EXCEPTIONAL_PLUMP_BISCUIT_DESC
 		reagents.add_reagent("nutriment", 3, nutriment_desc)
 
 /obj/item/weapon/reagent_containers/food/snacks/chawanmushi
@@ -2708,6 +2743,11 @@
 			reagents.add_reagent("tomatojuice", 5)
 			reagents.add_reagent("imidazoline", 5)
 
+// RS Add Start: Food Memories (Lira, November 2026)
+/var/const/SPECIAL_WISH_SOUP_CHANCE = 25
+/var/const/SPECIAL_WISH_SOUP_DESC = "A wish come true!"
+// RS Add End
+
 /obj/item/weapon/reagent_containers/food/snacks/wishsoup
 	name = "Wish Soup"
 	desc = "I wish this was soup."
@@ -2717,11 +2757,13 @@
 	center_of_mass = list("x"=16, "y"=11)
 	bitesize = 5
 
-/obj/item/weapon/reagent_containers/food/snacks/wishsoup/Initialize()
+// RS Edit: Food Memories (Lira, November 2026)
+/obj/item/weapon/reagent_containers/food/snacks/wishsoup/Initialize(mapload, var/exceptional)
 	. = ..()
 	reagents.add_reagent("water", 10)
-	if(prob(25))
-		src.desc = "A wish come true!"
+	is_exceptional = isnull(exceptional) ? prob(SPECIAL_WISH_SOUP_CHANCE) : exceptional
+	if(is_exceptional)
+		desc = SPECIAL_WISH_SOUP_DESC
 		reagents.add_reagent("nutriment", 8, list("something good" = 8))
 
 /obj/item/weapon/reagent_containers/food/snacks/tomatosoup
@@ -2750,6 +2792,8 @@
 	. = ..()
 	reagents.add_reagent("mushroom_soup", 10)
 
+GLOBAL_LIST_INIT(beet_soup_names, list("borsch", "bortsch", "borstch", "borsh", "borshch", "borscht")) // RS Add: Food Memories (Lira, November 2026)
+
 /obj/item/weapon/reagent_containers/food/snacks/beetsoup
 	name = "beet soup"
 	desc = "Wait, how do you spell it again..?"
@@ -2761,7 +2805,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/beetsoup/Initialize()
 	. = ..()
-	name = pick(list("borsch","bortsch","borstch","borsh","borshch","borscht"))
+	name = pick(GLOB.beet_soup_names) // RS Edit: Food Memories (Lira, November 2026)
 	reagents.add_reagent("beet_soup", 10)
 
 /obj/item/weapon/reagent_containers/food/snacks/soup/onion
@@ -4196,10 +4240,12 @@
 	reagents.add_reagent("protein", 1)
 
 // Dough + rolling pin = flat dough
+// RS Edit: Food Memories (Lira, November 2026)
 /obj/item/weapon/reagent_containers/food/snacks/dough/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(istype(W,/obj/item/weapon/material/kitchen/rollingpin))
-		new /obj/item/weapon/reagent_containers/food/snacks/sliceable/flatdough(src)
+		var/obj/item/weapon/reagent_containers/food/snacks/sliceable/flatdough/result = new(src)
 		to_chat(user, "You flatten the dough.")
+		result.record_hand_preparation(user)
 		qdel(src)
 
 // slicable into 3xdoughslices
@@ -4263,10 +4309,12 @@
 		qdel(src)
 
 // Burger + cheese wedge = cheeseburger
+// RS Edit: Food Memories (Lira, November 2026)
 /obj/item/weapon/reagent_containers/food/snacks/monkeyburger/attackby(obj/item/weapon/reagent_containers/food/snacks/cheesewedge/W as obj, mob/user as mob)
 	if(istype(W))// && !istype(src,/obj/item/weapon/reagent_containers/food/snacks/cheesewedge))
-		new /obj/item/weapon/reagent_containers/food/snacks/cheeseburger(src)
+		var/obj/item/weapon/reagent_containers/food/snacks/cheeseburger/result = new(src)
 		to_chat(user, "You make a cheeseburger.")
+		result.record_hand_preparation(user)
 		qdel(W)
 		qdel(src)
 		return
@@ -4274,10 +4322,12 @@
 		. = ..()
 
 // Human Burger + cheese wedge = cheeseburger
+// RS Edit: Food Memories (Lira, November 2026)
 /obj/item/weapon/reagent_containers/food/snacks/human/burger/attackby(obj/item/weapon/reagent_containers/food/snacks/cheesewedge/W as obj, mob/user as mob)
 	if(istype(W))
-		new /obj/item/weapon/reagent_containers/food/snacks/cheeseburger(src)
+		var/obj/item/weapon/reagent_containers/food/snacks/cheeseburger/result = new(src)
 		to_chat(user, "You make a cheeseburger.")
+		result.record_hand_preparation(user)
 		qdel(W)
 		qdel(src)
 		return
@@ -4311,6 +4361,10 @@
 	desc = "A thin piece of raw meat."
 	icon = 'icons/obj/food_ingredients.dmi'
 	icon_state = "rawcutlet"
+	// RS Add Start: Food Memories (Lira, November 2026)
+	knife_slice_path = /obj/item/weapon/reagent_containers/food/snacks/rawbacon
+	slices_num = 2
+	// RS Add End
 	bitesize = 1
 	center_of_mass = list("x"=17, "y"=20)
 
@@ -4372,13 +4426,14 @@
 	nutriment_desc = list("bread" = 3)
 
 // potato + knife = raw sticks
+// RS Edit: Food Memories (Lira, November 2026)
 /obj/item/weapon/reagent_containers/food/snacks/grown/attackby(obj/item/weapon/W, mob/user)
 	if(seed && seed.kitchen_tag && seed.kitchen_tag == "potato" && istype(W,/obj/item/weapon/material/knife))
-		new /obj/item/weapon/reagent_containers/food/snacks/rawsticks(get_turf(src))
+		make_cut_food(/obj/item/weapon/reagent_containers/food/snacks/rawsticks, user)
 		to_chat(user, "<span class='notice'>You cut the potato.</span>")
 		qdel(src)
 	else if(seed && seed.kitchen_tag && seed.kitchen_tag == "sunflower" && istype(W,/obj/item/weapon/material/knife))
-		new /obj/item/weapon/reagent_containers/food/snacks/rawsunflower(get_turf(src))
+		make_cut_food(/obj/item/weapon/reagent_containers/food/snacks/rawsunflower, user)
 		to_chat(user, "<span class='notice'>You remove the seeds from the flower, slightly damaging them.</span>")
 		qdel(src)
 	else
@@ -4965,7 +5020,7 @@
 		reagents.maximum_volume += extra
 
 	//Suck the coating out of the holder
-	C.holder.trans_to_holder(reagents, req)
+	C.holder.trans_to_holder(reagents, req, mixer = user) // RS Edit: Food Memories (Lira, November 2026)
 
 	//We're done with C now, repurpose the var to hold a reference to our local instance of it
 	C = reagents.get_reagent(id)
@@ -5174,8 +5229,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/rawcutlet/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(istype(W,/obj/item/weapon/material/knife))
-		new /obj/item/weapon/reagent_containers/food/snacks/rawbacon(src)
-		new /obj/item/weapon/reagent_containers/food/snacks/rawbacon(src)
+		make_knife_slices(user) // RS Edit: Food Memories (Lira, November 2026)
 		to_chat(user, "You slice the cutlet into thin strips of bacon.")
 		qdel(src)
 	else
@@ -5657,7 +5711,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/chipplate/attack_hand(mob/user as mob)
 	var/obj/item/weapon/reagent_containers/food/snacks/returningitem = new vendingobject(loc)
-	reagents.trans_to(returningitem, bitesize)
+	reagents.trans_to(returningitem, bitesize, mixer = user) // RS Edit: Food Memories (Lira, November 2026)
 	returningitem.bitesize = 2
 	user.put_in_hands(returningitem)
 	if (reagents && reagents.total_volume)
@@ -5700,6 +5754,7 @@
 	center_of_mass = list("x"=16, "y"=16)
 	nutriment_amt = 20
 
+// RS Edit: Food Memories (Lira, November 2026)
 /obj/item/weapon/reagent_containers/food/snacks/dip/attackby(obj/item/weapon/reagent_containers/food/snacks/item as obj, mob/user as mob)
 	. = ..()
 	var/obj/item/weapon/reagent_containers/food/snacks/returningitem
@@ -5710,7 +5765,7 @@
 	if(returningitem)
 		returningitem.reagents.clear_reagents() //Clear the new chip
 		var/memed = 0
-		item.reagents.trans_to(returningitem, item.reagents.total_volume) //Old chip to new chip
+		item.reagents.trans_to(returningitem, item.reagents.total_volume, mixer = user) //Old chip to new chip
 		if(item.icon_state == "chip_half")
 			returningitem.icon_state = "[returningitem.icon_state]_half"
 			returningitem.bitesize = clamp(returningitem.reagents.total_volume,1,10)
@@ -5722,7 +5777,7 @@
 		else
 			returningitem.bitesize = clamp(returningitem.reagents.total_volume*0.5,1,10)
 		qdel(item)
-		reagents.trans_to(returningitem, bitesize) //Dip to new chip
+		reagents.trans_to(returningitem, bitesize, mixer = user) //Dip to new chip
 		user.put_in_hands(returningitem)
 
 		if (reagents && reagents.total_volume)

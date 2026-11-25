@@ -146,7 +146,7 @@
 		if(reagents.total_volume)
 			if(M.reagents)
 				var/contained = reagents.get_reagents()
-				var/trans = reagents.trans_to_mob(M, 30, CHEM_BLOOD)
+				var/trans = reagents.trans_to_mob(M, 30, CHEM_BLOOD, source_mixer = user) // RS Edit: Food Memories (Lira, November 2026)
 				add_attack_logs(user,M,"Injected with [src.name] containing [contained], trasferred [trans] units")
 
 /*

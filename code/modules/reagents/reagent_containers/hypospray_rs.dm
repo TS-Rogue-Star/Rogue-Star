@@ -203,6 +203,7 @@
 			to_chat(user, "<span class='notice'>[L] is resisting your attempt to inject them with \the [src].</span>")
 			inject_wait_me = 30
 	add_attack_logs(user, L, "[user] attemped to use [src] on [L] which had [contained]")
+	var/datum/cooking_memory_binding/operator = capture_cooking_operator(user)
 	injecting = 1
 	if(!upgraded)
 		if(L.wear_suit)
@@ -227,10 +228,10 @@
 	else
 		add_attack_logs(user, L, "[user] applied [src] on [L] with [src] which had [contained]")
 	if(amount_per_transfer_from_this == "vial") //use vial transfer rate
-		vial.reagents.trans_to_mob(target, vial.amount_per_transfer_from_this, CHEM_BLOOD)
+		vial.reagents.trans_to_mob(target, vial.amount_per_transfer_from_this, CHEM_BLOOD, source_mixer = operator?.resolve())
 		to_chat(user, span_notice("You inject [vial.amount_per_transfer_from_this] units of the solution. The hypospray's cartridge now contains [vial.reagents.total_volume] units."))
 	else //Use hypo transfer rate
-		vial.reagents.trans_to_mob(target, amount_per_transfer_from_this, CHEM_BLOOD)
+		vial.reagents.trans_to_mob(target, amount_per_transfer_from_this, CHEM_BLOOD, source_mixer = operator?.resolve())
 		to_chat(user, span_notice("You inject [amount_per_transfer_from_this] units of the solution. The hypospray's cartridge now contains [vial.reagents.total_volume] units."))
 	injecting = 0
 	playsound(loc, 'sound/effects/hypospray.ogg', 50)

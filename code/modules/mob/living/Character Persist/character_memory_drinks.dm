@@ -3,9 +3,12 @@
 //////////////////////////////////////////////////////////////////////
 // Updated by Lira for Rogue Star November 2026: Chemistry Memories //
 //////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star November 2026: Food Memories ///////
+//////////////////////////////////////////////////////////////////////
 
 /datum/character_memory
 	var/list/drinks = list()
+	var/tmp/list/pending_drink_batches = list()
 	var/selected_drink
 
 /proc/character_memory_drink_result(var/decl/chemical_reaction/recipe)
@@ -45,65 +48,12 @@
 /datum/character_memory/proc/init_drinks_schema()
 	return execute_database_update("CREATE TABLE IF NOT EXISTS drinks (drink_id TEXT NOT NULL PRIMARY KEY, times_made INTEGER NOT NULL DEFAULT 0, first_made TEXT, last_made TEXT)", "create character memory drinks table")
 
-/datum/character_memory/proc/load_database_drinks()
-	var/list/rows = execute_database_query("SELECT drink_id, times_made, first_made, last_made FROM drinks", "load character memory drinks")
-	if(!islist(rows))
-		return FALSE
-	drinks = list()
-	for(var/list/row as anything in rows)
-		var/drink_id = row["drink_id"]
-		var/times_made = text2num("[row["times_made"]]")
-		if(!istext(drink_id) || !length(drink_id) || !isnum(times_made) || times_made < 1)
-			continue
-		drinks[drink_id] = list("times_made" = round(times_made), "first_made" = row["first_made"], "last_made" = row["last_made"])
-	sync_bartending_xp()
-	return TRUE
-
-/datum/character_memory/proc/save_database_drink(var/drink_id)
-	var/list/entry = drinks[drink_id]
-	if(!islist(entry))
-		return FALSE
-	return execute_database_update(list("INSERT OR REPLACE INTO drinks (drink_id, times_made, first_made, last_made) VALUES (?, ?, ?, ?)", drink_id, entry["times_made"], entry["first_made"], entry["last_made"]), "save character memory drink")
-
-/datum/character_memory/proc/save_database_drinks()
-	for(var/drink_id in drinks)
-		if(!save_database_drink(drink_id))
-			return FALSE
-	return TRUE
-
-/datum/character_memory/proc/sync_bartending_xp()
-	var/datum/etching/etching = ourmob?.etching
-	if(!etching)
-		return
-	if(!islist(etching.xp))
-		etching.xp = list()
-	if(etching.xp["bartending"] != length(drinks))
-		etching.xp["bartending"] = length(drinks)
-		etching.needs_saving = TRUE
-
 /datum/character_memory/proc/record_drink(var/drink_id)
 	if(!can_track(ourmob) || shutting_down || !length(character_memory_drink_recipes(drink_id)))
 		return FALSE
-	if(!save_path)
-		load()
-	if(!savable || !save_path)
+	if(!bind_pending_recipes())
 		return FALSE
-	var/list/entry = drinks[drink_id]
-	var/first_time = !islist(entry)
-	var/today = get_date_key()
-	if(first_time)
-		entry = list("times_made" = 0, "first_made" = today)
-		drinks[drink_id] = entry
-	entry["times_made"]++
-	entry["last_made"] = today
-	if(!ensure_database() || !save_database_drink(drink_id))
-		needs_saving = TRUE
-	sync_bartending_xp()
-	if(first_time)
-		var/datum/reagent/drink = SSchemistry.chemical_reagents[drink_id]
-		to_chat(ourmob, SPAN_NOTICE("You learned to make [drink.name]! +1 bartending XP ([length(drinks)] total). Find the recipe in Memory's Drinks tab."))
-	SStgui.update_uis(src)
-	return TRUE
+	return record_recipe_batches(drink_id, drinks, pending_drink_batches)
 
 /datum/character_memory/proc/build_drink_ingredients(var/list/reagents, var/multiplier = 1)
 	var/list/rows = list()
@@ -184,7 +134,7 @@
 	data["ingredient_recipes"] = build_drink_ingredient_recipes(data["ingredients"], catalysts, next_path)
 	return data
 
-/datum/character_memory/proc/build_drink_ingredient_recipes(var/list/ingredients, var/list/catalysts, var/list/path)
+/datum/character_memory/proc/build_drink_ingredient_recipes(var/list/ingredients, var/list/catalysts, var/list/path, var/coating_id)
 	var/list/recipes = list()
 	if(length(path) >= 32)
 		return recipes
@@ -194,12 +144,16 @@
 	for(var/list/catalyst as anything in catalysts)
 		var/reagent_id = catalyst["id"]
 		amounts[reagent_id] = max(amounts[reagent_id], catalyst["total"])
+	if(coating_id)
+		amounts |= coating_id
 	for(var/reagent_id in amounts)
-		if(!length(known_reagent_recipes(reagent_id)) || (reagent_id in path))
+		if(reagent_id in path)
 			continue
 		for(var/decl/chemical_reaction/recipe as anything in known_reagent_recipes(reagent_id))
 			var/multiplier = max(1, CEILING(amounts[reagent_id] / recipe.result_amount, 1))
 			var/list/recipe_data = build_drink_recipe(recipe, multiplier, path)
+			if(reagent_id == coating_id)
+				recipe_data["notes"] = recipe_data["notes"] + "Repeat this batch until you have enough coating for every ingredient. The amount needed depends on each ingredient's size and contents."
 			LAZYADD(recipes[reagent_id], list(recipe_data))
 	return recipes
 
@@ -284,7 +238,7 @@
 	if(!(selected_drink in drinks))
 		selected_drink = length(rows) ? rows[1]["id"] : null
 	data["drinks"] = rows
-	data["bartending_xp"] = length(drinks)
+	data["bartending_xp"] = recipe_discoveries["bartending"] || 0
 	data["drinks_made"] = total_made
 	data["selected_drink"] = selected_drink
 	data["drink_detail"] = flatten_reagent_recipe_detail(build_drink_detail(selected_drink))

@@ -548,9 +548,10 @@
 		blood_DNA = null
 		return TRUE
 
-/atom/proc/on_rag_wipe(var/obj/item/weapon/reagent_containers/glass/rag/R)
+// RS Edit: Food Memories (Lira, November 2026)
+/atom/proc/on_rag_wipe(var/obj/item/weapon/reagent_containers/glass/rag/R, var/mob/user)
 	clean_blood()
-	R.reagents.splash(src, 1)
+	R.reagents.splash(src, 1, source_mixer = user)
 
 /atom/proc/get_global_map_pos()
 	if(!islist(global_map) || isemptylist(global_map)) return

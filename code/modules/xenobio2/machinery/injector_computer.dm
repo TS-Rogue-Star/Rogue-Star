@@ -88,6 +88,7 @@
 		ui.open()
 		ui.set_auto_update(1)
 
+// RS Edit: Food Memories (Lira, November 2026)
 /obj/machinery/computer/xenobio2/Topic(href, href_list)
 
 	if(..())
@@ -95,8 +96,9 @@
 
 	if(href_list["inject_target"])
 		active = 1
+		var/datum/cooking_memory_binding/operator = capture_cooking_operator(usr)
 		spawn(5)
-			injector.inject_reagents()
+			injector.inject_reagents(operator?.resolve())
 			active = 0
 	if(href_list["eject_occupant"])
 		injector.eject_xeno()

@@ -1,3 +1,7 @@
+/////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star November 2026: Food Memories //
+/////////////////////////////////////////////////////////////////
+
 /* * * * * * * * * * * * * * * * * * * * * * * * * *
  * /datum/recipe by rastaf0            13 apr 2011 *
  * * * * * * * * * * * * * * * * * * * * * * * * * *
@@ -48,6 +52,7 @@
 							// Coatings are used for batter, breadcrumbs, beer-batter, colonel's secret coating, etc
 
 	var/result				// Example: = /obj/item/weapon/reagent_containers/food/snacks/donut/normal
+	var/serving_type // RS Add: Food Memories (Lira, November 2026)
 	var/result_quantity = 1 // Number of instances of result that are created.
 	var/time = 100			// 1/10 part of second
 	
@@ -91,7 +96,8 @@
 		return FALSE
 	return .
 
-/datum/recipe/proc/check_fruit(var/obj/container, var/exact = FALSE)
+// RS Edit: Food Memories (Lira, November 2026)
+/datum/recipe/proc/check_fruit(var/obj/container, var/exact = FALSE, var/list/matched)
 	if (!fruit || !fruit.len)
 		return TRUE
 
@@ -104,6 +110,9 @@
 			if(!G.seed || !G.seed.kitchen_tag || isnull(checklist[G.seed.kitchen_tag]))
 				continue
 			if(check_coating(G))
+				if(matched && checklist[G.seed.kitchen_tag] > 0)
+					//We found a thing we need
+					matched += G
 				checklist[G.seed.kitchen_tag]--
 		for(var/ktag in checklist)
 			if(!isnull(checklist[ktag]))
@@ -114,7 +123,8 @@
 					break
 	return .
 
-/datum/recipe/proc/check_items(var/obj/container as obj, var/exact = FALSE)
+// RS Edit: Food Memories (Lira, November 2026)
+/datum/recipe/proc/check_items(var/obj/container as obj, var/exact = FALSE, var/list/matched)
 	if(!items || !items.len)
 		return TRUE
 	
@@ -131,6 +141,7 @@
 				for(var/i = 1; i < checklist.len+1; i++)
 					var/item_type = checklist[i]
 					if (istype(O,item_type))
+						matched?.Add(O)
 						checklist.Cut(i, i+1)
 						found = TRUE
 						break
@@ -145,6 +156,7 @@
 					var/item_type = checklist[i]
 					if (istype(O,item_type))
 						if(check_coating(O))
+							matched?.Add(O)
 							checklist.Cut(i, i+1)
 							found = TRUE
 							break
@@ -189,7 +201,8 @@
 
 // food-related
 // This proc is called under the assumption that the container has already been checked and found to contain the necessary ingredients
-/datum/recipe/proc/make_food(var/obj/container as obj)
+// RS Edit: Food Memories (Lira, November 2026)
+/datum/recipe/proc/make_food(var/obj/container as obj, var/list/prepared_batches, var/mob/cook)
 	if(!result)
 		log_runtime(EXCEPTION("<span class='danger'>Recipe [type] is defined without a result, please bug report this.</span>"))
 		if(istype(container, /obj/machinery/microwave))
@@ -213,34 +226,30 @@
 
 
 	//Find items we need
-	if (items && items.len)
-		for (var/i in items)
-			var/obj/item/I = locate(i) in container
-			if (I && I.reagents)
-				I.reagents.trans_to_holder(buffer,I.reagents.total_volume)
-			qdel(I)
+	var/list/ingredients = list()
+	var/all_items_found = check_items(container, matched = ingredients)
+	var/single_ingredient_type
+	if(length(items) == 1 && all_items_found)
+		var/obj/sole_item = ingredients[1]
+		single_ingredient_type = sole_item.type
 
 	//Find fruits
-	if (fruit && fruit.len)
-		var/list/checklist = list()
-		checklist = fruit.Copy()
-
-		for(var/obj/item/weapon/reagent_containers/food/snacks/grown/G in container)
-			if(!G.seed || !G.seed.kitchen_tag || isnull(checklist[G.seed.kitchen_tag]))
-				continue
-
-			if (checklist[G.seed.kitchen_tag] > 0)
-				//We found a thing we need
-				checklist[G.seed.kitchen_tag]--
-				if (G && G.reagents)
-					G.reagents.trans_to_holder(buffer,G.reagents.total_volume)
-				qdel(G)
+	var/all_fruit_found = check_fruit(container, matched = ingredients)
+	for(var/obj/ingredient as anything in ingredients)
+		if(ingredient.reagents)
+			ingredient.reagents.trans_to_holder(buffer, ingredient.reagents.total_volume, mixer = cook)
+		qdel(ingredient)
 
 	//And lastly deduct necessary quantities of reagents
+	var/all_reagents_found = TRUE
 	if (reagents && reagents.len)
 		for (var/r in reagents)
+			var/available_amount = container.reagents?.get_reagent_amount(r)
+			if(available_amount < reagents[r])
+				all_reagents_found = FALSE
 			//Doesnt matter whether or not there's enough, we assume that check is done before
-			container.reagents.trans_type_to(buffer, r, reagents[r])
+			if(available_amount)
+				container.reagents.trans_type_to(buffer, r, reagents[r], mixer = cook)
 
 	/*
 	Now we've removed all the ingredients that were used and we have the buffer containing the total of
@@ -256,8 +265,9 @@
 	*/
 	var/datum/reagents/holder = new/datum/reagents(10000000000)
 	var/list/results = list()
+	var/output_type = serving_type || result
 	while (tally < result_quantity)
-		var/obj/result_obj = new result(container)
+		var/obj/result_obj = new output_type(container)
 		results.Add(result_obj)
 
 		if (!result_obj.reagents)//This shouldn't happen
@@ -268,7 +278,7 @@
 			qdel(holder)
 			holder = result_obj.reagents
 		else
-			result_obj.reagents.trans_to(holder, result_obj.reagents.total_volume)
+			result_obj.reagents.trans_to(holder, result_obj.reagents.total_volume, mixer = cook)
 		tally++
 
 
@@ -277,7 +287,7 @@
 			//We do no transferring
 		if (RECIPE_REAGENT_SUM)
 			//Sum is easy, just shove the entire buffer into the result
-			buffer.trans_to_holder(holder, buffer.total_volume)
+			buffer.trans_to_holder(holder, buffer.total_volume, mixer = cook)
 		if (RECIPE_REAGENT_MAX)
 			//We want the highest of each.
 			//Iterate through everything in buffer. If the target has less than the buffer, then top it up
@@ -285,7 +295,7 @@
 				var/rvol = holder.get_reagent_amount(R.id)
 				if (rvol < R.volume)
 					//Transfer the difference
-					buffer.trans_type_to(holder, R.id, R.volume-rvol)
+					buffer.trans_type_to(holder, R.id, R.volume-rvol, mixer = cook)
 
 		if (RECIPE_REAGENT_MIN)
 			//Min is slightly more complex. We want the result to have the lowest from each side
@@ -293,13 +303,13 @@
 			for (var/datum/reagent/R in buffer.reagent_list)
 				var/rvol = holder.get_reagent_amount(R.id)
 				if (rvol == 0) //If the target has zero of this reagent
-					buffer.trans_type_to(holder, R.id, R.volume)
+					buffer.trans_type_to(holder, R.id, R.volume, mixer = cook)
 					//Then transfer all of ours
 
 				else if (rvol > R.volume)
 					//if the target has more than ours
 					//Remove the difference
-					holder.remove_reagent(R.id, rvol-R.volume)
+					holder.remove_reagent(R.id, rvol-R.volume, mixer = cook)
 
 
 	if (results.len > 1)
@@ -308,8 +318,10 @@
 		var/total = holder.total_volume
 		for (var/i in results)
 			var/atom/a = i //optimisation
-			holder.trans_to(a, total / results.len)
+			holder.trans_to(a, total / results.len, mixer = cook)
 
+	if(prepared_batches && all_items_found && all_fruit_found && all_reagents_found && character_memory_food_id(src, single_ingredient_type))
+		prepared_batches[results] = src
 	return results
 
 // When exact is false, extraneous ingredients are ignored

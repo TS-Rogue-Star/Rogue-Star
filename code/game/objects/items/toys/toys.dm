@@ -47,12 +47,13 @@
 /obj/item/toy/balloon/afterattack(atom/A as mob|obj, mob/user as mob, proximity)
 	if(!proximity) return
 	if (istype(A, /obj/structure/reagent_dispensers/watertank) && get_dist(src,A) <= 1)
-		A.reagents.trans_to_obj(src, 10)
+		A.reagents.trans_to_obj(src, 10, mixer = user) // RS Edit: Food Memories (Lira, November 2026)
 		to_chat(user, "<span class='notice'>You fill the balloon with the contents of [A].</span>")
 		src.desc = "A translucent balloon with some form of liquid sloshing around in it."
 		src.update_icon()
 	return
 
+// RS Edit: Food Memories (Lira, November 2026)
 /obj/item/toy/balloon/attackby(obj/O as obj, mob/user as mob)
 	if(istype(O, /obj/item/weapon/reagent_containers/glass))
 		if(O.reagents)
@@ -61,12 +62,12 @@
 			else if(O.reagents.total_volume >= 1)
 				if(O.reagents.has_reagent("pacid", 1))
 					to_chat(user, "The acid chews through the balloon!")
-					O.reagents.splash(user, reagents.total_volume)
+					O.reagents.splash(user, reagents.total_volume, source_mixer = user)
 					qdel(src)
 				else
 					src.desc = "A translucent balloon with some form of liquid sloshing around in it."
 					to_chat(user, "<span class='notice'>You fill the balloon with the contents of [O].</span>")
-					O.reagents.trans_to_obj(src, 10)
+					O.reagents.trans_to_obj(src, 10, mixer = user)
 	src.update_icon()
 	return
 

@@ -76,14 +76,15 @@
 		B.loc = loc
 		beaker = null
 
-/obj/machinery/xenobio2/manualinjector/proc/inject_reagents()
+// RS Edit: Food Memories (Lira, November 2026)
+/obj/machinery/xenobio2/manualinjector/proc/inject_reagents(var/mob/user)
 	if(!occupant)
 		return
 	if(isxeno(occupant))
 		var/mob/living/simple_mob/xeno/X = occupant
-		beaker.reagents.trans_to_holder(X.reagents, computer.transfer_amount, 1, 0)
+		beaker.reagents.trans_to_holder(X.reagents, computer.transfer_amount, 1, 0, source_mixer = user)
 	else
-		beaker.reagents.trans_to_mob(occupant, computer.transfer_amount)
+		beaker.reagents.trans_to_mob(occupant, computer.transfer_amount, source_mixer = user)
 
 /obj/machinery/xenobio2/manualinjector/attackby(var/obj/item/W, var/mob/user)
 

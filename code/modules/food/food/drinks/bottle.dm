@@ -30,11 +30,15 @@
 	return ..()
 
 //when thrown on impact, bottles smash and spill their contents
+// RS Edit: Food Memories (Lira, November 2026)
 /obj/item/weapon/reagent_containers/food/drinks/bottle/throw_at(atom/target, range, speed, mob/thrower, spin = TRUE, datum/callback/callback)
 	. = ..()
-	if(istype(thrower) && thrower.a_intent == I_HURT)
+	if(. && istype(thrower) && thrower.a_intent == I_HURT)
 		violent_throw = TRUE
 		throw_source = get_turf(thrower)
+		if(isGlass && smash_duration)
+			var/datum/thrownthing/flight = throwing
+			flight.source_mixer = capture_cooking_operator(thrower)
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/throw_impact(atom/hit_atom, var/speed)
 	..()
@@ -44,7 +48,10 @@
 		if(smash_check(throw_dist)) //not as reliable as smashing directly
 			if(reagents)
 				hit_atom.visible_message("<span class='notice'>The contents of \the [src] splash all over [hit_atom]!</span>")
-				reagents.splash(hit_atom, reagents.total_volume)
+				// RS Edit Start: Food Memories (Lira, November 2026)
+				var/datum/thrownthing/flight = SSthrowing.processing[src]
+				reagents.splash(hit_atom, reagents.total_volume, source_mixer = flight?.source_mixer?.resolve())
+				// RS Edit End
 			src.smash(loc, hit_atom)
 
 	violent_throw = FALSE
@@ -174,7 +181,7 @@
 	//The reagents in the bottle splash all over the target, thanks for the idea Nodrak
 	if(reagents)
 		user.visible_message("<span class='notice'>The contents of \the [src] splash all over [target]!</span>")
-		reagents.splash(target, reagents.total_volume)
+		reagents.splash(target, reagents.total_volume, source_mixer = user) // RS Edit: Food Memories (Lira, November 2026)
 
 	//Finally, smash the bottle. This kills (qdel) the bottle.
 	var/obj/item/weapon/broken_bottle/B = smash(target.loc, target)

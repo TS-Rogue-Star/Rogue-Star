@@ -288,7 +288,8 @@
 	return 0
 
 //expects an atom containing the reagents used to clean the turf
-/turf/proc/clean(atom/source, mob/user)
+// RS Edit: Food Memories (Lira, November 2026)
+/turf/proc/clean(atom/source, mob/user, mob/source_mixer)
 	if(source.reagents.has_reagent("water", 1) || source.reagents.has_reagent("cleaner", 1))
 		clean_blood()
 		if(istype(src, /turf/simulated))
@@ -299,7 +300,7 @@
 				qdel(O)
 	else
 		to_chat(user, "<span class='warning'>\The [source] is too dry to wash that.</span>")
-	source.reagents.trans_to_turf(src, 1, 10)	//10 is the multiplier for the reaction effect. probably needed to wet the floor properly.
+	source.reagents.trans_to_turf(src, 1, 10, source_mixer = source_mixer)	//10 is the multiplier for the reaction effect. probably needed to wet the floor properly.
 
 /turf/proc/update_blood_overlays()
 	return

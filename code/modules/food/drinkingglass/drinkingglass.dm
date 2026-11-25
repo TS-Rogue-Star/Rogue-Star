@@ -155,7 +155,7 @@
 			return 1
 		if(reagents && reagents.total_volume) //They are on harm intent, aka wanting to spill it.
 			to_chat(user, "<span class='notice'>You splash the solution onto [target].</span>")
-			reagents.splash(target, reagents.total_volume)
+			reagents.splash(target, reagents.total_volume, source_mixer = user) // RS Edit: Food Memories (Lira, November 2026)
 			return 1
 	..()
 

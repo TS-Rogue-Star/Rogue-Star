@@ -166,6 +166,7 @@
 /obj/item/weapon/hypospray_mkii/attack(obj/item/I, mob/user, params)
 	return
 
+// RS Edit: Food Memories (Lira, November 2026)
 /obj/item/weapon/hypospray_mkii/afterattack(atom/target, mob/user, proximity)
 	if(!vial || !proximity || !isliving(target))
 		return
@@ -199,6 +200,7 @@
 						"<span class='userdanger'>\The [user] is trying to [fp_verb] you with \the [src]!</span>")
 	add_attack_logs(user, L, "[user] attemped to use [src] on [L] which had [contained]")
 
+	var/datum/cooking_memory_binding/operator = capture_cooking_operator(user)
 	if(!do_mob(user, L, inject_wait))
 		return
 
@@ -212,9 +214,9 @@
 		add_attack_logs(user, L, "[user] applied [src] on [L] with [src] which had [contained]")
 
 	if(mode == HYPO_SPRAY)
-		vial.reagents.trans_to_mob(target, vial.amount_per_transfer_from_this, CHEM_TOUCH)
+		vial.reagents.trans_to_mob(target, vial.amount_per_transfer_from_this, CHEM_TOUCH, source_mixer = operator?.resolve())
 	else if(mode == HYPO_INJECT)
-		vial.reagents.trans_to_mob(target, vial.amount_per_transfer_from_this, CHEM_BLOOD)
+		vial.reagents.trans_to_mob(target, vial.amount_per_transfer_from_this, CHEM_BLOOD, source_mixer = operator?.resolve())
 
 	playsound(loc, 'sound/effects/hypospray.ogg', 50)
 	playsound(loc, 'sound/effects/refill.ogg', 50)

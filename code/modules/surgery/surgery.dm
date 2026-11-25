@@ -106,11 +106,11 @@
 	return
 
 // does stuff to end the step, which is normally print a message + do whatever this step changes
-/datum/surgery_step/proc/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+/datum/surgery_step/proc/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool, step_context) // RS Edit: Food Memories (Lira, November 2026)
 	return
 
 // stuff that happens when the step fails
-/datum/surgery_step/proc/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+/datum/surgery_step/proc/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool, step_context) // RS Edit: Food Memories (Lira, November 2026)
 	return null
 
 
@@ -194,7 +194,8 @@
 	selected_surgery = available_surgeries[selected_surgery] //Sets the name they selected to be the datum.
 
 	M.op_stage.in_progress += zone
-	selected_surgery.begin_step(user, M, zone, src)		//start on it
+	// RS Edit Start: Food Memories (Lira, November 2026)
+	var/step_context = selected_surgery.begin_step(user, M, zone, src)		//start on it
 	var/success = TRUE
 
 	// Bad tools make it less likely to succeed.
@@ -216,10 +217,11 @@
 			to_chat(user, "<span class='warning'>You must remain close to and keep focused on your patient to conduct surgery.</span>")
 
 	if(success)
-		selected_surgery.end_step(user, M, zone, src)
+		selected_surgery.end_step(user, M, zone, src, step_context)
 	else
-		selected_surgery.fail_step(user, M, zone, src)
+		selected_surgery.fail_step(user, M, zone, src, step_context)
 		user.setClickCooldown(DEFAULT_ATTACK_COOLDOWN) //Gets rid of instakill mechanics.
+	// RS Edit End
 
 	M.op_stage.in_progress -= zone 									// Clear the in-progress flag.
 	if (ishuman(M))

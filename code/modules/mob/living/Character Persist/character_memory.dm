@@ -5,31 +5,52 @@
 //////////////////////////////////////////////////////////////////////////
 // Updated by Lira for Rogue Star November 2026: Chemistry Memories //////
 //////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star November 2026: Food Memories ///////////
+//////////////////////////////////////////////////////////////////////////
 
-#define CHARACTER_MEMORY_VERSION 3
+#define CHARACTER_MEMORY_VERSION 4
 #define CHARACTER_MEMORY_NOTE_LIMIT 4000
 #define CHARACTER_MEMORY_EVENT_DETAIL_LIMIT 80
 #define CHARACTER_MEMORY_EVENT_DETAIL_SEPARATOR "||"
 #define CHARACTER_MEMORY_PAIR_FIRST 1
 #define CHARACTER_MEMORY_PAIR_SECOND 2
 
+GLOBAL_LIST_EMPTY(character_memories_by_path)
 GLOBAL_DATUM_INIT(tgui_character_memory_state, /datum/tgui_state/character_memory_state, new)
+
+/datum/tgui/character_memory
+	var/active_tab = "characters"
+	var/list/received_note_submissions
 
 /datum/tgui_state/character_memory_state/can_use_topic(src_object, mob/user)
 	var/datum/character_memory/memory = src_object
-	if(!istype(memory) || memory.ourmob != user)
+	if(!istype(memory) || memory.ourmob != user || !memory.can_access_memory())
 		return STATUS_CLOSE
 	return user.shared_tgui_interaction(user)
 
 /datum/character_memory
-	var/mob/living/ourmob
 	var/save_path
+	var/tmp/save_generation = 0
+	var/tmp/save_owner_ckey
+	var/mob/living/ourmob
+	var/tmp/contacts_need_refresh = FALSE
+	var/tmp/recipes_need_refresh = FALSE
+	var/tmp/saved_memory_needs_reload = FALSE
+	var/tmp/recipes_saved_path
+	var/tmp/list/recipe_discoveries = list()
+	var/tmp/pending_recipe_path
 	var/database/memory_db
 	var/savable = FALSE
 	var/needs_saving = FALSE
 	var/shutting_down = FALSE
 	var/save_cooldown = 0
 	var/list/contacts = list()
+	var/tmp/list/saved_contact_notes
+	var/tmp/list/conflicting_contact_notes
+	var/tmp/list/edited_note_revisions
+	var/tmp/submitted_note_path
+	var/tmp/list/pending_contact_interactions
+	var/tmp/pending_interaction_path
 	var/selected_contact
 	var/list/ui_contact_tokens = list()
 	var/status_message
@@ -44,24 +65,64 @@ GLOBAL_DATUM_INIT(tgui_character_memory_state, /datum/tgui_state/character_memor
 	return ..()
 
 /datum/character_memory/Destroy()
+	set_save_path(null)
 	ourmob = null
 	memory_db = null
 	contacts = null
 	drinks = null
 	chemicals = null
+	foods = null
+	pending_drink_batches = null
+	pending_chemical_batches = null
+	pending_food_batches = null
+	food_search_cache = null
 	ui_contact_tokens = null
 	return ..()
+
+/proc/character_save_path_key(var/path)
+	return path && world.system_type == MS_WINDOWS ? lowertext(path) : path
+
+/proc/character_save_path_matches(var/path, var/expected)
+	return path && (path == expected || character_save_path_key(path) == character_save_path_key(expected))
+
+/proc/character_save_sibling_path(var/path, var/suffix, var/new_suffix)
+	if(path && character_save_path_matches(copytext(path, -length(suffix)), suffix))
+		return "[copytext(path, 1, -length(suffix))][new_suffix]"
+
+/proc/character_event_save_path(var/normal_path, var/suffix)
+	return character_save_sibling_path(normal_path, suffix, "-EVENT[suffix]")
+
+/datum/character_memory/proc/set_save_path(var/path)
+	if(save_path == path)
+		return
+	if(save_path)
+		var/key = character_save_path_key(save_path)
+		var/list/readers = GLOB.character_memories_by_path[key]
+		readers -= src
+		if(!length(readers))
+			GLOB.character_memories_by_path -= key
+	save_path = path
+	if(path)
+		var/key = character_save_path_key(path)
+		LAZYOR(GLOB.character_memories_by_path[key], src)
 
 /datum/character_memory/proc/process_memory()
 	if(!savable)
 		return
 	if(save_cooldown <= 0)
 		save()
+		if(recipes_need_refresh && !saved_memory_needs_reload && can_access_memory() && refresh_stale_recipes())
+			SStgui.update_uis(src)
 		save_cooldown = rand(5, 10)
 	else
 		save_cooldown--
 
-/datum/character_memory/proc/get_save_path(var/datum/preferences/P)
+/datum/character_memory/proc/can_access_memory()
+	if(!save_owner_ckey)
+		return !save_path
+	return save_owner_ckey == get_tracking_ckey(ourmob)
+
+/datum/character_memory/proc/get_save_path(var/datum/preferences/P, var/event_character = ourmob?.etching?.event_character)
 	if(!ourmob)
 		return
 	var/owner_ckey = get_tracking_ckey(ourmob)
@@ -71,19 +132,31 @@ GLOBAL_DATUM_INIT(tgui_character_memory_state, /datum/tgui_state/character_memor
 	var/character_name = ourmob.real_name
 	if(!character_name && P)
 		character_name = P.real_name
-	if(!character_name || !has_non_generic_real_name(ourmob))
+	if(!character_name || !has_non_generic_real_name(ourmob) || findtext(character_name, "/") || findtext(character_name, "\\"))
 		savable = FALSE
 		return
-	var/event_suffix = ourmob.etching?.event_character ? "-EVENT" : ""
-	save_path = "data/player_saves/[copytext(owner_ckey, 1, 2)]/[owner_ckey]/magic/[character_name][event_suffix]-memory.db"
+	save_owner_ckey = owner_ckey
+	set_save_path("data/player_saves/[copytext(owner_ckey, 1, 2)]/[owner_ckey]/magic/[character_name][event_character ? "-EVENT" : ""]-memory.db")
 	savable = TRUE
 
 /datum/character_memory/proc/load(var/datum/preferences/P)
+	if(!can_access_memory())
+		SStgui.close_uis(src)
+		return
 	error_message = null
 	status_message = null
 	if(!ourmob)
 		return
 	if(save_path)
+		if(savable && !shutting_down)
+			recipes_need_refresh = TRUE
+			if(ensure_saved_memory_loaded() && ensure_database() && persist_recipe_changes())
+				if(recipes_need_refresh)
+					load_database_recipes()
+				if(needs_saving)
+					save()
+				if(contacts_need_refresh && !needs_saving)
+					refresh_database_contacts()
 		return
 	if(!get_tracking_ckey(ourmob))
 		log_debug("<span class = 'danger'>Character memory load failed: Aborting memory load for [ourmob.real_name], no ckey</span>")
@@ -94,48 +167,267 @@ GLOBAL_DATUM_INIT(tgui_character_memory_state, /datum/tgui_state/character_memor
 		log_debug("<span class = 'danger'>Character memory load failed: No save_path</span>")
 		savable = FALSE
 		return
+	load_saved_memory()
+
+/datum/character_memory/vv_edit_var(var_name, var_value)
+	if(var_name != "save_path")
+		return ..()
+	if(!isnull(var_value) && !istext(var_value))
+		return FALSE
+	if(character_save_path_key(save_path) != character_save_path_key(var_value) && !replace_saved_history(var_value))
+		return FALSE
+	datum_flags |= DF_VAR_EDITED
+	return TRUE
+
+/datum/character_memory/proc/invalidate_save_operations()
+	save_generation++
+	SStgui.close_uis(src)
+	ui_contact_tokens.Cut()
+
+/datum/character_memory/proc/replace_saved_history(var/path)
+	if(save_path != path && (needs_saving || pending_recipe_path || length(edited_note_revisions) || length(pending_contact_interactions)) && !save())
+		return FALSE
+	memory_db?.Close()
+	memory_db = null
+	pending_recipe_path = null
+	pending_food_batches.Cut()
+	pending_drink_batches.Cut()
+	pending_chemical_batches.Cut()
+	needs_saving = FALSE
+	set_save_path(path)
+	load_saved_memory()
+	return TRUE
+
+/datum/character_memory/proc/load_saved_memory()
+	invalidate_save_operations()
+	saved_memory_needs_reload = TRUE
+	contacts_need_refresh = TRUE
+	recipes_saved_path = null
+	status_message = null
+	error_message = null
+	selected_contact = null
+	selected_food = null
+	selected_drink = null
+	selected_chemical = null
 	contacts = list()
-	if(!ensure_database() || !load_database_contacts() || !load_database_drinks() || !load_database_chemicals())
-		log_debug("<span class = 'danger'>Character memory database failed to load! File path: '[save_path]'. Aborting and clearing save_path.</span>")
-		save_path = null
-		memory_db = null
-		savable = FALSE
-		return
-	normalize_contacts()
-	if(needs_saving)
+	drinks = list()
+	chemicals = list()
+	foods = list()
+	recipe_discoveries.Cut()
+	food_search_cache.Cut()
+	saved_contact_notes = null
+	conflicting_contact_notes = null
+	edited_note_revisions = null
+	submitted_note_path = null
+	pending_contact_interactions = null
+	pending_interaction_path = null
+	if(ensure_saved_memory_loaded() && needs_saving)
 		save(force = TRUE)
 
+/datum/character_memory/proc/ensure_saved_memory_loaded(var/allow_bound_batches = FALSE)
+	if(!saved_memory_needs_reload)
+		return TRUE
+	if(!can_access_memory() && !(allow_bound_batches && save_owner_ckey && pending_recipe_path && pending_recipe_path == save_path))
+		return FALSE
+	return refresh_saved_memory()
+
+/datum/character_memory/proc/ensure_contacts_loaded()
+	return islist(saved_contact_notes) || (ensure_database() && refresh_database_contacts())
+
+/datum/character_memory/proc/refresh_saved_memory()
+	if(!ensure_database() || !refresh_database_contacts() || !persist_pending_interactions() || !load_database_recipes())
+		return FALSE
+	if(saved_memory_needs_reload)
+		saved_memory_needs_reload = FALSE
+		if(pending_recipe_path == save_path)
+			merge_pending_recipe_batches(foods, pending_food_batches)
+			merge_pending_recipe_batches(drinks, pending_drink_batches)
+			merge_pending_recipe_batches(chemicals, pending_chemical_batches)
+		error_message = null
+		SStgui.update_uis(src)
+	return TRUE
+
+/datum/character_memory/proc/refresh_stale_recipes()
+	if(!recipes_need_refresh)
+		return !pending_recipe_path || persist_recipe_changes()
+	return ensure_database() && persist_recipe_changes() && load_database_recipes()
+
+/datum/character_memory/proc/load_database_recipes()
+	recipes_need_refresh = !(load_reagent_recipes("drink", drinks, "bartending") && load_reagent_recipes("chemical", chemicals, "chemistry") && load_database_foods())
+	return !recipes_need_refresh
+
+/datum/character_memory/proc/load_reagent_recipes(var/kind, var/list/entries, var/skill)
+	var/id_column = "[kind]_id"
+	var/list/rows = execute_database_query("SELECT [id_column], times_made, first_made, last_made FROM [kind]s", "load character memory [kind]s")
+	if(!islist(rows))
+		return FALSE
+	entries.Cut()
+	for(var/list/row as anything in rows)
+		var/id = row[id_column]
+		var/times_made = text2num("[row["times_made"]]")
+		if(!istext(id) || !length(id) || !isnum(times_made) || times_made < 1)
+			continue
+		entries[id] = list("times_made" = round(times_made), "first_made" = row["first_made"], "last_made" = row["last_made"])
+	food_search_cache.Cut()
+	set_recipe_discoveries(skill, length(entries), reconcile_keys = TRUE)
+	return TRUE
+
+/datum/character_memory/proc/record_recipe_batches(var/id, var/list/entries, var/list/pending, var/batches = 1)
+	var/today = get_date_key()
+	add_recipe_batches(pending, id, batches, today, today)
+	if(!saved_memory_needs_reload)
+		if(!(id in entries))
+			food_search_cache.Cut()
+		add_recipe_batches(entries, id, batches, today, today)
+	if(!persist_recipe_changes())
+		SStgui.update_uis(src)
+	return TRUE
+
+/datum/character_memory/proc/add_recipe_batches(var/list/entries, var/id, var/batches, var/first_made, var/last_made)
+	var/list/entry = entries[id]
+	if(!entry)
+		entries[id] = list("times_made" = batches, "first_made" = first_made, "last_made" = last_made)
+		return
+	entry["times_made"] += batches
+	if(first_made && (!entry["first_made"] || sorttext(first_made, entry["first_made"]) > 0))
+		entry["first_made"] = first_made
+	if(last_made && (!entry["last_made"] || sorttext(entry["last_made"], last_made) > 0))
+		entry["last_made"] = last_made
+
+/datum/character_memory/proc/bind_pending_recipes()
+	if(!save_path)
+		load()
+	if(!savable || !save_path || !can_access_memory() || (pending_recipe_path && pending_recipe_path != save_path))
+		return FALSE
+	pending_recipe_path = save_path
+	return TRUE
+
+/datum/character_memory/proc/get_bound_etching()
+	RETURN_TYPE(/datum/etching)
+	if(ourmob?.character_memory != src)
+		return null
+	var/datum/etching/etching = ourmob.etching
+	if(!save_owner_ckey || !etching)
+		return null
+	if(character_save_path_matches(etching.save_path, character_save_sibling_path(save_path, "-memory.db", "-etching.json")))
+		return etching
+
+/proc/recipe_xp_skill(var/kind)
+	var/skill = lowertext(trim("[kind]"))
+	if(skill in list("cooking", "bartending", "chemistry"))
+		return skill
+
+/proc/set_recipe_xp_balance(var/list/balances, var/skill, var/total, var/reconcile_keys = FALSE)
+	var/changed = FALSE
+	if(reconcile_keys)
+		for(var/kind in balances.Copy())
+			if(kind != skill && recipe_xp_skill(kind) == skill)
+				balances -= kind
+				changed = TRUE
+	if(isnull(balances[skill]) || balances[skill] != total)
+		balances[skill] = total
+		changed = TRUE
+	return changed
+
+/datum/character_memory/proc/set_recipe_discoveries(var/skill, var/total, var/reconcile_keys = FALSE)
+	recipe_discoveries[skill] = total
+	var/datum/etching/bound = get_bound_etching()
+	if(!bound)
+		return
+	bound.xp = SANITIZE_LIST(bound.xp)
+	if(set_recipe_xp_balance(bound.xp, skill, total, reconcile_keys))
+		bound.needs_saving = TRUE
+
+/datum/character_memory/proc/database_recipe_xp()
+	var/list/rows = execute_database_query({"
+		SELECT (SELECT COUNT(*) FROM foods) AS cooking,
+			(SELECT COUNT(*) FROM drinks WHERE drink_id != '' AND CAST(times_made AS INTEGER) > 0) AS bartending,
+			(SELECT COUNT(*) FROM chemicals WHERE chemical_id != '' AND CAST(times_made AS INTEGER) > 0) AS chemistry
+	"}, "read committed character recipe XP")
+	return rows?[1]
+
 /datum/character_memory/proc/save(delet = FALSE, force = FALSE)
-	if(!ourmob || !get_tracking_ckey(ourmob))
-		return
-	if(!savable || (!needs_saving && !force))
-		return
-	if(shutting_down)
-		return
+	if(!ourmob || !savable || shutting_down)
+		return FALSE
+	var/had_bound_work = length(pending_contact_interactions) || length(edited_note_revisions) || pending_recipe_path
+	var/interactions_saved = persist_pending_interactions()
+	var/notes_saved = !length(edited_note_revisions) || sync_database_from_memory(submitted_notes_only = TRUE)
+	if(saved_memory_needs_reload && (!interactions_saved || length(edited_note_revisions) || !ensure_saved_memory_loaded(allow_bound_batches = TRUE)))
+		return FALSE
+	if(!save_owner_ckey || !can_access_memory())
+		var/recipes_saved = !pending_recipe_path || (pending_recipe_path == save_path && persist_recipe_changes())
+		return had_bound_work && interactions_saved && recipes_saved && notes_saved
+	if(!interactions_saved || length(edited_note_revisions))
+		return FALSE
+	if(!needs_saving && !force && !pending_recipe_path)
+		return !length(conflicting_contact_notes)
 	if(delet)
 		shutting_down = TRUE
 	if(!save_path)
 		if(shutting_down)
 			ourmob = null
 			qdel(src)
-		return
+		return FALSE
 
-	if(!sync_database_from_memory())
+	var/saved = (needs_saving || force) ? sync_database_from_memory() : persist_recipe_changes()
+	if(!saved)
 		log_debug("Character memory saving: [save_path] failed database sync.")
-		return
+		return FALSE
 
 	needs_saving = FALSE
+	if(length(conflicting_contact_notes))
+		return FALSE
 	if(shutting_down)
 		ourmob = null
 		qdel(src)
+	return TRUE
 
 /datum/character_memory/proc/enable_event_character()
-	if(needs_saving)
-		save(force = TRUE)
-	save_path = null
-	memory_db = null
-	get_save_path()
-	needs_saving = TRUE
+	if(ourmob?.etching?.event_character && character_save_path_matches(save_path, character_save_sibling_path(ourmob.etching.save_path, "-etching.json", "-memory.db")))
+		return TRUE
+	if(save_path || can_track(ourmob))
+		if(!can_access_memory())
+			return FALSE
+		if(!save_path)
+			get_save_path(event_character = FALSE)
+			if(save_path)
+				load_saved_memory()
+		if(!save_path || !save() || !refresh_saved_memory())
+			return FALSE
+	var/datum/character_memory/snapshot = new(ourmob)
+	if(save_path)
+		snapshot.save_owner_ckey = save_owner_ckey
+		snapshot.set_save_path(character_event_save_path(save_path, "-memory.db"))
+		snapshot.savable = savable
+		snapshot.contacts = contacts
+		snapshot.foods = foods
+		snapshot.drinks = drinks
+		snapshot.chemicals = chemicals
+		if(!snapshot.savable || !snapshot.publish_event_snapshot())
+			qdel(snapshot)
+			return FALSE
+
+	invalidate_save_operations()
+	memory_db?.Close()
+	memory_db = snapshot.memory_db
+	snapshot.memory_db = null
+	save_owner_ckey = snapshot.save_owner_ckey
+	set_save_path(snapshot.save_path)
+	savable = snapshot.savable
+	recipes_saved_path = save_path
+	if(save_path)
+		remember_contact_notes()
+	conflicting_contact_notes = null
+	edited_note_revisions = null
+	submitted_note_path = null
+	contacts_need_refresh = FALSE
+	recipes_need_refresh = FALSE
+	saved_memory_needs_reload = FALSE
+	needs_saving = FALSE
+	for(var/skill in recipe_discoveries)
+		set_recipe_discoveries(skill, recipe_discoveries[skill], reconcile_keys = TRUE)
+	qdel(snapshot)
+	return TRUE
 
 /datum/character_memory/proc/build_database_query(var/query_data)
 	var/database/query/query
@@ -196,6 +488,7 @@ GLOBAL_DATUM_INIT(tgui_character_memory_state, /datum/tgui_state/character_memor
 		return TRUE
 	if(!save_path)
 		return FALSE
+	contacts_need_refresh = TRUE
 	memory_db = new(save_path)
 	if(!memory_db)
 		log_debug("Character memory failed to open database: [save_path]")
@@ -206,7 +499,7 @@ GLOBAL_DATUM_INIT(tgui_character_memory_state, /datum/tgui_state/character_memor
 	return TRUE
 
 /datum/character_memory/proc/init_database_schema()
-	if(!init_drinks_schema() || !init_chemicals_schema())
+	if(!init_drinks_schema() || !init_chemicals_schema() || !init_foods_schema())
 		return FALSE
 	if(!execute_database_update("CREATE TABLE IF NOT EXISTS meta (name TEXT NOT NULL PRIMARY KEY, value TEXT)", "create character memory meta table"))
 		return FALSE
@@ -255,16 +548,15 @@ GLOBAL_DATUM_INIT(tgui_character_memory_state, /datum/tgui_state/character_memor
 	if(findtext(current_notes, merge_header) && findtext(current_notes, incoming_notes))
 		return current_notes
 	var/merged_notes = "[current_notes]\n\n[merge_header]\n[incoming_notes]"
-	needs_saving = TRUE
 	return copytext(merged_notes, 1, CHARACTER_MEMORY_NOTE_LIMIT + 1)
 
-/datum/character_memory/proc/ensure_loaded_contact(var/contact_id, var/display_name, var/last_seen, var/notes)
+/datum/character_memory/proc/ensure_loaded_contact(var/contact_id, var/display_name, var/last_seen, var/notes, var/list/legacy_ids)
 	if(!contact_id)
 		return null
 	var/raw_contact_id = "[contact_id]"
 	contact_id = normalize_loaded_contact_id(raw_contact_id)
-	if(contact_id != raw_contact_id)
-		needs_saving = TRUE
+	if(contact_id != raw_contact_id && islist(legacy_ids))
+		legacy_ids[raw_contact_id] = contact_id
 	var/list/contact = contacts[contact_id]
 	if(!islist(contact))
 		contact = list(
@@ -295,18 +587,66 @@ GLOBAL_DATUM_INIT(tgui_character_memory_state, /datum/tgui_state/character_memor
 		contact["notes"] = ""
 	return contact
 
-/datum/character_memory/proc/load_database_contacts()
+/datum/character_memory/proc/mark_peer_contacts_stale()
+	var/list/peers = GLOB.character_memories_by_path[character_save_path_key(save_path)]
+	for(var/datum/character_memory/peer in peers)
+		if(peer != src)
+			peer.contacts_need_refresh = TRUE
+
+/datum/character_memory/proc/refresh_stale_memory()
+	if(!ensure_saved_memory_loaded())
+		error_message = "The latest memories could not be loaded. Refresh to try again."
+		return
+	refresh_stale_recipes()
+	if(contacts_need_refresh && !needs_saving && (!ensure_database() || !refresh_database_contacts()))
+		error_message = "The latest contacts could not be loaded. Refresh to try again."
+
+/datum/character_memory/proc/refresh_database_contacts()
+	if(length(edited_note_revisions) && !sync_database_from_memory(submitted_notes_only = TRUE))
+		return FALSE
+	if(!execute_database_update("BEGIN TRANSACTION", "begin character memory contact read"))
+		return FALSE
+	var/list/old_contacts = contacts
+	var/list/legacy_ids = list()
+	contacts = list()
+	if(!load_database_contacts(legacy_ids) || !migrate_legacy_contacts(legacy_ids) || !execute_database_update("COMMIT", "commit character memory contact read"))
+		execute_database_update("ROLLBACK", "rollback character memory contact read")
+		contacts = old_contacts
+		return FALSE
+	if(length(legacy_ids))
+		mark_peer_contacts_stale()
+	contacts_need_refresh = FALSE
+	for(var/contact_id in conflicting_contact_notes)
+		var/list/conflict = conflicting_contact_notes[contact_id]
+		conflict["saved"] = contacts[contact_id]?["notes"]
+		if(!contacts[contact_id])
+			contacts[contact_id] = old_contacts[contact_id]
+			contacts[contact_id]["notes"] = ""
+	normalize_contacts()
+	remember_contact_notes()
+	for(var/list/interaction as anything in pending_contact_interactions)
+		apply_contact_interaction(interaction)
+	return TRUE
+
+/datum/character_memory/proc/remember_contact_notes()
+	edited_note_revisions = null
+	submitted_note_path = null
+	saved_contact_notes = list()
+	for(var/contact_id in contacts)
+		saved_contact_notes[contact_id] = contacts[contact_id]["notes"]
+
+/datum/character_memory/proc/load_database_contacts(var/list/legacy_ids)
 	var/list/contact_rows = execute_database_query("SELECT contact_id, display_name, last_seen, notes FROM contacts", "load character memory contacts")
 	if(!islist(contact_rows))
 		return FALSE
 	for(var/list/contact_row as anything in contact_rows)
-		ensure_loaded_contact(contact_row["contact_id"], contact_row["display_name"], contact_row["last_seen"], contact_row["notes"])
+		ensure_loaded_contact(contact_row["contact_id"], contact_row["display_name"], contact_row["last_seen"], contact_row["notes"], legacy_ids)
 
 	var/list/daily_rows = execute_database_query("SELECT contact_id, date_key, event_key, role_key, amount FROM daily_counts", "load character memory daily counts")
 	if(!islist(daily_rows))
 		return FALSE
 	for(var/list/daily_row as anything in daily_rows)
-		var/list/contact = ensure_loaded_contact(daily_row["contact_id"], null, null, null)
+		var/list/contact = ensure_loaded_contact(daily_row["contact_id"], null, null, null, legacy_ids)
 		var/date_value = daily_row["date_key"]
 		var/event_value = daily_row["event_key"]
 		var/role_value = daily_row["role_key"]
@@ -330,7 +670,7 @@ GLOBAL_DATUM_INIT(tgui_character_memory_state, /datum/tgui_state/character_memor
 	if(!islist(total_rows))
 		return FALSE
 	for(var/list/total_row as anything in total_rows)
-		var/list/total_contact = ensure_loaded_contact(total_row["contact_id"], null, null, null)
+		var/list/total_contact = ensure_loaded_contact(total_row["contact_id"], null, null, null, legacy_ids)
 		var/total_event_value = total_row["event_key"]
 		var/total_role_value = total_row["role_key"]
 		if(!islist(total_contact) || !total_event_value || !total_role_value)
@@ -338,17 +678,56 @@ GLOBAL_DATUM_INIT(tgui_character_memory_state, /datum/tgui_state/character_memor
 		increment_role_count(total_contact["totals"], "[total_event_value]", "[total_role_value]", total_row["amount"])
 	return TRUE
 
-/datum/character_memory/proc/save_database_contact(var/contact_id)
+/datum/character_memory/proc/migrate_legacy_contacts(var/list/legacy_ids)
+	if(!length(legacy_ids))
+		return TRUE
+	var/list/merged_ids = list()
+	for(var/legacy_id in legacy_ids)
+		var/contact_id = legacy_ids[legacy_id]
+		merged_ids[contact_id] = TRUE
+		for(var/table_name in list("daily_counts", "total_counts", "contacts"))
+			if(!execute_database_update(list("DELETE FROM [table_name] WHERE contact_id IN (?, ?)", legacy_id, contact_id), "remove legacy character memory rows"))
+				return FALSE
+	for(var/contact_id in merged_ids)
+		if(!save_database_contact(contact_id) || !save_database_contact_counts(contact_id))
+			return FALSE
+	return TRUE
+
+/datum/character_memory/proc/save_database_contact(var/contact_id, var/preserve_note = FALSE)
 	if(!contact_id)
 		return FALSE
 	var/list/contact = contacts[contact_id]
 	if(!islist(contact))
 		return FALSE
 	var/display_name = contact["display_name"] || contact_id
-	var/notes = contact["notes"]
-	if(isnull(notes))
-		notes = ""
-	return execute_database_update(list("INSERT OR REPLACE INTO contacts (contact_id, display_name, last_seen, notes) VALUES (?, ?, ?, ?)", contact_id, display_name, contact["last_seen"], notes), "save character memory contact")
+	var/notes = preserve_note ? null : (contact["notes"] || "")
+	return execute_database_update(list({"
+		INSERT OR REPLACE INTO contacts (contact_id, display_name, last_seen, notes)
+		SELECT ?, ?, MAX(last_seen), COALESCE(?, MAX(notes), '') FROM (
+			SELECT last_seen, notes FROM contacts WHERE contact_id = ?
+			UNION ALL SELECT ?, NULL
+		)
+	"}, contact_id, display_name, notes, contact_id, contact["last_seen"]), "save character memory contact")
+
+/datum/character_memory/proc/read_contact_note(var/contact_id)
+	return execute_database_query(list("SELECT notes FROM contacts WHERE contact_id = ?", contact_id), "check current character memory note")
+
+/datum/character_memory/proc/save_contact_note(var/contact_id, var/list/conflicts)
+	var/note = contacts[contact_id]["notes"] || ""
+	var/revision = edited_note_revisions?[contact_id] || md5(saved_contact_notes[contact_id] || "")
+	var/list/rows = read_contact_note(contact_id)
+	if(!islist(rows))
+		return null
+	if(!length(rows))
+		conflicts[contact_id] = list("draft" = note, "saved" = null)
+		return FALSE
+	var/current_note = rows[1]["notes"] || ""
+	if(md5(current_note) != revision && current_note != note)
+		conflicts[contact_id] = list("draft" = note, "saved" = current_note)
+		return FALSE
+	if(current_note != note && !execute_database_update(list("UPDATE contacts SET notes = ? WHERE contact_id = ?", note, contact_id), "save character memory note"))
+		return null
+	return TRUE
 
 /datum/character_memory/proc/normalize_database_amount(var/amount)
 	var/add_count = amount
@@ -370,24 +749,56 @@ GLOBAL_DATUM_INIT(tgui_character_memory_state, /datum/tgui_state/character_memor
 		return FALSE
 	return execute_database_update(list("UPDATE total_counts SET amount = amount + ? WHERE contact_id = ? AND event_key = ? AND role_key = ?", add_count, contact_id, event_key, role_key), "update character memory total count")
 
-/datum/character_memory/proc/persist_interaction(var/contact_id, var/date_key, var/event_key, var/role_key)
-	if(!ensure_database())
+/datum/character_memory/proc/write_contact_interaction(var/list/interaction)
+	var/contact_id = interaction["contact_id"]
+	var/event_key = interaction["event"]
+	var/role_key = interaction["role"]
+	return save_database_contact(contact_id, preserve_note = TRUE) && increment_database_daily_count(contact_id, interaction["date"], event_key, role_key) && increment_database_total_count(contact_id, event_key, role_key)
+
+/datum/character_memory/proc/persist_interaction(var/contact_id, var/date_key, var/event_key, var/role_key, var/display_name, var/last_seen)
+	if(!save_path || (pending_interaction_path && pending_interaction_path != save_path))
+		return FALSE
+	pending_interaction_path = save_path
+	var/list/interaction = list(
+		"contact_id" = contact_id,
+		"date" = date_key,
+		"event" = event_key,
+		"role" = role_key,
+		"name" = display_name || contacts[contact_id]?["display_name"],
+		"last_seen" = last_seen || contacts[contact_id]?["last_seen"]
+	)
+	LAZYADD(pending_contact_interactions, list(interaction))
+	if(islist(saved_contact_notes))
+		apply_contact_interaction(interaction)
+	return persist_pending_interactions()
+
+/datum/character_memory/proc/persist_pending_interactions()
+	if(!length(pending_contact_interactions))
+		return TRUE
+	if(pending_interaction_path != save_path || !ensure_database() || !ensure_contacts_loaded())
 		return FALSE
 	if(!execute_database_update("BEGIN TRANSACTION", "begin character memory interaction transaction"))
 		return FALSE
-	if(!save_database_contact(contact_id) || !increment_database_daily_count(contact_id, date_key, event_key, role_key) || !increment_database_total_count(contact_id, event_key, role_key))
-		execute_database_update("ROLLBACK", "rollback character memory interaction transaction")
-		return FALSE
+	for(var/list/interaction as anything in pending_contact_interactions)
+		if(!write_contact_interaction(interaction))
+			execute_database_update("ROLLBACK", "rollback character memory interaction transaction")
+			return FALSE
 	if(!execute_database_update("COMMIT", "commit character memory interaction transaction"))
 		execute_database_update("ROLLBACK", "rollback character memory interaction transaction")
 		return FALSE
+	if(islist(saved_contact_notes))
+		for(var/list/interaction as anything in pending_contact_interactions)
+			var/contact_id = interaction["contact_id"]
+			if(!(contact_id in saved_contact_notes))
+				saved_contact_notes[contact_id] = ""
+	pending_contact_interactions = null
+	pending_interaction_path = null
+	mark_peer_contacts_stale()
 	return TRUE
 
 /datum/character_memory/proc/save_database_contact_counts(var/contact_id)
 	var/list/contact = contacts[contact_id]
 	if(!islist(contact))
-		return FALSE
-	if(!save_database_contact(contact_id))
 		return FALSE
 	var/list/days = contact["days"]
 	if(islist(days))
@@ -416,41 +827,217 @@ GLOBAL_DATUM_INIT(tgui_character_memory_state, /datum/tgui_state/character_memor
 					return FALSE
 	return TRUE
 
-/datum/character_memory/proc/sync_database_from_memory()
-	normalize_contacts()
-	if(!ensure_database())
+/datum/character_memory/proc/publish_event_snapshot()
+	if(!ensure_database() || !execute_database_update("BEGIN TRANSACTION", "begin event memory snapshot"))
 		return FALSE
+	if(!save_database_metadata() || !copy_event_contacts() || !copy_event_recipes("drink", drinks) || !copy_event_recipes("chemical", chemicals) || !copy_event_recipes("food", foods) || !execute_database_update("COMMIT", "commit event memory snapshot"))
+		execute_database_update("ROLLBACK", "roll back event memory snapshot")
+		return FALSE
+	var/list/peers = GLOB.character_memories_by_path[character_save_path_key(save_path)]
+	for(var/datum/character_memory/peer in peers?.Copy())
+		if(peer != src)
+			peer.replace_saved_history(save_path)
+	return TRUE
+
+/datum/character_memory/proc/copy_event_contacts()
+	for(var/table_name in list("daily_counts", "total_counts", "contacts"))
+		if(!execute_database_update("DELETE FROM [table_name]", "replace event memory contacts"))
+			return FALSE
+	for(var/contact_id in contacts)
+		if(!save_database_contact(contact_id) || !save_database_contact_counts(contact_id))
+			return FALSE
+	return TRUE
+
+/datum/character_memory/proc/copy_event_recipes(var/kind, var/list/entries)
+	var/table_name = "[kind]s"
+	var/id_column = "[kind]_id"
+	if(!execute_database_update("DELETE FROM [table_name]", "clear character memory [table_name]"))
+		return FALSE
+	for(var/id in entries)
+		var/list/entry = entries[id]
+		if(!execute_database_update(list("INSERT INTO [table_name] ([id_column], times_made, first_made, last_made) VALUES (?, ?, ?, ?)", id, entry["times_made"], entry["first_made"], entry["last_made"]), "copy character memory [kind]"))
+			return FALSE
+	return TRUE
+
+/datum/character_memory/proc/save_recipe_rows(var/kind, var/list/pending, var/list/saved_rows)
+	var/table_name = "[kind]s"
+	var/id_column = "[kind]_id"
+	if(!length(pending))
+		return TRUE
+	var/list/updated = list()
+	saved_rows[kind] = updated
+	var/query = {"
+		INSERT OR REPLACE INTO [table_name] ([id_column], times_made, first_made, last_made)
+		SELECT ?, SUM(times_made), MIN(first_made), MAX(last_made) FROM (
+			SELECT times_made, first_made, last_made FROM [table_name] WHERE [id_column] = ? AND CAST(times_made AS INTEGER) > 0
+			UNION ALL SELECT ?, ?, ?
+		)
+	"}
+	for(var/id in pending)
+		var/list/batch = pending[id]
+		if(!execute_database_update(list(query, id, id, batch["times_made"], batch["first_made"], batch["last_made"]), "save character memory [kind]"))
+			return FALSE
+		var/list/rows = execute_database_query(list("SELECT times_made, first_made, last_made FROM [table_name] WHERE [id_column] = ?", id), "read updated character memory [kind]")
+		if(!length(rows))
+			return FALSE
+		updated[id] = rows[1]
+	return TRUE
+
+/datum/character_memory/proc/save_recipe_changes(var/list/saved_rows)
+	if(recipes_saved_path != save_path || (pending_recipe_path && pending_recipe_path != save_path))
+		return null
+	if(!save_recipe_rows("drink", pending_drink_batches, saved_rows) || !save_recipe_rows("chemical", pending_chemical_batches, saved_rows))
+		return null
+	if(!save_recipe_rows("food", pending_food_batches, saved_rows))
+		return null
+	if(length(pending_drink_batches) || length(pending_chemical_batches))
+		var/list/totals = database_recipe_xp()
+		if(!islist(totals))
+			return null
+		saved_rows["totals"] = totals
+		return totals["cooking"]
+	return length(pending_food_batches) ? database_food_count() : (recipe_discoveries["cooking"] || 0)
+
+/datum/character_memory/proc/reagent_recipe_save_committed(var/list/entries, var/list/pending, var/list/updated, var/skill, var/total, var/tab)
+	if(isnull(total))
+		return
+	for(var/id in updated)
+		entries[id] = updated[id]
+	set_recipe_discoveries(skill, total)
+	if(can_access_memory())
+		for(var/id in pending)
+			if(entries[id]["times_made"] == pending[id]["times_made"])
+				var/datum/reagent/product = SSchemistry.chemical_reagents[id]
+				to_chat(ourmob, SPAN_NOTICE("You learned to make [product.name]! +1 [skill] XP ([total] total). Find the recipe in Memory's [tab] tab."))
+	pending.Cut()
+
+/datum/character_memory/proc/apply_shared_recipe_rows(var/list/entries, var/list/pending, var/list/updated)
+	for(var/id in updated)
+		if(!(id in entries))
+			food_search_cache.Cut()
+		var/list/row = updated[id]
+		entries[id] = row.Copy()
+	merge_pending_recipe_batches(entries, pending, updated)
+
+/datum/character_memory/proc/merge_pending_recipe_batches(var/list/entries, var/list/pending, var/list/updated)
+	for(var/id in pending)
+		if(isnull(updated) || (id in updated))
+			var/list/batch = pending[id]
+			add_recipe_batches(entries, id, batch["times_made"], batch["first_made"], batch["last_made"])
+
+/datum/character_memory/proc/recipe_save_committed(var/list/saved_rows, var/discovery_count)
+	pending_recipe_path = null
+	var/list/totals = saved_rows["totals"]
+	reagent_recipe_save_committed(drinks, pending_drink_batches, saved_rows["drink"], "bartending", totals?["bartending"], "Drinks")
+	reagent_recipe_save_committed(chemicals, pending_chemical_batches, saved_rows["chemical"], "chemistry", totals?["chemistry"], "Chemistry")
+	food_save_committed(saved_rows["food"], discovery_count)
+	if(!length(saved_rows))
+		return
+	if(can_access_memory())
+		SStgui.update_uis(src)
+	var/list/peers = GLOB.character_memories_by_path[character_save_path_key(save_path)]
+	for(var/datum/character_memory/peer in peers)
+		if(peer == src || peer.shutting_down || peer.saved_memory_needs_reload || !character_save_path_matches(peer.save_path, save_path))
+			continue
+		if(!peer.can_access_memory())
+			peer.recipes_need_refresh = TRUE
+			continue
+		if(saved_rows["drink"])
+			peer.apply_shared_recipe_rows(peer.drinks, peer.pending_drink_batches, saved_rows["drink"])
+			peer.recipe_discoveries["bartending"] = totals["bartending"]
+		if(saved_rows["chemical"])
+			peer.apply_shared_recipe_rows(peer.chemicals, peer.pending_chemical_batches, saved_rows["chemical"])
+			peer.recipe_discoveries["chemistry"] = totals["chemistry"]
+		if(saved_rows["food"])
+			peer.apply_shared_recipe_rows(peer.foods, peer.pending_food_batches, saved_rows["food"])
+			peer.recipe_discoveries["cooking"] = discovery_count
+		SStgui.update_uis(peer)
+
+/datum/character_memory/proc/persist_recipe_changes()
+	if(!ensure_saved_memory_loaded())
+		return FALSE
+	if(recipes_saved_path == save_path && !pending_recipe_path)
+		return TRUE
+	if(!ensure_database() || !execute_database_update("BEGIN TRANSACTION", "begin character memory recipe transaction"))
+		return FALSE
+	var/list/saved_rows = list()
+	var/discovery_count = save_recipe_changes(saved_rows)
+	if(isnull(discovery_count) || !execute_database_update("COMMIT", "commit character memory recipe transaction"))
+		execute_database_update("ROLLBACK", "rollback character memory recipe transaction")
+		return FALSE
+	recipe_save_committed(saved_rows, discovery_count)
+	return TRUE
+
+/datum/character_memory/proc/save_contact_changes(var/list/saved_notes, var/list/conflicts, var/submitted_notes_only)
+	if(!islist(saved_contact_notes))
+		return FALSE
+	var/list/contact_ids = submitted_notes_only ? edited_note_revisions : contacts
+	for(var/contact_id in contact_ids)
+		var/list/conflict = conflicting_contact_notes?[contact_id]
+		if(conflict)
+			continue
+		var/new_contact = !(contact_id in saved_contact_notes)
+		if(new_contact && (submitted_notes_only || !save_database_contact(contact_id, preserve_note = TRUE)))
+			return FALSE
+		if(contacts[contact_id]["notes"] != (saved_contact_notes[contact_id] || "") || (contact_id in edited_note_revisions))
+			var/saved = save_contact_note(contact_id, conflicts)
+			if(isnull(saved))
+				return FALSE
+			if(!saved)
+				continue
+		else if(!new_contact)
+			continue
+		if(new_contact && !save_database_contact_counts(contact_id))
+			return FALSE
+		saved_notes[contact_id] = contacts[contact_id]["notes"]
+	return TRUE
+
+/datum/character_memory/proc/sync_database_from_memory(var/submitted_notes_only = FALSE)
+	if((!submitted_notes_only && !ensure_saved_memory_loaded()) || !ensure_database())
+		return FALSE
+	if(length(edited_note_revisions) && !character_save_path_matches(submitted_note_path, save_path))
+		return FALSE
+	if(submitted_notes_only && !islist(saved_contact_notes))
+		return FALSE
+	if(!submitted_notes_only)
+		normalize_contacts()
+		if(!persist_pending_interactions())
+			return FALSE
+		if(pending_recipe_path && recipes_saved_path == save_path && !persist_recipe_changes())
+			return FALSE
 	if(!execute_database_update("BEGIN TRANSACTION", "begin character memory full sync transaction"))
 		return FALSE
-	var/success = TRUE
-	if(success && !save_database_metadata())
-		success = FALSE
-	if(success && !execute_database_update("DELETE FROM daily_counts", "clear character memory daily counts"))
-		success = FALSE
-	if(success && !execute_database_update("DELETE FROM total_counts", "clear character memory total counts"))
-		success = FALSE
-	if(success && !execute_database_update("DELETE FROM contacts", "clear character memory contacts"))
-		success = FALSE
-	if(success)
-		for(var/contact_id in contacts)
-			if(!save_database_contact_counts(contact_id))
-				success = FALSE
-				break
-	if(success && !execute_database_update("DELETE FROM drinks", "clear character memory drinks"))
-		success = FALSE
-	if(success && !save_database_drinks())
-		success = FALSE
-	if(success && !execute_database_update("DELETE FROM chemicals", "clear character memory chemicals"))
-		success = FALSE
-	if(success && !save_database_chemicals())
-		success = FALSE
-	if(!success)
+	var/list/saved_notes = list()
+	var/list/conflicts = list()
+	var/success = (submitted_notes_only || save_database_metadata()) && save_contact_changes(saved_notes, conflicts, submitted_notes_only)
+	var/list/saved_rows = list()
+	var/discovery_count
+	if(success && !submitted_notes_only)
+		discovery_count = save_recipe_changes(saved_rows)
+		success = !isnull(discovery_count)
+	if(!success || !execute_database_update("COMMIT", "commit character memory full sync transaction"))
 		execute_database_update("ROLLBACK", "rollback character memory full sync transaction")
 		return FALSE
-	if(!execute_database_update("COMMIT", "commit character memory full sync transaction"))
-		execute_database_update("ROLLBACK", "rollback character memory full sync transaction")
-		return FALSE
-	return TRUE
+	var/pending_notes_before = length(edited_note_revisions)
+	var/contacts_changed = length(saved_notes)
+	for(var/contact_id in saved_notes)
+		saved_contact_notes[contact_id] = saved_notes[contact_id]
+		LAZYREMOVE(edited_note_revisions, contact_id)
+	for(var/contact_id in conflicts)
+		var/list/conflict = conflicts[contact_id]
+		LAZYSET(conflicting_contact_notes, contact_id, conflict)
+		contacts[contact_id]["notes"] = conflict["saved"] || ""
+		saved_contact_notes[contact_id] = contacts[contact_id]["notes"]
+		LAZYREMOVE(edited_note_revisions, contact_id)
+	if(!length(edited_note_revisions))
+		submitted_note_path = null
+	if(contacts_changed)
+		mark_peer_contacts_stale()
+	if(!submitted_notes_only)
+		recipe_save_committed(saved_rows, discovery_count)
+	if(length(conflicts) || length(edited_note_revisions) < pending_notes_before)
+		SStgui.update_uis(src)
+	return !submitted_notes_only || (!length(edited_note_revisions) && !length(conflicts))
 
 /datum/character_memory/proc/normalize_contacts()
 	if(!islist(contacts))
@@ -489,10 +1076,9 @@ GLOBAL_DATUM_INIT(tgui_character_memory_state, /datum/tgui_state/character_memor
 /datum/character_memory/proc/get_tracking_ckey(var/mob/living/L)
 	if(!isliving(L))
 		return null
+	if(L.client)
+		return get_valid_tracking_ckey(L.client.ckey, L.client.key)
 	var/tracking_ckey = get_valid_tracking_ckey(L.ckey, L.key)
-	if(tracking_ckey)
-		return tracking_ckey
-	tracking_ckey = get_valid_tracking_ckey(L.client?.ckey, L.client?.key)
 	if(tracking_ckey)
 		return tracking_ckey
 	if(ismob(L.teleop))
@@ -557,32 +1143,6 @@ GLOBAL_DATUM_INIT(tgui_character_memory_state, /datum/tgui_state/character_memor
 			return TRUE
 		return FALSE
 	return L.name != L.real_name
-
-/datum/character_memory/proc/ensure_contact(var/mob/living/L, var/mark_dirty = TRUE)
-	var/contact_id = get_contact_id(L)
-	if(!contact_id)
-		return null
-	var/list/contact = contacts[contact_id]
-	if(!islist(contact))
-		contact = list(
-			"display_name" = L.real_name,
-			"last_seen" = null,
-			"notes" = "",
-			"days" = list(),
-			"totals" = list()
-		)
-		contacts[contact_id] = contact
-		if(mark_dirty)
-			needs_saving = TRUE
-	contact["display_name"] = L.real_name
-	contact["last_seen"] = time2text(world.realtime, "YYYY-MM-DD hh:mm:ss")
-	if(!islist(contact["days"]))
-		contact["days"] = list()
-	if(!islist(contact["totals"]))
-		contact["totals"] = list()
-	if(isnull(contact["notes"]))
-		contact["notes"] = ""
-	return contact_id
 
 /datum/character_memory/proc/get_date_key()
 	return time2text(world.realtime, "YYYY-MM-DD")
@@ -655,38 +1215,28 @@ GLOBAL_DATUM_INIT(tgui_character_memory_state, /datum/tgui_state/character_memor
 		return FALSE
 	if(!save_path)
 		load()
-	if(!save_path || !savable)
+	if(!save_path || !savable || !can_access_memory())
 		return FALSE
 	var/stored_event_key = build_event_key(event_key, event_detail)
-	if(!stored_event_key)
+	var/contact_id = get_contact_id(other)
+	if(!stored_event_key || !contact_id)
 		return FALSE
+	if(!persist_interaction(contact_id, get_date_key(), stored_event_key, role_key, other.real_name, time2text(world.realtime, "YYYY-MM-DD hh:mm:ss")))
+		needs_saving = TRUE
+	return TRUE
 
-	var/contact_id = ensure_contact(other, FALSE)
-	if(!contact_id)
-		return FALSE
-
-	var/list/contact = contacts[contact_id]
+/datum/character_memory/proc/apply_contact_interaction(var/list/interaction)
+	var/list/contact = ensure_loaded_contact(interaction["contact_id"], interaction["name"], interaction["last_seen"], null)
 	var/list/days = contact["days"]
-	var/date_key = get_date_key()
+	var/date_key = interaction["date"]
 	var/list/day = days[date_key]
 	if(!islist(day))
 		day = list("events" = list())
 		days[date_key] = day
-	var/list/day_events = day["events"]
-	if(!islist(day_events))
-		day_events = list()
-		day["events"] = day_events
-
-	var/list/totals = contact["totals"]
-	if(!islist(totals))
-		totals = list()
-		contact["totals"] = totals
-
-	increment_role_count(day_events, stored_event_key, role_key)
-	increment_role_count(totals, stored_event_key, role_key)
-	if(!persist_interaction(contact_id, date_key, stored_event_key, role_key))
-		needs_saving = TRUE
-	return TRUE
+	if(!islist(day["events"]))
+		day["events"] = list()
+	increment_role_count(day["events"], interaction["event"], interaction["role"])
+	increment_role_count(contact["totals"], interaction["event"], interaction["role"])
 
 /datum/character_memory/proc/sanitize_note(var/note)
 	if(isnull(note))
@@ -707,7 +1257,7 @@ GLOBAL_DATUM_INIT(tgui_character_memory_state, /datum/tgui_state/character_memor
 /datum/character_memory/proc/get_ui_contact_token(var/contact_id)
 	if(!contact_id)
 		return null
-	var/contact_key = "[contact_id]"
+	var/contact_key = "[REF(src)]|[save_generation]|[contact_id]"
 	return "contact-[md5(contact_key)]"
 
 /datum/character_memory/proc/build_event_rows(var/list/event_bucket)
@@ -794,12 +1344,17 @@ GLOBAL_DATUM_INIT(tgui_character_memory_state, /datum/tgui_state/character_memor
 	var/list/contact = contacts[contact_id]
 	if(!islist(contact))
 		return null
+	var/list/conflict = conflicting_contact_notes?[contact_id]
 	return list(
 		"id" = token,
 		"name" = contact["display_name"],
 		"first_met" = get_first_met_date(contact),
 		"last_seen" = contact["last_seen"],
-		"notes" = contact["notes"],
+		"notes" = conflict ? conflict["draft"] : contact["notes"],
+		"note_conflict" = !!conflict,
+		"contact_deleted" = conflict && isnull(conflict["saved"]),
+		"note_pending" = (contact_id in edited_note_revisions),
+		"note_revision" = md5((conflict ? conflict["saved"] : saved_contact_notes?[contact_id]) || ""),
 		"categories" = build_event_categories(contact["totals"]),
 		"totals" = build_event_rows(contact["totals"]),
 		"days" = build_day_rows(contact)
@@ -824,27 +1379,40 @@ GLOBAL_DATUM_INIT(tgui_character_memory_state, /datum/tgui_state/character_memor
 	return GLOB.tgui_character_memory_state
 
 /datum/character_memory/tgui_interact(mob/user, datum/tgui/ui = null)
-	if(user != ourmob)
+	if(user != ourmob || !can_access_memory())
 		return
-	error_message = null
+	if(!ui)
+		error_message = null
 	if(!save_path && user.client)
 		load(user.client.prefs)
+	else if(!ui)
+		refresh_stale_memory()
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, "CharacterMemory", "Memory")
+		ui = new /datum/tgui/character_memory(user, src, "CharacterMemory", "Memory")
 		ui.open()
 	ui.set_autoupdate(FALSE)
 
-/datum/character_memory/tgui_data(mob/user)
+/datum/character_memory/tgui_data(mob/user, datum/tgui/character_memory/ui)
 	var/list/data = list()
-	if(user != ourmob)
+	if(user != ourmob || !can_access_memory())
 		return data
 	data["status"] = status_message
 	data["error"] = error_message
 	data["note_limit"] = CHARACTER_MEMORY_NOTE_LIMIT
 	data["savable"] = savable
-	add_drinks_ui_data(data)
-	add_chemicals_ui_data(data)
+	data["recipes_need_refresh"] = recipes_need_refresh || saved_memory_needs_reload
+	data["tab"] = ui?.active_tab || "characters"
+	switch(data["tab"])
+		if("food")
+			add_foods_ui_data(data)
+			return data
+		if("drinks")
+			add_drinks_ui_data(data)
+			return data
+		if("chemistry")
+			add_chemicals_ui_data(data)
+			return data
 
 	normalize_contacts()
 	var/list/contact_sort_rows = list()
@@ -887,21 +1455,48 @@ GLOBAL_DATUM_INIT(tgui_character_memory_state, /datum/tgui_state/character_memor
 			"categories" = build_event_categories(contact["totals"])
 		))
 
+	data["detail"] = null
 	data["contacts"] = contact_rows
 	data["selected_contact"] = selected_token
 	if(selected_contact && selected_token)
-		data["detail"] = build_contact_data(selected_contact, selected_token)
+		var/list/detail = build_contact_data(selected_contact, selected_token)
+		var/list/submission = ui?.received_note_submissions?[selected_contact]
+		detail["received_submission"] = submission?["id"]
+		detail["submitted_revision"] = submission?["revision"]
+		data["detail"] = detail
+		if(!error_message && detail["contact_deleted"])
+			data["error"] = "This contact was removed from the shared memory. Copy any note text you want to keep before discarding the edit."
+		else if(!error_message && (selected_contact in conflicting_contact_notes))
+			data["error"] = "Another body saved the note \"[conflicting_contact_notes[selected_contact]["saved"]]\". Use the saved note or save your edit to replace it."
+		else if(selected_contact in edited_note_revisions)
+			data["error"] = "The note could not be saved. Your edit is still pending."
 	return data
 
-/datum/character_memory/tgui_act(action, params)
+/datum/character_memory/tgui_act(action, params, datum/tgui/character_memory/ui)
 	. = ..()
-	if(.)
-		return
-	if(usr != ourmob)
+	if(!ourmob || usr != ourmob || ui?.user != ourmob || !can_access_memory())
+		return TRUE
+	var/list/submission
+	if(action == "save_note" && isnum(params["submission"]))
+		var/contact_id = resolve_ui_contact_id(params["id"])
+		if(contact_id)
+			submission = list("id" = params["submission"])
+			LAZYSET(ui.received_note_submissions, contact_id, submission)
+	if(. && !(ui.status == STATUS_UPDATE && (action in list("select_tab", "select_contact", "select_drink", "select_chemical", "select_food", "refresh"))))
+		return TRUE
+	if(action == "select_tab")
+		var/tab = params["tab"]
+		if(tab == ui.active_tab || !(tab in list("characters", "drinks", "food", "chemistry")))
+			return FALSE
+		ui.active_tab = tab
 		return TRUE
 	status_message = null
 	error_message = null
 	switch(action)
+		if("select_food")
+			if(params["id"] in foods)
+				selected_food = params["id"]
+			return TRUE
 		if("select_chemical")
 			if(params["id"] in chemicals)
 				selected_chemical = params["id"]
@@ -917,7 +1512,36 @@ GLOBAL_DATUM_INIT(tgui_character_memory_state, /datum/tgui_state/character_memor
 				return TRUE
 			selected_contact = contact_id
 			return TRUE
+		if("discard_note", "discard_deleted_note")
+			var/contact_id = resolve_ui_contact_id(params["id"])
+			var/list/conflict = conflicting_contact_notes?[contact_id]
+			if(!conflict || (action == "discard_deleted_note" && !isnull(conflict["saved"])))
+				return FALSE
+			var/list/rows = ensure_database() ? read_contact_note(contact_id) : null
+			if(!islist(rows))
+				error_message = "The saved note could not be loaded. Try discarding the edit again."
+				return TRUE
+			if(length(rows))
+				var/saved_note = rows[1]["notes"] || ""
+				contacts[contact_id]["notes"] = saved_note
+				saved_contact_notes[contact_id] = saved_note
+				LAZYREMOVE(conflicting_contact_notes, contact_id)
+				return TRUE
+			needs_saving = TRUE
+			save()
+			if(needs_saving)
+				error_message = "The remaining contacts could not be saved. Try discarding the edit again."
+				return TRUE
+			LAZYREMOVE(conflicting_contact_notes, contact_id)
+			contacts -= contact_id
+			saved_contact_notes -= contact_id
+			contacts_need_refresh = TRUE
+			refresh_stale_memory()
+			return TRUE
 		if("save_note")
+			if(!save_path || !savable || !ensure_contacts_loaded())
+				error_message = "The latest contacts could not be loaded. Refresh to try again."
+				return TRUE
 			var/contact_id = resolve_ui_contact_id(params["id"])
 			if(!contact_id)
 				error_message = "That memory entry is no longer available."
@@ -926,12 +1550,23 @@ GLOBAL_DATUM_INIT(tgui_character_memory_state, /datum/tgui_state/character_memor
 			if(!islist(contact))
 				error_message = "That memory entry is no longer available."
 				return TRUE
+			var/revision = params["note_revision"]
+			if(!istext(revision) || length(revision) != 32)
+				error_message = "Refresh this memory entry before saving your note."
+				return TRUE
+			LAZYREMOVE(conflicting_contact_notes, contact_id)
+			submitted_note_path = save_path
+			LAZYSET(edited_note_revisions, contact_id, revision)
 			contact["notes"] = sanitize_note(params["note"])
-			needs_saving = TRUE
-			save(force = TRUE)
-			status_message = "Memory note saved."
+			if(submission)
+				submission["revision"] = md5(contact["notes"])
+			if(!sync_database_from_memory(submitted_notes_only = TRUE) && length(edited_note_revisions))
+				needs_saving = TRUE
+			if(!(contact_id in edited_note_revisions) && !(contact_id in conflicting_contact_notes))
+				status_message = "Memory note saved."
 			return TRUE
 		if("refresh")
+			refresh_stale_memory()
 			return TRUE
 	return FALSE
 
@@ -940,7 +1575,7 @@ GLOBAL_DATUM_INIT(tgui_character_memory_state, /datum/tgui_state/character_memor
 	set category = "IC"
 	set desc = "Review your character's memories."
 
-	if(!character_memory)
+	if(!character_memory || !character_memory.can_access_memory())
 		to_chat(src, "<span class='warning'>You have no character memory for this body.</span>")
 		return
 	character_memory.tgui_interact(src)

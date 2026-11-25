@@ -58,7 +58,7 @@
 		SPAN_NOTICE("You scoop up some of [loaded] with \the [src]!")
 	)
 	loading.bitecount++
-	loading.reagents.trans_to_obj(src, min(loading.reagents.total_volume, scoop_volume))
+	loading.reagents.trans_to_obj(src, min(loading.reagents.total_volume, scoop_volume), mixer = user) // RS Edit: Food Memories (Lira, November 2026)
 	loaded_color = loading.filling_color
 
 	if(loading.food_inserted_micros && loading.food_inserted_micros.len)
@@ -84,6 +84,7 @@
 		qdel(loading)
 	update_icon()
 
+// RS Edit: Food Memories (Lira, November 2026)
 /obj/item/weapon/material/kitchen/utensil/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
 	if(!istype(M))
 		return ..()
@@ -97,7 +98,23 @@
 			return ..()
 
 	if (loaded && reagents.total_volume > 0)
-		reagents.trans_to_mob(M, reagents.total_volume, CHEM_INGEST)
+		var/mob/source_mixer = user
+		if(M == user)
+			if(!M.can_eat(loaded))
+				return
+			M.visible_message("<b>\The [user]</b> eats some of [loaded] with \the [src].")
+		else
+			user.visible_message(SPAN_WARNING("\The [user] begins to feed \the [M]!"))
+			if(!M.can_force_feed(user, loaded))
+				return
+			var/datum/cooking_memory_binding/operator = capture_cooking_operator(user)
+			if(!do_mob(user, M, 5 SECONDS))
+				return
+			if(!loaded || !reagents?.total_volume || !M.can_force_feed(user, loaded))
+				return
+			source_mixer = operator?.resolve()
+			M.visible_message("<b>\The [user]</b> feeds some of [loaded] to \the [M] with \the [src].")
+		reagents.trans_to_mob(M, reagents.total_volume, CHEM_INGEST, source_mixer = source_mixer)
 		if(food_inserted_micros && food_inserted_micros.len)
 			var/obj/belly/belly_target = M.get_spontaneous_belly(FOOD_VORE) // RS Add: Spont pref tum (Lira, January 2026)
 			for(var/mob/living/F in food_inserted_micros)
@@ -109,15 +126,6 @@
 					F.forceMove(belly_target)
 				else
 					F.forceMove(get_turf(src)) // RS Edit: Spont pref tum (Lira, January 2026)
-		if(M == user)
-			if(!M.can_eat(loaded))
-				return
-			M.visible_message("<b>\The [user]</b> eats some of [loaded] with \the [src].")
-		else
-			user.visible_message(SPAN_WARNING("\The [user] begins to feed \the [M]!"))
-			if(!(M.can_force_feed(user, loaded) && do_mob(user, M, 5 SECONDS)))
-				return
-			M.visible_message("<b>\The [user]</b> feeds some of [loaded] to \the [M] with \the [src].")
 		playsound(src,'sound/items/eatfood.ogg', rand(10,40), 1)
 		loaded = null
 		update_icon()

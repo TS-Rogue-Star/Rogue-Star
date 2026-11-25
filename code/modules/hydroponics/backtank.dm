@@ -285,13 +285,15 @@
 	possible_transfer_amounts = list(5,10)
 	spray_size = null
 
-/obj/item/weapon/reagent_containers/spray/mister/atmos/Spray_at(atom/A as mob|obj)
+// RS Edit: Food Memories (Lira, November 2026)
+/obj/item/weapon/reagent_containers/spray/mister/atmos/Spray_at(atom/A as mob|obj, mob/user as mob)
 	playsound(src, 'sound/effects/spray3.ogg', rand(50,1), -6)
 	var/direction = get_dir(src, A)
 	var/turf/T = get_turf(A)
 	var/turf/T1 = get_step(T,turn(direction, 90))
 	var/turf/T2 = get_step(T,turn(direction, -90))
 	var/list/the_targets = list(T, T1, T2)
+	var/datum/cooking_memory_binding/operator = capture_cooking_operator(user)
 
 	for(var/a = 1 to 3)
 		spawn(0)
@@ -301,7 +303,7 @@
 			D.create_reagents(amount_per_transfer_from_this)
 			if(!src)
 				return
-			reagents.trans_to_obj(D, amount_per_transfer_from_this)
+			reagents.trans_to_obj(D, amount_per_transfer_from_this, source_mixer = operator?.resolve())
 			D.set_color()
 			D.set_up(my_target, rand(6, 8), 2)
 	return

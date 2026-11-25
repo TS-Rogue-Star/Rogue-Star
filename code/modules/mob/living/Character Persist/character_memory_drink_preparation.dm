@@ -1,6 +1,8 @@
 //////////////////////////////////////////////////////////////////
 // Created by Lira for Rogue Star November 2026: Drink Memories //
 //////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star November 2026: Food Memories ///
+//////////////////////////////////////////////////////////////////
 
 /decl/chemical_reaction
 	var/list/drink_pour_order
@@ -40,9 +42,7 @@
 	drink_pour_order = list("rum", "limejuice", "sugar")
 	drink_preparation_notes = list("Add sugar last. Rum and sugar mixed before the lime juice can become Fire Punch.")
 
-/datum/character_memory/proc/build_drink_traits(var/datum/reagent/drink)
-	if(!drink)
-		return null
+/proc/character_memory_allergen_names(var/allergen_types)
 	var/static/list/allergen_names = list(
 		"Meat" = ALLERGEN_MEAT,
 		"Fish" = ALLERGEN_FISH,
@@ -61,8 +61,14 @@
 	)
 	var/list/allergens = list()
 	for(var/allergen in allergen_names)
-		if(drink.allergen_type & allergen_names[allergen])
+		if(allergen_types & allergen_names[allergen])
 			allergens += allergen
+	return allergens
+
+/datum/character_memory/proc/build_drink_traits(var/datum/reagent/drink)
+	if(!drink)
+		return null
+	var/list/allergens = character_memory_allergen_names(drink.allergen_type)
 	var/alcohol = "Non-alcoholic"
 	var/list/effects = list()
 	var/temperature_change = 0

@@ -45,6 +45,7 @@ SUBSYSTEM_DEF(throwing)
 	var/maxrange
 	var/speed
 	var/mob/thrower
+	var/datum/cooking_memory_binding/source_mixer // RS Add: Food Memories (Lira, November 2026)
 	var/start_time
 	var/dist_travelled = 0
 	var/dist_x
@@ -96,6 +97,7 @@ SUBSYSTEM_DEF(throwing)
 	thrownthing = null
 	target = null
 	thrower = null
+	source_mixer = null // RS Add: Food Memories (Lira, November 2026)
 	callback = null
 	return ..()
 

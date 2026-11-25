@@ -1,6 +1,8 @@
 //////////////////////////////////////////////////////////////////
 // Updated by Lira for Rogue Star November 2026: Drink Memories //
 //////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star November 2026: Food Memories ///
+//////////////////////////////////////////////////////////////////
 
 #define PROCESS_REACTION_ITER 5 //when processing a reaction, iterate this many times
 
@@ -107,6 +109,7 @@
 	if(mixer && length(effect_reactions))
 		record_mixed_drinks(mixer, effect_reactions)
 		record_mixed_chemicals(mixer, effect_reactions)
+		record_mixed_foods(mixer, effect_reactions)
 
 /* Holder-to-chemical */
 
@@ -250,7 +253,7 @@
 	return amount
 
 // RS Edit: Drink Memories (Lira, November 2026)
-/datum/reagents/proc/trans_to_holder(var/datum/reagents/target, var/amount = 1, var/multiplier = 1, var/copy = 0, var/mob/mixer = null) // Transfers [amount] reagents from [src] to [target], multiplying them by [multiplier]. Returns actual amount removed from [src] (not amount transferred to [target]).
+/datum/reagents/proc/trans_to_holder(var/datum/reagents/target, var/amount = 1, var/multiplier = 1, var/copy = 0, var/mob/mixer = null, var/mob/source_mixer = mixer, var/mob/target_mixer = mixer) // Transfers [amount] reagents from [src] to [target], multiplying them by [multiplier]. Returns actual amount removed from [src] (not amount transferred to [target]).
 	if(!target || !istype(target))
 		return
 
@@ -268,8 +271,8 @@
 			remove_reagent(current.id, amount_to_transfer, 1)
 
 	if(!copy)
-		handle_reactions(mixer)
-	target.handle_reactions(mixer)
+		handle_reactions(source_mixer)
+	target.handle_reactions(target_mixer)
 	return amount
 
 /* Holder-to-atom and similar procs */
@@ -279,29 +282,31 @@
 //If for some reason touch effects are bypassed (e.g. injecting stuff directly into a reagent container or person),
 //call the appropriate trans_to_*() proc.
 // RS Edit: Drink Memories (Lira, November 2026)
-/datum/reagents/proc/trans_to(var/atom/target, var/amount = 1, var/multiplier = 1, var/copy = 0, var/mob/mixer = null)
+/datum/reagents/proc/trans_to(var/atom/target, var/amount = 1, var/multiplier = 1, var/copy = 0, var/mob/mixer = null, var/mob/source_mixer = mixer)
 	if(iscarbon(target) || ismob(target))  // Reagent bellies || RS Edit || Chomp Port
-		return splash_mob(target, amount * multiplier, copy) //Touch effects handled by splash_mob
+		return splash_mob(target, amount * multiplier, copy, source_mixer = source_mixer) //Touch effects handled by splash_mob
 	touch(target, amount * multiplier) //First, handle mere touch effects ||RS Edit || Chomp Port
 	if(isturf(target))
-		return trans_to_turf(target, amount, multiplier, copy)
+		return trans_to_turf(target, amount, multiplier, copy, source_mixer)
 	if(isobj(target) && target.is_open_container() && !isbelly(target.loc)) // RS Edit || Chomp Port
-		return trans_to_obj(target, amount, multiplier, copy, mixer)
+		return trans_to_obj(target, amount, multiplier, copy, mixer, source_mixer)
 	return 0
 
 //Splashing reagents is messier than trans_to, the target's loc gets some of the reagents as well.
-/datum/reagents/proc/splash(var/atom/target, var/amount = 1, var/multiplier = 1, var/copy = 0, var/min_spill=0, var/max_spill=60)
+// RS Edit: Food Memories (Lira, November 2026)
+/datum/reagents/proc/splash(var/atom/target, var/amount = 1, var/multiplier = 1, var/copy = 0, var/min_spill=0, var/max_spill=60, var/mob/source_mixer = null)
 	var/spill = 0
 	if(!isturf(target) && target.loc)
 		spill = amount*(rand(min_spill, max_spill)/100)
 		amount -= spill
 	if(spill)
-		splash(target.loc, spill, multiplier, copy, min_spill, max_spill)
+		splash(target.loc, spill, multiplier, copy, min_spill, max_spill, source_mixer)
 
-	if(!trans_to(target, amount, multiplier, copy))
+	if(!trans_to(target, amount, multiplier, copy, source_mixer = source_mixer))
 		touch(target, amount)
 
-/datum/reagents/proc/trans_type_to(var/target, var/rtype, var/amount = 1)
+// RS Edit: Food Memories (Lira, November 2026)
+/datum/reagents/proc/trans_type_to(var/target, var/rtype, var/amount = 1, var/mob/mixer = null)
 	if (!target)
 		return
 
@@ -321,13 +326,13 @@
 	var/datum/reagents/F = new /datum/reagents(amount)
 	var/tmpdata = get_data(rtype)
 	F.add_reagent(rtype, amount, tmpdata)
-	remove_reagent(rtype, amount)
+	remove_reagent(rtype, amount, mixer = mixer)
 
 
 	if (istype(target, /atom))
-		return F.trans_to(target, amount) // Let this proc check the atom's type
+		return F.trans_to(target, amount, mixer = mixer) // Let this proc check the atom's type
 	else if (istype(target, /datum/reagents))
-		return F.trans_to_holder(target, amount)
+		return F.trans_to_holder(target, amount, mixer = mixer)
 
 /datum/reagents/proc/trans_id_to(var/atom/target, var/id, var/amount = 1, var/mob/mixer = null) // RS Edit: Drink Memories (Lira, November 2026)
 	if (!target || !target.reagents)
@@ -388,7 +393,8 @@
 // Attempts to place a reagent on the mob's skin.
 // Reagents are not guaranteed to transfer to the target.
 // Do not call this directly, call trans_to() instead.
-/datum/reagents/proc/splash_mob(var/mob/target, var/amount = 1, var/copy = 0)
+// RS Edit: Food Memories (Lira, November 2026)
+/datum/reagents/proc/splash_mob(var/mob/target, var/amount = 1, var/copy = 0, var/mob/source_mixer = null)
 	var/perm = 1
 	if(isliving(target)) //will we ever even need to tranfer reagents to non-living mobs?
 		var/mob/living/L = target
@@ -397,53 +403,55 @@
 			if(H.check_shields(0, null, null, null, "the spray") == 1)		//If they block the spray, it does nothing.
 				amount = 0
 		perm = L.reagent_permeability()
-	return trans_to_mob(target, amount, CHEM_TOUCH, perm, copy)
+	return trans_to_mob(target, amount, CHEM_TOUCH, perm, copy, source_mixer = source_mixer)
 
-/datum/reagents/proc/trans_to_mob(var/mob/target, var/amount = 1, var/type = CHEM_BLOOD, var/multiplier = 1, var/copy = 0) // Transfer after checking into which holder...
+// RS Edit: Food Memories (Lira, November 2026)
+/datum/reagents/proc/trans_to_mob(var/mob/target, var/amount = 1, var/type = CHEM_BLOOD, var/multiplier = 1, var/copy = 0, var/mob/source_mixer = null) // Transfer after checking into which holder...
 	if(!target || !istype(target))
 		return
 	if(iscarbon(target))
 		if(isbelly(target.loc) && target.stat == DEAD) // Reagent bellies || RS Add || Chomp Port
 			var/datum/reagents/R = new /datum/reagents(amount)
-			. = trans_to_holder(R, amount, multiplier, copy)
+			. = trans_to_holder(R, amount, multiplier, copy, source_mixer = source_mixer)
 			R.touch_mob(target)
 			return // End reagent bellies
 		var/mob/living/carbon/C = target
 		if(type == CHEM_BLOOD)
 			var/datum/reagents/R = C.reagents
-			return trans_to_holder(R, amount, multiplier, copy)
+			return trans_to_holder(R, amount, multiplier, copy, source_mixer = source_mixer)
 		if(type == CHEM_INGEST)
 			var/datum/reagents/R = C.ingested
-			return C.ingest(src, R, amount, multiplier, copy)
+			return C.ingest(src, R, amount, multiplier, copy, source_mixer)
 		if(type == CHEM_TOUCH)
 			var/datum/reagents/R = C.touching
-			return trans_to_holder(R, amount, multiplier, copy)
+			return trans_to_holder(R, amount, multiplier, copy, source_mixer = source_mixer)
 	else
 		var/datum/reagents/R = new /datum/reagents(amount)
-		. = trans_to_holder(R, amount, multiplier, copy)
+		. = trans_to_holder(R, amount, multiplier, copy, source_mixer = source_mixer)
 		R.touch_mob(target)
 
-/datum/reagents/proc/trans_to_turf(var/turf/target, var/amount = 1, var/multiplier = 1, var/copy = 0) // Turfs don't have any reagents (at least, for now). Just touch it.
+// RS Edit: Food Memories (Lira, November 2026)
+/datum/reagents/proc/trans_to_turf(var/turf/target, var/amount = 1, var/multiplier = 1, var/copy = 0, var/mob/source_mixer = null) // Turfs don't have any reagents (at least, for now). Just touch it.
 	if(!target)
 		return
 
 	var/datum/reagents/R = new /datum/reagents(amount * multiplier)
-	. = trans_to_holder(R, amount, multiplier, copy)
+	. = trans_to_holder(R, amount, multiplier, copy, source_mixer = source_mixer)
 	R.touch_turf(target, amount)
 	return
 
 // RS Edit: Drink Memories (Lira, November 2026)
-/datum/reagents/proc/trans_to_obj(var/obj/target, var/amount = 1, var/multiplier = 1, var/copy = 0, var/mob/mixer = null) // Objects may or may not; if they do, it's probably a beaker or something and we need to transfer properly; otherwise, just touch.
+/datum/reagents/proc/trans_to_obj(var/obj/target, var/amount = 1, var/multiplier = 1, var/copy = 0, var/mob/mixer = null, var/mob/source_mixer = mixer) // Objects may or may not; if they do, it's probably a beaker or something and we need to transfer properly; otherwise, just touch.
 	if(!target)
 		return
 
 	if(!target.reagents)
 		var/datum/reagents/R = new /datum/reagents(amount * multiplier)
-		. = trans_to_holder(R, amount, multiplier, copy)
+		. = trans_to_holder(R, amount, multiplier, copy, source_mixer = source_mixer)
 		R.touch_obj(target, amount)
 		return
 
-	return trans_to_holder(target.reagents, amount, multiplier, copy, mixer)
+	return trans_to_holder(target.reagents, amount, multiplier, copy, mixer, source_mixer)
 
 /* Atom reagent creation - use it all the time */
 

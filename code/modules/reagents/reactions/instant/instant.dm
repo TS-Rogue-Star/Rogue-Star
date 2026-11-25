@@ -1237,6 +1237,7 @@
 // Neutralization.
 
 /decl/chemical_reaction/instant/neutralize_neurotoxic_protein
+	parent_type = /decl/chemical_reaction/instant/food // RS Add: Food Memories (Lira, November 2026)
 	name = "Neutralize Toxic Proteins"
 	id = "neurotoxic_protein_neutral"
 	result = "protein"
@@ -1244,6 +1245,7 @@
 	result_amount = 2
 
 /decl/chemical_reaction/instant/neutralize_carpotoxin
+	parent_type = /decl/chemical_reaction/instant/food // RS Add: Food Memories (Lira, November 2026)
 	name = "Neutralize Carpotoxin"
 	id = "carpotoxin_neutral"
 	result = "protein"
@@ -1251,6 +1253,7 @@
 	result_amount = 1
 
 /decl/chemical_reaction/instant/neutralize_spidertoxin
+	parent_type = /decl/chemical_reaction/instant/food // RS Add: Food Memories (Lira, November 2026)
 	name = "Neutralize Spidertoxin"
 	id = "spidertoxin_neutral"
 	result = "protein"

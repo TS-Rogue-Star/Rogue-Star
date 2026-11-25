@@ -153,8 +153,10 @@
 	"<span class='filter_notice'>You start applying medication to the affected tissue in [target]'s [affected.name] with \the [tool].</span>")
 	target.custom_pain("Something in your [affected.name] is causing you a lot of pain!", 50)
 	..()
+	return capture_cooking_operator(user) // RS Add: Food Memories (Lira, November 2026)
 
-/datum/surgery_step/treat_necrosis/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+// RS Edit: Food Memories (Lira, November 2026)
+/datum/surgery_step/treat_necrosis/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool, datum/cooking_memory_binding/operator)
 	var/obj/item/organ/external/affected = target.get_organ(target_zone)
 
 	if (!istype(tool, /obj/item/weapon/reagent_containers))
@@ -162,7 +164,7 @@
 
 	var/obj/item/weapon/reagent_containers/container = tool
 
-	var/trans = container.reagents.trans_to_mob(target, container.amount_per_transfer_from_this, CHEM_BLOOD) //technically it's contact, but the reagents are being applied to internal tissue
+	var/trans = container.reagents.trans_to_mob(target, container.amount_per_transfer_from_this, CHEM_BLOOD, source_mixer = operator?.resolve()) //technically it's contact, but the reagents are being applied to internal tissue
 	if (trans > 0)
 		affected.status &= ~ORGAN_DEAD
 		affected.owner.update_icons_body()
@@ -170,7 +172,8 @@
 		user.visible_message("<span class='notice'>[user] applies [trans] units of the solution to affected tissue in [target]'s [affected.name].</span>", \
 			"<span class='notice'>You apply [trans] units of the solution to affected tissue in [target]'s [affected.name] with \the [tool].</span>")
 
-/datum/surgery_step/treat_necrosis/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+// RS Edit: Food Memories (Lira, November 2026)
+/datum/surgery_step/treat_necrosis/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool, datum/cooking_memory_binding/operator)
 	var/obj/item/organ/external/affected = target.get_organ(target_zone)
 
 	if (!istype(tool, /obj/item/weapon/reagent_containers))
@@ -178,7 +181,7 @@
 
 	var/obj/item/weapon/reagent_containers/container = tool
 
-	var/trans = container.reagents.trans_to_mob(target, container.amount_per_transfer_from_this, CHEM_BLOOD)
+	var/trans = container.reagents.trans_to_mob(target, container.amount_per_transfer_from_this, CHEM_BLOOD, source_mixer = operator?.resolve())
 
 	user.visible_message("<span class='danger'>[user]'s hand slips, applying [trans] units of the solution to the wrong place in [target]'s [affected.name] with the [tool]!</span>" , \
 	"<span class='danger'>Your hand slips, applying [trans] units of the solution to the wrong place in [target]'s [affected.name] with the [tool]!</span>")

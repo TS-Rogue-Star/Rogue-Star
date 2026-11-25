@@ -312,6 +312,7 @@
 	//DISCONNECT//
 	//////////////
 /client/Del()
+	QDEL_NULL(etching) // RS Add: Food Memories (Lira, November 2026)
 	cleanup_instrument_audio() // RS Add: Browser-based instrument audio (Lira, March 2026)
 	if(holder)
 		holder.owner = null

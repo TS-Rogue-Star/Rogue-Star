@@ -1,9 +1,12 @@
 //////////////////////////////////////////////////////////////////////
 // Created by Lira for Rogue Star November 2026: Chemistry Memories //
 //////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star November 2026: Food Memories ///////
+//////////////////////////////////////////////////////////////////////
 
 /datum/character_memory
 	var/list/chemicals = list()
+	var/tmp/list/pending_chemical_batches = list()
 	var/selected_chemical
 
 /proc/character_memory_chemical_result(var/decl/chemical_reaction/recipe)
@@ -44,71 +47,20 @@
 /datum/character_memory/proc/init_chemicals_schema()
 	return execute_database_update("CREATE TABLE IF NOT EXISTS chemicals (chemical_id TEXT NOT NULL PRIMARY KEY, times_made INTEGER NOT NULL DEFAULT 0, first_made TEXT, last_made TEXT)", "create character memory chemicals table")
 
-/datum/character_memory/proc/load_database_chemicals()
-	var/list/rows = execute_database_query("SELECT chemical_id, times_made, first_made, last_made FROM chemicals", "load character memory chemicals")
-	if(!islist(rows))
-		return FALSE
-	chemicals = list()
-	for(var/list/row as anything in rows)
-		var/chemical_id = row["chemical_id"]
-		var/times_made = text2num("[row["times_made"]]")
-		if(!istext(chemical_id) || !length(chemical_id) || !isnum(times_made) || times_made < 1)
-			continue
-		chemicals[chemical_id] = list("times_made" = round(times_made), "first_made" = row["first_made"], "last_made" = row["last_made"])
-	sync_chemistry_xp()
-	return TRUE
-
-/datum/character_memory/proc/save_database_chemical(var/chemical_id)
-	var/list/entry = chemicals[chemical_id]
-	if(!islist(entry))
-		return FALSE
-	return execute_database_update(list("INSERT OR REPLACE INTO chemicals (chemical_id, times_made, first_made, last_made) VALUES (?, ?, ?, ?)", chemical_id, entry["times_made"], entry["first_made"], entry["last_made"]), "save character memory chemical")
-
-/datum/character_memory/proc/save_database_chemicals()
-	for(var/chemical_id in chemicals)
-		if(!save_database_chemical(chemical_id))
-			return FALSE
-	return TRUE
-
-/datum/character_memory/proc/sync_chemistry_xp()
-	var/datum/etching/etching = ourmob?.etching
-	if(!etching)
-		return
-	if(!islist(etching.xp))
-		etching.xp = list()
-	if(etching.xp["chemistry"] != length(chemicals))
-		etching.xp["chemistry"] = length(chemicals)
-		etching.needs_saving = TRUE
-
 /datum/character_memory/proc/record_chemical(var/chemical_id)
 	if(!can_track(ourmob) || shutting_down || !length(character_memory_chemical_recipes(chemical_id)))
 		return FALSE
-	if(!save_path)
-		load()
-	if(!savable || !save_path)
+	if(!bind_pending_recipes())
 		return FALSE
-	var/list/entry = chemicals[chemical_id]
-	var/first_time = !islist(entry)
-	var/today = get_date_key()
-	if(first_time)
-		entry = list("times_made" = 0, "first_made" = today)
-		chemicals[chemical_id] = entry
-	entry["times_made"]++
-	entry["last_made"] = today
-	if(!ensure_database() || !save_database_chemical(chemical_id))
-		needs_saving = TRUE
-	sync_chemistry_xp()
-	if(first_time)
-		var/datum/reagent/chemical = SSchemistry.chemical_reagents[chemical_id]
-		to_chat(ourmob, SPAN_NOTICE("You learned to make [chemical.name]! +1 chemistry XP ([length(chemicals)] total). Find the recipe in Memory's Chemistry tab."))
-	SStgui.update_uis(src)
-	return TRUE
+	return record_recipe_batches(chemical_id, chemicals, pending_chemical_batches)
 
 /datum/character_memory/proc/known_reagent_recipes(var/reagent_id)
 	if(islist(drinks[reagent_id]))
 		return character_memory_drink_recipes(reagent_id)
 	if(islist(chemicals[reagent_id]))
 		return character_memory_chemical_recipes(reagent_id)
+	if(islist(foods["reagent:[reagent_id]"]))
+		return character_memory_food_recipes("reagent:[reagent_id]")
 	return null
 
 /datum/character_memory/proc/build_chemical_detail(var/chemical_id)
@@ -181,7 +133,7 @@
 	if(!(selected_chemical in chemicals))
 		selected_chemical = length(rows) ? rows[1]["id"] : null
 	data["chemicals"] = rows
-	data["chemistry_xp"] = length(chemicals)
+	data["chemistry_xp"] = recipe_discoveries["chemistry"] || 0
 	data["chemicals_made"] = total_made
 	data["selected_chemical"] = selected_chemical
 	data["chemical_detail"] = flatten_reagent_recipe_detail(build_chemical_detail(selected_chemical))

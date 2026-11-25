@@ -29,6 +29,7 @@
 				reagents.add_reagent(r, filled_reagents[r])
 	update_icon()
 
+// RS Edit: Food Memories (Lira, November 2026)
 /obj/item/weapon/reagent_containers/hypospray/attack(mob/living/M as mob, mob/user as mob)
 	if(!reagents.total_volume)
 		to_chat(user, "<span class='warning'>[src] is empty.</span>")
@@ -36,6 +37,7 @@
 	if (!istype(M))
 		return
 
+	var/datum/cooking_memory_binding/operator = capture_cooking_operator(user)
 	var/mob/living/carbon/human/H = M
 	if(istype(H))
 		var/obj/item/organ/external/affected = H.get_organ(user.zone_sel.selecting)
@@ -63,11 +65,12 @@
 					if(!do_after(user, 30, H))
 						return
 
-	do_injection(H, user)
+	do_injection(H, user, operator)
 	return
 
 // This does the actual injection and transfer.
-/obj/item/weapon/reagent_containers/hypospray/proc/do_injection(mob/living/carbon/human/H, mob/living/user)
+// RS Edit: Food Memories (Lira, November 2026)
+/obj/item/weapon/reagent_containers/hypospray/proc/do_injection(mob/living/carbon/human/H, mob/living/user, datum/cooking_memory_binding/operator = capture_cooking_operator(user))
 	if(!istype(H) || !istype(user))
 		return FALSE
 
@@ -80,7 +83,7 @@
 
 	if(H.reagents)
 		var/contained = reagentlist()
-		var/trans = reagents.trans_to_mob(H, amount_per_transfer_from_this, CHEM_BLOOD)
+		var/trans = reagents.trans_to_mob(H, amount_per_transfer_from_this, CHEM_BLOOD, source_mixer = operator?.resolve())
 		add_attack_logs(user,H,"Injected with [src.name] containing [contained], trasferred [trans] units")
 		to_chat(user, span("notice", "[trans] units injected. [reagents.total_volume] units remaining in \the [src]."))
 		return TRUE
