@@ -1,3 +1,7 @@
+/////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star November 2026: Food Memories //
+/////////////////////////////////////////////////////////////////
+
 //Cooking containers are used in ovens and fryers, to hold multiple ingredients for a recipe.
 //They work fairly similar to the microwave - acting as a container for objects and reagents,
 //which can be checked against recipe requirements in order to cook recipes that require several things
@@ -56,9 +60,17 @@
 				to_chat(user, "<span class='warning'>There's no more space in the [src] for that!</span>")
 				return 0
 
-			if(!user.unEquip(I) && !isturf(I.loc))
-				return
-			I.forceMove(src)
+			// RS Edit Start: Food Memories (Lira, November 2026)
+			var/obj/item/stack/stack = I
+			if(istype(stack) && (stack.uses_charge || stack.amount > 1))
+				if(!stack.use(1))
+					return
+				I = new stack.stacktype(src, 1)
+			else if(!user.unEquip(I, target = src))
+				if(!isturf(I.loc))
+					return
+				I.forceMove(src)
+			// RS Edit End
 			to_chat(user, "<span class='notice'>You put the [I] into the [src].</span>")
 			food_items += 1
 			update_icon()
@@ -151,7 +163,8 @@
 
 //Takes a reagent holder as input and distributes its contents among the items in the container
 //Distribution is weighted based on the volume already present in each item
-/obj/item/weapon/reagent_containers/cooking_container/proc/soak_reagent(var/datum/reagents/holder)
+// RS Edit: Food Memories (Lira, November 2026)
+/obj/item/weapon/reagent_containers/cooking_container/proc/soak_reagent(var/datum/reagents/holder, var/mob/mixer = null)
 	var/total = 0
 	var/list/weights = list()
 	for (var/obj/item/I in contents)
@@ -162,7 +175,7 @@
 	if (total > 0)
 		for (var/obj/item/I in contents)
 			if (weights[I])
-				holder.trans_to(I, weights[I] / total)
+				holder.trans_to(I, weights[I] / total, mixer = mixer)
 
 /obj/item/weapon/reagent_containers/cooking_container/update_icon()
 	overlays.Cut()
@@ -209,3 +222,13 @@
 	shortname = "rack"
 	desc = "Put ingredients 'in'/on this; designed for use with a grill. Warranty void if used incorrectly. Alt click to remove contents."
 	icon_state = "grillrack"
+
+// RS Add: Food Memories (Lira, November 2026)
+/obj/item/weapon/reagent_containers/cooking_container/grill/Initialize()
+	. = ..()
+	insertable += list(
+		/obj/item/stack/rods,
+		/obj/item/organ/internal/brain,
+		/obj/item/robot_parts/head,
+		/obj/item/weapon/ectoplasm
+	)

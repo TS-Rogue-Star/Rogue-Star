@@ -57,6 +57,7 @@
 /obj/item/weapon/reagent_containers/syringe/attackby(obj/item/I as obj, mob/user as mob)
 	return
 
+// RS Edit: Food Memories (Lira, November 2026)
 /obj/item/weapon/reagent_containers/syringe/afterattack(obj/target, mob/user, proximity)
 	if(!proximity || !target.reagents)
 		return
@@ -102,12 +103,13 @@
 						to_chat(user, "<span class='warning'>You are already drawing blood from [T.name].</span>")
 						return
 
+					var/datum/cooking_memory_binding/operator = capture_cooking_operator(user)
 					var/datum/reagent/B
 					drawing = 1
 					if(istype(T, /mob/living/carbon/human))
 						var/mob/living/carbon/human/H = T
 						if(H.species && !H.should_have_organ(O_HEART))
-							H.reagents.trans_to_obj(src, amount)
+							H.reagents.trans_to_obj(src, amount, mixer = user)
 						else
 							if(ismob(H) && H != user)
 								if(!do_mob(user, target, time))
@@ -126,7 +128,7 @@
 						reagents.reagent_list += B
 						reagents.update_total()
 						on_reagent_change()
-						reagents.handle_reactions()
+						reagents.handle_reactions(mixer = operator?.resolve())
 					to_chat(user, "<span class='notice'>You take a blood sample from [target].</span>")
 					for(var/mob/O in viewers(4, user))
 						O.show_message("<span class='notice'>[user] takes a blood sample from [target].</span>", 1)
@@ -202,6 +204,7 @@
 					user.visible_message("<span class='warning'>[user] begins hunting for an injection port on [target]'s suit!</span>","<span class='notice'>You begin hunting for an injection port on [target]'s suit!</span>")
 
 			//The warmup
+			var/datum/cooking_memory_binding/operator = capture_cooking_operator(user)
 			user.setClickCooldown(DEFAULT_QUICK_COOLDOWN)
 			if(!do_after(user,warmup_time,target))
 				return
@@ -210,12 +213,12 @@
 			var/contained = reagentlist()
 			if(ismob(target))
 				while(reagents.total_volume)
-					trans += reagents.trans_to_mob(target, amount_per_transfer_from_this, CHEM_BLOOD)
+					trans += reagents.trans_to_mob(target, amount_per_transfer_from_this, CHEM_BLOOD, source_mixer = operator?.resolve())
 					update_icon()
 					if(!reagents.total_volume || !do_after(user,cycle_time,target))
 						break
 			else
-				trans += reagents.trans_to_obj(target, amount_per_transfer_from_this, mixer = user) // RS Edit: Drink Memories (Lira, November 2026)
+				trans += reagents.trans_to_obj(target, amount_per_transfer_from_this, mixer = operator?.resolve()) // RS Edit: Drink Memories (Lira, November 2026)
 
 			if (reagents.total_volume <= 0 && mode == SYRINGE_INJECT)
 				mode = SYRINGE_DRAW
@@ -299,7 +302,7 @@
 
 	var/syringestab_amount_transferred = rand(max(reagents.total_volume - 10, 0), (reagents.total_volume - 5)) //nerfed by popular demand
 	var/contained = reagents.get_reagents()
-	var/trans = reagents.trans_to_mob(target, syringestab_amount_transferred, CHEM_BLOOD)
+	var/trans = reagents.trans_to_mob(target, syringestab_amount_transferred, CHEM_BLOOD, source_mixer = user) // RS Edit: Food Memories (Lira, November 2026)
 	if(isnull(trans)) trans = 0
 	add_attack_logs(user,target,"Stabbed with [src.name] containing [contained], trasferred [trans] units")
 	if(!issilicon(user))

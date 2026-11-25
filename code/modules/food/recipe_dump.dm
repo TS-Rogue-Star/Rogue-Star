@@ -6,13 +6,16 @@
 	if(!holder)
 		return
 
+	// RS Edit Start: Food Memories (Lira, November 2026)
 	//////////////////////// DRINK
 	var/list/drink_recipes = list()
 	for(var/decl/chemical_reaction/instant/drinks/CR in SSchemistry.chemical_reactions)
-		drink_recipes[CR.type] = list("Result" = CR.name,
-        						"ResAmt" = CR.result_amount,
-        						"Reagents" = CR.required_reagents,
-								"Catalysts" = CR.catalysts)
+		drink_recipes[CR.type] = list(
+			"Result" = CR.name,
+			"ResAmt" = CR.result_amount,
+			"Reagents" = CR.required_reagents?.Copy(),
+			"Catalysts" = CR.catalysts?.Copy()
+		)
 
 	//////////////////////// FOOD
 	var/list/food_recipes = subtypesof(/datum/recipe)
@@ -28,7 +31,7 @@
 		food_recipes[Rp] = list(
 						"Result" = "[res.name]",
 						"ResAmt" = "1",
-						"Reagents" = R.reagents,
+						"Reagents" = R.reagents?.Copy(),
 						"Catalysts" = list(),
 						"Fruit" = R.fruit,
 						"Ingredients" = R.items,
@@ -42,13 +45,16 @@
 
 	//////////////////////// FOOD+ (basically condiments, tofu, cheese, soysauce, etc)
 	for(var/decl/chemical_reaction/instant/food/CR in SSchemistry.chemical_reactions)
-		food_recipes[CR.type] = list("Result" = CR.name,
-								"ResAmt" = CR.result_amount,
-								"Reagents" = CR.required_reagents,
-								"Catalysts" = CR.catalysts,
-								"Fruit" = list(),
-								"Ingredients" = list(),
-								"Image" = null)
+		food_recipes[CR.type] = list(
+			"Result" = CR.name,
+			"ResAmt" = CR.result_amount,
+			"Reagents" = CR.required_reagents?.Copy(),
+			"Catalysts" = CR.catalysts?.Copy(),
+			"Fruit" = list(),
+			"Ingredients" = list(),
+			"Image" = null
+		)
+	// RS Edit End
 
 	//////////////////////// PROCESSING
 	//Items needs further processing into human-readability.

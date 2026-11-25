@@ -2,6 +2,10 @@
 	name = "meat"
 	desc = "A slab of meat."
 	icon_state = "meat"
+	// RS Add Start: Food Memories (Lira, November 2026)
+	knife_slice_path = /obj/item/weapon/reagent_containers/food/snacks/rawcutlet
+	slices_num = 3
+	// RS Add End
 	health = 180
 	filling_color = "#FF1C1C"
 	center_of_mass = list("x"=16, "y"=14)
@@ -24,9 +28,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/meat/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(istype(W,/obj/item/weapon/material/knife))
-		new /obj/item/weapon/reagent_containers/food/snacks/rawcutlet(src)
-		new /obj/item/weapon/reagent_containers/food/snacks/rawcutlet(src)
-		new /obj/item/weapon/reagent_containers/food/snacks/rawcutlet(src)
+		make_knife_slices(user) // RS Edit: Food Memories (Lira, November 2026)
 		new /obj/item/fat(src)	//RS ADD START
 		if(prob(25))
 			new /obj/item/fat(src)

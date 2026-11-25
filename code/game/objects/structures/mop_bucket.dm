@@ -26,6 +26,6 @@ GLOBAL_LIST_BOILERPLATE(all_mopbuckets, /obj/structure/mopbucket)
 		if(reagents.total_volume < 1)
 			to_chat(user, "<span class='warning'>\The [src] is out of water!</span>")
 		else
-			reagents.trans_to_obj(I, 5)
+			reagents.trans_to_obj(I, 5, mixer = user) // RS Edit: Food Memories (Lira, November 2026)
 			to_chat(user, "<span class='notice'>You wet \the [I] in \the [src].</span>")
 			playsound(src, 'sound/effects/slosh.ogg', 25, 1)

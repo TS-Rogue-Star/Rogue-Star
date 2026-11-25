@@ -180,6 +180,7 @@
 ///////////////////////////////////////////////////////////////////////////////////
 /// Reagent colonies.
 /decl/chemical_reaction/instant/meatcolony
+	parent_type = /decl/chemical_reaction/instant/food // RS Add: Food Memories (Lira, November 2026)
 	name = "protein"
 	id = "meatcolony"
 	result = "protein"
@@ -187,6 +188,7 @@
 	result_amount = 60
 
 /decl/chemical_reaction/instant/plantcolony
+	parent_type = /decl/chemical_reaction/instant/food // RS Add: Food Memories (Lira, November 2026)
 	name = "nutriment"
 	id = "plantcolony"
 	result = "nutriment"

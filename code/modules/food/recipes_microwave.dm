@@ -53,8 +53,9 @@ I said no!
 /datum/recipe/donkpocket/proc/warm_up(var/obj/item/weapon/reagent_containers/food/snacks/donkpocket/being_cooked)
 	being_cooked.heat()
 
-/datum/recipe/donkpocket/make_food(var/obj/container as obj)
-	. = ..(container)
+// RS Edit: Food Memories (Lira, November 2026)
+/datum/recipe/donkpocket/make_food(var/obj/container as obj, var/list/prepared_batches, var/mob/cook)
+	. = ..()
 	for (var/obj/item/weapon/reagent_containers/food/snacks/donkpocket/D in .)
 		if (!D.warm)
 			warm_up(D)
@@ -177,8 +178,9 @@ I said no!
 	reagents = list("water" = 5, "vodka" = 5, "amatoxin" = 5)
 	result = /obj/item/weapon/reagent_containers/food/snacks/amanitajelly
 
-/datum/recipe/amanitajelly/make_food(var/obj/container as obj)
-	. = ..(container)
+// RS Edit: Food Memories (Lira, November 2026)
+/datum/recipe/amanitajelly/make_food(var/obj/container as obj, var/list/prepared_batches, var/mob/cook)
+	. = ..()
 	for(var/obj/item/weapon/reagent_containers/food/snacks/amanitajelly/being_cooked in .)
 		being_cooked.reagents.del_reagent("amatoxin")
 
@@ -481,8 +483,9 @@ I said no!
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/donkpocket/dankpocket
 
-/datum/recipe/validsalad/make_food(var/obj/container as obj)
-	. = ..(container)
+// RS Edit: Food Memories (Lira, November 2026)
+/datum/recipe/validsalad/make_food(var/obj/container as obj, var/list/prepared_batches, var/mob/cook)
+	. = ..()
 	for (var/obj/item/weapon/reagent_containers/food/snacks/validsalad/being_cooked in .)
 		being_cooked.reagents.del_reagent("toxin")
 
@@ -755,6 +758,11 @@ I said no!
 		/obj/item/device/soulstone
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/bageltwo
+	// RS Add Start: Food Memories (Lira, November 2026)
+	serving_type = /obj/item/weapon/reagent_containers/food/snacks/bagelplain
+	result_quantity = 2
+	reagent_mix = RECIPE_REAGENT_REPLACE
+	// RS Add End
 
 //Recipes that use RECIPE_REAGENT_REPLACE will
 //simplify the end product and balance the amount of reagents

@@ -78,6 +78,7 @@
 	if(istype(B))
 		B.update_icon()
 
+// RS Edit: Food Memories (Lira, November 2026)
 /obj/item/weapon/reagent_containers/glass/rag/proc/remove_contents(mob/user, atom/trans_dest = null)
 	if(!trans_dest && !user.loc)
 		return
@@ -86,23 +87,27 @@
 		var/target_text = trans_dest? "\the [trans_dest]" : "\the [user.loc]"
 		user.visible_message("<span class='danger'>\The [user] begins to wring out [src] over [target_text].</span>", "<span class='notice'>You begin to wring out [src] over [target_text].</span>")
 
+		var/datum/cooking_memory_binding/operator = capture_cooking_operator(user)
 		if(do_after(user, reagents.total_volume*5)) //50 for a fully soaked rag
+			var/mob/mixer = operator?.resolve()
 			if(trans_dest)
-				reagents.trans_to(trans_dest, reagents.total_volume)
+				reagents.trans_to(trans_dest, reagents.total_volume, mixer = mixer)
 			else
-				reagents.splash(user.loc, reagents.total_volume)
+				reagents.splash(user.loc, reagents.total_volume, source_mixer = mixer)
 			user.visible_message("<span class='danger'>\The [user] wrings out [src] over [target_text].</span>", "<span class='notice'>You finish to wringing out [src].</span>")
 			update_name()
 
+// RS Edit: Food Memories (Lira, November 2026)
 /obj/item/weapon/reagent_containers/glass/rag/proc/wipe_down(atom/A, mob/user)
 	if(!reagents.total_volume)
 		to_chat(user, "<span class='warning'>The [initial(name)] is dry!</span>")
 	else
 		user.visible_message("[user] starts to wipe [A] with [src].")
 		update_name()
+		var/datum/cooking_memory_binding/operator = capture_cooking_operator(user)
 		if(do_after(user,30))
 			user.visible_message("[user] finishes wiping [A]!")
-			A.on_rag_wipe(src)
+			A.on_rag_wipe(src, operator?.resolve())
 
 /obj/item/weapon/reagent_containers/glass/rag/attack(atom/target as obj|turf|area, mob/user as mob , flag)
 	if(isliving(target)) //Leaving this as isliving.
@@ -125,7 +130,7 @@
 						"You hear some struggling and muffled cries of surprise"
 						)
 					//it's inhaled, so... maybe CHEM_BLOOD doesn't make a whole lot of sense but it's the best we can do for now
-					reagents.trans_to_mob(target, amount_per_transfer_from_this, CHEM_BLOOD)
+					reagents.trans_to_mob(target, amount_per_transfer_from_this, CHEM_BLOOD, source_mixer = user) // RS Edit: Food Memories (Lira, November 2026)
 					update_name()
 				else
 					to_chat(user, "<span class='warning'>You can't smother this creature.</span>")
@@ -146,7 +151,7 @@
 			to_chat(user, "<span class='warning'>\The [src] is already soaked.</span>")
 			return
 
-		if(A.reagents && A.reagents.trans_to_obj(src, reagents.maximum_volume))
+		if(A.reagents && A.reagents.trans_to_obj(src, reagents.maximum_volume, mixer = user)) // RS Edit: Food Memories (Lira, November 2026)
 			user.visible_message("<b>\The [user]</b> soaks [src] using [A].", "<span class='notice'>You soak [src] using [A].</span>")
 			update_name()
 		return

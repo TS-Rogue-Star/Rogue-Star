@@ -116,7 +116,7 @@
 			return 1
 		if(reagents && reagents.total_volume)
 			to_chat(user, "<span class='notice'>You splash the solution onto [target].</span>") //They are on harm intent, aka wanting to spill it.
-			reagents.splash(target, reagents.total_volume)
+			reagents.splash(target, reagents.total_volume, source_mixer = user) // RS Edit: Food Memories (Lira, November 2026)
 			return 1
 	..()
 
@@ -318,7 +318,7 @@
 		if(reagents.total_volume < 1)
 			to_chat(user, "<span class='warning'>\The [src] is empty!</span>")
 		else
-			reagents.trans_to_obj(D, 5)
+			reagents.trans_to_obj(D, 5, mixer = user) // RS Edit: Food Memories (Lira, November 2026)
 			to_chat(user, "<span class='notice'>You wet \the [D] in \the [src].</span>")
 			playsound(src, 'sound/effects/slosh.ogg', 25, 1)
 	else
@@ -360,7 +360,7 @@
 		if(reagents.total_volume < 1)
 			to_chat(user, "<span class='warning'>\The [src] is empty!</span>")
 		else
-			reagents.trans_to_obj(D, 5)
+			reagents.trans_to_obj(D, 5, mixer = user) // RS Edit: Food Memories (Lira, November 2026)
 			to_chat(user, "<span class='notice'>You wet \the [D] in \the [src].</span>")
 			playsound(src, 'sound/effects/slosh.ogg', 25, 1)
 		return

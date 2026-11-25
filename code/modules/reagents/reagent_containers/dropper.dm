@@ -22,6 +22,7 @@
 		else
 			. += "<span class='notice'>It is empty.</span>"
 
+// RS Edit: Food Memories (Lira, November 2026)
 /obj/item/weapon/reagent_containers/dropper/afterattack(var/obj/target, var/mob/user, var/proximity)
 	if(!target.reagents || !proximity) return
 
@@ -42,6 +43,7 @@
 			var/time = 20 //2/3rds the time of a syringe
 			user.visible_message("<span class='warning'>[user] is trying to squirt something into [target]'s eyes!</span>")
 
+			var/datum/cooking_memory_binding/operator = capture_cooking_operator(user)
 			if(!do_mob(user, target, time))
 				return
 
@@ -60,15 +62,15 @@
 						safe_thing = victim.glasses
 
 				if(safe_thing)
-					trans = reagents.splash(safe_thing, min(amount_per_transfer_from_this, reagents.total_volume), max_spill=30)
+					trans = reagents.splash(safe_thing, min(amount_per_transfer_from_this, reagents.total_volume), max_spill=30, source_mixer = operator?.resolve())
 					user.visible_message("<span class='warning'>[user] tries to squirt something into [target]'s eyes, but fails!</span>", "<span class='notice'>You transfer [trans] units of the solution.</span>")
 					return
 
 			var/contained = reagentlist()
 			add_attack_logs(user,target,"Used [src.name] containing [contained]")
 
-			trans += reagents.trans_to_mob(target, min(amount_per_transfer_from_this, reagents.total_volume)/2, CHEM_INGEST) //Half injected, half ingested
-			trans += reagents.trans_to_mob(target, min(amount_per_transfer_from_this, reagents.total_volume), CHEM_BLOOD) //I guess it gets into the bloodstream through the eyes or something
+			trans += reagents.trans_to_mob(target, min(amount_per_transfer_from_this, reagents.total_volume)/2, CHEM_INGEST, source_mixer = operator?.resolve()) //Half injected, half ingested
+			trans += reagents.trans_to_mob(target, min(amount_per_transfer_from_this, reagents.total_volume), CHEM_BLOOD, source_mixer = operator?.resolve()) //I guess it gets into the bloodstream through the eyes or something
 			user.visible_message("<span class='warning'>[user] squirts something into [target]'s eyes!</span>", "<span class='notice'>You transfer [trans] units of the solution.</span>")
 
 			return

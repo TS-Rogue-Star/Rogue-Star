@@ -13,12 +13,23 @@
 	persist_storable = FALSE
 	center_of_mass = list("x" = 19,"y" = 8)
 	var/atom/cooksource
+	var/list/ingredient_cooks
+	var/datum/cooking_memory_binding/mixture_cook
 
 	var/top_heat = TRUE
 
 /obj/item/cookpot/Initialize()
 	. = ..()
 	reagents = new/datum/reagents(600,src)
+
+/obj/item/cookpot/proc/mix_in(var/datum/reagents/ingredients, var/amount, var/datum/cooking_memory_binding/contributor)
+	if(ingredients.trans_to_obj(src, amount, mixer = contributor?.resolve()) && reagents?.total_volume)
+		mixture_cook = contributor
+
+/obj/item/cookpot/on_reagent_change()
+	. = ..()
+	if(!reagents?.total_volume)
+		mixture_cook = null
 
 /obj/item/cookpot/examine(mob/user)
 	. = ..()
@@ -154,7 +165,7 @@
 		A = pick(contents)
 		if(A)
 			if(istype(A,/obj/item/weapon/reagent_containers))
-				A.reagents.trans_to_obj(src,temp_based_reagent_calc())
+				mix_in(A.reagents, temp_based_reagent_calc(), ingredient_cooks?[A])
 				if(A.reagents.total_volume == 0)
 					qdel(A)
 					new /obj/particle_emitter/smelly/white(src.loc)
@@ -178,11 +189,11 @@
 /obj/item/cookpot/proc/dehydrate()
 	var/datum/reagent/water/W = reagents.get_reagent("water")
 	if(W?.volume > 0)
-		reagents.remove_reagent("water",1)
+		reagents.remove_reagent("water", 1, mixer = mixture_cook?.resolve())
 		return TRUE
 	var/datum/reagent/nutriment/broth/B = reagents.get_reagent("broth")
 	if(B?.volume > 0)
-		reagents.remove_reagent("broth",0.1)
+		reagents.remove_reagent("broth", 0.1, mixer = mixture_cook?.resolve())
 		return TRUE
 	return FALSE
 
@@ -200,7 +211,7 @@
 		var/howmuch = 1
 		if(high_heat())
 			howmuch = 5
-		howmuch = reagents.trans_to_holder(R,howmuch)
+		howmuch = reagents.trans_to_holder(R, howmuch, mixer = mixture_cook?.resolve())
 		reagents.add_reagent("slop",howmuch * 0.1)
 		qdel(R)
 
@@ -211,7 +222,7 @@
 	var/howmuch = W.volume
 	if(howmuch > 20)
 		howmuch = 20
-	reagents.remove_reagent("water",howmuch)
+	reagents.remove_reagent("water", howmuch, mixer = mixture_cook?.resolve())
 	reagents.add_reagent("broth",howmuch / 4)
 	playsound(src,pick(list('sound/effects/bubbles.ogg','sound/effects/bubbles2.ogg')),50,1)
 	if(bone)
@@ -226,15 +237,17 @@
 		else
 			bone.health += rand(0,1)
 			if(prob(bone.health))
+				var/datum/cooking_memory_binding/contributor = ingredient_cooks?[bone]
 				playsound(src, "fracture", 50, 1)
 				qdel(bone)
 				new /obj/particle_emitter/smelly(src.loc)
-				reagents.add_reagent("calcium",rand(1,2))
+				reagents.add_reagent("calcium",rand(1,2), mixer = contributor?.resolve())
 	return TRUE
 
 /obj/item/cookpot/proc/process_reagents()
+	var/mob/cook = mixture_cook?.resolve()
 	for(var/datum/reagent/R in reagents.reagent_list)
-		R.cookpot_interact()
+		R.cookpot_interact(cook)
 
 /obj/item/cookpot/proc/high_heat()
 	//Maybe eventually how quickly things burn might be affected by how hot things are.
@@ -266,6 +279,10 @@
 		return
 	cook()
 
+/obj/item/cookpot/Exited(atom/movable/ingredient, atom/new_loc)
+	LAZYREMOVE(ingredient_cooks, ingredient)
+	return ..()
+
 /obj/item/cookpot/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W,/obj/item/fat) || istype(W,/obj/item/weapon/reagent_containers/food/snacks) || istype(W,/obj/item/weapon/bone) || istype(W,/obj/item/stack/material/wax))	//	istype(W,/obj/item/weapon/digestion_remains/organic) //Maybe we can have this later when we have some cool prefs for it. The code already works for when we do.
 		if(contents.len >= 6)
@@ -273,6 +290,8 @@
 			return
 		user.remove_from_mob(W)
 		W.forceMove(src)
+		if(W.loc == src && (istype(W, /obj/item/weapon/reagent_containers) || istype(W, /obj/item/weapon/bone)))
+			LAZYSET(ingredient_cooks, W, capture_cooking_operator(user))
 		user.visible_message(SPAN_NOTICE("\The [user] adds \the [W] to \the [src]."),SPAN_NOTICE("You add \the [W] to \the [src]."),runemessage = "plonk")
 		return
 	if(istype(W,/obj/item/weapon/reagent_containers))
@@ -290,7 +309,7 @@
 					howmuch = transfer_amount
 				howmuch = "[howmuch] units"
 			user.visible_message(SPAN_NOTICE("\The [user] fills \the [R] from \the [src]."),SPAN_NOTICE("You fill your [R] with [howmuch] of \the [src]'s contents."),runemessage = "gloop")
-			reagents.trans_to_obj(R,transfer_amount)
+			reagents.trans_to_obj(R, transfer_amount, mixer = user)
 			return
 		//If the container is not empty, then we will pour its contents into the pot!!! Don't poison my stew please...
 		if(reagents.total_volume >= reagents.maximum_volume)
@@ -302,7 +321,7 @@
 			else
 				howmuch = R.amount_per_transfer_from_this
 			howmuch = "[howmuch] units"
-		R.reagents.trans_to_obj(src,R.amount_per_transfer_from_this)
+		mix_in(R.reagents, R.amount_per_transfer_from_this, capture_cooking_operator(user))
 		user.visible_message(SPAN_NOTICE("\The [user] pours something from \the [R] into \the [src]."),SPAN_NOTICE("You pour [howmuch] from \the [R] into \the [src]."),runemessage = "gloop")
 
 /*	if(istype(W,/obj/item/weapon/holder/micro))	//Maybe eventually we can do some interesting things with putting micros into the pot, but not now.
@@ -350,18 +369,18 @@
 /datum/reagent
 	var/player_sourced = FALSE	//If this reagent is made from or out of any part of any player's body. If true then maybe some preferences can happen
 
-/datum/reagent/proc/cookpot_interact()
+/datum/reagent/proc/cookpot_interact(var/mob/cook)
 	return
 
-/datum/reagent/carbon/cookpot_interact()
+/datum/reagent/carbon/cookpot_interact(var/mob/cook)
 	for(var/datum/reagent/R in holder.reagent_list)
 		if(istype(R,/datum/reagent/carbon))
 			continue
 		if(istype(R,/datum/reagent/nutriment) || istype(R,/datum/reagent/drink))
 			continue
-		holder.remove_reagent(R.id,5)
+		holder.remove_reagent(R.id, 5, mixer = cook)
 		break
-	holder.remove_reagent(src.id,rand(0,1))
+	holder.remove_reagent(src.id, rand(0, 1), mixer = cook)
 
 /datum/reagent/wax
 	name = "wax"

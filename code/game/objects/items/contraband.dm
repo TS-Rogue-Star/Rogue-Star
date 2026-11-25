@@ -88,7 +88,7 @@
 	playsound(loc, 'sound/effects/snort.ogg', 50, 1)
 
 	if(reagents)
-		reagents.trans_to_mob(user, amount_per_transfer_from_this, CHEM_BLOOD)
+		reagents.trans_to_mob(user, amount_per_transfer_from_this, CHEM_BLOOD, source_mixer = user) // RS Edit: Food Memories (Lira, November 2026)
 
 	if(!reagents.total_volume) /// Did we use all of it?
 		qdel(src)

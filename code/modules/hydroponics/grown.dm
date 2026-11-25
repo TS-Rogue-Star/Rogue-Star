@@ -1,3 +1,7 @@
+/////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star November 2026: Food Memories //
+/////////////////////////////////////////////////////////////////
+
 //Grown foods.
 /obj/item/weapon/reagent_containers/food/snacks/grown
 
@@ -170,6 +174,26 @@
 	if(seed) seed.thrown_at(src,hit_atom)
 	..()
 
+// RS Add: Food Memories (Lira, November 2026)
+/datum/seed/proc/food_cut_tag(var/edged = TRUE)
+	if(kitchen_tag == "sunflower" || kitchen_tag == "potato")
+		return kitchen_tag
+	if(kitchen_tag == "pumpkin" || (edged && !isnull(chems?["woodpulp"])))
+		return null
+	if(!isnull(chems?["potato"]))
+		return "potato"
+	if(!isnull(chems?["carrotjuice"]))
+		return "carrot"
+	if(!isnull(chems?["pineapplejuice"]))
+		return "pineapple"
+	if(!isnull(chems?["soymilk"]))
+		return "soybeans"
+
+// RS Add: Food Memories (Lira, November 2026)
+/obj/item/weapon/reagent_containers/food/snacks/grown/proc/make_cut_food(var/result_type, var/mob/user)
+	var/obj/item/weapon/reagent_containers/food/snacks/result = new result_type(get_turf(src))
+	result.record_hand_preparation(user)
+
 /obj/item/weapon/reagent_containers/food/snacks/grown/attackby(var/obj/item/weapon/W, var/mob/living/user)
 
 	if(seed)
@@ -214,33 +238,35 @@
 					qdel(src)
 					return
 
-				if(seed.kitchen_tag == "sunflower")
-					new /obj/item/weapon/reagent_containers/food/snacks/rawsunflower(get_turf(src))
+				// RS Edit Start: Food Memories (Lira, November 2026)
+				var/cut_tag = seed.food_cut_tag(W.edge)
+				if(cut_tag == "sunflower")
+					make_cut_food(/obj/item/weapon/reagent_containers/food/snacks/rawsunflower, user)
 					to_chat(user, SPAN_NOTICE("You remove the seeds from the flower, slightly damaging them."))
 					qdel(src)
 					return
 
-				if(seed.kitchen_tag == "potato" || !isnull(seed.chems["potato"]))
+				if(cut_tag == "potato")
 					to_chat(user, "<span class='filter_notice'>You slice \the [src] into sticks.</span>")
-					new /obj/item/weapon/reagent_containers/food/snacks/rawsticks(get_turf(src))
+					make_cut_food(/obj/item/weapon/reagent_containers/food/snacks/rawsticks, user)
 					qdel(src)
 					return
 
-				if(!isnull(seed.chems["carrotjuice"]))
+				if(cut_tag == "carrot")
 					to_chat(user, "<span class='filter_notice'>You slice \the [src] into sticks.</span>")
-					new /obj/item/weapon/reagent_containers/food/snacks/carrotfries(get_turf(src))
+					make_cut_food(/obj/item/weapon/reagent_containers/food/snacks/carrotfries, user)
 					qdel(src)
 					return
 
-				if(!isnull(seed.chems["pineapplejuice"]))
+				if(cut_tag == "pineapple")
 					to_chat(user, "<span class='filter_notice'>You slice \the [src] into rings.</span>")
-					new /obj/item/weapon/reagent_containers/food/snacks/pineapple_ring(get_turf(src))
+					make_cut_food(/obj/item/weapon/reagent_containers/food/snacks/pineapple_ring, user)
 					qdel(src)
 					return
 
-				if(!isnull(seed.chems["soymilk"]))
+				if(cut_tag == "soybeans")
 					to_chat(user, "<span class='filter_notice'>You roughly chop up \the [src].</span>")
-					new /obj/item/weapon/reagent_containers/food/snacks/soydope(get_turf(src))
+					make_cut_food(/obj/item/weapon/reagent_containers/food/snacks/soydope, user)
 					qdel(src)
 					return
 
@@ -251,9 +277,10 @@
 					for(var/i=1; i<=slices; i++)
 						var/obj/item/weapon/reagent_containers/food/snacks/fruit_slice/F = new(get_turf(src),seed)
 						if(reagents_to_transfer)
-							reagents.trans_to_obj(F,reagents_to_transfer)
+							reagents.trans_to_obj(F, reagents_to_transfer, mixer = user)
 					qdel(src)
 					return
+				// RS Edit End
 
 	. = ..()
 

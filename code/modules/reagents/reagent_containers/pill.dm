@@ -22,6 +22,7 @@
 	if(!icon_state)
 		icon_state = "[base_state][rand(1, 4)]" //preset pills only use colour changing or unique icons
 
+// RS Edit: Food Memories (Lira, November 2026)
 /obj/item/weapon/reagent_containers/pill/attack(mob/M as mob, mob/user as mob)
 	if(M == user)
 		if(istype(M, /mob/living/carbon/human))
@@ -37,7 +38,7 @@
 			to_chat(M, "<span class='notice'>You swallow \the [src].</span>")
 			M.drop_from_inventory(src) //icon update
 			if(reagents.total_volume)
-				reagents.trans_to_mob(M, reagents.total_volume, CHEM_INGEST)
+				reagents.trans_to_mob(M, reagents.total_volume, CHEM_INGEST, source_mixer = user)
 			qdel(src)
 			return 1
 
@@ -55,6 +56,7 @@
 		user.visible_message("<span class='warning'>[user] attempts to force [M] to swallow \the [src].</span>")
 
 		user.setClickCooldown(user.get_attack_speed(src))
+		var/datum/cooking_memory_binding/operator = capture_cooking_operator(user)
 		if(!do_mob(user, M))
 			return
 
@@ -65,7 +67,7 @@
 		add_attack_logs(user,M,"Fed a pill containing [contained]")
 
 		if(reagents && reagents.total_volume)
-			reagents.trans_to_mob(M, reagents.total_volume, CHEM_INGEST)
+			reagents.trans_to_mob(M, reagents.total_volume, CHEM_INGEST, source_mixer = operator?.resolve())
 		qdel(src)
 
 		return 1

@@ -1,3 +1,7 @@
+/////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star November 2026: Food Memories //
+/////////////////////////////////////////////////////////////////
+
 // Customizable Foods //////////////////////////////////////////
 var/global/deepFriedEverything = 0
 var/global/deepFriedNutriment = 0
@@ -49,7 +53,7 @@ var/global/ingredientLimit = 20
 		I.forceMove(src)
 
 		if(S.reagents)
-			S.reagents.trans_to_holder(reagents,S.reagents.total_volume)
+			S.reagents.trans_to_holder(reagents, S.reagents.total_volume, mixer = user) // RS Edit: Food Memories (Lira, November 2026)
 
 		ingredients += S
 
@@ -142,7 +146,7 @@ var/global/ingredientLimit = 20
 
 /obj/item/weapon/reagent_containers/food/snacks/customizable/sandwich/attackby(obj/item/I,mob/user)
 	if(istype(I,/obj/item/weapon/reagent_containers/food/snacks/slice/bread) && !addTop)
-		I.reagents.trans_to_holder(reagents,I.reagents.total_volume)
+		I.reagents.trans_to_holder(reagents, I.reagents.total_volume, mixer = user) // RS Edit: Food Memories (Lira, November 2026)
 		qdel(I)
 		addTop = 1
 		src.drawTopping()
@@ -194,27 +198,33 @@ var/global/ingredientLimit = 20
 	else
 		return ..()
 
+// RS Edit: Food Memories (Lira, November 2026)
+/proc/bun_filling_recipes()
+	var/static/list/recipes = list(
+		// Bun + meatball = burger
+		/obj/item/weapon/reagent_containers/food/snacks/meatball = /obj/item/weapon/reagent_containers/food/snacks/monkeyburger,
+		// Bun + cutlet = hamburger
+		/obj/item/weapon/reagent_containers/food/snacks/cutlet = /obj/item/weapon/reagent_containers/food/snacks/monkeyburger,
+		// Bun + sausage = hotdog
+		/obj/item/weapon/reagent_containers/food/snacks/sausage = /obj/item/weapon/reagent_containers/food/snacks/hotdog
+	)
+	return recipes
+
+// RS Edit: Food Memories (Lira, November 2026)
 /obj/item/weapon/reagent_containers/food/snacks/bun/attackby(obj/item/I, mob/user)
-	// Bun + meatball = burger
-	if(istype(I,/obj/item/weapon/reagent_containers/food/snacks/meatball))
-		new /obj/item/weapon/reagent_containers/food/snacks/monkeyburger(src)
-		to_chat(user, "You make a burger.")
+	var/list/recipes = bun_filling_recipes()
+	var/obj/item/weapon/reagent_containers/food/snacks/result
+	for(var/filling in recipes)
+		if(istype(I, filling))
+			var/product = recipes[filling]
+			result = new product(src)
+			to_chat(user, "You make a [result.name].")
+			break
+	if(result)
+		result.record_hand_preparation(user)
 		qdel(I)
 		qdel(src)
-
-	// Bun + cutlet = hamburger
-	else if(istype(I, /obj/item/weapon/reagent_containers/food/snacks/cutlet))
-		new /obj/item/weapon/reagent_containers/food/snacks/monkeyburger(src)
-		to_chat(user, "You make a burger.")
-		qdel(I)
-		qdel(src)
-
-	// Bun + sausage = hotdog
-	else if(istype(I, /obj/item/weapon/reagent_containers/food/snacks/sausage))
-		new /obj/item/weapon/reagent_containers/food/snacks/hotdog(src)
-		to_chat(user, "You make a hotdog.")
-		qdel(I)
-		qdel(src)
+		return
 
 	if(istype(I,/obj/item/weapon/reagent_containers/food/snacks))
 		if(!recursiveFood && istype(I, /obj/item/weapon/reagent_containers/food/snacks/customizable))

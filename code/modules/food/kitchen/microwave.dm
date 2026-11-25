@@ -316,7 +316,7 @@
 
 	switch(action)
 		if("cook")
-			cook()
+			cook(usr) // RS Edit: Food Memories (Lira, November 2026)
 			return TRUE
 
 		if("dispose")
@@ -390,7 +390,8 @@
 *   Microwave Menu Handling/Cooking
 ************************************/
 
-/obj/machinery/microwave/proc/cook()
+// RS Edit: Food Memories (Lira, November 2026)
+/obj/machinery/microwave/proc/cook(var/mob/user)
 	if(stat & (NOPOWER|BROKEN))
 		return
 	start()
@@ -430,6 +431,7 @@
 			cooked.forceMove(src.loc)
 		return
 
+	var/datum/cooking_memory_binding/operator = capture_cooking_operator(user)
 	//Making multiple copies of a recipe
 	var/halftime = round(recipe.time*4/10/2) // VOREStation Edit - Quicker Microwaves (Undone during Auroraport, left note in case of reversion, was round(recipe.time/20/2))
 	if(!wzhzhzh(halftime))
@@ -443,13 +445,14 @@
 		recipe.after_cook(src)
 		return
 
-	var/result = recipe.result
+	var/datum/recipe/first_recipe = recipe
+	var/list/batches = list()
 	var/valid = 1
 	var/list/cooked_items = list()
 	var/obj/temp = new /obj(src) //To prevent infinite loops, all results will be moved into a temporary location so they're not considered as inputs for other recipes
 	while(valid)
 		var/list/things = list()
-		things.Add(recipe.make_food(src))
+		things.Add(recipe.make_food(src, batches, operator?.resolve()))
 		cooked_items += things
 		//Move cooked things to the buffer so they're not considered as ingredients
 		for(var/atom/movable/AM in things)
@@ -458,7 +461,7 @@
 		valid = 0
 		recipe.after_cook(src)
 		recipe = select_recipe(available_recipes,src)
-		if(recipe && recipe.result == result)
+		if(recipe && recipe.result == first_recipe.result)
 			valid = 1
 			sleep(2)
 
@@ -470,12 +473,13 @@
 	//Any leftover reagents are divided amongst the foods
 	var/total = reagents.total_volume
 	for(var/obj/item/weapon/reagent_containers/food/snacks/S in cooked_items)
-		reagents.trans_to_holder(S.reagents, total/cooked_items.len)
+		reagents.trans_to_holder(S.reagents, total/cooked_items.len, mixer = operator?.resolve())
 
 	for(var/obj/item/weapon/reagent_containers/food/snacks/S in cookingContents())
 		S.cook()
 
 	dispose(0) //clear out anything left
+	first_recipe.record_food_batches(batches, operator?.resolve(), loc)
 	stop()
 
 	return
@@ -642,7 +646,7 @@
 		playsound(container.loc, 'sound/items/drop/flesh.ogg', 100, 1)
 	. = ..()
 
-/datum/recipe/splat/make_food(obj/container)
+/datum/recipe/splat/make_food(obj/container, var/list/prepared_batches, var/mob/cook) // RS Edit: Food Memories (Lira, November 2026)
 	for(var/obj/item/weapon/holder/H in container)
 		if(H.held_mob)
 			to_chat(H.held_mob, "<span class='danger'>You hear an earsplitting humming and your head aches!</span>")
