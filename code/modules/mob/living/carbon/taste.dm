@@ -1,4 +1,5 @@
-/mob/living/carbon/proc/ingest(var/datum/reagents/from, var/datum/reagents/target, var/amount = 1, var/multiplier = 1, var/copy = 0) //we kind of 'sneak' a proc in here for ingesting stuff so we can play with it.
+// RS Edit: Food Memories (Lira, November 2026)
+/mob/living/carbon/proc/ingest(var/datum/reagents/from, var/datum/reagents/target, var/amount = 1, var/multiplier = 1, var/copy = 0, var/mob/source_mixer = null) //we kind of 'sneak' a proc in here for ingesting stuff so we can play with it.
 	/* VOREStation Removal - Synths should be able to taste because... reasons
 	if(ishuman(src))
 		var/mob/living/carbon/human/H = src
@@ -19,13 +20,14 @@
 
 			last_taste_time = world.time
 			last_taste_text = text_output
-	return from.trans_to_holder(target,amount,multiplier,copy) //complete transfer
+	return from.trans_to_holder(target, amount, multiplier, copy, source_mixer = source_mixer) //complete transfer
 
 /* what this does:
 catalogue the 'taste strength' of each one
 calculate text size per text.
 */
-/datum/reagents/proc/generate_taste_message(mob/living/carbon/taster = null)
+// RS Edit: Food Memories (Lira, November 2026)
+/datum/reagents/proc/generate_taste_message(mob/living/carbon/taster = null, include_intensity = TRUE)
 	var/minimum_percent = 15
 	if(ishuman(taster))
 		var/mob/living/carbon/human/H = taster
@@ -65,6 +67,6 @@ calculate text size per text.
 				intensity_desc = "the flavor of"
 			else if(percent > minimum_percent * 3)
 				intensity_desc = "the strong flavor of"
-			out += "[intensity_desc] [taste_desc]"
+			out += include_intensity ? "[intensity_desc] [taste_desc]" : taste_desc
 
 	return english_list(out, "something indescribable")

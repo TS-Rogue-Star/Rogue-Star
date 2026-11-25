@@ -221,6 +221,7 @@
 		update_icon()
 		return ..()
 
+	var/datum/cooking_memory_binding/installer = !InputBeaker ? capture_cooking_operator(user) : null // RS Add: Food Memories (Lira, November 2026)
 	var/list/choice = list()
 	if(length(options) == 1)
 		for(var/key in options)
@@ -237,7 +238,7 @@
 				InputBeaker = W
 				// RS Add Start: Drink Memories (Lira, November 2026)
 				var/datum/reagents/distilling/buffer = reagents
-				buffer.begin_drink_batch(user)
+				buffer.begin_drink_batch(installer)
 				// RS Add End
 
 		if("install output")
@@ -328,12 +329,17 @@
 			visible_message("<span class='notice'>\The [src]'s motors wind down.</span>")
 			on = FALSE
 
-		if(InputBeaker && reagents.total_volume < reagents.maximum_volume)
-			InputBeaker.reagents.trans_to_holder(reagents, amount = rand(10,20))
+		// RS Edit Start: Food Memories (Lira, November 2026)
+		var/datum/reagents/distilling/buffer = reagents
+		if(InputBeaker && buffer.total_volume < buffer.maximum_volume)
+			var/datum/cooking_memory_binding/installer = buffer.input_installer
+			if(InputBeaker.reagents.trans_to_holder(buffer, amount = rand(10, 20), source_mixer = installer?.resolve()))
+				buffer.buffer_contributor = buffer.total_volume ? installer : null
 
 		if(OutputBeaker && OutputBeaker.reagents.total_volume < OutputBeaker.reagents.maximum_volume)
 			use_power(power_rating * CELLRATE * 0.5)
-			reagents.trans_to_holder(OutputBeaker.reagents, amount = rand(1, 5))
+			buffer.trans_to_holder(OutputBeaker.reagents, amount = rand(1, 5), target_mixer = buffer.buffer_contributor?.resolve())
+		// RS Edit End
 
 	update_icon()
 

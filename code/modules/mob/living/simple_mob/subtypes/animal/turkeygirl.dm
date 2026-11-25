@@ -89,7 +89,7 @@
 
 	user.setClickCooldown(user.get_attack_speed(O))
 	if(O.reagents)
-		O.reagents.trans_to_mob(src, O.bitesize, CHEM_INGEST)
+		O.reagents.trans_to_mob(src, O.bitesize, CHEM_INGEST, source_mixer = user) // RS Edit: Food Memories (Lira, November 2026)
 		adjust_nutrition(O.bitesize * 20)
 	O.bitecount ++
 	O.On_Consume(src)

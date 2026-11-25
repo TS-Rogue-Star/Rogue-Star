@@ -1,3 +1,7 @@
+/////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star November 2026: Food Memories //
+/////////////////////////////////////////////////////////////////
+
 /obj/item/weapon/reagent_containers/spray
 	name = "spray bottle"
 	desc = "A spray bottle, with an unscrewable top."
@@ -62,19 +66,21 @@
 	// End Rogue Star edit - Zayah
 	return
 
+// RS Edit: Food Memories (Lira, November 2026)
 /obj/item/weapon/reagent_containers/spray/proc/Spray_at(atom/A as mob|obj, mob/user as mob, proximity)
 	playsound(src, 'sound/effects/spray2.ogg', 50, 1, -6)
 	if (A.density && proximity)
 		A.visible_message("[usr] sprays [A] with [src].")
-		reagents.splash(A, amount_per_transfer_from_this)
+		reagents.splash(A, amount_per_transfer_from_this, source_mixer = user)
 	else
+		var/datum/cooking_memory_binding/operator = capture_cooking_operator(user)
 		spawn(0)
 			var/obj/effect/effect/water/chempuff/D = new/obj/effect/effect/water/chempuff(get_turf(src))
 			var/turf/my_target = get_turf(A)
 			D.create_reagents(amount_per_transfer_from_this)
 			if(!src)
 				return
-			reagents.trans_to_obj(D, amount_per_transfer_from_this)
+			reagents.trans_to_obj(D, amount_per_transfer_from_this, source_mixer = operator?.resolve())
 			D.set_color()
 			D.set_up(my_target, spray_size, 10)
 	return
@@ -101,7 +107,7 @@
 		return
 	if(isturf(usr.loc))
 		to_chat(usr, "<span class='notice'>You empty \the [src] onto the floor.</span>")
-		reagents.splash(usr.loc, reagents.total_volume)
+		reagents.splash(usr.loc, reagents.total_volume, source_mixer = usr) // RS Edit: Food Memories (Lira, November 2026)
 
 //space cleaner
 /obj/item/weapon/reagent_containers/spray/cleaner
@@ -185,13 +191,15 @@
 	volume = 600
 	origin_tech = list(TECH_COMBAT = 3, TECH_MATERIAL = 3, TECH_ENGINEERING = 3)
 
-/obj/item/weapon/reagent_containers/spray/chemsprayer/Spray_at(atom/A as mob|obj)
+// RS Edit: Food Memories (Lira, November 2026)
+/obj/item/weapon/reagent_containers/spray/chemsprayer/Spray_at(atom/A as mob|obj, mob/user as mob)
 	playsound(src, 'sound/effects/spray3.ogg', rand(50,1), -6)
 	var/direction = get_dir(src, A)
 	var/turf/T = get_turf(A)
 	var/turf/T1 = get_step(T,turn(direction, 90))
 	var/turf/T2 = get_step(T,turn(direction, -90))
 	var/list/the_targets = list(T, T1, T2)
+	var/datum/cooking_memory_binding/operator = capture_cooking_operator(user)
 
 	for(var/a = 1 to 3)
 		spawn(0)
@@ -201,7 +209,7 @@
 			D.create_reagents(amount_per_transfer_from_this)
 			if(!src)
 				return
-			reagents.trans_to_obj(D, amount_per_transfer_from_this)
+			reagents.trans_to_obj(D, amount_per_transfer_from_this, source_mixer = operator?.resolve())
 			D.set_color()
 			D.set_up(my_target, rand(6, 8), 2)
 	return
@@ -246,7 +254,7 @@
 	cut_overlays()
 
 	if(!hose_overlay)
-		hose_overlay = new icon(icon, "[icon_state]+hose")
+		hose_overlay = icon(icon, "[icon_state]+hose") // RS Edit: Food Memories (Lira, November 2026)
 
 	if(InputSocket.get_pairing())
 		add_overlay(hose_overlay)
@@ -263,7 +271,8 @@
 	else
 		. = ..()
 
-/obj/item/weapon/reagent_containers/spray/chemsprayer/hosed/Spray_at(atom/A as mob|obj)
+// RS Edit: Food Memories (Lira, November 2026)
+/obj/item/weapon/reagent_containers/spray/chemsprayer/hosed/Spray_at(atom/A as mob|obj, mob/user as mob)
 	update_icon()
 
 	var/direction = get_dir(src, A)
@@ -276,6 +285,7 @@
 		to_chat(usr, "<span class='notice'>\The [src] is empty.</span>")
 		return
 
+	var/datum/cooking_memory_binding/operator = capture_cooking_operator(user)
 	if(!heavy_spray)
 		for(var/a = 1 to 3)
 			spawn(0)
@@ -286,7 +296,7 @@
 				D.create_reagents(amount_per_transfer_from_this)
 				if(!src)
 					return
-				reagents.trans_to_obj(D, amount_per_transfer_from_this)
+				reagents.trans_to_obj(D, amount_per_transfer_from_this, source_mixer = operator?.resolve())
 				D.set_color()
 				D.set_up(my_target, rand(6, 8), 2)
 		return
@@ -305,7 +315,7 @@
 				else
 					my_target = pick(the_targets)
 				W.create_reagents(amount_per_transfer_from_this)
-				reagents.trans_to_obj(W, amount_per_transfer_from_this)
+				reagents.trans_to_obj(W, amount_per_transfer_from_this, source_mixer = operator?.resolve())
 				W.set_color()
 				W.set_up(my_target)
 

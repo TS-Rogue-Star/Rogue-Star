@@ -1,3 +1,7 @@
+/////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star November 2026: Food Memories //
+/////////////////////////////////////////////////////////////////
+
 #define ICECREAM_VANILLA 1
 #define ICECREAM_CHOCOLATE 2
 #define ICECREAM_STRAWBERRY 3
@@ -21,20 +25,27 @@
 	var/dispense_flavour = ICECREAM_VANILLA
 	var/flavour_name = "vanilla"
 
+// RS Add: Food Memories (Lira, November 2026)
+/proc/icecream_vat_cone_ingredients()
+	var/static/list/ingredients = list(
+		"waffle" = list("flour" = 1, "sugar" = 1),
+		"chocolate" = list("flour" = 1, "sugar" = 1, "coco" = 1)
+	)
+	return ingredients
+
+// RS Edit: Food Memories (Lira, November 2026)
 /obj/machinery/icecream_vat/proc/get_ingredient_list(var/type)
 	switch(type)
 		if(ICECREAM_CHOCOLATE)
-			return list("milk", "ice", "coco")
+			return list("milk" = 1, "ice" = 1, "coco" = 1)
 		if(ICECREAM_STRAWBERRY)
-			return list("milk", "ice", "berryjuice")
+			return list("milk" = 1, "ice" = 1, "berryjuice" = 1)
 		if(ICECREAM_BLUE)
-			return list("milk", "ice", "singulo")
-		if(CONE_WAFFLE)
-			return list("flour", "sugar")
-		if(CONE_CHOC)
-			return list("flour", "sugar", "coco")
+			return list("milk" = 1, "ice" = 1, "singulo" = 1)
+		if(CONE_WAFFLE, CONE_CHOC)
+			return icecream_vat_cone_ingredients()[get_flavour_name(type)]
 		else
-			return list("milk", "ice")
+			return list("milk" = 1, "ice" = 1)
 
 /obj/machinery/icecream_vat/proc/get_flavour_name(var/flavour_type)
 	switch(flavour_type)
@@ -98,7 +109,7 @@
 			//	if(beaker)
 			//		beaker.reagents.trans_to(I, 10)
 				if(I.reagents.total_volume < 10)
-					I.reagents.add_reagent("sugar", 10 - I.reagents.total_volume)
+					I.reagents.add_reagent("sugar", 10 - I.reagents.total_volume, mixer = user) // RS Edit: Food Memories (Lira, November 2026)
 			else
 				to_chat(user, "<span class='warning'>There is not enough icecream left!</span>")
 		else
@@ -109,23 +120,28 @@
 	else
 		..()
 
+// RS Edit: Food Memories (Lira, November 2026)
 /obj/machinery/icecream_vat/proc/make(var/mob/user, var/make_type, var/amount)
-	for(var/R in get_ingredient_list(make_type))
-		if(reagents.has_reagent(R, amount))
-			continue
-		amount = 0
-		break
-	if(amount)
-		for(var/R in get_ingredient_list(make_type))
-			reagents.remove_reagent(R, amount)
-		product_types[make_type] += amount
-		var/flavour = get_flavour_name(make_type)
-		if(make_type > 4)
-			src.visible_message("<span class='info'>[user] cooks up some [flavour] cones.</span>")
-		else
-			src.visible_message("<span class='info'>[user] whips up some [flavour] icecream.</span>")
+	if(!isnum(make_type) || !ISINTEGER(make_type) || !ISINRANGE(make_type, ICECREAM_VANILLA, CONE_CHOC))
+		return
+	if(!isnum(amount) || !ISINTEGER(amount) || amount < 1)
+		return
+	var/list/ingredients = get_ingredient_list(make_type)
+	for(var/id in ingredients)
+		if(!reagents.has_reagent(id, amount * ingredients[id]))
+			to_chat(user, "<span class='warning'>You don't have the ingredients to make this.</span>")
+			return
+	for(var/id in ingredients)
+		reagents.remove_reagent(id, amount * ingredients[id])
+	product_types[make_type] += amount
+	var/flavour = get_flavour_name(make_type)
+	if(make_type == CONE_WAFFLE || make_type == CONE_CHOC)
+		src.visible_message("<span class='info'>[user] cooks up some [flavour] cones.</span>")
+		if(isliving(user))
+			var/mob/living/cook = user
+			cook.character_memory?.record_food("[/obj/item/weapon/reagent_containers/food/snacks/icecream]", amount)
 	else
-		to_chat(user, "<span class='warning'>You don't have the ingredients to make this.</span>")
+		src.visible_message("<span class='info'>[user] whips up some [flavour] icecream.</span>")
 
 /obj/machinery/icecream_vat/Topic(href, href_list)
 

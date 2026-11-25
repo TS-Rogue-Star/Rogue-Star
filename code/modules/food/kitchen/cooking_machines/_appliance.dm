@@ -1,3 +1,7 @@
+/////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star November 2026: Food Memories //
+/////////////////////////////////////////////////////////////////
+
 // This folder contains code that was originally ported from Apollo Station and then refactored/optimized/changed.
 
 // Tracks precooked food to stop deep fried baked grilled grilled grilled diona nymph cereal.
@@ -161,7 +165,7 @@
 		return
 
 	if (stat & POWEROFF)//Its turned off
-		stat &= ~POWEROFF
+		switch_on(user) // RS Edit: Food Memories (Lira, November 2026)
 		use_power = 1
 		user.visible_message("<span class='filter_notice'>[user] turns [src] on.</span>", "<span class='filter_notice'>You turn on [src].</span>")
 
@@ -173,6 +177,10 @@
 
 	playsound(src, 'sound/machines/click.ogg', 40, 1)
 	update_icon()
+
+// RS Edit: Food Memories (Lira, November 2026)
+/obj/machinery/appliance/proc/switch_on(mob/user)
+	stat &= ~POWEROFF
 
 /obj/machinery/appliance/AICtrlClick(mob/user)
 	attempt_toggle_power(user)
@@ -434,6 +442,7 @@
 			update_icon()
 
 
+// RS Edit: Food Memories (Lira, November 2026)
 /obj/machinery/appliance/proc/finish_cooking(var/datum/cooking_item/CI)
 
 	src.visible_message("<b>\The [src]</b> pings!")
@@ -441,7 +450,7 @@
 		playsound(get_turf(src), cooked_sound, 50, 1)
 	//Check recipes first, a valid recipe overrides other options
 	var/datum/recipe/recipe = null
-	var/atom/C = null
+	var/obj/C = null
 	if (CI.container)
 		C = CI.container
 	else
@@ -450,27 +459,24 @@
 
 	if (recipe)
 		CI.result_type = 4//Recipe type, a specific recipe will transform the ingredients into a new food
-		var/list/results = recipe.make_food(C)
-
+		var/list/batches = list()
 		var/obj/temp = new /obj(src) //To prevent infinite loops, all results will be moved into a temporary location so they're not considered as inputs for other recipes
 
-		for (var/atom/movable/AM in results)
-			AM.forceMove(temp)
-
 		//making multiple copies of a recipe from one container. For example, tons of fries
-		while (select_recipe(available_recipes,C) == recipe)
-			var/list/TR = list()
-			TR += recipe.make_food(C)
-			for (var/atom/movable/AM in TR) //Move results to buffer
-				AM.forceMove(temp)
-			results += TR
+		do
+			var/list/results = recipe.make_food(C, batches, CI.memory_cook?.resolve())
+			for(var/atom/movable/result in results) //Move results to buffer
+				result.forceMove(temp)
+		while(select_recipe(available_recipes, C) == recipe)
 
-
-		for(var/obj/item/weapon/reagent_containers/food/snacks/R as anything in results)
-			R.forceMove(C) //Move everything from the buffer back to the container
-			R.cooked |= cook_type
+		for(var/atom/movable/result in temp)
+			result.forceMove(C) //Move everything from the buffer back to the container
+			if(istype(result, /obj/item/weapon/reagent_containers/food/snacks))
+				var/obj/item/weapon/reagent_containers/food/snacks/snack = result
+				snack.cooked |= cook_type
 
 		QDEL_NULL(temp) //delete buffer object
+		recipe.record_food_batches(batches, CI.memory_cook?.resolve(), C)
 		. = 1 //None of the rest of this function is relevant for recipe cooking
 
 	else if(CI.combine_target)
@@ -536,8 +542,9 @@
 	CI.container.reagents.trans_to_holder(buffer, CI.container.reagents.total_volume)
 
 	var/obj/item/weapon/reagent_containers/food/snacks/result = new cook_path(CI.container)
-	buffer.trans_to_holder(result.reagents, buffer.total_volume) //trans_to doesn't handle food items well, so
-																 //just call trans_to_holder instead
+	//trans_to doesn't handle food items well, so
+	//just call trans_to_holder instead
+	buffer.trans_to_holder(result.reagents, buffer.total_volume, mixer = CI.memory_cook?.resolve()) // RS Edit: Food Memories (Lira, November 2026)
 
 	// Reagent-only foods.
 	if(reagents_determine_color)
@@ -752,6 +759,7 @@
 	return result
 
 /datum/cooking_item
+	var/datum/cooking_memory_binding/memory_cook // RS Add: Food Memories (Lira, November 2026)
 	var/max_cookwork
 	var/cookwork
 	var/overcook_mult = 3 // How long it takes to overcook. This is max_cookwork x overcook mult. If you're changing this, mind that at 3x, a max_cookwork of 30 becomes 90 ticks for the purpose of burning, and a max_cookwork of 4 only has 12 before burning!
@@ -783,6 +791,7 @@
 	max_oil = 0
 	oil = 0
 	combine_target = null
+	memory_cook = null // RS Add: Food Memories (Lira, November 2026)
 	//Container is not reset
 
 /obj/machinery/appliance/RefreshParts()

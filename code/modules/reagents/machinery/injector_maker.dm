@@ -147,10 +147,12 @@
 /obj/machinery/injector_maker/attack_hand(mob/user as mob)
 	interact(user)
 
+// RS Edit: Food Memories (Lira, November 2026)
 /obj/machinery/injector_maker/interact(mob/user as mob)
 	if(user.incapacitated() || !beaker)
 		return
 
+	var/datum/cooking_memory_binding/operator = capture_cooking_operator(user)
 	var/choice = tgui_input_list(user, "There are [src.count_small_injector] small and [src.count_large_injector]  large injectors left.", "Choose what to do", list("large injector", "small injector", "eject beaker", "cancel"))
 
 	switch(choice)
@@ -192,7 +194,7 @@
 							to_chat(user, SPAN_WARNING("Not enough autoinjectors! You only have [src.count_small_injector]"))
 							return
 				var/name = sanitize(tgui_input_text(user, "Name Injector", "Naming", null, 32, 0, 0, 0, 0),MAX_MESSAGE_LEN,0,0,0)
-				make_injector("small injector", injector_amount, name, material, user)
+				fill_injectors("small injector", injector_amount, name, material, user, operator)
 				update_icon()
 
 
@@ -223,11 +225,16 @@
 							to_chat(user, SPAN_WARNING("Not enough autoinjectors! You only have [src.count_large_injector]"))
 							return
 				var/name = sanitize(tgui_input_text(user, "Name Injector", "Naming", null, 32, 0, 0, 0, 0),MAX_MESSAGE_LEN,0,0,0)
-				make_injector("large injector", injector_amount, name, material,user)
+				fill_injectors("large injector", injector_amount, name, material, user, operator)
 				update_icon()
 
 
+// RS Edit: Food Memories (Lira, November 2026)
 /obj/machinery/injector_maker/proc/make_injector(var/size, var/amount, var/new_name, var/material, mob/user as mob)
+	return fill_injectors(size, amount, new_name, material, user, capture_cooking_operator(user))
+
+// RS Edit: Food Memories (Lira, November 2026)
+/obj/machinery/injector_maker/proc/fill_injectors(var/size, var/amount, var/new_name, var/material, mob/user, datum/cooking_memory_binding/operator)
 	if(!beaker)
 		return
 	var/amount_per_injector = null
@@ -238,7 +245,7 @@
 		if("large injector")
 			amount_per_injector = CLAMP(beaker.reagents.total_volume / amount, 0, 15)
 	if((size == "small injector" && amount_per_injector < 5) || size == "large injector" && amount_per_injector < 15)
-		proceed = tgui_alert(usr, "Heads up! Less than max volume per injector!\n Making [amount] [size](s) filled with [amount_per_injector] total reagent volume each!","Proceed?",list("No","Yes"))
+		proceed = tgui_alert(user, "Heads up! Less than max volume per injector!\n Making [amount] [size](s) filled with [amount_per_injector] total reagent volume each!","Proceed?",list("No","Yes"))
 	if(proceed == "No" || !amount_per_injector)
 		return
 	for(var/i, i < amount, i++)
@@ -256,7 +263,7 @@
 						else
 							src.count_small_injector = src.count_small_injector - 1
 				var/obj/item/weapon/reagent_containers/hypospray/autoinjector/empty/P = new(loc)
-				beaker.reagents.trans_to_obj(P, amount_per_injector)
+				beaker.reagents.trans_to_obj(P, amount_per_injector, mixer = operator?.resolve())
 				P.update_icon()
 				if(new_name)
 					P.name = new_name
@@ -275,7 +282,7 @@
 						else
 							src.count_large_injector = src.count_large_injector - 1
 				var/obj/item/weapon/reagent_containers/hypospray/autoinjector/biginjector/empty/P = new(loc)
-				beaker.reagents.trans_to_obj(P, amount_per_injector)
+				beaker.reagents.trans_to_obj(P, amount_per_injector, mixer = operator?.resolve())
 				P.update_icon()
 				if(new_name)
 					P.name = new_name

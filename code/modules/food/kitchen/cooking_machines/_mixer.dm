@@ -1,3 +1,7 @@
+/////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star November 2026: Food Memories //
+/////////////////////////////////////////////////////////////////
+
 /*
 The mixer subtype is used for  the candymaker and cereal maker. They are similar to cookers but with a few
 fundamental differences
@@ -69,7 +73,7 @@ fundamental differences
 
 
 /obj/machinery/appliance/mixer/can_remove_items(var/mob/user, show_warning = TRUE)
-	if(stat)
+	if(stat & POWEROFF) // RS Edit: Food Memories (Lira, November 2026)
 		return 1
 	else
 		if(show_warning)
@@ -77,21 +81,23 @@ fundamental differences
 		return 0
 
 //Container is not removable
+// RS Edit: Food Memories (Lira, November 2026)
 /obj/machinery/appliance/mixer/removal_menu(var/mob/user)
 	if (can_remove_items(user))
-		var/list/menuoptions = list()
-		for(var/datum/cooking_item/CI as anything in cooking_objs)
-			if (CI.container)
-				if (!CI.container.check_contents())
-					to_chat(user, "<span class='filter_notice'>There's nothing in [src] you can remove!</span>")
-					return
+		var/datum/cooking_item/slot = cooking_objs[1]
+		if (!slot.container.check_contents())
+			to_chat(user, "<span class='filter_notice'>There's nothing in [src] you can remove!</span>")
+			return
 
-				for (var/obj/item/I in CI.container)
-					menuoptions[I.name] = I
+		var/list/menuoptions = list()
+		for (var/obj/item/I in slot.container)
+			menuoptions[I.name] = I
 
 		var/selection = tgui_input_list(user, "Which item would you like to remove? If you want to remove chemicals, use an empty beaker.", "Remove ingredients", menuoptions)
 		if (selection)
 			var/obj/item/I = menuoptions[selection]
+			if (QDELETED(I) || I.loc != slot?.container || !can_remove_items(user))
+				return FALSE
 			if (!user || !user.put_in_hands(I))
 				I.forceMove(get_turf(src))
 			update_icon()
@@ -110,7 +116,7 @@ fundamental differences
 		return
 
 	if(stat & POWEROFF)//Its turned off
-		stat &= ~POWEROFF
+		switch_on(usr) // RS Edit: Food Memories (Lira, November 2026)
 		if(usr)
 			usr.visible_message("<span class='filter_notice'>[usr] turns the [src] on.</span>", "<span class='filter_notice'>You turn on \the [src].</span>")
 			get_cooking_work(CI)
@@ -123,8 +129,14 @@ fundamental differences
 	playsound(src, 'sound/machines/click.ogg', 40, 1)
 	update_icon()
 
+// RS Add: Food Memories (Lira, November 2026)
+/obj/machinery/appliance/mixer/switch_on(mob/user)
+	..()
+	var/datum/cooking_item/slot = cooking_objs[1]
+	slot.memory_cook = slot.container.check_contents() ? capture_cooking_operator(user) : null
+
 /obj/machinery/appliance/mixer/can_insert(var/obj/item/I, var/mob/user)
-	if(!stat)
+	if(!(stat & POWEROFF)) // RS Edit: Food Memories (Lira, November 2026)
 		to_chat(user, "<span class='warning'>,You can't add items while \the [src] is running. Wait for it to finish or turn the power off to abort.</span>")
 		return 0
 	else

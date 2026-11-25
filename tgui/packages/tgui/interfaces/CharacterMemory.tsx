@@ -5,9 +5,12 @@
 // ///////////////////////////////////////////////////////////////////////
 // Updated by Lira for Rogue Star November 2026: Chemistry Memories //////
 // ///////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star November 2026: Food Memories ///////////
+// ///////////////////////////////////////////////////////////////////////
 
 import { Component } from 'inferno';
 import { useBackend, useLocalState } from '../backend';
+import { UI_INTERACTIVE } from '../constants';
 import {
   Box,
   Button,
@@ -127,12 +130,26 @@ type ContactRow = {
   categories?: string[];
 };
 
+let noteSubmission = 0;
+
+type NoteDraft = {
+  text: string;
+  revision: string;
+  submission?: { id: number; text: string; revision: string };
+};
+
 type ContactDetail = {
   id: string;
   name: string;
   first_met?: string;
   last_seen?: string;
   notes?: string;
+  note_conflict?: boolean;
+  contact_deleted?: boolean;
+  note_revision: string;
+  received_submission?: number;
+  submitted_revision?: string;
+  note_pending?: boolean;
   categories?: string[];
   totals: EventRow[];
   days: DayRow[];
@@ -144,12 +161,25 @@ type DrinkIngredient = {
   amount: number;
 };
 
+type CoatingIngredient = Pick<DrinkIngredient, 'id' | 'name'> & {
+  instruction: string;
+};
+
+type RecipeIngredientRow =
+  | (DrinkIngredient & { unit: 'unit' | 'item'; consumed?: number })
+  | (CoatingIngredient & { unit: 'coating' });
+
 type DrinkRecipe = {
   product: string;
+  items?: DrinkIngredient[];
+  coating?: string;
+  coating_ingredient?: CoatingIngredient;
+  yield_unit?: 'item';
   ingredients: DrinkIngredient[];
   catalysts: (DrinkIngredient & { consumed: number; total: number })[];
   inhibitors: DrinkIngredient[];
   yield: number;
+  usable_pieces?: number;
   minimum_yield: number;
   input_volume: number;
   mixture_volume: number;
@@ -190,9 +220,11 @@ type DrinkDetail = DrinkRow & {
   image: string;
   traits?: {
     taste?: string;
-    alcohol: string;
+    alcohol?: string;
     allergens: string[];
-    effects: string[];
+    effects?: string[];
+    base_food?: boolean;
+    variable_allergens?: string;
   };
   first_made?: string;
   last_made?: string;
@@ -200,24 +232,33 @@ type DrinkDetail = DrinkRow & {
   recipe_steps: DrinkRecipe[];
 };
 
+type MemoryTab = 'characters' | 'drinks' | 'food' | 'chemistry';
+
 type Data = {
+  tab: MemoryTab;
   status?: string;
   error?: string;
+  recipes_need_refresh?: boolean;
   note_limit: number;
   savable?: boolean;
-  contacts: ContactRow[];
+  contacts?: ContactRow[];
   selected_contact?: string;
-  detail?: ContactDetail;
-  chemicals: DrinkRow[];
+  detail?: ContactDetail | null;
+  chemicals?: DrinkRow[];
   selected_chemical?: string;
   chemical_detail?: DrinkDetail;
-  chemistry_xp: number;
-  chemicals_made: number;
-  drinks: DrinkRow[];
+  chemistry_xp?: number;
+  chemicals_made?: number;
+  drinks?: DrinkRow[];
   selected_drink?: string;
   drink_detail?: DrinkDetail;
-  bartending_xp: number;
-  drinks_made: number;
+  bartending_xp?: number;
+  drinks_made?: number;
+  foods?: DrinkRow[];
+  selected_food?: string;
+  food_detail?: DrinkDetail;
+  cooking_xp?: number;
+  foods_made?: number;
 };
 
 const formatEventDetail = (event: string, detail: string) => {
@@ -279,8 +320,42 @@ const filterDayRows = (days: DayRow[], category: CategoryFilter) => {
     .filter((day) => day.events.length > 0);
 };
 
+const getNoteEditorState = (
+  detail: ContactDetail | null | undefined,
+  draft: NoteDraft | undefined,
+  noteLimit: number
+) => {
+  const backendNote = detail?.notes || '';
+  const submission = draft?.submission;
+  const received = submission && submission.id === detail?.received_submission;
+  const rejected = received && !detail?.submitted_revision;
+  const accepted = received && !rejected;
+  const awaitingResponse = submission && !received;
+  const editedAfterSave = submission && draft.text !== submission.text;
+  const draftText = accepted && !editedAfterSave ? backendNote : draft?.text;
+  const clippedDraft = (draftText ?? backendNote).slice(0, noteLimit);
+  const revision =
+    (!rejected && detail?.note_conflict) ||
+    (accepted && !editedAfterSave && !detail?.note_pending)
+      ? detail?.note_revision
+      : accepted && !detail?.note_pending
+        ? detail?.submitted_revision
+        : draft?.revision;
+  const pendingSubmission =
+    awaitingResponse || (accepted && detail?.note_pending)
+      ? submission
+      : undefined;
+  const canSubmit =
+    !detail?.contact_deleted &&
+    (!!pendingSubmission ||
+      clippedDraft !== backendNote ||
+      !!detail?.note_pending ||
+      !!detail?.note_conflict);
+  return { backendNote, clippedDraft, revision, pendingSubmission, canSubmit };
+};
+
 export const CharacterMemory = (_props, context) => {
-  const { act, data } = useBackend<Data>(context);
+  const { act, config, data } = useBackend<Data>(context);
   const {
     contacts = [],
     detail,
@@ -290,13 +365,10 @@ export const CharacterMemory = (_props, context) => {
     status,
   } = data;
 
-  const [tab, setTab] = useLocalState(
-    context,
-    'characterMemoryTab',
-    'characters'
-  );
+  const tab = data.tab || 'characters';
+  const setTab = (nextTab: MemoryTab) => act('select_tab', { tab: nextTab });
 
-  const [drafts, setDrafts] = useLocalState<Record<string, string>>(
+  const [drafts, setDrafts] = useLocalState<Record<string, NoteDraft>>(
     context,
     'characterMemoryDrafts',
     {}
@@ -339,20 +411,51 @@ export const CharacterMemory = (_props, context) => {
   };
 
   const activeId = detail?.id || '';
-  const backendNote = detail?.notes || '';
-  const draft = Object.prototype.hasOwnProperty.call(drafts, activeId)
-    ? drafts[activeId]
-    : backendNote;
-  const clippedDraft = draft.slice(0, note_limit);
-  const noteChanged = clippedDraft !== backendNote;
+  const { backendNote, clippedDraft, revision, pendingSubmission, canSubmit } =
+    getNoteEditorState(detail, drafts[activeId], note_limit);
+  const canSaveNote = config.status === UI_INTERACTIVE && canSubmit;
 
   const setDraft = (value: string) => {
-    if (!activeId) {
+    if (!detail) {
       return;
     }
+    const next = { ...drafts };
+    if (!pendingSubmission && value === backendNote) {
+      delete next[activeId];
+    } else {
+      next[activeId] = {
+        text: value.slice(0, note_limit),
+        revision: revision ?? detail.note_revision,
+        submission: pendingSubmission,
+      };
+    }
+    setDrafts(next);
+  };
+
+  const saveNote = () => {
+    if (!detail || !canSaveNote) {
+      return;
+    }
+    noteSubmission =
+      Math.max(noteSubmission, detail.received_submission ?? 0) + 1;
+    const submission = {
+      id: noteSubmission,
+      text: pendingSubmission?.text ?? clippedDraft,
+      revision: pendingSubmission?.revision ?? revision ?? detail.note_revision,
+    };
     setDrafts({
       ...drafts,
-      [activeId]: value.slice(0, note_limit),
+      [activeId]: {
+        text: clippedDraft,
+        revision: submission.revision,
+        submission,
+      },
+    });
+    act('save_note', {
+      id: activeId,
+      note: submission.text,
+      note_revision: submission.revision,
+      submission: submission.id,
     });
   };
 
@@ -389,6 +492,12 @@ export const CharacterMemory = (_props, context) => {
                 Drinks
               </Tabs.Tab>
               <Tabs.Tab
+                selected={tab === 'food'}
+                onClick={() => setTab('food')}
+                icon="utensils">
+                Food
+              </Tabs.Tab>
+              <Tabs.Tab
                 selected={tab === 'chemistry'}
                 onClick={() => setTab('chemistry')}
                 icon="flask">
@@ -397,14 +506,27 @@ export const CharacterMemory = (_props, context) => {
             </Tabs>
           </Stack.Item>
           <Stack.Item grow minHeight={0}>
-            {tab === 'chemistry' ? (
+            {tab === 'food' ? (
+              <ReagentMemory key="food" food />
+            ) : tab === 'chemistry' ? (
               <ReagentMemory key="chemistry" chemistry />
             ) : tab === 'drinks' ? (
               <ReagentMemory key="drinks" />
             ) : (
               <Stack fill>
                 <Stack.Item basis="30%" grow>
-                  <Section title={contactTitle} fill scrollable>
+                  <Section
+                    title={contactTitle}
+                    fill
+                    scrollable
+                    buttons={
+                      <Button
+                        className={CHIP_BUTTON_CLASS}
+                        icon="sync-alt"
+                        onClick={() => act('refresh')}>
+                        Refresh
+                      </Button>
+                    }>
                     {contacts.length ? (
                       <Stack vertical>
                         <Stack.Item>
@@ -479,15 +601,7 @@ export const CharacterMemory = (_props, context) => {
                       {detail ? (
                         <>
                           <Stack.Item>
-                            <Section
-                              title={detail.name}
-                              buttons={
-                                <Button
-                                  className={CHIP_BUTTON_CLASS}
-                                  icon="sync-alt"
-                                  onClick={() => act('refresh')}
-                                />
-                              }>
+                            <Section title={detail.name}>
                               <Table>
                                 <Table.Row>
                                   <Table.Cell color="label">
@@ -521,19 +635,46 @@ export const CharacterMemory = (_props, context) => {
                                       {clippedDraft.length}/{note_limit}
                                     </Box>
                                   </Stack.Item>
-                                  <Stack.Item>
-                                    <Button
-                                      className={`${CHIP_BUTTON_CLASS} RogueStar__glowButton--positive`}
-                                      icon="save"
-                                      disabled={!noteChanged}
-                                      onClick={() =>
-                                        act('save_note', {
-                                          id: activeId,
-                                          note: clippedDraft,
-                                        })
-                                      }
-                                    />
-                                  </Stack.Item>
+                                  {detail.note_conflict && (
+                                    <Stack.Item>
+                                      <Button
+                                        icon={
+                                          detail.contact_deleted
+                                            ? 'trash'
+                                            : 'undo'
+                                        }
+                                        disabled={
+                                          config.status !== UI_INTERACTIVE
+                                        }
+                                        onClick={() => {
+                                          const next = { ...drafts };
+                                          delete next[activeId];
+                                          setDrafts(next);
+                                          act('discard_note', {
+                                            id: activeId,
+                                          });
+                                        }}>
+                                        {detail.contact_deleted
+                                          ? 'Discard edit'
+                                          : 'Use saved note'}
+                                      </Button>
+                                    </Stack.Item>
+                                  )}
+                                  {!detail.contact_deleted && (
+                                    <Stack.Item>
+                                      <Button
+                                        className={`${CHIP_BUTTON_CLASS} RogueStar__glowButton--positive`}
+                                        icon="save"
+                                        tooltip={
+                                          pendingSubmission
+                                            ? 'Retry previous save'
+                                            : 'Save note'
+                                        }
+                                        disabled={!canSaveNote}
+                                        onClick={saveNote}
+                                      />
+                                    </Stack.Item>
+                                  )}
                                 </Stack>
                               }>
                               <TextArea
@@ -574,16 +715,29 @@ export const CharacterMemory = (_props, context) => {
   );
 };
 
-const ReagentMemory = ({ chemistry = false }, context) => {
+const ReagentMemory = ({ chemistry = false, food = false }, context) => {
   const { act, data } = useBackend<Data>(context);
-  const drinks = (chemistry ? data.chemicals : data.drinks) || [];
-  const detail = chemistry ? data.chemical_detail : data.drink_detail;
-  const selected = chemistry ? data.selected_chemical : data.selected_drink;
-  const noun = chemistry ? 'chemical' : 'drink';
-  const title = chemistry ? 'Chemistry' : 'Drinks';
+  const drinks =
+    (food ? data.foods : chemistry ? data.chemicals : data.drinks) || [];
+  const detail = food
+    ? data.food_detail
+    : chemistry
+      ? data.chemical_detail
+      : data.drink_detail;
+  const selected = food
+    ? data.selected_food
+    : chemistry
+      ? data.selected_chemical
+      : data.selected_drink;
+  const noun = food ? 'food' : chemistry ? 'chemical' : 'drink';
+  const title = food ? 'Food' : chemistry ? 'Chemistry' : 'Drinks';
   const [search, setSearch] = useLocalState(
     context,
-    chemistry ? 'characterMemoryChemicalSearch' : 'characterMemoryDrinkSearch',
+    food
+      ? 'characterMemoryFoodSearch'
+      : chemistry
+        ? 'characterMemoryChemicalSearch'
+        : 'characterMemoryDrinkSearch',
     ''
   );
   const query = search.trim().toLowerCase();
@@ -593,16 +747,30 @@ const ReagentMemory = ({ chemistry = false }, context) => {
       drink.ingredient_names?.some((name) =>
         name.toLowerCase().includes(query)
       ) ||
-      (chemistry && drink.search_text?.includes(query))
+      drink.search_text?.includes(query)
   );
 
+  if (!drinks.length && data.recipes_need_refresh) {
+    return (
+      <NoticeBox warning>
+        Recipe memory could not be loaded.{' '}
+        <Button
+          className={CHIP_BUTTON_CLASS}
+          icon="sync-alt"
+          onClick={() => act('refresh')}>
+          Refresh
+        </Button>
+      </NoticeBox>
+    );
+  }
   return (
     <Stack vertical fill>
       {!drinks.length ? (
         <Stack.Item>
           <NoticeBox>
-            No {noun}s remembered yet. Mix your first {noun} to save its recipe
-            here.
+            {food
+              ? 'No food remembered yet. Cook a dish or mix a food recipe to save it here.'
+              : `No ${noun}s remembered yet. Mix your first ${noun} to save its recipe here.`}
           </NoticeBox>
         </Stack.Item>
       ) : (
@@ -625,9 +793,11 @@ const ReagentMemory = ({ chemistry = false }, context) => {
                   fluid
                   mb={1}
                   placeholder={
-                    chemistry
-                      ? 'Search chemicals, uses, or ingredients...'
-                      : 'Search drinks or ingredients...'
+                    food
+                      ? 'Search food or ingredients...'
+                      : chemistry
+                        ? 'Search chemicals, uses, or ingredients...'
+                        : 'Search drinks or ingredients...'
                   }
                   value={search}
                   onInput={(_, value) => setSearch(value)}
@@ -640,9 +810,16 @@ const ReagentMemory = ({ chemistry = false }, context) => {
                     mb={0.5}
                     selected={drink.id === selected}
                     onClick={() =>
-                      act(chemistry ? 'select_chemical' : 'select_drink', {
-                        id: drink.id,
-                      })
+                      act(
+                        food
+                          ? 'select_food'
+                          : chemistry
+                            ? 'select_chemical'
+                            : 'select_drink',
+                        {
+                          id: drink.id,
+                        }
+                      )
                     }>
                     <Stack justify="space-between" align="center">
                       <Stack.Item grow>
@@ -661,19 +838,21 @@ const ReagentMemory = ({ chemistry = false }, context) => {
               {detail ? (
                 <Section title={detail.name} fill scrollable>
                   <Stack align="center" mb={2}>
-                    <Stack.Item>
-                      <Box
-                        as="img"
-                        src={`data:image/png;base64,${detail.image}`}
-                        alt={detail.name}
-                        width="96px"
-                        height="96px"
-                        style={{
-                          'image-rendering': 'pixelated',
-                          '-ms-interpolation-mode': 'nearest-neighbor',
-                        }}
-                      />
-                    </Stack.Item>
+                    {!!detail.image && (
+                      <Stack.Item>
+                        <Box
+                          as="img"
+                          src={`data:image/png;base64,${detail.image}`}
+                          alt={detail.name}
+                          width="96px"
+                          height="96px"
+                          style={{
+                            'image-rendering': 'pixelated',
+                            '-ms-interpolation-mode': 'nearest-neighbor',
+                          }}
+                        />
+                      </Stack.Item>
+                    )}
                     <Stack.Item grow>
                       {!detail.medical && (
                         <Box mb={1}>{detail.description}</Box>
@@ -694,20 +873,35 @@ const ReagentMemory = ({ chemistry = false }, context) => {
                     <ChemicalCharacteristics properties={detail.medical} />
                   )}
                   {detail.traits && (
-                    <Section title="Drink characteristics">
+                    <Section
+                      title={
+                        food ? 'Food characteristics' : 'Drink characteristics'
+                      }>
                       <LabeledList>
                         {detail.traits.taste && (
-                          <LabeledList.Item label="Taste">
+                          <LabeledList.Item
+                            label={
+                              detail.traits.base_food ? 'Base taste' : 'Taste'
+                            }>
                             {detail.traits.taste}
                           </LabeledList.Item>
                         )}
-                        <LabeledList.Item label="Alcohol">
-                          {detail.traits.alcohol}
+                        {detail.traits.alcohol && (
+                          <LabeledList.Item label="Alcohol">
+                            {detail.traits.alcohol}
+                          </LabeledList.Item>
+                        )}
+                        <LabeledList.Item
+                          label={
+                            detail.traits.base_food
+                              ? 'Base allergens'
+                              : 'Allergens'
+                          }>
+                          {detail.traits.variable_allergens ||
+                            detail.traits.allergens.join(', ') ||
+                            'None listed'}
                         </LabeledList.Item>
-                        <LabeledList.Item label="Allergens">
-                          {detail.traits.allergens.join(', ') || 'None listed'}
-                        </LabeledList.Item>
-                        {!!detail.traits.effects.length && (
+                        {!!detail.traits.effects?.length && (
                           <LabeledList.Item label="Notable effects">
                             {detail.traits.effects.join(', ')}
                           </LabeledList.Item>
@@ -722,11 +916,8 @@ const ReagentMemory = ({ chemistry = false }, context) => {
                         recipe,
                         detail.recipes.length > 1 ? index + 1 : undefined
                       )}>
-                      <IngredientTable
-                        ingredients={recipe.ingredients}
-                        catalysts={recipe.catalysts}
-                        pourOrder={recipe.pour_order}
-                        ingredientRecipes={recipe.ingredient_recipes}
+                      <RecipeIngredients
+                        recipe={recipe}
                         recipeSteps={detail.recipe_steps}
                       />
                       <DrinkRecipeDetails recipe={recipe} />
@@ -813,11 +1004,26 @@ const DrinkRecipeDetails = ({ recipe }: { readonly recipe: DrinkRecipe }) => (
     <LabeledList>
       <LabeledList.Item label="Produces">
         {formatDrinkAmount(recipe.yield)}{' '}
-        {recipe.yield === 1 ? 'unit' : 'units'} of {recipe.product}
+        {recipe.yield_unit === 'item'
+          ? recipe.yield === 1
+            ? 'item'
+            : 'items'
+          : recipe.yield === 1
+            ? 'unit'
+            : 'units'}{' '}
+        of {recipe.product}
         {recipe.leftovers.length
-          ? `; ${formatDrinkAmount(recipe.mixture_volume)} units in the container including leftovers`
+          ? recipe.yield_unit === 'item'
+            ? `; leaves ${formatDrinkAmount(recipe.mixture_volume)} units in the container`
+            : `; ${formatDrinkAmount(recipe.mixture_volume)} units in the container including leftovers`
           : ''}
       </LabeledList.Item>
+      {recipe.yield_unit !== 'item' &&
+        recipe.mixture_volume > recipe.input_volume && (
+          <LabeledList.Item label="Minimum vessel capacity">
+            {formatDrinkAmount(recipe.mixture_volume)} units
+          </LabeledList.Item>
+        )}
       {recipe.temperature && (
         <LabeledList.Item label="Temperature">
           {recipe.temperature}
@@ -833,6 +1039,7 @@ const DrinkRecipePreparation = ({
   readonly recipe: DrinkRecipe;
 }) => (
   <>
+    {!!recipe.coating && <Box mt={1}>{recipe.coating}</Box>}
     {!!recipe.batch_limit && (
       <NoticeBox mt={1}>
         Mix {formatDrinkAmount(recipe.batch_yield)} units at a time.
@@ -871,29 +1078,52 @@ const DrinkRecipePreparation = ({
   </>
 );
 
+const RecipeIngredients = ({
+  recipe,
+  recipeSteps,
+}: {
+  readonly recipe: DrinkRecipe;
+  readonly recipeSteps: DrinkRecipe[];
+}) => (
+  <IngredientTable
+    items={recipe.items}
+    coating={recipe.coating_ingredient}
+    ingredients={recipe.ingredients}
+    catalysts={recipe.catalysts}
+    pourOrder={recipe.pour_order}
+    ingredientRecipes={recipe.ingredient_recipes}
+    recipeSteps={recipeSteps}
+  />
+);
+
 const IngredientTable = ({
+  items = [],
+  coating,
   ingredients,
   catalysts = [],
   pourOrder = [],
   ingredientRecipes,
   recipeSteps,
 }: {
+  readonly items?: DrinkIngredient[];
+  readonly coating?: CoatingIngredient;
   readonly ingredients: DrinkIngredient[];
   readonly catalysts?: DrinkRecipe['catalysts'];
   readonly pourOrder?: DrinkIngredient[];
   readonly ingredientRecipes: DrinkRecipe['ingredient_recipes'];
   readonly recipeSteps: DrinkRecipe[];
 }) => {
-  const rows: (DrinkIngredient & { consumed?: number })[] = ingredients.map(
-    (ingredient) => ({ ...ingredient })
-  );
+  const rows: RecipeIngredientRow[] = ingredients.map((ingredient) => ({
+    ...ingredient,
+    unit: 'unit',
+  }));
   for (const catalyst of catalysts) {
     const ingredient = rows.find((row) => row.id === catalyst.id);
-    if (ingredient) {
+    if (ingredient?.unit === 'unit') {
       ingredient.consumed = ingredient.amount;
       ingredient.amount += catalyst.total - catalyst.consumed;
     } else {
-      rows.push({ ...catalyst, amount: catalyst.total });
+      rows.push({ ...catalyst, amount: catalyst.total, unit: 'unit' });
     }
   }
   if (pourOrder.length) {
@@ -902,16 +1132,23 @@ const IngredientTable = ({
       (left, right) => order.indexOf(left.id) - order.indexOf(right.id)
     );
   }
+  rows.unshift(...items.map((item) => ({ ...item, unit: 'item' as const })));
+  if (coating) {
+    rows.push({ ...coating, unit: 'coating' });
+  }
+  if (!rows.length) {
+    return null;
+  }
 
   return (
     <Table>
       <Table.Row header>
         <Table.Cell>Ingredient</Table.Cell>
-        <Table.Cell textAlign="right">Units</Table.Cell>
+        <Table.Cell textAlign="right">Amount</Table.Cell>
       </Table.Row>
       {rows.map((ingredient) => (
         <DrinkIngredientRow
-          key={ingredient.id}
+          key={`${ingredient.unit}-${ingredient.id}`}
           ingredient={ingredient}
           recipes={(ingredientRecipes[ingredient.id] || []).map(
             (stepId) => recipeSteps[stepId - 1]
@@ -925,7 +1162,7 @@ const IngredientTable = ({
 
 class DrinkIngredientRow extends Component<
   {
-    readonly ingredient: DrinkIngredient & { consumed?: number };
+    readonly ingredient: RecipeIngredientRow;
     readonly recipes: DrinkRecipe[];
     readonly recipeSteps: DrinkRecipe[];
   },
@@ -935,6 +1172,7 @@ class DrinkIngredientRow extends Component<
 
   render() {
     const { ingredient, recipes, recipeSteps } = this.props;
+    const { unit } = ingredient;
     const expanded = this.state.expanded && recipes.length > 0;
     return (
       <>
@@ -951,7 +1189,7 @@ class DrinkIngredientRow extends Component<
             ) : (
               ingredient.name
             )}
-            {ingredient.consumed !== undefined && (
+            {unit !== 'coating' && ingredient.consumed !== undefined && (
               <Box inline color="label" ml={1}>
                 (Catalyst; {formatDrinkAmount(ingredient.consumed)}{' '}
                 {ingredient.consumed === 1 ? 'unit' : 'units'} consumed)
@@ -959,7 +1197,9 @@ class DrinkIngredientRow extends Component<
             )}
           </Table.Cell>
           <Table.Cell textAlign="right">
-            {formatDrinkAmount(ingredient.amount)}
+            {unit === 'coating'
+              ? ingredient.instruction
+              : `${formatDrinkAmount(ingredient.amount)} ${unit}${ingredient.amount === 1 ? '' : 's'}`}
           </Table.Cell>
         </Table.Row>
         {expanded && (
@@ -973,24 +1213,24 @@ class DrinkIngredientRow extends Component<
                       recipe,
                       recipes.length > 1 ? index + 1 : undefined
                     )}>
-                    <IngredientTable
-                      ingredients={recipe.ingredients}
-                      catalysts={recipe.catalysts}
-                      pourOrder={recipe.pour_order}
-                      ingredientRecipes={recipe.ingredient_recipes}
+                    <RecipeIngredients
+                      recipe={recipe}
                       recipeSteps={recipeSteps}
                     />
                     <DrinkRecipeDetails recipe={recipe} />
-                    {(ingredient.amount < recipe.yield ||
-                      recipe.leftovers.length > 0) && (
-                      <Box mt={1} color="label">
-                        Use {formatDrinkAmount(ingredient.amount)} units of{' '}
-                        {ingredient.name}
-                        {recipe.leftovers.length
-                          ? ' after separating the leftovers.'
-                          : ' from this batch.'}
-                      </Box>
-                    )}
+                    {unit !== 'coating' &&
+                      (ingredient.amount <
+                        (recipe.usable_pieces ?? recipe.yield) ||
+                        recipe.leftovers.length > 0) && (
+                        <Box mt={1} color="label">
+                          Use {formatDrinkAmount(ingredient.amount)}{' '}
+                          {unit === 'unit' ? 'units of' : 'of'}{' '}
+                          {ingredient.name}
+                          {recipe.leftovers.length && unit === 'unit'
+                            ? ' after separating the leftovers.'
+                            : ' from this batch.'}
+                        </Box>
+                      )}
                     <DrinkRecipePreparation recipe={recipe} />
                   </Section>
                 ))}

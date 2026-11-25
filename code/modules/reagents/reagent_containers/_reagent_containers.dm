@@ -80,7 +80,7 @@
 	var/contained = reagentlist()
 	add_attack_logs(user,target,"Splashed with [src.name] containing [contained]")
 	user.visible_message("<span class='danger'>[target] has been splashed with something by [user]!</span>", "<span class = 'notice'>You splash the solution onto [target].</span>")
-	reagents.splash(target, reagents.total_volume)
+	reagents.splash(target, reagents.total_volume, source_mixer = user) // RS Edit: Food Memories (Lira, November 2026)
 	return 1
 
 /obj/item/weapon/reagent_containers/proc/self_feed_message(var/mob/user)
@@ -95,6 +95,7 @@
 /obj/item/weapon/reagent_containers/proc/feed_sound(var/mob/user)
 	return
 
+// RS Edit: Food Memories (Lira, November 2026)
 /obj/item/weapon/reagent_containers/proc/standard_feed_mob(var/mob/user, var/mob/target) // This goes into attack
 	if(!istype(target) || !target.can_feed())
 		return FALSE
@@ -116,11 +117,12 @@
 	user.setClickCooldown(user.get_attack_speed(src)) //puts a limit on how fast people can eat/drink things
 	if(user == target)
 		self_feed_message(user)
-		reagents.trans_to_mob(user, issmall(user) ? CEILING(amount_per_transfer_from_this/2, 1) : amount_per_transfer_from_this, CHEM_INGEST)
+		reagents.trans_to_mob(user, issmall(user) ? CEILING(amount_per_transfer_from_this/2, 1) : amount_per_transfer_from_this, CHEM_INGEST, source_mixer = user)
 		feed_sound(user)
 		return TRUE
 
 	else
+		var/datum/cooking_memory_binding/operator = capture_cooking_operator(user)
 		other_feed_message_start(user, target)
 		if(!do_mob(user, target))
 			return FALSE
@@ -128,7 +130,7 @@
 
 		var/contained = reagentlist()
 		add_attack_logs(user,target,"Fed from [src.name] containing [contained]")
-		reagents.trans_to_mob(target, amount_per_transfer_from_this, CHEM_INGEST)
+		reagents.trans_to_mob(target, amount_per_transfer_from_this, CHEM_INGEST, source_mixer = operator?.resolve())
 		feed_sound(user)
 		return TRUE
 

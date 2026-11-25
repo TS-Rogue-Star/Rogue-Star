@@ -3,6 +3,8 @@
 ///////////////////////////////////////////////////////////////////////////
 // Updated by Lira for Rogue Star September 2026: Pet Register Interface //
 ///////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star November 2026: Food Memories ////////////
+///////////////////////////////////////////////////////////////////////////
 
 /mob
 	var/datum/etching/etching
@@ -56,7 +58,9 @@
 		return
 	if(!kind || !value)
 		var/list/xp_list = list()
-		xp_list += etching.xp
+		for(var/skill in etching.xp)
+			if(!recipe_xp_skill(skill))
+				xp_list += skill
 		xp_list += "New kind of XP"
 		kind = tgui_input_list(usr, "What kind of XP would you like to add?", "Grant XP", xp_list)
 		if(!kind)
@@ -406,6 +410,10 @@
 	needs_saving = TRUE
 
 /datum/etching/proc/grant_xp(kind,value,quiet = FALSE,source)
+	if(recipe_xp_skill(kind))
+		if(usr)
+			to_chat(usr, SPAN_WARNING("Cooking, bartending and chemistry XP come from discoveries in Memory."))
+		return
 	xp["[kind]"] += value
 	if(!quiet)
 		to_chat(ourmob,"<span class = 'notice'>You earned [value] [kind]! New total: ([xp["[kind]"]])</span>")

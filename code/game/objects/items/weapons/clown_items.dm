@@ -50,7 +50,7 @@
 	else if(istype(target,/turf))
 		to_chat(user, "<span class='notice'>You scrub \the [target.name] clean.</span>")
 		var/turf/T = target
-		T.clean(src, user)
+		T.clean(src, user, user) // RS Edit: Food Memories (Lira, November 2026)
 	else if(istype(target,/obj/structure/sink))
 		to_chat(user, "<span class='notice'>You wet \the [src] in the sink.</span>")
 		wet()

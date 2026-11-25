@@ -566,7 +566,7 @@
 			var/inject_amount = clamp(round(text2num(params["amount"]), 5), 0, 50) // round to nearest 5 and clamp to 0-50
 			if(!inject_amount)
 				return
-			connected.beaker.reagents.trans_to_mob(connected.occupant, inject_amount, CHEM_BLOOD)
+			connected.beaker.reagents.trans_to_mob(connected.occupant, inject_amount, CHEM_BLOOD, source_mixer = usr) // RS Edit: Food Memories (Lira, November 2026)
 	////////////////////////////////////////////////////////
 		if("selectSEBlock") // This chunk of code updates selected block / sub-block based on click (se stands for strutural enzymes)
 			var/select_block = text2num(params["block"])

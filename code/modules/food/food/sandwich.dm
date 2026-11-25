@@ -34,7 +34,7 @@
 			return
 		to_chat(user, "<font color='blue'>You layer [W] over \the [src].</font>")
 		var/obj/item/weapon/reagent_containers/F = W
-		F.reagents.trans_to_obj(src, F.reagents.total_volume)
+		F.reagents.trans_to_obj(src, F.reagents.total_volume, mixer = user) // RS Edit: Food Memories (Lira, November 2026)
 		user.drop_item()
 		W.loc = src
 		ingredients += W

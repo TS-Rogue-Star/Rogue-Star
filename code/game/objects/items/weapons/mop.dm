@@ -22,6 +22,7 @@ GLOBAL_LIST_BOILERPLATE(all_mops, /obj/item/weapon/mop)
 	create_reagents(30)
 	..()
 
+// RS Edit: Food Memories (Lira, November 2026)
 /obj/item/weapon/mop/afterattack(atom/A, mob/user, proximity)
 	if(!proximity) return
 	if(istype(A, /turf) || istype(A, /obj/effect/decal/cleanable) || istype(A, /obj/effect/overlay) || istype(A, /obj/effect/rune))
@@ -31,10 +32,11 @@ GLOBAL_LIST_BOILERPLATE(all_mops, /obj/item/weapon/mop)
 
 		user.visible_message("<span class='warning'>[user] begins to clean \the [get_turf(A)].</span>")
 
+		var/datum/cooking_memory_binding/operator = capture_cooking_operator(user)
 		if(do_after(user, 40))
 			var/turf/T = get_turf(A)
 			if(T)
-				T.clean(src, user)
+				T.clean(src, user, operator?.resolve())
 			to_chat(user, "<span class='notice'>You have finished mopping!</span>")
 
 
@@ -63,6 +65,7 @@ GLOBAL_LIST_BOILERPLATE(all_mops, /obj/item/weapon/mop)
 	create_reagents(30)
 	..()
 
+// RS Edit: Food Memories (Lira, November 2026)
 /obj/item/weapon/mop/advanced/afterattack(atom/A, mob/user, proximity)
 	if(!proximity) return
 	if(istype(A, /turf) || istype(A, /obj/effect/decal/cleanable) || istype(A, /obj/effect/overlay) || istype(A, /obj/effect/rune))
@@ -72,8 +75,9 @@ GLOBAL_LIST_BOILERPLATE(all_mops, /obj/item/weapon/mop)
 
 		user.visible_message("<span class='warning'>[user] begins to clean \the [get_turf(A)].</span>")
 
+		var/datum/cooking_memory_binding/operator = capture_cooking_operator(user)
 		if(do_after(user, 20))
 			var/turf/T = get_turf(A)
 			if(T)
-				T.clean(src, user)
+				T.clean(src, user, operator?.resolve())
 			to_chat(user, "<span class='notice'>You have finished mopping!</span>")

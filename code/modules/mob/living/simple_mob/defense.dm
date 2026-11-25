@@ -93,7 +93,7 @@
 			to_chat(user, "<span class='notice'>\The [src] seems too full to eat.</span>")
 			return
 		if(S.reagents)
-			S.reagents.trans_to_mob(src, S.bitesize * 5, CHEM_INGEST, multiplier = 5)
+			S.reagents.trans_to_mob(src, S.bitesize * 5, CHEM_INGEST, multiplier = 5, source_mixer = user) // RS Edit: Food Memories (Lira, November 2026)
 
 		if(src != user)
 			visible_message("<span class='notice'>\The [src] takes a bite of \the [S].</span>","<span class='notice'>\The [user] feeds \the [S] to you.</span>", runemessage = "monch")

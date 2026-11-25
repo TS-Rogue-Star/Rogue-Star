@@ -19,6 +19,7 @@
 
 	var/pierce_material = FALSE	// If true, the patch can be used through thick material.
 
+// RS Edit: Food Memories (Lira, November 2026)
 /obj/item/weapon/reagent_containers/pill/patch/attack(mob/M as mob, mob/user as mob)
 	var/mob/living/L = user
 
@@ -40,7 +41,7 @@
 			to_chat(H, "<span class='notice'>\The [src] is placed on your [affecting].</span>")
 			M.drop_from_inventory(src) //icon update
 			if(reagents.total_volume)
-				reagents.trans_to_mob(M, reagents.total_volume, CHEM_TOUCH)
+				reagents.trans_to_mob(M, reagents.total_volume, CHEM_TOUCH, source_mixer = user)
 			qdel(src)
 			return 1
 
@@ -61,6 +62,7 @@
 		user.visible_message("<span class='warning'>[user] attempts to place \the [src] onto [H]`s [affecting].</span>")
 
 		user.setClickCooldown(user.get_attack_speed(src))
+		var/datum/cooking_memory_binding/operator = capture_cooking_operator(user)
 		if(!do_mob(user, M))
 			return
 
@@ -74,7 +76,7 @@
 		M.drop_from_inventory(src) //icon update
 
 		if(reagents.total_volume)
-			reagents.trans_to_mob(M, reagents.total_volume, CHEM_TOUCH)
+			reagents.trans_to_mob(M, reagents.total_volume, CHEM_TOUCH, source_mixer = operator?.resolve())
 		qdel(src)
 
 		return 1

@@ -105,6 +105,10 @@
 	*/
 
 
+// RS Add Food Memories (Lira, November 2026)
+/obj/item/weapon/reagent_containers/syringe
+	var/tmp/datum/cooking_memory_binding/cryobag_installer
+
 /obj/item/bodybag/cryobag
 	name = "stasis bag"
 	desc = "A non-reusable plastic bag designed to slow down bodily functions such as circulation and breathing, \
@@ -180,7 +184,7 @@
 		var/mob/living/carbon/human/H = AM
 		H.Stasis(stasis_level)
 		src.used = 1
-		inject_occupant(H)
+		inject_occupant(H, syringe?.cryobag_installer?.resolve()) // RS Edit: Food Memories (Lira, November 2026)
 
 	if(istype(AM, /obj/item/organ))
 		var/obj/item/organ/O = AM
@@ -206,12 +210,13 @@
 		return tank.air_contents
 	..()
 
-/obj/structure/closet/body_bag/cryobag/proc/inject_occupant(var/mob/living/carbon/human/H)
+// RS Edit: Food Memories (Lira, November 2026)
+/obj/structure/closet/body_bag/cryobag/proc/inject_occupant(var/mob/living/carbon/human/H, var/mob/user)
 	if(!syringe)
 		return
 
 	if(H.reagents)
-		syringe.reagents.trans_to_mob(H, 30, CHEM_BLOOD)
+		syringe.reagents.trans_to_mob(H, 30, CHEM_BLOOD, source_mixer = user)
 
 /obj/structure/closet/body_bag/cryobag/examine(mob/user)
 	. = ..()
@@ -222,6 +227,7 @@
 		for(var/mob/living/L in contents)
 			. += L.examine(user)
 
+// RS Edit: Food Memories (Lira, November 2026)
 /obj/structure/closet/body_bag/cryobag/attackby(obj/item/W, mob/user)
 	if(opened)
 		..()
@@ -239,9 +245,10 @@
 				to_chat(user,"<span class='info'>You insert \the [syringe] into \the [src], and it locks into place.</span>")
 				user.unEquip(syringe)
 				src.syringe = syringe
+				syringe.cryobag_installer = capture_cooking_operator(user)
 				syringe.loc = null
 				for(var/mob/living/carbon/human/H in contents)
-					inject_occupant(H)
+					inject_occupant(H, user)
 					break
 
 		else if(W.is_screwdriver())
@@ -249,6 +256,7 @@
 				if(used)
 					to_chat(user,"<span class='warning'>The injector cannot be removed now that the stasis bag has been used!</span>")
 				else
+					syringe.cryobag_installer = null
 					syringe.forceMove(src.loc)
 					to_chat(user,"<span class='info'>You pry \the [syringe] out of \the [src].</span>")
 					syringe = null

@@ -1,15 +1,20 @@
 //////////////////////////////////////////////////////////////////
 // Updated by Lira for Rogue Star November 2026: Drink Memories //
 //////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star November 2026: Food Memories ///
+//////////////////////////////////////////////////////////////////
 
 // RS Add: Drink Memories (Lira, November 2026)
 /datum/reagents/distilling
-	var/datum/weakref/drink_maker
+	var/datum/cooking_memory_binding/input_installer
+	var/datum/cooking_memory_binding/buffer_contributor
+	var/datum/cooking_memory_binding/drink_maker
 	var/list/remembered_drinks = list()
 
 // RS Add: Drink Memories (Lira, November 2026)
-/datum/reagents/distilling/proc/begin_drink_batch(var/mob/user)
-	drink_maker = isliving(user) ? WEAKREF(user) : null
+/datum/reagents/distilling/proc/begin_drink_batch(var/datum/cooking_memory_binding/installer)
+	input_installer = installer
+	drink_maker = input_installer
 	remembered_drinks = list()
 
 // RS Edit: Drink Memories (Lira, November 2026)
@@ -19,8 +24,9 @@
 	if(my_atom.flags & NOREACT)
 		return FALSE
 	if(mixer)
-		drink_maker = WEAKREF(mixer)
+		drink_maker = capture_cooking_operator(mixer)
 	if(!total_volume)
+		buffer_contributor = null
 		remembered_drinks.Cut()
 	var/reaction_occurred
 	var/list/eligible_reactions = list()

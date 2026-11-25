@@ -196,8 +196,12 @@
 
 	return 0
 
+// RS Edit: Food Memories (Lira, November 2026)
 /obj/machinery/appliance/cooker/add_content(var/obj/item/I, var/mob/user)
 	var/datum/cooking_item/CI = ..()
-	if(istype(CI) && CI.combine_target)
+	if(!istype(CI))
+		return
+	CI.memory_cook = capture_cooking_operator(user)
+	if(CI.combine_target)
 		to_chat(user, "<span class='filter_notice'>\The [I] will be used to make a [selected_option]. Output selection is returned to default for future items.</span>")
 		selected_option = null

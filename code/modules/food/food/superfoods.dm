@@ -104,6 +104,11 @@
 	var/regentime = 1000
 	var/interval = 0
 
+	// RS Add Start: Food Memories (Lira, November 2026)
+	var/const/completed_name = "The Chaos Cake!"
+	var/const/completed_desc = "A chaos cake. Both a creation of dark and light, the two cakes are kept in a careful balance by that mystical coin in the middle. It's said its effects would dissipate if the balance is ever tipped in favour of one side too much, so both sides much be cut equally."
+	// RS Add End
+
 	var/static/list/desclist2 = list(
 			"The first layer of a strange cake, you can see the cherry paste ooze.",
 			"The second layer of the cake sits in place now, smelling of pear with delicious colourful cream.",
@@ -113,7 +118,7 @@
 			"The cake is getting closer with the sixth layer added, the pink hue smelling of chocolate, with colourful sprinkles on top.",
 			"The first pair of triplets rest on the cake, despite being mostly similar to the first three, an evil aura becomes noticable.",
 			"The second pair of triplets rest on the cake, if you stand on the bright side, you can feel a good aura lifting your mood.",
-			"A chaos cake. Both a creation of dark and light, the two cakes are kept in a careful balance by that mystical coin in the middle. It's said its effects would dissipate if the balance is ever tipped in favour of one side too much, so both sides much be cut equally."
+			completed_desc // RS Edit: Food Memories (Lira, November 2026)
 		)
 
 /obj/item/weapon/chaoscake_layer
@@ -258,14 +263,17 @@
 			return
 	if(istype(W,/obj/item/weapon/chaoscake_layer))
 		var/obj/item/weapon/chaoscake_layer/C = W
-		if(C.layer_stage == 8)
+		// RS Edit Start: Food Memories (Lira, November 2026)
+		if(!edible && stage == C.layer_stage && stage + 1 == maxstages)
 			to_chat(user, "Finally! The coin on the top, the almighty chaos cake is complete!")
 			qdel(W)
 			stage++
 			desc = desclist2[stage]
-			icon_state = "chaoscake-6"
+			icon_state = "chaoscake-[slices]"
 			edible = 1
-			name = "The Chaos Cake!"
+			name = completed_name
+			user?.character_memory?.record_food("[/obj/structure/chaoscake]")
+		// RS Edit End
 		else if(stage == maxstages)
 			to_chat(user, "The cake is already done!")
 		else if(stage == C.layer_stage)
